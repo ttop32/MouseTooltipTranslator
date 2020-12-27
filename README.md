@@ -13,6 +13,10 @@ When mouse hover on text, it shows translated tooltip in any desired language.
 
 # Required environment to run    
 npm install -g chrome-extension-cli    
+npm i jquery --save
+npm i popper.js --save
+npm i bootstrap --save
+
 
 # Run watch   
 npm run watch       
