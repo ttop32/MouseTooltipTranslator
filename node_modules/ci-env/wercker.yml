@@ -1,0 +1,16 @@
+box:
+  id: node:10
+build:
+  steps:
+    - script:
+        name: set production false
+        code: |
+          npm config set -g production false
+    - script:
+        name: echo nodejs information
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
+
+    - npm-install
+    - npm-test
