@@ -1,9 +1,15 @@
 # MouseTooltipTranslator   
-visualise tooltip translation based on mouse hover for chrome extension   
+Mouse over to translate.   
+When mouse hover on text, it shows translated tooltip in any desired language.   
 
 
 # Result   
 
+
+
+# Features   
+- using google translate to translate in any language    
+- google tts (text to speech) is available to use in the setting    
 
 
 # Required environment to run    
