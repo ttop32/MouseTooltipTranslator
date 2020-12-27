@@ -15,8 +15,8 @@ When mouse hover on text, it shows translated tooltip in any desired language.
 npm install -g chrome-extension-cli    
 
 # Run
-npm run watch     //watch
-npm run build   //build
+npm run watch     //watch    
+npm run build     //build   
 
 # Privacy policy
 - Mouse tooltip translator uses user data only for google translation(tts) purpose.   
