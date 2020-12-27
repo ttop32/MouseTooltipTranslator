@@ -22,7 +22,7 @@ npm run build
 
 # Privacy policy
 - Mouse tooltip translator uses user data only for google translation(tts) purpose.   
-- It does not share any user data with any other third party.    
+- It does not share any user data with any other third parties.   
 
 # Acknowledgement and References  
 - [TransOver](https://github.com/artemave/translate_onhover)    
