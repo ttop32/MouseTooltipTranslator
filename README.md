@@ -2,6 +2,8 @@
 Mouse over to translate.   
 When mouse hover on text, it shows translated tooltip in any desired language.   
 
+download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc?hl=en)   
+
 # Result   
 ![result](doc/screenshot_1.png)    
 ![result](doc/screenshot_2.png)     
