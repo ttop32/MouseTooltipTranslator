@@ -11023,7 +11023,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         }
         //if source lang is equal to target lang
         //if tooltip is not on and activation key is not pressed,  clear translation
-        if (currentSetting["translateTarget"]==lang || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
+        if (currentSetting["translateTarget"] == lang || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
           translatedText = "";
         }
 
@@ -11040,13 +11040,28 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       }
     });
   } else if (request.type === 'tts') {
-    //use tts on or activation key is pressed
+    //if use_tts is on or activation key is pressed
     if (currentSetting["useTTS"] == "true" || request.keyDownList[currentSetting["keyDownTTS"]]) {
-      var soundUrl = "https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=UTF-8&tl=" + request.lang + "&q=" + encodeURIComponent(request.word);
-      if (currentAudio != null) {
+      if (currentAudio != null) { //stop current played tts
         currentAudio.pause();
       }
-      currentAudio = new Audio(soundUrl);
+      //split word in 200 length
+      //play 200 leng tts seqeuntly using ended callback
+      var splittedWord = request.word.match(/.{1,200}/g); //split word in 200length
+      var prevAudio = null;
+      splittedWord.forEach(function(value, i) {
+        var soundUrl = "https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=UTF-8&tl=" + request.lang + "&q=" + encodeURIComponent(value);
+        var audio = new Audio(soundUrl);
+        if (i == 0) {
+          currentAudio = audio;
+        } else {
+          prevAudio.addEventListener("ended", function() {
+            currentAudio = audio;
+            currentAudio.play();
+          });
+        }
+        prevAudio = audio;
+      });
       currentAudio.play();
     }
     sendResponse({});
@@ -11076,6 +11091,7 @@ function saveSetting(options) {
     currentSetting = options;
   });
 }
+
 
 loadSetting();
 

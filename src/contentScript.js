@@ -28,6 +28,7 @@ window.onmousemove = function(event) {
     document.documentElement.scrollLeft :
     document.body.scrollLeft);
   clientTarget = event.target;
+  setTooltipPosition();
 }
 
 //use key down for enable translation partially
@@ -36,20 +37,28 @@ var keyDownList = { //ctrl, shift, alt
   16: false,
   18: false
 };
-document.addEventListener("keydown", event => {
+document.addEventListener("visibilitychange", function() { //detect tab swtich to turn off key down
+  keyDownList = {
+    17: false,
+    16: false,
+    18: false
+  };
+})
+$(document).keydown(function(e) {
   for (var key in keyDownList) {
-    if (event.keyCode == key.toString()) {
+    if (e.which == key.toString()) {
       keyDownList[key] = true;
     }
   }
-});
-document.addEventListener("keyup", event => {
+})
+$(document).keyup(function(e) {
   for (var key in keyDownList) {
-    if (event.keyCode == key.toString()) {
+    if (e.which == key.toString()) {
       keyDownList[key] = false;
     }
   }
-});
+})
+
 
 //tooltip core======================================================================
 
@@ -95,40 +104,44 @@ setInterval(function() {
     $('#bubble').attr('data-original-title', "");
     $('#bubble').tooltip("hide");
   }
+  setTooltipPosition();
 }, 700);
 
-//tooltip: mouse move
-setInterval(function() {
+
+function setTooltipPosition() {
   if (activatedWord != null) {
     $('#bubble').css('left', clientXScroll).css('top', clientYScroll);
     $("#bubble").tooltip("show");
   }
-}, 10);
+}
+
 
 
 //tooltip: init
 $(document).ready(function() {
-  var bubble = document.createElement('div');
-  bubble.id = 'bubble';
-  bubble.style.position = "absolute";
-  bubble.style.visibility = "visible";
-  bubble.className = 'bootstrapiso';
-  document.body.appendChild(bubble);
+  $('<div/>', {
+    id: 'bubble',
+    class: 'bootstrapiso',
+    css: {
+      "position": "absolute",
+      "visibility": "visiable",
+      "width": "200px",
+      "top": "50%",
+      "left": "50%",
+      "margin-left": "-100px" /* Negative half of width. */
+    }
+  }).appendTo(document.body);
 
   $('#bubble').tooltip({
     placement: "top",
-    //container: "#bubble"
-  })
-
-  // $('#bubble').on('show.bs.tooltip', function() {
-  //   $($(this).data('bs.tooltip').tip).addClass('bootstrapiso');
-  // });
+    container: "#bubble",
+    animation: false
+  });
 });
 
 
 
 //send background.js ===========================================================================
-
 function tts(word, lang) {
   chrome.runtime.sendMessage({
       type: 'tts',
@@ -152,3 +165,11 @@ function translateSentence(word, sourceLang, targetLang, callbackFunc) {
     }
   );
 }
+
+
+
+//todo
+//support pdf
+//support tts long sentence
+//fix tooltip display error
+//fix key hold error
