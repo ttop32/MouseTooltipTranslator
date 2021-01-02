@@ -5,9 +5,9 @@
 //for setting, it save and load from chrome storage
 //for translation, it uses ajax to get translated  result
 
-var $ = require("jquery");
-window.$ = $;
 
+//tooltip background===========================================================================
+import $ from "jquery";
 var currentSetting = {};
 var defaultList = {
   "useTooltip": "true",
@@ -94,6 +94,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 
+function saveSetting(options) {
+  chrome.storage.local.set(options, function() {
+    currentSetting = options;
+  });
+}
 
 function loadSetting() {
   var keys = Object.keys(defaultList);
@@ -105,12 +110,4 @@ function loadSetting() {
     }
   });
 }
-
-function saveSetting(options) {
-  chrome.storage.local.set(options, function() {
-    currentSetting = options;
-  });
-}
-
-
 loadSetting();

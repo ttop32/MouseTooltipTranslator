@@ -1,12 +1,9 @@
 'use strict';
 
-import './popup.css';
-
-
 //interact user setting
 //save and load setting from background.js
 
-
+import './popup.css';
 
 var langList = {
   'afrikaans': 'af',
@@ -126,9 +123,6 @@ var keyList = {
   "Alt": 18,
   "Shift": 16
 };
-
-
-
 var settingList = {
   "useTooltip": {
     "description": "Enable tooltip",
@@ -155,16 +149,11 @@ var settingList = {
     "optionList": keyList
   }
 }
-
-
-
-
-
-
-
-
-
 var selectedList = {};
+
+
+
+
 
 function loadSettingHtml() {
   //create optionlist
