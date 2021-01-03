@@ -31,15 +31,15 @@ npm run build
 - It does not share any user data with any other third parties.   
 
 # Acknowledgement and References  
-- [TransOver](https://github.com/artemave/translate_onhover)    
-- [Cool Tooltip Dictionary 14](https://github.com/yakolla/HoveringDictionary)    
-- [Google Dictionary (by Google)](https://chrome.google.com/webstore/detail/google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja?hl=en)   
-- [Chrome Extension CLI](https://www.npmjs.com/package/chrome-extension-cli)    
-- [bootstrap](https://www.npmjs.com/package/bootstrap)    
+- [TransOver](https://github.com/artemave/translate_onhover)     
+- [Cool Tooltip Dictionary 14](https://github.com/yakolla/HoveringDictionary)     
+- [Google Dictionary (by Google)](https://chrome.google.com/webstore/detail/google-dictionary-by-goog/mgijmajocgfcbeboacabfgobmjgjcoja?hl=en)     
+- [Chrome Extension CLI](https://www.npmjs.com/package/chrome-extension-cli)     
 - [jquery](https://www.npmjs.com/package/jquery)    
-- [Isolate-Bootstrap](https://github.com/cryptoapi/Isolate-Bootstrap-4.1-CSS-Themes)
-- [mouse pointer](https://www.flaticon.com/free-icon/mouse-pointer_889858?term=mouse&page=1&position=34&related_item_id=889858)
-- [pdf.js](https://mozilla.github.io/pdf.js/)
-- [Read Aloud]( https://github.com/ken107/read-aloud)
+- [bootstrap](https://www.npmjs.com/package/bootstrap)     
+- [Isolate-Bootstrap](https://github.com/cryptoapi/Isolate-Bootstrap-4.1-CSS-Themes)    
+- [mouse pointer](https://www.flaticon.com/free-icon/mouse-pointer_889858?term=mouse&page=1&position=34&related_item_id=889858)    
+- [pdf.js](https://mozilla.github.io/pdf.js/)    
+- [Read Aloud]( https://github.com/ken107/read-aloud)     
 
 
