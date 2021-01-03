@@ -17,6 +17,7 @@ npm install -g chrome-extension-cli
 npm i jquery --save   
 npm i popper.js --save     
 npm i bootstrap --save    
+npm i is-url --save    
 
 
 # Run watch   
