@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.3",
+    "is-url": "^1.2.4",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1"
   }

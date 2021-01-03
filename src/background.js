@@ -1,13 +1,18 @@
 'use strict';
 
-//handle translation and setting
+//handle translation, setting and pdf
 //it communicate with popup.js(for setting) and contentScript.js(for translattion)
 //for setting, it save and load from chrome storage
 //for translation, it uses ajax to get translated  result
-
+//for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
 import $ from "jquery";
+var isUrl = require('is-url');
+
+
+
+
 var currentSetting = {};
 var defaultList = {
   "useTooltip": "true",
@@ -37,16 +42,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
           })
         }
-        var lang = null;
-        if (data.src) {
-          var lang = data.src;
-        }
+        var lang = (data.src) ? data.src : null; //if data.src is exist, give data.src
+
+        //if word is url
         //if source lang is equal to target lang
-        //if tooltip is not on and activation key is not pressed,  clear translation
-        if (currentSetting["translateTarget"] == lang || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
+        //if tooltip is not on and activation key is not pressed,
+        //then, clear translation
+        if (isUrl(request.word) || currentSetting["translateTarget"] == lang || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
           translatedText = "";
         }
-
         sendResponse({
           "translatedText": translatedText,
           "lang": lang
@@ -103,7 +107,7 @@ function saveSetting(options) {
 function loadSetting() {
   var keys = Object.keys(defaultList);
   chrome.storage.local.get(keys, function(options) {
-    if (!options["useTooltip"]) {
+    if (!options["useTooltip"]) { //if no save data exist, load default
       currentSetting = defaultList
     } else {
       currentSetting = options;
@@ -111,3 +115,21 @@ function loadSetting() {
   });
 }
 loadSetting();
+
+
+
+
+////intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
+chrome.webRequest.onBeforeRequest.addListener(function({
+  url,
+  method
+}) {
+  if (/\.pdf$/i.test(url)) { // if the resource is a PDF file ends with ".pdf"
+    return {
+      redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url) //url
+    };
+  }
+}, {
+  urls: ['*://*/*.pdf', '*://*/*.PDF', "file:///*/*.pdf", "file:///*/*.PDF"],
+  types: ['main_frame']
+}, ['blocking']);

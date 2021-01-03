@@ -1,7 +1,7 @@
 {
   "name": "Mouse Tooltip Translator",
   "description": "Mouse over to translate",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
@@ -9,13 +9,15 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking"],
+  "web_accessible_resources": ["pdfjs/web/viewer.html"],
+
+
 
 
 
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "scripts": ["background.js"]
   },
   "browser_action": {
     "default_title": "Mouse Tooltip Translator",
