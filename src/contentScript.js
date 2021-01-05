@@ -19,6 +19,7 @@ var clientY = 0;
 var clientXScroll = 0;
 var clientYScroll = 0;
 var activatedWord = null;
+var translatedSentenceLen = 0;
 var keyDownList = { //use key down for enable translation partially
   17: false, //ctrl
   16: false, //shift
@@ -55,8 +56,6 @@ $(document).keyup(function(e) {
 })
 
 
-
-
 //tooltip core======================================================================
 //tooltip: init
 $(document).ready(function() {
@@ -74,8 +73,7 @@ $(document).ready(function() {
 
   $('#mttContainer').tooltip({
     placement: "top",
-    container: "#mttContainer",
-    animation: false
+    container: "#mttContainer"
   });
 });
 
@@ -83,27 +81,25 @@ $(document).ready(function() {
 setInterval(function() {
   var word = getMouseOverWord(clientX, clientY);
 
-  if (word != null && word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
+  if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
     translateSentence(word, "auto", "ko", function(translatedSentence, lang) {
-      if (translatedSentence.length != 0) { // only show tooltip when word lang is not user lang
-        $('#mttContainer').attr('data-original-title', translatedSentence);
-        tts(word, lang);
-      } else {
-        $('#mttContainer').attr('data-original-title', "");
-        $('#mttContainer').tooltip("hide");
-      }
+      $('#mttContainer').attr('data-original-title', translatedSentence);
       activatedWord = word;
+      translatedSentenceLen = translatedSentence.length;
+      setTooltipPosition();
+      if (translatedSentenceLen == 0) { //if no translated text given( when it is off), hide
+        $("#mttContainer").tooltip("hide");
+      }
+      tts(word, lang);
     });
-  } else if ((word == null || word.length == 0) && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
+  } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
     activatedWord = null;
-    $('#mttContainer').attr('data-original-title', "");
     $('#mttContainer').tooltip("hide");
   }
-  setTooltipPosition(); //tooltip movement
 }, 700);
 
 function setTooltipPosition() {
-  if (activatedWord != null) {
+  if (activatedWord != null && translatedSentenceLen != 0) {
     $('#mttContainer').css('left', clientXScroll).css('top', clientYScroll);
     $("#mttContainer").tooltip("show");
   }
@@ -112,13 +108,15 @@ function setTooltipPosition() {
 function getMouseOverWord(clientX, clientY) {
   var range = document.caretRangeFromPoint(clientX, clientY);
   //if no range or is not text, give null
-  if (range == null || range.startContainer == null || range.startContainer.nodeType !== Node.TEXT_NODE)
-    return null;
+  if (range == null || range.startContainer == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
+    return "";
+  }
+
   range.expand('sentence'); //range.expand('word');
   var rect = range.getBoundingClientRect(); //mouse in word rect
   if (rect.left > clientX || rect.right < clientX ||
     rect.top > clientY || rect.bottom < clientY) {
-    return null;
+    return "";
   }
   return range.toString();
 }
@@ -151,7 +149,3 @@ function tts(word, lang) {
     function(data) {}
   );
 }
-
-//support pdf tooltip translation using Mozilla PDF.js
-//increase tooltip margin
-//prevent translation on url text
