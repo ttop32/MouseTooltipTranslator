@@ -3,7 +3,7 @@
 //interact user setting
 //save and load setting from background.js
 
-import './popup.css';
+
 
 var langList = {
   'afrikaans': 'af',

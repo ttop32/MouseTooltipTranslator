@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
   } else if (request.type === 'tts') {
     //if use_tts is on or activation key is pressed
-    if (currentSetting["useTTS"] == "true" || request.keyDownList[currentSetting["keyDownTTS"]]) {
+    if (currentSetting["translateTarget"] != request.lang && (currentSetting["useTTS"] == "true" || request.keyDownList[currentSetting["keyDownTTS"]])) {
       if (currentAudio != null) { //stop current played tts
         currentAudio.pause();
       }
@@ -107,16 +107,16 @@ function saveSetting(options) {
 function loadSetting() {
   var keys = Object.keys(defaultList);
   chrome.storage.local.get(keys, function(options) {
-    if (!options["useTooltip"]) { //if no save data exist, load default
-      currentSetting = defaultList
-    } else {
-      currentSetting = options;
+    for (var key in defaultList) {
+      if (!options[key]) {
+        currentSetting[key] = defaultList[key];
+      } else {
+        currentSetting[key] = options[key];
+      }
     }
   });
 }
 loadSetting();
-
-
 
 
 ////intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
