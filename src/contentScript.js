@@ -1,7 +1,7 @@
 'use strict';
 //inject translation tooltip based on user text hover event
 //it gets translation and tts from background.js
-
+//and also it handle pdf line break when current url is pdf url
 
 
 
@@ -148,4 +148,43 @@ function tts(word, lang) {
     },
     function(data) {}
   );
+}
+
+
+
+
+//pdf.js does not support new line, we need to add line break to show tooltip correctly
+//pdf add line break space ===========================================================================
+if (/\.pdf$/i.test(document.URL)) { //if current url is pdf
+  document.addEventListener("webviewerloaded", function() {
+    PDFViewerApplication.initializedPromise.then(function() {
+      PDFViewerApplication.eventBus.on("documentloaded", function(event) { //when pdf loaded
+        window.PDFViewerApplication.eventBus.on('textlayerrendered', function pagechange(evt) { //when textlayerloaded
+
+          var lastY;
+          var lastItem;
+          $(".page span").each(function(index, item) { //for each span in page, iterate to give line break based on y pos
+            var currentY = parseFloat($(this).css("top"));
+            var currentFontSize = parseFloat($(this).css("font-size"));
+
+            if (index === 0) { //skip first index
+
+            } else {
+              if (lastY < currentY - currentFontSize * 2 || currentY + currentFontSize * 2 < lastY) { //if y diff double, give end line
+                if (!(/\n $/.test($(lastItem).text()))) { //if no end line, give end line
+                  $(lastItem).text($(lastItem).text() + "\n ");
+                }
+              } else if (lastY < currentY - currentFontSize || currentY + currentFontSize < lastY) { // if y diff, give end space
+                if (!(/ $/.test($(lastItem).text()))) { //if no end space, give end space
+                  $(lastItem).text($(lastItem).text() + " ");
+                }
+              }
+            }
+            lastY = currentY
+            lastItem = item;
+          })
+        })
+      });
+    });
+  });
 }
