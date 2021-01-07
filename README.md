@@ -42,5 +42,6 @@ npm run build
 - [mouse pointer](https://www.flaticon.com/free-icon/mouse-pointer_889858?term=mouse&page=1&position=34&related_item_id=889858)    
 - [pdf.js](https://mozilla.github.io/pdf.js/)    
 - [Read Aloud]( https://github.com/ken107/read-aloud)     
+- [miricanvas](https://www.miricanvas.com/)
 
 
