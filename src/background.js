@@ -9,7 +9,7 @@
 //tooltip background===========================================================================
 import $ from "jquery";
 var isUrl = require('is-url');
-
+//import Tesseract from 'tesseract.js';
 
 
 
@@ -94,13 +94,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   } else if (request.type === 'loadSetting') {
     sendResponse(currentSetting);
   }
+
   return true;
 });
 
 
 function saveSetting(options) {
-  chrome.storage.local.set(options, function() {
-    currentSetting = options;
+  chrome.storage.local.set(request.options, function() {
+    currentSetting = request.options;
   });
 }
 
@@ -118,8 +119,29 @@ function loadSetting() {
 }
 loadSetting();
 
+// //intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
+// for online pdf url
+chrome.webRequest.onHeadersReceived.addListener(({
+  url,
+  method,
+  responseHeaders
+}) => {
+  const header = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
+  if (header) {
+    const headerValue = header.value.toLowerCase().split(';', 1)[0].trim();
+    if (headerValue === 'application/pdf') {
+      return {
+        redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
+      }
+    }
+  }
+}, {
+  urls: ['<all_urls>'],
+  types: ['main_frame', "sub_frame"]
+}, ['blocking', 'responseHeaders']);
 
-////intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
+
+//for local pdf url
 chrome.webRequest.onBeforeRequest.addListener(function({
   url,
   method
@@ -130,6 +152,6 @@ chrome.webRequest.onBeforeRequest.addListener(function({
     };
   }
 }, {
-  urls: ['*://*/*.pdf', '*://*/*.PDF', "file:///*/*.pdf", "file:///*/*.PDF"],
+  urls: ["file:///*/*.pdf", "file:///*/*.PDF"],
   types: ['main_frame']
 }, ['blocking']);
