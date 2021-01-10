@@ -40,7 +40,11 @@ document.addEventListener("visibilitychange", function() { //detect tab swtich t
 $(document).keydown(function(e) {
   for (var key in keyDownList) {
     if (e.which == key.toString()) {
-      keyDownList[key] = true;
+      if( keyDownList[key]==false){     //run tooltip again with keydown on
+        keyDownList[key] = true;
+        activatedWord=null;
+        determineTooltipShowHide();
+      }
     }
   }
 })
@@ -78,6 +82,12 @@ $(document).ready(function() {
 
 //tooltip: word detection, show & hide
 setInterval(function() {
+  determineTooltipShowHide();
+}, 700);
+
+
+
+function determineTooltipShowHide(){
   var word = getMouseOverWord(clientX, clientY);
 
   if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
@@ -95,7 +105,7 @@ setInterval(function() {
     activatedWord = null;
     $('#mttContainer').tooltip("hide");
   }
-}, 700);
+}
 
 function setTooltipPosition() {
   if (activatedWord != null && translatedSentenceLen != 0) {

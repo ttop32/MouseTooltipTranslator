@@ -90,7 +90,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     sendResponse({});
   } else if (request.type === 'saveSetting') {
-    saveSetting(request.options);
+    chrome.storage.local.set(request.options, function() {
+      currentSetting = request.options;
+    });
   } else if (request.type === 'loadSetting') {
     sendResponse(currentSetting);
   }
@@ -98,12 +100,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   return true;
 });
 
-
-function saveSetting(options) {
-  chrome.storage.local.set(request.options, function() {
-    currentSetting = request.options;
-  });
-}
 
 function loadSetting() {
   var keys = Object.keys(defaultList);
