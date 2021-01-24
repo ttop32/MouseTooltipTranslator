@@ -1,7 +1,7 @@
 {
   "name": "Mouse Tooltip Translator",
-  "description": "Mouseover translation - Mouse over to translate",
-  "version": "0.1.6",
+  "description": "Mouseover translation - Mouse over to translate using google translate",
+  "version": "0.1.7",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
@@ -11,11 +11,13 @@
   },
   "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking"],
   "web_accessible_resources": ["pdfjs/web/viewer.html"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval';  object-src 'none'",
+
 
 
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["tesseract/tesseract.min.js", "opencv/opencv.js", "background.js"]
   },
   "browser_action": {
     "default_title": "Mouse Tooltip Translator",
