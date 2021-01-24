@@ -10,8 +10,11 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 ![result](doc/screenshot_4.png)    
 
 # Features   
-- using google translate to translate in any language    
-- google tts (text to speech) is available to use in the setting    
+- Visualise tooltip on any web page (except chrome web store site)
+- Using google translate to translate in any language
+- In the setting, google tts (text to speech) is available to listen text
+- Support pdf to display translated tooltip using Mozilla PDF.js
+- Filter out when source language and target language are same
 
 # Required environment to run    
 npm install -g chrome-extension-cli      
@@ -43,5 +46,10 @@ npm run build
 - [pdf.js](https://mozilla.github.io/pdf.js/)    
 - [Read Aloud]( https://github.com/ken107/read-aloud)     
 - [miricanvas](https://www.miricanvas.com/)
+- [opencv.js](https://docs.opencv.org/4.5.1/df/df7/tutorial_js_table_of_contents_setup.html)
+- [tesseract.js](https://github.com/naptha/tesseract.js)
+- [PDF Reader](https://github.com/Emano-Waldeck/pdf-reader)
+
+
 
 
