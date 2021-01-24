@@ -1777,7 +1777,41 @@ const PDFViewerApplication = {
 
 };
 exports.PDFViewerApplication = PDFViewerApplication;
+let validateFileURL;
+{
+  const HOSTED_VIEWER_ORIGINS = ["null", "http://mozilla.github.io", "https://mozilla.github.io"];
 
+  validateFileURL = function (file) {
+    if (file === undefined) {
+      return;
+    }
+
+    try {
+      const viewerOrigin = new URL(window.location.href).origin || "null";
+
+      if (HOSTED_VIEWER_ORIGINS.includes(viewerOrigin)) {
+        return;
+      }
+
+      const {
+        origin,
+        protocol
+      } = new URL(file, window.location.href);
+
+      if (origin !== viewerOrigin && protocol !== "blob:") {
+        throw new Error("file origin does not match viewer's");
+      }
+    } catch (ex) {
+      const message = ex && ex.message;
+      PDFViewerApplication.l10n.get("loading_error", null, "An error occurred while loading the PDF.").then(loadingErrorMessage => {
+        PDFViewerApplication.error(loadingErrorMessage, {
+          message
+        });
+      });
+      throw ex;
+    }
+  };
+}
 
 async function loadFakeWorker() {
   if (!_pdfjsLib.GlobalWorkerOptions.workerSrc) {
@@ -1803,6 +1837,7 @@ function webViewerInitialized() {
   const queryString = document.location.search.substring(1);
   const params = (0, _ui_utils.parseQueryString)(queryString);
   file = "file" in params ? params.file : _app_options.AppOptions.get("defaultUrl");
+  //validateFileURL(file);
   const fileInput = document.createElement("input");
   fileInput.id = appConfig.openFileInputName;
   fileInput.className = "fileInput";
