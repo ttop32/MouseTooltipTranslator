@@ -1,6 +1,6 @@
 # MouseTooltipTranslator   
-Mouse over to translate.   
-When mouse hover on text, it shows translated tooltip in any desired language.   
+Mouseover translation - Mouse over to translate using google translate        
+When mouse hover on text, it shows translated tooltip in any desired language.      
 download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc?hl=en)   
 
 # Result   
@@ -10,12 +10,13 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 ![result](doc/screenshot_4.png)    
 
 # Features   
-- Visualise tooltip on any web page (except chrome web store site)
-- Using google translate to translate in any language
-- In the setting, google tts (text to speech) is available to listen text
-- Support pdf to display translated tooltip using Mozilla PDF.js
-- Filter out when source language and target language are same
-
+- Visualise tooltip on any web page (except chrome web store site)  
+- Using google translate to translate in any language   
+- In the setting, google tts (text to speech) is available to listen text   
+- Support pdf to display translated tooltip using Mozilla PDF.js   
+- Filter out when source language and target language are same    
+- (Experimental feature) show comic bubble translation when mouse over on comic bubble background      
+  
 # Required environment to run    
 npm install -g chrome-extension-cli      
 npm i jquery --save   
