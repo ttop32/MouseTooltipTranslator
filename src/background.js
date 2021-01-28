@@ -131,41 +131,47 @@ loadSetting();
 
 // ocr ===========================================================
 var ocrSchedulerList = {};
-var previouseText = "";
-var previouseMainUrl = "";
-var previouseCanvasSrc = document.createElement("canvas");
-var previouseCanvasCropped = document.createElement("canvas");
-
-function doOcr(request, sendResponse) {
-  var image = new Image(); //image get
-  image.onload = async function() { //load image
-    //load canvas if mainurl diff
-    if (request.mainUrl != previouseMainUrl) { //load canvas
-      var currentCanvas = imageToCanvas(image);
-    } else {
-      var currentCanvas = previouseCanvasSrc;
-    }
-    previouseCanvasSrc = imageToCanvas(currentCanvas); //memorise
-    previouseMainUrl = request.mainUrl;
-    var croppedImage = await cropText(image, request.px, request.py); //crop image using opencv to only get mouse pointed area
+var recentText = "";
+var recentMainUrl = "";
+var recentLang = "";
+var recentImage = document.createElement("canvas");
+var recentCanvasCropped = document.createElement("canvas");
 
 
-    if (isMatch(croppedImage, previouseCanvasCropped)) { //if same as previouse image, skip ocr
-      var currentText = previouseText;
-    } else {
-      var currentText = await useTesseract(croppedImage);
-      previouseCanvasCropped = imageToCanvas(croppedImage);
-      previouseText = currentText;
-    }
-    sendResponse({
-      "text": currentText,
-      "mainUrl": request.mainUrl,
-      "time": request.time
-      // "crop": croppedImage.toDataURL()
-    });
+async function doOcr(request, sendResponse) {
+  if (request.mainUrl != recentMainUrl) { // load image if mainurl diff
+    recentImage = await loadImage(request.mainUrl);
+    recentMainUrl = request.mainUrl;
   }
-  image.src = request.mainUrl;
+
+  var croppedImage = await cropText(recentImage, request.px, request.py); //crop image using opencv to only get mouse pointed area
+
+  //if same as previouse image and same lang, skip ocr
+  if (isMatch(croppedImage, recentCanvasCropped) && recentLang == currentSetting["ocrDetectionLang"]) {
+    var currentText = recentText;
+  } else {
+    var currentText = await useTesseract(croppedImage);
+    recentCanvasCropped = croppedImage;
+    recentText = currentText;
+    recentLang = currentSetting["ocrDetectionLang"];
+  }
+  sendResponse({
+    "text": currentText,
+    "mainUrl": request.mainUrl,
+    "time": request.time
+    // "crop": croppedImage.toDataURL()
+  });
 }
+
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    var image = new Image(); //image get
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = url;
+  });
+}
+
 
 //use paint bucket brush method to
 //fill mouse positioned bubble background
@@ -179,26 +185,21 @@ function cropText(img, x, y) {
 
     //preprocessing, make gray
     cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
-    cv.threshold(gray, gray, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU);
-    // let M = cv.Mat.ones(3, 3, cv.CV_8U);
-    //cv.erode(gray, gray, M);
-    //cv.dilate(gray, gray, M);
 
     //paint bubble background
     let maskBubble = new cv.Mat(gray.rows + 2, gray.cols + 2, cv.CV_8U, [0, 0, 0, 0])
     cv.floodFill(gray, maskBubble, {
       x: x,
       y: y
-    }, [130, 128, 0, 255], {}, [0, 0, 0, 0], [0, 0, 0, 0], 4 | (255 << 8));
+    }, [130, 128, 0, 255], {}, [5, 5, 5, 5], [5, 5, 5, 5], 4 | (255 << 8));
     cv.threshold(maskBubble, maskBubble, 50, 255, cv.THRESH_BINARY) //use floolfill border as empty space
-
 
     //get only bubble inside area, (paint bubble outside and get inside using inverse
     let maskOutside = new cv.Mat(maskBubble.rows + 2, maskBubble.cols + 2, cv.CV_8U, [0, 0, 0, 0])
     cv.floodFill(maskBubble, maskOutside, {
       x: 1,
       y: 1
-    }, [0, 0, 0, 0], {}, [0, 0, 0, 0], [0, 0, 0, 0], 4 | (255 << 8));
+    }, [255, 255, 255, 255], {}, [0, 0, 0, 0], [0, 0, 0, 0], 4 | (255 << 8));
     maskOutside = maskOutside.roi(new cv.Rect(2, 2, maskOutside.cols - 4, maskOutside.rows - 4)); //previous two flood fill expand border, shrink it
     cv.bitwise_not(maskOutside, maskInside); //src,dst
 
@@ -206,6 +207,26 @@ function cropText(img, x, y) {
     src.copyTo(segmentedImg, maskInside); //dst, mask     //show only masked area
     let cropTextImg = segmentedImg.roi(cv.boundingRect(maskInside)); //crop to fit masked area
 
+    // // crop without background bubble
+    // //text crop
+    // let maskBubbleInside = new cv.Mat();
+    // let bubbleInside = new cv.Mat();
+    // maskBubble = maskBubble.roi(new cv.Rect(1, 1, maskBubble.cols - 2, maskBubble.rows - 2)); //previous two flood fill expand border, shrink it
+    // cv.bitwise_not(maskBubble, maskBubbleInside); //src,dst
+    // src.copyTo(bubbleInside, maskBubbleInside); //dst, mask     //show only masked area
+    // //give bound
+    // var rect = cv.boundingRect(maskBubbleInside);
+    // rect.x = Math.max(rect.x - 15, 0);
+    // rect.y = Math.max(rect.y - 15, 0);
+    // rect.width = Math.min(rect.width + 30, bubbleInside.rows - 1);
+    // rect.height = Math.min(rect.height + 30, bubbleInside.cols - 1);
+    // //white background
+    // bubbleInside = bubbleInside.roi(rect); //crop to fit masked area
+    // let gray2 = new cv.Mat();
+    // let gray3 = new cv.Mat();
+    // var maskOutsideCropped = maskBubble.roi(rect);
+    // cv.cvtColor(bubbleInside, gray2, cv.COLOR_RGBA2GRAY, 0);
+    // cv.add(gray2, maskOutsideCropped, gray3);
 
     let canvas = document.createElement("canvas");
     cv.imshow(canvas, cropTextImg);
@@ -238,12 +259,22 @@ function useTesseract(image) {
     }
 
     // var start = Math.floor(Date.now() / 1000);
-    if (ocrSchedulerList[currentSetting["ocrDetectionLang"]].getNumWorkers() < 3) { //if no worker, create worker
-      var worker1 = Tesseract.createWorker({
-        "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
-        "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
-        "langPath": "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast" //3.02,4.0.0_fast,4.0.0, 4.0.0_best //https://github.com/naptha/tessdata
-      });
+    if (ocrSchedulerList[currentSetting["ocrDetectionLang"]].getNumWorkers() < 2) { //if no worker, create worker
+      if (currentSetting["ocrDetectionLang"] == "jpn_vert") {
+        var worker1 = Tesseract.createWorker({
+          "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
+          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
+          "langPath": chrome.runtime.getURL("/traindata"), //https://github.com/zodiac3539/jpn_vert
+          "gzip": false
+        });
+      } else {
+        var worker1 = Tesseract.createWorker({
+          "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
+          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
+          "langPath": "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast" //3.02,4.0.0_fast,4.0.0, 4.0.0_best //https://github.com/naptha/tessdata
+        });
+      }
+
       await worker1.load();
       await worker1.loadLanguage(currentSetting["ocrDetectionLang"]);
       await worker1.initialize(currentSetting["ocrDetectionLang"]);
@@ -254,11 +285,13 @@ function useTesseract(image) {
       });
       ocrSchedulerList[currentSetting["ocrDetectionLang"]].addWorker(worker1);
     }
-    const {
+    var {
       data: {
         text
       }
     } = await ocrSchedulerList[currentSetting["ocrDetectionLang"]].addJob('recognize', image); //do ocr
+    text = text.replace(/[`~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove speical char
+
     // var end = Math.floor(Date.now() / 1000);
     // console.log("time taken" + (end - start));
     // console.log(text);
@@ -266,11 +299,6 @@ function useTesseract(image) {
   });
 }
 
-function imageToCanvas(image) {
-  let canvas = document.createElement("canvas");
-  canvas.getContext('2d').drawImage(image, 0, 0);
-  return canvas;
-}
 
 // intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
 // for online pdf url

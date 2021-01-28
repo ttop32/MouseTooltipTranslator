@@ -14,7 +14,7 @@ var clientX = 0;
 var clientY = 0;
 var mouseTarget = null;
 var activatedWord = null;
-var translatedSentenceLen = 0;
+var hasTranslation = false;
 var keyDownList = { //use key down for enable translation partially
   17: false, //ctrl
   16: false, //shift
@@ -30,7 +30,7 @@ $(document).mousemove(function(event) {
 });
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
-    translatedSentenceLen = 0;
+    hasTranslation = false;
     $('#mttContainer').tooltip("hide");
   } else {
     for (var key in keyDownList) { // check activation hold key pressed and record
@@ -49,10 +49,12 @@ $(document).keyup(function(e) {
   }
 });
 document.addEventListener("visibilitychange", function() { //detect tab swtich to turn off key down
-  for (var key in keyDownList) { //reset key press when swtich
-    keyDownList[key] = false;
+  if (document.visibilityState === "hidden") {
+    for (var key in keyDownList) { //reset key press when swtich
+      keyDownList[key] = false;
+    }
+    stopTTS(); //stop tts when tab swtiching
   }
-  stopTTS(); //stop tts when tab swtiching
 });
 
 //tooltip core======================================================================
@@ -82,17 +84,17 @@ $(document).ready(function() {
 setInterval(function() {
   if (document.visibilityState == "visible") { //only work when tab is activated
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
-    if(word.length>1000){
-      word="";
+    if (word.length > 1000) {
+      word = "";
     }
 
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
       translateSentence(word, "auto", "ko", function(translatedSentence, lang) {
         $('#mttContainer').attr('data-original-title', translatedSentence);
         activatedWord = word;
-        translatedSentenceLen = translatedSentence.length;
+        hasTranslation = translatedSentence.length > 0 ? true : false;
         setTooltipPosition();
-        if (translatedSentenceLen == 0) { //if no translated text given( when it is off), hide
+        if (hasTranslation == false) { //if no translated text given( when it is off), hide
           $("#mttContainer").tooltip("hide");
         }
         tts(word, lang);
@@ -105,9 +107,8 @@ setInterval(function() {
 }, 700);
 
 
-
 function setTooltipPosition() {
-  if (activatedWord != null && translatedSentenceLen != 0) {
+  if (activatedWord != null && hasTranslation) {
     $('#mttContainer').css({
       "left": clientX,
       "top": clientY
@@ -207,7 +208,6 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
     mouseTarget.complete && mouseTarget.naturalHeight !== 0) { //if image is loaded
 
     if (currentImgCheckClientX != clientX || currentImgCheckClientY != clientY) { //if mouse move, do ocr using background js
-      console.log("hh");
       //mouse position on image width height
       var bounds = mouseTarget.getBoundingClientRect();
       var x = clientX - bounds.left;
@@ -253,6 +253,5 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
       return currentImageOcrData;
     }
   }
-
   return null
 }
