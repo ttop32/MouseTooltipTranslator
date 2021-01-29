@@ -50,6 +50,8 @@ npm run build
 - [opencv.js](https://docs.opencv.org/4.5.1/df/df7/tutorial_js_table_of_contents_setup.html)
 - [tesseract.js](https://github.com/naptha/tesseract.js)
 - [PDF Reader](https://github.com/Emano-Waldeck/pdf-reader)
+- [jpn_vert](https://github.com/zodiac3539/jpn_vert)
+
 
 
 
