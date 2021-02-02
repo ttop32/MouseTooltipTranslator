@@ -1,14 +1,16 @@
 'use strict';
 
 //handle translation, setting and pdf
-//it communicate with popup.js(for setting) and contentScript.js(for translattion)
+//it communicate with popup.js(for setting) and contentScript.js(for translattion,tts and ocr)
 //for setting, it save and load from chrome storage
 //for translation, it uses ajax to get translated  result
+//for ocr, it get image src and return text
 //for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
 import $ from "jquery";
 var isUrl = require('is-url');
+var loadScriptOnce = require('load-script-once');
 
 
 
@@ -45,18 +47,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
           })
         }
-        var lang = (data.src) ? data.src : null; //if data.src is exist, give data.src
 
         //if word is url
         //if source lang is equal to target lang
         //if tooltip is not on and activation key is not pressed,
         //then, clear translation
-        if (isUrl(request.word) || currentSetting["translateTarget"] == lang || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
+        if (isUrl(request.word) || currentSetting["translateTarget"] == data.src || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
           translatedText = "";
         }
         sendResponse({
           "translatedText": translatedText,
-          "lang": lang
+          "lang": data.src
         });
       },
       error: function(xhr, status, error) {
@@ -102,6 +103,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   } else if (request.type === 'saveSetting') {
     chrome.storage.local.set(request.options, function() {
       currentSetting = request.options;
+      loadOcrScript();
     });
   } else if (request.type === 'loadSetting') {
     loadSetting(sendResponse);
@@ -124,6 +126,7 @@ function loadSetting(callback) {
     if (typeof callback !== 'undefined') {
       callback(currentSetting);
     };
+    loadOcrScript();
   });
 }
 loadSetting();
@@ -131,14 +134,23 @@ loadSetting();
 
 // ocr ===========================================================
 var ocrSchedulerList = {};
-var recentText = "";
 var recentMainUrl = "";
+var recentText = "";
 var recentLang = "";
 var recentImage = document.createElement("canvas");
 var recentCanvasCropped = document.createElement("canvas");
 
+function loadOcrScript() {
+  if (currentSetting["useOCR"] == "true") {
+    loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js"));
+    loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
+  }
+}
 
 async function doOcr(request, sendResponse) {
+  await loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js")); //load script for ocr, if already loaded, it just go
+  await loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
+
   if (request.mainUrl != recentMainUrl) { // load image if mainurl diff
     recentImage = await loadImage(request.mainUrl);
     recentMainUrl = request.mainUrl;
@@ -158,8 +170,8 @@ async function doOcr(request, sendResponse) {
   sendResponse({
     "text": currentText,
     "mainUrl": request.mainUrl,
-    "time": request.time
-    // "crop": croppedImage.toDataURL()
+    "time": request.time,
+    "crop": "" //croppedImage.toDataURL()
   });
 }
 
@@ -290,7 +302,7 @@ function useTesseract(image) {
         text
       }
     } = await ocrSchedulerList[currentSetting["ocrDetectionLang"]].addJob('recognize', image); //do ocr
-    text = text.replace(/[`~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove speical char
+    text = text.replace(/[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove speical char
 
     // var end = Math.floor(Date.now() / 1000);
     // console.log("time taken" + (end - start));

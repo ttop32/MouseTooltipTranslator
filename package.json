@@ -21,6 +21,7 @@
     "bootstrap": "^4.5.3",
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
+    "load-script-once": "^2.0.1",
     "popper.js": "^1.16.1"
   }
 }
