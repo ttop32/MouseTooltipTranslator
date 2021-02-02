@@ -51,6 +51,7 @@ npm run build
 - [tesseract.js](https://github.com/naptha/tesseract.js)
 - [PDF Reader](https://github.com/Emano-Waldeck/pdf-reader)
 - [jpn_vert](https://github.com/zodiac3539/jpn_vert)
+- [bubble reader](https://m.blog.naver.com/PostView.nhn?blogId=waltherp38&logNo=221116037039&proxyReferer=https:%2F%2Fwww.google.com%2F)
 
 
 
