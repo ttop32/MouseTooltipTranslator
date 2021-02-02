@@ -23,6 +23,7 @@ npm i jquery --save
 npm i popper.js --save     
 npm i bootstrap --save    
 npm i is-url --save    
+npm i load-script-once --save       
 
 
 # Run watch   
