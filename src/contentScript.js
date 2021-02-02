@@ -4,12 +4,12 @@
 
 
 import $ from "jquery";
-require('popper.js');
-require('bootstrap');
+import 'bootstrap/js/dist/tooltip';
 
 
 //init environment======================================================================\
 var currentSetting = {};
+var tooltipContainer;
 var clientX = 0;
 var clientY = 0;
 var mouseTarget = null;
@@ -31,7 +31,7 @@ $(document).mousemove(function(event) {
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
     hasTranslation = false;
-    $('#mttContainer').tooltip("hide");
+    tooltipContainer.tooltip("hide");
   } else {
     for (var key in keyDownList) { // check activation hold key pressed and record
       if (e.which == key.toString() && keyDownList[key] == false) { //run tooltip again with keydown on
@@ -48,9 +48,9 @@ $(document).keyup(function(e) {
     }
   }
 });
-document.addEventListener("visibilitychange", function() { //detect tab swtich to turn off key down
+document.addEventListener("visibilitychange", function() { //detect tab switching to turn off key down
   if (document.visibilityState === "hidden") {
-    for (var key in keyDownList) { //reset key press when swtich
+    for (var key in keyDownList) { //reset key press when switching
       keyDownList[key] = false;
     }
     stopTTS(); //stop tts when tab swtiching
@@ -60,13 +60,14 @@ document.addEventListener("visibilitychange", function() { //detect tab swtich t
 //tooltip core======================================================================
 //tooltip: init
 $(document).ready(function() {
-  $(".dropdown-toggle").dropdown(); //if site has drop down run again
   getSetting(); //load setting from background js
 
   $('<div/>', {
     id: 'mttContainer',
-    class: 'bootstrapiso',
+    class: 'bootstrapiso', //apply bootstrap isolation css using bootstrapiso class
     css: {
+      "left": 0,
+      "top": 0,
       "position": "fixed",
       "z-index": "1070",
       "width": "200px",
@@ -74,9 +75,11 @@ $(document).ready(function() {
     }
   }).appendTo(document.body);
 
-  $('#mttContainer').tooltip({
+  tooltipContainer = $('#mttContainer');
+  tooltipContainer.tooltip({
     placement: "top",
-    container: "#mttContainer"
+    container: "#mttContainer",
+    trigger: "manual"
   });
 });
 
@@ -84,24 +87,26 @@ $(document).ready(function() {
 setInterval(function() {
   if (document.visibilityState == "visible") { //only work when tab is activated
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
-    if (word.length > 1000) {
+    if (word.length > 1000) { //filter out text that has over 1000length
       word = "";
     }
-
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
       translateSentence(word, "auto", "ko", function(translatedSentence, lang) {
-        $('#mttContainer').attr('data-original-title', translatedSentence);
+        tooltipContainer.attr('data-original-title', translatedSentence);
         activatedWord = word;
-        hasTranslation = translatedSentence.length > 0 ? true : false;
+        hasTranslation = translatedSentence.length > 0 ? true : false; //set true if there is translation
         setTooltipPosition();
-        if (hasTranslation == false) { //if no translated text given( when it is off), hide
-          $("#mttContainer").tooltip("hide");
-        }
         tts(word, lang);
+
+        if (hasTranslation == false) { //if no translated text given( when it is off), hide
+          tooltipContainer.tooltip("hide");
+        } else {
+          tooltipContainer.tooltip("show");
+        }
       });
     } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
       activatedWord = null;
-      $('#mttContainer').tooltip("hide");
+      tooltipContainer.tooltip("hide");
     }
   }
 }, 700);
@@ -109,11 +114,7 @@ setInterval(function() {
 
 function setTooltipPosition() {
   if (activatedWord != null && hasTranslation) {
-    $('#mttContainer').css({
-      "left": clientX,
-      "top": clientY
-    });
-    $("#mttContainer").tooltip("show");
+    tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
   }
 }
 
@@ -142,7 +143,7 @@ function getMouseOverWord(clientX, clientY) {
 
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, sourceLang, targetLang, callbackFunc) {
-  var word = word.replace(/\s+/g, ' ').trim(); //replace whitespace
+  var word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
   chrome.runtime.sendMessage({
       type: 'translate',
       word: word,
@@ -191,7 +192,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { //update cur
 
 
 //ocr==================================================================================
-var currentImageOcrData = null; //text
+var currentImgOcrData = null; //text
 var currentImgCheckClientX = 0;
 var currentImgCheckClientY = 0;
 var currentImgCheckTimeSend = 0;
@@ -219,7 +220,7 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
       var currentTime = Date.now(); //current sending time
       currentImgCheckTimeSend = currentTime;
       if (mouseTarget.src != currentImgCheckMainUrl) { //reset ocr data if new image
-        currentImageOcrData = null;
+        currentImgOcrData = null;
         currentImgCheckMainUrl = mouseTarget.src;
       }
       mouseTarget.style.cursor = 'wait'; //show mouse loading
@@ -234,7 +235,7 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
         },
         function(response) {
           if (response.mainUrl == currentImgCheckMainUrl && currentImgCheckTimeReceive < response.time) { //check url and is recent one
-            currentImageOcrData = response.text;
+            currentImgOcrData = response.text;
             currentImgCheckTimeReceive = response.time;
             if (response.time == currentImgCheckTimeSend) { //if get most recent one, stop mouse loading
               mouseTarget.style.cursor = '';
@@ -249,8 +250,8 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
         }
       );
     }
-    if (mouseTarget.src == currentImgCheckMainUrl && currentImageOcrData != null) { //if selected image is processed and recieved
-      return currentImageOcrData;
+    if (mouseTarget.src == currentImgCheckMainUrl && currentImgOcrData != null) { //if selected image is processed and recieved
+      return currentImgOcrData;
     }
   }
   return null
