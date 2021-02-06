@@ -9,7 +9,6 @@
 
 //tooltip background===========================================================================
 import $ from "jquery";
-var isUrl = require('is-url');
 var loadScriptOnce = require('load-script-once');
 
 
@@ -48,11 +47,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           })
         }
 
-        //if word is url
         //if source lang is equal to target lang
         //if tooltip is not on and activation key is not pressed,
         //then, clear translation
-        if (isUrl(request.word) || currentSetting["translateTarget"] == data.src || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
+        if (currentSetting["translateTarget"] == data.src || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
           translatedText = "";
         }
         sendResponse({
