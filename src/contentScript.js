@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import 'bootstrap/js/dist/tooltip';
-
+var isUrl = require('is-url');
 
 //init environment======================================================================\
 var currentSetting = {};
@@ -30,8 +30,9 @@ $(document).mousemove(function(event) {
 });
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
-    hasTranslation = false;
-    tooltipContainer.tooltip("hide");
+    hideTooltipAndSetNoPositioning();
+    clientX = 0;
+    clientY = 0;
   } else {
     for (var key in keyDownList) { // check activation hold key pressed and record
       if (e.which == key.toString() && keyDownList[key] == false) { //run tooltip again with keydown on
@@ -49,11 +50,16 @@ $(document).keyup(function(e) {
   }
 });
 document.addEventListener("visibilitychange", function() { //detect tab switching to turn off key down
-  if (document.visibilityState === "hidden") {
+  if (document.visibilityState === "hidden") { //reset all env value
     for (var key in keyDownList) { //reset key press when switching
       keyDownList[key] = false;
     }
     stopTTS(); //stop tts when tab swtiching
+    hideTooltipAndSetNoPositioning();
+    clientX = 0;
+    clientY = 0;
+  } else {
+    activatedWord = null;
   }
 });
 
@@ -87,21 +93,20 @@ $(document).ready(function() {
 setInterval(function() {
   if (document.visibilityState == "visible") { //only work when tab is activated
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
-    if (word.length > 1000) { //filter out text that has over 1000length
-      word = "";
-    }
+    word = filterWord(word); //filter out one that is url,over 1000length,no normal char
+
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
       translateSentence(word, "auto", "ko", function(translatedSentence, lang) {
         tooltipContainer.attr('data-original-title', translatedSentence);
         activatedWord = word;
-        hasTranslation = translatedSentence.length > 0 ? true : false; //set true if there is translation
-        setTooltipPosition();
         tts(word, lang);
 
-        if (hasTranslation == false) { //if no translated text given( when it is off), hide
-          tooltipContainer.tooltip("hide");
-        } else {
+        if (translatedSentence.length > 0) { //if no translated text given( when it is off), hide
+          hasTranslation = true;
+          setTooltipPosition();
           tooltipContainer.tooltip("show");
+        } else {
+          hideTooltipAndSetNoPositioning();
         }
       });
     } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
@@ -110,14 +115,6 @@ setInterval(function() {
     }
   }
 }, 700);
-
-
-function setTooltipPosition() {
-  if (activatedWord != null && hasTranslation) {
-    tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
-  }
-}
-
 
 function getMouseOverWord(clientX, clientY) {
   //check is image
@@ -140,10 +137,29 @@ function getMouseOverWord(clientX, clientY) {
   return range.toString();
 }
 
+function filterWord(word) {
+  word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
+  if (word.length > 1000 || //filter out text that has over 1000length
+    isUrl(word) || //if it is url
+    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(word)) { // filter one that only include num,space, special char as combination
+    word = "";
+  }
+  return word;
+}
+
+function hideTooltipAndSetNoPositioning() {
+  hasTranslation = false;
+  tooltipContainer.tooltip("hide");
+}
+
+function setTooltipPosition() {
+  if (activatedWord != null && hasTranslation) {
+    tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
+  }
+}
 
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, sourceLang, targetLang, callbackFunc) {
-  var word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
   chrome.runtime.sendMessage({
       type: 'translate',
       word: word,
