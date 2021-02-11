@@ -53,6 +53,9 @@ npm run build
 - [bubble reader](https://m.blog.naver.com/PostView.nhn?blogId=waltherp38&logNo=221116037039&proxyReferer=https:%2F%2Fwww.google.com%2F)
 - [mouse pointer](https://www.flaticon.com/free-icon/mouse-pointer_889858?term=mouse&page=1&position=34&related_item_id=889858)    
 - [miricanvas](https://www.miricanvas.com/)
+- [Vue.js](https://vuejs.org/)
+- [vuetify](https://vuetifyjs.com/en/)
+
 
 
 
