@@ -4,31 +4,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Mouse Tooltip Translator</title>
-  <link rel="stylesheet" href="bootstrapcustom.min.css" />
+  <!-- vuetify and its font will be loaded(it comes from popup.js css import) -->
   <link rel="stylesheet" href="popup.css" />
+  <style type="text/css">
+    body {
+      min-width: 350px;
+      height: 600px;
+      margin: 0;
+    }
+
+    @media only screen and (min-height: 600px) {
+      body {
+        overflow: hidden;
+      }
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+  </style>
 </head>
 
 
 
 
 <body>
-  <div class="bootstrapiso">
-    <!-- Default panel contents -->
-    <div class="card-header">Configuration - Mouse Tooltip Translator </div>
-    <ul class="list-group list-group-flush" id="container">
-
-      <!-- <li class="list-group-item">
-          <select>
-            <option value="">- 2 -</option>
-            <option value="">- 3 -</option>
-          </select>
-        </li> -->
-
-    </ul>
+  <div id="app">
+    <v-app>
+      <v-card tile flat>
+        <v-toolbar color="blue" dark dense>
+          <v-toolbar-title>
+            <div v-cloak>Mouse Tooltip Translator</div>
+          </v-toolbar-title>
+        </v-toolbar>
+        <v-list flat>
+          <v-list-item v-for="(value, name) in settingList" :key="name" >
+            <v-select v-model="selectedList[name]" :items="Object.keys(value.optionList)" :label="value.description" @change="onChange($event,name)" ></v-select>
+          </v-list-item>
+        </v-list>
+        </card>
+    </v-app>
   </div>
-
-
-
 
   <script src="popup.js"></script>
 </body>

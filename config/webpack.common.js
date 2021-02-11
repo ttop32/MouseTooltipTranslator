@@ -24,7 +24,32 @@ const common = {
     builtAt: true,
   },
   module: {
-    rules: [
+    rules: [{
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires sass-loader@^7.0.0
+            options: {
+              implementation: require('sass'),
+              indentedSyntax: true // optional
+            },
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                indentedSyntax: true // optional
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        use: 'url-loader?limit=25000'
+      },
       // Help webpack in understanding CSS files imported in .js files
       {
         test: /\.css$/,
@@ -33,15 +58,13 @@ const common = {
       // Check for images imported in .js files and
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images',
-              name: '[name].[ext]',
-            },
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: 'images',
+            name: '[name].[ext]',
           },
-        ],
+        }, ],
       },
     ],
   },
@@ -50,12 +73,10 @@ const common = {
     new SizePlugin(),
     // Copy static assets from `public` folder to `build` folder
     new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: '**/*',
-          context: 'public',
-        },
-      ]
+      patterns: [{
+        from: '**/*',
+        context: 'public',
+      }, ]
     }),
     // Extract CSS into separate files
     new MiniCssExtractPlugin({
