@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VGrid/VSpacer.ts"],"names":[],"mappings":";;;;;;;AAAA;;AACA;;eAEe,qCAAuB,QAAvB,EAAiC,KAAjC,EAAwC,UAAxC,C","sourcesContent":["import './_grid.sass'\nimport { createSimpleFunctional } from '../../util/helpers'\n\nexport default createSimpleFunctional('spacer', 'div', 'v-spacer')\n"],"sourceRoot":"","file":"VSpacer.js"}

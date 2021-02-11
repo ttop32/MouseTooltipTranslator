@@ -1,0 +1,27 @@
+@import './_variables.scss'
+
+// Block
+.v-chip-group
+  .v-chip
+    margin: $chip-group-margin
+
+  .v-chip--active
+    color: inherit
+
+    &.v-chip--no-color
+      &:after
+        opacity: $chip-group-no-color-opacity
+
+      &:focus:after
+        opacity: $chip-group-no-color-focus-opacity
+
+// Element
+.v-chip-group .v-slide-group__content
+  padding: $chip-group-content-padding
+
+// Modifiers
+.v-chip-group--column
+  .v-slide-group__content
+    white-space: normal
+    flex-wrap: wrap
+    max-width: 100%

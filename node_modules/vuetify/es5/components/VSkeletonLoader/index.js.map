@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VSkeletonLoader/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,wB","sourcesContent":["import VSkeletonLoader from './VSkeletonLoader'\n\nexport { VSkeletonLoader }\nexport default VSkeletonLoader\n"],"sourceRoot":"","file":"index.js"}

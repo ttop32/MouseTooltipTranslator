@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VMain/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAIe,c","sourcesContent":["import VMain from './VMain'\n\nexport { VMain }\n\nexport default VMain\n"],"sourceRoot":"","file":"index.js"}

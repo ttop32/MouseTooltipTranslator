@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VChipGroup/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,mB","sourcesContent":["import VChipGroup from './VChipGroup'\n\nexport { VChipGroup }\nexport default VChipGroup\n"],"sourceRoot":"","file":"index.js"}

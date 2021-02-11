@@ -1,0 +1,106 @@
+// Imports
+@import './_variables.scss'
+
++theme(v-badge) using ($material)
+  .v-badge__badge::after
+    border-color: map-get($material, 'cards')
+
+.v-badge
+  display: inline-block
+  line-height: $badge-line-height
+  position: relative
+
+  &__badge
+    border-radius: $badge-border-radius
+    color: $badge-color
+    display: inline-block
+    font-size: $badge-font-size
+    height: $badge-height
+    letter-spacing: $badge-letter-spacing
+    line-height: 1
+    min-width: $badge-min-width
+    padding: $badge-padding
+    pointer-events: auto
+    position: absolute
+    text-align: center
+    text-indent: 0
+    top: $badge-top
+    transition: $primary-transition
+    white-space: nowrap
+
+    +ltr()
+      right: $badge-right
+
+    +rtl()
+      left: $badge-right
+
+    .v-icon
+      color: inherit
+      font-size: $badge-font-size
+      margin: $badge-icon-margin
+
+    .v-img
+      height: $badge-font-size
+      width: $badge-font-size
+
+  &__wrapper
+    flex: 0 1
+    height: 100%
+    left: 0
+    pointer-events: none
+    position: absolute
+    top: 0
+    width: 100%
+
+  &--avatar
+    .v-badge__badge
+      padding: 0
+
+      .v-avatar
+        height: $badge-height !important
+        min-width: 0 !important
+        max-width: $badge-min-width !important
+
+  &--bordered
+    .v-badge__badge::after
+      border-radius: inherit
+      border-width: $badge-bordered-width
+      border-style: solid
+      bottom: 0
+      content: ''
+      left: 0
+      position: absolute
+      right: 0
+      top: 0
+      transform: scale(1.15)
+
+  &--dot
+    .v-badge__badge
+      border-radius: $badge-dot-border-radius
+      height: $badge-dot-height
+      min-width: 0
+      padding: 0
+      width: $badge-dot-width
+
+      &::after
+        border-width: $badge-dot-border-width
+
+  &--icon
+    .v-badge__badge
+      padding: $badge-icon-padding
+
+  &--inline
+    align-items: center
+    display: inline-flex
+    justify-content: center
+
+    .v-badge__badge,
+    .v-badge__wrapper
+      position: relative
+
+    .v-badge__wrapper
+      margin: $badge-wrapper-margin
+
+  &--tile
+    .v-badge__badge
+      border-radius: 0

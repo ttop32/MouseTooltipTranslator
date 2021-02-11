@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VMessages/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,kB","sourcesContent":["import VMessages from './VMessages'\n\nexport { VMessages }\nexport default VMessages\n"],"sourceRoot":"","file":"index.js"}

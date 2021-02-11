@@ -1,0 +1,31 @@
+@import './_variables.scss'
+
+.v-color-picker__edit
+  margin-top: $color-picker-edit-margin-top
+  display: flex
+
+.v-color-picker__input
+  width: 100%
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  text-align: center
+
+  &:not(:last-child)
+    +ltr()
+      margin-right: $color-picker-input-margin
+
+    +rtl()
+      margin-left: $color-picker-input-margin
+
+  input
+    border-radius: $color-picker-border-radius
+    margin-bottom: $color-picker-input-margin-bottom
+    min-width: 0
+    outline: none
+    text-align: center
+    width: 100%
+    height: $color-picker-input-height
+
+  span
+    font-size: $color-picker-input-font-size

@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VBottomNavigation/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,0B","sourcesContent":["import VBottomNavigation from './VBottomNavigation'\n\nexport { VBottomNavigation }\nexport default VBottomNavigation\n"],"sourceRoot":"","file":"index.js"}

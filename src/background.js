@@ -146,31 +146,45 @@ function loadOcrScript() {
 }
 
 async function doOcr(request, sendResponse) {
-  await loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js")); //load script for ocr, if already loaded, it just go
-  await loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
+  try {
+    await loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js")); //load script for ocr, if already loaded, it just go
+    await loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
 
-  if (request.mainUrl != recentMainUrl) { // load image if mainurl diff
-    recentImage = await loadImage(request.mainUrl);
-    recentMainUrl = request.mainUrl;
+    if (request.mainUrl != recentMainUrl) { // load image if mainurl diff
+      recentMainUrl = request.mainUrl;
+      recentImage = await loadImage(request.mainUrl);
+    } else if (request.base64Url != "") { //if same url and base64 received, use base64
+      recentImage = await loadImage(request.base64Url);
+    }
+
+    var px = request.pxRatio * recentImage.naturalWidth;
+    var py = request.pyRatio * recentImage.naturalHeight;
+    var croppedImage = await cropText(recentImage, px, py); //crop image using opencv to only get mouse pointed area
+    //if same as previouse image and same lang, skip ocr
+    if (isMatch(croppedImage, recentCanvasCropped) && recentLang == currentSetting["ocrDetectionLang"]) {
+      var currentText = recentText;
+    } else {
+      var currentText = await useTesseract(croppedImage);
+      recentCanvasCropped = croppedImage;
+      recentText = currentText;
+      recentLang = currentSetting["ocrDetectionLang"];
+    }
+    sendResponse({
+      "success": "true",
+      "text": currentText,
+      "mainUrl": request.mainUrl,
+      "time": request.time,
+      "crop": "" //croppedImage.toDataURL()
+    });
+  } catch (err) {
+    sendResponse({
+      "success": "false",
+      "text": "",
+      "mainUrl": request.mainUrl,
+      "time": request.time,
+      "crop": "" //croppedImage.toDataURL()
+    });
   }
-
-  var croppedImage = await cropText(recentImage, request.px, request.py); //crop image using opencv to only get mouse pointed area
-
-  //if same as previouse image and same lang, skip ocr
-  if (isMatch(croppedImage, recentCanvasCropped) && recentLang == currentSetting["ocrDetectionLang"]) {
-    var currentText = recentText;
-  } else {
-    var currentText = await useTesseract(croppedImage);
-    recentCanvasCropped = croppedImage;
-    recentText = currentText;
-    recentLang = currentSetting["ocrDetectionLang"];
-  }
-  sendResponse({
-    "text": currentText,
-    "mainUrl": request.mainUrl,
-    "time": request.time,
-    "crop": "" //croppedImage.toDataURL()
-  });
 }
 
 function loadImage(url) {
@@ -192,9 +206,12 @@ function cropText(img, x, y) {
     let gray = new cv.Mat();
     let maskInside = new cv.Mat();
     let segmentedImg = new cv.Mat();
+    let cropTextImgResize = new cv.Mat();
 
     //preprocessing, make gray
     cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
+    cv.adaptiveThreshold(gray, gray, 200, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 61, 4);
+    // cv.threshold(gray, gray, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
 
     //paint bubble background
     let maskBubble = new cv.Mat(gray.rows + 2, gray.cols + 2, cv.CV_8U, [0, 0, 0, 0])
@@ -217,29 +234,22 @@ function cropText(img, x, y) {
     src.copyTo(segmentedImg, maskInside); //dst, mask     //show only masked area
     let cropTextImg = segmentedImg.roi(cv.boundingRect(maskInside)); //crop to fit masked area
 
-    // // crop without background bubble
-    // //text crop
-    // let maskBubbleInside = new cv.Mat();
-    // let bubbleInside = new cv.Mat();
-    // maskBubble = maskBubble.roi(new cv.Rect(1, 1, maskBubble.cols - 2, maskBubble.rows - 2)); //previous two flood fill expand border, shrink it
-    // cv.bitwise_not(maskBubble, maskBubbleInside); //src,dst
-    // src.copyTo(bubbleInside, maskBubbleInside); //dst, mask     //show only masked area
-    // //give bound
-    // var rect = cv.boundingRect(maskBubbleInside);
-    // rect.x = Math.max(rect.x - 15, 0);
-    // rect.y = Math.max(rect.y - 15, 0);
-    // rect.width = Math.min(rect.width + 30, bubbleInside.rows - 1);
-    // rect.height = Math.min(rect.height + 30, bubbleInside.cols - 1);
-    // //white background
-    // bubbleInside = bubbleInside.roi(rect); //crop to fit masked area
-    // let gray2 = new cv.Mat();
-    // let gray3 = new cv.Mat();
-    // var maskOutsideCropped = maskBubble.roi(rect);
-    // cv.cvtColor(bubbleInside, gray2, cv.COLOR_RGBA2GRAY, 0);
-    // cv.add(gray2, maskOutsideCropped, gray3);
+    //resize image to fit 350px
+    //too small image need to be larger to recognize correctly
+    //too large image's ocr speed is slow
+    var maxSize = 350;
+    var rowsNew = cropTextImg.rows;
+    var colsNew = cropTextImg.cols;
+    colsNew = colsNew * maxSize / rowsNew;
+    rowsNew = maxSize;
+    if (maxSize < colsNew) {
+      rowsNew = rowsNew * maxSize / colsNew;
+      colsNew = maxSize;
+    }
+    cv.resize(cropTextImg, cropTextImgResize, new cv.Size(colsNew, rowsNew), 0, 0, cv.INTER_AREA);
 
     let canvas = document.createElement("canvas");
-    cv.imshow(canvas, cropTextImg);
+    cv.imshow(canvas, cropTextImgResize);
     src.delete();
     gray.delete();
     maskBubble.delete();
@@ -247,6 +257,7 @@ function cropText(img, x, y) {
     maskOutside.delete();
     segmentedImg.delete();
     cropTextImg.delete();
+    cropTextImgResize.delete();
     resolve(canvas);
   });
 }

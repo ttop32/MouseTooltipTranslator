@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VFileInput/index.ts"],"names":[],"mappings":"AAAA,OAAO,UAAP,MAAuB,cAAvB;AAEA,SAAS,UAAT;AACA,eAAe,UAAf","sourcesContent":["import VFileInput from './VFileInput'\n\nexport { VFileInput }\nexport default VFileInput\n"],"sourceRoot":"","file":"index.js"}

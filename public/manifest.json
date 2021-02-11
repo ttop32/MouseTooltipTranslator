@@ -1,7 +1,8 @@
 {
   "name": "Mouse Tooltip Translator",
+  "short_name": "Mouseover Translator",
   "description": "Mouseover translation - Mouse over to translate using google translate",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
@@ -16,6 +17,14 @@
 
 
 
+
+  "content_scripts": [{
+    "js": ["contentScript.js"],
+    "css": ["bootstrapcustom.min.css"],
+    "matches": ["<all_urls>"],
+    "run_at": "document_idle",
+    "all_frames": true
+  }],
   "background": {
     "scripts": ["background.js"]
   },
@@ -23,11 +32,7 @@
     "default_title": "Mouse Tooltip Translator",
     "default_popup": "popup.html"
   },
-  "content_scripts": [{
-    "js": ["contentScript.js"],
-    "css": ["bootstrapcustom.min.css"],
-    "matches": ["<all_urls>"],
-    "run_at": "document_idle",
-    "all_frames": true
-  }]
+  "options_ui": {
+    "page":  "popup.html"
+  }
 }

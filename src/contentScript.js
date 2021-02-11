@@ -1,5 +1,5 @@
 'use strict';
-//inject translation tooltip based on user text hover event
+// inject translation tooltip based on user text hover event
 //it gets translation and tts from background.js
 
 
@@ -96,12 +96,12 @@ setInterval(function() {
     word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
-      translateSentence(word, "auto", "ko", function(translatedSentence, lang) {
-        tooltipContainer.attr('data-original-title', translatedSentence);
+      translateSentence(word, function(response) {
+        tooltipContainer.attr('data-original-title', response.translatedText);
         activatedWord = word;
-        tts(word, lang);
+        tts(word, response.lang);
 
-        if (translatedSentence.length > 0) { //if no translated text given( when it is off), hide
+        if (response.translatedText.length > 0) { //if no translated text given( when it is off), hide
           hasTranslation = true;
           setTooltipPosition();
           tooltipContainer.tooltip("show");
@@ -141,7 +141,7 @@ function filterWord(word) {
   word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
   if (word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url
-    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(word)) { // filter one that only include num,space, special char as combination
+    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(word)) { // filter one that only include num,space and special char as combination
     word = "";
   }
   return word;
@@ -159,14 +159,14 @@ function setTooltipPosition() {
 }
 
 //send to background.js for background processing and setting handling ===========================================================================
-function translateSentence(word, sourceLang, targetLang, callbackFunc) {
+function translateSentence(word, callbackFunc) {
   chrome.runtime.sendMessage({
       type: 'translate',
       word: word,
       keyDownList: keyDownList
     },
     function(response) {
-      callbackFunc(response.translatedText, response.lang);
+      callbackFunc(response);
     }
   );
 }
@@ -220,17 +220,16 @@ var currentImgCheckMainUrl = "";
 //send image when mouse pointing
 //recieve ocr processed text and return recent recieved text
 function checkImage(clientX, clientY) { //if mouse target on image, process ocr
-  if (currentSetting["useOCR"] != null && currentSetting["useOCR"] == "true" && //when use ocr setting on
+  if (currentSetting != null && currentSetting["useOCR"] != null && currentSetting["useOCR"] == "true" && //when use ocr setting on
     mouseTarget != null && mouseTarget.tagName === 'IMG' && //when mouse over on img
     mouseTarget.complete && mouseTarget.naturalHeight !== 0) { //if image is loaded
-
     if (currentImgCheckClientX != clientX || currentImgCheckClientY != clientY) { //if mouse move, do ocr using background js
       //mouse position on image width height
       var bounds = mouseTarget.getBoundingClientRect();
       var x = clientX - bounds.left;
       var y = clientY - bounds.top;
-      var px = x / mouseTarget.clientWidth * mouseTarget.naturalWidth;
-      var py = y / mouseTarget.clientHeight * mouseTarget.naturalHeight;
+      var pxRatio = x / mouseTarget.clientWidth;
+      var pyRatio = y / mouseTarget.clientHeight;
       currentImgCheckClientX = clientX;
       currentImgCheckClientY = clientY;
       var currentTime = Date.now(); //current sending time
@@ -242,33 +241,65 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
       mouseTarget.style.cursor = 'wait'; //show mouse loading
 
 
-      chrome.runtime.sendMessage({
+      (async () => {
+        var response = await sendMessagePromise({
           type: 'ocr',
           "mainUrl": mouseTarget.src,
+          "base64Url": "",
           "time": currentTime,
-          "px": px,
-          "py": py
-        },
-        function(response) {
-          if (response.mainUrl == currentImgCheckMainUrl && currentImgCheckTimeReceive < response.time) { //check url and is recent one
-            currentImgOcrData = response.text;
-            currentImgCheckTimeReceive = response.time;
-            if (response.time == currentImgCheckTimeSend) { //if get most recent one, stop mouse loading
-              mouseTarget.style.cursor = '';
-            }
+          "pxRatio": pxRatio,
+          "pyRatio": pyRatio
+        });
+        if (response.success == "false") { //if fail, try again with base64
+          var base64Url = await getBase64(response.mainUrl);
+          var responseBase64 = await sendMessagePromise({
+            type: 'ocr',
+            "mainUrl": response.mainUrl,
+            "base64Url": base64Url,
+            "time": currentTime,
+            "pxRatio": pxRatio,
+            "pyRatio": pyRatio
+          });
+        }
+
+        if (response.mainUrl == currentImgCheckMainUrl && currentImgCheckTimeReceive < response.time) { //check url and is recent one
+          currentImgOcrData = response.text;
+          currentImgCheckTimeReceive = response.time;
+          if (response.time == currentImgCheckTimeSend) { //if get most recent one, stop mouse loading
+            mouseTarget.style.cursor = '';
           }
           // // show cropped image
           // const image = new Image();
           // image.src = response.crop;
-          // image.onload = () => {
-          //   document.body.appendChild(image);
-          // }
+          // document.body.appendChild(image);
         }
-      );
+      })();
     }
     if (mouseTarget.src == currentImgCheckMainUrl && currentImgOcrData != null) { //if selected image is processed and recieved
       return currentImgOcrData;
     }
   }
-  return null
+  return null;
+}
+
+function sendMessagePromise(item) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(item, response => {
+      resolve(response);
+    });
+  });
+}
+
+function getBase64(url) {
+  return new Promise(function(resolve, reject) {
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve(this.result) // <--- `this.result` contains a base64 data URI
+        };
+        reader.readAsDataURL(blob);
+      });
+  });
 }

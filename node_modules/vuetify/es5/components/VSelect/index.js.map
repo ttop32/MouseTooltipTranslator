@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VSelect/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,gB","sourcesContent":["import VSelect from './VSelect'\n\nexport { VSelect }\nexport default VSelect\n"],"sourceRoot":"","file":"index.js"}

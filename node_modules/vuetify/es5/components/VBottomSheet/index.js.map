@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VBottomSheet/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,qB","sourcesContent":["import VBottomSheet from './VBottomSheet'\n\nexport { VBottomSheet }\nexport default VBottomSheet\n"],"sourceRoot":"","file":"index.js"}

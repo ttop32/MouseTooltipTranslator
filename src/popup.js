@@ -1,6 +1,15 @@
 'use strict';
 
-//interact user setting, //save and load setting from background.js
+//interact user setting,
+//save and load setting from background.js
+
+import "typeface-roboto/index.css"; //font for vuetify
+import 'vuetify/dist/vuetify.min.css'; //vuetify css
+import Vue from 'vue'; //vue framework
+import Vuetify from 'vuetify'; //vue style
+
+Vue.use(Vuetify);
+
 
 var langList = {
   Afrikaans: "af",
@@ -112,14 +121,14 @@ var langList = {
 var langListWithAuto = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
 langListWithAuto['Auto'] = "auto";
 var toggleList = {
-  "On": true,
-  "Off": false
+  "On": "true",
+  "Off": "false"
 };
 var keyList = {
-  "None": null,
-  "Ctrl": 17,
-  "Alt": 18,
-  "Shift": 16
+  "None": "null",
+  "Ctrl": "17",
+  "Alt": "18",
+  "Shift": "16"
 };
 
 var ocrLangList = {
@@ -269,31 +278,39 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadSettingHtml() {
-  //create optionlist
-  var settingHtml = ""
-  for (var settingListKey in settingList) {
-    settingHtml += '<li class="list-group-item list-group-item-action">' + settingList[settingListKey]["description"] + '<select id="' + settingListKey + '">';
-    for (var optionListKey in settingList[settingListKey]["optionList"]) {
-      settingHtml += '<option value="' + settingList[settingListKey]["optionList"][optionListKey] + '">' + optionListKey + '</option>'
+  new Vue({
+    el: '#app',
+    vuetify: new Vuetify({
+      icons: {
+        iconfont: 'mdiSvg'
+      }
+    }),
+    data: {
+      settingList: settingList,
+      selectedList: getVueSelectList()
+    },
+    methods: {
+      onChange: function(event, name) {
+        currentSetting[name] = settingList[name]["optionList"][event];
+        changeSetting();
+      }
     }
-    settingHtml += '</select></li>'
-  }
-  var container = document.getElementById('container');
-  container.innerHTML = container.innerHTML + settingHtml;
+  });
+}
 
-  //set selected value and change listner
-  for (var settingListKey in settingList) {
-    var setting = document.getElementById(settingListKey);
-    setting.value = currentSetting[settingListKey]; //set current selected item
-    setting.addEventListener("change", changeSetting); //set value change listner
-  }
+function getVueSelectList() { //get selected option key dictionary by value
+  var result = {}
+  Object.keys(currentSetting).forEach(function(key) {
+    Object.keys(settingList[key]["optionList"]).forEach(function(selectKey) {
+      if (settingList[key]["optionList"][selectKey] == currentSetting[key]) {
+        result[key] = selectKey;
+      }
+    });
+  });
+  return result;
 }
 
 function changeSetting() {
-  for (var settingListKey in settingList) { //get all selected list
-    currentSetting[settingListKey] = document.getElementById(settingListKey).value;
-  }
-
   chrome.runtime.sendMessage({ //save setting from background.js
       type: 'saveSetting',
       options: currentSetting

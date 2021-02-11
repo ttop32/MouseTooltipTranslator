@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VGrid/VFlex.ts"],"names":[],"mappings":"AAAA,OAAO,0CAAP;AAEA,OAAO,IAAP,MAAiB,QAAjB;AAEA,eAAe,IAAI,CAAC,MAAD,CAAnB","sourcesContent":["import './_grid.sass'\n\nimport Grid from './grid'\n\nexport default Grid('flex')\n"],"sourceRoot":"","file":"VFlex.js"}

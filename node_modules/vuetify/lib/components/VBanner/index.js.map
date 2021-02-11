@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/components/VBanner/index.ts"],"names":[],"mappings":"AAAA,OAAO,OAAP,MAAoB,WAApB;AAEA,SAAS,OAAT;AACA,eAAe,OAAf","sourcesContent":["import VBanner from './VBanner'\n\nexport { VBanner }\nexport default VBanner\n"],"sourceRoot":"","file":"index.js"}

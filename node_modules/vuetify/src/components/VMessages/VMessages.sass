@@ -1,0 +1,25 @@
+@import './_variables.scss'
+
+/* Theme */
++theme(v-messages) using ($material)
+  color: map-deep-get($material, 'text', 'secondary')
+
+.v-messages
+  flex: 1 1 auto
+  font-size: $messages-font-size
+  min-height: $messages-min-height
+  min-width: 1px // Ensure takes up space with no messages and inside of flex
+  position: relative
+
+  +ltr()
+    text-align: left
+
+  +rtl()
+    text-align: right
+
+  &__message
+    line-height: $messages-line-height
+    word-break: break-word
+    overflow-wrap: break-word
+    word-wrap: break-word
+    hyphens: auto
