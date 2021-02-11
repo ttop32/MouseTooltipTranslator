@@ -24,6 +24,12 @@ npm i popper.js --save
 npm i bootstrap --save    
 npm i is-url --save    
 npm i load-script-once --save       
+npm i vue --save
+npm i vuetify --save
+npm i @mdi/js -D
+npm i sass sass-loader deepmerge -D
+npm i --save typeface-roboto
+npm i url-loader --save-dev
 
 
 # Run watch   
