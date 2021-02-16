@@ -30,7 +30,8 @@ npm i @mdi/js -D
 npm i sass sass-loader deepmerge -D    
 npm i --save typeface-roboto     
 npm i url-loader --save-dev    
-
+npm i -D babel-loader @babel/core @babel/preset-env
+npm i @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props
 
 # Run watch   
 npm run watch       
@@ -61,6 +62,8 @@ npm run build
 - [miricanvas](https://www.miricanvas.com/)
 - [Vue.js](https://vuejs.org/)
 - [vuetify](https://vuetifyjs.com/en/)
+- [vue jsx](https://github.com/vuejs/jsx)
+
 
 
 
