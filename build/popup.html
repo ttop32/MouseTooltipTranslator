@@ -18,10 +18,6 @@
         overflow: hidden;
       }
     }
-
-    [v-cloak] {
-      display: none;
-    }
   </style>
 </head>
 
@@ -29,22 +25,7 @@
 
 
 <body>
-  <div id="app">
-    <v-app>
-      <v-card tile flat>
-        <v-toolbar color="blue" dark dense>
-          <v-toolbar-title>
-            <div v-cloak>Mouse Tooltip Translator</div>
-          </v-toolbar-title>
-        </v-toolbar>
-        <v-list flat>
-          <v-list-item v-for="(value, name) in settingList" :key="name" >
-            <v-select v-model="selectedList[name]" :items="Object.keys(value.optionList)" :label="value.description" @change="onChange($event,name)" ></v-select>
-          </v-list-item>
-        </v-list>
-        </card>
-    </v-app>
-  </div>
+  <div id="app"></div>
 
   <script src="popup.js"></script>
 </body>
