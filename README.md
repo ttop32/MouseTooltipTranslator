@@ -29,9 +29,9 @@ npm i vuetify --save
 npm i @mdi/js -D    
 npm i sass sass-loader deepmerge -D    
 npm i --save typeface-roboto     
-npm i url-loader --save-dev    
-npm i -D babel-loader @babel/core @babel/preset-env
-npm i @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props
+npm i url-loader --save-dev     
+npm i -D babel-loader @babel/core @babel/preset-env    
+npm i @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props    
 
 # Run watch   
 npm run watch       
