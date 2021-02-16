@@ -279,7 +279,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadSettingHtml() {
   new Vue({
-    el: '#app',
+    render() {
+      var selectList = [];
+      var thisVue = this;
+      Object.keys(this.settingList).forEach(key => {
+        // console.log(this.selectedList[key]);
+        var changeFunc = function(event) {
+          thisVue.onChange(event, key)
+        };
+        selectList.push(
+          <v-list-item>
+          <v-select items={Object.keys(this.settingList[key].optionList)} label={this.settingList[key].description}  vModel={this.selectedList[key]} vOn:change={changeFunc}> </v-select>
+          </v-list-item>
+        );
+      });
+
+      return (
+        <v-app>
+          <v-card tile flat>
+            <v-toolbar color="blue" dark dense>
+              <v-toolbar-title>
+                Mouse Tooltip Translator
+              </v-toolbar-title>
+            </v-toolbar>
+            <v-list flat>
+              {selectList}
+            </v-list>
+          </v-card>
+        </v-app>
+      );
+    },
     vuetify: new Vuetify({
       icons: {
         iconfont: 'mdiSvg'
@@ -295,7 +324,7 @@ function loadSettingHtml() {
         changeSetting();
       }
     }
-  });
+  }).$mount('#app');
 }
 
 function getVueSelectList() { //get selected option key dictionary by value

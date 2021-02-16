@@ -25,6 +25,15 @@ const common = {
   },
   module: {
     rules: [{
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@vue/babel-preset-jsx']//            plugins: ["jsx-v-model", "transform-vue-jsx"]
+          }
+        }
+      }, {
         test: /\.s(c|a)ss$/,
         use: [
           'vue-style-loader',

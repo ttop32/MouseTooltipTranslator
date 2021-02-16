@@ -252,7 +252,7 @@ function checkImage(clientX, clientY) { //if mouse target on image, process ocr
         });
         if (response.success == "false") { //if fail, try again with base64
           var base64Url = await getBase64(response.mainUrl);
-          var responseBase64 = await sendMessagePromise({
+          var response = await sendMessagePromise({
             type: 'ocr',
             "mainUrl": response.mainUrl,
             "base64Url": base64Url,
