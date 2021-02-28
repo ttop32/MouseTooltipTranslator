@@ -2,7 +2,7 @@
   "name": "Mouse Tooltip Translator",
   "short_name": "Mouseover Translator",
   "description": "Mouseover translation - Mouse over to translate using google translate",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
