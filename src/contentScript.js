@@ -141,7 +141,7 @@ function filterWord(word) {
   word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
   if (word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url
-    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(word)) { // filter one that only include num,space and special char as combination
+    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]/g.test(word)) { // filter one that only include num,space and special char(include currency sign) as combination
     word = "";
   }
   return word;
