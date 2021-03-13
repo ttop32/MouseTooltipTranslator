@@ -14,7 +14,8 @@ var clientX = 0;
 var clientY = 0;
 var mouseTarget = null;
 var activatedWord = null;
-var hasTranslation = false;
+var doProcessPos = false;
+var firstMouseMove = false;
 var keyDownList = { //use key down for enable translation partially
   17: false, //ctrl
   16: false, //shift
@@ -26,13 +27,12 @@ $(document).mousemove(function(event) {
   clientX = event.clientX;
   clientY = event.clientY;
   mouseTarget = event.target;
+  firstMouseMove = true;
   setTooltipPosition();
 });
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
-    hideTooltipAndSetNoPositioning();
-    clientX = 0;
-    clientY = 0;
+    hideTooltip();
   } else {
     for (var key in keyDownList) { // check activation hold key pressed and record
       if (e.which == key.toString() && keyDownList[key] == false) { //run tooltip again with keydown on
@@ -55,9 +55,8 @@ document.addEventListener("visibilitychange", function() { //detect tab switchin
       keyDownList[key] = false;
     }
     stopTTS(); //stop tts when tab swtiching
-    hideTooltipAndSetNoPositioning();
-    clientX = 0;
-    clientY = 0;
+    hideTooltip();
+    firstMouseMove = false;
   } else {
     activatedWord = null;
   }
@@ -91,22 +90,26 @@ $(document).ready(function() {
 
 //determineTooltipShowHide : word detection, show & hide
 setInterval(function() {
-  if (document.visibilityState == "visible") { //only work when tab is activated
+  if (document.visibilityState == "visible" && firstMouseMove == true) { //only work when tab is activated and when mousemove
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
     word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
       translateSentence(word, function(response) {
+        // if(word==response.translatedText){//skip when source text and translated text are same
+        //   response.translatedText=""
+        // }
+
         tooltipContainer.attr('data-original-title', response.translatedText);
         activatedWord = word;
         tts(word, response.lang);
 
         if (response.translatedText.length > 0) { //if no translated text given( when it is off), hide
-          hasTranslation = true;
+          doProcessPos = true;
           setTooltipPosition();
           tooltipContainer.tooltip("show");
         } else {
-          hideTooltipAndSetNoPositioning();
+          hideTooltip();
         }
       });
     } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
@@ -147,13 +150,13 @@ function filterWord(word) {
   return word;
 }
 
-function hideTooltipAndSetNoPositioning() {
-  hasTranslation = false;
+function hideTooltip() {
+  doProcessPos = false;
   tooltipContainer.tooltip("hide");
 }
 
 function setTooltipPosition() {
-  if (activatedWord != null && hasTranslation) {
+  if (activatedWord != null && doProcessPos == true) {
     tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
   }
 }
