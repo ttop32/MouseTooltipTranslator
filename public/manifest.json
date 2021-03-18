@@ -1,9 +1,8 @@
 {
   "name": "__MSG_appName__",
-  "short_name": "Mouseover Translator",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
@@ -30,7 +29,7 @@
     "scripts": ["background.js"]
   },
   "browser_action": {
-    "default_title": "Mouse Tooltip Translator",
+    "default_title": "Mouseover Translator",
     "default_popup": "popup.html"
   },
   "options_ui": {

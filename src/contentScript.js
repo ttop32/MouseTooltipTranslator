@@ -15,23 +15,26 @@ var clientY = 0;
 var mouseTarget = null;
 var activatedWord = null;
 var doProcessPos = false;
-var firstMouseMove = false;
+var mouseMoved = false;
+var settingLoaded = false;
 var keyDownList = { //use key down for enable translation partially
   17: false, //ctrl
   16: false, //shift
   18: false //alt
 };
+var style = $("<style>").appendTo("head");
 
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
   clientX = event.clientX;
   clientY = event.clientY;
   mouseTarget = event.target;
-  firstMouseMove = true;
+  mouseMoved = true;
   setTooltipPosition();
 });
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
+    mouseMoved = false;
     hideTooltip();
   } else {
     for (var key in keyDownList) { // check activation hold key pressed and record
@@ -55,8 +58,8 @@ document.addEventListener("visibilitychange", function() { //detect tab switchin
       keyDownList[key] = false;
     }
     stopTTS(); //stop tts when tab swtiching
+    mouseMoved = false;
     hideTooltip();
-    firstMouseMove = false;
   } else {
     activatedWord = null;
   }
@@ -90,27 +93,33 @@ $(document).ready(function() {
 
 //determineTooltipShowHide : word detection, show & hide
 setInterval(function() {
-  if (document.visibilityState == "visible" && firstMouseMove == true) { //only work when tab is activated and when mousemove
+  if (document.visibilityState == "visible" && mouseMoved == true && settingLoaded == true) { //only work when tab is activated and when mousemove
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
     word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
       translateSentence(word, function(response) {
-        // if(word==response.translatedText){//skip when source text and translated text are same
-        //   response.translatedText=""
-        // }
-
-        tooltipContainer.attr('data-original-title', response.translatedText);
         activatedWord = word;
-        tts(word, response.lang);
 
-        if (response.translatedText.length > 0) { //if no translated text given( when it is off), hide
+        //if empty
+        //if source lang is equal to target lang
+        //if tooltip is not on and activation key is not pressed,
+        //then, hide
+        if (response.translatedText == "" || currentSetting["translateTarget"] == response.lang || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
+          hideTooltip();
+
+        } else {
+          tooltipContainer.attr('data-original-title', response.translatedText);
           doProcessPos = true;
           setTooltipPosition();
           tooltipContainer.tooltip("show");
-        } else {
-          hideTooltip();
         }
+
+        //if use_tts is on or activation key is pressed
+        if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
+          tts(word, response.lang);
+        }
+
       });
     } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
       activatedWord = null;
@@ -161,12 +170,19 @@ function setTooltipPosition() {
   }
 }
 
+function changeFontSize(size) {
+  style.html(`
+    .bootstrapiso .tooltip {
+      font-size: ` + size + `px;
+    }`
+  );
+}
+
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, callbackFunc) {
   chrome.runtime.sendMessage({
       type: 'translate',
-      word: word,
-      keyDownList: keyDownList
+      word: word
     },
     function(response) {
       callbackFunc(response);
@@ -178,8 +194,7 @@ function tts(word, lang) {
   chrome.runtime.sendMessage({
       type: 'tts',
       word: word,
-      lang: lang,
-      keyDownList: keyDownList
+      lang: lang
     },
     function(data) {}
   );
@@ -193,12 +208,14 @@ function stopTTS() {
   );
 }
 
-function getSetting() {
+function getSetting() { //load  setting from background js
   chrome.runtime.sendMessage({
       type: 'loadSetting'
     },
     response => {
       currentSetting = response;
+      changeFontSize(currentSetting["tooltipFontSize"]);
+      settingLoaded = true;
     }
   );
 }
@@ -207,6 +224,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { //update cur
   for (var key in changes) {
     currentSetting[key] = changes[key].newValue;
   }
+  changeFontSize(currentSetting["tooltipFontSize"]);
 });
 
 
