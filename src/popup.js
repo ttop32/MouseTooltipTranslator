@@ -227,10 +227,20 @@ var ocrLangList = {
   'Yoruba': 'yor'
 };
 
+var translatorList = {
+  "google": "google",
+  "bing": "bing"
+};
+
+var tooltipFontSizeList = {}; //font size 5 to 20
+for (let i = 5; i < 21; i++) {
+  tooltipFontSizeList[i] = i;
+}
+
 
 var settingList = {
   "useTooltip": {
-    "description": "Enable tooltip",
+    "description": "Enable Tooltip",
     "optionList": toggleList
   },
   "useTTS": {
@@ -238,19 +248,27 @@ var settingList = {
     "optionList": toggleList
   },
   "translateSource": {
-    "description": "Translate from",
+    "description": "Translate From",
     "optionList": langListWithAuto
   },
   "translateTarget": {
-    "description": "Translate to",
+    "description": "Translate Into",
     "optionList": langList
   },
+  "translatorVendor": {
+    "description": "Translator",
+    "optionList": translatorList
+  },
+  "tooltipFontSize": {
+    "description": "Tooltip Font Size",
+    "optionList": tooltipFontSizeList
+  },
   "keyDownTooltip": {
-    "description": "Tooltip activation hold key",
+    "description": "Tooltip Activation Hold Key",
     "optionList": keyList
   },
   "keyDownTTS": {
-    "description": "TTS activation hold key",
+    "description": "TTS Activation Hold Key",
     "optionList": keyList
   },
   "useOCR": {
@@ -296,17 +314,17 @@ function loadSettingHtml() {
 
       return (
         <v-app>
-          <v-card tile flat>
-            <v-toolbar color="blue" dark dense>
-              <v-toolbar-title>
-                Mouse Tooltip Translator
-              </v-toolbar-title>
-            </v-toolbar>
-            <v-list flat>
-              {selectList}
-            </v-list>
-          </v-card>
-        </v-app>
+         <v-card tile flat>
+           <v-toolbar color="blue" dark dense>
+             <v-toolbar-title>
+               Mouseover Translator
+             </v-toolbar-title>
+           </v-toolbar>
+           <v-list flat id="settingListBox">
+             {selectList}
+           </v-list>
+         </v-card>
+       </v-app>
       );
     },
     vuetify: new Vuetify({

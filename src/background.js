@@ -19,78 +19,181 @@ var defaultList = {
   "useTTS": "false",
   "translateSource": "auto",
   "translateTarget": window.navigator.language,
+  "translatorVendor": "google",
+  "tooltipFontSize": "14",
   "keyDownTooltip": "null",
   "keyDownTTS": "null",
   "useOCR": "false",
-  "ocrDetectionLang": "jpn_vert"
+  "ocrDetectionLang": "jpn_vert",
+
 }
 var currentAudio = null;
+var bingLangCode = {
+  "auto": "auto-detect",
+  'af': 'af',
+  'am': 'am',
+  'ar': 'ar',
+  'az': 'az',
+  'bg': 'bg',
+  'bs': 'bs',
+  'ca': 'ca',
+  'cs': 'cs',
+  'cy': 'cy',
+  'da': 'da',
+  'de': 'de',
+  'el': 'el',
+  'en': 'en',
+  'es': 'es',
+  'et': 'et',
+  'fa': 'fa',
+  'fi': 'fi',
+  'fr': 'fr',
+  'ga': 'ga',
+  'gu': 'gu',
+  'hi': 'hi',
+  'hmn': 'mww',
+  'hr': 'hr',
+  'ht': 'ht',
+  'hu': 'hu',
+  'hy': 'hy',
+  'id': 'id',
+  'is': 'is',
+  'it': 'it',
+  'iw': 'he',
+  'ja': 'ja',
+  'kk': 'kk',
+  'km': 'km',
+  'kn': 'kn',
+  'ko': 'ko',
+  'ku': 'ku',
+  'lo': 'lo',
+  'lt': 'lt',
+  'lv': 'lv',
+  'mg': 'mg',
+  'mi': 'mi',
+  'ml': 'ml',
+  'mr': 'mr',
+  'ms': 'ms',
+  'mt': 'mt',
+  'my': 'my',
+  'ne': 'ne',
+  'nl': 'nl',
+  'no': 'nb',
+  'pa': 'pa',
+  'pl': 'pl',
+  'ps': 'ps',
+  'pt': 'pt',
+  'ro': 'ro',
+  'ru': 'ru',
+  'sk': 'sk',
+  'sl': 'sl',
+  'sm': 'sm',
+  'sq': 'sq',
+  'sr': 'sr-Cyrl',
+  'sv': 'sv',
+  'sw': 'sw',
+  'ta': 'ta',
+  'te': 'te',
+  'th': 'th',
+  'tl': 'fil',
+  'tr': 'tr',
+  'uk': 'uk',
+  'ur': 'ur',
+  'vi': 'vi',
+  'zh-cn': 'zh-Hans',
+  'zh-tw': 'zh-Hant'
+};
+
+function swap(json) {
+  var ret = {};
+  for (var key in json) {
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
+var bingLangCodeOpposite = swap(bingLangCode); // swap key value
 
 
+
+//listen from contents js and background js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === 'translate') {
-    $.ajax({
-      url: 'https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex',
-      data: {
+    var detectedLang = "";
+    var translatedText = "";
+
+    if (currentSetting["translatorVendor"] == "google") {
+      var translatorUrl = "https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
+      var translatorData = {
         q: request.word,
         sl: currentSetting["translateSource"], //source lang
         tl: currentSetting["translateTarget"] //target lang
-      },
-      dataType: 'json',
+      };
+
+    } else {
+      var translatorUrl = "https://www.bing.com/ttranslatev3";
+      var translatorData = {
+        text: request.word,
+        fromLang: bingLangCode[currentSetting["translateSource"]], //source lang
+        to: bingLangCode[currentSetting["translateTarget"]] //target lang
+      };
+    }
+
+    $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: translatorUrl,
+      data: translatorData,
       success: function(data) {
-        var translatedText = "";
-        if (data.sentences) {
-          data.sentences.forEach(function(sentences) {
-            if (sentences.trans) {
-              translatedText += sentences.trans;
-            }
-          })
+        if (currentSetting["translatorVendor"] == "google") {
+          detectedLang = data[0][0][2];
+          translatedText = data[0][0][0][0][0];
+        } else {
+          detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
+          translatedText = data[0]["translations"][0]["text"];
         }
 
-        //if source lang is equal to target lang
-        //if tooltip is not on and activation key is not pressed,
-        //then, clear translation
-        if (currentSetting["translateTarget"] == data.src || (currentSetting["useTooltip"] == "false" && !request.keyDownList[currentSetting["keyDownTooltip"]])) {
-          translatedText = "";
-        }
         sendResponse({
           "translatedText": translatedText,
-          "lang": data.src
+          "lang": detectedLang
         });
       },
       error: function(xhr, status, error) {
         console.log({
           error: error,
           xhr: xhr
-        })
+        });
+        sendResponse({
+          "translatedText": "",
+          "lang": "en"
+        });
       }
     });
+
   } else if (request.type === 'tts') {
-    //if use_tts is on or activation key is pressed
-    if (currentSetting["translateTarget"] != request.lang && (currentSetting["useTTS"] == "true" || request.keyDownList[currentSetting["keyDownTTS"]])) {
-      if (currentAudio != null) { //stop current played tts
-        currentAudio.pause();
-        currentAudio = null;
-      }
-      //split word in 200 length
-      //play 200 leng tts seqeuntly using ended callback
-      var splittedWord = request.word.match(/.{1,200}/g); //split word in 200length
-      var prevAudio = null;
-      splittedWord.forEach(function(value, i) {
-        var soundUrl = "https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=UTF-8&tl=" + request.lang + "&q=" + encodeURIComponent(value);
-        var audio = new Audio(soundUrl);
-        if (i == 0) {
-          currentAudio = audio;
-          audio.play();
-        } else {
-          prevAudio.addEventListener("ended", function() {
-            currentAudio = audio;
-            currentAudio.play();
-          });
-        }
-        prevAudio = audio;
-      });
+    if (currentAudio != null) { //stop current played tts
+      currentAudio.pause();
+      currentAudio = null;
     }
+    //split word in 200 length
+    //play 200 leng tts seqeuntly using ended callback
+    var splittedWord = request.word.match(/.{1,200}/g); //split word in 200length
+    var prevAudio = null;
+    splittedWord.forEach(function(value, i) {
+      var soundUrl = "https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=UTF-8&tl=" + request.lang + "&q=" + encodeURIComponent(value);
+      var audio = new Audio(soundUrl);
+      if (i == 0) {
+        currentAudio = audio;
+        audio.play();
+      } else {
+        prevAudio.addEventListener("ended", function() {
+          currentAudio = audio;
+          currentAudio.play();
+        });
+      }
+      prevAudio = audio;
+    });
+
     sendResponse({});
   } else if (request.type === 'stopTTS') {
     if (currentAudio != null) { //stop current played tts

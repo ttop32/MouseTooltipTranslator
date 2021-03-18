@@ -3,19 +3,41 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Mouse Tooltip Translator</title>
+  <title>Mouseover Translator</title>
   <!-- vuetify and its font will be loaded(it comes from popup.js css import) -->
   <link rel="stylesheet" href="popup.css" />
   <style type="text/css">
     body {
-      min-width: 350px;
       height: 600px;
+      min-width: 350px;
       margin: 0;
     }
 
+    /* https://codepen.io/bromix/pen/MWwEmmP */
+    /* show custom slide bar on setting list table */
     @media only screen and (min-height: 600px) {
-      body {
-        overflow: hidden;
+      #settingListBox {
+        height: 552px;
+        overflow: auto;
+      }
+
+      #settingListBox::-webkit-scrollbar {
+        width: 15px;
+      }
+
+      #settingListBox::-webkit-scrollbar-track {
+        background: #e6e6e6;
+        border-left: 1px solid #dadada;
+      }
+
+      #settingListBox::-webkit-scrollbar-thumb {
+        background: #b0b0b0;
+        border: solid 3px #e6e6e6;
+        border-radius: 7px;
+      }
+
+      #settingListBox::-webkit-scrollbar-thumb:hover {
+        background: #8a8a8a;
       }
     }
   </style>
