@@ -3,7 +3,7 @@ Chrome extension for mouseover translation - Mouse over to translate using googl
 When mouse hover on text, it shows translated tooltip in any desired language.    
 
 There is technical issue on 0.1.13 version.    
-Currently, I unpublish extension by my own decision for stop newer installer to use not working extension.     
+Currently, I unpublish extension by my own decision for stop new installer to use not working extension.     
 Newer version 0.1.15 version is reviewing on chrome web store for now.   
 download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc?hl=en)   
 
