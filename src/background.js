@@ -146,8 +146,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       data: translatorData,
       success: function(data) {
         if (currentSetting["translatorVendor"] == "google") {
-          detectedLang = data[0][0][2];
-          translatedText = data[0][0][0][0][0];
+          if (data.sentences) {
+            data.sentences.forEach(function(sentences) {
+              if (sentences.trans) {
+                translatedText += sentences.trans;
+              }
+            })
+          }
+          detectedLang=data.src;
         } else {
           detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
           translatedText = data[0]["translations"][0]["text"];
