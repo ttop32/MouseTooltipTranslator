@@ -22,7 +22,7 @@ for locale in localeList:
     
     manifestDict ={   
       "appName": {
-        "message": "Mouseover Translator"
+        "message": "Mouse Tooltip Translator"
       },
       "appDesc": {
         "message": translate_text
