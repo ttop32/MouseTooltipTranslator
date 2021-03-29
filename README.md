@@ -67,6 +67,9 @@ npm run build
 - [Vue.js](https://vuejs.org/)
 - [vuetify](https://vuetifyjs.com/en/)
 - [vue jsx](https://github.com/vuejs/jsx)
+- [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
+- [review by doitreview](https://doitreview.tistory.com/68?category=915950)
+- [review by parbat0305](https://parbat0305.tistory.com/527)
 
 
 
