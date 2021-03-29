@@ -1,7 +1,8 @@
 {
-  "name": "Mouse Tooltip Translator",
-  "description": "Mouseover translation - Mouseover to translate using google translate",
-  "version": "0.1.17",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "0.1.18",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
