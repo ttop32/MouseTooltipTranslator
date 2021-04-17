@@ -8,10 +8,8 @@
     "build": "webpack --mode=production --config config/webpack.config.js"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/preset-env": "^7.12.16",
+    "@mdi/font": "^5.9.55",
     "@mdi/js": "^5.9.55",
-    "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
     "deepmerge": "^4.2.2",
@@ -26,8 +24,6 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
-    "@vue/babel-preset-jsx": "^1.2.4",
     "bootstrap": "^4.5.3",
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",

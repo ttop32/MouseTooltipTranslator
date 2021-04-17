@@ -4,11 +4,14 @@
 //save and load setting from background.js
 
 import "typeface-roboto/index.css"; //font for vuetify
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 import 'vuetify/dist/vuetify.min.css'; //vuetify css
 import Vue from 'vue'; //vue framework
 import Vuetify from 'vuetify'; //vue style
 
+
 Vue.use(Vuetify);
+
 
 
 var langList = {
@@ -279,89 +282,93 @@ var settingList = {
     "description": "OCR Detection Language",
     "optionList": ocrLangList
   }
+};
+
+
+var aboutPageList = {
+  "extensionSetting": {
+    name: "Extension Setting",
+    sub_name: chrome.runtime.getManifest().version, //manifest version
+    url: "chrome://extensions/?id=lipgjejlkhodmdnilcdfkgpfihdepnmj",
+    icon: "mdi-cog"
+  },
+  "reviewPage": {
+    name: "Review Page",
+    sub_name: "Comment on this extension",
+    url: "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+    icon: "mdi-message-draw"
+  },
+  "sourceCode": {
+    name: "Source code",
+    sub_name: "Check source code in github",
+    url: "https://github.com/ttop32/MouseTooltipTranslator",
+    icon: "mdi-github"
+  },
+  "privacyPolicy": {
+    name: "Privacy Policy",
+    sub_name: "User privacy policy",
+    url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
+    icon: "mdi-shield-account"
+  },
 }
-var currentSetting;
 
-//load setting from chrome storage
-//then, load setting html
-document.addEventListener('DOMContentLoaded', function() {
-  chrome.runtime.sendMessage({
-      type: 'loadSetting'
-    },
-    response => {
-      currentSetting = response;
-      loadSettingHtml();
-    }
-  );
-});
 
-function loadSettingHtml() {
-  new Vue({
-    render() {
-      var selectList = [];
-      var thisVue = this;
-      Object.keys(this.settingList).forEach(key => {
-        // console.log(this.selectedList[key]);
-        var changeFunc = function(event) {
-          thisVue.onChange(event, key)
-        };
-        selectList.push(
-          <v-list-item>
-          <v-select items={Object.keys(this.settingList[key].optionList)} label={this.settingList[key].description}  vModel={this.selectedList[key]} vOn:change={changeFunc}> </v-select>
-          </v-list-item>
-        );
+
+new Vue({
+  data: {
+    settingList: settingList,
+    selectedList: {},
+    showAbout: false,
+    aboutPageList: aboutPageList,
+    currentSetting: {}
+  },
+  async beforeCreate() {
+    //loadSettingFromBackground
+    this.currentSetting = await new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage({
+        type: 'loadSetting'
+      }, response => {
+        resolve(response);
       });
+    });
 
-      return (
-        <v-app>
-         <v-card tile flat>
-           <v-toolbar color="blue" dark dense>
-             <v-toolbar-title>
-               Mouseover Translator
-             </v-toolbar-title>
-           </v-toolbar>
-           <v-list flat id="settingListBox">
-             {selectList}
-           </v-list>
-         </v-card>
-       </v-app>
+    this.loadSelectListFromSetting();
+  },
+  methods: {
+    loadSelectListFromSetting(){
+      var result = {}
+      //transform currentSetting(name:option_select_id) to selectedList(name:option_select_name)
+      for (const [key_option_id, val_selected_id1] of Object.entries(this.currentSetting)) {
+          for (const [key_selected_name, val_selected_id2] of Object.entries(settingList[key_option_id]["optionList"])) {
+              if (val_selected_id1 == val_selected_id2) {
+                result[key_option_id] = key_selected_name;
+              }
+          }
+      }
+      this.selectedList = result;
+    },
+    onSelectChange(event, name) {
+      this.currentSetting[name] = settingList[name]["optionList"][event];
+      this.changeSetting();
+    },
+    changeSetting() {
+      chrome.runtime.sendMessage({ //save setting from background.js
+          type: 'saveSetting',
+          options: this.currentSetting
+        },
+        response => {}
       );
     },
-    vuetify: new Vuetify({
-      icons: {
-        iconfont: 'mdiSvg'
-      }
-    }),
-    data: {
-      settingList: settingList,
-      selectedList: getVueSelectList()
+    openUrl(newURL) {
+      chrome.tabs.create({
+        url: newURL
+      });
     },
-    methods: {
-      onChange: function(event, name) {
-        currentSetting[name] = settingList[name]["optionList"][event];
-        changeSetting();
-      }
+  },
+  el: '#app',
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdi'
     }
-  }).$mount('#app');
-}
-
-function getVueSelectList() { //get selected option key dictionary by value
-  var result = {}
-  Object.keys(currentSetting).forEach(function(key) {
-    Object.keys(settingList[key]["optionList"]).forEach(function(selectKey) {
-      if (settingList[key]["optionList"][selectKey] == currentSetting[key]) {
-        result[key] = selectKey;
-      }
-    });
-  });
-  return result;
-}
-
-function changeSetting() {
-  chrome.runtime.sendMessage({ //save setting from background.js
-      type: 'saveSetting',
-      options: currentSetting
-    },
-    response => {}
-  );
-}
+  }),
+});

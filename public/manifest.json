@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "manifest_version": 2,
   "icons": {
     "16": "icons/icon_16.png",
@@ -10,7 +10,7 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking"],
+  "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking","tabs"],
   "web_accessible_resources": ["pdfjs/web/viewer.html"],
   "content_security_policy": "script-src 'self' 'unsafe-eval';  object-src 'none'",
 
@@ -29,7 +29,7 @@
     "scripts": ["background.js"]
   },
   "browser_action": {
-    "default_title": "Mouseover Translator",
+    "default_title": "Mouse Tooltip Translator",
     "default_popup": "popup.html"
   },
   "options_ui": {
