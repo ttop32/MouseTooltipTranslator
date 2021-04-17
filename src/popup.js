@@ -289,7 +289,7 @@ var aboutPageList = {
   "extensionSetting": {
     name: "Extension Setting",
     sub_name: chrome.runtime.getManifest().version, //manifest version
-    url: "chrome://extensions/?id=lipgjejlkhodmdnilcdfkgpfihdepnmj",
+    url: "chrome://extensions/?id=hmigninkgibhdckiaphhmbgcghochdjc",
     icon: "mdi-cog"
   },
   "reviewPage": {
@@ -335,15 +335,15 @@ new Vue({
     this.loadSelectListFromSetting();
   },
   methods: {
-    loadSelectListFromSetting(){
+    loadSelectListFromSetting() {
       var result = {}
       //transform currentSetting(name:option_select_id) to selectedList(name:option_select_name)
       for (const [key_option_id, val_selected_id1] of Object.entries(this.currentSetting)) {
-          for (const [key_selected_name, val_selected_id2] of Object.entries(settingList[key_option_id]["optionList"])) {
-              if (val_selected_id1 == val_selected_id2) {
-                result[key_option_id] = key_selected_name;
-              }
+        for (const [key_selected_name, val_selected_id2] of Object.entries(settingList[key_option_id]["optionList"])) {
+          if (val_selected_id1 == val_selected_id2) {
+            result[key_option_id] = key_selected_name;
           }
+        }
       }
       this.selectedList = result;
     },
