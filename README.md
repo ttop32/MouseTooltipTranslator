@@ -34,8 +34,7 @@ npm i @mdi/js -D
 npm i sass sass-loader deepmerge -D    
 npm i --save typeface-roboto     
 npm i url-loader --save-dev     
-npm i -D babel-loader @babel/core @babel/preset-env    
-npm i @vue/babel-preset-jsx @vue/babel-helper-vue-jsx-merge-props    
+npm install @mdi/font -D    
 
 # Run watch   
 npm run watch       
@@ -66,7 +65,7 @@ npm run build
 - [miricanvas](https://www.miricanvas.com/)
 - [Vue.js](https://vuejs.org/)
 - [vuetify](https://vuetifyjs.com/en/)
-- [vue jsx](https://github.com/vuejs/jsx)
+- [floating-maple-leaf](https://www.freeimages.com/photo/floating-maple-leaf-1171688)
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
 - [review by parbat0305](https://parbat0305.tistory.com/527)
