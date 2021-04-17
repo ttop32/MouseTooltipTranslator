@@ -69,7 +69,7 @@ npm run build
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
 - [review by parbat0305](https://parbat0305.tistory.com/527)
-- [review by quantumgaea](https://blog.naver.com/PostView.nhn?blogId=quantumgaea&logNo=222254404573&widgetTypeCall=true)
+- [review by quantumgaea](https://blog.naver.com/quantumgaea/222254404573)
 
 
 
