@@ -10,7 +10,7 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking","tabs"],
+  "permissions": ["storage", "<all_urls>", "webRequest", "webRequestBlocking", "tabs"],
   "web_accessible_resources": ["pdfjs/web/viewer.html"],
   "content_security_policy": "script-src 'self' 'unsafe-eval';  object-src 'none'",
 
