@@ -70,6 +70,8 @@ npm run build
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
 - [review by parbat0305](https://parbat0305.tistory.com/527)
 - [review by quantumgaea](https://blog.naver.com/quantumgaea/222254404573)
+- [review by yyaasema](https://blog.naver.com/yyaasema/222251147172)
+- [review by eduvantage](https://blog.naver.com/eduvantage/222253462689)
 
 
 
