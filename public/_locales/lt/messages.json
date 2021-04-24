@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseol vertimas - Versti Mouseover Text naudojant Google Translate. "
+		"message": "\"Mouseover\" versti - pelės įrankių vertėjas Versti Mouseover Text naudojant Google Translate. "
 	}
 }

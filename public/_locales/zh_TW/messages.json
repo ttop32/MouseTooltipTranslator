@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover翻譯 - 使用Google Translate翻譯MouseOver文本。 "
+		"message": "MouseOver Translate  - 鼠標工具提示翻譯使用Google Translate翻譯鼠標懸停文本。 "
 	}
 }

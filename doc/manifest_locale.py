@@ -14,7 +14,7 @@ for locale in localeList:
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     
 
-    descOri="Mouseover translation - translate mouseover text using google translate."
+    descOri="Mouseover Translate : Mouse Tooltip Translator translate mouseover text using Google Translate."
     translate_text = translator.translate(descOri,lang_tgt=locale)  
     print(translate_text)
 
@@ -22,7 +22,7 @@ for locale in localeList:
     
     manifestDict ={   
       "appName": {
-        "message": "Mouse Tooltip Translator"
+        "message": "Mouse Tooltip Translator -Mouseover Translate"
       },
       "appDesc": {
         "message": translate_text

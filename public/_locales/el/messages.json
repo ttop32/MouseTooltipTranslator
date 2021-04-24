@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover Μετάφραση - μεταφράστε το κείμενο Mouseover χρησιμοποιώντας το Google Translate. "
+		"message": "Mouseover Μετάφραση - Μεταφραστής εργαλείων ποντικιού Μεταφράστε το κείμενο Mouseover χρησιμοποιώντας το Google Translate. "
 	}
 }

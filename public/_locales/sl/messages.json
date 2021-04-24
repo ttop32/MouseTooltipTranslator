@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Prevajanje mišic - Prevedi MouseOver Besedilo z Google Translates. "
+		"message": "MouseOver Translate - Mouse ToolTip Translated Prevedi MouseOver Besedilo z Google Translate. "
 	}
 }
