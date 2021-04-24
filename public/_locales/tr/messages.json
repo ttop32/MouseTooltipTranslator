@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover Tercüme - Mouseover metnini Google Translate'u kullanarak çevirin. "
+		"message": "Mouseover Çevir - Fare ToolTip Tercüman, Google Translate'u Kullanarak Mouseover Metin Çevirin. "
 	}
 }
