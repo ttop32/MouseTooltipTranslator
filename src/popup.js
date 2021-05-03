@@ -239,7 +239,14 @@ var tooltipFontSizeList = {}; //font size 5 to 20
 for (let i = 5; i < 21; i++) {
   tooltipFontSizeList[i] = i;
 }
+var detectTypeList = {
+  'Word': 'word',
+  'Sentence': 'sentence',
+  'Container': 'container'
+}
 
+var translateReverseTargetList = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
+translateReverseTargetList['None'] = "null";
 
 var settingList = {
   "useTooltip": {
@@ -273,6 +280,14 @@ var settingList = {
   "keyDownTTS": {
     "description": "TTS Activation Hold Key",
     "optionList": keyList
+  },
+  "detectType": {
+    "description": "Detect Type",
+    "optionList": detectTypeList
+  },
+  "translateReverseTarget": {
+    "description": "Reverse Translate Language",
+    "optionList": translateReverseTargetList
   },
   "useOCR": {
     "description": "Enable OCR (Experimental)",
@@ -349,6 +364,17 @@ new Vue({
     },
     onSelectChange(event, name) {
       this.currentSetting[name] = settingList[name]["optionList"][event];
+
+      //when activation hold key is set, turn off permanent feature enable
+      if (name == "keyDownTooltip" && settingList[name]["optionList"][event] != null) {
+        this.currentSetting["useTooltip"] = "false";
+        this.selectedList["useTooltip"] = "Off";
+      }
+      if (name == "keyDownTTS" && settingList[name]["optionList"][event] != null) {
+        this.currentSetting["useTTS"] = "false";
+        this.selectedList["useTTS"] = "Off";
+      }
+
       this.changeSetting();
     },
     changeSetting() {

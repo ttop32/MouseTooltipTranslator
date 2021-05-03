@@ -23,9 +23,10 @@ var defaultList = {
   "tooltipFontSize": "14",
   "keyDownTooltip": "null",
   "keyDownTTS": "null",
+  'detectType': 'sentence',
+  "translateReverseTarget" :"null",
   "useOCR": "false",
   "ocrDetectionLang": "jpn_vert",
-
 }
 var currentAudio = null;
 var bingLangCode = {
@@ -127,7 +128,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       var translatorData = {
         q: request.word,
         sl: currentSetting["translateSource"], //source lang
-        tl: currentSetting["translateTarget"] //target lang
+        tl: request.translateTarget //target lang
       };
 
     } else {
@@ -135,7 +136,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       var translatorData = {
         text: request.word,
         fromLang: bingLangCode[currentSetting["translateSource"]], //source lang
-        to: bingLangCode[currentSetting["translateTarget"]] //target lang
+        to: bingLangCode[request.translateTarget] //target lang
       };
     }
 
@@ -153,7 +154,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
               }
             })
           }
-          detectedLang=data.src;
+          detectedLang = data.src;
         } else {
           detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
           translatedText = data[0]["translations"][0]["text"];
