@@ -79,7 +79,8 @@ $(document).ready(function() {
       "position": "fixed",
       "z-index": "1070",
       "width": "200px",
-      "margin-left": "-100px" /* Negative half of width. */
+      "margin-left": "-100px"
+      /* Negative half of width. */
     }
   }).appendTo(document.body);
 
@@ -92,35 +93,40 @@ $(document).ready(function() {
 });
 
 //determineTooltipShowHide : word detection, show & hide
-setInterval(function() {
+setInterval(async function() {
   if (document.visibilityState == "visible" && mouseMoved == true && settingLoaded == true) { //only work when tab is activated and when mousemove
     var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
     word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
     if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
-      translateSentence(word, function(response) {
-        activatedWord = word;
+      var response = await translateSentence(word, currentSetting["translateTarget"]);
+      activatedWord = word;
 
-        //if empty
-        //if source lang is equal to target lang
-        //if tooltip is not on and activation key is not pressed,
-        //then, hide
-        if (response.translatedText == "" || currentSetting["translateTarget"] == response.lang || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
-          hideTooltip();
-
+      //if lang are same, reverse translate
+      if (currentSetting["translateTarget"] == response.lang) {
+        if (currentSetting["translateReverseTarget"] != "null") {
+          var response = await translateSentence(word, currentSetting["translateReverseTarget"]);
         } else {
-          tooltipContainer.attr('data-original-title', response.translatedText);
-          doProcessPos = true;
-          setTooltipPosition();
-          tooltipContainer.tooltip("show");
+          response.translatedText = "";
         }
+      }
 
-        //if use_tts is on or activation key is pressed
-        if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
-          tts(word, response.lang);
-        }
+      //if empty
+      //if tooltip is not on and activation key is not pressed,
+      //then, hide
+      if (response.translatedText == "" || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
+        hideTooltip();
+      } else {
+        tooltipContainer.attr('data-original-title', response.translatedText);
+        doProcessPos = true;
+        setTooltipPosition();
+        tooltipContainer.tooltip("show");
+      }
 
-      });
+      //if use_tts is on or activation key is pressed
+      if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
+        tts(word, response.lang);
+      }
     } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
       activatedWord = null;
       tooltipContainer.tooltip("hide");
@@ -140,7 +146,18 @@ function getMouseOverWord(clientX, clientY) {
   if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
     return "";
   }
-  range.expand('sentence'); //range.expand('word');
+
+  //expand range
+  if (currentSetting["detectType"] == "word") {
+    range.expand('word');
+  } else if (currentSetting["detectType"] == "sentence") {
+    range.expand('sentence');
+  } else if (currentSetting["detectType"] == "container") {
+    //range.expand('textedit');
+    range.setStart(range.startContainer, 0);
+    range.setEnd(range.startContainer, range.startContainer.data.length);
+  }
+
   var rect = range.getBoundingClientRect(); //mouse in word rect
   if (rect.left > clientX || rect.right < clientX ||
     rect.top > clientY || rect.bottom < clientY) {
@@ -174,20 +191,16 @@ function changeFontSize(size) {
   style.html(`
     .bootstrapiso .tooltip {
       font-size: ` + size + `px;
-    }`
-  );
+    }`);
 }
 
 //send to background.js for background processing and setting handling ===========================================================================
-function translateSentence(word, callbackFunc) {
-  chrome.runtime.sendMessage({
-      type: 'translate',
-      word: word
-    },
-    function(response) {
-      callbackFunc(response);
-    }
-  );
+function translateSentence(word, translateTarget) {
+  return sendMessagePromise({
+    type: 'translate',
+    word: word,
+    translateTarget: translateTarget
+  });
 }
 
 function tts(word, lang) {
