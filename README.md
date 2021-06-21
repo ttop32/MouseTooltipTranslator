@@ -35,6 +35,7 @@ npm i sass sass-loader deepmerge -D
 npm i --save typeface-roboto     
 npm i url-loader --save-dev     
 npm install @mdi/font -D    
+npm i axios
 
 # Run watch   
 npm run watch       
@@ -65,6 +66,7 @@ npm run build
 - [miricanvas](https://www.miricanvas.com/)
 - [Vue.js](https://vuejs.org/)
 - [vuetify](https://vuetifyjs.com/en/)
+- [bing-translate-api](https://github.com/plainheart/bing-translate-api)
 - [floating-maple-leaf](https://www.freeimages.com/photo/floating-maple-leaf-1171688)
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
