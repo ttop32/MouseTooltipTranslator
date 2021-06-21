@@ -10,7 +10,7 @@
 //tooltip background===========================================================================
 import $ from "jquery";
 var loadScriptOnce = require('load-script-once');
-
+const axios = require('axios');
 
 
 var currentSetting = {};
@@ -120,62 +120,7 @@ var bingLangCodeOpposite = swap(bingLangCode); // swap key value
 //listen from contents js and background js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.type === 'translate') {
-    var detectedLang = "";
-    var translatedText = "";
-
-    if (currentSetting["translatorVendor"] == "google") {
-      var translatorUrl = "https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
-      var translatorData = {
-        q: request.word,
-        sl: currentSetting["translateSource"], //source lang
-        tl: request.translateTarget //target lang
-      };
-
-    } else {
-      var translatorUrl = "https://www.bing.com/ttranslatev3";
-      var translatorData = {
-        text: request.word,
-        fromLang: bingLangCode[currentSetting["translateSource"]], //source lang
-        to: bingLangCode[request.translateTarget] //target lang
-      };
-    }
-
-    $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: translatorUrl,
-      data: translatorData,
-      success: function(data) {
-        if (currentSetting["translatorVendor"] == "google") {
-          if (data.sentences) {
-            data.sentences.forEach(function(sentences) {
-              if (sentences.trans) {
-                translatedText += sentences.trans;
-              }
-            })
-          }
-          detectedLang = data.src;
-        } else {
-          detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
-          translatedText = data[0]["translations"][0]["text"];
-        }
-
-        sendResponse({
-          "translatedText": translatedText,
-          "lang": detectedLang
-        });
-      },
-      error: function(xhr, status, error) {
-        console.log({
-          error: error,
-          xhr: xhr
-        });
-        sendResponse({
-          "translatedText": "",
-          "lang": "en"
-        });
-      }
-    });
+    doTranslate(request, sendResponse);
 
   } else if (request.type === 'tts') {
     if (currentAudio != null) { //stop current played tts
@@ -238,6 +183,111 @@ function loadSetting(callback) {
   });
 }
 loadSetting();
+
+
+
+
+
+// translate ===========================================================
+
+let bingGlobalConfig;
+async function fetchBingGlobalConfig() {
+  // https://github.com/plainheart/bing-translate-api
+  function isTokenExpired() {
+    if (!bingGlobalConfig) {
+      return true
+    }
+    const { key, tokenExpiryInterval } = bingGlobalConfig
+    return Date.now() - key > tokenExpiryInterval
+  }
+
+  if(isTokenExpired()){ //get new token if expired
+    let token
+    let key
+    let tokenTs
+    let tokenExpiryInterval
+    try {
+      const {data, headers}=await axios.get('https://www.bing.com/translator', );
+      const [_key, _token, interval] = new Function(`return ${data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]}`)();
+      key =  _key;
+      token = _token;
+      tokenExpiryInterval = interval;
+    } catch (e) {
+      console.error('failed to fetch global config', e)
+      throw e
+    }
+    return {
+      key,
+      token,
+      tokenExpiryInterval,
+    }
+  }else{
+    return bingGlobalConfig;
+  }
+}
+
+
+async function doTranslate(request, sendResponse) {
+  var detectedLang = "";
+  var translatedText = "";
+
+  if (currentSetting["translatorVendor"] == "google") {
+    var translatorUrl = "https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
+    var translatorData = {
+      q: request.word,
+      sl: currentSetting["translateSource"], //source lang
+      tl: request.translateTarget //target lang
+    };
+
+  } else {
+    bingGlobalConfig=await fetchBingGlobalConfig();
+    var translatorUrl = "https://www.bing.com/ttranslatev3";
+    var translatorData = {
+      text: request.word,
+      fromLang: bingLangCode[currentSetting["translateSource"]], //source lang
+      to: bingLangCode[request.translateTarget], //target lang
+      token:bingGlobalConfig.token,
+      key:bingGlobalConfig.key,
+    };
+  }
+
+  $.ajax({
+    type: "POST",
+    dataType: "json",
+    url: translatorUrl,
+    data: translatorData,
+    success: function(data) {
+      if (currentSetting["translatorVendor"] == "google") {
+        if (data.sentences) {
+          data.sentences.forEach(function(sentences) {
+            if (sentences.trans) {
+              translatedText += sentences.trans;
+            }
+          })
+        }
+        detectedLang = data.src;
+      } else {  //if bing
+        detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
+        translatedText = data[0]["translations"][0]["text"];
+      }
+
+      sendResponse({
+        "translatedText": translatedText,
+        "lang": detectedLang
+      });
+    },
+    error: function(xhr, status, error) {
+      console.log({
+        error: error,
+        xhr: xhr
+      });
+      sendResponse({
+        "translatedText": "",
+        "lang": "en"
+      });
+    }
+  });
+}
 
 
 // ocr ===========================================================
