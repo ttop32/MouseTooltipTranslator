@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover Translate - Mouse Tooltip Tulkotājs Tulkot Mouseover tekstu, izmantojot Google Translate. "
+		"message": "Mouseover Tulkot: Mouse Tooltip Tulkotājs Tulkot Mouseover tekstu, izmantojot Tulkotājs API "
 	}
 }
