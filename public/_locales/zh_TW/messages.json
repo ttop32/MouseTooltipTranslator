@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "MouseOver Translate  - 鼠標工具提示翻譯使用Google Translate翻譯鼠標懸停文本。 "
+		"message": "MouseOver Translate：鼠標工具提示轉換器使用翻譯API將鼠標懸浮文本翻譯 "
 	}
 }

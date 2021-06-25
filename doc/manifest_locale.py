@@ -13,8 +13,8 @@ for locale in localeList:
     dst='./_locales/'+locale+'/messages.json'
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     
+    descOri="Mouseover Translate : Mouse Tooltip Translator translate mouseover text using translator API"
 
-    descOri="Mouseover Translate : Mouse Tooltip Translator translate mouseover text using Google Translate."
     translate_text = translator.translate(descOri,lang_tgt=locale)  
     print(translate_text)
 
