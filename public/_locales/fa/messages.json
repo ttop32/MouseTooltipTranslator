@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "MoureOver Translate - Mouse Tooltip Translator ترجمه متن ماوسور با استفاده از Google Translate. "
+		"message": "MoureOver Translate: Mouse Tooltip Translator ترجمه متن ماوسور با استفاده از مترجم API "
 	}
 }

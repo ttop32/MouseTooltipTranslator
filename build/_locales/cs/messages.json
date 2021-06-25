@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover Přeložit - Mouse Tooltip překladatel přeložit text Mouseover Text pomocí Google Translate. "
+		"message": "Mouseover Přeložit: Mouse Tooltip překladatel přeložit text Mouseover Text pomocí překladatele API "
 	}
 }

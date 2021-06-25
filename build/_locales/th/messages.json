@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator -Mouseover Translate"
 	},
 	"appDesc": {
-		"message": "Mouseover Translate - Mouse Tooltip Tooltip แปลข้อความ MouseOver โดยใช้ Google Translate "
+		"message": "Mouseover Translate: เครื่องมือ Mouse Tooltip แปลข้อความ MouseOver ข้อความโดยใช้ Translator API "
 	}
 }
