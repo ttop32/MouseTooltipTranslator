@@ -19,6 +19,10 @@ If pop-over translate tooltip is not came out properly after installation, user 
 https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md
 
 # Change Log
+- 0.1.25
+  - google reject by “Having excessive keywords in description”
+    - Google anonunce "Irrelevant information about Mouseover Translate" again
+    - remove all main description
 - 0.1.24
   - google reject by “Having excessive keywords in description”
     - Google anonunce "Irrelevant information about Mouseover Translate"
