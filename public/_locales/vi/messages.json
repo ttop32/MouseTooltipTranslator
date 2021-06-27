@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "MOWIONOVER Dịch: Mouse Tooltip Translator Dịch văn bản MouseOver bằng cách sử dụng API dịch giả "
+		"message": "Mouse Tooltip Translator Dịch văn bản MouseOver bằng API dịch giả "
 	}
 }

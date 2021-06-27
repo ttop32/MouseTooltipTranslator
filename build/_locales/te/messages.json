@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouseover అనువదించు: మౌస్ టూల్టిప్లో అనువాదకుడు ట్రాన్స్లేటర్ API ఉపయోగించి Mouseover టెక్స్ట్ అనువదించు "
+		"message": "మౌస్ టూల్టిప్లో అనువాదకుడు ట్రాన్స్లేటర్ API ఉపయోగించి Mouseover టెక్స్ట్ అనువదించు "
 	}
 }

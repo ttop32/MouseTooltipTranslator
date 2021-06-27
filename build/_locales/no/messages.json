@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "MouseOver Oversett: Mouse ToolTip Translator Oversett Mouseover Tekst med oversetter API "
+		"message": "Mouse ToolTip Translator Oversett Mouseover tekst med oversetter API "
 	}
 }

@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Egéráthúzási Fordítás : Mouse Tooltip Fordító lefordítani egéráthúzáskor szöveget fordító API "
+		"message": "Egér Tooltip Translator lefordítani egéráthúzáskor szöveget fordító API "
 	}
 }

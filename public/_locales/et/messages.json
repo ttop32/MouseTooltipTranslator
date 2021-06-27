@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouseover Tõlgi: Hiire tööriista Translator Tõlgi Mouseover Tekst tõlkija API abil "
+		"message": "Hiire tööriista Translator Tõlgi Mouseover Tekst tõlkija API abil "
 	}
 }
