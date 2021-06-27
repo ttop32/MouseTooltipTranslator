@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator -Mouseover Translate"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouseover Translate : 마우스 툴팁 번역기 Translator API를 사용하여 마우스 툴팁 번역기 "
+		"message": "마우스 툴팁 번역기는 Translator API를 사용하여 마우스 오버 텍스트를 번역합니다 "
 	}
 }
