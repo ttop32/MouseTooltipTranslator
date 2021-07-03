@@ -77,10 +77,9 @@ $(document).ready(function() {
       "left": 0,
       "top": 0,
       "position": "fixed",
-      "z-index": "1070",
-      "width": "200px",
-      "margin-left": "-100px"
-      /* Negative half of width. */
+      "z-index": "100000200",
+      "width": "500px",
+      "margin-left": "-250px",
     }
   }).appendTo(document.body);
 
@@ -187,13 +186,6 @@ function setTooltipPosition() {
   }
 }
 
-function changeFontSize(size) {
-  style.html(`
-    .bootstrapiso .tooltip {
-      font-size: ` + size + `px;
-    }`);
-}
-
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, translateTarget) {
   return sendMessagePromise({
@@ -227,7 +219,7 @@ function getSetting() { //load  setting from background js
     },
     response => {
       currentSetting = response;
-      changeFontSize(currentSetting["tooltipFontSize"]);
+      changeTooltipStyle(currentSetting);
       settingLoaded = true;
     }
   );
@@ -237,8 +229,19 @@ chrome.storage.onChanged.addListener(function(changes, namespace) { //update cur
   for (var key in changes) {
     currentSetting[key] = changes[key].newValue;
   }
-  changeFontSize(currentSetting["tooltipFontSize"]);
+  changeTooltipStyle(currentSetting);
 });
+
+function changeTooltipStyle(setting) {
+  style.html(`
+    .bootstrapiso .tooltip {
+      font-size: ` + setting["tooltipFontSize"] + `px;
+    }
+    .bootstrapiso .tooltip-inner {
+      max-width: ` + setting["tooltipWidth"] + `px;
+    }
+    `);
+}
 
 
 //ocr==================================================================================

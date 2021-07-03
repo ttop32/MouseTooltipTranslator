@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "עכבר Tooltip Translator תרגם טקסט עכבר באמצעות מתרגם API "
+		"message": "עכבר Tooltip מתרגם תרגם טקסט עכבר באמצעות Google ו בינג מתרגם "
 	}
 }

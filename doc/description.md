@@ -19,6 +19,10 @@ If pop-over translate tooltip is not came out properly after installation, user 
 https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md
 
 # Change Log
+- 0.1.26  
+  - increase tooltip z-index for particular site (request by WM)  
+  - add customization feature on tooltip width (request by Bambang Sutrisno)  
+  - change description  
 - 0.1.25
   - google reject by “Having excessive keywords in description”
     - Google anonunce "Irrelevant information about Mouseover Translate" again
@@ -126,7 +130,12 @@ https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md
   - Fix key hold error (issue on tab switching)
 - 0.1.0   
   - First release
-# Main Description 
+
+# Supported Translation Languages
+English, Russian, Japanese, Chinese, German and so on
+  
+  
+# Description 
 Mouse tooltip translator is a google chrome extension that focus on providing convenient translate experience for user. To achieve convenient translate experience, this translator extension minimize current generally required step to translate word in website. In modern days, copying and pasting are getting generalized to obtain translated sentence from google translate site. This extension uses text hovering event to decide which text is required to be translated for user. It automatically detects pointed area and it collect near words to group them as sentence for sentence translate service. This translator extension translate mouse pointed sentence text into user desired language text using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with clean pop-over tooltip. User does not require any other more action for translate text. This extension process surely replaces general user translation action process which open new tab for using google translate to getting translated sentence.    
 This extension is positioned between user and translator API (google translate and Bing translator) for providing simple translate experience with google translate service. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension handles given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Translator vendors provide multilingual translate service which support more than 100 language translate. In this translator extension’s popup setting page, supported translate language list is provide to user. User can select any user desired translate language for google translate in this translator extension. Not only support google translate but also support Bing translator to give variety on user translate experience in this translator extension. Currently, this translator extension does not have any planned yet to support other translator like naver translate service, papago translator and yandex translator. Papago translator API is payment requirement service to use. This free serviced tooltip translator does not have any handling way to deal with payment on translate service for papago translator.    
 In this translator extension, user does not require a process to select source translate language for translate because this extension handle language detection feature based on google translate language detection. This translator extension sends its mouse pointer text data to google translate and receive translated text with language detection data at the same time. Google translate provide detected language type of given text and its translated text in one json format data. This translator extension handles its auto language detection feature which provide ease on user to minimize user interaction on source language selection for translate. Most of web site text does not require to provide source language selection to determine language to translate. This translator extension uses google auto language detection feature to automatically understand its source language to translate correctly with google translate. User can use this feature by select “auto” in this translator extension’s pop-up configuration page. If user want to use google translate in specified source language translate service, this translator extension provides source language selection on pop up configuration page to select to use google translate in any user desired source language.    

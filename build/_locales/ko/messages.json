@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "마우스 툴팁 번역기는 Translator API를 사용하여 마우스 오버 텍스트를 번역합니다 "
+		"message": "마우스 툴팁 번역기 Google 및 Bing Translator를 사용하여 마우스 오버 텍스트 번역 "
 	}
 }
