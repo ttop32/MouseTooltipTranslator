@@ -3,6 +3,6 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator translate mouseover text using translator API "
+		"message": "Mouse Tooltip Translator translate mouseover text using google and bing translator "
 	}
 }

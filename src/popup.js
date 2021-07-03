@@ -248,6 +248,13 @@ var detectTypeList = {
 var translateReverseTargetList = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
 translateReverseTargetList['None'] = "null";
 
+
+var tooltipWidth={};
+for (let i = 100; i < 600; i+=100) {
+  tooltipWidth[i] = i;
+}
+
+
 var settingList = {
   "useTooltip": {
     "description": "Enable Tooltip",
@@ -269,10 +276,6 @@ var settingList = {
     "description": "Translator",
     "optionList": translatorList
   },
-  "tooltipFontSize": {
-    "description": "Tooltip Font Size",
-    "optionList": tooltipFontSizeList
-  },
   "keyDownTooltip": {
     "description": "Tooltip Activation Hold Key",
     "optionList": keyList
@@ -280,6 +283,14 @@ var settingList = {
   "keyDownTTS": {
     "description": "TTS Activation Hold Key",
     "optionList": keyList
+  },
+  "tooltipFontSize": {
+    "description": "Tooltip Font Size",
+    "optionList": tooltipFontSizeList
+  },
+  "tooltipWidth":{
+    "description": "Tooltip Width",
+    "optionList": tooltipWidth
   },
   "detectType": {
     "description": "Detect Type",
