@@ -19,6 +19,9 @@ If pop-over translate tooltip is not came out properly after installation, user 
 https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md
 
 # Change Log
+- 0.1.27
+  - support youtube subtitle cpation to show tooltip (request by Veratyr) 
+  - fix gmail pdf attachment crash (request by junkey)
 - 0.1.26  
   - increase tooltip z-index for particular site (request by WM)  
   - add customization feature on tooltip width (request by Bambang Sutrisno)  
