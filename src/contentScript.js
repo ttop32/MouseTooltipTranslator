@@ -140,23 +140,26 @@ function getMouseOverWord(clientX, clientY) {
     return imageOutput;
   }
 
+  //get mouse positioned char
   var range = document.caretRangeFromPoint(clientX, clientY);
   //if no range or is not text, give null
   if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
     return "";
   }
 
-  //expand range
-  if (currentSetting["detectType"] == "word") {
+  //expand char to get word,sentence,
+  //if target is youtube caption, use container
+  if (currentSetting["detectType"] == "container" || mouseTarget.className=="ytp-caption-segment") {
+    //range.expand('textedit');
+    range.setStartBefore(range.startContainer);
+    range.setEndAfter(range.startContainer);
+  }else if (currentSetting["detectType"] == "word") {
     range.expand('word');
   } else if (currentSetting["detectType"] == "sentence") {
     range.expand('sentence');
-  } else if (currentSetting["detectType"] == "container") {
-    //range.expand('textedit');
-    range.setStart(range.startContainer, 0);
-    range.setEnd(range.startContainer, range.startContainer.data.length);
   }
 
+  //check mouse is actually in text bound rect
   var rect = range.getBoundingClientRect(); //mouse in word rect
   if (rect.left > clientX || rect.right < clientX ||
     rect.top > clientY || rect.bottom < clientY) {

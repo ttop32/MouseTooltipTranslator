@@ -26,6 +26,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
+    "crx-hotreload": "^1.0.6",
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
     "load-script-once": "^2.0.1",

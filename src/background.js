@@ -11,6 +11,7 @@
 import $ from "jquery";
 var loadScriptOnce = require('load-script-once');
 const axios = require('axios');
+// var crxHotreload = require('crx-hotreload');
 
 
 var currentSetting = {};
@@ -489,10 +490,18 @@ chrome.webRequest.onHeadersReceived.addListener(({
   method,
   responseHeaders
 }) => {
-  const header = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
-  if (header) {
-    const headerValue = header.value.toLowerCase().split(';', 1)[0].trim();
-    if (headerValue === 'application/pdf') {
+  //skip download header
+  const header1 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-disposition').shift();
+  if (header1) {
+    if (header1.value.toLowerCase().includes("attachment")) {
+      return;
+    }
+  }
+
+  //check content type is pdf
+  const header2 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
+  if (header2) {
+    if (header2.value.toLowerCase().includes("application/pdf") ) {
       return {
         redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
       }
@@ -500,7 +509,7 @@ chrome.webRequest.onHeadersReceived.addListener(({
   }
 }, {
   urls: ['<all_urls>'],
-  types: ['main_frame', "sub_frame"]
+  types: ['main_frame', 'sub_frame']
 }, ['blocking', 'responseHeaders']);
 
 
@@ -509,11 +518,9 @@ chrome.webRequest.onBeforeRequest.addListener(function({
   url,
   method
 }) {
-  if (/\.pdf$/i.test(url)) { // if the resource is a PDF file ends with ".pdf"
-    return {
-      redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url) //url
-    };
-  }
+  return {
+    redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url) //url
+  };
 }, {
   urls: ["file:///*/*.pdf", "file:///*/*.PDF"],
   types: ['main_frame']

@@ -1,0 +1,11 @@
+{
+    "manifest_version": 2,
+
+    "name":        "Chrome Extension Hot Reloader EXAMPLE",
+    "description": "An example extension which demonstrates hot-reloading",
+    "version":     "1.1337.0",
+
+    "background": {
+        "scripts": ["hot-reload.js"]
+    }
+}
