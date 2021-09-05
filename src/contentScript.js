@@ -123,7 +123,7 @@ setInterval(async function() {
 async function processWord(word) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
-  if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
+  if (word && activatedWord != word) { //show tooltip, if current word is changed and word is not none
     var response = await translate(word);
     activatedWord = word;
 
@@ -143,9 +143,9 @@ async function processWord(word) {
     if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
       tts(word, response.lang);
     }
-  } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
+  } else if (!word && activatedWord) { //hide tooltip, if activated word exist and current word is none
     activatedWord = null;
-    tooltipContainer.tooltip("hide");
+    hideTooltip();
   }
 }
 
