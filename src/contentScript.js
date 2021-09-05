@@ -124,8 +124,8 @@ async function processWord(word) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
   if (word && activatedWord != word) { //show tooltip, if current word is changed and word is not none
-    var response = await translate(word);
     activatedWord = word;
+    var response = await translate(word);
 
     //if empty
     //if tooltip is not on and activation key is not pressed,
@@ -185,7 +185,7 @@ function getMouseOverWord(clientX, clientY) {
 }
 
 function filterWord(word) {
-  word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
+  word = word.replace(/\s+/g, ' '); //replace whitespace as single space
   word = word.trim(); // remove whitespaces from begin and end of word
   if (word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url
