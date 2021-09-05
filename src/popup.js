@@ -260,6 +260,14 @@ var settingList = {
     "description": "Enable Tooltip",
     "optionList": toggleList
   },
+  "translateOnHover": {
+    "description": "Translate on hover",
+    "optionList": toggleList
+  },
+  "translateOnSelection": {
+    "description": "Translate on selection",
+    "optionList": toggleList
+  },
   "useTTS": {
     "description": "Enable TTS",
     "optionList": toggleList
