@@ -18,6 +18,8 @@ var currentSetting = {};
 var defaultList = {
   "useTooltip": "true",
   "useTTS": "false",
+  "translateOnHover": "true",
+  "translateOnSelection": "false",
   "translateSource": "auto",
   "translateTarget": window.navigator.language,
   "translatorVendor": "google",

@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import 'bootstrap/js/dist/tooltip';
+import {enableSelectionEndEvent} from "./selection";
 var isUrl = require('is-url');
 
 //init environment======================================================================\
@@ -23,6 +24,7 @@ var keyDownList = { //use key down for enable translation partially
   18: false //alt
 };
 var style = $("<style>").appendTo("head");
+let selectedText = "";
 
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
@@ -91,47 +93,61 @@ $(document).ready(function() {
   });
 });
 
+enableSelectionEndEvent();
+
+document.addEventListener("selectionEnd", async function(event) {
+  // if translate on selection is enabled
+  if (document.visibilityState === "visible" && settingLoaded && currentSetting["translateOnSelection"] === "true") {
+    selectedText = event.selectedText;
+    await processWord(selectedText);
+  }
+}, false);
+
 //determineTooltipShowHide : word detection, show & hide
 setInterval(async function() {
-  if (document.visibilityState == "visible" && mouseMoved == true && settingLoaded == true) { //only work when tab is activated and when mousemove
-    var word = getMouseOverWord(clientX, clientY); //get mouse positioned text
-    word = filterWord(word); //filter out one that is url,over 1000length,no normal char
+  if (selectedText) {
+    return;
+  }
 
-    if (word.length != 0 && activatedWord != word) { //show tooltip, if current word is changed and word is not none
-      var response = await translateSentence(word, currentSetting["translateTarget"]);
-      activatedWord = word;
-
-      //if lang are same, reverse translate
-      if (currentSetting["translateTarget"] == response.lang) {
-        if (currentSetting["translateReverseTarget"] != "null") {
-          var response = await translateSentence(word, currentSetting["translateReverseTarget"]);
-        } else {
-          response.translatedText = "";
-        }
-      }
-
-      //if empty
-      //if tooltip is not on and activation key is not pressed,
-      //then, hide
-      if (response.translatedText == "" || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
-        hideTooltip();
-      } else {
-        tooltipContainer.attr('data-original-title', response.translatedText);
-        doProcessPos = true;
-        setTooltipPosition();
-        tooltipContainer.tooltip("show");
-      }
-
-      //if use_tts is on or activation key is pressed
-      if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
-        tts(word, response.lang);
-      }
-    } else if (word.length == 0 && activatedWord != null) { //hide tooltip, if activated word exist and current word is none
-      activatedWord = null;
-      tooltipContainer.tooltip("hide");
-    }
+  // only work when tab is activated and when mousemove
+  if (document.visibilityState == "visible"
+      && mouseMoved
+      && settingLoaded
+      && currentSetting["translateOnHover"] === "true"
+  ) {
+    let word = getMouseOverWord(clientX, clientY); //get mouse positioned text
+    await processWord(word);
   }
 }, 700);
+
+async function processWord(word) {
+  word = filterWord(word); //filter out one that is url,over 1000length,no normal char
+
+  if (word && activatedWord != word) { //show tooltip, if current word is changed and word is not none
+    var response = await translate(word);
+    activatedWord = word;
+
+    //if empty
+    //if tooltip is not on and activation key is not pressed,
+    //then, hide
+    if (response.translatedText == "" || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
+      hideTooltip();
+    } else {
+      tooltipContainer.attr('data-original-title', response.translatedText);
+      doProcessPos = true;
+      setTooltipPosition();
+      tooltipContainer.tooltip("show");
+    }
+
+    //if use_tts is on or activation key is pressed
+    if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
+      tts(word, response.lang);
+    }
+  } else if (!word && activatedWord) { //hide tooltip, if activated word exist and current word is none
+    activatedWord = null;
+    hideTooltip();
+  }
+}
 
 function getMouseOverWord(clientX, clientY) {
   //check is image
@@ -153,7 +169,7 @@ function getMouseOverWord(clientX, clientY) {
     //range.expand('textedit');
     range.setStartBefore(range.startContainer);
     range.setEndAfter(range.startContainer);
-  }else if (currentSetting["detectType"] == "word") {
+  } else if (currentSetting["detectType"] == "word") {
     range.expand('word');
   } else if (currentSetting["detectType"] == "sentence") {
     range.expand('sentence');
@@ -170,6 +186,7 @@ function getMouseOverWord(clientX, clientY) {
 
 function filterWord(word) {
   word = word.replace(/\s+/g, ' ').trim(); //replace whitespace as single space
+  word = word.trim(); // remove whitespaces from begin and end of word
   if (word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url
     !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]/g.test(word)) { // filter one that only include num,space and special char(include currency sign) as combination
@@ -188,6 +205,22 @@ function setTooltipPosition() {
     tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
   }
 }
+
+async function translate(word) {
+  var response = await translateSentence(word, currentSetting["translateTarget"]);
+
+  //if lang are same, reverse translate
+  if (currentSetting["translateTarget"] == response.lang) {
+    if (currentSetting["translateReverseTarget"] != "null") {
+      response = await translateSentence(word, currentSetting["translateReverseTarget"]);
+    } else {
+      response.translatedText = "";
+    }
+  }
+
+  return response;
+}
+
 
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, translateTarget) {
