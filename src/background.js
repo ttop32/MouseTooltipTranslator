@@ -17,6 +17,8 @@ const axios = require('axios');
 var currentSetting = {};
 var defaultList = {
   "useTooltip": "true",
+  "translateOnHover": "true",
+  "translateOnSelection": "false",
   "useTTS": "false",
   "translateSource": "auto",
   "translateTarget": window.navigator.language,
