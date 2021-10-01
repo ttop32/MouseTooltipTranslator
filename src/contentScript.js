@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import 'bootstrap/js/dist/tooltip';
-import {enableSelectionEndEvent} from "./selection";
+import { enableSelectionEndEvent } from "./selection";
 var isUrl = require('is-url');
 
 //init environment======================================================================\
@@ -25,6 +25,12 @@ var keyDownList = { //use key down for enable translation partially
 };
 var style = $("<style>").appendTo("head");
 let selectedText = "";
+var rtlLangList = [
+  "ar", //Arabic
+  "iw", //Hebrew
+  "ku", //Kurdish
+  "ur" //Urdu
+];
 
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
@@ -72,7 +78,7 @@ document.addEventListener("visibilitychange", function() { //detect tab switchin
 $(document).ready(function() {
   getSetting(); //load setting from background js
 
-  $('<div/>', {
+  tooltipContainer = $('<div/>', {
     id: 'mttContainer',
     class: 'bootstrapiso', //apply bootstrap isolation css using bootstrapiso class
     css: {
@@ -85,7 +91,6 @@ $(document).ready(function() {
     }
   }).appendTo(document.body);
 
-  tooltipContainer = $('#mttContainer');
   tooltipContainer.tooltip({
     placement: "top",
     container: "#mttContainer",
@@ -95,32 +100,25 @@ $(document).ready(function() {
 
 enableSelectionEndEvent();
 
+//determineTooltipShowHide based on selection
 document.addEventListener("selectionEnd", async function(event) {
   // if translate on selection is enabled
   if (document.visibilityState === "visible" && settingLoaded && currentSetting["translateOnSelection"] === "true") {
     selectedText = event.selectedText;
-    await processWord(selectedText);
+    await processWord(selectedText, "select");
   }
 }, false);
 
-//determineTooltipShowHide : word detection, show & hide
+//determineTooltipShowHide based on hover
 setInterval(async function() {
-  if (selectedText) {
-    return;
-  }
-
-  // only work when tab is activated and when mousemove
-  if (document.visibilityState == "visible"
-      && mouseMoved
-      && settingLoaded
-      && currentSetting["translateOnHover"] === "true"
-  ) {
-    let word = getMouseOverWord(clientX, clientY); //get mouse positioned text
-    await processWord(word);
+  // only work when tab is activated and when mousemove and no selected text
+  if (!selectedText && document.visibilityState == "visible" && mouseMoved && settingLoaded && currentSetting["translateOnHover"] === "true") {
+    let word = getMouseOverWord(clientX, clientY);
+    await processWord(word, "mouseover");
   }
 }, 700);
 
-async function processWord(word) {
+async function processWord(word, actionType) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
   if (word && activatedWord != word) { //show tooltip, if current word is changed and word is not none
@@ -133,15 +131,17 @@ async function processWord(word) {
     if (response.translatedText == "" || (currentSetting["useTooltip"] == "false" && !keyDownList[currentSetting["keyDownTooltip"]])) {
       hideTooltip();
     } else {
+      applyLangAlignment(response.targetLang);
       tooltipContainer.attr('data-original-title', response.translatedText);
       doProcessPos = true;
       setTooltipPosition();
       tooltipContainer.tooltip("show");
+      recordHistory(word, response.translatedText, actionType);
     }
 
     //if use_tts is on or activation key is pressed
-    if (currentSetting["translateTarget"] != response.lang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
-      tts(word, response.lang);
+    if (currentSetting["translateTarget"] != response.sourceLang && (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]])) {
+      tts(word, response.sourceLang);
     }
   } else if (!word && activatedWord) { //hide tooltip, if activated word exist and current word is none
     activatedWord = null;
@@ -165,7 +165,7 @@ function getMouseOverWord(clientX, clientY) {
 
   //expand char to get word,sentence,
   //if target is youtube caption, use container
-  if (currentSetting["detectType"] == "container" || mouseTarget.className=="ytp-caption-segment") {
+  if (currentSetting["detectType"] == "container" || mouseTarget.className == "ytp-caption-segment") {
     //range.expand('textedit');
     range.setStartBefore(range.startContainer);
     range.setEndAfter(range.startContainer);
@@ -210,7 +210,7 @@ async function translate(word) {
   var response = await translateSentence(word, currentSetting["translateTarget"]);
 
   //if lang are same, reverse translate
-  if (currentSetting["translateTarget"] == response.lang) {
+  if (currentSetting["translateTarget"] == response.sourceLang) {
     if (currentSetting["translateReverseTarget"] != "null") {
       response = await translateSentence(word, currentSetting["translateReverseTarget"]);
     } else {
@@ -221,6 +221,13 @@ async function translate(word) {
   return response;
 }
 
+function applyLangAlignment(lang) {
+  if (rtlLangList.includes(lang)) {
+    tooltipContainer.attr("dir", "rtl");
+  } else {
+    tooltipContainer.attr("dir", "ltr");
+  }
+}
 
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, translateTarget) {
@@ -249,26 +256,46 @@ function stopTTS() {
   );
 }
 
+function recordHistory(sourceText, targetText, actionType) {
+  //if action is record trigger action, do record
+  if (currentSetting["historyRecordActions"].includes(actionType)) {
+    chrome.runtime.sendMessage({ //send history to background.js
+        type: 'recordHistory',
+        "sourceText": sourceText,
+        "targetText": targetText,
+      },
+      response => {}
+    );
+  }
+}
+
 function getSetting() { //load  setting from background js
   chrome.runtime.sendMessage({
-      type: 'loadSetting'
+      type: 'loadSetting',
+      withoutHistory: true
     },
     response => {
       currentSetting = response;
-      changeTooltipStyle(currentSetting);
+      applyStyleSetting(currentSetting);
       settingLoaded = true;
     }
   );
 }
 
 chrome.storage.onChanged.addListener(function(changes, namespace) { //update current setting value,
+  //skip history data
+  delete changes['historyList'];
   for (var key in changes) {
     currentSetting[key] = changes[key].newValue;
   }
-  changeTooltipStyle(currentSetting);
+  // if style changed
+  if (changes["tooltipFontSize"] || changes["tooltipWidth"]) {
+    applyStyleSetting(currentSetting);
+  }
 });
 
-function changeTooltipStyle(setting) {
+function applyStyleSetting(setting) {
+  //apply css
   style.html(`
     .bootstrapiso .tooltip {
       font-size: ` + setting["tooltipFontSize"] + `px;

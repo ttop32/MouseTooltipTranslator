@@ -8,7 +8,6 @@
 //for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
-import $ from "jquery";
 var loadScriptOnce = require('load-script-once');
 const axios = require('axios');
 // var crxHotreload = require('crx-hotreload');
@@ -25,12 +24,14 @@ var defaultList = {
   "translatorVendor": "google",
   "keyDownTooltip": "null",
   "keyDownTTS": "null",
-  "tooltipFontSize": "14",
-  "tooltipWidth":"200",
   'detectType': 'sentence',
-  "translateReverseTarget" :"null",
+  "translateReverseTarget": "null",
+  "tooltipFontSize": "14",
+  "tooltipWidth": "200",
   "useOCR": "false",
   "ocrDetectionLang": "jpn_vert",
+  "historyList": [],
+  "historyRecordActions": [],
 }
 var currentAudio = null;
 var bingLangCode = {
@@ -118,7 +119,7 @@ function swap(json) {
 }
 
 var bingLangCodeOpposite = swap(bingLangCode); // swap key value
-
+loadSetting();
 
 
 //listen from contents js and background js =========================================================================================================
@@ -158,139 +159,148 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
     sendResponse({});
   } else if (request.type === 'saveSetting') {
-    chrome.storage.local.set(request.options, function() {
-      currentSetting = request.options;
-      loadOcrScript();
-    });
+    saveSetting(request.options);
   } else if (request.type === 'loadSetting') {
-    loadSetting(sendResponse);
+    loadSetting(request.withoutHistory, sendResponse);
   } else if (request.type === 'ocr') {
     doOcr(request, sendResponse);
+  } else if (request.type === 'recordHistory') {
+    //append to front
+    currentSetting["historyList"].unshift({
+      "sourceText": request.sourceText,
+      "targetText": request.targetText
+    });
+    //remove when too many list
+    if (currentSetting["historyList"].length > 100) {
+      currentSetting["historyList"].pop();
+    }
+    saveSetting(currentSetting);
   }
+
   return true;
 });
 
 
-function loadSetting(callback) {
+function saveSetting(inputSettings) {
+  chrome.storage.local.set(inputSettings, function() {
+    currentSetting = inputSettings;
+    loadOcrScript();
+  });
+}
+
+function loadSetting(withoutHistory, callback) {
   chrome.storage.local.get(Object.keys(defaultList), function(options) { //load setting
-    $.each(defaultList, function(key, item) {
+    for (var key in defaultList) {
+      if (withoutHistory && "historyList" == key) {
+        continue
+      }
+
       if (options[key]) { //if value exist, load. else load defualt val
         currentSetting[key] = options[key];
       } else {
         currentSetting[key] = defaultList[key];
       }
-    });
+    }
     if (typeof callback !== 'undefined') {
       callback(currentSetting);
     };
     loadOcrScript();
   });
 }
-loadSetting();
-
 
 
 
 
 // translate ===========================================================
 
-let bingGlobalConfig;
-async function fetchBingGlobalConfig() {
-  // https://github.com/plainheart/bing-translate-api
-  function isTokenExpired() {
-    if (!bingGlobalConfig) {
-      return true
+let bingAccessToken;
+
+async function doTranslate(request, sendResponse) {
+  var translatorUrl;
+  var params;
+  var detectedLang="";
+  var translatedText="";
+
+  if (currentSetting["translatorVendor"] == "google") {
+    translatorUrl="https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
+    params={
+      q: request.word,
+      sl: currentSetting["translateSource"], //source lang
+      tl: request.translateTarget //target lang}
+    };
+  }else{
+    //bing translation
+    //if no access token or token is timeout, get new token
+    if (!bingAccessToken || Date.now() - bingAccessToken["tokenTs"] > bingAccessToken["tokenExpiryInterval"]) {
+      bingAccessToken=await getBingAccessToken();
     }
-    const { key, tokenExpiryInterval } = bingGlobalConfig
-    return Date.now() - key > tokenExpiryInterval
+    const { token, key, IG, IID } = bingAccessToken;
+    translatorUrl='https://www.bing.com/ttranslatev3?isVertical=1\u0026';
+    params={
+      text: request.word,
+      fromLang: bingLangCode[currentSetting["translateSource"]],
+      to: bingLangCode[request.translateTarget],
+      token,
+      key,
+      IG,
+      IID:(IID && IID.length ? IID + '.' + (bingAccessToken.count++) : ''),
+    }
   }
 
-  if(isTokenExpired()){ //get new token if expired
-    let token
-    let key
-    let tokenTs
-    let tokenExpiryInterval
-    try {
-      const {data, headers}=await axios.get('https://www.bing.com/translator', );
-      const [_key, _token, interval] = new Function(`return ${data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]}`)();
-      key =  _key;
-      token = _token;
-      tokenExpiryInterval = interval;
-    } catch (e) {
-      console.error('failed to fetch global config', e)
-      throw e
+
+  try {
+    var res = await axios.post(translatorUrl, null, { params });
+
+    if (currentSetting["translatorVendor"] == "google") {
+      if (res.data.sentences) {
+        res.data.sentences.forEach(function(sentences) {
+          if (sentences.trans) {
+            translatedText += sentences.trans;
+          }
+        })
+      }
+      detectedLang = res.data.src;
+    } else {
+      //bing translation
+      detectedLang = bingLangCodeOpposite[res.data[0]["detectedLanguage"]["language"]];
+      translatedText = res.data[0]["translations"][0]["text"];
     }
-    return {
-      key,
-      token,
-      tokenExpiryInterval,
-    }
-  }else{
-    return bingGlobalConfig;
+
+    sendResponse({
+      "translatedText": translatedText,
+      "sourceLang":detectedLang,
+      "targetLang":request.translateTarget
+    });
+  } catch (error) {
+    console.log(error);
+    sendResponse({
+      "translatedText": "",
+      "sourceLang":"en",
+      "targetLang":request.translateTarget
+    });
   }
 }
 
-
-async function doTranslate(request, sendResponse) {
-  var detectedLang = "";
-  var translatedText = "";
-
-  if (currentSetting["translatorVendor"] == "google") {
-    var translatorUrl = "https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
-    var translatorData = {
-      q: request.word,
-      sl: currentSetting["translateSource"], //source lang
-      tl: request.translateTarget //target lang
-    };
-
-  } else {
-    bingGlobalConfig=await fetchBingGlobalConfig();
-    var translatorUrl = "https://www.bing.com/ttranslatev3";
-    var translatorData = {
-      text: request.word,
-      fromLang: bingLangCode[currentSetting["translateSource"]], //source lang
-      to: bingLangCode[request.translateTarget], //target lang
-      token:bingGlobalConfig.token,
-      key:bingGlobalConfig.key,
-    };
-  }
-
-  $.ajax({
-    type: "POST",
-    dataType: "json",
-    url: translatorUrl,
-    data: translatorData,
-    success: function(data) {
-      if (currentSetting["translatorVendor"] == "google") {
-        if (data.sentences) {
-          data.sentences.forEach(function(sentences) {
-            if (sentences.trans) {
-              translatedText += sentences.trans;
-            }
-          })
-        }
-        detectedLang = data.src;
-      } else {  //if bing
-        detectedLang = bingLangCodeOpposite[data[0]["detectedLanguage"]["language"]];
-        translatedText = data[0]["translations"][0]["text"];
-      }
-
-      sendResponse({
-        "translatedText": translatedText,
-        "lang": detectedLang
-      });
-    },
-    error: function(xhr, status, error) {
-      console.log({
-        error: error,
-        xhr: xhr
-      });
-      sendResponse({
-        "translatedText": "",
-        "lang": "en"
-      });
+async function getBingAccessToken() {
+  // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
+  try {
+    const {data, headers, request: { redirects } }=await axios.get('https://www.bing.com/translator', );
+    const IG = data.match(/IG:"([^"]+)"/)[1]
+    const IID = data.match(/data-iid="([^"]+)"/)[1]
+    const [_key, _token, interval, _isVertical, _isAuthv2] = new Function(`return ${data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]}`)()
+    return {
+      IG,
+      IID,
+      key:_key,
+      token:_token,
+      tokenTs:_key,
+      tokenExpiryInterval:interval,
+      isAuthv2:_isAuthv2,
+      count: 0,
     }
-  });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 
@@ -503,7 +513,7 @@ chrome.webRequest.onHeadersReceived.addListener(({
   //check content type is pdf
   const header2 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
   if (header2) {
-    if (header2.value.toLowerCase().includes("application/pdf") ) {
+    if (header2.value.toLowerCase().includes("application/pdf")) {
       return {
         redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
       }
