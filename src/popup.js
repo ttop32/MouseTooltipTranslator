@@ -237,7 +237,7 @@ var translatorList = {
 
 var tooltipFontSizeList = {}; //font size 5 to 20
 for (let i = 5; i < 21; i++) {
-  tooltipFontSizeList[i] = i;
+  tooltipFontSizeList[String(i)] = String(i);
 }
 var detectTypeList = {
   'Word': 'word',
@@ -248,12 +248,10 @@ var detectTypeList = {
 var translateReverseTargetList = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
 translateReverseTargetList['None'] = "null";
 
-
 var tooltipWidth={};
 for (let i = 100; i < 600; i+=100) {
-  tooltipWidth[i] = i;
+  tooltipWidth[String(i)] = String(i);
 }
-
 
 var settingList = {
   "useTooltip": {
@@ -292,14 +290,6 @@ var settingList = {
     "description": "TTS Activation Hold Key",
     "optionList": keyList
   },
-  "tooltipFontSize": {
-    "description": "Tooltip Font Size",
-    "optionList": tooltipFontSizeList
-  },
-  "tooltipWidth":{
-    "description": "Tooltip Width",
-    "optionList": tooltipWidth
-  },
   "detectType": {
     "description": "Detect Type",
     "optionList": detectTypeList
@@ -307,6 +297,14 @@ var settingList = {
   "translateReverseTarget": {
     "description": "Reverse Translate Language",
     "optionList": translateReverseTargetList
+  },
+  "tooltipFontSize": {
+    "description": "Tooltip Font Size",
+    "optionList": tooltipFontSizeList
+  },
+  "tooltipWidth":{
+    "description": "Tooltip Width",
+    "optionList": tooltipWidth
   },
   "useOCR": {
     "description": "Enable OCR (Experimental)",
@@ -317,6 +315,20 @@ var settingList = {
     "optionList": ocrLangList
   }
 };
+//add text key and val key to option list
+function capsulateOptionList(){
+  for (const [key1, val1] of Object.entries(settingList)) {
+    var capsulate=[]
+    for (const [key2, val2] of Object.entries(settingList[key1]["optionList"])) {
+      capsulate.push({
+        "text": key2,
+        "val":val2
+      })
+    }
+    settingList[key1]["optionList"]=capsulate
+  }
+}
+capsulateOptionList();
 
 
 var aboutPageList = {
@@ -347,14 +359,17 @@ var aboutPageList = {
 }
 
 
-
 new Vue({
   data: {
     settingList: settingList,
-    selectedList: {},
-    showAbout: false,
     aboutPageList: aboutPageList,
-    currentSetting: {}
+    currentSetting: {},
+    currentPage:"main",
+    historyRecordActionNames: [
+      "select",
+      "mouseover"
+    ],
+    copyAlertBar:false,
   },
   async beforeCreate() {
     //loadSettingFromBackground
@@ -365,35 +380,17 @@ new Vue({
         resolve(response);
       });
     });
-
-    this.loadSelectListFromSetting();
   },
   methods: {
-    loadSelectListFromSetting() {
-      var result = {}
-      //transform currentSetting(name:option_select_id) to selectedList(name:option_select_name)
-      for (const [key_option_id, val_selected_id1] of Object.entries(this.currentSetting)) {
-        for (const [key_selected_name, val_selected_id2] of Object.entries(settingList[key_option_id]["optionList"])) {
-          if (val_selected_id1 == val_selected_id2) {
-            result[key_option_id] = key_selected_name;
-          }
-        }
-      }
-      this.selectedList = result;
-    },
     onSelectChange(event, name) {
-      this.currentSetting[name] = settingList[name]["optionList"][event];
-
+      this.currentSetting[name] = event;
       //when activation hold key is set, turn off permanent feature enable
-      if (name == "keyDownTooltip" && settingList[name]["optionList"][event] != null) {
+      if (name == "keyDownTooltip" && event != "null") {
         this.currentSetting["useTooltip"] = "false";
-        this.selectedList["useTooltip"] = "Off";
       }
-      if (name == "keyDownTTS" && settingList[name]["optionList"][event] != null) {
+      if (name == "keyDownTTS" && event != "null") {
         this.currentSetting["useTTS"] = "false";
-        this.selectedList["useTTS"] = "Off";
       }
-
       this.changeSetting();
     },
     changeSetting() {
@@ -407,6 +404,28 @@ new Vue({
     openUrl(newURL) {
       chrome.tabs.create({
         url: newURL
+      });
+    },
+    removeAllHistory(){
+      this.currentSetting["historyList"]=[];
+      this.changeSetting();
+    },
+    removeHistory(index) {
+      this.currentSetting["historyList"].splice(index, 1);
+      this.changeSetting();
+    },
+    downloadCSV(){
+      var arr=this.currentSetting["historyList"];
+      var csv = arr.map(function(v){return v["sourceText"].replace(/\n|\r|,|'|"/g, " ")+','+v["targetText"].replace(/\n|\r|,|'|"/g, " ")}).join('\n');
+      var link = document.createElement("a");
+      link.href = encodeURI("data:text/csv;charset=utf-8,"+csv);
+      link.download = "export.csv";
+      link.click();
+    },
+    copyToClipboard(sourceText,targetText){
+      var text = sourceText+" \n"+targetText;
+      navigator.clipboard.writeText(text).then((response) => {
+        this.copyAlertBar=true;
       });
     },
   },

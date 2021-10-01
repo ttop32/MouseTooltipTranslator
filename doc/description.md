@@ -19,6 +19,10 @@ If pop-over translate tooltip is not came out properly after installation, user 
 https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md
 
 # Change Log
+- 0.1.29
+  - fix bing translator (request by zx xu)
+  - support right to left alignment for Arabic (request by mohamad-b)  
+  - add translated text history section on popup page (request by TeraStrider)   
 - 0.1.28
   - support translation on selection (contributed by sanprojects)
 - 0.1.27
