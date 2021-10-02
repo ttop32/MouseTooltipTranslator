@@ -74,6 +74,8 @@ npm run build
 - [review by quantumgaea](https://blog.naver.com/quantumgaea/222254404573)
 - [review by yyaasema](https://blog.naver.com/yyaasema/222251147172)
 - [review by eduvantage](https://blog.naver.com/eduvantage/222253462689)
+- [review by webiitoko](https://webiitoko.blog.fc2.com/blog-entry-1086.html)
+- [review by Jukka Melaranta](https://saaressa.blogspot.com/2021/08/mouse-tooltip-translator.html)
 
 # Contributors
 - [sanprojects](https://github.com/sanprojects)
