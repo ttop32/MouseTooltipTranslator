@@ -1,26 +1,21 @@
 'use strict';
 
 //handle translation, setting and pdf
-//it communicate with popup.js(for setting) and contentScript.js(for translattion,tts and ocr)
+//it communicate with popup.js(for setting) and contentScript.js(for translattion and tts)
 //for setting, it save and load from chrome storage
-//for translation, it uses ajax to get translated  result
-//for ocr, it get image src and return text
+//for translation, use fetch to get translated  result
 //for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
-var loadScriptOnce = require('load-script-once');
-const axios = require('axios');
-// var crxHotreload = require('crx-hotreload');
 
 
 var currentSetting = {};
+var currentAudio = null;
 var defaultList = {
   "useTooltip": "true",
   "useTTS": "false",
-  "translateOnHover": "true",
-  "translateOnSelection": "false",
   "translateSource": "auto",
-  "translateTarget": window.navigator.language,
+  "translateTarget": navigator.language,
   "translatorVendor": "google",
   "keyDownTooltip": "null",
   "keyDownTTS": "null",
@@ -33,7 +28,6 @@ var defaultList = {
   "historyList": [],
   "historyRecordActions": [],
 }
-var currentAudio = null;
 var bingLangCode = {
   "auto": "auto-detect",
   'af': 'af',
@@ -119,63 +113,60 @@ function swap(json) {
 }
 
 var bingLangCodeOpposite = swap(bingLangCode); // swap key value
-loadSetting();
 
 
 //listen from contents js and background js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.type === 'translate') {
-    doTranslate(request, sendResponse);
+  (async () => {
+    currentSetting = await getSetting();
 
-  } else if (request.type === 'tts') {
-    if (currentAudio != null) { //stop current played tts
-      currentAudio.pause();
-      currentAudio = null;
-    }
-    //split word in 200 length
-    //play 200 leng tts seqeuntly using ended callback
-    var splittedWord = request.word.match(/.{1,200}/g); //split word in 200length
-    var prevAudio = null;
-    splittedWord.forEach(function(value, i) {
-      var soundUrl = "https://translate.googleapis.com/translate_tts?client=dict-chrome-ex&ie=UTF-8&tl=" + request.lang + "&q=" + encodeURIComponent(value);
-      var audio = new Audio(soundUrl);
-      if (i == 0) {
-        currentAudio = audio;
-        audio.play();
-      } else {
-        prevAudio.addEventListener("ended", function() {
-          currentAudio = audio;
-          currentAudio.play();
-        });
+    if (request.type === 'translate') {
+      doTranslate(request, sendResponse);
+
+    } else if (request.type === 'tts') {
+      //get avilable voice list
+      chrome.tts.getVoices((voices) => {
+        let filtered = voices.filter((e) => {
+          return e.remote != null && e.lang != null && e.voiceName != null
+        }); //get one that include remote, lang, voiceName
+
+        filtered.sort((x, y) => {
+          return y.remote - x.remote
+        }); //get remote first;
+
+        //find matched lang voice and speak
+        for (var item of filtered) {
+          if (item.lang.toLowerCase().includes(request.lang.toLowerCase())) {
+            chrome.tts.speak(request.word, {
+              'lang': request.lang,
+              'voiceName': item.voiceName
+            });
+            break
+          }
+        }
+      })
+
+      sendResponse({});
+    } else if (request.type === 'stopTTS') {
+      chrome.tts.stop();
+      sendResponse({});
+    } else if (request.type === 'saveSetting') {
+      saveSetting(request.options);
+    } else if (request.type === 'loadSetting') {
+      sendResponse(currentSetting)
+    } else if (request.type === 'recordHistory') {
+      //append to front
+      currentSetting["historyList"].unshift({
+        "sourceText": request.sourceText,
+        "targetText": request.targetText
+      });
+      //remove when too many list
+      if (currentSetting["historyList"].length > 100) {
+        currentSetting["historyList"].pop();
       }
-      prevAudio = audio;
-    });
-
-    sendResponse({});
-  } else if (request.type === 'stopTTS') {
-    if (currentAudio != null) { //stop current played tts
-      currentAudio.pause();
-      currentAudio = null;
+      saveSetting(currentSetting);
     }
-    sendResponse({});
-  } else if (request.type === 'saveSetting') {
-    saveSetting(request.options);
-  } else if (request.type === 'loadSetting') {
-    loadSetting(request.withoutHistory, sendResponse);
-  } else if (request.type === 'ocr') {
-    doOcr(request, sendResponse);
-  } else if (request.type === 'recordHistory') {
-    //append to front
-    currentSetting["historyList"].unshift({
-      "sourceText": request.sourceText,
-      "targetText": request.targetText
-    });
-    //remove when too many list
-    if (currentSetting["historyList"].length > 100) {
-      currentSetting["historyList"].pop();
-    }
-    saveSetting(currentSetting);
-  }
+  })();
 
   return true;
 });
@@ -184,27 +175,26 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 function saveSetting(inputSettings) {
   chrome.storage.local.set(inputSettings, function() {
     currentSetting = inputSettings;
-    loadOcrScript();
   });
 }
 
-function loadSetting(withoutHistory, callback) {
-  chrome.storage.local.get(Object.keys(defaultList), function(options) { //load setting
-    for (var key in defaultList) {
-      if (withoutHistory && "historyList" == key) {
-        continue
-      }
 
-      if (options[key]) { //if value exist, load. else load defualt val
-        currentSetting[key] = options[key];
-      } else {
-        currentSetting[key] = defaultList[key];
-      }
+function getSetting() {
+  return new Promise((resolve, reject) => {
+    if (Object.keys(currentSetting).length != Object.keys(defaultList).length) {
+      chrome.storage.local.get(Object.keys(defaultList), function(options) { //load setting
+        for (var key in defaultList) {
+          if (options[key]) { //if value exist, load. else load defualt val
+            currentSetting[key] = options[key];
+          } else {
+            currentSetting[key] = defaultList[key];
+          }
+        }
+        resolve(currentSetting);
+      });
+    } else {
+      resolve(currentSetting);
     }
-    if (typeof callback !== 'undefined') {
-      callback(currentSetting);
-    };
-    loadOcrScript();
   });
 }
 
@@ -212,71 +202,78 @@ function loadSetting(withoutHistory, callback) {
 
 
 // translate ===========================================================
-
 let bingAccessToken;
 
 async function doTranslate(request, sendResponse) {
   var translatorUrl;
   var params;
-  var detectedLang="";
-  var translatedText="";
+  var detectedLang = "";
+  var translatedText = "";
 
+  //prepare params
   if (currentSetting["translatorVendor"] == "google") {
-    translatorUrl="https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex";
-    params={
+    translatorUrl = "https://translate.googleapis.com/translate_a/t?client=dict-chrome-ex&";
+    params = {
       q: request.word,
       sl: currentSetting["translateSource"], //source lang
-      tl: request.translateTarget //target lang}
+      tl: request.translateTarget //target lang
     };
-  }else{
+  } else {
     //bing translation
     //if no access token or token is timeout, get new token
     if (!bingAccessToken || Date.now() - bingAccessToken["tokenTs"] > bingAccessToken["tokenExpiryInterval"]) {
-      bingAccessToken=await getBingAccessToken();
+      bingAccessToken = await getBingAccessToken();
     }
-    const { token, key, IG, IID } = bingAccessToken;
-    translatorUrl='https://www.bing.com/ttranslatev3?isVertical=1\u0026';
-    params={
+    translatorUrl = 'https://www.bing.com/ttranslatev3?isVertical=1\u0026&';
+    const {
+      token,
+      key,
+      IG,
+      IID
+    } = bingAccessToken;
+    params = {
       text: request.word,
       fromLang: bingLangCode[currentSetting["translateSource"]],
       to: bingLangCode[request.translateTarget],
       token,
       key,
       IG,
-      IID:(IID && IID.length ? IID + '.' + (bingAccessToken.count++) : ''),
+      IID: (IID && IID.length ? IID + '.' + (bingAccessToken.count++) : ''),
     }
   }
 
-
+  //send params to translator site
   try {
-    var res = await axios.post(translatorUrl, null, { params });
+    const res = await fetch(translatorUrl + new URLSearchParams(params), {
+      method: "POST",
+    }).then(response => response.json())
 
     if (currentSetting["translatorVendor"] == "google") {
-      if (res.data.sentences) {
-        res.data.sentences.forEach(function(sentences) {
+      if (res.sentences) {
+        res.sentences.forEach(function(sentences) {
           if (sentences.trans) {
             translatedText += sentences.trans;
           }
         })
       }
-      detectedLang = res.data.src;
+      detectedLang = res.src;
     } else {
       //bing translation
-      detectedLang = bingLangCodeOpposite[res.data[0]["detectedLanguage"]["language"]];
-      translatedText = res.data[0]["translations"][0]["text"];
+      detectedLang = bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
+      translatedText = res[0]["translations"][0]["text"];
     }
 
     sendResponse({
       "translatedText": translatedText,
-      "sourceLang":detectedLang,
-      "targetLang":request.translateTarget
+      "sourceLang": detectedLang,
+      "targetLang": request.translateTarget
     });
   } catch (error) {
     console.log(error);
     sendResponse({
       "translatedText": "",
-      "sourceLang":"en",
-      "targetLang":request.translateTarget
+      "sourceLang": "en",
+      "targetLang": request.translateTarget
     });
   }
 }
@@ -284,18 +281,18 @@ async function doTranslate(request, sendResponse) {
 async function getBingAccessToken() {
   // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
   try {
-    const {data, headers, request: { redirects } }=await axios.get('https://www.bing.com/translator', );
+    const data = await fetch("https://www.bing.com/translator").then(response => response.text());
     const IG = data.match(/IG:"([^"]+)"/)[1]
     const IID = data.match(/data-iid="([^"]+)"/)[1]
-    const [_key, _token, interval, _isVertical, _isAuthv2] = new Function(`return ${data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]}`)()
+    const [_key, _token, interval, _isVertical, _isAuthv2] = JSON.parse(data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]);
     return {
       IG,
       IID,
-      key:_key,
-      token:_token,
-      tokenTs:_key,
-      tokenExpiryInterval:interval,
-      isAuthv2:_isAuthv2,
+      key: _key,
+      token: _token,
+      tokenTs: _key,
+      tokenExpiryInterval: interval,
+      isAuthv2: undefined,
       count: 0,
     }
   } catch (e) {
@@ -303,196 +300,6 @@ async function getBingAccessToken() {
   }
 }
 
-
-// ocr ===========================================================
-var ocrSchedulerList = {};
-var recentMainUrl = "";
-var recentText = "";
-var recentLang = "";
-var recentImage = document.createElement("canvas");
-var recentCanvasCropped = document.createElement("canvas");
-
-function loadOcrScript() {
-  if (currentSetting["useOCR"] == "true") {
-    loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js"));
-    loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
-  }
-}
-
-async function doOcr(request, sendResponse) {
-  try {
-    await loadScriptOnce(chrome.extension.getURL("/opencv/opencv.js")); //load script for ocr, if already loaded, it just go
-    await loadScriptOnce(chrome.extension.getURL("/tesseract/tesseract.min.js"));
-
-    if (request.mainUrl != recentMainUrl) { // load image if mainurl diff
-      recentMainUrl = request.mainUrl;
-      recentImage = await loadImage(request.mainUrl);
-    } else if (request.base64Url != "") { //if same url and base64 received, use base64
-      recentImage = await loadImage(request.base64Url);
-    }
-
-    var px = request.pxRatio * recentImage.naturalWidth;
-    var py = request.pyRatio * recentImage.naturalHeight;
-    var croppedImage = await cropText(recentImage, px, py); //crop image using opencv to only get mouse pointed area
-    //if same as previouse image and same lang, skip ocr
-    if (isMatch(croppedImage, recentCanvasCropped) && recentLang == currentSetting["ocrDetectionLang"]) {
-      var currentText = recentText;
-    } else {
-      var currentText = await useTesseract(croppedImage);
-      recentCanvasCropped = croppedImage;
-      recentText = currentText;
-      recentLang = currentSetting["ocrDetectionLang"];
-    }
-    sendResponse({
-      "success": "true",
-      "text": currentText,
-      "mainUrl": request.mainUrl,
-      "time": request.time,
-      "crop": "" //croppedImage.toDataURL()
-    });
-  } catch (err) {
-    sendResponse({
-      "success": "false",
-      "text": "",
-      "mainUrl": request.mainUrl,
-      "time": request.time,
-      "crop": "" //croppedImage.toDataURL()
-    });
-  }
-}
-
-function loadImage(url) {
-  return new Promise((resolve, reject) => {
-    var image = new Image(); //image get
-    image.onload = () => resolve(image);
-    image.onerror = reject;
-    image.src = url;
-  });
-}
-
-
-//use paint bucket brush method to
-//fill mouse positioned bubble background
-//and get that masked area
-function cropText(img, x, y) {
-  return new Promise(function(resolve, reject) {
-    let src = cv.imread(img);
-    let gray = new cv.Mat();
-    let maskInside = new cv.Mat();
-    let segmentedImg = new cv.Mat();
-    let cropTextImgResize = new cv.Mat();
-
-    //preprocessing, make gray
-    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
-    cv.adaptiveThreshold(gray, gray, 200, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 61, 4);
-    // cv.threshold(gray, gray, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
-
-    //paint bubble background
-    let maskBubble = new cv.Mat(gray.rows + 2, gray.cols + 2, cv.CV_8U, [0, 0, 0, 0])
-    cv.floodFill(gray, maskBubble, {
-      x: x,
-      y: y
-    }, [130, 128, 0, 255], {}, [5, 5, 5, 5], [5, 5, 5, 5], 4 | (255 << 8));
-    cv.threshold(maskBubble, maskBubble, 50, 255, cv.THRESH_BINARY) //use floolfill border as empty space
-
-    //get only bubble inside area, (paint bubble outside and get inside using inverse
-    let maskOutside = new cv.Mat(maskBubble.rows + 2, maskBubble.cols + 2, cv.CV_8U, [0, 0, 0, 0])
-    cv.floodFill(maskBubble, maskOutside, {
-      x: 1,
-      y: 1
-    }, [255, 255, 255, 255], {}, [0, 0, 0, 0], [0, 0, 0, 0], 4 | (255 << 8));
-    maskOutside = maskOutside.roi(new cv.Rect(2, 2, maskOutside.cols - 4, maskOutside.rows - 4)); //previous two flood fill expand border, shrink it
-    cv.bitwise_not(maskOutside, maskInside); //src,dst
-
-    //crop image based on  bubble inside area mask
-    src.copyTo(segmentedImg, maskInside); //dst, mask     //show only masked area
-    let cropTextImg = segmentedImg.roi(cv.boundingRect(maskInside)); //crop to fit masked area
-
-    //resize image to fit 350px
-    //too small image need to be larger to recognize correctly
-    //too large image's ocr speed is slow
-    var maxSize = 350;
-    var rowsNew = cropTextImg.rows;
-    var colsNew = cropTextImg.cols;
-    colsNew = colsNew * maxSize / rowsNew;
-    rowsNew = maxSize;
-    if (maxSize < colsNew) {
-      rowsNew = rowsNew * maxSize / colsNew;
-      colsNew = maxSize;
-    }
-    cv.resize(cropTextImg, cropTextImgResize, new cv.Size(colsNew, rowsNew), 0, 0, cv.INTER_AREA);
-
-    let canvas = document.createElement("canvas");
-    cv.imshow(canvas, cropTextImgResize);
-    src.delete();
-    gray.delete();
-    maskBubble.delete();
-    maskInside.delete();
-    maskOutside.delete();
-    segmentedImg.delete();
-    cropTextImg.delete();
-    cropTextImgResize.delete();
-    resolve(canvas);
-  });
-}
-
-function isMatch(data1, data2) { //compare canvas
-  if (data1.width != data2.width || data1.height != data2.height) { //check length
-    return false
-  }
-  for (var i = 0; i < data1.length; i++) { //check value
-    if (data1[i] != data2[i]) return false;
-  }
-  return true;
-}
-
-//create ocr worker and processs ocr
-function useTesseract(image) {
-  return new Promise(async function(resolve, reject) {
-    if (ocrSchedulerList[currentSetting["ocrDetectionLang"]] == null) {
-      ocrSchedulerList[currentSetting["ocrDetectionLang"]] = Tesseract.createScheduler();
-    }
-
-    // var start = Math.floor(Date.now() / 1000);
-    if (ocrSchedulerList[currentSetting["ocrDetectionLang"]].getNumWorkers() < 2) { //if no worker, create worker
-      if (currentSetting["ocrDetectionLang"] == "jpn_vert") {
-        var worker1 = Tesseract.createWorker({
-          "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
-          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
-          "langPath": chrome.runtime.getURL("/traindata"), //https://github.com/zodiac3539/jpn_vert
-          "gzip": false
-        });
-      } else {
-        var worker1 = Tesseract.createWorker({
-          "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
-          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
-          "langPath": "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast" //3.02,4.0.0_fast,4.0.0, 4.0.0_best //https://github.com/naptha/tessdata
-        });
-      }
-
-      await worker1.load();
-      await worker1.loadLanguage(currentSetting["ocrDetectionLang"]);
-      await worker1.initialize(currentSetting["ocrDetectionLang"]);
-      await worker1.setParameters({
-        tessedit_pageseg_mode: Tesseract.PSM.AUTO_ONLY,
-        tessjs_create_hocr: "0",
-        tessjs_create_tsv: "0"
-      });
-      ocrSchedulerList[currentSetting["ocrDetectionLang"]].addWorker(worker1);
-    }
-    var {
-      data: {
-        text
-      }
-    } = await ocrSchedulerList[currentSetting["ocrDetectionLang"]].addJob('recognize', image); //do ocr
-    text = text.replace(/[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove speical char
-
-    // var end = Math.floor(Date.now() / 1000);
-    // console.log("time taken" + (end - start));
-    // console.log(text);
-    resolve(text);
-  });
-}
 
 
 // intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
@@ -514,26 +321,25 @@ chrome.webRequest.onHeadersReceived.addListener(({
   const header2 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
   if (header2) {
     if (header2.value.toLowerCase().includes("application/pdf")) {
-      return {
-        redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
-      }
+      chrome.tabs.update({
+        url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + url
+      });
     }
   }
 }, {
   urls: ['<all_urls>'],
   types: ['main_frame', 'sub_frame']
-}, ['blocking', 'responseHeaders']);
-
+}, ['responseHeaders']);
 
 //for local pdf url
 chrome.webRequest.onBeforeRequest.addListener(function({
   url,
   method
 }) {
-  return {
-    redirectUrl: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url) //url
-  };
+  chrome.tabs.update({
+    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + url
+  });
 }, {
   urls: ["file:///*/*.pdf", "file:///*/*.PDF"],
   types: ['main_frame']
-}, ['blocking']);
+}, []);

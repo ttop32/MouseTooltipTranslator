@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        vue: argv.mode == 'production' ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js'
+        'vue$': 'vue/dist/vue.esm.js'
       },
     }
   })
