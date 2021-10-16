@@ -24,7 +24,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bootstrap": "^4.5.3",
     "crx-hotreload": "^1.0.6",
     "is-url": "^1.2.4",
@@ -32,7 +32,9 @@
     "load-script-once": "^2.0.1",
     "popper.js": "^1.16.1",
     "typeface-roboto": "^1.1.13",
-    "vue": "^2.6.12",
+    "vue": "^2.6.14",
+    "vue-loader": "^15.9.8",
+    "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.4.4"
   }
 }

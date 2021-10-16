@@ -3,7 +3,7 @@
 const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const { VueLoaderPlugin } = require('vue-loader')
 const PATHS = require('./paths');
 
 // To re-use webpack configuration across templates,
@@ -47,13 +47,22 @@ const common = {
         ],
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+          }
+          // other vue-loader options go here
+        }
+      },
+      {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         use: 'url-loader?limit=25000'
       },
       // Help webpack in understanding CSS files imported in .js files
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: ['vue-style-loader',MiniCssExtractPlugin.loader, 'css-loader'],
       },
       // Check for images imported in .js files and
       {
@@ -69,6 +78,7 @@ const common = {
     ],
   },
   plugins: [
+    new VueLoaderPlugin(),
     // Print file sizes
     new SizePlugin(),
     // Copy static assets from `public` folder to `build` folder

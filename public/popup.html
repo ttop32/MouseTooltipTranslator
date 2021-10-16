@@ -1,200 +1,70 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Mouse Tooltip Translator</title>
+      <!-- vuetify and its font will be loaded(it comes from popup.js css import) -->
+      <link rel="stylesheet" href="popup.css" />
+      <style type="text/css">
+        body {
+          width: 383px;
+          height: 600px;
+          margin: 0;
+        }
 
-<head>
-  <meta charset="UTF-8">
-  <title>Mouse Tooltip Translator</title>
-  <!-- vuetify and its font will be loaded(it comes from popup.js css import) -->
-  <link rel="stylesheet" href="popup.css" />
-  <style type="text/css">
-    body {
-      width: 383px;
-      height: 600px;
-      margin: 0;
-    }
+        .fade-leave-active,
+        .fade-move {
+          transition: all 500ms;
+        }
 
-    [v-cloak] {
-      display: none;
-    }
+        .fade-leave-active {
+          position: absolute;
+        }
 
-    .fade-leave-active,
-    .fade-move {
-      transition: all 500ms;
-    }
+        .fade-leave-to {
+          opacity: 0;
+          transform: scale(0.0,0.0);
+          transform-origin: center top;
+        }
 
-    .fade-leave-active {
-      position: absolute;
-    }
+        /* https://codepen.io/bromix/pen/MWwEmmP */
+        /* when loaded from popup not options_ui */
+        /* show custom slide bar on setting list table */
+        @media only screen and (min-height: 600px) {
+          body {
+            width: 350px;
+          }
 
-    .fade-leave-to {
-      opacity: 0;
-      transform: scale(0.0,0.0);
-      transform-origin: center top;
-    }
+          .scrollList {
+            height: 552px;
+            overflow: auto;
+          }
 
-    /* https://codepen.io/bromix/pen/MWwEmmP */
-    /* when loaded from popup not options_ui */
-    /* show custom slide bar on setting list table */
-    @media only screen and (min-height: 600px) {
-      body {
-        width: 350px;
-      }
+          .scrollList::-webkit-scrollbar {
+            width: 15px;
+          }
 
-      .scrollList {
-        height: 552px;
-        overflow: auto;
-      }
+          .scrollList::-webkit-scrollbar-track {
+            background: #e6e6e6;
+            border-left: 1px solid #dadada;
+          }
 
-      .scrollList::-webkit-scrollbar {
-        width: 15px;
-      }
+          .scrollList::-webkit-scrollbar-thumb {
+            background: #b0b0b0;
+            border: solid 3px #e6e6e6;
+            border-radius: 7px;
+          }
 
-      .scrollList::-webkit-scrollbar-track {
-        background: #e6e6e6;
-        border-left: 1px solid #dadada;
-      }
-
-      .scrollList::-webkit-scrollbar-thumb {
-        background: #b0b0b0;
-        border: solid 3px #e6e6e6;
-        border-radius: 7px;
-      }
-
-      .scrollList::-webkit-scrollbar-thumb:hover {
-        background: #8a8a8a;
-      }
-    }
-  </style>
-</head>
-
-
-
-
-<body>
-  <div id="app">
-    <v-app v-cloak>
-      <v-fade-transition hide-on-leave>
-
-
-        <!-- main page ====================================== -->
-        <v-card v-if="currentPage=='main'" tile flat>
-          <v-toolbar color="blue" dark dense>
-            <v-toolbar-title>
-              <div>Mouse Tooltip Translator</div>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon @click="currentPage = 'history'">
-              <v-icon>mdi-history</v-icon>
-            </v-btn>
-            <v-app-bar-nav-icon @click="currentPage = 'about'"></v-app-bar-nav-icon>
-          </v-toolbar>
-
-          <v-list flat id="settingListBox" class="scrollList">
-            <v-list-item v-for="(value, name) in settingList" :key="name">
-              <v-select v-model="currentSetting[name]" :items="value.optionList" item-text="text" item-value="val" :label="value.description" @change="onSelectChange($event,name)"></v-select>
-            </v-list-item>
-          </v-list>
-        </v-card>
-
-
-
-        <!-- about page ====================================== -->
-        <div v-else-if="currentPage=='about'">
-          <!-- about page img====================================== -->
-          <v-img src="floating-maple-leaf.jpg" height="300px" dark class="vimage">
-            <v-row class="fill-height">
-              <v-card-title>
-                <v-btn dark icon class="mr-4" @click="currentPage = 'main'">
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-              </v-card-title>
-              <v-spacer></v-spacer>
-              <v-card-title class="white--text">
-                <div class="text-h4 pl-12 pt-12">
-                  Mouse Tooltip<br>
-                  Translator
-                </div>
-              </v-card-title>
-            </v-row>
-          </v-img>
-
-          <!-- about page contents list====================================== -->
-          <v-list-item-group>
-            <v-list-item v-for="(value, key) in aboutPageList" :key="key" @click="openUrl(value.url)">
-              <v-list-item-icon>
-                <v-icon color="indigo">
-                  {{value.icon}}
-                </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{value.name}}</v-list-item-title>
-                <v-list-item-subtitle>{{value.sub_name}}</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </div>
-
-
-
-
-        <!-- history page ====================================== -->
-        <div v-else-if="currentPage=='history'">
-          <v-toolbar color="blue" dark dense>
-            <v-btn icon @click="currentPage = 'main'">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-toolbar-title>History</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon @click="removeAllHistory">
-              <v-icon>mdi-trash-can</v-icon>
-            </v-btn>
-            <v-btn icon @click="downloadCSV">
-              <v-icon>mdi-download</v-icon>
-            </v-btn>
-          </v-toolbar>
-
-          <v-list-item-group class="scrollList">
-            <v-card-text>
-              <span class="subheading">Record Text When</span>
-              <v-chip-group multiple active-class="primary--text" v-model="currentSetting['historyRecordActions']" @change="changeSetting">
-                <v-chip v-for="action in historyRecordActionNames" :value="action">
-                  {{ action }}
-                </v-chip>
-              </v-chip-group>
-            </v-card-text>
-            <v-divider></v-divider>
-
-            <transition-group name="fade" tag="div">
-              <v-list-item v-for="(history, index) in currentSetting['historyList']" :key="history">
-                <v-list-item-content @click="copyToClipboard(history.sourceText,history.targetText)">
-                  <v-list-item-title v-text="history.sourceText"></v-list-item-title>
-                  <v-list-item-subtitle v-text="history.targetText"></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn icon @click.prevent="removeHistory(index)" @mousedown.stop @touchstart.native.stop>
-                    <v-icon color="grey lighten-1">mdi-close</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </transition-group>
-          </v-list-item-group>
-
-          <v-snackbar v-model="copyAlertBar">
-            Item Copied
-            <template v-slot:action="{ attrs }">
-              <v-btn color="pink" text v-bind="attrs" @click="copyAlertBar = false">
-                Close
-              </v-btn>
-            </template>
-          </v-snackbar>
-        </div>
-
-
-      </v-fade-transition>
-    </v-app>
-  </div>
-
-  <script src="popup.js"></script>
-</body>
-
+          .scrollList::-webkit-scrollbar-thumb:hover {
+            background: #8a8a8a;
+          }
+        }
+      </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="popup.js"></script>
+  </body>
 </html>
