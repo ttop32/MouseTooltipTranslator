@@ -8,6 +8,7 @@ When mouse hover on text, it shows translated tooltip in any desired language.
 download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc?hl=en)   
 
 # Result   
+![Alt Text](doc/result_0.gif)
 ![result](doc/screenshot_1.png)    
 ![result](doc/screenshot_2.png)     
 ![result](doc/screenshot_3.png)    
