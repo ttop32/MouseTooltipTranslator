@@ -29,6 +29,8 @@ npm i bootstrap --save
 npm i is-url --save    
 npm i load-script-once --save          
 npm i vue --save    
+npm i vue-loader --save    
+npm i vue-template-compiler --save    
 npm i vuetify --save    
 npm i @mdi/js -D    
 npm i sass sass-loader deepmerge -D    
