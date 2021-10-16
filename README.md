@@ -49,6 +49,9 @@ npm run build
 - Mouse tooltip translator uses user data only for google translation(tts) purpose.   
 - It does not share any user data with any other third parties.   
 
+# Contributors
+- [sanprojects](https://github.com/sanprojects)
+
 # Acknowledgement and References  
 - [Chrome Extension CLI](https://www.npmjs.com/package/chrome-extension-cli)     
 - [TransOver](https://github.com/artemave/translate_onhover)     
@@ -79,8 +82,7 @@ npm run build
 - [review by webiitoko](https://webiitoko.blog.fc2.com/blog-entry-1086.html)
 - [review by Jukka Melaranta](https://saaressa.blogspot.com/2021/08/mouse-tooltip-translator.html)
 
-# Contributors
-- [sanprojects](https://github.com/sanprojects)
+
 
 
 
