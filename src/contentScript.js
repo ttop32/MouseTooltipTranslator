@@ -35,6 +35,7 @@ var rtlLangList = [
   "ur", //Urdu
   "yi", //Yiddish
 ];
+var hiddenProcessed = false;
 
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
@@ -64,16 +65,15 @@ $(document).keyup(function(e) {
     }
   }
 });
-document.addEventListener("visibilitychange", function() { //detect tab switching to turn off key down
-  if (document.visibilityState === "hidden") { //reset all env value
-    for (var key in keyDownList) { //reset key press when switching
-      keyDownList[key] = false;
-    }
-    stopTTS(); //stop tts when tab swtiching
-    mouseMoved = false;
-    hideTooltip();
-    activatedWord = null; //restart word process
+
+window.addEventListener('blur', function(event) { //detect tab switching to turn off key down
+  for (var key in keyDownList) { //reset key press when switching
+    keyDownList[key] = false;
   }
+  stopTTS(); //stop tts
+  mouseMoved = false;
+  hideTooltip();
+  activatedWord = null; //restart word process
 });
 
 //tooltip core======================================================================
