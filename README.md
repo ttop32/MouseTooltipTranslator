@@ -73,6 +73,8 @@ npm run build
 - [Vue.js](https://vuejs.org/)
 - [vuetify](https://vuetifyjs.com/en/)
 - [bing-translate-api](https://github.com/plainheart/bing-translate-api)
+- [floodFill](https://codepen.io/Geeyoam/pen/vLGZzG)
+- [trimCanvas](https://gist.github.com/remy/784508)
 - [floating-maple-leaf](https://www.freeimages.com/photo/floating-maple-leaf-1171688)
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
