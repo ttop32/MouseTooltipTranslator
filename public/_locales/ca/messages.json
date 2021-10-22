@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "Traductor del ratolí Traductor Traductor Text Mouseover mitjançant traductor de Google i Bing "
+		"message": "El traductor d'informació d'eines del ratolí tradueix el text del ratolí amb el traductor de Google"
 	}
 }

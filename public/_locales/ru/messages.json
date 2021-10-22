@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator Перевести текст мыши с использованием переводчика Google и Bing "
+		"message": "Переводчик подсказок мыши переводит текст при наведении указателя мыши с помощью Google Translate"
 	}
 }

@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "Fare ToolTip Tercüman, Google ve Bing Tercümanı kullanarak Mousebover Metin Çevir "
+		"message": "Fare İpucu Tercümanı, fareyle üzerine gelinen metni google çeviri kullanarak çevir"
 	}
 }

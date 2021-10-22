@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "鼠标工具提示转换器使用谷歌和Bing翻译转换鼠标悬浮文本 "
+		"message": "鼠标工具提示翻译器使用谷歌翻译翻译鼠标悬停文本"
 	}
 }

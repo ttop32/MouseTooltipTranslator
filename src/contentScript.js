@@ -9,6 +9,8 @@ import {
   enableSelectionEndEvent
 } from "./selection";
 var isUrl = require('is-url');
+import { getSettingFromStorage } from "./setting";
+
 
 //init environment======================================================================\
 var currentSetting = {};
@@ -45,24 +47,25 @@ $(document).mousemove(function(event) {
   mouseMoved = true;
   setTooltipPosition();
 });
+//detect activation hold key pressed
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
     mouseMoved = false;
     hideTooltip();
   } else {
-    for (var key in keyDownList) { // check activation hold key pressed and record
-      if (e.which == key.toString() && keyDownList[key] == false) { //run tooltip again with keydown on
-        keyDownList[key] = true;
-        activatedWord = null; //restart word process
+    if ([currentSetting["keyDownTooltip"], currentSetting["keyDownTTS"]].includes(e.which.toString()) && // check activation hold key pressed, run tooltip again with key down value
+      keyDownList[e.which] == false) {
+      keyDownList[e.which] = true;
+      activatedWord = null; //restart word process
+      if (selectedText != "") { //restart select if selected value exist
+        processWord(selectedText, "mouseover");
       }
     }
   }
 });
 $(document).keyup(function(e) {
-  for (var key in keyDownList) {
-    if (e.which == key.toString()) {
-      keyDownList[key] = false;
-    }
+  if (keyDownList.hasOwnProperty(e.which)){
+    keyDownList[e.which] = false;
   }
 });
 
@@ -106,7 +109,7 @@ enableSelectionEndEvent();
 //determineTooltipShowHide based on selection
 document.addEventListener("selectionEnd", async function(event) {
   // if translate on selection is enabled
-  if (document.visibilityState === "visible" && settingLoaded) {
+  if (document.visibilityState === "visible" && settingLoaded && currentSetting["translateWhen"].includes("select")) {
     selectedText = event.selectedText;
     await processWord(selectedText, "select");
   }
@@ -115,7 +118,7 @@ document.addEventListener("selectionEnd", async function(event) {
 //determineTooltipShowHide based on hover
 setInterval(async function() {
   // only work when tab is activated and when mousemove and no selected text
-  if (!selectedText && document.visibilityState == "visible" && mouseMoved && settingLoaded) {
+  if (!selectedText && document.visibilityState == "visible" && mouseMoved && settingLoaded && currentSetting["translateWhen"].includes("mouseover")) {
     let word = getMouseOverWord(clientX, clientY);
     await processWord(word, "mouseover");
   }
@@ -281,29 +284,23 @@ function recordHistory(sourceText, targetText) {
   );
 }
 
-function getSetting() { //load  setting from background js
-  chrome.runtime.sendMessage({
-      type: 'loadSetting',
-    },
-    response => {
-      delete response['historyList'];
-      currentSetting = response;
-      applyStyleSetting(currentSetting);
-      settingLoaded = true;
-    }
-  );
+async function getSetting() { //load  setting from background js
+  currentSetting=await getSettingFromStorage({});
+  applyStyleSetting(currentSetting);
+  settingLoaded = true;
 }
 
 //detect storage value changes, update current setting value
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-  //skip history data
-  delete changes['historyList'];
   for (var key in changes) {
     currentSetting[key] = changes[key].newValue;
   }
   // if style changed
   if (changes["tooltipFontSize"] || changes["tooltipWidth"]) {
     applyStyleSetting(currentSetting);
+  }
+  if (changes["translateWhen"] ) {
+    selectedText=""
   }
 });
 

@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "சுட்டி உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் கூகிள் மற்றும் பிங் மொழிபெயர்ப்பாளரைப் பயன்படுத்தி Mouseover உரை மொழிபெயர்ப்பது "
+		"message": "மவுஸ் டூல்டிப் மொழிபெயர்ப்பாளர் கூகுள் டிரான்ஸ்லேட்டைப் பயன்படுத்தி மவுஸ் ஓவர் உரையை மொழிபெயர்க்கிறார்"
 	}
 }

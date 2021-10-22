@@ -1,7 +1,7 @@
 'use strict';
 
 //interact user setting,
-//save and load setting from background.js
+//save setting from background.js
 //use popup.vue file
 
 import "typeface-roboto/index.css"; //font for vuetify

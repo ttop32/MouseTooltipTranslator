@@ -124,6 +124,7 @@
 </template>
 <script>
 
+import { getSettingFromStorage } from "./setting";
 
 var langList = {
   Afrikaans: "af",
@@ -347,6 +348,12 @@ var translatorList = {
   "bing": "bing"
 };
 
+var translateActionList = {
+  "Select": "select",
+  "Mouseover":"mouseover",
+  "Mouseover & Select":"mouseoverselect",
+}
+
 var tooltipFontSizeList = {}; //font size 5 to 20
 for (let i = 5; i < 21; i++) {
   tooltipFontSizeList[String(i)] = String(i);
@@ -373,6 +380,10 @@ var settingList = {
   "useTTS": {
     "description": "Enable TTS",
     "optionList": toggleList
+  },
+  "translateWhen": {
+    "description": "Translate When",
+    "optionList": translateActionList
   },
   "translateSource": {
     "description": "Translate From",
@@ -486,19 +497,8 @@ export default {
     };
   },
   async beforeCreate() {
-    //loadSettingFromBackground
-    this.currentSetting = await new Promise((resolve, reject) => {
-      chrome.runtime.sendMessage({
-        type: 'loadSetting'
-      }, response => {
-        var lastError = chrome.runtime.lastError;
-        if (lastError) {
-            console.log(lastError.message);
-            // 'Could not establish connection. Receiving end does not exist.'
-        }
-        resolve(response);
-      });
-    });
+    this.currentSetting = await getSettingFromStorage({});
+
   },
   methods: {
     onSelectChange(event, name) {

@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "माउस टूलटिप अनुवादक Google और बिंग अनुवादक का उपयोग करके माउसओवर टेक्स्ट का अनुवाद करें "
+		"message": "माउस टूलटिप अनुवादक Google अनुवाद का उपयोग करके माउसओवर टेक्स्ट का अनुवाद करता है"
 	}
 }

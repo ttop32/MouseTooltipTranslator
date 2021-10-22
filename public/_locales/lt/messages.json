@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "Pelės įrankių vertėjas Versti Mouseover Text naudodami \"Google\" ir \"Bing\" vertėjas "
+		"message": "Pelės patarimo vertėjas išverskite pelės žymeklį užvedusį tekstą naudodami „Google“ vertėją"
 	}
 }

@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator: Translate & TTS"
 	},
 	"appDesc": {
-		"message": "Egér Tooltip Translator lefordítani egéráthúzáskor szöveget Google és a Bing fordító "
+		"message": "Mouse Tooltip Translator fordítsa le az egérmutatót a google fordítóval"
 	}
 }
