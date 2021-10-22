@@ -7,27 +7,10 @@
 //for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
-
+import { getSettingFromStorage } from "./setting";
 
 var currentSetting = {};
 var currentAudio = null;
-var defaultList = {
-  "useTooltip": "true",
-  "useTTS": "false",
-  "translateSource": "auto",
-  "translateTarget": navigator.language,
-  "translatorVendor": "google",
-  "keyDownTooltip": "null",
-  "keyDownTTS": "null",
-  'detectType': 'sentence',
-  "translateReverseTarget": "null",
-  "tooltipFontSize": "14",
-  "tooltipWidth": "200",
-  "useOCR": "false",
-  "ocrDetectionLang": "jpn_vert",
-  "historyList": [],
-  "historyRecordActions": [],
-}
 var bingLangCode = {
   "auto": "auto-detect",
   'af': 'af',
@@ -118,7 +101,7 @@ var bingLangCodeOpposite = swap(bingLangCode); // swap key value
 //listen from contents js and background js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   (async () => {
-    currentSetting = await getSetting();
+    currentSetting = await getSettingFromStorage(currentSetting);
 
     if (request.type === 'translate') {
       doTranslate(request, sendResponse);
@@ -152,8 +135,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       sendResponse({});
     } else if (request.type === 'saveSetting') {
       saveSetting(request.options);
-    } else if (request.type === 'loadSetting') {
-      sendResponse(currentSetting)
     } else if (request.type === 'recordHistory') {
       //append to front
       currentSetting["historyList"].unshift({
@@ -177,27 +158,6 @@ function saveSetting(inputSettings) {
     currentSetting = inputSettings;
   });
 }
-
-
-function getSetting() {
-  return new Promise((resolve, reject) => {
-    if (Object.keys(currentSetting).length != Object.keys(defaultList).length) {
-      chrome.storage.local.get(Object.keys(defaultList), function(options) { //load setting
-        for (var key in defaultList) {
-          if (options[key]) { //if value exist, load. else load defualt val
-            currentSetting[key] = options[key];
-          } else {
-            currentSetting[key] = defaultList[key];
-          }
-        }
-        resolve(currentSetting);
-      });
-    } else {
-      resolve(currentSetting);
-    }
-  });
-}
-
 
 
 

@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.21.4",
+    "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",
     "crx-hotreload": "^1.0.6",
     "is-url": "^1.2.4",
