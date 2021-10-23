@@ -38,8 +38,8 @@ npm i sass sass-loader deepmerge -D
 npm i --save typeface-roboto     
 npm i url-loader --save-dev     
 npm install @mdi/font -D    
-npm i axios
-npm i bcp-47
+npm i axios  
+npm i bcp-47  
 
 # Run watch   
 npm run watch       
