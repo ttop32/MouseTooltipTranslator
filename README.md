@@ -85,6 +85,8 @@ npm run build
 - [review by eduvantage](https://blog.naver.com/eduvantage/222253462689)
 - [review by webiitoko](https://webiitoko.blog.fc2.com/blog-entry-1086.html)
 - [review by Jukka Melaranta](https://saaressa.blogspot.com/2021/08/mouse-tooltip-translator.html)
+- [review by Joost Dancet](https://taalextensies.wordpress.com/mouse-tooltip-translator/)
+- [review by Sigit Khoirul Anam](https://www.youtube.com/watch?v=flC9i_7uoho)
 
 
 
