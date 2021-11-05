@@ -128,11 +128,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           }
         }
       })
-
-      sendResponse({});
     } else if (request.type === 'stopTTS') {
       chrome.tts.stop();
-      sendResponse({});
     } else if (request.type === 'saveSetting') {
       saveSetting(request.options);
     } else if (request.type === 'recordHistory') {
@@ -282,7 +279,7 @@ chrome.webRequest.onHeadersReceived.addListener(({
   if (header2) {
     if (header2.value.toLowerCase().includes("application/pdf")) {
       chrome.tabs.update({
-        url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + url
+        url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURI(url)
       });
     }
   }
@@ -297,7 +294,7 @@ chrome.webRequest.onBeforeRequest.addListener(function({
   method
 }) {
   chrome.tabs.update({
-    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + url
+    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURI(url)
   });
 }, {
   urls: ["file:///*/*.pdf", "file:///*/*.PDF"],

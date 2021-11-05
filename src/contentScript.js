@@ -9,7 +9,9 @@ import {
   enableSelectionEndEvent
 } from "./selection";
 var isUrl = require('is-url');
-import { getSettingFromStorage } from "./setting";
+import {
+  getSettingFromStorage
+} from "./setting";
 
 
 //init environment======================================================================\
@@ -64,19 +66,22 @@ $(document).keydown(function(e) {
   }
 });
 $(document).keyup(function(e) {
-  if (keyDownList.hasOwnProperty(e.which)){
+  if (keyDownList.hasOwnProperty(e.which)) {
     keyDownList[e.which] = false;
   }
 });
 
-window.addEventListener('blur', function(event) { //detect tab switching to turn off key down
-  for (var key in keyDownList) { //reset key press when switching
+window.addEventListener('focus', function(event) { //detect tab switching to reset env
+  if (currentSetting["useTTS"] == "true") { //remove previouse played tts
+    stopTTS();
+  }
+  hideTooltip();
+  for (var key in keyDownList) { //reset key press
     keyDownList[key] = false;
   }
-  stopTTS(); //stop tts
   mouseMoved = false;
-  hideTooltip();
   activatedWord = null; //restart word process
+  selectedText = "";
 });
 
 //tooltip core======================================================================
@@ -258,35 +263,32 @@ function sendMessagePromise(item) {
 
 function tts(word, lang) {
   chrome.runtime.sendMessage({
-      type: 'tts',
-      word: word,
-      lang: lang
-    },
-    function(data) {}
-  );
+    type: 'tts',
+    word: word,
+    lang: lang
+  });
 }
 
 function stopTTS() {
   chrome.runtime.sendMessage({
-      type: 'stopTTS'
-    },
-    function(data) {}
-  );
+    type: 'stopTTS'
+  });
 }
 
 function recordHistory(sourceText, targetText) {
   chrome.runtime.sendMessage({ //send history to background.js
-      type: 'recordHistory',
-      "sourceText": sourceText,
-      "targetText": targetText,
-    },
-    response => {}
-  );
+    type: 'recordHistory',
+    "sourceText": sourceText,
+    "targetText": targetText,
+  });
 }
 
 async function getSetting() { //load  setting from background js
-  currentSetting=await getSettingFromStorage({});
+  currentSetting = await getSettingFromStorage({});
   applyStyleSetting(currentSetting);
+  if (currentSetting["useTTS"] == "true") { //remove previouse played tts
+    stopTTS();
+  }
   settingLoaded = true;
 }
 
@@ -299,8 +301,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
   if (changes["tooltipFontSize"] || changes["tooltipWidth"]) {
     applyStyleSetting(currentSetting);
   }
-  if (changes["translateWhen"] ) {
-    selectedText=""
+  if (changes["translateWhen"]) {
+    selectedText = ""
   }
 });
 
