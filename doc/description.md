@@ -17,6 +17,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 If pop-over translate tooltip is not came out properly after installation, user need to reload all your existing pages to run web page with this extension for using extension feature. And, make sure to setting target translate language properly from pop up configuration page. Pop up configuration page is provided by click extension icon top right corner and click this extension's blue mouse icon. If user want to use this extension on local file, user need to set “allow access to file URLs” from "chrome://extensions/?id=hmigninkgibhdckiaphhmbgcghochdjc".    
 
 # Change Log   
+- 0.1.34
+  - remove sendMessage (stop tts)
 - 0.1.33
   - avoid to use sendMessage (stop tts) when leave tab
 - 0.1.32

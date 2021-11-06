@@ -71,10 +71,7 @@ $(document).keyup(function(e) {
   }
 });
 
-window.addEventListener('focus', function(event) { //detect tab switching to reset env
-  if (currentSetting["useTTS"] == "true") { //remove previouse played tts
-    stopTTS();
-  }
+window.addEventListener('blur', function(event) { //detect tab switching to reset env
   hideTooltip();
   for (var key in keyDownList) { //reset key press
     keyDownList[key] = false;
@@ -263,32 +260,27 @@ function sendMessagePromise(item) {
 
 function tts(word, lang) {
   chrome.runtime.sendMessage({
-    type: 'tts',
-    word: word,
-    lang: lang
-  });
-}
-
-function stopTTS() {
-  chrome.runtime.sendMessage({
-    type: 'stopTTS'
-  });
+      type: 'tts',
+      word: word,
+      lang: lang
+    },
+    response => {}
+  );
 }
 
 function recordHistory(sourceText, targetText) {
   chrome.runtime.sendMessage({ //send history to background.js
-    type: 'recordHistory',
-    "sourceText": sourceText,
-    "targetText": targetText,
-  });
+      type: 'recordHistory',
+      "sourceText": sourceText,
+      "targetText": targetText,
+    },
+    response => {}
+  );
 }
 
 async function getSetting() { //load  setting from background js
   currentSetting = await getSettingFromStorage({});
   applyStyleSetting(currentSetting);
-  if (currentSetting["useTTS"] == "true") { //remove previouse played tts
-    stopTTS();
-  }
   settingLoaded = true;
 }
 
