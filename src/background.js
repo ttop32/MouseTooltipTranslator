@@ -128,10 +128,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           }
         }
       })
+      sendResponse({});
     } else if (request.type === 'stopTTS') {
       chrome.tts.stop();
+      sendResponse({});
     } else if (request.type === 'saveSetting') {
       saveSetting(request.options);
+      sendResponse({});
     } else if (request.type === 'recordHistory') {
       //append to front
       currentSetting["historyList"].unshift({
@@ -143,6 +146,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         currentSetting["historyList"].pop();
       }
       saveSetting(currentSetting);
+      sendResponse({});
     }
   })();
 
