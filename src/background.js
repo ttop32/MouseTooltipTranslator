@@ -264,43 +264,16 @@ async function getBingAccessToken() {
 
 
 // intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
-// for online pdf url
-chrome.webRequest.onHeadersReceived.addListener(({
-  url,
-  method,
-  responseHeaders
-}) => {
-  //skip download header
-  const header1 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-disposition').shift();
-  if (header1) {
-    if (header1.value.toLowerCase().includes("attachment")) {
-      return;
+chrome.tabs.onUpdated.addListener(    //when tab update
+  function(tabId, changeInfo, tab) {
+    if(changeInfo.url){
+      if(/.pdf$/.test(changeInfo.url.toLowerCase()) ){    //url is end with .pdf
+        if(!changeInfo.url.includes(chrome.runtime.getURL('/pdfjs/web/viewer.html'))){   //url is not start with chrome-extension://
+          chrome.tabs.update(tabId,{
+            url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(changeInfo.url)
+          });
+        }
+      }
     }
   }
-
-  //check content type is pdf
-  const header2 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
-  if (header2) {
-    if (header2.value.toLowerCase().includes("application/pdf")) {
-      chrome.tabs.update({
-        url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURI(url)
-      });
-    }
-  }
-}, {
-  urls: ['<all_urls>'],
-  types: ['main_frame', 'sub_frame']
-}, ['responseHeaders']);
-
-//for local pdf url
-chrome.webRequest.onBeforeRequest.addListener(function({
-  url,
-  method
-}) {
-  chrome.tabs.update({
-    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURI(url)
-  });
-}, {
-  urls: ["file:///*/*.pdf", "file:///*/*.PDF"],
-  types: ['main_frame']
-}, []);
+);
