@@ -35,3 +35,27 @@ document.addEventListener("webviewerloaded", function() {
     });
   });
 });
+
+
+//if current url is local file and no file permission
+//alert user need permmsion
+function checkCurrentUrlIsLocalFileUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const url = urlParams.get('file');
+
+  if (/^file:\/\//.test(url)) { //check current url is file url
+    chrome.extension.isAllowedFileSchemeAccess((isAllowedAccess) => { //check file url permmision
+      if (isAllowedAccess == false) {
+        alert(`
+          To use this extension for local file,
+          user need to turn on 'Allow access to file URLs'
+          from chrome extension setting page
+          `);
+        chrome.tabs.update({
+          url: "chrome://extensions/?id=hmigninkgibhdckiaphhmbgcghochdjc" //redirect to setting page
+        });
+      }
+    })
+  }
+}
+checkCurrentUrlIsLocalFileUrl();

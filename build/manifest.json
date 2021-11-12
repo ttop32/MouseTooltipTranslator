@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.35",
+  "version": "0.1.36",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -13,7 +13,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self';  object-src 'none'"
   },
-  "permissions": ["storage", "tabs", "tts"],
+  "permissions": ["storage", "tabs", "tts", "webRequest"],
   "host_permissions": [
     "<all_urls>"
   ],

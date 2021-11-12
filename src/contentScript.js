@@ -39,7 +39,7 @@ var rtlLangList = [
   "ur", //Urdu
   "yi", //Yiddish
 ];
-var hiddenProcessed = false;
+
 
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
@@ -279,7 +279,7 @@ function recordHistory(sourceText, targetText) {
 }
 
 async function getSetting() { //load  setting from background js
-  currentSetting = await getSettingFromStorage({});
+  currentSetting = await getSettingFromStorage();
   applyStyleSetting(currentSetting);
   settingLoaded = true;
 }
