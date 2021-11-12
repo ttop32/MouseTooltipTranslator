@@ -406,7 +406,7 @@ var settingList = {
     "optionList": keyList
   },
   "detectType": {
-    "description": "Detect Type",
+    "description": "Text Detect Type",
     "optionList": detectTypeList
   },
   "translateReverseTarget": {
@@ -420,6 +420,10 @@ var settingList = {
   "tooltipWidth":{
     "description": "Tooltip Width",
     "optionList": tooltipWidth
+  },
+  "detectPDF":{
+    "description": "Detect PDF",
+    "optionList": toggleList
   },
   "useOCR": {
     "description": "Enable OCR (Experimental)",
@@ -497,7 +501,7 @@ export default {
     };
   },
   async beforeCreate() {
-    this.currentSetting = await getSettingFromStorage({});
+    this.currentSetting = await getSettingFromStorage();
 
   },
   methods: {
