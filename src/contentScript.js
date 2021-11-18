@@ -14,7 +14,7 @@ import {
 } from "./setting";
 
 
-//init environment======================================================================\
+//init environment var======================================================================\
 var currentSetting = {};
 var tooltipContainer;
 var clientX = 0;
@@ -23,12 +23,7 @@ var mouseTarget = null;
 var activatedWord = null;
 var mouseMoved = false;
 var settingLoaded = false;
-var keyDownList = { //use key down for enable translation partially
-  17: false, //ctrl
-  16: false, //shift
-  18: false, //alt
-  91: false, //command
-};
+var keyDownList = {}; //use key down for enable translation partially
 var style = $("<style>").appendTo("head");
 let selectedText = "";
 var rtlLangList = [
@@ -38,51 +33,12 @@ var rtlLangList = [
   "fa", //Persian
   "ur", //Urdu
   "yi", //Yiddish
-];
+]; //right to left language system list
 
 
-//use mouse position for tooltip position
-$(document).mousemove(function(event) {
-  clientX = event.clientX;
-  clientY = event.clientY;
-  mouseTarget = event.target;
-  mouseMoved = true;
-  setTooltipPosition();
-});
-//detect activation hold key pressed
-$(document).keydown(function(e) {
-  if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
-    mouseMoved = false;
-    hideTooltip();
-  } else {
-    if ([currentSetting["keyDownTooltip"], currentSetting["keyDownTTS"]].includes(e.which.toString()) && // check activation hold key pressed, run tooltip again with key down value
-      keyDownList[e.which] == false) {
-      keyDownList[e.which] = true;
-      activatedWord = null; //restart word process
-      if (selectedText != "") { //restart select if selected value exist
-        processWord(selectedText, "mouseover");
-      }
-    }
-  }
-});
-$(document).keyup(function(e) {
-  if (keyDownList.hasOwnProperty(e.which)) {
-    keyDownList[e.which] = false;
-  }
-});
-
-window.addEventListener('blur', function(event) { //detect tab switching to reset env
-  hideTooltip();
-  for (var key in keyDownList) { //reset key press
-    keyDownList[key] = false;
-  }
-  mouseMoved = false;
-  activatedWord = null; //restart word process
-  selectedText = "";
-});
 
 //tooltip core======================================================================
-//tooltip: init
+//tooltip init
 $(document).ready(function() {
   getSetting(); //load setting from background js
 
@@ -106,18 +62,9 @@ $(document).ready(function() {
   });
 });
 
-enableSelectionEndEvent();
 
-//determineTooltipShowHide based on selection
-document.addEventListener("selectionEnd", async function(event) {
-  // if translate on selection is enabled
-  if (document.visibilityState === "visible" && settingLoaded && currentSetting["translateWhen"].includes("select")) {
-    selectedText = event.selectedText;
-    await processWord(selectedText, "select");
-  }
-}, false);
 
-//determineTooltipShowHide based on hover
+//determineTooltipShowHide based on hover, check mouse over word on every 700ms
 setInterval(async function() {
   // only work when tab is activated and when mousemove and no selected text
   if (!selectedText && document.visibilityState == "visible" && mouseMoved && settingLoaded && currentSetting["translateWhen"].includes("mouseover")) {
@@ -126,6 +73,17 @@ setInterval(async function() {
   }
 }, 700);
 
+//determineTooltipShowHide based on selection
+enableSelectionEndEvent(); //set mouse drag text selection event
+document.addEventListener("selectionEnd", async function(event) {
+  // if translate on selection is enabled
+  if (document.visibilityState === "visible" && settingLoaded && currentSetting["translateWhen"].includes("select")) {
+    selectedText = event.selectedText;
+    await processWord(selectedText, "select");
+  }
+}, false);
+
+//process detected word
 async function processWord(word, actionType) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
 
@@ -240,6 +198,46 @@ function applyLangAlignment(lang) {
     tooltipContainer.attr("dir", "ltr");
   }
 }
+
+
+//event listner - detect mouse move, key press, mouse press, tab switch==========================================================================================
+//use mouse position for tooltip position
+$(document).mousemove(function(event) {
+  clientX = event.clientX;
+  clientY = event.clientY;
+  mouseTarget = event.target;
+  mouseMoved = true;
+  setTooltipPosition();
+});
+//detect activation hold key pressed
+$(document).keydown(function(e) {
+  if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
+    mouseMoved = false;
+    hideTooltip();
+  } else {
+    if ([currentSetting["keyDownTooltip"], currentSetting["keyDownTTS"]].includes(e.which.toString()) && keyDownList[e.which] != true) { // check activation hold key pressed, run tooltip again with key down value
+      keyDownList[e.which] = true;
+      activatedWord = null; //restart word process
+      if (selectedText != "") { //restart select if selected value exist
+        processWord(selectedText, "select");
+      }
+    }
+  }
+});
+$(document).keyup(function(e) {
+  if (keyDownList.hasOwnProperty(e.which)) {
+    keyDownList[e.which] = false;
+  }
+});
+
+//detect tab switching to reset env
+window.addEventListener('blur', function(event) {
+  hideTooltip();
+  keyDownList = {}; //reset key press
+  mouseMoved = false;
+  activatedWord = null; //restart word process
+  selectedText = "";
+});
 
 //send to background.js for background processing and setting handling ===========================================================================
 function translateSentence(word, translateTarget) {
