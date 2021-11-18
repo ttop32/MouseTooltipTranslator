@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator: Translate & TTS"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "మౌస్ టూల్‌టిప్ ట్రాన్స్‌లేటర్ గూగుల్ ట్రాన్స్‌లేట్ ఉపయోగించి మౌస్ ఓవర్ టెక్స్ట్‌ను అనువదిస్తుంది"
+		"message": "మౌస్ టూల్టిప్లో అనువాదకుడు Google అనువాదం ఉపయోగించి Mouseover టెక్స్ట్ అనువదించు"
 	}
 }

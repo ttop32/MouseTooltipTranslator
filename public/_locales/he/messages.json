@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator: Translate & TTS"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "מתרגם טיפים של עכבר מתרגם טקסט עם עכבר באמצעות google translate"
+		"message": "עכבר Tooltip מתרגם תרגם טקסט עכבר באמצעות Google Translate"
 	}
 }

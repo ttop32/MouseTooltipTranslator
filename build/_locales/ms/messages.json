@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator: Translate & TTS"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Penterjemah Petua Alat Tetikus menterjemah teks alih tetikus menggunakan terjemahan google"
+		"message": "Penterjemah Tooltip Mouse Terjemah Teks tetikus menggunakan Google Translate"
 	}
 }
