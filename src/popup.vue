@@ -354,8 +354,8 @@ var translateActionList = {
   "Mouseover & Select":"mouseoverselect",
 }
 
-var tooltipFontSizeList = {}; //font size 5 to 20
-for (let i = 5; i < 21; i++) {
+var tooltipFontSizeList = {}; //font size 5 to 25
+for (let i = 5; i < 26; i++) {
   tooltipFontSizeList[String(i)] = String(i);
 }
 var detectTypeList = {
