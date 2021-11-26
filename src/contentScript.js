@@ -52,6 +52,8 @@ $(document).ready(function() {
       "z-index": "100000200",
       "width": "500px",
       "margin-left": "-250px",
+      "background-color": "#00000000", //transparent
+      "pointer-events": "none" //click through
     }
   }).appendTo(document.body);
 
