@@ -1,6 +1,6 @@
 # MouseTooltipTranslator  
 [![Chrome users](https://img.shields.io/chrome-web-store/users/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) 
-[![Chrome rate](https://img.shields.io/chrome-web-store/rating/hmigninkgibhdckiaphhmbgcghochdjc?style=flat-square?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) 
+[![Chrome rate](https://img.shields.io/chrome-web-store/rating/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) 
 
 
 
