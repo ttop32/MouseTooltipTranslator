@@ -1,4 +1,10 @@
-# MouseTooltipTranslator   
+# MouseTooltipTranslator  
+[![Chrome users](https://img.shields.io/chrome-web-store/users/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) 
+[![Chrome rate](https://img.shields.io/chrome-web-store/rating/hmigninkgibhdckiaphhmbgcghochdjc?style=flat-square?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) 
+
+
+
+
 Chrome extension for mouseover translation - Mouse over to translate using google translate        
 When mouse hover on text, it shows translated tooltip in any desired language.    
 
