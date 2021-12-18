@@ -20,6 +20,8 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.40
+  - detect chrome pdf viewer instead of pdf url (request by Justin Brown) 
 - 0.1.39
   - fix translator css crash from twitter youtube (request by PedoBearNomsLoli)
 - 0.1.38

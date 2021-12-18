@@ -4,7 +4,6 @@
 //it communicate with popup.js(for setting) and contentScript.js(for translattion and tts)
 //for setting, it save and load from chrome storage
 //for translation, use fetch to get translated  result
-//for pdf, it intercept pdf url and redirect to translation tooltip pdf.js
 
 //tooltip background===========================================================================
 import {
@@ -268,62 +267,5 @@ async function getBingAccessToken() {
     }
   } catch (e) {
     console.log(e);
-  }
-}
-
-
-
-// intercept pdf url and redirect to translation tooltip pdf.js ===========================================================
-
-// check url end with .url
-chrome.tabs.onUpdated.addListener( //when tab update
-  function(tabId, changeInfo, tab) {
-    if (changeInfo.url) {
-      if (/.pdf$/.test(changeInfo.url.toLowerCase())) { //url is end with .pdf
-        if (!changeInfo.url.includes(chrome.runtime.getURL('/pdfjs/web/viewer.html'))) { //url is not start with chrome-extension://
-          openPDFViwer(changeInfo.url, tabId);
-        }
-      }
-    }
-  }
-);
-
-
-//for url that does not end with .pdf,
-// check pdf request header
-chrome.webRequest.onHeadersReceived.addListener(({
-  url,
-  method,
-  responseHeaders
-}) => {
-  if (/.pdf$/.test(url.toLowerCase())) { //skip url, end with .pdf
-    return;
-  }
-  //skip download header
-  const header1 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-disposition').shift();
-  if (header1) {
-    if (header1.value.toLowerCase().includes("attachment")) {
-      return;
-    }
-  }
-
-  //check content type is pdf
-  const header2 = responseHeaders.filter(h => h.name.toLowerCase() === 'content-type').shift();
-  if (header2) {
-    if (header2.value.toLowerCase().includes("application/pdf")) {
-      openPDFViwer(url);
-    }
-  }
-}, {
-  urls: ['<all_urls>'],
-  types: ['main_frame', 'sub_frame']
-}, ['responseHeaders']);
-
-
-async function openPDFViwer(url, tabId) {
-  if (currentSetting["detectPDF"] == "true") {
-    chrome.tabs.update(tabId, {
-      url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
-    });
   }
 }

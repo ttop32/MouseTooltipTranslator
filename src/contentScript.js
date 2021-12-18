@@ -1,7 +1,7 @@
 'use strict';
 // inject translation tooltip based on user text hover event
 //it gets translation and tts from background.js
-
+//intercept pdf url
 
 import $ from "jquery";
 import 'bootstrap/js/dist/tooltip';
@@ -281,6 +281,7 @@ function recordHistory(sourceText, targetText) {
 async function getSetting() { //load  setting from background js
   currentSetting = await getSettingFromStorage();
   applyStyleSetting(currentSetting);
+  detectPDF();
   settingLoaded = true;
 }
 
@@ -310,6 +311,13 @@ function applyStyleSetting(setting) {
     `);
 }
 
+function detectPDF() {
+  if (currentSetting["detectPDF"] == "true") {
+    if (document.body.children[0].type == "application/pdf") {
+      window.location.replace(chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(window.location.href));
+    }
+  }
+}
 
 //ocr==================================================================================
 var ocrText = null; //text
