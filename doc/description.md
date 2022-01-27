@@ -20,6 +20,8 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.41
+  - fix  google translate api request
 - 0.1.40
   - detect chrome pdf viewer instead of pdf url (request by Justin Brown) 
 - 0.1.39
@@ -130,7 +132,7 @@ English, Russian, Japanese, Chinese, German and so on
   - Filter out when only detect currency sign text
 - 0.1.12
   - Fix base64 image OCR response for translate ocr correctly
-  - Use Vue JSX on translator popup page
+  - Use Vue JSX on translator popup page 
 - 0.1.11
   - Use Vue and Vuetify on translator popup page
   - Add options_ui
