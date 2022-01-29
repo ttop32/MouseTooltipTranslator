@@ -83,8 +83,8 @@ var bingLangCode = {
   uk: "uk",
   ur: "ur",
   vi: "vi",
-  "zh-cn": "zh-Hans",
-  "zh-tw": "zh-Hant",
+  "zh-CN": "zh-Hans",
+  "zh-TW": "zh-Hant",
 };
 
 function swap(json) {
