@@ -5,10 +5,10 @@
 
 import $ from "jquery";
 import 'bootstrap/js/dist/tooltip';
+var isUrl = require('is-url');
 import {
   enableSelectionEndEvent
 } from "./selection";
-var isUrl = require('is-url');
 import {
   getSettingFromStorage
 } from "./setting";
@@ -91,31 +91,26 @@ async function processWord(word, actionType) {
 
   if (word && activatedWord != word) { //show tooltip, if current word is changed and word is not none
     activatedWord = word;
-    setTooltipPosition();
-    var response = await translate(word);
+    var {translatedText,sourceLang,targetLang} = await translate(word);
 
     //if respond text is not empty, process text
-    //else, hide
-    if (response.translatedText != "") {
+    if (translatedText) {
       //if tooltip is on or activation key is pressed, show tooltip
       if (currentSetting["useTooltip"] == "true" || keyDownList[currentSetting["keyDownTooltip"]]) {
-        applyLangAlignment(response.targetLang);
-        tooltipContainer.attr('data-original-title', response.translatedText); //place text on tooltip
-        tooltipContainer.tooltip("show");
+        showTooltip(translatedText,targetLang);
 
         //if record trigger is activated, do record
         if (currentSetting["historyRecordActions"].includes(actionType)) {
-          recordHistory(word, response.translatedText);
+          recordHistory(word, translatedText);
         }
       }
       //if use_tts is on or activation key is pressed, do tts
       if (currentSetting["useTTS"] == "true" || keyDownList[currentSetting["keyDownTTS"]]) {
-        tts(word, response.sourceLang);
+        tts(word, sourceLang);
       }
     } else {
       hideTooltip();
     }
-
   } else if (!word && activatedWord) { //hide tooltip, if activated word exist and current word is none
     activatedWord = null;
     hideTooltip();
@@ -125,7 +120,7 @@ async function processWord(word, actionType) {
 function getMouseOverWord(clientX, clientY) {
   //check is image
   var imageOutput = checkImage(clientX, clientY);
-  if (imageOutput != null) {
+  if (imageOutput) {
     return imageOutput;
   }
 
@@ -139,7 +134,6 @@ function getMouseOverWord(clientX, clientY) {
   //expand char to get word,sentence,
   //if target is youtube caption, use container
   if (currentSetting["detectType"] == "container" || mouseTarget.className == "ytp-caption-segment") {
-    //range.expand('textedit');
     range.setStartBefore(range.startContainer);
     range.setEndAfter(range.startContainer);
   } else if (currentSetting["detectType"] == "word") {
@@ -168,12 +162,23 @@ function filterWord(word) {
   return word;
 }
 
+function showTooltip(text,lang) {
+  applyLangAlignment(lang);
+  tooltipContainer.attr("data-original-title", text); //place text on tooltip
+  tooltipContainer.tooltip("show");
+}
+
 function hideTooltip() {
   tooltipContainer.tooltip("hide");
 }
 
+function applyLangAlignment(lang) {
+  var isRtl= (rtlLangList.includes(lang)) ? "rtl" : "ltr";
+  tooltipContainer.attr("dir", isRtl);
+}
+
 function setTooltipPosition() {
-  if (activatedWord != null) {
+  if(tooltipContainer){
     tooltipContainer.css("transform", "translate(" + clientX + "px," + clientY + "px)");
   }
 }
@@ -192,15 +197,6 @@ async function translate(word) {
 
   return response;
 }
-
-function applyLangAlignment(lang) {
-  if (rtlLangList.includes(lang)) {
-    tooltipContainer.attr("dir", "rtl");
-  } else {
-    tooltipContainer.attr("dir", "ltr");
-  }
-}
-
 
 //event listner - detect mouse move, key press, mouse press, tab switch==========================================================================================
 //use mouse position for tooltip position

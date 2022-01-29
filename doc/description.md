@@ -20,8 +20,10 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.42
+  - fix chinese default language code (request by yc-forever) 
 - 0.1.41
-  - fix  google translate api request
+  - fix google translate api request
 - 0.1.40
   - detect chrome pdf viewer instead of pdf url (request by Justin Brown) 
 - 0.1.39
