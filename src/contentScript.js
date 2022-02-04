@@ -96,7 +96,8 @@ async function processWord(word, actionType) {
     //if respond text is not empty, process text
     if (translatedText) {
       //if tooltip is on or activation key is pressed, show tooltip
-      if (currentSetting["useTooltip"] == "true" || keyDownList[currentSetting["keyDownTooltip"]]) {
+      //if current word is recent activatedWord
+      if ((currentSetting["useTooltip"] == "true" || keyDownList[currentSetting["keyDownTooltip"]]) && activatedWord == word && document.visibilityState == "visible") {
         showTooltip(translatedText,targetLang);
 
         //if record trigger is activated, do record
@@ -109,10 +110,9 @@ async function processWord(word, actionType) {
         tts(word, sourceLang);
       }
     } else {
-      hideTooltip();
+      hideTooltip(false);
     }
   } else if (!word && activatedWord) { //hide tooltip, if activated word exist and current word is none
-    activatedWord = null;
     hideTooltip();
   }
 }
@@ -133,14 +133,16 @@ function getMouseOverWord(clientX, clientY) {
 
   //expand char to get word,sentence,
   //if target is youtube caption, use container
-  if (currentSetting["detectType"] == "container" || mouseTarget.className == "ytp-caption-segment") {
-    range.setStartBefore(range.startContainer);
-    range.setEndAfter(range.startContainer);
-  } else if (currentSetting["detectType"] == "word") {
-    range.expand('word');
-  } else if (currentSetting["detectType"] == "sentence") {
-    range.expand('sentence');
-  }
+  try{
+    if (currentSetting["detectType"] == "container" || mouseTarget.className == "ytp-caption-segment") {
+      range.setStartBefore(range.startContainer);
+      range.setEndAfter(range.startContainer);
+    } else if (currentSetting["detectType"] == "word") {
+      range.expand('word');
+    } else if (currentSetting["detectType"] == "sentence") {
+      range.expand('sentence');
+    }
+  } catch (error) {  }
 
   //check mouse is actually in text bound rect
   var rect = range.getBoundingClientRect(); //mouse in word rect
@@ -168,7 +170,10 @@ function showTooltip(text,lang) {
   tooltipContainer.tooltip("show");
 }
 
-function hideTooltip() {
+function hideTooltip(resetActivatedWord=true) {
+  if(resetActivatedWord){
+    activatedWord=null;
+  }
   tooltipContainer.tooltip("hide");
 }
 
@@ -211,7 +216,7 @@ $(document).mousemove(function(event) {
 $(document).keydown(function(e) {
   if ((e.keyCode == 65 || e.keyCode == 70) && e.ctrlKey) { //user pressed ctrl+f  ctrl+a, hide tooltip
     mouseMoved = false;
-    hideTooltip();
+    hideTooltip(false);
   } else {
     if ([currentSetting["keyDownTooltip"], currentSetting["keyDownTTS"]].includes(e.which.toString()) && keyDownList[e.which] != true) { // check activation hold key pressed, run tooltip again with key down value
       keyDownList[e.which] = true;
@@ -230,11 +235,10 @@ $(document).keyup(function(e) {
 
 //detect tab switching to reset env
 window.addEventListener('blur', function(event) {
-  hideTooltip();
   keyDownList = {}; //reset key press
   mouseMoved = false;
-  activatedWord = null; //restart word process
   selectedText = "";
+  hideTooltip();
 });
 
 //send to background.js for background processing and setting handling ===========================================================================
