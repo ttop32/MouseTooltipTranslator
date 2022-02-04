@@ -20,6 +20,9 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.43
+  - google reject by tabs permission 
+    - remove open setting page in new tab
 - 0.1.42
   - fix chinese default language code (request by yc-forever) 
 - 0.1.41
