@@ -6153,7 +6153,7 @@
 }
 
 .bootstrapiso .tooltip.show {
-  opacity: .8
+  opacity: 1;
 }
 
 .bootstrapiso .tooltip .arrow {
@@ -6181,7 +6181,7 @@
 .bootstrapiso .bs-tooltip-top .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="top"] .arrow::before {
   top: 0;
   border-width: .4rem .4rem 0;
-  border-top-color: #000
+  border-top-color: #000000C8;
 }
 
 .bootstrapiso .bs-tooltip-right, .bootstrapiso .bs-tooltip-auto[x-placement^="right"] {
@@ -6197,7 +6197,7 @@
 .bootstrapiso .bs-tooltip-right .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="right"] .arrow::before {
   right: 0;
   border-width: .4rem .4rem .4rem 0;
-  border-right-color: #000
+  border-right-color: #000000C8;
 }
 
 .bootstrapiso .bs-tooltip-bottom, .bootstrapiso .bs-tooltip-auto[x-placement^="bottom"] {
@@ -6211,7 +6211,7 @@
 .bootstrapiso .bs-tooltip-bottom .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   bottom: 0;
   border-width: 0 .4rem .4rem;
-  border-bottom-color: #000
+  border-bottom-color: #000000C8;
 }
 
 .bootstrapiso .bs-tooltip-left, .bootstrapiso .bs-tooltip-auto[x-placement^="left"] {
@@ -6227,7 +6227,7 @@
 .bootstrapiso .bs-tooltip-left .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="left"] .arrow::before {
   left: 0;
   border-width: .4rem 0 .4rem .4rem;
-  border-left-color: #000
+  border-left-color: #000000C8;
 }
 
 .bootstrapiso .tooltip-inner {
@@ -6235,7 +6235,7 @@
   padding: .25rem .5rem;
   color: #fff;
   text-align: center;
-  background-color: #000;
+  background-color: #000000C8;
   border-radius: .25rem
 }
 

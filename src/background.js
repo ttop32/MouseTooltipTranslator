@@ -8,7 +8,6 @@
 //tooltip background===========================================================================
 import { getSettingFromStorage } from "./setting";
 
-
 var currentSetting = {};
 var settingLoaded = false;
 var bingLangCode = {
@@ -117,7 +116,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       saveSetting(request.options);
       sendResponse({});
     } else if (request.type === "recordHistory") {
-      recordHistory(request)
+      recordHistory(request);
       sendResponse({});
     }
   })();
@@ -137,7 +136,7 @@ async function getSetting() {
   settingLoaded = true;
 }
 
-function recordHistory(request){
+function recordHistory(request) {
   //append history to front
   currentSetting["historyList"].unshift({
     sourceText: request.sourceText,
@@ -152,58 +151,29 @@ function recordHistory(request){
 
 // translate ===========================================================
 let bingAccessToken;
-let googleBaseUrl = "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
+let googleBaseUrl1 =
+  "https://translate.googleapis.com/translate_a/single?dt=at&dt=bd&dt=ex&dt=ld&client=gtx&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&otf=1&ssel=0&tsel=0&kc=7&dj=1&";
+let googleBaseUrl2 =
+  "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
+let oneHourInMilSec = 1 * 60 * 60 * 1000;
+var googleTranslateFailedTimeout = 0;
 
 async function doTranslate(request, sendResponse) {
-  var translatorUrl;
-  var params;
-  var detectedLang = "";
-  var translatedText = "";
-
   try {
-    //prepare params
     if (currentSetting["translatorVendor"] == "google") {
-      translatorUrl = googleBaseUrl;
-      params = {
-        q: request.word,
-        sl: currentSetting["translateSource"], //source lang
-        tl: request.translateTarget, //target lang
-      };
+      var {
+        translatedText,
+        detectedLang,
+      } = await translateWithOperatedGoogleUrl(
+        request.word,
+        request.translateTarget
+      );
     } else {
-      //bing translation
-      translatorUrl = bingBaseUrl;
-      const { token, key, IG, IID } = await getBingAccessToken();
-      params = {
-        text: request.word,
-        fromLang: bingLangCode[currentSetting["translateSource"]],
-        to: bingLangCode[request.translateTarget],
-        token,
-        key,
-        IG,
-        IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-      };
-    }
-
-    //send params to translator site
-    const res = await fetch(translatorUrl + new URLSearchParams(params), {
-      method: "POST",
-    }).then((response) => response.json());
-
-    if (currentSetting["translatorVendor"] == "google") {
-      if (res.sentences) {
-        res.sentences.forEach(function(sentences) {
-          if (sentences.trans) {
-            translatedText += sentences.trans;
-          }
-        });
-      }
-      detectedLang = res.src;
-    } else {
-      //bing translation
-      detectedLang =
-        bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
-      translatedText = res[0]["translations"][0]["text"];
+      var { translatedText, detectedLang } = await translateWithBing(
+        request.word,
+        request.translateTarget
+      );
     }
 
     sendResponse({
@@ -219,6 +189,74 @@ async function doTranslate(request, sendResponse) {
       targetLang: request.translateTarget,
     });
   }
+}
+
+async function translateWithOperatedGoogleUrl(word, targetLang) {
+  //try goodleBaseUrl1 if it failed try goodleBaseUrl2 next time until next hour
+  var googleUrl = googleBaseUrl1;
+  if (Date.now() < googleTranslateFailedTimeout) {
+    googleUrl = googleBaseUrl2;
+  }
+
+  var translateRes = await translateWithGoogle(googleUrl, word, targetLang);
+
+  if (translateRes == null && googleUrl == googleBaseUrl1) {
+    googleTranslateFailedTimeout = Date.now() + oneHourInMilSec;
+    return await translateWithGoogle(googleBaseUrl2, word, targetLang);
+  } else {
+    return translateRes;
+  }
+}
+
+async function translateWithGoogle(translatorUrl, word, targetLang) {
+  let res = await postMessage(translatorUrl, {
+    q: word,
+    sl: currentSetting["translateSource"], //source lang
+    tl: targetLang,
+  });
+
+  if (res && res.sentences) {
+    var translatedText = "";
+    res.sentences.forEach(function(sentences) {
+      if (sentences.trans) {
+        translatedText += sentences.trans;
+      }
+    });
+    var detectedLang = res.src;
+    return { translatedText, detectedLang };
+  } else {
+    return null;
+  }
+}
+
+async function translateWithBing(word, targetLang) {
+  const { token, key, IG, IID } = await getBingAccessToken();
+
+  let res = await postMessage(bingBaseUrl, {
+    text: word,
+    fromLang: bingLangCode[currentSetting["translateSource"]],
+    to: bingLangCode[targetLang],
+    token,
+    key,
+    IG,
+    IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+  });
+  if (res && res[0]) {
+    var detectedLang =
+      bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
+    var translatedText = res[0]["translations"][0]["text"];
+    return { translatedText, detectedLang };
+  } else {
+    return null;
+  }
+}
+
+async function postMessage(url, params) {
+  return await fetch(url + new URLSearchParams(params), {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .catch((err) => console.log(err));
 }
 
 async function getBingAccessToken() {
@@ -257,43 +295,42 @@ async function getBingAccessToken() {
 
 //tts =========================================================================================
 
-var voiceList={}
+var voiceList = {};
 
 async function doTts(word, lang) {
-  var voice=await getVoices(lang);
+  var voice = await getVoices(lang);
   chrome.tts.speak(word, {
     lang: lang,
     voiceName: voice,
   });
 }
 
-function getVoices(lang){
-  return new Promise(resolve => {
+function getVoices(lang) {
+  return new Promise((resolve) => {
     //if already have voiceName return
-    if(voiceList[lang]){
+    if (voiceList[lang]) {
       resolve(voiceList[lang]);
-    }else{
-
+    } else {
       // get voice list and sort by remote first
       // get matched lang voice
       chrome.tts.getVoices((voices) => {
         let filtered = voices.filter((e) => {
           return e.remote != null && e.lang != null && e.voiceName != null;
         }); //get one that include remote, lang, voiceName
-    
+
         filtered.sort((x, y) => {
           return y.remote - x.remote;
         }); //get remote first;
-    
+
         //find matched lang voice and speak
         for (var item of filtered) {
           if (item.lang.toLowerCase().includes(lang.toLowerCase())) {
-            voiceList[lang]=item.voiceName;
+            voiceList[lang] = item.voiceName;
             resolve(voiceList[lang]);
             break;
           }
         }
       });
     }
-  })
+  });
 }
