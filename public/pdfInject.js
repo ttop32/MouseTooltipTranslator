@@ -51,9 +51,6 @@ function checkCurrentUrlIsLocalFileUrl() {
           user need to turn on 'Allow access to file URLs'
           from chrome extension setting page
           `);
-        chrome.tabs.update({
-          url: "chrome://extensions/?id=hmigninkgibhdckiaphhmbgcghochdjc" //redirect to setting page
-        });
       }
     })
   }
