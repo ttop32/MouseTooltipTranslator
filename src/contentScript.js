@@ -22,6 +22,7 @@ var clientY = 0;
 var mouseTarget = null;
 var activatedWord = null;
 var mouseMoved = false;
+var mouseMovedCount=0;
 var settingLoaded = false;
 var keyDownList = {}; //use key down for enable translation partially
 var style = $("<style>").appendTo("head");
@@ -206,10 +207,17 @@ async function translate(word) {
 //event listner - detect mouse move, key press, mouse press, tab switch==========================================================================================
 //use mouse position for tooltip position
 $(document).mousemove(function(event) {
+  //if mouse moved far distance two times, check as mouse moved
+  if(mouseMoved ==false && Math.abs(event.clientX-clientX)+Math.abs(event.clientY-clientY)>3){
+    if(mouseMovedCount<2){
+      mouseMovedCount+=1;
+    }else{
+      mouseMoved = true;
+    }    
+  }
   clientX = event.clientX;
   clientY = event.clientY;
-  mouseTarget = event.target;
-  mouseMoved = true;
+  mouseTarget = event.target;  
   setTooltipPosition();
 });
 //detect activation hold key pressed
@@ -237,6 +245,7 @@ $(document).keyup(function(e) {
 window.addEventListener('blur', function(event) {
   keyDownList = {}; //reset key press
   mouseMoved = false;
+  mouseMovedCount=0;
   selectedText = "";
   hideTooltip();
 });
