@@ -20,6 +20,8 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.46
+  - rollback google translate fix from 0.1.44
 - 0.1.45
   - change mouse moved detection
 - 0.1.44
