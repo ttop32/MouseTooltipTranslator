@@ -132,10 +132,10 @@ function getMouseOverWord(clientX, clientY) {
     return "";
   }
 
-  //expand char to get word,sentence,
-  //if target is youtube caption, use container
+  //expand char to get word,sentence based on setting 
+  //except if mouse target is special web block which need to be handled as block for clarity, handle as block 
   try{
-    if (currentSetting["detectType"] == "container" || mouseTarget.className == "ytp-caption-segment") {
+    if (currentSetting["detectType"] == "container" || checkMouseTargetIsSpecialWebBlock()) {
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
     } else if (currentSetting["detectType"] == "word") {
@@ -152,6 +152,11 @@ function getMouseOverWord(clientX, clientY) {
     return "";
   }
   return range.toString();
+}
+
+function checkMouseTargetIsSpecialWebBlock(){
+  return mouseTarget.className == "ytp-caption-segment" ||   //youtube caption
+  mouseTarget.className=="LC20lb MBeuO DKV0Md"  //google search list title block
 }
 
 function filterWord(word) {

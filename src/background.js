@@ -151,21 +151,14 @@ function recordHistory(request) {
 
 // translate ===========================================================
 let bingAccessToken;
-let googleBaseUrl1 =
-  "https://translate.googleapis.com/translate_a/single?dt=at&dt=bd&dt=ex&dt=ld&client=gtx&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&ie=UTF-8&oe=UTF-8&otf=1&ssel=0&tsel=0&kc=7&dj=1&";
-let googleBaseUrl2 =
+let googleBaseUrl =
   "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
-let oneHourInMilSec = 1 * 60 * 60 * 1000;
-var googleTranslateFailedTimeout = 0;
 
 async function doTranslate(request, sendResponse) {
   try {
     if (currentSetting["translatorVendor"] == "google") {
-      var {
-        translatedText,
-        detectedLang,
-      } = await translateWithOperatedGoogleUrl(
+      var { translatedText, detectedLang } = await translateWithGoogle(
         request.word,
         request.translateTarget
       );
@@ -191,25 +184,8 @@ async function doTranslate(request, sendResponse) {
   }
 }
 
-async function translateWithOperatedGoogleUrl(word, targetLang) {
-  //try goodleBaseUrl1 if it failed try goodleBaseUrl2 next time until next hour
-  var googleUrl = googleBaseUrl1;
-  if (Date.now() < googleTranslateFailedTimeout) {
-    googleUrl = googleBaseUrl2;
-  }
-
-  var translateRes = await translateWithGoogle(googleUrl, word, targetLang);
-
-  if (translateRes == null && googleUrl == googleBaseUrl1) {
-    googleTranslateFailedTimeout = Date.now() + oneHourInMilSec;
-    return await translateWithGoogle(googleBaseUrl2, word, targetLang);
-  } else {
-    return translateRes;
-  }
-}
-
-async function translateWithGoogle(translatorUrl, word, targetLang) {
-  let res = await postMessage(translatorUrl, {
+async function translateWithGoogle(word, targetLang) {
+  let res = await postMessage(googleBaseUrl, {
     q: word,
     sl: currentSetting["translateSource"], //source lang
     tl: targetLang,
