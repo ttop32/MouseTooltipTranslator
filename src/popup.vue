@@ -374,6 +374,7 @@ var ocrLangList = {
 
 var translatorList = {
   google: "google",
+  "google_sub(Experimental)": "googleSub",
   bing: "bing",
 };
 
