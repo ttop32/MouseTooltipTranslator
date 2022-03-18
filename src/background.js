@@ -151,8 +151,10 @@ function recordHistory(request) {
 
 // translate ===========================================================
 let bingAccessToken;
-let googleBaseUrl =
+let googleBaseUrlMain =
   "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
+let googleBaseUrlSub ="https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&dt=bd&dj=1&";
+  
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
 async function doTranslate(request, sendResponse) {
@@ -160,7 +162,14 @@ async function doTranslate(request, sendResponse) {
     if (currentSetting["translatorVendor"] == "google") {
       var { translatedText, detectedLang } = await translateWithGoogle(
         request.word,
-        request.translateTarget
+        request.translateTarget,
+        googleBaseUrlMain
+      );
+    } else if(currentSetting["translatorVendor"] == "googleSub"){
+      var { translatedText, detectedLang } = await translateWithGoogle(
+        request.word,
+        request.translateTarget,
+        googleBaseUrlSub
       );
     } else {
       var { translatedText, detectedLang } = await translateWithBing(
@@ -184,7 +193,7 @@ async function doTranslate(request, sendResponse) {
   }
 }
 
-async function translateWithGoogle(word, targetLang) {
+async function translateWithGoogle(word, targetLang,googleBaseUrl) {
   let res = await postMessage(googleBaseUrl, {
     q: word,
     sl: currentSetting["translateSource"], //source lang

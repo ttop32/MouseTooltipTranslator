@@ -160,7 +160,7 @@ function useTesseract(image, lang) {
         var worker1 = Tesseract.createWorker({
           'workerBlobURL': false,
           "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
-          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
+          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.asm.js"),
           "langPath": chrome.runtime.getURL("/traindata"), //https://github.com/zodiac3539/jpn_vert
           "gzip": false
         });
@@ -168,7 +168,7 @@ function useTesseract(image, lang) {
         var worker1 = Tesseract.createWorker({
           'workerBlobURL': false,
           "workerPath": chrome.runtime.getURL("/tesseract/worker.min.js"),
-          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
+          "corePath": chrome.runtime.getURL("/tesseract/tesseract-core.asm.js"),
           "langPath": "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast" //3.02,4.0.0_fast,4.0.0, 4.0.0_best //https://github.com/naptha/tessdata
         });
       }
