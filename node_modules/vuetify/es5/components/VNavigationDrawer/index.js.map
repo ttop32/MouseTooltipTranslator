@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VNavigationDrawer/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,0B","sourcesContent":["import VNavigationDrawer from './VNavigationDrawer'\n\nexport { VNavigationDrawer }\nexport default VNavigationDrawer\n"],"sourceRoot":"","file":"index.js"}

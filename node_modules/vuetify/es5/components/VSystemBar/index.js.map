@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VSystemBar/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,mB","sourcesContent":["import VSystemBar from './VSystemBar'\n\nexport { VSystemBar }\nexport default VSystemBar\n"],"sourceRoot":"","file":"index.js"}

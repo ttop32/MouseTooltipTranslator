@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VBreadcrumbs/VBreadcrumbsDivider.ts"],"names":[],"mappings":";;;;;;;AAAA;;eAEe,qCAAuB,wBAAvB,EAAiD,IAAjD,C","sourcesContent":["import { createSimpleFunctional } from '../../util/helpers'\n\nexport default createSimpleFunctional('v-breadcrumbs__divider', 'li')\n"],"sourceRoot":"","file":"VBreadcrumbsDivider.js"}

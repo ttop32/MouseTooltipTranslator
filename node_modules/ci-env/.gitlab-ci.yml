@@ -1,9 +1,0 @@
-stages:
-  - test
-
-test:
-  stage: test
-  image: node:8
-  script:
-    - npm i --silent
-    - npm test

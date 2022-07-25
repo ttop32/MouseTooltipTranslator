@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VSwitch/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,gB","sourcesContent":["import VSwitch from './VSwitch'\n\nexport { VSwitch }\nexport default VSwitch\n"],"sourceRoot":"","file":"index.js"}

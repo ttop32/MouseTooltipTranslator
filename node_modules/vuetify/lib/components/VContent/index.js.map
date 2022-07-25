@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VContent/index.ts"],"names":[],"mappings":"AAAA,OAAO,QAAP,MAAqB,YAArB;AAEA,SAAS,QAAT;AAEA,eAAe,QAAf","sourcesContent":["import VContent from './VContent'\n\nexport { VContent }\n\nexport default VContent\n"],"sourceRoot":"","file":"index.js"}

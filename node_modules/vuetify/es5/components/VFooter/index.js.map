@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VFooter/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,gB","sourcesContent":["import VFooter from './VFooter'\n\nexport { VFooter }\nexport default VFooter\n"],"sourceRoot":"","file":"index.js"}

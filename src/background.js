@@ -1,12 +1,14 @@
 "use strict";
 
 //handle translation, setting and pdf
-//it communicate with popup.js(for setting) and contentScript.js(for translattion and tts)
+//it communicate with popup.js(for setting) and contentScript.js(for translation and tts)
 //for setting, it save and load from chrome storage
 //for translation, use fetch to get translated  result
 
 //tooltip background===========================================================================
 import { getSettingFromStorage } from "./setting";
+var he = require('he');
+
 
 var currentSetting = {};
 var settingLoaded = false;
@@ -105,7 +107,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     if (request.type === "translate") {
-      doTranslate(request, sendResponse);
+      var translatedResult=await doTranslate(request.word, request.translateTarget);
+      sendResponse(translatedResult);
     } else if (request.type === "tts") {
       doTts(request.word, request.lang);
       sendResponse({});
@@ -153,43 +156,47 @@ function recordHistory(request) {
 let bingAccessToken;
 let googleBaseUrlMain =
   "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
-let googleBaseUrlSub ="https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&dt=bd&dj=1&";
-  
+let googleBaseUrlSub ="https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&dt=bd&dj=1&";  
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
-async function doTranslate(request, sendResponse) {
+async function doTranslate(text,targetLang) {
   try {
     if (currentSetting["translatorVendor"] == "google") {
       var { translatedText, detectedLang } = await translateWithGoogle(
-        request.word,
-        request.translateTarget,
+        text,
+        targetLang,
         googleBaseUrlMain
       );
     } else if(currentSetting["translatorVendor"] == "googleSub"){
       var { translatedText, detectedLang } = await translateWithGoogle(
-        request.word,
-        request.translateTarget,
+        text,
+        targetLang,
         googleBaseUrlSub
+      );
+    } else if(currentSetting["translatorVendor"] == "googleSub2"){
+      var { translatedText, detectedLang } = await translateWithGoogleSub2(
+        text,
+        targetLang
       );
     } else {
       var { translatedText, detectedLang } = await translateWithBing(
-        request.word,
-        request.translateTarget
+        text,
+        targetLang
       );
     }
-
-    sendResponse({
+    
+    return {
       translatedText: translatedText,
       sourceLang: detectedLang,
-      targetLang: request.translateTarget,
-    });
+      targetLang:targetLang,
+    };
   } catch (error) {
     console.log(error);
-    sendResponse({
+    return {
       translatedText: "",
       sourceLang: "en",
-      targetLang: request.translateTarget,
-    });
+      targetLang:targetLang,
+    };
   }
 }
 
@@ -318,4 +325,141 @@ function getVoices(lang) {
       });
     }
   });
+}
+
+
+
+
+
+// translateWithGoogleSub2=====================================================================
+
+
+
+const googleTranslateTKK = '448487.932609646';
+
+
+
+async function translateWithGoogleSub2(word, targetLang) {
+  // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
+
+  var tk=getToken(word, googleTranslateTKK);
+  
+  const apiPath = "https://translate.googleapis.com/translate_a/t?";
+  
+  const data = {
+    client: 'te_lib',
+    sl: currentSetting["translateSource"],
+    tl: targetLang,
+    hl: targetLang,
+    anno:3,
+    client:"te_lib",
+    format:"html",
+    v:1.0,
+    tc:1,
+    sr:1,
+    mode:1,
+    q:word,
+    tk,
+  };
+
+  var res= await fetch(apiPath + new URLSearchParams(data), {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .catch((err) => console.log(err));
+
+  if(res&&res[0]&&res[0][0]){
+    var cleanText=he.decode(res[0][0]);
+    var bTag=cleanText.match(/(?<=<b>).+?(?=<\/b>)/g) //text between <b> </b>
+    if(bTag&&bTag[0]){
+      cleanText=bTag[0];
+    }
+
+    return { translatedText:cleanText,  detectedLang:res[0][1] };
+  }else{
+    return null;
+  }
+}
+
+
+
+
+
+function shiftLeftOrRightThenSumOrXor(num, optString) {
+	for (let i = 0; i < optString.length - 2; i += 3) {
+		let acc = optString.charAt(i + 2);
+		if ('a' <= acc) {
+			acc = acc.charCodeAt(0) - 87;
+		} else {
+			acc = Number(acc);
+		}
+		if (optString.charAt(i + 1) == '+') {
+			acc = num >>> acc;
+		} else {
+			acc = num << acc;
+		}
+		if (optString.charAt(i) == '+') {
+			num += acc & 4294967295;
+		} else {
+			num ^= acc;
+		}
+	}
+	return num;
+}
+
+function transformQuery(query) {
+	const bytesArray = [];
+	let idx = [];
+	for (let i = 0; i < query.length; i++) {
+		let charCode = query.charCodeAt(i);
+
+		if (128 > charCode) {
+			bytesArray[idx++] = charCode;
+		} else {
+			if (2048 > charCode) {
+				bytesArray[idx++] = (charCode >> 6) | 192;
+			} else {
+				if (
+					55296 == (charCode & 64512) &&
+					i + 1 < query.length &&
+					56320 == (query.charCodeAt(i + 1) & 64512)
+				) {
+					charCode =
+						65536 +
+						((charCode & 1023) << 10) +
+						(query.charCodeAt(++i) & 1023);
+					bytesArray[idx++] = (charCode >> 18) | 240;
+					bytesArray[idx++] = ((charCode >> 12) & 63) | 128;
+				} else {
+					bytesArray[idx++] = (charCode >> 12) | 224;
+				}
+				bytesArray[idx++] = ((charCode >> 6) & 63) | 128;
+			}
+			bytesArray[idx++] = (charCode & 63) | 128;
+		}
+	}
+	return bytesArray;
+}
+
+function getToken(query, windowTkk) {
+	const tkkSplited = windowTkk.split('.');
+	const tkkIndex = Number(tkkSplited[0]) || 0;
+	const tkkKey = Number(tkkSplited[1]) || 0;
+
+	const bytesArray = transformQuery(query);
+
+	let encondingRound = tkkIndex;
+	for (let i = 0; i < bytesArray.length; i++) {
+		encondingRound += bytesArray[i];
+		encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, '+-a^+6');
+	}
+	encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, '+-3^+b+-f');
+
+	encondingRound ^= tkkKey;
+	if (encondingRound <= 0) {
+		encondingRound = (encondingRound & 2147483647) + 2147483648;
+	}
+
+	const normalizedResult = encondingRound % 1000000;
+	return normalizedResult.toString() + '.' + (normalizedResult ^ tkkIndex);
 }

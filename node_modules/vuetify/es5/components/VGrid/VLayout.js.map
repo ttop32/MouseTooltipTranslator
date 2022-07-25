@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VGrid/VLayout.ts"],"names":[],"mappings":";;;;;;;AAAA;;AAEA;;;;eAEe,oBAAK,QAAL,C","sourcesContent":["import './_grid.sass'\n\nimport Grid from './grid'\n\nexport default Grid('layout')\n"],"sourceRoot":"","file":"VLayout.js"}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VThemeProvider/index.ts"],"names":[],"mappings":"AAAA,OAAO,cAAP,MAA2B,kBAA3B;AAEA,SAAS,cAAT;AACA,eAAe,cAAf","sourcesContent":["import VThemeProvider from './VThemeProvider'\n\nexport { VThemeProvider }\nexport default VThemeProvider\n"],"sourceRoot":"","file":"index.js"}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VIcon/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,c","sourcesContent":["import VIcon from './VIcon'\n\nexport { VIcon }\nexport default VIcon\n"],"sourceRoot":"","file":"index.js"}

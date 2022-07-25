@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VPicker/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,gB","sourcesContent":["import VPicker from './VPicker'\n\nexport { VPicker }\nexport default VPicker\n"],"sourceRoot":"","file":"index.js"}

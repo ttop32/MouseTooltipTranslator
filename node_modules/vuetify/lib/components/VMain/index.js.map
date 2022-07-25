@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VMain/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAP,MAAkB,SAAlB;AAEA,SAAS,KAAT;AAEA,eAAe,KAAf","sourcesContent":["import VMain from './VMain'\n\nexport { VMain }\n\nexport default VMain\n"],"sourceRoot":"","file":"index.js"}

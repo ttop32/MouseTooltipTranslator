@@ -20,6 +20,11 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.49
+  - Fix conflict with google web translate (request by dotdioscorea)
+  - Add blur on tooltip (request by neoOpus)
+  - Fix css conflict on tooltip (request by min geon shin)
+  - Add sub google translator option
 - 0.1.48
   - google reject by "Irrelevant information about Mouse Tooltip Translator"
     - remove Translate API section, Language Detect section, TTS section and UI Design section

@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VSubheader/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,mB","sourcesContent":["import VSubheader from './VSubheader'\n\nexport { VSubheader }\nexport default VSubheader\n"],"sourceRoot":"","file":"index.js"}

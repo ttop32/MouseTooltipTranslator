@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VOverlay/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAIe,iB","sourcesContent":["import VOverlay from './VOverlay'\n\nexport { VOverlay }\n\nexport default VOverlay\n"],"sourceRoot":"","file":"index.js"}

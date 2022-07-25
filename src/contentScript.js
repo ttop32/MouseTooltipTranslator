@@ -45,7 +45,7 @@ $(document).ready(function() {
 
   tooltipContainer = $('<div/>', {
     id: 'mttContainer',
-    class: 'bootstrapiso', //use bootstrapiso class to apply bootstrap isolation css
+    class: 'bootstrapiso notranslate', //use bootstrapiso class to apply bootstrap isolation css, prevent google web translate
     css: {
       "left": 0,
       "top": 0,
@@ -317,13 +317,21 @@ function applyStyleSetting(setting) {
   //apply css
   style.html(`
     .bootstrapiso .tooltip {
-      font-size: ` + setting["tooltipFontSize"] + `px;
+      font-size: ` + setting["tooltipFontSize"] + `px  !important;
+      width:auto  !important;
+      height:auto  !important;
+      background:transparent  !important;
     }
     .bootstrapiso .tooltip-inner {
-      max-width: ` + setting["tooltipWidth"] + `px;
+      max-width: ` + setting["tooltipWidth"] + `px  !important;
+      backdrop-filter: blur(2px) !important; 
+      background-color: #000000b8 !important;
+      color: #fff !important;
+      border-radius: .25rem !important;
     }
     `);
 }
+// 
 
 function detectPDF() {
   if (currentSetting["detectPDF"] == "true") {

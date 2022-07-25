@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VLazy/index.ts"],"names":[],"mappings":"AAAA,OAAO,KAAP,MAAkB,SAAlB;AAEA,SAAS,KAAT;AACA,eAAe,KAAf","sourcesContent":["import VLazy from './VLazy'\n\nexport { VLazy }\nexport default VLazy\n"],"sourceRoot":"","file":"index.js"}

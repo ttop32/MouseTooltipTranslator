@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VCounter/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAGe,iB","sourcesContent":["import VCounter from './VCounter'\n\nexport { VCounter }\nexport default VCounter\n"],"sourceRoot":"","file":"index.js"}

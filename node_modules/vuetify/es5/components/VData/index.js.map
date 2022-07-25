@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/components/VData/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA;;;;eAIe,c","sourcesContent":["import VData from './VData'\n\nexport { VData }\n\nexport default VData\n"],"sourceRoot":"","file":"index.js"}
