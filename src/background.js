@@ -107,7 +107,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     if (request.type === "translate") {
-      var translatedResult=await doTranslate(request.word, request.translateTarget);
+      var translatedResult=await doTranslate(request.word, request.translateTarget,currentSetting["translateSource"]);
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
       doTts(request.word, request.lang);
@@ -154,34 +154,21 @@ function recordHistory(request) {
 
 // translate ===========================================================
 let bingAccessToken;
-let googleBaseUrlMain =
-  "https://clients5.google.com/translate_a/single?dj=1&dt=t&dt=sp&dt=ld&dt=bd&client=dict-chrome-ex&";
-let googleBaseUrlSub ="https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&dt=bd&dj=1&";  
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
-async function doTranslate(text,targetLang) {
+async function doTranslate(text,targetLang,fromLang) {
   try {
     if (currentSetting["translatorVendor"] == "google") {
       var { translatedText, detectedLang } = await translateWithGoogle(
         text,
         targetLang,
-        googleBaseUrlMain
-      );
-    } else if(currentSetting["translatorVendor"] == "googleSub"){
-      var { translatedText, detectedLang } = await translateWithGoogle(
-        text,
-        targetLang,
-        googleBaseUrlSub
-      );
-    } else if(currentSetting["translatorVendor"] == "googleSub2"){
-      var { translatedText, detectedLang } = await translateWithGoogleSub2(
-        text,
-        targetLang
+        fromLang
       );
     } else {
       var { translatedText, detectedLang } = await translateWithBing(
         text,
-        targetLang
+        targetLang,
+        fromLang
       );
     }
     
@@ -200,33 +187,14 @@ async function doTranslate(text,targetLang) {
   }
 }
 
-async function translateWithGoogle(word, targetLang,googleBaseUrl) {
-  let res = await postMessage(googleBaseUrl, {
-    q: word,
-    sl: currentSetting["translateSource"], //source lang
-    tl: targetLang,
-  });
 
-  if (res && res.sentences) {
-    var translatedText = "";
-    res.sentences.forEach(function(sentences) {
-      if (sentences.trans) {
-        translatedText += sentences.trans;
-      }
-    });
-    var detectedLang = res.src;
-    return { translatedText, detectedLang };
-  } else {
-    return null;
-  }
-}
 
-async function translateWithBing(word, targetLang) {
+async function translateWithBing(word, targetLang,fromLang) {
   const { token, key, IG, IID } = await getBingAccessToken();
 
   let res = await postMessage(bingBaseUrl, {
     text: word,
-    fromLang: bingLangCode[currentSetting["translateSource"]],
+    fromLang: bingLangCode[fromLang],
     to: bingLangCode[targetLang],
     token,
     key,
@@ -331,7 +299,7 @@ function getVoices(lang) {
 
 
 
-// translateWithGoogleSub2=====================================================================
+// translateWithGoogle=====================================================================
 
 
 
@@ -339,7 +307,7 @@ const googleTranslateTKK = '448487.932609646';
 
 
 
-async function translateWithGoogleSub2(word, targetLang) {
+async function translateWithGoogle(word, targetLang,fromLang) {
   // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
 
   var tk=getToken(word, googleTranslateTKK);
@@ -348,7 +316,7 @@ async function translateWithGoogleSub2(word, targetLang) {
   
   const data = {
     client: 'te_lib',
-    sl: currentSetting["translateSource"],
+    sl: fromLang,
     tl: targetLang,
     hl: targetLang,
     anno:3,
@@ -462,4 +430,26 @@ function getToken(query, windowTkk) {
 
 	const normalizedResult = encondingRound % 1000000;
 	return normalizedResult.toString() + '.' + (normalizedResult ^ tkkIndex);
+}
+
+
+
+
+// detect local file===================================================================== 
+chrome.tabs.onUpdated.addListener( //when tab update
+  function(tabId, changeInfo, tab) {
+    if (changeInfo.url  && 
+      /^(file:\/\/).*(\.pdf)$/.test(changeInfo.url.toLowerCase()) && //url is end with .pdf, start with file://
+      !changeInfo.url.includes(chrome.runtime.getURL('/pdfjs/web/viewer.html')) && //url is not start with chrome-extension://
+      currentSetting["detectPDF"] == "true"
+      ){
+      openPDFViwer(changeInfo.url, tabId);       
+    }
+  }
+);
+
+async function openPDFViwer(url, tabId) {
+  chrome.tabs.update(tabId, {
+    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
+  });
 }

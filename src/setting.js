@@ -22,14 +22,14 @@ var defaultList = {
   historyRecordActions: [],
 };
 
+//load setting
+//if value exist, load. else load default val
 export function getSettingFromStorage() {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get(Object.keys(defaultList), function(loadedSetting) {
-      //load setting
       var currentSetting = {};
       for (var key in defaultList) {
         if (loadedSetting[key]) {
-          //if value exist, load. else load defualt val
           currentSetting[key] = loadedSetting[key];
         } else {
           currentSetting[key] = defaultList[key];
