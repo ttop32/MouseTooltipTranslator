@@ -95,11 +95,7 @@
               v-model="currentSetting['historyRecordActions']"
               @change="changeSetting"
             >
-              <v-chip
-                v-for="action in historyRecordActionChipList"
-                :value="action.name"
-                filter
-              >
+              <v-chip v-for="action in historyRecordActionChipList"    :value="action.name" filter :key="action.name">
                 {{ action.name }}
               </v-chip>
             </v-chip-group>
@@ -374,8 +370,6 @@ var ocrLangList = {
 
 var translatorList = {
   google: "google",
-  "google_sub1(Experimental)": "googleSub",
-  "google_sub2(Experimental)": "googleSub2",
   bing: "bing",
 };
 
@@ -587,4 +581,9 @@ export default {
 </script>
 <style>
 /* style is directly declared in popup html */
+
+.v-label{
+  font-size: 18px;
+}
+
 </style>

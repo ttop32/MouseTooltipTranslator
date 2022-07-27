@@ -20,8 +20,12 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.50
+  - Add local pdf permission warning
+  - Use google translator sub2 as main translator option
+  - Fix css conflict on tooltip radius
 - 0.1.49
-  - Fix conflict with google web translate (request by dotdioscorea)
+  - Fix conflict with google web translator (request by dotdioscorea)
   - Add blur on tooltip (request by neoOpus)
   - Fix css conflict on tooltip (request by min geon shin)
   - Add sub google translator option

@@ -37,7 +37,6 @@ var rtlLangList = [
 ]; //right to left language system list
 
 
-
 //tooltip core======================================================================
 //tooltip init
 $(document).ready(function() {
@@ -46,16 +45,6 @@ $(document).ready(function() {
   tooltipContainer = $('<div/>', {
     id: 'mttContainer',
     class: 'bootstrapiso notranslate', //use bootstrapiso class to apply bootstrap isolation css, prevent google web translate
-    css: {
-      "left": 0,
-      "top": 0,
-      "position": "fixed",
-      "z-index": "100000200",
-      "width": "500px",
-      "margin-left": "-250px",
-      "background-color": "#00000000", //transparent
-      "pointer-events": "none" //click through
-    }
   }).appendTo(document.body);
 
   tooltipContainer.tooltip({
@@ -314,13 +303,24 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 });
 
 function applyStyleSetting(setting) {
-  //apply css
   style.html(`
+    #mttContainer {
+      left: 0;
+      top: 0;
+      position: fixed;
+      z-index: 100000200;
+      width: 500px;
+      margin-left: -250px;
+      background-color: #00000000; //transparent
+      pointer-events: none; //click through
+    }
     .bootstrapiso .tooltip {
       font-size: ` + setting["tooltipFontSize"] + `px  !important;
       width:auto  !important;
       height:auto  !important;
       background:transparent  !important;
+      border:none !important;
+      border-radius: 0px !important;
     }
     .bootstrapiso .tooltip-inner {
       max-width: ` + setting["tooltipWidth"] + `px  !important;
@@ -331,7 +331,7 @@ function applyStyleSetting(setting) {
     }
     `);
 }
-// 
+
 
 function detectPDF() {
   if (currentSetting["detectPDF"] == "true") {

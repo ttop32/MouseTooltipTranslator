@@ -47,12 +47,20 @@ function checkCurrentUrlIsLocalFileUrl() {
     chrome.extension.isAllowedFileSchemeAccess((isAllowedAccess) => { //check file url permmision
       if (isAllowedAccess == false) {
         alert(`
-          To use this extension for local file,
-          user need to turn on 'Allow access to file URLs'
-          from chrome extension setting page
-          `);
+    ------------------------------------------------------------------
+    Mouse tooltip translator require permission for local pdf file.
+    User need to turn on 'Allow access to file URLs' from setting.
+    This page will be redirected to setting page after confirm.
+    -------------------------------------------------------------------`);
+        openSettingPage();
       }
     })
   }
 }
 checkCurrentUrlIsLocalFileUrl();
+
+function openSettingPage(){
+  chrome.tabs.create({
+    url: "chrome://extensions/?id=hmigninkgibhdckiaphhmbgcghochdjc",
+  });
+}
