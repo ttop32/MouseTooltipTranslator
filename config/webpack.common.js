@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const SizePlugin = require('size-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { VueLoaderPlugin } = require('vue-loader')
-const PATHS = require('./paths');
+const SizePlugin = require("size-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { VueLoaderPlugin } = require("vue-loader");
+const PATHS = require("./paths");
 
 // To re-use webpack configuration across templates,
 // CLI maintains a common webpack configuration file - `webpack.common.js`.
@@ -15,32 +15,33 @@ const common = {
     // the build folder to output bundles and assets in.
     path: PATHS.build,
     // the filename template for entry chunks
-    filename: '[name].js',
+    filename: "[name].js",
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   stats: {
     all: false,
     errors: true,
     builtAt: true,
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.s(c|a)ss$/,
         use: [
-          'vue-style-loader',
-          'css-loader',
+          "vue-style-loader",
+          "css-loader",
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             // Requires sass-loader@^7.0.0
             options: {
-              implementation: require('sass'),
-              indentedSyntax: true // optional
+              implementation: require("sass"),
+              indentedSyntax: true, // optional
             },
             // Requires sass-loader@^8.0.0
             options: {
-              implementation: require('sass'),
+              implementation: require("sass"),
               sassOptions: {
-                indentedSyntax: true // optional
+                indentedSyntax: true, // optional
               },
             },
           },
@@ -48,32 +49,42 @@ const common = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         options: {
-          loaders: {
-          }
+          loaders: {},
           // other vue-loader options go here
-        }
+        },
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        use: 'url-loader?limit=25000'
+        use: "url-loader?limit=25000",
       },
       // Help webpack in understanding CSS files imported in .js files
       {
         test: /\.css$/,
-        use: ['vue-style-loader',MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+          { loader: "vue-style-loader" },
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "",
+            },
+          },
+          { loader: "css-loader" },
+        ],
       },
       // Check for images imported in .js files and
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            outputPath: 'images',
-            name: '[name].[ext]',
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              outputPath: "images",
+              name: "[name].[ext]",
+            },
           },
-        }, ],
+        ],
       },
     ],
   },
@@ -83,14 +94,16 @@ const common = {
     new SizePlugin(),
     // Copy static assets from `public` folder to `build` folder
     new CopyWebpackPlugin({
-      patterns: [{
-        from: '**/*',
-        context: 'public',
-      }, ]
+      patterns: [
+        {
+          from: "**/*",
+          context: "public",
+        },
+      ],
     }),
     // Extract CSS into separate files
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: "[name].css",
     }),
   ],
 };

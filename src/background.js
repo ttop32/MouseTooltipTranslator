@@ -7,10 +7,11 @@
 
 //tooltip background===========================================================================
 import { getSettingFromStorage } from "./setting";
+import { Setting } from "./setting";
 var he = require('he');
 
 
-var currentSetting = {};
+var setting;
 var settingLoaded = false;
 var bingLangCode = {
   auto: "auto-detect",
@@ -88,6 +89,52 @@ var bingLangCode = {
   "zh-TW": "zh-Hant",
 };
 
+var bingLangCodeOpposite = swap(bingLangCode); // swap key value
+getSetting();
+
+//listen message from contents js and popup js =========================================================================================================
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  (async () => {
+    if (settingLoaded == false) {
+      await getSetting();
+    }
+
+    if (request.type === "translate") {
+      var translatedResult=await doTranslate(request.word, request.translateTarget,setting.data["translateSource"],setting.data["translatorVendor"]);
+      sendResponse(translatedResult);
+    } else if (request.type === "tts") {
+      doTts(request.word, request.lang);
+      sendResponse({});
+    } else if (request.type === "stopTTS") {
+      chrome.tts.stop();
+      sendResponse({});
+    } else if (request.type === "recordHistory") {
+      recordHistory(request);
+      sendResponse({});
+    } 
+  })();
+
+  return true;
+});
+
+async function getSetting() {
+  setting = await Setting.create();
+  settingLoaded = true;
+}
+
+function recordHistory(request) {
+  //append history to front
+  setting.data["historyList"].unshift({
+    sourceText: request.sourceText,
+    targetText: request.targetText,
+  });
+  //remove when too many list
+  if (setting.data["historyList"].length > 100) {
+    setting.data["historyList"].pop();
+  }
+  setting.save(setting.data);
+}
+
 function swap(json) {
   var ret = {};
   for (var key in json) {
@@ -96,69 +143,13 @@ function swap(json) {
   return ret;
 }
 
-var bingLangCodeOpposite = swap(bingLangCode); // swap key value
-getSetting();
-
-//listen from contents js and background js =========================================================================================================
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  (async () => {
-    if (settingLoaded == false) {
-      await getSetting();
-    }
-
-    if (request.type === "translate") {
-      var translatedResult=await doTranslate(request.word, request.translateTarget,currentSetting["translateSource"]);
-      sendResponse(translatedResult);
-    } else if (request.type === "tts") {
-      doTts(request.word, request.lang);
-      sendResponse({});
-    } else if (request.type === "stopTTS") {
-      chrome.tts.stop();
-      sendResponse({});
-    } else if (request.type === "saveSetting") {
-      saveSetting(request.options);
-      sendResponse({});
-    } else if (request.type === "recordHistory") {
-      recordHistory(request);
-      sendResponse({});
-    }
-  })();
-
-  return true;
-});
-
-function saveSetting(inputSettings) {
-  chrome.storage.local.set(inputSettings, function() {
-    currentSetting = inputSettings;
-  });
-}
-
-async function getSetting() {
-  //load  setting from background js
-  currentSetting = await getSettingFromStorage();
-  settingLoaded = true;
-}
-
-function recordHistory(request) {
-  //append history to front
-  currentSetting["historyList"].unshift({
-    sourceText: request.sourceText,
-    targetText: request.targetText,
-  });
-  //remove when too many list
-  if (currentSetting["historyList"].length > 100) {
-    currentSetting["historyList"].pop();
-  }
-  saveSetting(currentSetting);
-}
-
 // translate ===========================================================
 let bingAccessToken;
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
-async function doTranslate(text,targetLang,fromLang) {
+async function doTranslate(text,targetLang,fromLang,translatorVendor) {
   try {
-    if (currentSetting["translatorVendor"] == "google") {
+    if (translatorVendor == "google") {
       var { translatedText, detectedLang } = await translateWithGoogle(
         text,
         targetLang,
@@ -192,7 +183,7 @@ async function doTranslate(text,targetLang,fromLang) {
 async function translateWithBing(word, targetLang,fromLang) {
   const { token, key, IG, IID } = await getBingAccessToken();
 
-  let res = await postMessage(bingBaseUrl, {
+  let res = await fetchMessage(bingBaseUrl, {
     text: word,
     fromLang: bingLangCode[fromLang],
     to: bingLangCode[targetLang],
@@ -200,7 +191,7 @@ async function translateWithBing(word, targetLang,fromLang) {
     key,
     IG,
     IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-  });
+  },"POST");
   if (res && res[0]) {
     var detectedLang =
       bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
@@ -211,9 +202,9 @@ async function translateWithBing(word, targetLang,fromLang) {
   }
 }
 
-async function postMessage(url, params) {
+async function fetchMessage(url, params,httpMethod) {
   return await fetch(url + new URLSearchParams(params), {
-    method: "POST",
+    method: httpMethod,
   })
     .then((response) => response.json())
     .catch((err) => console.log(err));
@@ -301,18 +292,13 @@ function getVoices(lang) {
 
 // translateWithGoogle=====================================================================
 
-
-
 const googleTranslateTKK = '448487.932609646';
-
-
+const apiPath = "https://translate.googleapis.com/translate_a/t?";
 
 async function translateWithGoogle(word, targetLang,fromLang) {
   // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
 
   var tk=getToken(word, googleTranslateTKK);
-  
-  const apiPath = "https://translate.googleapis.com/translate_a/t?";
   
   const data = {
     client: 'te_lib',
@@ -330,11 +316,7 @@ async function translateWithGoogle(word, targetLang,fromLang) {
     tk,
   };
 
-  var res= await fetch(apiPath + new URLSearchParams(data), {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .catch((err) => console.log(err));
+  var res= await fetchMessage(apiPath ,data, "GET");
 
   if(res&&res[0]&&res[0][0]){
     var cleanText=he.decode(res[0][0]);
@@ -441,7 +423,7 @@ chrome.tabs.onUpdated.addListener( //when tab update
     if (changeInfo.url  && 
       /^(file:\/\/).*(\.pdf)$/.test(changeInfo.url.toLowerCase()) && //url is end with .pdf, start with file://
       !changeInfo.url.includes(chrome.runtime.getURL('/pdfjs/web/viewer.html')) && //url is not start with chrome-extension://
-      currentSetting["detectPDF"] == "true"
+      setting.data["detectPDF"] == "true"
       ){
       openPDFViwer(changeInfo.url, tabId);       
     }
@@ -453,3 +435,29 @@ async function openPDFViwer(url, tabId) {
     url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
   });
 }
+
+
+
+
+
+// ================= contents script reinjection after upgrade or install
+// https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
+chrome.runtime.onInstalled.addListener(async () => {
+  for (const cs of chrome.runtime.getManifest().content_scripts) {
+    for (const tab of await chrome.tabs.query({url: cs.matches})) {
+      if ( /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore).*/.test(tab.url)){
+        continue;
+      }
+
+      //load css and js on opened tab
+      chrome.scripting.insertCSS({
+        target: {tabId: tab.id},
+        files: cs.css
+      });
+      chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        files: cs.js,
+      });      
+    }
+  }
+});
