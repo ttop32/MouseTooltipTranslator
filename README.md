@@ -29,23 +29,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - (Experimental feature) show comic bubble translation when mouse over on comic bubble background      
   
 # Required environment to run    
-npm install -g chrome-extension-cli      
-npm i jquery --save   
-npm i popper.js --save     
-npm i bootstrap --save    
-npm i is-url --save    
-npm i load-script-once --save          
-npm i vue --save    
-npm i vue-loader --save    
-npm i vue-template-compiler --save    
-npm i vuetify --save    
-npm i @mdi/js -D    
-npm i sass sass-loader deepmerge -D    
-npm i --save typeface-roboto     
-npm i url-loader --save-dev     
-npm install @mdi/font -D    
-npm i axios  
-npm i bcp-47  
+npm install
 
 # Run watch   
 npm run watch       
