@@ -20,6 +20,9 @@ If pop-over translate tooltip is not came out properly after installation, user 
 English, Russian, Japanese, Chinese, German and so on
 
 # Change Log   
+- 0.1.51
+  - Auto contents script injecting when install
+  - Add tts stop when tab switching
 - 0.1.50
   - Add local pdf permission warning
   - Use google translator sub2 as main translator option

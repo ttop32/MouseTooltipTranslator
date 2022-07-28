@@ -19,7 +19,7 @@
         <v-list flat id="settingListBox" class="scrollList">
           <v-list-item v-for="(value, name) in settingList" :key="name">
             <v-select
-              v-model="currentSetting[name]"
+              v-model="setting.data[name]"
               :items="value.optionList"
               item-text="text"
               item-value="val"
@@ -92,7 +92,7 @@
             <v-chip-group
               multiple
               active-class="primary--text"
-              v-model="currentSetting['historyRecordActions']"
+              v-model="setting.data['historyRecordActions']"
               @change="changeSetting"
             >
               <v-chip v-for="action in historyRecordActionChipList"    :value="action.name" filter :key="action.name">
@@ -104,7 +104,7 @@
 
           <transition-group name="fade" tag="div">
             <v-list-item
-              v-for="(history, index) in currentSetting['historyList']"
+              v-for="(history, index) in setting.data['historyList']"
               :key="history"
             >
               <v-list-item-content
@@ -150,6 +150,8 @@
 </template>
 <script>
 import { getSettingFromStorage } from "./setting";
+import { Setting } from "./setting";
+
 
 var langList = {
   Afrikaans: "af",
@@ -397,7 +399,7 @@ for (let i = 100; i < 600; i += 100) {
   tooltipWidth[String(i)] = String(i);
 }
 
-var settingList = {
+var settingListData = {
   useTooltip: {
     description: "Enable Tooltip",
     optionList: toggleList,
@@ -461,17 +463,17 @@ var settingList = {
 };
 //add text key and val key to option list
 function capsulateOptionList() {
-  for (const [key1, val1] of Object.entries(settingList)) {
+  for (const [key1, val1] of Object.entries(settingListData)) {
     var capsulate = [];
     for (const [key2, val2] of Object.entries(
-      settingList[key1]["optionList"]
+      settingListData[key1]["optionList"]
     )) {
       capsulate.push({
         text: key2,
         val: val2,
       });
     }
-    settingList[key1]["optionList"] = capsulate;
+    settingListData[key1]["optionList"] = capsulate;
   }
 }
 capsulateOptionList();
@@ -501,9 +503,9 @@ export default {
   name: "app",
   data: function () {
     return {
-      settingList: settingList,
+      settingList: settingListData,
       aboutPageList: aboutPageList,
-      currentSetting: {},
+      setting:{},
       currentPage: "main",
       historyRecordActionChipList: [
         {
@@ -519,43 +521,36 @@ export default {
     };
   },
   async beforeCreate() {
-    this.currentSetting = await getSettingFromStorage();
+    this.setting = await Setting.create();
   },
   methods: {
     onSelectChange(event, name) {
-      this.currentSetting[name] = event;
+      this.setting.data[name] = event;
       //when activation hold key is set, turn off permanent feature enable
       if (name == "keyDownTooltip" && event != "null") {
-        this.currentSetting["useTooltip"] = "false";
+        this.setting.data["useTooltip"] = "false";
       }
       if (name == "keyDownTTS" && event != "null") {
-        this.currentSetting["useTTS"] = "false";
+        this.setting.data["useTTS"] = "false";
       }
       this.changeSetting();
     },
     changeSetting() {
-      chrome.runtime.sendMessage(
-        {
-          //save setting from background.js
-          type: "saveSetting",
-          options: this.currentSetting,
-        },
-        (response) => {}
-      );
+      this.setting.save(this.setting.data);
     },
     openUrl(newURL) {
       window.open(newURL);
     },
     removeAllHistory() {
-      this.currentSetting["historyList"] = [];
+      this.setting.data["historyList"] = [];
       this.changeSetting();
     },
     removeHistory(index) {
-      this.currentSetting["historyList"].splice(index, 1);
+      this.setting.data["historyList"].splice(index, 1);
       this.changeSetting();
     },
     downloadCSV() {
-      var arr = this.currentSetting["historyList"];
+      var arr = this.setting.data["historyList"];
       var csv = arr
         .map(function (v) {
           return (

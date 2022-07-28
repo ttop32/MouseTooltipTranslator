@@ -22,6 +22,46 @@ var defaultList = {
   historyRecordActions: [],
 };
 
+// automatic setting update class
+export class Setting {
+
+  constructor() {
+    this.data = {};
+  }
+
+  static async create(settingUpdateCallback=()=>{}) {
+    const o = new Setting();
+    await o.initialize(settingUpdateCallback);
+    return o;
+  }
+
+  async initialize(settingUpdateCallback) {
+    await this.load();
+    this.initSettingListener(settingUpdateCallback);
+  }
+
+  async load() {
+    this.data = await getSettingFromStorage();
+  }
+
+  initSettingListener(settingUpdateCallback) {
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+      for (var key in changes) {
+        this.data[key] = changes[key].newValue;
+      }
+      settingUpdateCallback();
+    });
+  }
+
+  save(inputSettings){
+    chrome.storage.local.set(inputSettings, ()=> {
+      this.data = inputSettings;
+    }); 
+  }
+}
+
+
+
 //load setting
 //if value exist, load. else load default val
 export function getSettingFromStorage() {
@@ -29,11 +69,7 @@ export function getSettingFromStorage() {
     chrome.storage.local.get(Object.keys(defaultList), function(loadedSetting) {
       var currentSetting = {};
       for (var key in defaultList) {
-        if (loadedSetting[key]) {
-          currentSetting[key] = loadedSetting[key];
-        } else {
-          currentSetting[key] = defaultList[key];
-        }
+        currentSetting[key] = loadedSetting[key] ? loadedSetting[key] :  defaultList[key];
       }
       resolve(currentSetting);
     });
