@@ -28,6 +28,9 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - Filter out when source language and target language are same    
 - (Experimental feature) show comic bubble translation when mouse over on comic bubble background      
   
+# Contributors
+- [sanprojects](https://github.com/sanprojects)
+
 # Change Log
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)   
 
@@ -43,9 +46,6 @@ npm run build
 # Privacy policy
 - Mouse tooltip translator uses user data only for google translation(tts) purpose.   
 - It does not share any user data with any other third parties.   
-
-# Contributors
-- [sanprojects](https://github.com/sanprojects)
 
 # Acknowledgement and References  
 - [Chrome Extension CLI](https://www.npmjs.com/package/chrome-extension-cli)     
