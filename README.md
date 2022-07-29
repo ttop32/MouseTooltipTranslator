@@ -28,6 +28,9 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - Filter out when source language and target language are same    
 - (Experimental feature) show comic bubble translation when mouse over on comic bubble background      
   
+# Change Log
+- [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)   
+
 # Required environment to run    
 npm install
 
