@@ -6,7 +6,6 @@
 //for translation, use fetch to get translated  result
 
 //tooltip background===========================================================================
-import { getSettingFromStorage } from "./setting";
 import { Setting } from "./setting";
 var he = require('he');
 
@@ -298,6 +297,8 @@ const apiPath = "https://translate.googleapis.com/translate_a/t?";
 async function translateWithGoogle(word, targetLang,fromLang) {
   // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
 
+  var translatedText="";
+  var detectedLang="";
   var tk=getToken(word, googleTranslateTKK);
   
   const data = {
@@ -306,7 +307,6 @@ async function translateWithGoogle(word, targetLang,fromLang) {
     tl: targetLang,
     hl: targetLang,
     anno:3,
-    client:"te_lib",
     format:"html",
     v:1.0,
     tc:1,
@@ -319,13 +319,22 @@ async function translateWithGoogle(word, targetLang,fromLang) {
   var res= await fetchMessage(apiPath ,data, "GET");
 
   if(res&&res[0]&&res[0][0]){
-    var cleanText=he.decode(res[0][0]);
-    var bTag=cleanText.match(/(?<=<b>).+?(?=<\/b>)/g) //text between <b> </b>
-    if(bTag&&bTag[0]){
-      cleanText=bTag[0];
+    if(fromLang=="auto"){
+      translatedText=res[0][0];
+      detectedLang=res[0][1];
+    }else{
+      translatedText=res[0];
+      detectedLang=fromLang;
     }
 
-    return { translatedText:cleanText,  detectedLang:res[0][1] };
+    //clear html tag and decode html entity 
+    var translatedText=he.decode(translatedText);
+    var bTag=translatedText.match(/(?<=<b>).+?(?=<\/b>)/g) //text between <b> </b>
+    if(bTag&&bTag[0]){
+      translatedText=bTag[0];
+    }
+
+    return { translatedText,  detectedLang };
   }else{
     return null;
   }
