@@ -36,12 +36,8 @@ export class Setting {
   }
 
   async initialize(settingUpdateCallback) {
-    await this.load();
-    this.initSettingListener(settingUpdateCallback);
-  }
-
-  async load() {
     this.data = await getSettingFromStorage();
+    this.initSettingListener(settingUpdateCallback);
   }
 
   initSettingListener(settingUpdateCallback) {

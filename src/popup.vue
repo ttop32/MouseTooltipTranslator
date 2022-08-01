@@ -16,7 +16,7 @@
           ></v-app-bar-nav-icon>
         </v-toolbar>
 
-        <v-list flat id="settingListBox" class="scrollList">
+        <v-list v-if="setting.data" id="settingListBox" class="scrollList" flat >
           <v-list-item v-for="(value, name) in settingList" :key="name">
             <v-select
               v-model="setting.data[name]"
@@ -58,7 +58,7 @@
             @click="openUrl(value.url)"
           >
             <v-list-item-icon>
-              <v-icon color="indigo">
+              <v-icon color="primary">
                 {{ value.icon }}
               </v-icon>
             </v-list-item-icon>
@@ -149,7 +149,6 @@
   </v-app>
 </template>
 <script>
-import { getSettingFromStorage } from "./setting";
 import { Setting } from "./setting";
 
 
@@ -260,8 +259,8 @@ var langList = {
   Yoruba: "yo",
   Zulu: "zu",
 };
-var langListWithAuto = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
-langListWithAuto["Auto"] = "auto";
+var langListWithAuto=Object.assign({"Auto": "auto"}, langList); //copy lang and add auto
+
 var toggleList = {
   On: "true",
   Off: "false",
@@ -575,7 +574,21 @@ export default {
 };
 </script>
 <style>
-/* style is directly declared in popup html */
+
+.fade-leave-active,
+.fade-move {
+  transition: all 500ms;
+}
+
+.fade-leave-active {
+  position: absolute;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0.0,0.0);
+  transform-origin: center top;
+}
 
 .v-label{
   font-size: 18px;
