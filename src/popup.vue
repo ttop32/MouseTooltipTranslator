@@ -16,7 +16,7 @@
           ></v-app-bar-nav-icon>
         </v-toolbar>
 
-        <v-list v-if="setting.data" id="settingListBox" class="scrollList" flat >
+        <v-list v-if="setting.data" id="settingListBox" class="scrollList" flat>
           <v-list-item v-for="(value, name) in settingList" :key="name">
             <v-select
               v-model="setting.data[name]"
@@ -26,6 +26,27 @@
               :label="value.description"
               @change="onSelectChange($event, name)"
             ></v-select>
+          </v-list-item>
+
+          <v-list-item>
+            <v-select
+              v-model="setting.data['langExcludeList']"
+              :items="langExcludeSelectList"
+              item-text="text"
+              item-value="val"
+              label="Exclude Language"
+              multiple
+              @change="handleExcludeLang()"
+            >
+              <template v-slot:selection="{ item, index }">
+                <v-chip v-if="index === 0">
+                  <span>{{ item.text }}</span>
+                </v-chip>
+                <span v-if="index === 1" class="grey--text text-caption">
+                  (+{{ setting.data["langExcludeList"].length - 1 }} others)
+                </span>
+              </template>
+            </v-select>
           </v-list-item>
         </v-list>
       </v-card>
@@ -95,14 +116,19 @@
               v-model="setting.data['historyRecordActions']"
               @change="changeSetting"
             >
-              <v-chip v-for="action in historyRecordActionChipList"    :value="action.name" filter :key="action.name">
+              <v-chip
+                v-for="action in historyRecordActionChipList"
+                :value="action.name"
+                filter
+                :key="action.name"
+              >
                 {{ action.name }}
               </v-chip>
             </v-chip-group>
           </v-card-text>
           <v-divider class="mx-4"></v-divider>
 
-          <transition-group name="fade" tag="div">
+          <!-- name="list" tag="div" -->
             <v-list-item
               v-for="(history, index) in setting.data['historyList']"
               :key="history"
@@ -128,7 +154,6 @@
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
-          </transition-group>
         </v-list-item-group>
 
         <v-snackbar v-model="copyAlertBar">
@@ -150,7 +175,6 @@
 </template>
 <script>
 import { Setting } from "./setting";
-
 
 var langList = {
   Afrikaans: "af",
@@ -259,18 +283,23 @@ var langList = {
   Yoruba: "yo",
   Zulu: "zu",
 };
-var langListWithAuto=Object.assign({"Auto": "auto"}, langList); //copy lang and add auto
+var langListWithAuto = Object.assign({ Auto: "auto" }, langList); //copy lang and add auto
 
 var toggleList = {
   On: "true",
   Off: "false",
 };
+
 var keyList = {
   None: "null",
-  Ctrl: "17",
-  Alt: "18",
-  Shift: "16",
-  Command: "91",
+  "Ctrl Left":"ControlLeft",
+  "Ctrl Right":"ControlRight",
+  "Alt Left":"AltLeft",
+  "Alt Right":"AltRight",
+  "Shift Left":"ShiftLeft",
+  "Shift Right":"ShiftRight",
+  "Meta Left":"MetaLeft",
+  "Meta Right":"MetaRight",
 };
 
 var ocrLangList = {
@@ -460,22 +489,6 @@ var settingListData = {
     optionList: ocrLangList,
   },
 };
-//add text key and val key to option list
-function capsulateOptionList() {
-  for (const [key1, val1] of Object.entries(settingListData)) {
-    var capsulate = [];
-    for (const [key2, val2] of Object.entries(
-      settingListData[key1]["optionList"]
-    )) {
-      capsulate.push({
-        text: key2,
-        val: val2,
-      });
-    }
-    settingListData[key1]["optionList"] = capsulate;
-  }
-}
-capsulateOptionList();
 
 var aboutPageList = {
   reviewPage: {
@@ -504,7 +517,7 @@ export default {
     return {
       settingList: settingListData,
       aboutPageList: aboutPageList,
-      setting:{},
+      setting: {},
       currentPage: "main",
       historyRecordActionChipList: [
         {
@@ -517,11 +530,15 @@ export default {
         },
       ],
       copyAlertBar: false,
+      langExcludeSelectList: [],
     };
   },
-  async beforeCreate() {
+  async mounted() {
     this.setting = await Setting.create();
+    this.langExcludeSelectList = this.makeTextValList(langList);
+    this.convertOptionListAsTextVal();
   },
+
   methods: {
     onSelectChange(event, name) {
       this.setting.data[name] = event;
@@ -570,28 +587,35 @@ export default {
         this.copyAlertBar = true;
       });
     },
+
+    handleExcludeLang() {
+      this.changeSetting();
+    },
+
+    makeTextValList(inputList) {
+      // convert {key:item}  => {text:key, val:item}
+      var textValList = [];
+      for (const [key2, val2] of Object.entries(inputList)) {
+        textValList.push({
+          text: key2,
+          val: val2,
+        });
+      }
+      return textValList;
+    },
+    convertOptionListAsTextVal() {
+      for (const [key1, val1] of Object.entries(this.settingList)) {
+        this.settingList[key1]["optionList"] = this.makeTextValList(
+          this.settingList[key1]["optionList"]
+        );
+      }
+    },
   },
 };
 </script>
 <style>
 
-.fade-leave-active,
-.fade-move {
-  transition: all 500ms;
-}
-
-.fade-leave-active {
-  position: absolute;
-}
-
-.fade-leave-to {
-  opacity: 0;
-  transform: scale(0.0,0.0);
-  transform-origin: center top;
-}
-
-.v-label{
+.v-label {
   font-size: 18px;
 }
-
 </style>

@@ -426,7 +426,7 @@ function getToken(query, windowTkk) {
 
 
 
-// detect local file===================================================================== 
+// detect local pdf file and redirect to translated pdf===================================================================== 
 chrome.tabs.onUpdated.addListener( //when tab update
   function(tabId, changeInfo, tab) {
     if (changeInfo.url  && 
