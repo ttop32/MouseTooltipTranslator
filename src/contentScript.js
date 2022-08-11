@@ -34,7 +34,7 @@ var rtlLangList = [
 //tooltip core======================================================================
 //tooltip init
 
-$(async function(){
+$(async function() {
   removePrevRunEnv(); //remove previous tooltip container if exist
   addElementEnv(); //add tooltip container
   await getSetting(); //load setting
@@ -44,7 +44,6 @@ $(async function(){
   startMouseoverDetector(); // start current mouseover text detector
   startTextSelectDetector(); // start current text select detector
 });
-
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
@@ -219,21 +218,25 @@ function setTooltipPosition() {
 }
 
 async function translate(word) {
-  var response = await translateSentence(
-    word,
-    setting.data["translateTarget"]
-  );
+  var response = await translateSentence(word, setting.data["translateTarget"]);
+  //if to,from lang are same and no reverse translate
+  // if source lang are in excluded list
+  if (
+    (setting.data["translateTarget"] == response.sourceLang &&
+      setting.data["translateReverseTarget"] == "null") ||
+    setting.data["langExcludeList"].includes(response.sourceLang)
+  ) {
+    response.translatedText = "";
+  } else if (
+    setting.data["translateTarget"] == response.sourceLang &&
+    setting.data["translateReverseTarget"] != "null"
+  ) {
+    //if to,from lang are same and reverse translate on
 
-  //if lang are same, reverse translate
-  if (setting.data["translateTarget"] == response.sourceLang) {
-    if (setting.data["translateReverseTarget"] != "null") {
-      response = await translateSentence(
-        word,
-        setting.data["translateReverseTarget"]
-      );
-    } else {
-      response.translatedText = "";
-    }
+    response = await translateSentence(
+      word,
+      setting.data["translateReverseTarget"]
+    );
   }
 
   return response;
@@ -269,12 +272,12 @@ function loadEventListener() {
       hideTooltip(false);
     } else if (
       [setting.data["keyDownTooltip"], setting.data["keyDownTTS"]].includes(
-        e.which.toString()
+        e.code
       ) &&
-      keyDownList[e.which] != true
+      keyDownList[e.code] != true
     ) {
       // check activation hold key pressed, run tooltip again with key down value
-      keyDownList[e.which] = true;
+      keyDownList[e.code] = true;
       activatedWord = null; //restart word process
       if (selectedText != "") {
         //restart select if selected value exist
@@ -284,8 +287,8 @@ function loadEventListener() {
   });
 
   $(document).on("keyup", (e) => {
-    if (keyDownList.hasOwnProperty(e.which)) {
-      keyDownList[e.which] = false;
+    if (keyDownList.hasOwnProperty(e.code)) {
+      keyDownList[e.code] = false;
     }
   });
 
@@ -304,20 +307,18 @@ function loadEventListener() {
   });
 }
 
-
-
 //send to background.js for background processing  ===========================================================================
 function sendMessagePromise(params) {
   return new Promise((resolve, reject) => {
     try {
       chrome.runtime.sendMessage(params, (response) => {
         resolve(response);
-      });      
+      });
     } catch (e) {
       if (e.message == "Extension context invalidated.") {
-        console.log()
-      }else{
-        console.log(e)
+        console.log();
+      } else {
+        console.log(e);
       }
     }
   });
@@ -362,7 +363,7 @@ async function getSetting() {
   settingLoaded = true;
 }
 
-function settingUpdateCallback(){
+function settingUpdateCallback() {
   applyStyleSetting();
   selectedText = "";
 }
@@ -371,14 +372,14 @@ function applyStyleSetting() {
   style.html(
     `
     #mttContainer {
-      left: 0;
-      top: 0;
-      position: fixed;
-      z-index: 100000200;
-      width: 500px;
-      margin-left: -250px;
-      background-color: #00000000; //transparent
-      pointer-events: none; //click through
+      left: 0 !important;
+      top: 0 !important;
+      position: fixed !important;
+      z-index: 100000200 !important;
+      width: 500px !important;
+      margin-left: -250px !important;
+      background-color: #00000000  !important;
+      pointer-events: none !important;
     }
     .bootstrapiso .tooltip {
       font-size: ` +
@@ -389,6 +390,8 @@ function applyStyleSetting() {
       background:transparent  !important;
       border:none !important;
       border-radius: 0px !important;
+      visibility: visible  !important;
+      pointer-events: none !important;
     }
     .bootstrapiso .tooltip-inner {
       max-width: ` +
@@ -398,6 +401,7 @@ function applyStyleSetting() {
       background-color: #000000b8 !important;
       color: #fff !important;
       border-radius: .25rem !important;
+      pointer-events: none !important;
     }
     `
   );
@@ -437,8 +441,6 @@ function addElementEnv() {
     id: "mttstyle",
   }).appendTo("head");
 }
-
-
 
 //ocr==================================================================================
 var ocrText = null; //text

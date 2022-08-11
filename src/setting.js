@@ -20,16 +20,23 @@ var defaultList = {
   ocrDetectionLang: "jpn_vert",
   historyList: [],
   historyRecordActions: [],
+  langExcludeList: [],
+};
+
+var oldKeyConvertList = {
+  "17": "ControlLeft",
+  "18": "AltLeft",
+  "16": "ShiftLeft",
+  "91": "MetaLeft",
 };
 
 // automatic setting update class
 export class Setting {
-
   constructor() {
     this.data = {};
   }
 
-  static async create(settingUpdateCallback=()=>{}) {
+  static async create(settingUpdateCallback = () => {}) {
     const o = new Setting();
     await o.initialize(settingUpdateCallback);
     return o;
@@ -37,6 +44,7 @@ export class Setting {
 
   async initialize(settingUpdateCallback) {
     this.data = await getSettingFromStorage();
+    this.checkOldSettingData();
     this.initSettingListener(settingUpdateCallback);
   }
 
@@ -49,14 +57,21 @@ export class Setting {
     });
   }
 
-  save(inputSettings){
-    chrome.storage.local.set(inputSettings, ()=> {
+  save(inputSettings) {
+    chrome.storage.local.set(inputSettings, () => {
       this.data = inputSettings;
-    }); 
+    });
+  }
+
+  checkOldSettingData() {
+    for (const keyDownOption in ["keyDownTooltip", "keyDownTTS"]) {
+      if (oldKeyConvertList.hasOwnProperty(this.data[keyDownOption])) {
+        this.data[keyDownOption] = oldKeyConvertList[this.data[keyDownOption]];
+        this.save(this.data);
+      }
+    }
   }
 }
-
-
 
 //load setting
 //if value exist, load. else load default val
@@ -65,7 +80,9 @@ export function getSettingFromStorage() {
     chrome.storage.local.get(Object.keys(defaultList), function(loadedSetting) {
       var currentSetting = {};
       for (var key in defaultList) {
-        currentSetting[key] = loadedSetting[key] ? loadedSetting[key] :  defaultList[key];
+        currentSetting[key] = loadedSetting[key]
+          ? loadedSetting[key]
+          : defaultList[key];
       }
       resolve(currentSetting);
     });

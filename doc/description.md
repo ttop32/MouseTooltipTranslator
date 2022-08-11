@@ -17,6 +17,9 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.53
+  - add a list of excluded languages to be translated (request by kwisatz haderach)
+  - fix visibility css on translator tooltip 
 - 0.1.52
   - fix google translator not working (request by ATU8020)
 - 0.1.51

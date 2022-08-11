@@ -5,7 +5,10 @@
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
-    "build": "webpack --mode=production --config config/webpack.config.js"
+    "build": "webpack --mode=production --config config/webpack.config.js",
+    "zip": "npm-build-zip",
+    "delete": "del-cli --force ./build",
+    "build-zip": "npm run delete && npm run build && npm run zip"
   },
   "devDependencies": {
     "@mdi/font": "^5.9.55",
@@ -13,8 +16,10 @@
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
     "deepmerge": "^4.2.2",
+    "del-cli": "^5.0.0",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^0.10.1",
+    "npm-build-zip": "^1.0.3",
     "sass": "^1.32.7",
     "sass-loader": "^11.0.1",
     "size-plugin": "^2.0.2",
