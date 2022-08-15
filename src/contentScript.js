@@ -103,10 +103,11 @@ async function processWord(word, actionType) {
       ) {
         showTooltip(translatedText, targetLang);
 
-        //if record trigger is activated, do record
-        if (setting.data["historyRecordActions"].includes(actionType)) {
-          recordHistory(word, translatedText);
-        }
+        updateRecentTranslated(
+          word,
+          translatedText,
+          actionType
+        );
       }
       //if use_tts is on or activation key is pressed, do tts
       if (
@@ -175,6 +176,9 @@ function checkMouseTargetIsSpecialWebBlock() {
 }
 
 function filterWord(word) {
+  if (!word) {
+    return "";
+  }
   word = word.replace(/\s+/g, " "); //replace whitespace as single space
   word = word.trim(); // remove whitespaces from begin and end of word
   if (
@@ -305,6 +309,9 @@ function loadEventListener() {
   $(window).on("beforeunload", (e) => {
     stopTTS();
   });
+
+  //prevent edge browser select context
+  window.onmouseup = (event) => event.preventDefault();
 }
 
 //send to background.js for background processing  ===========================================================================
@@ -347,11 +354,12 @@ async function stopTTS() {
 }
 
 //send history to background.js
-async function recordHistory(sourceText, targetText) {
+async function updateRecentTranslated(sourceText, targetText, actionType) {
   return await sendMessagePromise({
-    type: "recordHistory",
-    sourceText: sourceText,
-    targetText: targetText,
+    type: "updateRecentTranslated",
+    sourceText,
+    targetText,
+    actionType,
   });
 }
 
