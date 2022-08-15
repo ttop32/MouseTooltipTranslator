@@ -7,8 +7,7 @@
 
 //tooltip background===========================================================================
 import { Setting } from "./setting";
-var he = require('he');
-
+var he = require("he");
 
 var setting;
 var settingLoaded = false;
@@ -89,6 +88,7 @@ var bingLangCode = {
 };
 
 var bingLangCodeOpposite = swap(bingLangCode); // swap key value
+var recentTranslated = {};
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
@@ -99,7 +99,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     if (request.type === "translate") {
-      var translatedResult=await doTranslate(request.word, request.translateTarget,setting.data["translateSource"],setting.data["translatorVendor"]);
+      var translatedResult = await doTranslate(
+        request.word,
+        request.translateTarget,
+        setting.data["translateSource"],
+        setting.data["translatorVendor"]
+      );
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
       doTts(request.word, request.lang);
@@ -107,10 +112,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else if (request.type === "stopTTS") {
       chrome.tts.stop();
       sendResponse({});
-    } else if (request.type === "recordHistory") {
+    } else if (request.type === "updateRecentTranslated") {
       recordHistory(request);
+      updateContext(request);
       sendResponse({});
-    } 
+    }
   })();
 
   return true;
@@ -121,17 +127,23 @@ async function getSetting() {
   settingLoaded = true;
 }
 
-function recordHistory(request) {
-  //append history to front
-  setting.data["historyList"].unshift({
-    sourceText: request.sourceText,
-    targetText: request.targetText,
-  });
-  //remove when too many list
-  if (setting.data["historyList"].length > 100) {
-    setting.data["historyList"].pop();
+function recordHistory(request, force = false) {
+  //if action not included
+  if (
+    force ||
+    setting.data["historyRecordActions"].includes(request.actionType)
+  ) {
+    //append history to front
+    setting.data["historyList"].unshift({
+      sourceText: request.sourceText,
+      targetText: request.targetText,
+    });
+    //remove when too many list
+    if (setting.data["historyList"].length > 100) {
+      setting.data["historyList"].pop();
+    }
+    setting.save(setting.data);
   }
-  setting.save(setting.data);
 }
 
 function swap(json) {
@@ -146,7 +158,7 @@ function swap(json) {
 let bingAccessToken;
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
-async function doTranslate(text,targetLang,fromLang,translatorVendor) {
+async function doTranslate(text, targetLang, fromLang, translatorVendor) {
   try {
     if (translatorVendor == "google") {
       var { translatedText, detectedLang } = await translateWithGoogle(
@@ -161,36 +173,38 @@ async function doTranslate(text,targetLang,fromLang,translatorVendor) {
         fromLang
       );
     }
-    
+
     return {
       translatedText: translatedText,
       sourceLang: detectedLang,
-      targetLang:targetLang,
+      targetLang: targetLang,
     };
   } catch (error) {
     console.log(error);
     return {
       translatedText: "",
       sourceLang: "en",
-      targetLang:targetLang,
+      targetLang: targetLang,
     };
   }
 }
 
-
-
-async function translateWithBing(word, targetLang,fromLang) {
+async function translateWithBing(word, targetLang, fromLang) {
   const { token, key, IG, IID } = await getBingAccessToken();
 
-  let res = await fetchMessage(bingBaseUrl, {
-    text: word,
-    fromLang: bingLangCode[fromLang],
-    to: bingLangCode[targetLang],
-    token,
-    key,
-    IG,
-    IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-  },"POST");
+  let res = await fetchMessage(
+    bingBaseUrl,
+    {
+      text: word,
+      fromLang: bingLangCode[fromLang],
+      to: bingLangCode[targetLang],
+      token,
+      key,
+      IG,
+      IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+    },
+    "POST"
+  );
   if (res && res[0]) {
     var detectedLang =
       bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
@@ -201,7 +215,7 @@ async function translateWithBing(word, targetLang,fromLang) {
   }
 }
 
-async function fetchMessage(url, params,httpMethod) {
+async function fetchMessage(url, params, httpMethod) {
   return await fetch(url + new URLSearchParams(params), {
     method: httpMethod,
   })
@@ -285,188 +299,209 @@ function getVoices(lang) {
   });
 }
 
-
-
-
-
 // translateWithGoogle=====================================================================
 
-const googleTranslateTKK = '448487.932609646';
+const googleTranslateTKK = "448487.932609646";
 const apiPath = "https://translate.googleapis.com/translate_a/t?";
 
-async function translateWithGoogle(word, targetLang,fromLang) {
+async function translateWithGoogle(word, targetLang, fromLang) {
   // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
 
-  var translatedText="";
-  var detectedLang="";
-  var tk=getToken(word, googleTranslateTKK);
-  
+  var translatedText = "";
+  var detectedLang = "";
+  var tk = getToken(word, googleTranslateTKK);
+
   const data = {
-    client: 'te_lib',
+    client: "te_lib",
     sl: fromLang,
     tl: targetLang,
     hl: targetLang,
-    anno:3,
-    format:"html",
-    v:1.0,
-    tc:1,
-    sr:1,
-    mode:1,
-    q:word,
+    anno: 3,
+    format: "html",
+    v: 1.0,
+    tc: 1,
+    sr: 1,
+    mode: 1,
+    q: word,
     tk,
   };
 
-  var res= await fetchMessage(apiPath ,data, "GET");
+  var res = await fetchMessage(apiPath, data, "GET");
 
-  if(res&&res[0]&&res[0][0]){
-    if(fromLang=="auto"){
-      translatedText=res[0][0];
-      detectedLang=res[0][1];
-    }else{
-      translatedText=res[0];
-      detectedLang=fromLang;
+  if (res && res[0] && res[0][0]) {
+    if (fromLang == "auto") {
+      translatedText = res[0][0];
+      detectedLang = res[0][1];
+    } else {
+      translatedText = res[0];
+      detectedLang = fromLang;
     }
 
-    //clear html tag and decode html entity 
-    var translatedText=he.decode(translatedText);
-    var bTag=translatedText.match(/(?<=<b>).+?(?=<\/b>)/g) //text between <b> </b>
-    if(bTag&&bTag[0]){
-      translatedText=bTag[0];
+    //clear html tag and decode html entity
+    var translatedText = he.decode(translatedText);
+    var bTag = translatedText.match(/(?<=<b>).+?(?=<\/b>)/g); //text between <b> </b>
+    if (bTag && bTag[0]) {
+      translatedText = bTag.join(" ");
     }
 
-    return { translatedText,  detectedLang };
-  }else{
+    return { translatedText, detectedLang };
+  } else {
     return null;
   }
 }
 
-
-
-
-
 function shiftLeftOrRightThenSumOrXor(num, optString) {
-	for (let i = 0; i < optString.length - 2; i += 3) {
-		let acc = optString.charAt(i + 2);
-		if ('a' <= acc) {
-			acc = acc.charCodeAt(0) - 87;
-		} else {
-			acc = Number(acc);
-		}
-		if (optString.charAt(i + 1) == '+') {
-			acc = num >>> acc;
-		} else {
-			acc = num << acc;
-		}
-		if (optString.charAt(i) == '+') {
-			num += acc & 4294967295;
-		} else {
-			num ^= acc;
-		}
-	}
-	return num;
+  for (let i = 0; i < optString.length - 2; i += 3) {
+    let acc = optString.charAt(i + 2);
+    if ("a" <= acc) {
+      acc = acc.charCodeAt(0) - 87;
+    } else {
+      acc = Number(acc);
+    }
+    if (optString.charAt(i + 1) == "+") {
+      acc = num >>> acc;
+    } else {
+      acc = num << acc;
+    }
+    if (optString.charAt(i) == "+") {
+      num += acc & 4294967295;
+    } else {
+      num ^= acc;
+    }
+  }
+  return num;
 }
 
 function transformQuery(query) {
-	const bytesArray = [];
-	let idx = [];
-	for (let i = 0; i < query.length; i++) {
-		let charCode = query.charCodeAt(i);
+  const bytesArray = [];
+  let idx = [];
+  for (let i = 0; i < query.length; i++) {
+    let charCode = query.charCodeAt(i);
 
-		if (128 > charCode) {
-			bytesArray[idx++] = charCode;
-		} else {
-			if (2048 > charCode) {
-				bytesArray[idx++] = (charCode >> 6) | 192;
-			} else {
-				if (
-					55296 == (charCode & 64512) &&
-					i + 1 < query.length &&
-					56320 == (query.charCodeAt(i + 1) & 64512)
-				) {
-					charCode =
-						65536 +
-						((charCode & 1023) << 10) +
-						(query.charCodeAt(++i) & 1023);
-					bytesArray[idx++] = (charCode >> 18) | 240;
-					bytesArray[idx++] = ((charCode >> 12) & 63) | 128;
-				} else {
-					bytesArray[idx++] = (charCode >> 12) | 224;
-				}
-				bytesArray[idx++] = ((charCode >> 6) & 63) | 128;
-			}
-			bytesArray[idx++] = (charCode & 63) | 128;
-		}
-	}
-	return bytesArray;
+    if (128 > charCode) {
+      bytesArray[idx++] = charCode;
+    } else {
+      if (2048 > charCode) {
+        bytesArray[idx++] = (charCode >> 6) | 192;
+      } else {
+        if (
+          55296 == (charCode & 64512) &&
+          i + 1 < query.length &&
+          56320 == (query.charCodeAt(i + 1) & 64512)
+        ) {
+          charCode =
+            65536 + ((charCode & 1023) << 10) + (query.charCodeAt(++i) & 1023);
+          bytesArray[idx++] = (charCode >> 18) | 240;
+          bytesArray[idx++] = ((charCode >> 12) & 63) | 128;
+        } else {
+          bytesArray[idx++] = (charCode >> 12) | 224;
+        }
+        bytesArray[idx++] = ((charCode >> 6) & 63) | 128;
+      }
+      bytesArray[idx++] = (charCode & 63) | 128;
+    }
+  }
+  return bytesArray;
 }
 
 function getToken(query, windowTkk) {
-	const tkkSplited = windowTkk.split('.');
-	const tkkIndex = Number(tkkSplited[0]) || 0;
-	const tkkKey = Number(tkkSplited[1]) || 0;
+  const tkkSplited = windowTkk.split(".");
+  const tkkIndex = Number(tkkSplited[0]) || 0;
+  const tkkKey = Number(tkkSplited[1]) || 0;
 
-	const bytesArray = transformQuery(query);
+  const bytesArray = transformQuery(query);
 
-	let encondingRound = tkkIndex;
-	for (let i = 0; i < bytesArray.length; i++) {
-		encondingRound += bytesArray[i];
-		encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, '+-a^+6');
-	}
-	encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, '+-3^+b+-f');
+  let encondingRound = tkkIndex;
+  for (let i = 0; i < bytesArray.length; i++) {
+    encondingRound += bytesArray[i];
+    encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, "+-a^+6");
+  }
+  encondingRound = shiftLeftOrRightThenSumOrXor(encondingRound, "+-3^+b+-f");
 
-	encondingRound ^= tkkKey;
-	if (encondingRound <= 0) {
-		encondingRound = (encondingRound & 2147483647) + 2147483648;
-	}
+  encondingRound ^= tkkKey;
+  if (encondingRound <= 0) {
+    encondingRound = (encondingRound & 2147483647) + 2147483648;
+  }
 
-	const normalizedResult = encondingRound % 1000000;
-	return normalizedResult.toString() + '.' + (normalizedResult ^ tkkIndex);
+  const normalizedResult = encondingRound % 1000000;
+  return normalizedResult.toString() + "." + (normalizedResult ^ tkkIndex);
 }
 
-
-
-
-// detect local pdf file and redirect to translated pdf===================================================================== 
-chrome.tabs.onUpdated.addListener( //when tab update
+// detect local pdf file and redirect to translated pdf=====================================================================
+chrome.tabs.onUpdated.addListener(
+  //when tab update
   function(tabId, changeInfo, tab) {
-    if (changeInfo.url  && 
+    if (
+      changeInfo.url &&
       /^(file:\/\/).*(\.pdf)$/.test(changeInfo.url.toLowerCase()) && //url is end with .pdf, start with file://
-      !changeInfo.url.includes(chrome.runtime.getURL('/pdfjs/web/viewer.html')) && //url is not start with chrome-extension://
+      !changeInfo.url.includes(
+        chrome.runtime.getURL("/pdfjs/web/viewer.html")
+      ) && //url is not start with chrome-extension://
       setting.data["detectPDF"] == "true"
-      ){
-      openPDFViwer(changeInfo.url, tabId);       
+    ) {
+      openPDFViewer(changeInfo.url, tabId);
     }
   }
 );
 
-async function openPDFViwer(url, tabId) {
+async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {
-    url: chrome.runtime.getURL('/pdfjs/web/viewer.html') + '?file=' + encodeURIComponent(url)
+    url:
+      chrome.runtime.getURL("/pdfjs/web/viewer.html") +
+      "?file=" +
+      encodeURIComponent(url),
   });
 }
-
-
-
-
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
 chrome.runtime.onInstalled.addListener(async () => {
   for (const cs of chrome.runtime.getManifest().content_scripts) {
-    for (const tab of await chrome.tabs.query({url: cs.matches})) {
-      if ( /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore).*/.test(tab.url)){
+    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+      if (
+        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore).*/.test(
+          tab.url
+        )
+      ) {
         continue;
       }
 
       //load css and js on opened tab
       chrome.scripting.insertCSS({
-        target: {tabId: tab.id},
-        files: cs.css
+        target: { tabId: tab.id },
+        files: cs.css,
       });
       chrome.scripting.executeScript({
-        target: {tabId: tab.id},
+        target: { tabId: tab.id },
         files: cs.js,
-      });      
+      });
     }
   }
 });
+
+// ================= context menu
+
+chrome.contextMenus.create({
+  id: "save",
+  title: "save",
+  visible: false,
+});
+
+function updateContext(request) {
+  chrome.contextMenus.update("save", {
+    title: "Save : " + truncate(request.sourceText, 12),
+    contexts: ["page", "selection"],
+    visible: true,
+  });
+  recentTranslated = request;
+}
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId == "save") {
+    recordHistory(recentTranslated, true);
+  }
+});
+
+function truncate(str, n) {
+  return str.length > n ? str.slice(0, n - 1) + "..." : str;
+}
