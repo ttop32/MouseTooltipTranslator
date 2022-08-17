@@ -310,8 +310,6 @@ function loadEventListener() {
     stopTTS();
   });
 
-  //prevent edge browser select context
-  window.onmouseup = (event) => event.preventDefault();
 }
 
 //send to background.js for background processing  ===========================================================================
