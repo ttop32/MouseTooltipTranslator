@@ -84,7 +84,6 @@ npm run build
 - [review by Joost Dancet](https://taalextensies.wordpress.com/mouse-tooltip-translator/)
 - [review by Sigit Khoirul Anam](https://www.youtube.com/watch?v=flC9i_7uoho)
 - [review by jqueryscript](https://www.jqueryscript.net/blog/Weekly-Web-Design-Development-News-Collective-429.html)
-- [review by Sigit webiitoko](https://webiitoko.blog.fc2.com/blog-entry-1086.html)
 
 
 
