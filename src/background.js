@@ -87,6 +87,8 @@ var bingLangCode = {
   "zh-TW": "zh-Hant",
 };
 
+
+
 var bingLangCodeOpposite = swap(bingLangCode); // swap key value
 var recentTranslated = {};
 getSetting();
@@ -107,7 +109,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       );
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
-      doTts(request.word, request.lang);
+      doTts(request.word, request.lang, setting.data["ttsVolume"] ,setting.data["ttsRate"] );
       sendResponse({});
     } else if (request.type === "stopTTS") {
       chrome.tts.stop();
@@ -259,43 +261,17 @@ async function getBingAccessToken() {
 
 //tts =========================================================================================
 
-var voiceList = {};
 
-async function doTts(word, lang) {
-  var voice = await getVoices(lang);
+async function doTts(word, lang, ttsVolume,ttsRate) {
+  // var voice = await getVoices(lang);
+  var voice =setting.data["ttsVoice_"+lang]
+  // var voice;
+
   chrome.tts.speak(word, {
     lang: lang,
     voiceName: voice,
-  });
-}
-
-function getVoices(lang) {
-  return new Promise((resolve) => {
-    //if already have voiceName return
-    if (voiceList[lang]) {
-      resolve(voiceList[lang]);
-    } else {
-      // get voice list and sort by remote first
-      // get matched lang voice
-      chrome.tts.getVoices((voices) => {
-        let filtered = voices.filter((e) => {
-          return e.remote != null && e.lang != null && e.voiceName != null;
-        }); //get one that include remote, lang, voiceName
-
-        filtered.sort((x, y) => {
-          return y.remote - x.remote;
-        }); //get remote first;
-
-        //find matched lang voice and speak
-        for (var item of filtered) {
-          if (item.lang.toLowerCase().includes(lang.toLowerCase())) {
-            voiceList[lang] = item.voiceName;
-            resolve(voiceList[lang]);
-            break;
-          }
-        }
-      });
-    }
+    volume: Number(ttsVolume),  
+    rate: Number(ttsRate), 
   });
 }
 

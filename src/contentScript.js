@@ -6,7 +6,7 @@
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
 var isUrl = require("is-url");
-import { enableSelectionEndEvent } from "./selection";
+import { enableSelectionEndEvent, getSelectionText } from "./selection";
 import { Setting } from "./setting";
 
 //init environment var======================================================================\
@@ -310,6 +310,12 @@ function loadEventListener() {
     stopTTS();
   });
 
+  //prevent edge browser selection
+  // window.onmouseup = event => {
+  //   if(getSelectionText()){
+  //     event.preventDefault();
+  //   }
+  // }
 }
 
 //send to background.js for background processing  ===========================================================================
@@ -369,12 +375,23 @@ async function getSetting() {
   settingLoaded = true;
 }
 
-function settingUpdateCallback() {
-  applyStyleSetting();
-  selectedText = "";
+function settingUpdateCallback(changes) {
+  var styleSettings = ['tooltipFontSize', 'tooltipWidth', "tooltipTextAlign"];
+  var selectSettings=["translateWhen"]
+
+  //if style is changed, update css
+  if(styleSettings.some(w => (w in changes))){
+    applyStyleSetting();
+  }
+  if(selectSettings.some(w => (w in changes))){
+    selectedText = "";
+  }
+
+
 }
 
 function applyStyleSetting() {
+
   style.html(
     `
     #mttContainer {
@@ -388,9 +405,6 @@ function applyStyleSetting() {
       pointer-events: none !important;
     }
     .bootstrapiso .tooltip {
-      font-size: ` +
-      setting.data["tooltipFontSize"] +
-      `px  !important;
       width:auto  !important;
       height:auto  !important;
       background:transparent  !important;
@@ -400,9 +414,15 @@ function applyStyleSetting() {
       pointer-events: none !important;
     }
     .bootstrapiso .tooltip-inner {
+      font-size: ` +
+      setting.data["tooltipFontSize"] +
+      `px  !important;
       max-width: ` +
       setting.data["tooltipWidth"] +
       `px  !important;
+      text-align: ` +
+      setting.data["tooltipTextAlign"] +
+      ` !important;
       backdrop-filter: blur(2px) !important; 
       background-color: #000000b8 !important;
       color: #fff !important;

@@ -14,10 +14,38 @@
           <v-app-bar-nav-icon
             @click="currentPage = 'about'"
           ></v-app-bar-nav-icon>
+
+
+
+          <template v-slot:extension>
+            <v-tabs
+              v-model="tab"
+              align-with-title
+            >
+              <v-tabs-slider color="red"></v-tabs-slider>
+              <v-tab
+                v-for="item in tabs"
+                :key="item"
+              >
+                {{ item }}
+              </v-tab>
+            </v-tabs>
+          </template>
         </v-toolbar>
 
-        <v-list v-if="setting.data" id="settingListBox" class="scrollList" flat>
-          <v-list-item v-for="(value, name) in settingList" :key="name">
+
+      <!-- tab------------------- -->
+      <v-tabs-items v-model="tab">
+
+
+
+        <v-tab-item
+          v-for="tabItem in tabs"
+          :key="tabItem"
+        >
+        <perfect-scrollbar class="scroll-area" >
+          <v-card flat v-if="tabItems[tabItem]">
+            <v-list-item v-for="(value, name) in tabItems[tabItem]" :key="name">
             <v-select
               v-model="setting.data[name]"
               :items="value.optionList"
@@ -28,7 +56,14 @@
             ></v-select>
           </v-list-item>
 
-          <v-list-item>
+
+          <!-- <v-color-picker
+            dot-size="25"
+          ></v-color-picker> -->
+
+
+
+          <v-list-item v-if="tabItem=='MAIN'">
             <v-select
               v-model="setting.data['langExcludeList']"
               :items="langExcludeSelectList"
@@ -48,7 +83,20 @@
               </template>
             </v-select>
           </v-list-item>
-        </v-list>
+
+          </v-card>
+        </perfect-scrollbar>
+
+        </v-tab-item>
+      </v-tabs-items>
+      
+
+
+
+
+
+
+
       </v-card>
 
       <!-- about page ====================================== -->
@@ -284,6 +332,7 @@ var langList = {
   Zulu: "zu",
 };
 var langListWithAuto = Object.assign({ Auto: "auto" }, langList); //copy lang and add auto
+var langListOpposite=swap(langList);
 
 var toggleList = {
   On: "true",
@@ -409,10 +458,12 @@ var translateActionList = {
   "Mouseover & Select": "mouseoverselect",
 };
 
-var tooltipFontSizeList = {}; //font size 5 to 25
-for (let i = 5; i < 26; i++) {
-  tooltipFontSizeList[String(i)] = String(i);
-}
+var tooltipFontSizeList = getRangeOption(5,26,1,0); //font size 5 to 25
+var tooltipWidth = getRangeOption(1,6,100,0);
+var ttsVolumeList=getRangeOption(1,11,0.1,1);
+var ttsRateList=getRangeOption(5,21,0.1,1);
+
+
 var detectTypeList = {
   Word: "word",
   Sentence: "sentence",
@@ -422,9 +473,11 @@ var detectTypeList = {
 var translateReverseTargetList = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
 translateReverseTargetList["None"] = "null";
 
-var tooltipWidth = {};
-for (let i = 100; i < 600; i += 100) {
-  tooltipWidth[String(i)] = String(i);
+var tooltipTextAlignList={
+  Center:"center",
+  Left:"left",
+  Right:"right",
+  Justify:"justify",
 }
 
 var settingListData = {
@@ -468,14 +521,6 @@ var settingListData = {
     description: "Reverse Translate Language",
     optionList: translateReverseTargetList,
   },
-  tooltipFontSize: {
-    description: "Tooltip Font Size",
-    optionList: tooltipFontSizeList,
-  },
-  tooltipWidth: {
-    description: "Tooltip Width",
-    optionList: tooltipWidth,
-  },
   detectPDF: {
     description: "Detect PDF",
     optionList: toggleList,
@@ -488,6 +533,40 @@ var settingListData = {
     description: "OCR Detection Language",
     optionList: ocrLangList,
   },
+};
+
+var visualTabData={
+  tooltipFontSize: {
+    description: "Tooltip Font Size",
+    optionList: tooltipFontSizeList,
+  },
+  tooltipWidth: {
+    description: "Tooltip Width",
+    optionList: tooltipWidth,
+  },
+  tooltipTextAlign: {
+    description: "Tooltip Text Align",
+    optionList: tooltipTextAlignList,
+  },
+};
+
+var voiceTabData={
+  ttsRate: {
+    description: "TTS Speed",
+    optionList: ttsRateList,
+  },
+  ttsVolume: {
+    description: "TTS Volume",
+    optionList: ttsVolumeList,
+  },
+};
+
+
+var tabs=["MAIN","VISUAL","VOICE"];
+var tabItems={
+  "MAIN":settingListData,
+  "VISUAL":visualTabData,
+  "VOICE":voiceTabData,
 };
 
 var aboutPageList = {
@@ -511,11 +590,28 @@ var aboutPageList = {
   },
 };
 
+function getRangeOption(start,end,scale,roundOff) {
+  var optionList={};
+  for (let i = start; i < end; i++) {
+    var num=String((i*scale).toFixed(roundOff));
+    optionList[num] = num;
+  }
+  return optionList;
+} 
+
+function swap(json) {
+  var ret = {};
+  for (var key in json) {
+    ret[json[key]] = key;
+  }
+  return ret;
+}
+
+
 export default {
   name: "app",
   data: function () {
     return {
-      settingList: settingListData,
       aboutPageList: aboutPageList,
       setting: {},
       currentPage: "main",
@@ -531,12 +627,36 @@ export default {
       ],
       copyAlertBar: false,
       langExcludeSelectList: [],
+
+
+      tab: null,
+      tabs: tabs,
+      tabItems:tabItems,
+
+
+      color: '#1976D2FF',
+      mask: '!#XXXXXXXX',
+      menu: false,
     };
   },
   async mounted() {
     this.setting = await Setting.create();
     this.langExcludeSelectList = this.makeTextValList(langList);
     this.convertOptionListAsTextVal();
+    this.addTtsVoiceTabOption();
+  },
+  computed: {
+    swatchStyle() {
+      const { color, menu } = this
+      return {
+        backgroundColor: color,
+        cursor: 'pointer',
+        height: '30px',
+        width: '30px',
+        borderRadius: menu ? '50%' : '4px',
+        transition: 'border-radius 200ms ease-in-out'
+      }
+    }
   },
 
   methods: {
@@ -604,12 +724,33 @@ export default {
       return textValList;
     },
     convertOptionListAsTextVal() {
-      for (const [key1, val1] of Object.entries(this.settingList)) {
-        this.settingList[key1]["optionList"] = this.makeTextValList(
-          this.settingList[key1]["optionList"]
-        );
-      }
+      for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
+        for (const [key1, val1] of Object.entries(tabVal)) {
+          this.tabItems[tabKey][key1]["optionList"] = this.makeTextValList(
+            this.tabItems[tabKey][key1]["optionList"]
+          );
+        }
+      }      
     },
+    addTtsVoiceTabOption(){
+      var voiceTabOption={}
+      
+      for (var key in this.setting.voiceList) {
+        var voiceOptionList={};
+        for (const x of this.setting.voiceList[key]) {
+          voiceOptionList[x]=x;          
+        }
+        if(langListOpposite[key]){
+          voiceTabOption["ttsVoice_"+key]={
+            description: "Voice for " +langListOpposite[key],
+            optionList: this.makeTextValList(voiceOptionList),          
+          }
+        }
+      }
+      
+      //add voice option
+      this.tabItems["VOICE"] = Object.assign(this.tabItems["VOICE"], voiceTabOption)
+    }
   },
 };
 </script>
@@ -618,4 +759,12 @@ export default {
 .v-label {
   font-size: 18px;
 }
+
+.scroll-area {
+  position: relative;
+  margin: auto;
+  /* width: 200px; */
+  height: 500px;
+}
+
 </style>

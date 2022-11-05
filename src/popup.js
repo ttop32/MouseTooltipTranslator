@@ -9,9 +9,14 @@ import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loade
 import 'vuetify/dist/vuetify.min.css'; //vuetify css
 import Vue from 'vue'; //vue framework
 import Vuetify from 'vuetify'; //vue style
-import App from './popup.vue'
-Vue.use(Vuetify);
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
+
+import App from './popup.vue'
+
+Vue.use(Vuetify);
+Vue.use(PerfectScrollbar)
 
 
 new Vue({
