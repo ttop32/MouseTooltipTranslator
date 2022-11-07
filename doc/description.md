@@ -17,6 +17,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.57
+  - add option for font color (request by WellingtonmpdNeves)
 - 0.1.56
   - add option for voice selection (request by Joost Dancet)
   - add option for voice speed (request by vijayabalan)
