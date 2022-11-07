@@ -19,6 +19,9 @@ var defaultList = {
   tooltipFontSize: "14",
   tooltipWidth: "200",
   tooltipTextAlign:"center",
+  tooltipBackgroundBlur:"2",
+  tooltipFontColor:"#ffffffff",
+  tooltipBackgroundColor:"#000000b8",
   ttsVolume: "1.0",
   ttsRate: "1.0",
   historyList: [],
@@ -56,9 +59,9 @@ export class Setting {
     });
   }
 
-  save(inputSettings) {
-    chrome.storage.local.set(inputSettings, () => {
-      this.data = inputSettings;
+  save() {
+    chrome.storage.local.set(this.data, () => {
+      
     });
   }
 

@@ -144,7 +144,7 @@ function recordHistory(request, force = false) {
     if (setting.data["historyList"].length > 100) {
       setting.data["historyList"].pop();
     }
-    setting.save(setting.data);
+    setting.save();
   }
 }
 
@@ -263,9 +263,7 @@ async function getBingAccessToken() {
 
 
 async function doTts(word, lang, ttsVolume,ttsRate) {
-  // var voice = await getVoices(lang);
   var voice =setting.data["ttsVoice_"+lang]
-  // var voice;
 
   chrome.tts.speak(word, {
     lang: lang,

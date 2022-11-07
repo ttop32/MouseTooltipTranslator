@@ -57,10 +57,23 @@
           </v-list-item>
 
 
-          <!-- <v-color-picker
-            dot-size="25"
-          ></v-color-picker> -->
 
+        <v-list-item v-if="tabItem=='VISUAL'"  v-for="(value, name) in colorOption" :key="name" >
+          <v-text-field v-model="setting.data[name]" v-mask="mask" :label="value.description" @change="changeSetting">
+            <template v-slot:append>
+              <v-menu v-model="value.menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                  <div :style="swatchStyle(value, name)" v-on="on" class="ma-1" />
+                </template>
+                <v-card>
+                  <v-card-text>
+                    <v-color-picker v-model="setting.data[name]" flat                />
+                  </v-card-text>
+                </v-card>
+              </v-menu>
+            </template>
+				  </v-text-field>
+        </v-list-item>
 
 
           <v-list-item v-if="tabItem=='MAIN'">
@@ -71,7 +84,7 @@
               item-value="val"
               label="Exclude Language"
               multiple
-              @change="handleExcludeLang()"
+              @change="onSelectChange"
             >
               <template v-slot:selection="{ item, index }">
                 <v-chip v-if="index === 0">
@@ -462,6 +475,7 @@ var tooltipFontSizeList = getRangeOption(5,26,1,0); //font size 5 to 25
 var tooltipWidth = getRangeOption(1,6,100,0);
 var ttsVolumeList=getRangeOption(1,11,0.1,1);
 var ttsRateList=getRangeOption(5,21,0.1,1);
+var tooltipBackgroundBlurList=getRangeOption(0,21,1,0);
 
 
 var detectTypeList = {
@@ -548,6 +562,10 @@ var visualTabData={
     description: "Tooltip Text Align",
     optionList: tooltipTextAlignList,
   },
+  tooltipBackgroundBlur: {
+    description: "Tooltip Background Blur",
+    optionList: tooltipBackgroundBlurList,
+  },
 };
 
 var voiceTabData={
@@ -568,6 +586,20 @@ var tabItems={
   "VISUAL":visualTabData,
   "VOICE":voiceTabData,
 };
+
+
+
+var colorOption={
+  tooltipFontColor: {
+    description: "Tooltip Font Color",
+    menu: false,
+  },
+  tooltipBackgroundColor: {
+    description: "Tooltip Background Color",
+    menu: false,
+  },
+};
+
 
 var aboutPageList = {
   reviewPage: {
@@ -634,9 +666,8 @@ export default {
       tabItems:tabItems,
 
 
-      color: '#1976D2FF',
       mask: '!#XXXXXXXX',
-      menu: false,
+      colorOption: colorOption,
     };
   },
   async mounted() {
@@ -645,24 +676,9 @@ export default {
     this.convertOptionListAsTextVal();
     this.addTtsVoiceTabOption();
   },
-  computed: {
-    swatchStyle() {
-      const { color, menu } = this
-      return {
-        backgroundColor: color,
-        cursor: 'pointer',
-        height: '30px',
-        width: '30px',
-        borderRadius: menu ? '50%' : '4px',
-        transition: 'border-radius 200ms ease-in-out'
-      }
-    }
-  },
 
   methods: {
     onSelectChange(event, name) {
-      this.setting.data[name] = event;
-      //when activation hold key is set, turn off permanent feature enable
       if (name == "keyDownTooltip" && event != "null") {
         this.setting.data["useTooltip"] = "false";
       }
@@ -672,7 +688,7 @@ export default {
       this.changeSetting();
     },
     changeSetting() {
-      this.setting.save(this.setting.data);
+      this.setting.save();
     },
     openUrl(newURL) {
       window.open(newURL);
@@ -707,11 +723,6 @@ export default {
         this.copyAlertBar = true;
       });
     },
-
-    handleExcludeLang() {
-      this.changeSetting();
-    },
-
     makeTextValList(inputList) {
       // convert {key:item}  => {text:key, val:item}
       var textValList = [];
@@ -750,6 +761,19 @@ export default {
       
       //add voice option
       this.tabItems["VOICE"] = Object.assign(this.tabItems["VOICE"], voiceTabOption)
+    },
+    swatchStyle(value,name){
+      const color=this.setting.data[name];
+      const menu=value.menu;
+      return {
+        "box-shadow": "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+        backgroundColor: color,
+        cursor: 'pointer',
+        height: '30px',
+        width: '30px',
+        borderRadius: menu ? '50%' : '4px',
+        transition: 'border-radius 200ms ease-in-out'
+      }
     }
   },
 };

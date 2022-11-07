@@ -9,6 +9,8 @@ var isUrl = require("is-url");
 import { enableSelectionEndEvent, getSelectionText } from "./selection";
 import { Setting } from "./setting";
 
+
+
 //init environment var======================================================================\
 var setting;
 var tooltipContainer;
@@ -376,22 +378,20 @@ async function getSetting() {
 }
 
 function settingUpdateCallback(changes) {
-  var styleSettings = ['tooltipFontSize', 'tooltipWidth', "tooltipTextAlign"];
-  var selectSettings=["translateWhen"]
+  var keys=Object.keys(changes)
 
   //if style is changed, update css
-  if(styleSettings.some(w => (w in changes))){
+  if(keys.some(w => w.includes("tooltip"))){
     applyStyleSetting();
   }
-  if(selectSettings.some(w => (w in changes))){
+  if(keys.some(w => w.includes("translateWhen"))){
     selectedText = "";
   }
-
-
 }
 
-function applyStyleSetting() {
 
+function applyStyleSetting() {
+  
   style.html(
     `
     #mttContainer {
@@ -423,11 +423,22 @@ function applyStyleSetting() {
       text-align: ` +
       setting.data["tooltipTextAlign"] +
       ` !important;
-      backdrop-filter: blur(2px) !important; 
-      background-color: #000000b8 !important;
-      color: #fff !important;
+      backdrop-filter: blur(` +
+      setting.data["tooltipBackgroundBlur"] +
+      `px)  !important; 
+      background-color: ` +
+      setting.data["tooltipBackgroundColor"] +
+      ` !important;
+      color: ` +
+      setting.data["tooltipFontColor"] +
+      ` !important;
       border-radius: .25rem !important;
       pointer-events: none !important;
+    }
+    .bootstrapiso .arrow::before {
+      border-top-color: ` +
+      setting.data["tooltipBackgroundColor"] +
+      ` !important;
     }
     `
   );
