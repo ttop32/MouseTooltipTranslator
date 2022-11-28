@@ -1,8 +1,8 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Переводчик контекста мышью"
 	},
 	"appDesc": {
-		"message": "Translate Translate Translate Translation Translate Translate Translate"
+		"message": "Переводчик контекста мышью: при наведении на элемент мышью переводит текст с помощью переводчика Google"
 	}
 }
