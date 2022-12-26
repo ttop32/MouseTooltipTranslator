@@ -5,7 +5,7 @@
       <v-card v-if="currentPage == 'main'" tile flat>
         <v-toolbar color="blue" dark dense>
           <v-toolbar-title>
-            <div>Mouse Tooltip Translator</div>
+            <div>{{remainSettingDesc['appName']}}</div>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="currentPage = 'history'">
@@ -82,7 +82,7 @@
               :items="langExcludeSelectList"
               item-text="text"
               item-value="val"
-              label="Exclude Language"
+              :label="remainSettingDesc['Exclude_Langauge']"
               multiple
               @change="onSelectChange"
             >
@@ -496,85 +496,96 @@ var tooltipTextAlignList={
 
 var settingListData = {
   useTooltip: {
-    description: "Enable Tooltip",
+    description: chrome.i18n.getMessage("Enable_Tooltip"),  // public/_locales/en/messages.json is used 
     optionList: toggleList,
   },
   useTTS: {
-    description: "Enable TTS",
+    description: chrome.i18n.getMessage("Enable_TTS"),
     optionList: toggleList,
   },
   translateWhen: {
-    description: "Translate When",
+    description: chrome.i18n.getMessage("Translate_When"),
     optionList: translateActionList,
   },
   translateSource: {
-    description: "Translate From",
+    description: chrome.i18n.getMessage("Translate_From"),
     optionList: langListWithAuto,
   },
   translateTarget: {
-    description: "Translate Into",
+    description: chrome.i18n.getMessage("Translate_Into"),
     optionList: langList,
   },
   translatorVendor: {
-    description: "Translator",
+    description: chrome.i18n.getMessage("Translator"),
     optionList: translatorList,
   },
   keyDownTooltip: {
-    description: "Tooltip Activation Hold Key",
+    description: chrome.i18n.getMessage("Tooltip_Activation_Hold_Key"),
     optionList: keyList,
   },
   keyDownTTS: {
-    description: "TTS Activation Hold Key",
+    description: chrome.i18n.getMessage("TTS_Activation_Hold_Key"),
     optionList: keyList,
   },
   detectType: {
-    description: "Text Detect Type",
+    description: chrome.i18n.getMessage("Text_Detect_Type"),
     optionList: detectTypeList,
   },
   translateReverseTarget: {
-    description: "Reverse Translate Language",
+    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
     optionList: translateReverseTargetList,
   },
   detectPDF: {
-    description: "Detect PDF",
+    description: chrome.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
   useOCR: {
-    description: "Enable OCR (Experimental)",
+    description: chrome.i18n.getMessage("Enable_OCR"),
     optionList: toggleList,
   },
   ocrDetectionLang: {
-    description: "OCR Detection Language",
+    description: chrome.i18n.getMessage("OCR_Detection_Language"),
     optionList: ocrLangList,
   },
 };
 
 var visualTabData={
   tooltipFontSize: {
-    description: "Tooltip Font Size",
+    description: chrome.i18n.getMessage("Tooltip_Font_Size"),
     optionList: tooltipFontSizeList,
   },
   tooltipWidth: {
-    description: "Tooltip Width",
+    description: chrome.i18n.getMessage("Tooltip_Width"),
     optionList: tooltipWidth,
   },
   tooltipTextAlign: {
-    description: "Tooltip Text Align",
+    description: chrome.i18n.getMessage("Tooltip_Text_Align"),
     optionList: tooltipTextAlignList,
   },
   tooltipBackgroundBlur: {
-    description: "Tooltip Background Blur",
+    description: chrome.i18n.getMessage("Tooltip_Background_Blur"),
     optionList: tooltipBackgroundBlurList,
+  },
+};
+
+var colorOption={
+  tooltipFontColor: {
+    description: chrome.i18n.getMessage("Tooltip_Font_Color"),
+    menu: false,
+  },
+  tooltipBackgroundColor: {
+    description: chrome.i18n.getMessage("Tooltip_Background_Color"),
+    menu: false,
   },
 };
 
 var voiceTabData={
   ttsRate: {
-    description: "TTS Speed",
+    description: chrome.i18n.getMessage("TTS_Speed"),
     optionList: ttsRateList,
   },
   ttsVolume: {
-    description: "TTS Volume",
+    description: chrome.i18n.getMessage("TTS_Volume"),
     optionList: ttsVolumeList,
   },
 };
@@ -589,34 +600,30 @@ var tabItems={
 
 
 
-var colorOption={
-  tooltipFontColor: {
-    description: "Tooltip Font Color",
-    menu: false,
-  },
-  tooltipBackgroundColor: {
-    description: "Tooltip Background Color",
-    menu: false,
-  },
-};
+var remainSettingDesc={
+  "appName":chrome.i18n.getMessage("appName"),
+  "Exclude_Langauge":chrome.i18n.getMessage("Exclude_Langauge"),
+  "Voice_for_":chrome.i18n.getMessage("Voice_for_"),
+}
+
 
 
 var aboutPageList = {
   reviewPage: {
-    name: "Review Page",
-    sub_name: "Comment on this extension",
+    name: chrome.i18n.getMessage("Review_Page"),
+    sub_name: chrome.i18n.getMessage("Comment_on_this_extension"),
     url: "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
     icon: "mdi-message-draw",
   },
   sourceCode: {
-    name: "Source code",
-    sub_name: "Check source code in github",
+    name: chrome.i18n.getMessage("Source_code"),
+    sub_name: chrome.i18n.getMessage("Check_source_code_in_github"),
     url: "https://github.com/ttop32/MouseTooltipTranslator",
     icon: "mdi-github",
   },
   privacyPolicy: {
-    name: "Privacy Policy",
-    sub_name: "User privacy policy",
+    name: chrome.i18n.getMessage("Privacy_Policy"),
+    sub_name: chrome.i18n.getMessage("User_privacy_policy"),
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
     icon: "mdi-shield-account",
   },
@@ -668,6 +675,7 @@ export default {
 
       mask: '!#XXXXXXXX',
       colorOption: colorOption,
+      remainSettingDesc:remainSettingDesc,
     };
   },
   async mounted() {
@@ -753,7 +761,7 @@ export default {
         }
         if(langListOpposite[key]){
           voiceTabOption["ttsVoice_"+key]={
-            description: "Voice for " +langListOpposite[key],
+            description: this.remainSettingDesc["Voice_for_"] +langListOpposite[key],
             optionList: this.makeTextValList(voiceOptionList),          
           }
         }

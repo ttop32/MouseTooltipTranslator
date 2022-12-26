@@ -87,7 +87,6 @@ function startTextSelectDetector() {
 //process detected word
 async function processWord(word, actionType) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
-
   //show tooltip, if current word is changed and word is not none
   if (word && activatedWord != word) {
     activatedWord = word;
@@ -128,11 +127,9 @@ async function processWord(word, actionType) {
 }
 
 function getMouseOverWord(clientX, clientY) {
-  //check is image
-  var imageOutput = checkImage(clientX, clientY);
-  if (imageOutput) {
-    return imageOutput;
-  }
+  //check is image for ocr
+  checkImage();
+
 
   //get mouse positioned char
   var range = document.caretRangeFromPoint(clientX, clientY);
@@ -171,9 +168,13 @@ function getMouseOverWord(clientX, clientY) {
 }
 
 function checkMouseTargetIsSpecialWebBlock() {
+  var specialClassNameList=[
+    "ytp-caption-segment",//youtube caption
+    "LC20lb", //google search list title block
+    "ocr_text_div" //mousetooltip ocr block
+  ]
   return (
-    mouseTarget.className == "ytp-caption-segment" || //youtube caption
-    mouseTarget.className == "LC20lb MBeuO DKV0Md" //google search list title block
+    specialClassNameList.some(className => mouseTarget.classList.contains(className))
   );
 }
 
@@ -480,78 +481,50 @@ function addElementEnv() {
 }
 
 //ocr==================================================================================
-var ocrText = null; //text
-var ocrImgX = 0;
-var ocrImgY = 0;
-var ocrSendTimeID = 0;
-var ocrRecentReceivedID = 0;
-var ocrUrl = "";
-var ocriframe;
+var ocrIframe;
+var ocrIframeListener;
+var ocrHistory={}
 
 //detect mouse positioned image to process in iframe
 //send image when mouse pointing
-//recieve ocr processed text and return recent recieved text
-function checkImage(clientX, clientY) {
-  //if mouse target on image, process ocr
+//receive ocr processed text
+function checkImage() {
+  //if mouse target is image, process ocr
   if (
     setting.data["useOCR"] == "true" && //when use ocr setting on
     mouseTarget != null &&
     mouseTarget.tagName === "IMG" && //when mouse over on img
-    mouseTarget.complete &&
-    mouseTarget.naturalHeight !== 0
+    mouseTarget.complete &&  //if image is loaded
+    mouseTarget.naturalHeight !== 0 &&
+    mouseTarget.width > 300   &&
+    mouseTarget.height > 300  
   ) {
-    //if image is loaded
-
-    //if mouse move, do ocr using background js
-    if (ocrImgX != clientX || ocrImgY != clientY) {
       (async () => {
-        ocrImgX = clientX;
-        ocrImgY = clientY;
+        await initOCR();
+
+        // if already ocr processed,skip
+        // if lang change or no ocr history ,do ocr
+        if(ocrHistory[mouseTarget.src] && ocrHistory[mouseTarget.src]["lang"]==setting.data["ocrDetectionLang"]){
+          return null;
+        }
+
         mouseTarget.style.cursor = "wait"; //show mouse loading
-
-        //mouse position on image width height
-        var bounds = mouseTarget.getBoundingClientRect();
-        var x = clientX - bounds.left;
-        var y = clientY - bounds.top;
-        var px = parseInt(
-          (x / mouseTarget.clientWidth) * mouseTarget.naturalWidth
-        );
-        var py = parseInt(
-          (y / mouseTarget.clientHeight) * mouseTarget.naturalHeight
-        );
-
-        //ocr img url init
-        if (mouseTarget.src != ocrUrl) {
-          ocrText = null;
-          ocrUrl = mouseTarget.src;
+        var ocrTimeID = Date.now(); //current sending time
+        //record ocr process
+        ocrHistory[mouseTarget.src]={
+          lang:setting.data["ocrDetectionLang"],
+          time:ocrTimeID,
+          imageTarget:mouseTarget,
+          ocrData:{}
         }
 
-        //create ocr iframe
-        if (!ocriframe) {
-          ocriframe = $("<iframe />", {
-            name: "ocrFrame",
-            id: "ocrFrame",
-            src: chrome.runtime.getURL("/ocr.html"),
-            css: {
-              display: "none",
-            },
-          })
-            .appendTo("body")
-            .get(0);
-
-          await sleep(100);
-        }
-
-        //send to ocr iframe
-        ocrSendTimeID = Date.now(); //current sending time
-        ocriframe.contentWindow.postMessage(
+        //send to ocr iframe, -> public/ocr.js
+        ocrIframe.contentWindow.postMessage(
           {
             type: "ocr",
-            mainUrl: ocrUrl,
+            mainUrl: mouseTarget.src,
             base64Url: "",
-            time: ocrSendTimeID,
-            px: px,
-            py: py,
+            time: ocrTimeID,
             lang: setting.data["ocrDetectionLang"],
           },
           "*"
@@ -559,56 +532,68 @@ function checkImage(clientX, clientY) {
       })();
     }
 
-    //pass saved data
-    if (mouseTarget.src == ocrUrl && ocrText != null) {
-      //if selected image is processed and recieved
-      return ocrText;
-    }
-  }
   return null;
 }
 
+async function initOCR(){
+  addOcrIframeListener();
+  await createOcrIframe();
+}
+
+async function createOcrIframe(){
+  if (!ocrIframe) {
+    ocrIframe = $("<iframe />", {
+      name: "ocrFrame",
+      id: "ocrFrame",
+      src: chrome.runtime.getURL("/ocr.html"),
+      css: {
+        display: "none",
+      },
+    })
+      .appendTo("body")
+      .get(0);
+
+    await sleep(100); //wait iframe start
+  }
+}
+
 //ocr iframe communcation handler
-window.addEventListener(
-  "message",
-  function(response) {
-    //if success save data
-    if (response.data.type == "success") {
-      if (
-        response.data.mainUrl == ocrUrl &&
-        ocrRecentReceivedID < response.data.time
-      ) {
-        //check url and is recent one
-        ocrText = response.data.text;
-        ocrRecentReceivedID = response.data.time;
-        if (response.data.time == ocrSendTimeID) {
-          //if get most recent one, stop mouse loading
-          mouseTarget.style.cursor = "";
+function addOcrIframeListener(){
+  if (!ocrIframeListener) {
+    ocrIframeListener="done";
+    window.addEventListener(
+      "message",
+      function(response) {
+        if (response.data.type == "success") {
+          // get only last request 
+          if(ocrHistory[response.data.mainUrl]["lang"]==response.data.lang&& ocrHistory[response.data.mainUrl]["time"]==response.data.time ){
+            processOcrData(ocrHistory[response.data.mainUrl]["imageTarget"],response.data.ocrData);
+            ocrHistory[response.data.mainUrl]["imageTarget"].style.cursor = ""; //reset cursor state
+          }
+          //if fail, resend with base64 data
+        } else if (response.data.type == "fail") {
+          if (response.data.base64Url == "") {
+            (async () => {
+              var ocrBase64Url = await getBase64(response.data.mainUrl);
+              ocrIframe.contentWindow.postMessage(
+                {
+                  type: "ocr",
+                  mainUrl: response.data.mainUrl,
+                  base64Url: ocrBase64Url,
+                  time: response.data.time,
+                  lang: response.data.lang,
+                },
+                "*"
+              );
+            })();
+          }
         }
-      }
-      //if fail, resend with base64 data
-    } else if (response.data.type == "fail") {
-      if (response.data.base64Url == "") {
-        (async () => {
-          var ocrBase64Url = await getBase64(response.data.mainUrl);
-          ocriframe.contentWindow.postMessage(
-            {
-              type: "ocr",
-              mainUrl: response.data.mainUrl,
-              base64Url: ocrBase64Url,
-              time: response.data.time,
-              px: response.data.px,
-              py: response.data.py,
-              lang: setting.data["ocrDetectionLang"],
-            },
-            "*"
-          );
-        })();
-      }
-    }
-  },
-  false
-);
+      },
+      false
+    );
+  }
+}
+
 
 function getBase64(url) {
   return new Promise(function(resolve, reject) {
@@ -626,4 +611,74 @@ function getBase64(url) {
 
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+
+function processOcrData(target,data){
+  //for each paragraph ocr result get box and text to display result
+  for (var keyBlock in data.blocks) {
+    var paragraphs = data.blocks[keyBlock].paragraphs;
+    for (var keyParagraph in paragraphs) {
+      var paragraph = paragraphs[keyParagraph];
+      var text=paragraph["text"];
+      text=getTextWithoutSpecialChar(text);
+      
+      //if string contains only whitespace, skip
+      if (/^\s*$/.test(text)) {
+        continue;
+      }
+      // console.log(paragraph["confidence"] + "==" + text);
+      addTextBlock(target,paragraph["bbox"],text)
+    }
+  }
+  
+}
+
+
+
+function addTextBlock(target,bbox, text) {
+
+  var $div = $("<div />").appendTo(target.parentElement);
+  $div.attr("class", "ocr_text_div");
+  $div.html(text);
+  $div.css('cssText', `
+    position: absolute;
+    opacity: 0.7;
+    z-index: 100000;
+    pointer-events: auto;
+    border: 2px solid CornflowerBlue !important;
+    font-size: 1.5rem;
+    overflow: hidden;
+    color:#00000000 !important;
+    background-color: #00000000 !important
+  `);
+  setLeftTopWH(target,bbox,$div)
+
+  $( window ).on("resize", (e) => {
+    setLeftTopWH(target,bbox,$div)
+  });
+}
+
+function setLeftTopWH(target,bbox,$div){
+  var offsetLeft=target.offsetLeft;
+  var offsetTop=target.offsetTop;
+  var widthRatio= target.offsetWidth/target.naturalWidth;
+  var heightRatio= target.offsetHeight/target.naturalHeight;
+  var x=widthRatio*(bbox["x0"]);
+  var y=heightRatio*(bbox["y0"]);
+  var w=widthRatio*(bbox["x1"] - bbox["x0"]);
+  var h=heightRatio *(bbox["y1"] - bbox["y0"]);
+  var left = offsetLeft + x;
+  var top = offsetTop + y;
+
+  $div.css({
+    left: left + "px",
+    top: top + "px",
+    width: w + "px",
+    height: h + "px",
+  });
+}
+
+function getTextWithoutSpecialChar(text){
+  return text.replace(/[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove special char
 }

@@ -4,5 +4,122 @@
 	},
 	"appDesc": {
 		"message": "แปลเครื่องมือ Mouse Mouse Tooltip"
-	}
+
+	},
+
+    "Enable_Tooltip": {
+        "message": "Enable Tooltip"
+    },
+
+    "Enable_TTS": {
+        "message": "Enable TTS"
+    },
+
+    "Translate_When": {
+        "message": "Translate When"
+    },
+
+    "Translate_From": {
+        "message": "Translate From"
+    },
+
+    "Translate_Into": {
+        "message": "Translate Into"
+    },
+
+    "Translator": {
+        "message": "Translator"
+    },
+
+    "Tooltip_Activation_Hold_Key": {
+        "message": "Tooltip Activation Hold Key"
+    },
+
+    "TTS_Activation_Hold_Key": {
+        "message": "TTS Activation Hold Key"
+    },
+
+    "Text_Detect_Type": {
+        "message": "Text Detect Type"
+    },
+
+    "Reverse_Translate_Language": {
+        "message": "Reverse Translate Language"
+    },
+
+    "Detect_PDF": {
+        "message": "Detect PDF"
+    },
+
+    "Enable_OCR": {
+        "message": "Enable OCR"
+    },
+
+    "OCR_Detection_Language": {
+        "message": "OCR Detection Language"
+    },
+
+    "Exclude_Langauge": {
+        "message": "Exclude Langauge"
+    },
+
+    "Tooltip_Font_Size": {
+        "message": "Tooltip Font Size"
+    },
+
+    "Tooltip_Width": {
+        "message": "Tooltip Width"
+    },
+
+    "Tooltip_Text_Align": {
+        "message": "Tooltip Text Align"
+    },
+
+    "Tooltip_Background_Blur": {
+        "message": "Tooltip Background Blur"
+    },
+
+    "Tooltip_Font_Color": {
+        "message": "Tooltip Font Color"
+    },
+
+    "Tooltip_Background_Color": {
+        "message": "Tooltip Background Color"
+    },
+
+    "TTS_Speed": {
+        "message": "TTS Speed"
+    },
+
+    "TTS_Volume": {
+        "message": "TTS Volume"
+    },
+
+    "Voice_for_": {
+        "message": "Voice for "
+    },
+
+    "Review_Page": {
+        "message": "Review Page"
+    },
+
+    "Comment_on_this_extension": {
+        "message": "Comment on this extension"
+    },
+
+    "Source_code": {
+        "message": "Source code"
+    },
+
+    "Check_source_code_in_github": {
+        "message": "Check source code in github"
+    },
+
+    "Privacy_Policy": {
+        "message": "Privacy Policy"
+    },
+
+    "User_privacy_policy": {
+        "message": "User privacy policy"
+    }
 }

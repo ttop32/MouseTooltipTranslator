@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.57",
+  "version": "0.1.58",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -11,7 +11,7 @@
     "128": "icons/icon_128.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self';  object-src 'none'"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'"
   },
   "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus" ],
   "host_permissions": [
