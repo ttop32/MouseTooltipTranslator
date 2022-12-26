@@ -28,7 +28,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - In the setting, google tts (text to speech) is available to listen text   
 - Support pdf to display translated tooltip using Mozilla PDF.js   
 - Filter out when source language and target language are same    
-- (Experimental feature) show comic bubble translation when mouse over on comic bubble background      
+- process OCR when mouse over on image      
   
 # Contributors
 - [sanprojects](https://github.com/sanprojects)
