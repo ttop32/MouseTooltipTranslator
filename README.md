@@ -37,6 +37,9 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 # Change Log
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)   
 
+# Language locale
+- [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
+
 # Required environment to run    
 npm install
 
