@@ -400,8 +400,8 @@ function applyStyleSetting() {
       top: 0 !important;
       position: fixed !important;
       z-index: 100000200 !important;
-      width: 500px !important;
-      margin-left: -250px !important;
+      width: 1000px !important;
+      margin-left: -500px !important;
       background-color: #00000000  !important;
       pointer-events: none !important;
     }

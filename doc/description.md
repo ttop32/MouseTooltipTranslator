@@ -7,8 +7,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 - In the setting, google TTS (text to speech) is available to listen text
 - Support pdf to display translated tooltip using PDF.js
 - Filter out when source language and target language are same
-- (Experimental) translate youtube caption when mouse over subtitle block
-- (Experimental) Use OCR to comic when hover on bubble background
+- translate youtube caption when mouse over subtitle block
+- process OCR when mouse over on image (ex manga)
 
 # Source code  
 - https://github.com/ttop32/MouseTooltipTranslator  
@@ -17,6 +17,9 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.59
+  - support bigger translation box (request by Zoelya)
+  - add papago translator
 - 0.1.58
   - use tesseract.js@4.0.1 
   - change OCR process flow
@@ -248,7 +251,7 @@ Currently, this translator extension has under development OCR feature to transl
 In this translator extension, user does not require a process to select source translate language for translate correctly because this extension handle language detection feature based on google translate language detection. This translator extension sends its mouse pointed text data to google translate and receive translated text with language detection data at the same time. This translator extension handles its auto language detection feature to minimize user interaction on source language selection for translate. And, auto language detection is used to filter out user known language text to prevent tooltip translate for providing clear web site experience. This translator extension detect same source target language to decide display translated tooltip or not for minimize disturbing on web site experience by displaying tooltip every time.  
 
 # Translate API
-This extension is positioned between user and translator API for providing simple translate experience with google translate service. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension handles given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Additionally, Bing translator is also support to give variety on user translate experience in this translator extension. Currently, this translator extension does not have any plan to support other translator like naver translate service, papago translator and deepl. Papago translator and deepl are payment requirement service to use. This free serviced tooltip translator does not have any handling way to deal with payment on translate service for papago and deepl.  
+This extension is positioned between user and translator API for providing simple translate experience with google translate service. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension handles given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Additionally, Bing translator is also support to give variety on user translate experience in this translator extension. Moreover, there is also another supported translator, Papago translator. Papago translator is a powerful tool that uses neural machine to translate any text. This characteristic of papago helps user to get more realistic translated result. Currently, this translator extension does not have any plan to support remained other translator like deepL translator.  DeepL are payment requirement service to use. 
 
 # Ownership  
 Mouse tooltip translator is individual developer’s created extension that is not officially made by google. It just handles google translate and google text to speech service to give ease translate experience to user. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension handles Google’s provided google translate service to user without any profit. Main purpose of this translator extension gives free translate experience on any web site without include any advertisement for show only translate result. This translator extension provides simple tooltip translate service on anywhere include YouTube, pdf and any text web site.  
