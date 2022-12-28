@@ -156,25 +156,42 @@ function swap(json) {
   return ret;
 }
 
+
+//tts =========================================================================================
+
+
+async function doTts(word, lang, ttsVolume,ttsRate) {
+  var voice =setting.data["ttsVoice_"+lang]
+
+  chrome.tts.speak(word, {
+    lang: lang,
+    voiceName: voice,
+    volume: Number(ttsVolume),  
+    rate: Number(ttsRate), 
+  });
+}
+
+
 // translate ===========================================================
 let bingAccessToken;
 let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
 
 async function doTranslate(text, targetLang, fromLang, translatorVendor) {
   try {
+    var translate;
     if (translatorVendor == "google") {
-      var { translatedText, detectedLang } = await translateWithGoogle(
-        text,
-        targetLang,
-        fromLang
-      );
-    } else {
-      var { translatedText, detectedLang } = await translateWithBing(
-        text,
-        targetLang,
-        fromLang
-      );
+      translate=translateWithGoogle;
+    } else if(translatorVendor == "bing") {
+      translate=translateWithBing;
+    } else{
+      translate=translateWithPapago;
     }
+
+    var { translatedText, detectedLang } = await translate(
+      text,
+      targetLang,
+      fromLang
+    );
 
     return {
       translatedText: translatedText,
@@ -259,19 +276,6 @@ async function getBingAccessToken() {
   }
 }
 
-//tts =========================================================================================
-
-
-async function doTts(word, lang, ttsVolume,ttsRate) {
-  var voice =setting.data["ttsVoice_"+lang]
-
-  chrome.tts.speak(word, {
-    lang: lang,
-    voiceName: voice,
-    volume: Number(ttsVolume),  
-    rate: Number(ttsRate), 
-  });
-}
 
 // translateWithGoogle=====================================================================
 
@@ -426,6 +430,67 @@ async function openPDFViewer(url, tabId) {
       encodeURIComponent(url),
   });
 }
+
+
+
+
+// translateWithPapago=====================================================================
+
+// https://github.com/PinMIlk/nodepapago
+import axios from 'axios';
+import axiosFetchAdapter from "@vespaiach/axios-fetch-adapter"
+axios.defaults.adapter = axiosFetchAdapter;
+import Translator from 'nodepapago';
+
+var papagoLangCode = {
+  auto:"detect",
+  ar: "ar",
+  en: "en",
+  fa: "fa",
+  fr: "fr",
+  de: "de",
+  hi: "hi",
+  id: "id",
+  it: "it",
+  ja: "ja",
+  ko: "ko",
+  my: "mm",
+  pt: "pt",
+  ru: "ru",
+  es: "es",
+  th: "th",
+  vi: "vi",
+  "zh-CN": "zh-CN",
+  "zh-TW": "zh-TW",
+};
+var papagoLangCodeOpposite = swap(papagoLangCode); 
+
+
+async function translateWithPapago(word, targetLang, fromLang) {
+  var translatedText = "";
+  var detectedLang = "";
+
+
+  var res=await new Translator({
+    parameter: {
+        source: papagoLangCode[fromLang],
+        target: papagoLangCode[targetLang],
+        text: word
+    },
+    verbose:true
+  }).translate();
+
+  if (res && res["translatedText"]) {
+    translatedText=res["translatedText"];
+    detectedLang=papagoLangCodeOpposite[res["srcLangType"]];
+    return { translatedText, detectedLang };
+  } else {
+    return null;
+  }
+}
+
+
+
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
