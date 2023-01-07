@@ -40,14 +40,18 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 # Language locale
 - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
 
-# Required environment to run    
-npm install
+# Build yourself to install
+1. Install node js, https://nodejs.org/en/
+2. open terminal
+3. git clone https://github.com/ttop32/MouseTooltipTranslator.git
+4. cd MouseTooltipTranslator
+5. npm install 
+6. npm build
+7. You will see MouseTooltipTranslator/build path
+8. From chrome, open this folder as unpacked extension folder
 
-# Run watch   
+# Run watch for developing  
 npm run watch       
-
-# Run build    
-npm run build         
 
 # Privacy policy
 - Mouse tooltip translator uses user data only for google translation(tts) purpose.   
