@@ -47,7 +47,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 git clone https://github.com/ttop32/MouseTooltipTranslator.git
 cd MouseTooltipTranslator
 npm install 
-npm build
+npm run build
 ```
 3. You will see MouseTooltipTranslator/build path
 4. From chrome, open this folder as unpacked extension folder
