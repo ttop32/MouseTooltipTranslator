@@ -520,10 +520,12 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 // ================= context menu
 
-chrome.contextMenus.create({
-  id: "save",
-  title: "save",
-  visible: false,
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: "save",
+    title: "save",
+    visible: false,
+  });
 });
 
 function updateContext(request) {
