@@ -671,7 +671,7 @@ export default {
 
       tab: null,
       tabs: tabs,
-      tabItems:tabItems,
+      tabItems:{},
 
 
       mask: '!#XXXXXXXX',
@@ -682,7 +682,7 @@ export default {
   async mounted() {
     this.setting = await Setting.create();
     this.langExcludeSelectList = this.makeTextValList(langList);
-    this.convertOptionListAsTextVal();
+    this.loadTabOptionList();
     this.addTtsVoiceTabOption();
   },
 
@@ -733,7 +733,7 @@ export default {
       });
     },
     makeTextValList(inputList) {
-      // convert {key:item}  => {text:key, val:item}
+      // convert {key:item}  as {text:key, val:item}
       var textValList = [];
       for (const [key2, val2] of Object.entries(inputList)) {
         textValList.push({
@@ -743,7 +743,8 @@ export default {
       }
       return textValList;
     },
-    convertOptionListAsTextVal() {
+    loadTabOptionList() {
+      this.tabItems=tabItems;
       for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
         for (const [key1, val1] of Object.entries(tabVal)) {
           this.tabItems[tabKey][key1]["optionList"] = this.makeTextValList(
