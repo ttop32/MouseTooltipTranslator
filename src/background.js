@@ -224,6 +224,19 @@ async function translateWithBing(word, targetLang, fromLang) {
     },
     "POST"
   );
+  // new URLSearchParams(
+  //   {
+  //     text: word,
+  //     fromLang: bingLangCode[fromLang],
+  //     to: bingLangCode[targetLang],
+  //     token,
+  //     key,
+  //   }
+  // ).toString()
+  
+  //   'Content-Type': 'application/x-www-form-urlencoded'
+  
+
   if (res && res[0]) {
     var detectedLang =
       bingLangCodeOpposite[res[0]["detectedLanguage"]["language"]];
@@ -256,8 +269,8 @@ async function getBingAccessToken() {
       ).then((response) => response.text());
       const IG = data.match(/IG:"([^"]+)"/)[1];
       const IID = data.match(/data-iid="([^"]+)"/)[1];
-      const [_key, _token, interval, _isVertical, _isAuthv2] = JSON.parse(
-        data.match(/params_RichTranslateHelper\s?=\s?([^\]]+\])/)[1]
+      var [_key, _token, interval] = JSON.parse(
+        data.match(/params_AbusePreventionHelper\s?=\s?([^\]]+\])/)[1]
       );
       bingAccessToken = {
         IG,

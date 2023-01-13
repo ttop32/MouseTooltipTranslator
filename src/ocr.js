@@ -19,7 +19,7 @@ window.addEventListener(
 );
 
 // ocr ===========================================================
-var ocrWorkerList = {};
+var schedulerList={}
 var recentMainUrl = "";
 var recentLang = "";
 
@@ -91,27 +91,36 @@ function useTesseract(image, lang) {
     try {
       //load tessearct worker
       // if lang is jpn_vert  use custom jpn_vert
-      if (ocrWorkerList[lang] == null) {
-        ocrWorkerList[lang] = await Tesseract.createWorker({
+      if (schedulerList[lang] == null  ) {
+        var isLocal=lang == "jpn_vert" || lang == "jpn_vert_old"
+        
+        // create worker
+        var worker = await Tesseract.createWorker({
           workerBlobURL: false,
           workerPath: chrome.runtime.getURL("/tesseract/worker.min.js"),
           corePath: chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
           langPath:
-            lang == "jpn_vert"
+            isLocal
               ? chrome.runtime.getURL("/traindata")
               : "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0", //https://github.com/zodiac3539/jpn_vert
-          gzip: lang == "jpn_vert" ? false : true,
+          gzip: isLocal  ? false : true,
           // logger: m => console.log(m), // Add logger here
         });
-        await ocrWorkerList[lang].loadLanguage(lang);
-        await ocrWorkerList[lang].initialize(lang);
-        await ocrWorkerList[lang].setParameters({
+        await worker.loadLanguage(lang);
+        await worker.initialize(lang);
+        await worker.setParameters({
           tessedit_pageseg_mode: Tesseract.PSM.AUTO_ONLY,
         });
+
+        // create scheduler
+        var scheduler = Tesseract.createScheduler();
+        scheduler.addWorker(worker);
+        schedulerList[lang]=scheduler;
       }
   
       //ocr on image
-      var { data } = await ocrWorkerList[lang].recognize(image);
+      var { data } = await schedulerList[lang].addJob('recognize', image);
+
 
       resolve(data);
     } catch (err) {
