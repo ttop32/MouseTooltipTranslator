@@ -7,7 +7,7 @@
 
 Chrome extension for mouseover translation - Mouse over to translate using google translate        
 When mouse hover on text, it shows translated tooltip in any desired language.    
-
+Japanese OCR uses https://github.com/ttop32/jpn_vert_traineddata
 
 
 
