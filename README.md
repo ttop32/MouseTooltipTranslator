@@ -46,13 +46,10 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 git clone https://github.com/ttop32/MouseTooltipTranslator.git
 cd MouseTooltipTranslator
 npm install 
-npm run build
+npm run build        # or 'npm run watch' for developing
 ```
 3. You will see MouseTooltipTranslator/build path
 4. From chrome, open this folder as unpacked extension folder
-
-# Run watch for developing  
-npm run watch       
 
 # OCR
 - Japanese OCR uses https://github.com/ttop32/jpn_vert_traineddata
