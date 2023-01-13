@@ -17,6 +17,11 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.60
+  - change ocr japanese vertical model
+  - fix node js 18 crash (request by anthony-nyc)
+  - fix bing crash (request by Anh Dao)
+  - fix ocr schedule process
 - 0.1.59
   - support bigger translation box (request by Zoelya)
   - add papago translator
@@ -255,6 +260,3 @@ This extension is positioned between user and translator API for providing simpl
 
 # Ownership  
 Mouse tooltip translator is individual developer’s created extension that is not officially made by google. It just handles google translate and google text to speech service to give ease translate experience to user. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension handles Google’s provided google translate service to user without any profit. Main purpose of this translator extension gives free translate experience on any web site without include any advertisement for show only translate result. This translator extension provides simple tooltip translate service on anywhere include YouTube, pdf and any text web site.  
-
-# Open Source  
-This translator extension is open-source project in MIT license. Any developer can read its main translate functionality in the GitHub. User can check that it does not inject google analytics code in this translator extension. This translator extension respect user privacy but user need to keep in mind that it sends hovering text to google translate for translate purpose. It uses any usage data only for google translate (and google TTS, text to speech) purpose. This translator extension does not share its usage data with any other third parties.  
