@@ -49,7 +49,8 @@ npm install
 npm run build        # or 'npm run watch' for developing
 ```
 3. You will see MouseTooltipTranslator/build path
-4. From chrome, open this folder as unpacked extension folder
+4. Open chrome browser
+5. Open this folder as unpacked extension folder from chrome://extensions/
 
 # OCR
 - Japanese OCR uses https://github.com/ttop32/jpn_vert_traineddata
