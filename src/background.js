@@ -511,7 +511,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   for (const cs of chrome.runtime.getManifest().content_scripts) {
     for (const tab of await chrome.tabs.query({ url: cs.matches })) {
       if (
-        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore).*/.test(
+        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
           tab.url
         )
       ) {
@@ -526,7 +526,7 @@ chrome.runtime.onInstalled.addListener(async () => {
       chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: cs.js,
-      });
+      }); 
     }
   }
 });

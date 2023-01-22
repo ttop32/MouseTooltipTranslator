@@ -17,6 +17,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.61
+  - Fix destruction process
 - 0.1.60
   - change ocr japanese vertical model
   - fix node js 18 crash (request by anthony-nyc)
