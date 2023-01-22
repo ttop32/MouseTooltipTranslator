@@ -24,6 +24,10 @@ var settingLoaded = false;
 var keyDownList = {}; //use key down for enable translation partially
 var style;
 let selectedText = "";
+var destructionEvent = 'destructmyextension_MouseTooltipTranslator'// + chrome.runtime.id;
+const controller = new AbortController();
+const { signal } = controller;
+var mouseoverInterval;
 var rtlLangList = [
   "ar", //Arabic
   "iw", //Hebrew
@@ -37,7 +41,7 @@ var rtlLangList = [
 //tooltip init
 
 $(async function() {
-  removePrevRunEnv(); //remove previous tooltip container if exist
+  loadDestructor();  //remove previous tooltip script
   addElementEnv(); //add tooltip container
   await getSetting(); //load setting
   applyStyleSetting(); //add tooltip style
@@ -49,7 +53,7 @@ $(async function() {
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  setInterval(async function() {
+  mouseoverInterval=setInterval(async function() {
     // only work when tab is activated and when mousemove and no selected text
     if (
       !selectedText &&
@@ -67,7 +71,7 @@ function startMouseoverDetector() {
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
   enableSelectionEndEvent(); //set mouse drag text selection event
-  document.addEventListener(
+  addEventHandler(
     "selectionEnd",
     async function(event) {
       // if translate on selection is enabled
@@ -79,57 +83,65 @@ function startTextSelectDetector() {
         selectedText = event.selectedText;
         await processWord(selectedText, "select");
       }
-    },
-    false
+    }
   );
 }
 
 //process detected word
 async function processWord(word, actionType) {
   word = filterWord(word); //filter out one that is url,over 1000length,no normal char
-  //show tooltip, if current word is changed and word is not none
-  if (word && activatedWord != word) {
-    activatedWord = word;
-    var { translatedText, sourceLang, targetLang } = await translate(word);
 
-    //if respond text is not empty, process text
-    if (translatedText) {
-      //if tooltip is on or activation key is pressed, show tooltip
-      //if current word is recent activatedWord
-      if (
-        (setting.data["useTooltip"] == "true" ||
-          keyDownList[setting.data["keyDownTooltip"]]) &&
-        activatedWord == word &&
-        document.visibilityState == "visible"
-      ) {
-        showTooltip(translatedText, targetLang);
-
-        updateRecentTranslated(
-          word,
-          translatedText,
-          actionType
-        );
-      }
-      //if use_tts is on or activation key is pressed, do tts
-      if (
-        setting.data["useTTS"] == "true" ||
-        keyDownList[setting.data["keyDownTTS"]]
-      ) {
-        tts(word, sourceLang);
-      }
-    } else {
-      hideTooltip(false);
-    }
-  } else if (!word && activatedWord) {
-    //hide tooltip, if activated word exist and current word is none
+  //hide tooltip, if activated word exist and current word is none
+  if (!word && activatedWord) {
     hideTooltip();
+    return;
   }
+  //do nothing, if no new word or no word change
+  if (!word || activatedWord==word){
+    return;
+  }
+
+  //stage current processing word
+  activatedWord = word;
+  var { translatedText, sourceLang, targetLang } = await translate(word);
+
+  //if no translated text is empty some reason, hide tooltip
+  if (!translatedText){
+    hideTooltip();
+    return;
+  }
+
+  //if tooltip is on or activation key is pressed, show tooltip
+  //if current word is recent activatedWord
+  if (
+    (setting.data["useTooltip"] == "true" ||
+      keyDownList[setting.data["keyDownTooltip"]]) &&
+    activatedWord == word &&
+    document.visibilityState == "visible"
+  ) {
+    showTooltip(translatedText, targetLang);
+
+    updateRecentTranslated(
+      word,
+      translatedText,
+      actionType
+    );
+  }
+
+  //if use_tts is on or activation key is pressed, do tts
+  if (
+    setting.data["useTTS"] == "true" ||
+    keyDownList[setting.data["keyDownTTS"]]
+  ) {
+    tts(word, sourceLang);
+  }
+  
+  
 }
 
 function getMouseOverWord(clientX, clientY) {
   //check is image for ocr
   checkImage();
-
 
   //get mouse positioned char
   var range = document.caretRangeFromPoint(clientX, clientY);
@@ -173,6 +185,7 @@ function checkMouseTargetIsSpecialWebBlock() {
     "LC20lb", //google search list title block
     "ocr_text_div" //mousetooltip ocr block
   ]
+  // if mouse targeted web element contain particular class name, return true 
   return (
     specialClassNameList.some(className => mouseTarget.classList.contains(className))
   );
@@ -253,7 +266,7 @@ async function translate(word) {
 
 function loadEventListener() {
   //use mouse position for tooltip position
-  $(document).on("mousemove", (e) => {
+  addEventHandler("mousemove",(e) => {
     //if mouse moved far distance two times, check as mouse moved
     if (
       mouseMoved == false &&
@@ -269,15 +282,18 @@ function loadEventListener() {
     clientY = e.clientY;
     mouseTarget = e.target;
     setTooltipPosition();
-  });
+  })
 
-  //detect activation hold key pressed
-  $(document).on("keydown", (e) => {
+    //detect activation hold key pressed
+  addEventHandler("keydown",(e) => {
     //if user pressed ctrl+f  ctrl+a, hide tooltip
     if ((e.code == "KeyF" || e.code == "KeyA") && e.ctrlKey) {
       mouseMoved = false;
       hideTooltip(false);
-    } else if (
+      return;
+    } 
+    
+    if (
       [setting.data["keyDownTooltip"], setting.data["keyDownTTS"]].includes(
         e.code
       ) &&
@@ -293,14 +309,14 @@ function loadEventListener() {
     }
   });
 
-  $(document).on("keyup", (e) => {
+  addEventHandler("keyup",(e) => {
     if (keyDownList.hasOwnProperty(e.code)) {
       keyDownList[e.code] = false;
     }
   });
 
   //detect tab switching to reset env
-  $(window).on("blur", (e) => {
+  addEventHandler("blur",(e) => {
     keyDownList = {}; //reset key press
     mouseMoved = false;
     mouseMovedCount = 0;
@@ -309,7 +325,7 @@ function loadEventListener() {
     stopTTS();
   });
 
-  $(window).on("beforeunload", (e) => {
+  addEventHandler("beforeunload",(e) => {
     stopTTS();
   });
 
@@ -388,6 +404,10 @@ function settingUpdateCallback(changes) {
   if(keys.some(w => w.includes("translateWhen"))){
     selectedText = "";
   }
+  if(keys.some(w => w.includes("ocrDetectionLang"))){
+    removeOcrBlock();
+  }
+  
 }
 
 
@@ -457,11 +477,6 @@ function detectPDF() {
   }
 }
 
-function removePrevRunEnv() {
-  $("#mttstyle").remove();
-  $("#mttContainer").tooltip("dispose");
-  $("#mttContainer").remove();
-}
 
 function addElementEnv() {
   tooltipContainer = $("<div/>", {
@@ -480,142 +495,119 @@ function addElementEnv() {
   }).appendTo("head");
 }
 
+
+//destruction =================================== 
+
+function loadDestructor(){
+  // https://stackoverflow.com/questions/25840674/chrome-runtime-sendmessage-throws-exception-from-content-script-after-reloading/25844023#25844023
+  // Unload previous content script if needed
+  window.dispatchEvent(new CustomEvent(destructionEvent));   //call destructor to remove script
+  addEventHandler(destructionEvent, destructor);     //add destructor listener for later remove
+}
+
+function destructor() {
+  clearInterval(mouseoverInterval);   //clear mouseover interval
+  removePrevElement(); //remove element
+  controller.abort();  //clear all event Listener by controller signal
+}
+
+function addEventHandler(eventName,callbackFunc){
+  //record event for later event signal kill
+  return window.addEventListener(eventName, callbackFunc, {signal});
+}
+
+function removePrevElement() {
+  $("#mttstyle").remove();
+  $("#mttContainer").tooltip("dispose");
+  $("#mttContainer").remove();
+  for (let key in iFrames) {
+    iFrames[key].remove();
+  }
+  removeOcrBlock();
+}
+
+
+function isValidChromeRuntime() {
+  return chrome.runtime && !!chrome.runtime.getManifest();
+}
+
+
 //ocr==================================================================================
-var ocrIframe;
-var ocrIframeListener;
 var ocrHistory={}
+var iFrames={}
+var ocrBlock=[]
 
-//detect mouse positioned image to process in iframe
-//send image when mouse pointing
-//receive ocr processed text
-function checkImage() {
-  //if mouse target is image, process ocr
-  if (
-    setting.data["useOCR"] == "true" && //when use ocr setting on
-    mouseTarget != null &&
-    mouseTarget.tagName === "IMG" && //when mouse over on img
-    mouseTarget.complete &&  //if image is loaded
-    mouseTarget.naturalHeight !== 0 &&
-    mouseTarget.width > 300   &&
-    mouseTarget.height > 300  
-  ) {
-      (async () => {
-        await initOCR();
+//detect mouse positioned image to process ocr in ocr.html iframe
+//create text box from ocr result
+async function checkImage() {
+  // if mouse target is not image or ocr is not on, skip
+  // if already ocr processed,skip
+  if(!checkMouseTargetIsImage() || setting.data["useOCR"] == "false" ||
+    (ocrHistory[mouseTarget.src] && ocrHistory[mouseTarget.src]["lang"]==setting.data["ocrDetectionLang"])
+   ){
+    return;
+  }
 
-        // if already ocr processed,skip
-        // if lang change or no ocr history ,do ocr
-        if(ocrHistory[mouseTarget.src] && ocrHistory[mouseTarget.src]["lang"]==setting.data["ocrDetectionLang"]){
-          return null;
-        }
 
-        mouseTarget.style.cursor = "wait"; //show mouse loading
-        var ocrTimeID = Date.now(); //current sending time
-        //record ocr process
-        ocrHistory[mouseTarget.src]={
-          lang:setting.data["ocrDetectionLang"],
-          time:ocrTimeID,
-          imageTarget:mouseTarget,
-          ocrData:{}
-        }
 
-        //send to ocr iframe, -> public/ocr.js
-        ocrIframe.contentWindow.postMessage(
-          {
-            type: "ocr",
-            mainUrl: mouseTarget.src,
-            base64Url: "",
-            time: ocrTimeID,
-            lang: setting.data["ocrDetectionLang"],
-          },
-          "*"
-        );
-      })();
-    }
+  mouseTarget.style.cursor = "wait"; //show mouse loading
+  var url=mouseTarget.src;
+  var bboxList=[];
+  var ratio=1;
+  var ocrBaseData={
+    mainUrl: url,
+    base64Url: "",
+    lang: setting.data["ocrDetectionLang"],
+  }
+  ocrHistory[url]=$.extend({imageTarget:mouseTarget}, ocrBaseData)
 
-  return null;
+
+
+
+  await initOCR();
+  var base64Url = await getBase64(url);
+  //box segment
+  // var {bboxList,base64Url,ratio}=await handleResponse($.extend(ocrBaseData, {type: "segmentBox",base64Url}))
+  //ocr process
+  var res=await handleResponse($.extend(ocrBaseData,{type: "ocr",bboxList,base64Url}))
+  
+  //display ocr block 
+  for (var i in res.ocrData) {
+    processOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData[i],ratio);
+  }
+  ocrHistory[res.mainUrl]["imageTarget"].style.cursor = ""; //reset cursor state
 }
 
 async function initOCR(){
-  addOcrIframeListener();
-  await createOcrIframe();
+  await createIframe("ocrFrame","/ocr.html");
+  // await createIframe("opencvFrame","/opencvHandler.html");
 }
 
-async function createOcrIframe(){
-  if (!ocrIframe) {
-    ocrIframe = $("<iframe />", {
-      name: "ocrFrame",
-      id: "ocrFrame",
-      src: chrome.runtime.getURL("/ocr.html"),
+async function createIframe(name,htmlPath){
+  return new Promise(function(resolve, reject) {
+    if (iFrames[name]) {
+      resolve();
+      return;
+    }
+
+    iFrames[name] = $("<iframe />", {
+      name: name,
+      id: name,
+      src: chrome.runtime.getURL(htmlPath),
       css: {
         display: "none",
+        // width:"700",
+        // height:"700"
       },
-    })
-      .appendTo("body")
-      .get(0);
-
-    await sleep(100); //wait iframe start
-  }
-}
-
-//ocr iframe communcation handler
-function addOcrIframeListener(){
-  if (!ocrIframeListener) {
-    ocrIframeListener="done";
-    window.addEventListener(
-      "message",
-      function(response) {
-        if (response.data.type == "success") {
-          // get only last request 
-          if(ocrHistory[response.data.mainUrl]["lang"]==response.data.lang&& ocrHistory[response.data.mainUrl]["time"]==response.data.time ){
-            processOcrData(ocrHistory[response.data.mainUrl]["imageTarget"],response.data.ocrData);
-            ocrHistory[response.data.mainUrl]["imageTarget"].style.cursor = ""; //reset cursor state
-          }
-          //if fail, resend with base64 data
-        } else if (response.data.type == "fail") {
-          if (response.data.base64Url == "") {
-            (async () => {
-              var ocrBase64Url = await getBase64(response.data.mainUrl);
-              ocrIframe.contentWindow.postMessage(
-                {
-                  type: "ocr",
-                  mainUrl: response.data.mainUrl,
-                  base64Url: ocrBase64Url,
-                  time: response.data.time,
-                  lang: response.data.lang,
-                },
-                "*"
-              );
-            })();
-          }
-        }
-      },
-      false
-    );
-  }
-}
-
-
-function getBase64(url) {
-  return new Promise(function(resolve, reject) {
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        var reader = new FileReader();
-        reader.onload = function() {
-          resolve(this.result); // <--- `this.result` contains a base64 data URI
-        };
-        reader.readAsDataURL(blob);
-      });
+    }).appendTo("body")
+      .on('load', function() {
+        resolve()
+     }).get(0);
   });
 }
 
-function sleep(time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
-
-
-function processOcrData(target,data){
-  //for each paragraph ocr result get box and text to display result
+function processOcrData(target,ocrData,ratio){
+  var {data}=ocrData;
   for (var keyBlock in data.blocks) {
     var paragraphs = data.blocks[keyBlock].paragraphs;
     for (var keyParagraph in paragraphs) {
@@ -628,16 +620,12 @@ function processOcrData(target,data){
         continue;
       }
       // console.log(paragraph["confidence"] + "==" + text);
-      addTextBlock(target,paragraph["bbox"],text)
+      addTextBlock(target,paragraph["bbox"],text,ratio)
     }
   }
-  
 }
 
-
-
-function addTextBlock(target,bbox, text) {
-
+function addTextBlock(target,bbox, text,ratio) {
   var $div = $("<div />").appendTo(target.parentElement);
   $div.attr("class", "ocr_text_div");
   $div.html(text);
@@ -652,22 +640,23 @@ function addTextBlock(target,bbox, text) {
     color:#00000000 !important;
     background-color: #00000000 !important
   `);
-  setLeftTopWH(target,bbox,$div)
+  setLeftTopWH(target,bbox,$div,ratio)
 
   $( window ).on("resize", (e) => {
-    setLeftTopWH(target,bbox,$div)
+    setLeftTopWH(target,bbox,$div,ratio)
   });
+  ocrBlock.push($div);
 }
 
-function setLeftTopWH(target,bbox,$div){
+function setLeftTopWH(target,bbox,$div,ratio){
   var offsetLeft=target.offsetLeft;
   var offsetTop=target.offsetTop;
   var widthRatio= target.offsetWidth/target.naturalWidth;
   var heightRatio= target.offsetHeight/target.naturalHeight;
-  var x=widthRatio*(bbox["x0"]);
-  var y=heightRatio*(bbox["y0"]);
-  var w=widthRatio*(bbox["x1"] - bbox["x0"]);
-  var h=heightRatio *(bbox["y1"] - bbox["y0"]);
+  var x=widthRatio*(bbox["x0"])/ratio;
+  var y=heightRatio*(bbox["y0"])/ratio;
+  var w=widthRatio*(bbox["x1"] - bbox["x0"])/ratio;
+  var h=heightRatio *(bbox["y1"] - bbox["y0"])/ratio;
   var left = offsetLeft + x;
   var top = offsetTop + y;
 
@@ -681,4 +670,66 @@ function setLeftTopWH(target,bbox,$div){
 
 function getTextWithoutSpecialChar(text){
   return text.replace(/[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove special char
+}
+
+function getBase64(url) {
+  return new Promise(function(resolve, reject) {
+      fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve(this.result); // <--- `this.result` contains a base64 data URI
+        };
+        reader.readAsDataURL(blob);
+      }).catch(async (error) => {
+        // console.error('Error:', error);
+        var {base64Url}=await handleResponse({
+          type: "getBase64",
+          url
+        })
+        resolve(base64Url);
+      });     
+  });
+}
+
+async function handleResponse(data){
+  return new Promise(function(resolve, reject) {
+    var timeId = Date.now();
+    data["timeId"]=timeId;
+
+    //listen iframe response
+    addEventHandler('message', function namedListener(response) {
+      if (response.data.timeId==timeId){
+        window.removeEventListener('click', namedListener);
+        resolve(response.data)
+      }
+    });
+
+    //broadcast message to iframe
+    for(var key in iFrames) {
+      iFrames[key].contentWindow.postMessage(
+        data,
+        "*"
+      );      
+    };
+  })  
+}
+
+function checkMouseTargetIsImage(){
+  if(    
+    mouseTarget != null &&
+    mouseTarget.src &&
+    mouseTarget.tagName === "IMG" && //when mouse over on img
+    mouseTarget.complete &&  //if image is loaded
+    mouseTarget.naturalHeight !== 0 &&
+    mouseTarget.width > 300   &&
+    mouseTarget.height > 300  ){
+    return true;
+  }
+  return false;
+}
+
+function removeOcrBlock(){
+  ocrBlock.forEach((block, i) =>   block.remove());
 }
