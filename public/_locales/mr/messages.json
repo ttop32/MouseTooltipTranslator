@@ -59,8 +59,8 @@
         "message": "OCR Detection Language"
     },
 
-    "Exclude_Langauge": {
-        "message": "Exclude Langauge"
+    "Exclude_Language": {
+        "message": "Exclude Language"
     },
 
     "Tooltip_Font_Size": {
