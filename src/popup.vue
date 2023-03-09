@@ -82,7 +82,7 @@
               :items="langExcludeSelectList"
               item-text="text"
               item-value="val"
-              :label="remainSettingDesc['Exclude_Langauge']"
+              :label="remainSettingDesc['Exclude_Language']"
               multiple
               @change="onSelectChange"
             >
@@ -604,7 +604,7 @@ var tabItems={
 
 var remainSettingDesc={
   "appName":chrome.i18n.getMessage("appName"),
-  "Exclude_Langauge":chrome.i18n.getMessage("Exclude_Langauge"),
+  "Exclude_Language":chrome.i18n.getMessage("Exclude_Language"),
   "Voice_for_":chrome.i18n.getMessage("Voice_for_"),
 }
 

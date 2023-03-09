@@ -27,7 +27,7 @@ itemList=[
 "Detect PDF",
 "Enable OCR",
 "OCR Detection Language",
-"Exclude Langauge",
+"Exclude Language",
 
 "Tooltip Font Size",
 "Tooltip Width",
