@@ -16,101 +16,84 @@
           ></v-app-bar-nav-icon>
 
 
-
+          <!-- tab header -->
           <template v-slot:extension>
             <v-tabs
-              v-model="tab"
+              v-model="currentTab"
               align-with-title
             >
               <v-tabs-slider color="red"></v-tabs-slider>
               <v-tab
-                v-for="item in tabs"
-                :key="item"
+                v-for="tabName in tabs"
+                :key="tabName"
               >
-                {{ item }}
+                {{ tabName }}
               </v-tab>
             </v-tabs>
           </template>
         </v-toolbar>
 
 
-      <!-- tab------------------- -->
-      <v-tabs-items v-model="tab">
 
-
-
+      <!-- tab body------------------- -->
+      <v-tabs-items v-model="currentTab">
         <v-tab-item
-          v-for="tabItem in tabs"
-          :key="tabItem"
+          v-for="tabName in tabs"
+          :key="tabName"
         >
         <perfect-scrollbar class="scroll-area" >
-          <v-card flat v-if="tabItems[tabItem]">
-            <v-list-item v-for="(value, name) in tabItems[tabItem]" :key="name">
-            <v-select
-              v-model="setting.data[name]"
-              :items="value.optionList"
-              item-text="text"
-              item-value="val"
-              :label="value.description"
-              @change="onSelectChange($event, name)"
-            ></v-select>
-          </v-list-item>
+          <v-card flat v-if="tabItems[tabName]">
+            <v-list-item v-for="(option, optionName) in tabItems[tabName]" :key="optionName">
 
 
-
-        <v-list-item v-if="tabItem=='VISUAL'"  v-for="(value, name) in colorOption" :key="name" >
-          <v-text-field v-model="setting.data[name]" v-mask="mask" :label="value.description" @change="changeSetting">
-            <template v-slot:append>
-              <v-menu v-model="value.menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
-                <template v-slot:activator="{ on }">
-                  <div :style="swatchStyle(value, name)" v-on="on" class="ma-1" />
+              <!-- single select (default null) and multiple select option -->
+              <v-select
+                v-if="!option.optionType  || option.optionType=='multipleSelect' "
+                v-model="setting.data[optionName]"
+                :items="option.optionList"
+                item-text="text"
+                item-value="val"
+                :label="option.description"
+                @change="onSelectChange($event, optionName)"
+                :multiple="option.optionType=='multipleSelect'"
+                tabName              
+              >
+                <!-- multiple select, selected text show -->
+                <template v-if="option.optionType=='multipleSelect'" v-slot:selection="{ item, index }" >
+                  <v-chip v-if="index === 0">
+                    <span>{{ item.text }}</span>
+                  </v-chip>
+                  <span v-if="index === 1" class="grey--text text-caption">
+                    (+{{ setting.data[optionName].length - 1 }} others)
+                  </span>
                 </template>
-                <v-card>
-                  <v-card-text>
-                    <v-color-picker v-model="setting.data[name]" flat                />
-                  </v-card-text>
-                </v-card>
-              </v-menu>
-            </template>
-				  </v-text-field>
-        </v-list-item>
+              </v-select>
 
+              <!-- color picker option -->
+              <v-text-field v-else-if="option.optionType=='colorPicker'" v-model="setting.data[optionName]" v-mask="mask" :label="option.description" @change="onSelectChange($event, optionName)">
+                <template v-slot:append>
+                  <v-menu v-model="option.menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
+                    <template v-slot:activator="{ on }">
+                      <div :style="swatchStyle(option, optionName)" v-on="on" class="ma-1" />
+                    </template>
+                    <v-card>
+                      <v-card-text>
+                        <v-color-picker v-model="setting.data[optionName]" flat                />
+                      </v-card-text>
+                    </v-card>
+                  </v-menu>
+                </template>
+              </v-text-field>
 
-          <v-list-item v-if="tabItem=='MAIN'">
-            <v-select
-              v-model="setting.data['langExcludeList']"
-              :items="langExcludeSelectList"
-              item-text="text"
-              item-value="val"
-              :label="remainSettingDesc['Exclude_Language']"
-              multiple
-              @change="onSelectChange"
-            >
-              <template v-slot:selection="{ item, index }">
-                <v-chip v-if="index === 0">
-                  <span>{{ item.text }}</span>
-                </v-chip>
-                <span v-if="index === 1" class="grey--text text-caption">
-                  (+{{ setting.data["langExcludeList"].length - 1 }} others)
-                </span>
-              </template>
-            </v-select>
+              
+
           </v-list-item>
-
           </v-card>
         </perfect-scrollbar>
-
         </v-tab-item>
       </v-tabs-items>
-      
-
-
-
-
-
-
-
       </v-card>
+
 
       <!-- about page ====================================== -->
       <div v-else-if="currentPage == 'about'">
@@ -135,18 +118,18 @@
         <!-- about page contents list====================================== -->
         <v-list-item-group>
           <v-list-item
-            v-for="(value, key) in aboutPageList"
+            v-for="(aboutPageItem, key) in aboutPageList"
             :key="key"
-            @click="openUrl(value.url)"
+            @click="openUrl(aboutPageItem.url)"
           >
             <v-list-item-icon>
               <v-icon color="primary">
-                {{ value.icon }}
+                {{ aboutPageItem.icon }}
               </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{ value.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{ value.sub_name }}</v-list-item-subtitle>
+              <v-list-item-title>{{ aboutPageItem.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{ aboutPageItem.sub_name }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -549,6 +532,11 @@ var settingListData = {
     description: chrome.i18n.getMessage("OCR_Detection_Language"),
     optionList: ocrLangList,
   },
+  langExcludeList: {
+    description: chrome.i18n.getMessage("Exclude_Language"),
+    optionList: langList,
+    optionType: "multipleSelect",
+  },
 };
 
 var visualTabData={
@@ -568,16 +556,17 @@ var visualTabData={
     description: chrome.i18n.getMessage("Tooltip_Background_Blur"),
     optionList: tooltipBackgroundBlurList,
   },
-};
-
-var colorOption={
   tooltipFontColor: {
     description: chrome.i18n.getMessage("Tooltip_Font_Color"),
+    optionType: "colorPicker",
     menu: false,
+    optionList: {},
   },
   tooltipBackgroundColor: {
     description: chrome.i18n.getMessage("Tooltip_Background_Color"),
+    optionType: "colorPicker",
     menu: false,
+    optionList: {},
   },
 };
 
@@ -604,7 +593,6 @@ var tabItems={
 
 var remainSettingDesc={
   "appName":chrome.i18n.getMessage("appName"),
-  "Exclude_Language":chrome.i18n.getMessage("Exclude_Language"),
   "Voice_for_":chrome.i18n.getMessage("Voice_for_"),
 }
 
@@ -653,6 +641,12 @@ export default {
   name: "app",
   data: function () {
     return {
+      currentTab: null,
+      tabs: tabs,
+      tabItems:{},
+      mask: '!#XXXXXXXX',
+      remainSettingDesc:remainSettingDesc,
+
       aboutPageList: aboutPageList,
       setting: {},
       currentPage: "main",
@@ -667,22 +661,10 @@ export default {
         },
       ],
       copyAlertBar: false,
-      langExcludeSelectList: [],
-
-
-      tab: null,
-      tabs: tabs,
-      tabItems:{},
-
-
-      mask: '!#XXXXXXXX',
-      colorOption: colorOption,
-      remainSettingDesc:remainSettingDesc,
     };
   },
   async mounted() {
     this.setting = await Setting.create();
-    this.langExcludeSelectList = this.makeTextValList(langList);
     this.loadTabOptionList();
     this.addTtsVoiceTabOption();
   },

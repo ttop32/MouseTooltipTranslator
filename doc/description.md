@@ -17,6 +17,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.62
+  - Typo fix from option list (contributed by neoOpus)
 - 0.1.61
   - Fix destruction process
 - 0.1.60
