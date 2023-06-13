@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.62",
+  "version": "0.1.63",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -13,10 +13,11 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'"
   },
-  "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus" ],
+  "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus", "clipboardWrite" ],
   "host_permissions": [
     "<all_urls>"
   ],
+
   "web_accessible_resources": [{
     "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html"],
     "matches": ["<all_urls>"]

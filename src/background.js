@@ -11,6 +11,7 @@ var he = require("he");
 
 var setting;
 var settingLoaded = false;
+var tabIdToPreviousUrl = {};
 var bingLangCode = {
   auto: "auto-detect",
   af: "af",
@@ -141,7 +142,7 @@ function recordHistory(request, force = false) {
       targetText: request.targetText,
     });
     //remove when too many list
-    if (setting.data["historyList"].length > 100) {
+    if (setting.data["historyList"].length > 1000) {
       setting.data["historyList"].pop();
     }
     setting.save();
@@ -420,21 +421,39 @@ function getToken(query, windowTkk) {
 
 // detect local pdf file and redirect to translated pdf=====================================================================
 chrome.tabs.onUpdated.addListener(
-  //when tab update
   function(tabId, changeInfo, tab) {
-    if (
-      changeInfo.url &&
-      /^(file:\/\/).*(\.pdf)$/.test(changeInfo.url.toLowerCase()) && //url is end with .pdf, start with file://
-      !changeInfo.url.includes(
-        chrome.runtime.getURL("/pdfjs/web/viewer.html")
-      ) && //url is not start with chrome-extension://
-      setting.data["detectPDF"] == "true"
-    ) {
-      openPDFViewer(changeInfo.url, tabId);
+    var url=(changeInfo.url?changeInfo.url:'').toLowerCase();
+
+    if(!url||changeInfo.status!="loading"||setting.data["detectPDF"] == "false" ){
+      return;
+    }
+
+    //record prev url
+    var previousUrl = tabIdToPreviousUrl[tabId] ? tabIdToPreviousUrl[tabId]:'';
+    tabIdToPreviousUrl[tabId] = url;
+
+    //check local pdf file, open with viewer
+    if( checkIsLocalPdfUrl(url) ){
+      openPDFViewer(url, tabId);
+
+    //check bookmark redirect, open with viewer
+    }else if( !checkIsExtensionPdfViewer(previousUrl) && url.includes( chrome.runtime.getURL("/?file="))){
+      var param=getUrlParam(url,"file")
+      openPDFViewer(param, tabId);
     }
   }
 );
 
+function getUrlParam(url,param) {
+  return  new URL(url).searchParams.get(param);
+}
+//url is end with .pdf, start with file://
+function checkIsLocalPdfUrl(url){
+  return /^(file:\/\/).*(\.pdf)$/.test(url)   
+}
+function checkIsExtensionPdfViewer(url){
+  return url.includes( chrome.runtime.getURL("/pdfjs/web/viewer.html"));
+}
 async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {
     url:
@@ -444,6 +463,75 @@ async function openPDFViewer(url, tabId) {
   });
 }
 
+
+
+// ================= context menu
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: "copy",
+    title: "copy",
+    visible: false,
+  });
+});
+
+function updateContext(request) {
+  chrome.contextMenus.update("copy", {
+    title: "Copy : " + truncate(request.targetText, 20),
+    contexts: ["page", "selection"],
+    visible: true,
+  });
+  recentTranslated = request;
+}
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId == "copy") {
+    runFunctionOnTab(tab.id,copyText,[recentTranslated.targetText])
+  }
+});
+
+function copyText(text) {  
+  navigator.clipboard.writeText(text);
+}
+
+function runFunctionOnTab(tabId,func,args){
+  chrome.scripting.executeScript({
+    target: { tabId: tabId },
+    func: func,
+    args: args,
+  });
+}
+
+function truncate(str, n) {
+  return str.length > n ? str.slice(0, n - 1) + "..." : str;
+}
+
+
+
+// ================= contents script reinjection after upgrade or install
+// https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
+chrome.runtime.onInstalled.addListener(async () => {
+  for (const cs of chrome.runtime.getManifest().content_scripts) {
+    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+      if (
+        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
+          tab.url
+        )
+      ) {
+        continue;
+      }
+
+      //load css and js on opened tab
+      chrome.scripting.insertCSS({
+        target: { tabId: tab.id },
+        files: cs.css,
+      });
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: cs.js,
+      }); 
+    }
+  }
+});
 
 
 
@@ -500,62 +588,4 @@ async function translateWithPapago(word, targetLang, fromLang) {
   } else {
     return null;
   }
-}
-
-
-
-
-// ================= contents script reinjection after upgrade or install
-// https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
-chrome.runtime.onInstalled.addListener(async () => {
-  for (const cs of chrome.runtime.getManifest().content_scripts) {
-    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
-      if (
-        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
-          tab.url
-        )
-      ) {
-        continue;
-      }
-
-      //load css and js on opened tab
-      chrome.scripting.insertCSS({
-        target: { tabId: tab.id },
-        files: cs.css,
-      });
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: cs.js,
-      }); 
-    }
-  }
-});
-
-// ================= context menu
-
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: "save",
-    title: "save",
-    visible: false,
-  });
-});
-
-function updateContext(request) {
-  chrome.contextMenus.update("save", {
-    title: "Save : " + truncate(request.sourceText, 12),
-    contexts: ["page", "selection"],
-    visible: true,
-  });
-  recentTranslated = request;
-}
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == "save") {
-    recordHistory(recentTranslated, true);
-  }
-});
-
-function truncate(str, n) {
-  return str.length > n ? str.slice(0, n - 1) + "..." : str;
 }

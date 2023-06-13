@@ -461,6 +461,17 @@ function applyStyleSetting() {
       setting.data["tooltipBackgroundColor"] +
       ` !important;
     }
+    .ocr_text_div{
+      position: absolute;
+      opacity: 0.7;
+      z-index: 100000;
+      pointer-events: auto;
+      border: 2px solid CornflowerBlue;
+      font-size: 1.5rem;
+      overflow: hidden;
+      color:#00000000 !important;
+      background-color: #00000000 !important
+    }
     `
   );
 }
@@ -561,26 +572,27 @@ async function checkImage() {
   }
   ocrHistory[url]=$.extend({imageTarget:mouseTarget}, ocrBaseData)
 
-
-
-
+  //init ocr
   await initOCR();
   var base64Url = await getBase64(url);
-  //box segment
-  // var {bboxList,base64Url,ratio}=await handleResponse($.extend(ocrBaseData, {type: "segmentBox",base64Url}))
-  //ocr process
-  var res=await handleResponse($.extend(ocrBaseData,{type: "ocr",bboxList,base64Url}))
-  
-  //display ocr block 
-  for (var i in res.ocrData) {
-    processOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData[i],ratio);
-  }
-  ocrHistory[res.mainUrl]["imageTarget"].style.cursor = ""; //reset cursor state
+
+  // ocr process without opencv, then display
+  var res=await requestOcr(ocrBaseData,bboxList,base64Url);
+  showOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData,ratio,"Green");
+
+  //ocr process with opencv , then display
+  var {bboxList,base64Url,ratio}=await requestSegmentBox(ocrBaseData,base64Url);
+  var res=await requestOcr(ocrBaseData,bboxList,base64Url);
+  showOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData,ratio,"Red");
+
+  //reset cursor state
+  ocrHistory[res.mainUrl]["imageTarget"].style.cursor = ""; 
 }
+
 
 async function initOCR(){
   await createIframe("ocrFrame","/ocr.html");
-  // await createIframe("opencvFrame","/opencvHandler.html");
+  await createIframe("opencvFrame","/opencvHandler.html");
 }
 
 async function createIframe(name,htmlPath){
@@ -606,45 +618,52 @@ async function createIframe(name,htmlPath){
   });
 }
 
-function processOcrData(target,ocrData,ratio){
-  var {data}=ocrData;
-  for (var keyBlock in data.blocks) {
-    var paragraphs = data.blocks[keyBlock].paragraphs;
-    for (var keyParagraph in paragraphs) {
-      var paragraph = paragraphs[keyParagraph];
-      var text=paragraph["text"];
-      text=getTextWithoutSpecialChar(text);
-      
-      //if string contains only whitespace, skip
-      if (/^\s*$/.test(text)) {
-        continue;
-      }
-      // console.log(paragraph["confidence"] + "==" + text);
-      addTextBlock(target,paragraph["bbox"],text,ratio)
-    }
+function showOcrData(target,ocrData,ratio,color){
+  var textBoxList=getTextBoxList(ocrData)
+
+  for (var textBox of textBoxList) {
+    createOcrTextBlock(target,textBox["bbox"],textBox["text"],ratio,color);
   }
 }
 
-function addTextBlock(target,bbox, text,ratio) {
-  var $div = $("<div />").appendTo(target.parentElement);
-  $div.attr("class", "ocr_text_div");
-  $div.html(text);
-  $div.css('cssText', `
-    position: absolute;
-    opacity: 0.7;
-    z-index: 100000;
-    pointer-events: auto;
-    border: 2px solid CornflowerBlue !important;
-    font-size: 1.5rem;
-    overflow: hidden;
-    color:#00000000 !important;
-    background-color: #00000000 !important
-  `);
-  setLeftTopWH(target,bbox,$div,ratio)
+function getTextBoxList(ocrData){
+  var textBoxList=[];
+  for (var ocrDataItem of ocrData) {
+    var {data}=ocrDataItem;
+    for (var block of data.blocks) {
+      for (var paragraph of block.paragraphs) {
+        paragraph["text"]=getTextWithoutSpecialChar(paragraph["text"]);
+  
+        //if string contains only whitespace, skip
+        if (/^\s*$/.test(paragraph["text"])) {
+          continue;
+        }
+        // console.log(paragraph["confidence"] + "==" + text);
+        // console.log(paragraph);
+        textBoxList.push(paragraph)
+      }
+    }
+  }
+  return textBoxList;
+}
 
+function createOcrTextBlock(target,bbox, text,ratio,color) {
+  //init bbox
+  var $div  = $("<div/>", {
+    class: "ocr_text_div notranslate", 
+    text: text,
+    css:{
+      "border":"2px solid "+color
+    }
+  }).appendTo(target.parentElement);
+
+  // position
+  setLeftTopWH(target,bbox,$div,ratio)
   $( window ).on("resize", (e) => {
     setLeftTopWH(target,bbox,$div,ratio)
   });
+
+  //record current ocr block list for future delete
   ocrBlock.push($div);
 }
 
@@ -684,7 +703,7 @@ function getBase64(url) {
         reader.readAsDataURL(blob);
       }).catch(async (error) => {
         // console.error('Error:', error);
-        var {base64Url}=await handleResponse({
+        var {base64Url}=await getMessageResponse({
           type: "getBase64",
           url
         })
@@ -693,7 +712,14 @@ function getBase64(url) {
   });
 }
 
-async function handleResponse(data){
+async function requestOcr(ocrBaseData,bboxList,base64Url){
+  return await getMessageResponse($.extend(ocrBaseData,{type: "ocr",bboxList,base64Url}))
+}
+async function requestSegmentBox(ocrBaseData,base64Url){
+  return await getMessageResponse($.extend(ocrBaseData, {type: "segmentBox",base64Url}))
+}
+
+async function getMessageResponse(data){
   return new Promise(function(resolve, reject) {
     var timeId = Date.now();
     data["timeId"]=timeId;
@@ -717,11 +743,12 @@ async function handleResponse(data){
 }
 
 function checkMouseTargetIsImage(){
+  // loaded image that has big enough size,  
   if(    
     mouseTarget != null &&
     mouseTarget.src &&
-    mouseTarget.tagName === "IMG" && //when mouse over on img
-    mouseTarget.complete &&  //if image is loaded
+    mouseTarget.tagName === "IMG" && 
+    mouseTarget.complete && 
     mouseTarget.naturalHeight !== 0 &&
     mouseTarget.width > 300   &&
     mouseTarget.height > 300  ){
