@@ -41,7 +41,9 @@
           v-for="tabName in tabs"
           :key="tabName"
         >
-        <perfect-scrollbar class="scroll-area" >
+
+        <div class="scrollList" >
+
           <v-card flat v-if="tabItems[tabName]">
             <v-list-item v-for="(option, optionName) in tabItems[tabName]" :key="optionName">
 
@@ -89,7 +91,7 @@
 
           </v-list-item>
           </v-card>
-        </perfect-scrollbar>
+        </div>
         </v-tab-item>
       </v-tabs-items>
       </v-card>
@@ -646,6 +648,7 @@ export default {
       tabItems:{},
       mask: '!#XXXXXXXX',
       remainSettingDesc:remainSettingDesc,
+      height:window.innerHeight,
 
       aboutPageList: aboutPageList,
       setting: {},
@@ -775,13 +778,6 @@ export default {
 
 .v-label {
   font-size: 18px;
-}
-
-.scroll-area {
-  position: relative;
-  margin: auto;
-  /* width: 200px; */
-  height: 500px;
 }
 
 </style>

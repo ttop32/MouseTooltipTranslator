@@ -68,16 +68,23 @@ function useTesseract(image, lang, rectangles) {
   return new Promise(async function(resolve, reject) {
     try {
       await loadScheduler(lang);
+      var data=[]
 
-      //ocr on image
-      var d = await schedulerList[lang].addJob('recognize', image);
-      var data=[d];
+      
+      // //ocr on plain image
+      if(rectangles.length==0){
+        var d = await schedulerList[lang].addJob('recognize', image);
+        data=[d];
+  
+      //ocr on opencv processed image with bbox
+      }else{
+        data = await Promise.all(
+          rectangles.map((rectangle) =>
+            schedulerList[lang].addJob("recognize", image, { rectangle })
+          )
+        );
+      }
 
-      // const data = await Promise.all(
-      //   rectangles.map((rectangle) =>
-      //     schedulerList[lang].addJob("recognize", image, { rectangle })
-      //   )
-      // );
 
       resolve(data);
     } catch (err) {
