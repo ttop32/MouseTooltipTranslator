@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.63",
+  "version": "0.1.64",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -13,7 +13,7 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'"
   },
-  "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus", "clipboardWrite" ],
+  "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus" ],
   "host_permissions": [
     "<all_urls>"
   ],
