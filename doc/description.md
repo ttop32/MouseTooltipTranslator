@@ -17,6 +17,9 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.64
+  - google reject translator by "clipboardWrite permission"
+    - remove the permission
 - 0.1.63
   - Change pdf url format (request by shawnding )
   - Change context menu to include copy (request by KirpichKrasniy)
