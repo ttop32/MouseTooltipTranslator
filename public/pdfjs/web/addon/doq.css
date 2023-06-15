@@ -1,0 +1,189 @@
+/* Viewer customizations */
+:root {
+  --reader-bg: #F8F1E3;
+}
+.reader .pdfViewer .page, .reader .thumbnailImage {
+  background-color: var(--reader-bg) !important;
+}
+.reader .freeTextEditor > .internal {
+  --free-text-color: #000000;
+  color: var(--free-text-color) !important;
+}
+.invert :is(.page, .thumbnailImage), .colorSwatch.invert {
+  filter: invert(86%);
+}
+
+/* Widgets */
+.colorSwatch {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  border: 0.5px solid var(--field-border-color);
+  background-color: #ffffff;
+  color: #000000;
+  margin: 4px;
+  cursor: pointer;
+}
+.maskIcon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  color: var(--main-color);
+  opacity: var(--toolbar-icon-opacity);
+  cursor: pointer;
+}
+
+.maskIcon::before, :checked + .colorSwatch::before {
+  display: inline-block;
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  vertical-align: top;
+  background-color: currentcolor;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+.maskIcon::before {
+  margin-top: 2px;
+}
+
+/* Toolbar layout */
+#readerToolbar {
+  right: 189px;
+  font-size: 0;
+  background-color: var(--toolbar-bg-color);
+  -webkit-user-select: none;
+  user-select: none;
+}
+#readerToolbar::after {
+  border-bottom-color: var(--toolbar-bg-color);
+}
+#readerToolbar > :first-child {
+  margin-bottom: 10px;
+}
+#readerToolbar > :last-child {
+  margin-bottom: -10px;
+}
+
+/* Panel layouts */
+.mainPanel {
+  max-width: 170px;
+  padding: 0 6px;
+}
+.mainPanel > :first-child {
+  margin-bottom: 6px;
+}
+.mainPanel > :last-child {
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 2px;
+}
+.optionsPanel {
+  padding: 0 8px;
+  height: 74px;
+  overflow-y: hidden;
+  transition-property: height, opacity, visibility;
+  transition-duration: var(--sidebar-transition-duration);
+}
+.optionsPanel.collapsed {
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.optionsPanel > div {
+  position: relative;
+  margin-bottom: 6px;
+}
+.optionsPanel > :last-child {
+  margin-bottom: 10px;
+}
+
+/* Main panel */
+#tonePicker {
+  position: relative;
+  text-align: center;
+}
+#schemeSelectContainer {
+  position: relative;
+  min-width: 94px;
+  width: auto;
+  flex-grow: 1;
+  margin: 0 !important;
+}
+#schemeSelect {
+  width: 100%;
+}
+#optionsToggleContainer {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+#optionsToggle {
+  margin: 3px;
+}
+#optionsToggleContainer .maskIcon {
+  transition-property: transform;
+  transition-duration: var(--sidebar-transition-duration);
+}
+#optionsToggle:checked + div > .maskIcon {
+  transform: rotate(-22.5deg);
+}
+/* Options Panel */
+.optionsPanel .toolbarLabel {
+  display: block;
+  text-align: center;
+}
+
+/* Icons */
+#viewReader.toolbarButton::before {
+  -webkit-mask-image: url(images/readerIcon.svg);
+  mask-image: url(images/readerIcon.svg);
+}
+#tonePicker > :checked + .colorSwatch::before {
+  -webkit-mask-image: url(images/checkMark.svg);
+  mask-image: url(images/checkMark.svg);
+}
+#optionsToggleContainer .maskIcon::before {
+  -webkit-mask-image: url(images/optionsIcon.svg);
+  mask-image: url(images/optionsIcon.svg);
+}
+
+/* Form controls */
+#readerToolbar input[type="radio"] {
+  margin: 10px 0 3px 7px;
+  position: absolute !important;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+#readerToolbar input[type="checkbox"] {
+  pointer-events: none;
+}
+#readerToolbar input[type="checkbox"] + label:hover,
+#readerToolbar input[type="checkbox"]:focus-visible + label {
+  background-color: var(--button-hover-color);
+}
+#readerToolbar input[type="checkbox"]:checked + label {
+  background-color: var(--toggled-btn-bg-color);
+}
+/* Accessibility */
+.tabMode #schemeSelectContainer:focus-within,
+#readerToolbar input:focus-visible + :is(label, div) {
+  outline: 5px auto;
+}
+
+/* For PDF.js legacy (< 3.x) versions */
+.pdfjsLegacy #schemeSelect {
+  width: calc(100% + 22px);
+}
+.pdfjsLegacy#viewReader::before {
+  -webkit-mask-image: url(images/readerIcon-legacy.svg);
+  mask-image: url(images/readerIcon-legacy.svg);
+}

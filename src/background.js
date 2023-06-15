@@ -11,7 +11,6 @@ var he = require("he");
 
 var setting;
 var settingLoaded = false;
-var tabIdToPreviousUrl = {};
 var bingLangCode = {
   auto: "auto-detect",
   af: "af",
@@ -428,31 +427,17 @@ chrome.tabs.onUpdated.addListener(
       return;
     }
 
-    //record prev url
-    var previousUrl = tabIdToPreviousUrl[tabId] ? tabIdToPreviousUrl[tabId]:'';
-    tabIdToPreviousUrl[tabId] = url;
-
     //check local pdf file, open with viewer
     if( checkIsLocalPdfUrl(url) ){
       openPDFViewer(url, tabId);
-
-    //check bookmark redirect, open with viewer
-    }else if( !checkIsExtensionPdfViewer(previousUrl) && url.includes( chrome.runtime.getURL("/?file="))){
-      var param=getUrlParam(url,"file")
-      openPDFViewer(param, tabId);
     }
   }
 );
 
-function getUrlParam(url,param) {
-  return  new URL(url).searchParams.get(param);
-}
+
 //url is end with .pdf, start with file://
 function checkIsLocalPdfUrl(url){
   return /^(file:\/\/).*(\.pdf)$/.test(url)   
-}
-function checkIsExtensionPdfViewer(url){
-  return url.includes( chrome.runtime.getURL("/pdfjs/web/viewer.html"));
 }
 async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {

@@ -1,0 +1,85 @@
+[
+  {
+    "name": "Firefox",
+    "tones": [
+      {
+        "name": "Sepia",
+        "background": "#F4ECD8",
+        "foreground": "#5B4636",
+        "accents": ["#0060DF", "#B5007F"]
+      },
+      {
+        "name": "Dark",
+        "background": "#1C1B22",
+        "foreground": "#EEEEEE",
+        "accents": ["#45A1FF", "#E675FD"]
+      }
+    ]
+  },
+
+  {
+    "name": "Safari",
+    "tones": [
+      {
+        "name": "Sepia",
+        "background": "#F8F1E3",
+        "foreground": "#4F321C",
+        "accents": ["#D19600"]
+      },
+      {
+        "name": "Gray",
+        "background": "#4A4A4D",
+        "foreground": "#D7D7D8",
+        "accents": ["#5AC8FA"]
+      },
+      {
+        "name": "Night",
+        "background": "#121212",
+        "foreground": "#B0B0B0",
+        "accents": ["#5AC8FA"]
+      }
+    ]
+  },
+
+  {
+    "name": "Nord",
+    "tones": [
+      {
+        "name": "Snow Storm",
+        "background": "#ECEFF4",
+        "foreground": "#3B4252"
+      },
+      {
+        "name": "Polar Night",
+        "background": "#2E3440",
+        "foreground": "#D8DEE9",
+        "accents": ["#3B4252"]
+      }
+    ],
+    "accents": [
+      "#434C5E", "#4C566A", "#E5E9F0",
+      "#8FBCBB", "#88C0D0", "#81A1C1", "#5E81AC",
+      "#BF616A", "#D08770", "#EBCB8B", "#A3BE8C", "#B48EAD"
+    ]
+  },
+
+  {
+    "name": "Solarized",
+    "tones": [
+      {
+        "name": "Light",
+        "background": "#FDF6E3",
+        "foreground": "#657B83"
+      },
+      {
+        "name": "Dark",
+        "background": "#002B36",
+        "foreground": "#839496"
+      }
+    ],
+    "accents": [
+      "#B58900", "#CB4B16", "#DC322F", "#D33682",
+      "#6C71C4", "#268BD2", "#2AA198", "#859900"
+    ]
+  }
+]
