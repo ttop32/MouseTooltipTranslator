@@ -17,6 +17,10 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.65
+  - fix pdf url crash
+  - change pdf js version to 3.7.107
+  - use doq for pdf js dark mode (requested by 6 SEX)
 - 0.1.64
   - google reject translator by "clipboardWrite permission"
     - remove the permission
