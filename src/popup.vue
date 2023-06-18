@@ -619,6 +619,12 @@ var aboutPageList = {
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
     icon: "mdi-shield-account",
   },
+  pdfViewer: {
+    name:  chrome.i18n.getMessage("PDF_Viewer"),
+    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file") ,
+    url: chrome.runtime.getURL("/pdfjs/web/viewer.html")+"?file=/pdf_demo.pdf",
+    icon: "mdi-file-pdf-box",
+  },
 };
 
 function getRangeOption(start,end,scale,roundOff) {
