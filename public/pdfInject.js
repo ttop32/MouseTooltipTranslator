@@ -92,7 +92,7 @@ function addSpaceBetweenPdfText(){
   // add manual new line
   var lastY;
   var lastItem;
-  document.querySelectorAll('.page span').forEach(function(item, index) {
+  document.querySelectorAll(".page span[role='presentation']").forEach(function(item, index) {
     var currentY = parseFloat(item.getBoundingClientRect().top);
     var currentFontSize = parseFloat(window.getComputedStyle(item).fontSize);
 

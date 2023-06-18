@@ -17,6 +17,9 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.66
+  - fix bing translator response
+  - fix pdf text select (requested by Furkan Nart1)
 - 0.1.65
   - fix pdf url crash
   - change pdf js version to 3.7.107

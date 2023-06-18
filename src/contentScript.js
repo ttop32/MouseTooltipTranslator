@@ -9,8 +9,6 @@ var isUrl = require("is-url");
 import { enableSelectionEndEvent, getSelectionText } from "./selection";
 import { Setting } from "./setting";
 
-
-
 //init environment var======================================================================\
 var setting;
 var tooltipContainer;
@@ -20,11 +18,10 @@ var mouseTarget = null;
 var activatedWord = null;
 var mouseMoved = false;
 var mouseMovedCount = 0;
-var settingLoaded = false;
 var keyDownList = {}; //use key down for enable translation partially
 var style;
 let selectedText = "";
-var destructionEvent = 'destructmyextension_MouseTooltipTranslator'// + chrome.runtime.id;
+var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
 const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
@@ -41,7 +38,7 @@ var rtlLangList = [
 //tooltip init
 
 $(async function() {
-  loadDestructor();  //remove previous tooltip script
+  loadDestructor(); //remove previous tooltip script
   addElementEnv(); //add tooltip container
   await getSetting(); //load setting
   applyStyleSetting(); //add tooltip style
@@ -53,13 +50,12 @@ $(async function() {
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  mouseoverInterval=setInterval(async function() {
+  mouseoverInterval = setInterval(async function() {
     // only work when tab is activated and when mousemove and no selected text
     if (
       !selectedText &&
-      document.visibilityState == "visible" &&
       mouseMoved &&
-      settingLoaded &&
+      document.visibilityState == "visible" &&
       setting.data["translateWhen"].includes("mouseover")
     ) {
       let word = getMouseOverWord(clientX, clientY);
@@ -71,20 +67,16 @@ function startMouseoverDetector() {
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
   enableSelectionEndEvent(); //set mouse drag text selection event
-  addEventHandler(
-    "selectionEnd",
-    async function(event) {
-      // if translate on selection is enabled
-      if (
-        document.visibilityState === "visible" &&
-        settingLoaded &&
-        setting.data["translateWhen"].includes("select")
-      ) {
-        selectedText = event.selectedText;
-        await processWord(selectedText, "select");
-      }
+  addEventHandler("selectionEnd", async function(event) {
+    // if translate on selection is enabled
+    if (
+      document.visibilityState === "visible" &&
+      setting.data["translateWhen"].includes("select")
+    ) {
+      selectedText = event.selectedText;
+      await processWord(selectedText, "select");
     }
-  );
+  });
 }
 
 //process detected word
@@ -97,7 +89,7 @@ async function processWord(word, actionType) {
     return;
   }
   //do nothing, if no new word or no word change
-  if (!word || activatedWord==word){
+  if (!word || activatedWord == word) {
     return;
   }
 
@@ -106,26 +98,22 @@ async function processWord(word, actionType) {
   var { translatedText, sourceLang, targetLang } = await translate(word);
 
   //if no translated text is empty some reason, hide tooltip
-  if (!translatedText){
+  if (!translatedText) {
     hideTooltip();
+    return;
+  }
+  if (activatedWord != word) {
     return;
   }
 
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
   if (
-    (setting.data["useTooltip"] == "true" ||
-      keyDownList[setting.data["keyDownTooltip"]]) &&
-    activatedWord == word &&
-    document.visibilityState == "visible"
+    setting.data["useTooltip"] == "true" ||
+    keyDownList[setting.data["keyDownTooltip"]]
   ) {
     showTooltip(translatedText, targetLang);
-
-    updateRecentTranslated(
-      word,
-      translatedText,
-      actionType
-    );
+    updateRecentTranslated(word, translatedText, actionType);
   }
 
   //if use_tts is on or activation key is pressed, do tts
@@ -135,8 +123,6 @@ async function processWord(word, actionType) {
   ) {
     tts(word, sourceLang);
   }
-  
-  
 }
 
 function getMouseOverWord(clientX, clientY) {
@@ -180,14 +166,14 @@ function getMouseOverWord(clientX, clientY) {
 }
 
 function checkMouseTargetIsSpecialWebBlock() {
-  var specialClassNameList=[
-    "ytp-caption-segment",//youtube caption
+  var specialClassNameList = [
+    "ytp-caption-segment", //youtube caption
     "LC20lb", //google search list title block
-    "ocr_text_div" //mousetooltip ocr block
-  ]
-  // if mouse targeted web element contain particular class name, return true 
-  return (
-    specialClassNameList.some(className => mouseTarget.classList.contains(className))
+    "ocr_text_div", //mousetooltip ocr block
+  ];
+  // if mouse targeted web element contain particular class name, return true
+  return specialClassNameList.some((className) =>
+    mouseTarget.classList.contains(className)
   );
 }
 
@@ -195,16 +181,16 @@ function filterWord(word) {
   if (!word) {
     return "";
   }
+  // filter one that only include num,space and special char(include currency sign) as combination
   word = word.replace(/\s+/g, " "); //replace whitespace as single space
   word = word.trim(); // remove whitespaces from begin and end of word
   if (
     word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url
-    !/[^\s\d»«…~`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6]/g.test(
+    !/[^\s\d»«…~`!@#$%^&*()‑_+\-=\[\]{};':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6\p{Extended_Pictographic}]/gu.test(
       word
     )
   ) {
-    // filter one that only include num,space and special char(include currency sign) as combination
     word = "";
   }
   return word;
@@ -266,7 +252,7 @@ async function translate(word) {
 
 function loadEventListener() {
   //use mouse position for tooltip position
-  addEventHandler("mousemove",(e) => {
+  addEventHandler("mousemove", (e) => {
     //if mouse moved far distance two times, check as mouse moved
     if (
       mouseMoved == false &&
@@ -282,17 +268,17 @@ function loadEventListener() {
     clientY = e.clientY;
     mouseTarget = e.target;
     setTooltipPosition();
-  })
+  });
 
-    //detect activation hold key pressed
-  addEventHandler("keydown",(e) => {
+  //detect activation hold key pressed
+  addEventHandler("keydown", (e) => {
     //if user pressed ctrl+f  ctrl+a, hide tooltip
     if ((e.code == "KeyF" || e.code == "KeyA") && e.ctrlKey) {
       mouseMoved = false;
       hideTooltip(false);
       return;
-    } 
-    
+    }
+
     if (
       [setting.data["keyDownTooltip"], setting.data["keyDownTTS"]].includes(
         e.code
@@ -309,14 +295,14 @@ function loadEventListener() {
     }
   });
 
-  addEventHandler("keyup",(e) => {
+  addEventHandler("keyup", (e) => {
     if (keyDownList.hasOwnProperty(e.code)) {
       keyDownList[e.code] = false;
     }
   });
 
   //detect tab switching to reset env
-  addEventHandler("blur",(e) => {
+  addEventHandler("blur", (e) => {
     keyDownList = {}; //reset key press
     mouseMoved = false;
     mouseMovedCount = 0;
@@ -325,7 +311,7 @@ function loadEventListener() {
     stopTTS();
   });
 
-  addEventHandler("beforeunload",(e) => {
+  addEventHandler("beforeunload", (e) => {
     stopTTS();
   });
 
@@ -391,28 +377,24 @@ async function updateRecentTranslated(sourceText, targetText, actionType) {
 //load  setting
 async function getSetting() {
   setting = await Setting.create(settingUpdateCallback);
-  settingLoaded = true;
 }
 
 function settingUpdateCallback(changes) {
-  var keys=Object.keys(changes)
+  var keys = Object.keys(changes);
 
   //if style is changed, update css
-  if(keys.some(w => w.includes("tooltip"))){
+  if (keys.some((w) => w.includes("tooltip"))) {
     applyStyleSetting();
   }
-  if(keys.some(w => w.includes("translateWhen"))){
+  if (keys.some((w) => w.includes("translateWhen"))) {
     selectedText = "";
   }
-  if(keys.some(w => w.includes("ocrDetectionLang"))){
+  if (keys.some((w) => w.includes("ocrDetectionLang"))) {
     removeOcrBlock();
   }
-  
 }
 
-
 function applyStyleSetting() {
-  
   style.html(
     `
     #mttContainer {
@@ -488,7 +470,6 @@ function detectPDF() {
   }
 }
 
-
 function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
@@ -506,25 +487,24 @@ function addElementEnv() {
   }).appendTo("head");
 }
 
+//destruction ===================================
 
-//destruction =================================== 
-
-function loadDestructor(){
+function loadDestructor() {
   // https://stackoverflow.com/questions/25840674/chrome-runtime-sendmessage-throws-exception-from-content-script-after-reloading/25844023#25844023
   // Unload previous content script if needed
-  window.dispatchEvent(new CustomEvent(destructionEvent));   //call destructor to remove script
-  addEventHandler(destructionEvent, destructor);     //add destructor listener for later remove
+  window.dispatchEvent(new CustomEvent(destructionEvent)); //call destructor to remove script
+  addEventHandler(destructionEvent, destructor); //add destructor listener for later remove
 }
 
 function destructor() {
-  clearInterval(mouseoverInterval);   //clear mouseover interval
+  clearInterval(mouseoverInterval); //clear mouseover interval
   removePrevElement(); //remove element
-  controller.abort();  //clear all event Listener by controller signal
+  controller.abort(); //clear all event Listener by controller signal
 }
 
-function addEventHandler(eventName,callbackFunc){
+function addEventHandler(eventName, callbackFunc) {
   //record event for later event signal kill
-  return window.addEventListener(eventName, callbackFunc, {signal});
+  return window.addEventListener(eventName, callbackFunc, { signal });
 }
 
 function removePrevElement() {
@@ -537,65 +517,72 @@ function removePrevElement() {
   removeOcrBlock();
 }
 
-
-function isValidChromeRuntime() {
-  return chrome.runtime && !!chrome.runtime.getManifest();
-}
-
-
 //ocr==================================================================================
-var ocrHistory={}
-var iFrames={}
-var ocrBlock=[]
+var ocrHistory = {};
+var iFrames = {};
+var ocrBlock = [];
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
 async function checkImage() {
   // if mouse target is not image or ocr is not on, skip
   // if already ocr processed,skip
-  if(!checkMouseTargetIsImage() || setting.data["useOCR"] == "false" ||
-    (ocrHistory[mouseTarget.src] && ocrHistory[mouseTarget.src]["lang"]==setting.data["ocrDetectionLang"])
-   ){
+  if (
+    !checkMouseTargetIsImage() ||
+    setting.data["useOCR"] == "false" ||
+    (ocrHistory[mouseTarget.src] &&
+      ocrHistory[mouseTarget.src]["lang"] == setting.data["ocrDetectionLang"])
+  ) {
     return;
   }
 
-
-
   mouseTarget.style.cursor = "wait"; //show mouse loading
-  var url=mouseTarget.src;
-  var bboxList=[];
-  var ratio=1;
-  var ocrBaseData={
+  var url = mouseTarget.src;
+  var bboxList = [];
+  var ratio = 1;
+  var ocrBaseData = {
     mainUrl: url,
     base64Url: "",
     lang: setting.data["ocrDetectionLang"],
-  }
-  ocrHistory[url]=$.extend({imageTarget:mouseTarget}, ocrBaseData)
+  };
+  ocrHistory[url] = $.extend({ imageTarget: mouseTarget }, ocrBaseData);
 
   //init ocr
   await initOCR();
   var base64Url = await getBase64(url);
 
   // ocr process without opencv, then display
-  var res=await requestOcr(ocrBaseData,bboxList,base64Url);
-  showOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData,ratio,"Green");
+  var res = await requestOcr(ocrBaseData, bboxList, base64Url);
+  showOcrData(
+    ocrHistory[res.mainUrl]["imageTarget"],
+    res.ocrData,
+    ratio,
+    "Green"
+  );
 
   //ocr process with opencv , then display
-  var {bboxList,base64Url,ratio}=await requestSegmentBox(ocrBaseData,base64Url);
-  var res=await requestOcr(ocrBaseData,bboxList,base64Url);
-  showOcrData(ocrHistory[res.mainUrl]["imageTarget"],res.ocrData,ratio,"Red");
+  var { bboxList, base64Url, ratio } = await requestSegmentBox(
+    ocrBaseData,
+    base64Url
+  );
+  var res = await requestOcr(ocrBaseData, bboxList, base64Url);
+  showOcrData(
+    ocrHistory[res.mainUrl]["imageTarget"],
+    res.ocrData,
+    ratio,
+    "Red"
+  );
 
   //reset cursor state
-  ocrHistory[res.mainUrl]["imageTarget"].style.cursor = ""; 
+  ocrHistory[res.mainUrl]["imageTarget"].style.cursor = "";
 }
 
-
-async function initOCR(){
-  await createIframe("ocrFrame","/ocr.html");
-  await createIframe("opencvFrame","/opencvHandler.html");
+async function initOCR() {
+  await createIframe("ocrFrame", "/ocr.html");
+  await createIframe("opencvFrame", "/opencvHandler.html");
 }
 
-async function createIframe(name,htmlPath){
+async function createIframe(name, htmlPath) {
   return new Promise(function(resolve, reject) {
     if (iFrames[name]) {
       resolve();
@@ -611,71 +598,73 @@ async function createIframe(name,htmlPath){
         // width:"700",
         // height:"700"
       },
-    }).appendTo("body")
-      .on('load', function() {
-        resolve()
-     }).get(0);
+    })
+      .appendTo("body")
+      .on("load", function() {
+        resolve();
+      })
+      .get(0);
   });
 }
 
-function showOcrData(target,ocrData,ratio,color){
-  var textBoxList=getTextBoxList(ocrData)
+function showOcrData(target, ocrData, ratio, color) {
+  var textBoxList = getTextBoxList(ocrData);
 
   for (var textBox of textBoxList) {
-    createOcrTextBlock(target,textBox["bbox"],textBox["text"],ratio,color);
+    createOcrTextBlock(target, textBox["bbox"], textBox["text"], ratio, color);
   }
 }
 
-function getTextBoxList(ocrData){
-  var textBoxList=[];
+function getTextBoxList(ocrData) {
+  var textBoxList = [];
   for (var ocrDataItem of ocrData) {
-    var {data}=ocrDataItem;
+    var { data } = ocrDataItem;
     for (var block of data.blocks) {
       for (var paragraph of block.paragraphs) {
-        paragraph["text"]=getTextWithoutSpecialChar(paragraph["text"]);
-  
+        paragraph["text"] = getTextWithoutSpecialChar(paragraph["text"]);
+
         //if string contains only whitespace, skip
         if (/^\s*$/.test(paragraph["text"])) {
           continue;
         }
         // console.log(paragraph["confidence"] + "==" + text);
         // console.log(paragraph);
-        textBoxList.push(paragraph)
+        textBoxList.push(paragraph);
       }
     }
   }
   return textBoxList;
 }
 
-function createOcrTextBlock(target,bbox, text,ratio,color) {
+function createOcrTextBlock(target, bbox, text, ratio, color) {
   //init bbox
-  var $div  = $("<div/>", {
-    class: "ocr_text_div notranslate", 
+  var $div = $("<div/>", {
+    class: "ocr_text_div notranslate",
     text: text,
-    css:{
-      "border":"2px solid "+color
-    }
+    css: {
+      border: "2px solid " + color,
+    },
   }).appendTo(target.parentElement);
 
   // position
-  setLeftTopWH(target,bbox,$div,ratio)
-  $( window ).on("resize", (e) => {
-    setLeftTopWH(target,bbox,$div,ratio)
+  setLeftTopWH(target, bbox, $div, ratio);
+  $(window).on("resize", (e) => {
+    setLeftTopWH(target, bbox, $div, ratio);
   });
 
   //record current ocr block list for future delete
   ocrBlock.push($div);
 }
 
-function setLeftTopWH(target,bbox,$div,ratio){
-  var offsetLeft=target.offsetLeft;
-  var offsetTop=target.offsetTop;
-  var widthRatio= target.offsetWidth/target.naturalWidth;
-  var heightRatio= target.offsetHeight/target.naturalHeight;
-  var x=widthRatio*(bbox["x0"])/ratio;
-  var y=heightRatio*(bbox["y0"])/ratio;
-  var w=widthRatio*(bbox["x1"] - bbox["x0"])/ratio;
-  var h=heightRatio *(bbox["y1"] - bbox["y0"])/ratio;
+function setLeftTopWH(target, bbox, $div, ratio) {
+  var offsetLeft = target.offsetLeft;
+  var offsetTop = target.offsetTop;
+  var widthRatio = target.offsetWidth / target.naturalWidth;
+  var heightRatio = target.offsetHeight / target.naturalHeight;
+  var x = (widthRatio * bbox["x0"]) / ratio;
+  var y = (heightRatio * bbox["y0"]) / ratio;
+  var w = (widthRatio * (bbox["x1"] - bbox["x0"])) / ratio;
+  var h = (heightRatio * (bbox["y1"] - bbox["y0"])) / ratio;
   var left = offsetLeft + x;
   var top = offsetTop + y;
 
@@ -687,13 +676,16 @@ function setLeftTopWH(target,bbox,$div,ratio){
   });
 }
 
-function getTextWithoutSpecialChar(text){
-  return text.replace(/[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi, ''); //remove special char
+function getTextWithoutSpecialChar(text) {
+  return text.replace(
+    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi,
+    ""
+  ); //remove special char
 }
 
 function getBase64(url) {
   return new Promise(function(resolve, reject) {
-      fetch(url)
+    fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
         var reader = new FileReader();
@@ -701,62 +693,65 @@ function getBase64(url) {
           resolve(this.result); // <--- `this.result` contains a base64 data URI
         };
         reader.readAsDataURL(blob);
-      }).catch(async (error) => {
+      })
+      .catch(async (error) => {
         // console.error('Error:', error);
-        var {base64Url}=await getMessageResponse({
+        var { base64Url } = await getMessageResponse({
           type: "getBase64",
-          url
-        })
+          url,
+        });
         resolve(base64Url);
-      });     
+      });
   });
 }
 
-async function requestOcr(ocrBaseData,bboxList,base64Url){
-  return await getMessageResponse($.extend(ocrBaseData,{type: "ocr",bboxList,base64Url}))
+async function requestOcr(ocrBaseData, bboxList, base64Url) {
+  return await getMessageResponse(
+    $.extend(ocrBaseData, { type: "ocr", bboxList, base64Url })
+  );
 }
-async function requestSegmentBox(ocrBaseData,base64Url){
-  return await getMessageResponse($.extend(ocrBaseData, {type: "segmentBox",base64Url}))
+async function requestSegmentBox(ocrBaseData, base64Url) {
+  return await getMessageResponse(
+    $.extend(ocrBaseData, { type: "segmentBox", base64Url })
+  );
 }
 
-async function getMessageResponse(data){
+async function getMessageResponse(data) {
   return new Promise(function(resolve, reject) {
     var timeId = Date.now();
-    data["timeId"]=timeId;
+    data["timeId"] = timeId;
 
     //listen iframe response
-    addEventHandler('message', function namedListener(response) {
-      if (response.data.timeId==timeId){
-        window.removeEventListener('click', namedListener);
-        resolve(response.data)
+    addEventHandler("message", function namedListener(response) {
+      if (response.data.timeId == timeId) {
+        window.removeEventListener("click", namedListener);
+        resolve(response.data);
       }
     });
 
     //broadcast message to iframe
-    for(var key in iFrames) {
-      iFrames[key].contentWindow.postMessage(
-        data,
-        "*"
-      );      
-    };
-  })  
+    for (var key in iFrames) {
+      iFrames[key].contentWindow.postMessage(data, "*");
+    }
+  });
 }
 
-function checkMouseTargetIsImage(){
-  // loaded image that has big enough size,  
-  if(    
+function checkMouseTargetIsImage() {
+  // loaded image that has big enough size,
+  if (
     mouseTarget != null &&
     mouseTarget.src &&
-    mouseTarget.tagName === "IMG" && 
-    mouseTarget.complete && 
+    mouseTarget.tagName === "IMG" &&
+    mouseTarget.complete &&
     mouseTarget.naturalHeight !== 0 &&
-    mouseTarget.width > 300   &&
-    mouseTarget.height > 300  ){
+    mouseTarget.width > 300 &&
+    mouseTarget.height > 300
+  ) {
     return true;
   }
   return false;
 }
 
-function removeOcrBlock(){
-  ocrBlock.forEach((block, i) =>   block.remove());
+function removeOcrBlock() {
+  ocrBlock.forEach((block, i) => block.remove());
 }
