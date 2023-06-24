@@ -8,13 +8,14 @@
 //tooltip background===========================================================================
 import { Setting } from "./setting";
 import translator from "./translator/index.js";
-
+import * as util from './util.js';
 
 
 var setting;
 var settingLoaded = false;
 var recentTranslated = {};
-var translateWithCache=cacheFn(doTranslate);
+var recentTab;
+var translateWithCache = cacheFn(doTranslate);
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
@@ -26,15 +27,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     if (request.type === "translate") {
       var translatedResult = await translateWithCache(
-      // var translatedResult = await doTranslate(
+        // var translatedResult = await doTranslate(
         request.word,
-        setting.data["translateSource"],
+        setting["translateSource"],
         request.translateTarget,
-        setting.data["translatorVendor"]
+        setting["translatorVendor"]
       );
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
-      doTts(request.word, request.lang, setting.data["ttsVolume"] ,setting.data["ttsRate"] );
+      doTts(
+        request.word,
+        request.lang,
+        setting["ttsVolume"],
+        setting["ttsRate"]
+      );
       sendResponse({});
     } else if (request.type === "stopTTS") {
       chrome.tts.stop();
@@ -50,39 +56,33 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 async function getSetting() {
-  setting = await Setting.create();
+  setting = await Setting.loadSetting(await util.getDefaultData());
   settingLoaded = true;
 }
 
 function recordHistory(request, force = false) {
-  //if action not included
-  if (
-    force ||
-    setting.data["historyRecordActions"].includes(request.actionType)
-  ) {
+  if (force || setting["historyRecordActions"].includes(request.actionType)) {
     //append history to front
-    setting.data["historyList"].unshift({
+    setting["historyList"].unshift({
       sourceText: request.sourceText,
       targetText: request.targetText,
     });
     //remove when too many list
-    if (setting.data["historyList"].length > 1000) {
-      setting.data["historyList"].pop();
+    if (setting["historyList"].length > 10000) {
+      setting["historyList"].pop();
     }
     setting.save();
   }
 }
 
-
-
-async function doTts(word, lang, ttsVolume,ttsRate) {
-  var voice =setting.data["ttsVoice_"+lang]
+async function doTts(word, lang, ttsVolume, ttsRate) {
+  var voice = setting["ttsVoice_" + lang];
 
   chrome.tts.speak(word, {
     lang: lang,
     voiceName: voice,
-    volume: Number(ttsVolume),  
-    rate: Number(ttsRate), 
+    volume: Number(ttsVolume),
+    rate: Number(ttsRate),
   });
 }
 
@@ -91,25 +91,26 @@ async function doTranslate(text, fromLang, targetLang, translatorVendor) {
 }
 
 // detect local pdf file and redirect to translated pdf=====================================================================
-chrome.tabs.onUpdated.addListener(
-  function(tabId, changeInfo, tab) {
-    var url=(changeInfo.url?changeInfo.url:'').toLowerCase();
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  var url = (changeInfo.url ? changeInfo.url : "").toLowerCase();
 
-    if(!url||changeInfo.status!="loading"||setting.data["detectPDF"] == "false" ){
-      return;
-    }
-
-    //check local pdf file, open with viewer
-    if( checkIsLocalPdfUrl(url) ){
-      openPDFViewer(url, tabId);
-    }
+  if (
+    !url ||
+    changeInfo.status != "loading" ||
+    (setting && setting["detectPDF"] == "false")
+  ) {
+    return;
   }
-);
 
+  //check local pdf file, open with viewer
+  if (checkIsLocalPdfUrl(url)) {
+    openPDFViewer(url, tabId);
+  }
+});
 
 //url is end with .pdf, start with file://
-function checkIsLocalPdfUrl(url){
-  return /^(file:\/\/).*(\.pdf)$/.test(url)   
+function checkIsLocalPdfUrl(url) {
+  return /^(file:\/\/).*(\.pdf)$/.test(url);
 }
 async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {
@@ -119,8 +120,6 @@ async function openPDFViewer(url, tabId) {
       encodeURIComponent(url),
   });
 }
-
-
 
 // ================= context menu
 chrome.runtime.onInstalled.addListener(() => {
@@ -142,15 +141,15 @@ function updateContext(request) {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId == "copy") {
-    runFunctionOnTab(tab.id,copyText,[recentTranslated.targetText])
+    runFunctionOnTab(tab.id, copyText, [recentTranslated.targetText]);
   }
 });
 
-function copyText(text) {  
+function copyText(text) {
   navigator.clipboard.writeText(text);
 }
 
-function runFunctionOnTab(tabId,func,args){
+function runFunctionOnTab(tabId, func, args) {
   chrome.scripting.executeScript({
     target: { tabId: tabId },
     func: func,
@@ -162,7 +161,16 @@ function truncate(str, n) {
   return str.length > n ? str.slice(0, n - 1) + "..." : str;
 }
 
+//command shortcut key=====================================
+chrome.commands.onCommand.addListener((command) => {
+  if (command == "copy-translated-text") {
+    runFunctionOnTab(recentTab.id, copyText, [recentTranslated.targetText]);
+  }
+});
 
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
+  recentTab = tabs[0];
+});
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
@@ -185,31 +193,28 @@ chrome.runtime.onInstalled.addListener(async () => {
       chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: cs.js,
-      });         
+      });
     }
   }
 });
 
-
-
 // performance=======================================================
 function cacheFn(fn) {
-  var cache={};
+  var cache = {};
 
-  return function(){
-    var args = arguments;  
-    var key = [].slice.call(args).join('');
-    if (1000<Object.keys( cache ).length ) {
-      cache={}//numbers.shift();
+  return function() {
+    var args = arguments;
+    var key = [].slice.call(args).join("");
+    if (1000 < Object.keys(cache).length) {
+      cache = {}; //numbers.shift();
     }
 
-    if(cache[key]){
-        return cache[key];
+    if (cache[key]) {
+      return cache[key];
+    } else {
+      cache[key] = fn.apply(this, args);
+      return cache[key];
     }
-    else{
-        cache[key] = fn.apply(this, args);
-        return cache[key];
-    }
-  }
+  };
 }
 // debounce

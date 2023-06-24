@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.66",
+  "version": "0.1.67",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -27,6 +27,15 @@
       "opencvHandler.html"
     ]
   },
+  "commands": {
+    "copy-translated-text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1"
+      },
+      "description": "Copy Translated Text"
+    }
+  },
+
 
 
 

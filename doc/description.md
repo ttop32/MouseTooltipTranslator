@@ -17,6 +17,10 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log   
+- 0.1.67
+  - fix hidden translator tooltip in bing chat (requested by Moein)
+  - add shortcut key for copy translated text
+  - add detect swap hold key (requested by abonawwaf)
 - 0.1.66
   - fix bing translator response
   - fix pdf text select (requested by Furkan Nart1)

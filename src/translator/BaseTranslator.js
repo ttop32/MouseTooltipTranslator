@@ -1,3 +1,6 @@
+import * as util from '../util.js';
+
+
 export default class BaseTranslator {
   static langCodeJson = {};
   static langCodeJsonSwapped = {};
@@ -39,19 +42,11 @@ export default class BaseTranslator {
   }
   static decodeLangCode(lang) {
     if (!Object.keys(this.langCodeJsonSwapped)) {
-      this.langCodeJsonSwapped = this.swapKeyValue(this.langCodeJson);
+      this.langCodeJsonSwapped = this.util.swapJsonKeyValue(this.langCodeJson);
     }
     return this.langCodeJsonSwapped[lang]
       ? this.langCodeJsonSwapped[lang]
       : lang;
-  }
-
-  static swapKeyValue(json) {
-    var ret = {};
-    for (var key in json) {
-      ret[json[key]] = key;
-    }
-    return ret;
   }
 
   static async fetchMessage(url, params, method) {
