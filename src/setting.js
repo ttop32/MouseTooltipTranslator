@@ -1,57 +1,27 @@
 // load setting from chrome storage
-
-import { parse } from "bcp-47";
-
-var defaultList = {
-  useTooltip: "true",
-  useTTS: "false",
-  translateWhen: "mouseoverselect",
-  translateSource: "auto",
-  //translateTarget: getLang(),
-  translatorVendor: "google",
-  keyDownTooltip: "null",
-  keyDownTTS: "null",
-  detectType: "sentence",
-  translateReverseTarget: "null",
-  detectPDF: "true",
-  useOCR: "false",
-  ocrDetectionLang: "jpn_vert",
-  tooltipFontSize: "14",
-  tooltipWidth: "200",
-  tooltipTextAlign:"center",
-  tooltipBackgroundBlur:"2",
-  tooltipFontColor:"#ffffffff",
-  tooltipBackgroundColor:"#000000b8",
-  ttsVolume: "1.0",
-  ttsRate: "1.0",
-  historyList: [],
-  historyRecordActions: [],
-  langExcludeList: [],
-};
-
-
-// automatic setting update class
+// automatic setting update class===============================
 export class Setting {
-  constructor() {
-    this.data = {};
-    this.defaultList= {};
-    this.voiceList={};
+  updateCallbackFnList = [];
+  defaultList = {};
+
+  constructor(defaultList={}){
+    this.defaultList =defaultList;
   }
 
-  static async create(settingUpdateCallback = () => {}) {
-    const o = new Setting();
-    await o.initialize(settingUpdateCallback);
+  static async loadSetting(defaultList={}) {
+    const o = new Setting(defaultList);
+    await o.initialize();
     return o;
   }
 
-  async initialize(settingUpdateCallback) {
-    await this.getDefaultSetting();
-    this.data = await this.getSettingFromStorage();
-    this.initSettingListener(settingUpdateCallback);
+  async initialize() {
+    this.loadDefaultData();
+    await this.loadStorageData();
+    this.initSettingListener();
   }
 
-  initSettingListener(settingUpdateCallback) {
-    chrome.storage.onChanged.addListener((changes, namespace) => {      
+  initSettingListener() {
+    chrome.storage.onChanged.addListener((changes, namespace) => {
       for (var key in changes) {
         this.data[key] = changes[key].newValue;
       }
@@ -59,86 +29,68 @@ export class Setting {
     });
   }
 
-  save() {
-    chrome.storage.local.set(this.data, () => {
-      
-    });
+  async loadDefaultData() {
+    for (let [key, value] of Object.entries(this.defaultList)) {
+      this[key] = value;
+    }
   }
+  loadStorageData() {
+    var settingData = this;
 
-
-  //load setting
-  //if value exist, load. else load default val
-  getSettingFromStorage() {
     return new Promise((resolve, reject) => {
-      var defaultVar=this.defaultList;
-      chrome.storage.local.get(Object.keys(defaultVar), function(loadedSetting) {
-        var currentSetting = {};
-        for (var key in defaultVar) {
-          currentSetting[key] = loadedSetting[key]
-            ? loadedSetting[key]
-            : defaultVar[key];
+      chrome.storage.local.get(Object.keys(settingData), function(storage) {
+        for (var key in settingData) {
+          settingData[key] = storage[key] ? storage[key] : settingData[key];
         }
-        resolve(currentSetting);
+        resolve();
       });
     });
   }
 
-  async getDefaultSetting(){
-    this.defaultList=defaultList;
-    await this.getDefaultVoice();
-    this.defaultList["translateTarget"]=this.getDefaultLang();
-  }
-
-  getDefaultLang() {
-    var lang = parse(navigator.language).language;
-    lang = lang == "zh" ? navigator.language : lang; // chinese lang code fix
-    return lang;
-  }
-
-
-  async getDefaultVoice(){
-    this.voiceList = await this.updateVoiceList();
-
-    for (var key in this.voiceList) {
-      this.defaultList["ttsVoice_"+key]=this.voiceList[key][0]
-    }
-  }
-
-  updateVoiceList() {
-    return new Promise((resolve) => {
-    var voiceList={}
-
-    try {
-    // get voice list and sort by remote first
-    // get matched lang voice
-    chrome.tts.getVoices((voices) => {
-      
-      let filtered = voices.filter((e) => {
-        return e.remote != null && e.lang != null && e.voiceName != null;
-      }); //get one that include remote, lang, voiceName
-
-      filtered.sort((x, y) => {
-        return y.remote - x.remote;
-      }); //get remote first;
-
-      //find matched lang voice and speak
-      for (var item of filtered) {
-        var lang=parse(item.lang).language
-        if(voiceList[lang]){
-          voiceList[lang].push(item.voiceName)
-        }else{
-          voiceList[lang]=  [item.voiceName]
-        }
+  initSettingListener() {
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+      for (var key in changes) {
+        this[key] = changes[key].newValue;
       }
-      resolve(voiceList);
-    });
-    }
-    catch(err) {
-      resolve(voiceList);
-    }
 
+      this.runSettingCallback(changes);
     });
   }
 
+  runSettingCallback(changes) {
+    var keys = Object.keys(changes);
+    keys = keys.filter((item) => !this["ignoreCallbackOptionList"].includes(item));
+
+    if (keys.length == 0) {
+      return;
+    }
+
+    for (var fn of this.updateCallbackFnList) {
+      fn(changes);
+    }
+  }
+
+  save() {
+    chrome.storage.local.set(this, () => {});
+  }
+
+  addUpdateCallback(fn) {
+    this.updateCallbackFnList.push(fn);
+  }
+
+  ignoreCallbackOption(option) {
+    this["ignoreCallbackOptionList"].push(option);
+    save();
+  }
+
+  getSpecificOptions(keyword){
+    var specificOptions={}
+    for (var key in this) {
+      if(key.includes(keyword)){
+        specificOptions[key]=this[key];
+      }
+    }
+    return specificOptions
+  }
 }
 

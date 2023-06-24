@@ -1,7 +1,7 @@
 
 
 #python -m pip install --pre googletrans
-
+# python d
 
 import os
 import json
@@ -28,6 +28,7 @@ i18List=[
 "Translator",
 "Tooltip Activation Hold Key",
 "TTS Activation Hold Key",
+"Detect Type Swap Hold Key",
 "Text Detect Type",
 "Reverse Translate Language",
 "Detect PDF",

@@ -51,7 +51,7 @@
               <!-- single select (default null) and multiple select option -->
               <v-select
                 v-if="!option.optionType  || option.optionType=='multipleSelect' "
-                v-model="setting.data[optionName]"
+                v-model="setting[optionName]"
                 :items="option.optionList"
                 item-text="text"
                 item-value="val"
@@ -66,13 +66,13 @@
                     <span>{{ item.text }}</span>
                   </v-chip>
                   <span v-if="index === 1" class="grey--text text-caption">
-                    (+{{ setting.data[optionName].length - 1 }} others)
+                    (+{{ setting[optionName].length - 1 }} others)
                   </span>
                 </template>
               </v-select>
 
               <!-- color picker option -->
-              <v-text-field v-else-if="option.optionType=='colorPicker'" v-model="setting.data[optionName]" v-mask="mask" :label="option.description" @change="onSelectChange($event, optionName)">
+              <v-text-field v-else-if="option.optionType=='colorPicker'" v-model="setting[optionName]" v-mask="mask" :label="option.description" @change="onSelectChange($event, optionName)">
                 <template v-slot:append>
                   <v-menu v-model="option.menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
                     <template v-slot:activator="{ on }">
@@ -80,7 +80,7 @@
                     </template>
                     <v-card>
                       <v-card-text>
-                        <v-color-picker v-model="setting.data[optionName]" flat                />
+                        <v-color-picker v-model="setting[optionName]" flat                />
                       </v-card-text>
                     </v-card>
                   </v-menu>
@@ -159,7 +159,7 @@
             <v-chip-group
               multiple
               active-class="primary--text"
-              v-model="setting.data['historyRecordActions']"
+              v-model="setting['historyRecordActions']"
               @change="changeSetting"
             >
               <v-chip
@@ -176,7 +176,7 @@
 
           <!-- name="list" tag="div" -->
             <v-list-item
-              v-for="(history, index) in setting.data['historyList']"
+              v-for="(history, index) in setting['historyList']"
               :key="history"
             >
               <v-list-item-content
@@ -221,6 +221,8 @@
 </template>
 <script>
 import { Setting } from "./setting";
+import * as util from './util.js';
+
 
 var langList = {
   Afrikaans: "af",
@@ -329,8 +331,8 @@ var langList = {
   Yoruba: "yo",
   Zulu: "zu",
 };
-var langListWithAuto = Object.assign({ Auto: "auto" }, langList); //copy lang and add auto
-var langListOpposite=swap(langList);
+var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
+var langListOpposite=util.swapJsonKeyValue(langList);
 
 var toggleList = {
   On: "true",
@@ -471,7 +473,7 @@ var detectTypeList = {
   Container: "container",
 };
 
-var translateReverseTargetList = JSON.parse(JSON.stringify(langList)); //copy lang and add auto
+var translateReverseTargetList = util.copyJson(langList); //copy lang and add auto
 translateReverseTargetList["None"] = "null";
 
 var tooltipTextAlignList={
@@ -512,6 +514,10 @@ var settingListData = {
   },
   keyDownTTS: {
     description: chrome.i18n.getMessage("TTS_Activation_Hold_Key"),
+    optionList: keyList,
+  },
+  keyDownDetectSwap:{
+    description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
     optionList: keyList,
   },
   detectType: {
@@ -636,14 +642,6 @@ function getRangeOption(start,end,scale,roundOff) {
   return optionList;
 } 
 
-function swap(json) {
-  var ret = {};
-  for (var key in json) {
-    ret[json[key]] = key;
-  }
-  return ret;
-}
-
 
 export default {
   name: "app",
@@ -673,18 +671,19 @@ export default {
     };
   },
   async mounted() {
-    this.setting = await Setting.create();
+    this.setting = await Setting.loadSetting(await util.getDefaultData());
+
     this.loadTabOptionList();
-    this.addTtsVoiceTabOption();
+    await this.addTtsVoiceTabOption();
   },
 
   methods: {
     onSelectChange(event, name) {
       if (name == "keyDownTooltip" && event != "null") {
-        this.setting.data["useTooltip"] = "false";
+        this.setting["useTooltip"] = "false";
       }
       if (name == "keyDownTTS" && event != "null") {
-        this.setting.data["useTTS"] = "false";
+        this.setting["useTTS"] = "false";
       }
       this.changeSetting();
     },
@@ -695,15 +694,15 @@ export default {
       window.open(newURL);
     },
     removeAllHistory() {
-      this.setting.data["historyList"] = [];
+      this.setting["historyList"] = [];
       this.changeSetting();
     },
     removeHistory(index) {
-      this.setting.data["historyList"].splice(index, 1);
+      this.setting["historyList"].splice(index, 1);
       this.changeSetting();
     },
     downloadCSV() {
-      var arr = this.setting.data["historyList"];
+      var arr = this.setting["historyList"];
       var csv = arr
         .map(function (v) {
           return (
@@ -745,14 +744,13 @@ export default {
         }
       }      
     },
-    addTtsVoiceTabOption(){
+    
+    async addTtsVoiceTabOption(){
       var voiceTabOption={}
+      var availableVoiceList= await util.getAvailableVoiceList();
       
-      for (var key in this.setting.voiceList) {
-        var voiceOptionList={};
-        for (const x of this.setting.voiceList[key]) {
-          voiceOptionList[x]=x;          
-        }
+      for (var key in availableVoiceList) {
+        var voiceOptionList=util.getJsonFromList(availableVoiceList[key]);
         if(langListOpposite[key]){
           voiceTabOption["ttsVoice_"+key]={
             description: this.remainSettingDesc["Voice_for_"] +langListOpposite[key],
@@ -765,7 +763,7 @@ export default {
       this.tabItems["VOICE"] = Object.assign(this.tabItems["VOICE"], voiceTabOption)
     },
     swatchStyle(value,name){
-      const color=this.setting.data[name];
+      const color=this.setting[name];
       const menu=value.menu;
       return {
         "box-shadow": "rgba(0, 0, 0, 0.35) 0px 5px 15px",
