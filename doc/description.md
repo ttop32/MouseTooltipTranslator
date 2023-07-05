@@ -16,7 +16,10 @@ When mouse hover on text, it shows translated tooltip in any language.
 # Supported Translation Languages (using google translate)
 English, Russian, Japanese, Chinese and so on
 
-# Change Log   
+# Change Log
+- 0.1.68
+  - fix shortcut key action
+  - fix youtube subtitle detection
 - 0.1.67
   - fix hidden translator tooltip in bing chat (requested by Moein)
   - add shortcut key for copy translated text

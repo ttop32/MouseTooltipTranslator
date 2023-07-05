@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Mouse Tooltip Translator"
-	},
-	"appDesc": {
-		"message": "माउस टूलटिप अनुवादक Google अनुवाद का उपयोग करके माउसओवर टेक्स्ट का अनुवाद करें"
-	},
 	"Enable_Tooltip": {
 		"message": "Enable Tooltip"
 	},
@@ -28,6 +22,9 @@
 	},
 	"TTS_Activation_Hold_Key": {
 		"message": "TTS Activation Hold Key"
+	},
+	"Detect_Type_Swap_Hold_Key": {
+		"message": "Detect Type Swap Hold Key"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
@@ -98,7 +95,10 @@
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+	"appName": {
+		"message": "Mouse Tooltip Translator With TTS Voice Speech"
+	},
+	"appDesc": {
+		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके"
 	}
 }

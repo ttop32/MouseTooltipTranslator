@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Mouse Tooltip Translator"
-	},
-	"appDesc": {
-		"message": "માઉસ ટૂલટીપ અનુવાદક અનુવાદ Google અનુવાદનો ઉપયોગ કરીને માઉસઓવર ટેક્સ્ટનો અનુવાદ કરે છે"
-	},
 	"Enable_Tooltip": {
 		"message": "Enable Tooltip"
 	},
@@ -28,6 +22,9 @@
 	},
 	"TTS_Activation_Hold_Key": {
 		"message": "TTS Activation Hold Key"
+	},
+	"Detect_Type_Swap_Hold_Key": {
+		"message": "Detect Type Swap Hold Key"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
@@ -98,7 +95,10 @@
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+	"appName": {
+		"message": "Mouse Tooltip Translator - Online Translator"
+	},
+	"appDesc": {
+		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે"
 	}
 }

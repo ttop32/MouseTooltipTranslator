@@ -133,11 +133,11 @@ async function processWord(word, actionType) {
 function getMouseOverWord(x, y) {
   //check is image for ocr
   checkImage();
-
-  var range = util.caretRangeFromPointOnShadowDom(x, y);
-  var range = range ? range: document.caretRangeFromPoint(x, y);
-  //if no range or is not text, give null
-  if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
+  
+  var range = util.caretRangeFromPoint(x,y); 
+  var range = range ? range: util.caretRangeFromPointOnShadowDom(x, y);
+  //if no range, skip
+  if (range == null) {
     return "";
   }
 
@@ -160,6 +160,7 @@ function expandRange(range,type){
     if ( type == "container" ) {
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
+      range.setStart(range.startContainer,0);
     } else {
       range.expand(type);// "word" or "sentence"
     }

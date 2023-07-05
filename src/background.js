@@ -8,23 +8,18 @@
 //tooltip background===========================================================================
 import { Setting } from "./setting";
 import translator from "./translator/index.js";
-import * as util from './util.js';
-
+import * as util from "./util.js";
 
 var setting;
-var settingLoaded = false;
 var recentTranslated = {};
-var recentTab;
 var translateWithCache = cacheFn(doTranslate);
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   (async () => {
-    if (settingLoaded == false) {
-      await getSetting();
-    }
-
+    await getSetting();
+    
     if (request.type === "translate") {
       var translatedResult = await translateWithCache(
         // var translatedResult = await doTranslate(
@@ -33,6 +28,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         request.translateTarget,
         setting["translatorVendor"]
       );
+      
+      translatedResult=translatedResult?translatedResult:{
+        translatedText: "",
+        sourceLang: "en",
+        targetLang: "en",
+      }
+
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
       doTts(
@@ -56,8 +58,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 async function getSetting() {
-  setting = await Setting.loadSetting(await util.getDefaultData());
-  settingLoaded = true;
+  setting=setting?setting: await Setting.loadSetting(await util.getDefaultData());
 }
 
 function recordHistory(request, force = false) {
@@ -68,7 +69,7 @@ function recordHistory(request, force = false) {
       targetText: request.targetText,
     });
     //remove when too many list
-    if (setting["historyList"].length > 10000) {
+    if (setting["historyList"].length > 5000) {
       setting["historyList"].pop();
     }
     setting.save();
@@ -126,6 +127,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "copy",
     title: "copy",
+    contexts: ["all"],
     visible: false,
   });
 });
@@ -133,7 +135,6 @@ chrome.runtime.onInstalled.addListener(() => {
 function updateContext(request) {
   chrome.contextMenus.update("copy", {
     title: "Copy : " + truncate(request.targetText, 20),
-    contexts: ["page", "selection"],
     visible: true,
   });
   recentTranslated = request;
@@ -141,7 +142,7 @@ function updateContext(request) {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId == "copy") {
-    runFunctionOnTab(tab.id, copyText, [recentTranslated.targetText]);
+    copyOntab(tab, recentTranslated.targetText);
   }
 });
 
@@ -157,20 +158,31 @@ function runFunctionOnTab(tabId, func, args) {
   });
 }
 
+function copyOntab(tab, text) {
+  runFunctionOnTab(tab.id, copyText, [text]);
+}
+
 function truncate(str, n) {
   return str.length > n ? str.slice(0, n - 1) + "..." : str;
 }
 
 //command shortcut key=====================================
 chrome.commands.onCommand.addListener((command) => {
-  if (command == "copy-translated-text") {
-    runFunctionOnTab(recentTab.id, copyText, [recentTranslated.targetText]);
-  }
+  (async () => {
+    if (command == "copy-translated-text") {
+      var recentTab = await getCurrentTab();
+      copyOntab(recentTab, recentTranslated.targetText);
+    }
+  })();
 });
 
-chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
-  recentTab = tabs[0];
-});
+
+async function getCurrentTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  console.log( await chrome.tabs.query(queryOptions));
+  return tab;
+}
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
@@ -202,17 +214,17 @@ chrome.runtime.onInstalled.addListener(async () => {
 function cacheFn(fn) {
   var cache = {};
 
-  return function() {
+  return async function() {
     var args = arguments;
     var key = [].slice.call(args).join("");
-    if (1000 < Object.keys(cache).length) {
+    if (5000 < Object.keys(cache).length) {
       cache = {}; //numbers.shift();
     }
 
     if (cache[key]) {
       return cache[key];
     } else {
-      cache[key] = fn.apply(this, args);
+      cache[key] = await fn.apply(this, args);
       return cache[key];
     }
   };
