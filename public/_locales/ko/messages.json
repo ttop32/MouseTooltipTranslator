@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Mouse Tooltip Translator"
-	},
-	"appDesc": {
-		"message": "마우스 툴팁 번역기는 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다"
-	},
 	"Enable_Tooltip": {
 		"message": "Enable Tooltip"
 	},
@@ -28,6 +22,9 @@
 	},
 	"TTS_Activation_Hold_Key": {
 		"message": "TTS Activation Hold Key"
+	},
+	"Detect_Type_Swap_Hold_Key": {
+		"message": "Detect Type Swap Hold Key"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
@@ -98,7 +95,10 @@
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+	"appName": {
+		"message": "Mouse Tooltip Translator"
+	},
+	"appDesc": {
+		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다"
 	}
 }

@@ -115,6 +115,14 @@ export function caretRangeFromPointOnShadowDom(x,y){
     }
 }
   
+export function caretRangeFromPoint(x,y){  
+  var range = document.caretRangeFromPoint(x, y); 
+  //if no range or is not text, give null
+  if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
+    return;
+  }
+  return range;
+}
 
 export function getAllShadows(el = document.body) {
     // https://stackoverflow.com/questions/38701803/how-to-get-element-in-user-agent-shadow-root-with-javascript

@@ -1,7 +1,7 @@
 
 
 #python -m pip install --pre googletrans
-# python d
+# python ./doc/insertLocale.py
 
 import os
 import json
@@ -19,6 +19,7 @@ appName="Mouse Tooltip Translator"
 appDesc="Mouse Tooltip Translator translate mouseover text using google translate"
 
 localeList=['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB', 'en_US', 'es', 'es_419', 'et', 'fa', 'fi', 'fil', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kn', 'ko', 'lt', 'lv', 'ml', 'mr', 'ms', 'nl', 'no', 'pl', 'pt_BR', 'pt_PT',  'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW']
+translateLangCodeDict={ "zh_CN": "zh-CN","zh_TW":"zh-TW"}
 i18List=[
 "Enable Tooltip",
 "Enable TTS",
@@ -79,6 +80,11 @@ def getI18Chrome(text):
 def getI18Id(text):
     return text.replace(" ", "_")
 
+def getTranslateLangCode(lang):
+    if lang in translateLangCodeDict:
+        return translateLangCodeDict[lang]
+    else:
+        return lang
 
 
 
@@ -86,11 +92,21 @@ def addBasicDescription(jsonDict,locale):
     if "appName" not in jsonDict:
         jsonDict["appName"]={"message":appName}
     if "appDesc" not in jsonDict:
-        jsonDict["appDesc"]={"message":translator.translate(appDesc, src="auto", dest=locale).text}
+        try:
+            time.sleep(2)
+            jsonDict["appDesc"]={"message":translator.translate(appDesc, src="auto", dest=getTranslateLangCode(locale)).text}
+        except Exception as e: 
+            print(locale)
+            print(e)
+            jsonDict["appDesc"]={"message":appDesc}
+
+
         
+def getI18IdList():
+    return [getI18Id(i18) for i18 in i18List]
 
 def addI18Description(jsonDict,):
-    idList=[getI18Id(i18) for i18 in i18List]
+    idList=getI18IdList()
     for (i18,i18Id) in zip(i18List,idList):
         if i18Id not in jsonDict:
             jsonDict[i18Id]={"message":i18}
@@ -100,19 +116,18 @@ def insertI18Json(locale):
     jsonData=openJson(filePath)
     addBasicDescription(jsonData,locale)
     addI18Description(jsonData)
+    jsonData=recorderJson(jsonData)
     writeJson(filePath,jsonData)
 
-
-
+def recorderJson(jsonData):
+    orderedList= getI18IdList()+["appName","appDesc"]
+    newDict={}
+    for name in orderedList:
+        newDict[name]=jsonData[name]
+    return newDict
 
 for locale in tqdm(localeList):
-    try:
-        time.sleep(2)
         insertI18Json(locale)
-    except Exception as e: 
-        print(locale)
-        print(e)
-
 
 
 

@@ -1,5 +1,3 @@
-import * as util from '../util.js';
-
 
 export default class BaseTranslator {
   static langCodeJson = {};
@@ -11,17 +9,11 @@ export default class BaseTranslator {
       targetLang = this.encodeLangCode(targetLang);
       var response = await this.requestTranslate(text, fromLang, targetLang);
 
-      var wrappedResponse = this.wrapResponse(
+      var { translatedText, detectedLang } = this.wrapResponse(
         response,
         fromLang,
         targetLang
       );
-
-      if(!wrappedResponse){
-        throw new Error("Response Crash");
-      }
-    var { translatedText, detectedLang } = wrappedResponse;
-      
 
       return {
         translatedText,
@@ -30,11 +22,7 @@ export default class BaseTranslator {
       };
     } catch (error) {
       console.log(error);
-      return {
-        translatedText: "",
-        sourceLang: "en",
-        targetLang: "en",
-      };
+      return;
     }
   }
   static encodeLangCode(lang) {
