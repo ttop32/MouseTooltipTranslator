@@ -118,6 +118,7 @@ async function loadScheduler(lang){
       await worker.initialize(lang);
       await worker.setParameters({
         tessedit_pageseg_mode: Tesseract.PSM.AUTO_ONLY,
+        // user_defined_dpi: "100"
         // tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT,
       });
 

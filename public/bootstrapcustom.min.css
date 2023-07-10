@@ -6159,8 +6159,8 @@
 .bootstrapiso .tooltip .arrow {
   position: absolute;
   display: block;
-  width: .8rem;
-  height: .4rem
+  width: .8em;
+  height: .4em
 }
 
 .bootstrapiso .tooltip .arrow::before {
@@ -6171,7 +6171,7 @@
 }
 
 .bootstrapiso .bs-tooltip-top, .bootstrapiso .bs-tooltip-auto[x-placement^="top"] {
-  padding: .4rem 0
+  padding: .4em 0
 }
 
 .bootstrapiso .bs-tooltip-top .arrow, .bootstrapiso .bs-tooltip-auto[x-placement^="top"] .arrow {
@@ -6180,28 +6180,28 @@
 
 .bootstrapiso .bs-tooltip-top .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="top"] .arrow::before {
   top: 0;
-  border-width: .4rem .4rem 0;
+  border-width: .4em .4em 0;
   border-top-color: #000000b8;
 }
 
 .bootstrapiso .bs-tooltip-right, .bootstrapiso .bs-tooltip-auto[x-placement^="right"] {
-  padding: 0 .4rem
+  padding: 0 .4em
 }
 
 .bootstrapiso .bs-tooltip-right .arrow, .bootstrapiso .bs-tooltip-auto[x-placement^="right"] .arrow {
   left: 0;
-  width: .4rem;
-  height: .8rem
+  width: .4em;
+  height: .8em
 }
 
 .bootstrapiso .bs-tooltip-right .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="right"] .arrow::before {
   right: 0;
-  border-width: .4rem .4rem .4rem 0;
+  border-width: .4em .4em .4em 0;
   border-right-color: #000000b8;
 }
 
 .bootstrapiso .bs-tooltip-bottom, .bootstrapiso .bs-tooltip-auto[x-placement^="bottom"] {
-  padding: .4rem 0
+  padding: .4em 0
 }
 
 .bootstrapiso .bs-tooltip-bottom .arrow, .bootstrapiso .bs-tooltip-auto[x-placement^="bottom"] .arrow {
@@ -6210,33 +6210,33 @@
 
 .bootstrapiso .bs-tooltip-bottom .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   bottom: 0;
-  border-width: 0 .4rem .4rem;
+  border-width: 0 .4em .4em;
   border-bottom-color: #000000b8;
 }
 
 .bootstrapiso .bs-tooltip-left, .bootstrapiso .bs-tooltip-auto[x-placement^="left"] {
-  padding: 0 .4rem
+  padding: 0 .4em
 }
 
 .bootstrapiso .bs-tooltip-left .arrow, .bootstrapiso .bs-tooltip-auto[x-placement^="left"] .arrow {
   right: 0;
-  width: .4rem;
-  height: .8rem
+  width: .4em;
+  height: .8em
 }
 
 .bootstrapiso .bs-tooltip-left .arrow::before, .bootstrapiso .bs-tooltip-auto[x-placement^="left"] .arrow::before {
   left: 0;
-  border-width: .4rem 0 .4rem .4rem;
+  border-width: .4em 0 .4em .4em;
   border-left-color: #000000b8;
 }
 
 .bootstrapiso .tooltip-inner {
   max-width: 200px;
-  padding: .25rem .5rem;
+  padding: .25em .5em;
   color: #fff;
   text-align: center;
   background-color: #000000b8;
-  border-radius: .25rem
+  border-radius: .25em
 }
 
 

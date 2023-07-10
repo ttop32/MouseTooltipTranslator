@@ -1,4 +1,7 @@
 {
+	"Mouse_Tooltip_Translator": {
+		"message": "Mouse Tooltip Translator"
+	},
 	"Enable_Tooltip": {
 		"message": "Enable Tooltip"
 	},
@@ -17,6 +20,9 @@
 	"Translator": {
 		"message": "Translator"
 	},
+	"Text_Detect_Type": {
+		"message": "Text Detect Type"
+	},
 	"Tooltip_Activation_Hold_Key": {
 		"message": "Tooltip Activation Hold Key"
 	},
@@ -25,9 +31,6 @@
 	},
 	"Detect_Type_Swap_Hold_Key": {
 		"message": "Detect Type Swap Hold Key"
-	},
-	"Text_Detect_Type": {
-		"message": "Text Detect Type"
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
@@ -96,9 +99,9 @@
 		"message": "Translate local PDF file"
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Tradutor da dica de ferramenta do mouse"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Tradutor Traduzir MouseOver Texto usando o Google Translate"
+		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate"
 	}
 }

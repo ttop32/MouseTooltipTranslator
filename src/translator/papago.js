@@ -1,14 +1,10 @@
 import BaseTranslator from "./BaseTranslator";
 
 // https://github.com/PinMIlk/nodepapago
-import axios from "axios";
-import axiosFetchAdapter from "@vespaiach/axios-fetch-adapter";
-axios.defaults.adapter = axiosFetchAdapter;
-import Translator from "nodepapago";
-
+import { v4 as uuidv4 } from "uuid";
+import Crypto from "crypto";
 
 var papagoLangCode = {
-  auto: "detect",
   ar: "ar",
   en: "en",
   fa: "fa",
@@ -29,24 +25,82 @@ var papagoLangCode = {
   "zh-TW": "zh-TW",
 };
 
+// var urlTranslate="https://papago.naver.com/apis/nsmt/translate"
+var urlTranslate = "https://papago.naver.com/apis/n2mt/translate";
+var urlDect = "https://papago.naver.com/apis/langs/dect";
+var mainUrl = "https://papago.naver.com/";
+
 export default class google extends BaseTranslator {
   static langCodeJson = papagoLangCode;
+  static version = "";
 
   static async requestTranslate(text, fromLang, targetLang) {
-    return await new Translator({
-      parameter: {
+    if (fromLang == "auto") {
+      var { options, uuid } = await this.getOptionsAndUuid(urlDect);
+      var { langCode } = await this.fetchJson(
+        urlDect,
+        {
+          query: text,
+        },
+        options
+      );
+      fromLang = langCode;
+    }
+
+    var { options, uuid } = await this.getOptionsAndUuid(urlTranslate);
+
+    return await this.fetchJson(
+      urlTranslate,
+      {
+        deviceId: uuid,
+        locale: "ko",
+        dict: "true",
+        dictDisplay: "30",
+        honorific: "false",
+        instant: "false",
+        paging: "false",
         source: fromLang,
         target: targetLang,
-        text,
+        text: text,
       },
-      verbose: true,
-    }).translate();
+      options
+    );
   }
+
   static wrapResponse(res, fromLang, targetLang) {
-    if (res && res["translatedText"]) {
-      var translatedText = res["translatedText"];
-      var detectedLang = res["srcLangType"];
-      return { translatedText, detectedLang };
-    }
+    return {
+      translatedText: res["translatedText"],
+      detectedLang: res["srcLangType"],
+    };
+  }
+
+  static async getVersion() {
+    var data = await this.fetchText(mainUrl);
+    var scriptUrl = mainUrl + "main." + data.match(/"\/main.([^"]+)"/)[1];
+    var data = await this.fetchText(scriptUrl);
+    var version = "v1." + data.match(/"v1.([^"]+)"/)[1];
+    return version;
+  }
+  static async getToken(url) {
+    var uuid = uuidv4();
+    var time = Date.now();
+    this.version = this.version ? this.version : await this.getVersion();
+    var hash = Crypto.createHmac("md5", this.version)
+      .update(`${uuid}\n${url}\n${time}`)
+      .digest("base64");
+    return {
+      uuid,
+      time,
+      hash,
+    };
+  }
+  static async getOptionsAndUuid(url) {
+    var { uuid, time, hash } = await this.getToken(url);
+    var headers = {
+      Authorization: `PPG ${uuid}:${hash}`,
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      Timestamp: time,
+    };
+    return { options: { method: "POST", headers }, uuid };
   }
 }
