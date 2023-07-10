@@ -1,4 +1,3 @@
-
 export default class BaseTranslator {
   static langCodeJson = {};
   static langCodeJsonSwapped = {};
@@ -37,22 +36,18 @@ export default class BaseTranslator {
       : lang;
   }
 
-  static async fetchMessage(url, params, method) {
-    return await fetch(url + new URLSearchParams(params), {
-      method,
-    })
+  static async fetchJson(url,  urlParams = "",options = {}) {
+    var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
+    return await fetch(url + urlParams, options)
       .then((response) => response.json())
       .catch((err) => console.log(err));
   }
-  static async fetchMessageWithBody(url, params, method, body) {
-    return await fetch(url + new URLSearchParams(params), {
-      method,
-      body,
-    })
-      .then((response) => response.json())
+  static async fetchText(url,  urlParams = "",options = {}) {
+    var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
+    return await fetch(url + urlParams, options)
+      .then((response) => response.text())
       .catch((err) => console.log(err));
   }
-
   static async requestTranslate(text, fromLang, targetLang) {
     throw new Error("Not implemented");
   }

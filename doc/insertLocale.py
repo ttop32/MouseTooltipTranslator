@@ -21,16 +21,17 @@ appDesc="Mouse Tooltip Translator translate mouseover text using google translat
 localeList=['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB', 'en_US', 'es', 'es_419', 'et', 'fa', 'fi', 'fil', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kn', 'ko', 'lt', 'lv', 'ml', 'mr', 'ms', 'nl', 'no', 'pl', 'pt_BR', 'pt_PT',  'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW']
 translateLangCodeDict={ "zh_CN": "zh-CN","zh_TW":"zh-TW"}
 i18List=[
+"Mouse Tooltip Translator",
 "Enable Tooltip",
 "Enable TTS",
 "Translate When",
 "Translate From",
 "Translate Into",
 "Translator",
+"Text Detect Type",
 "Tooltip Activation Hold Key",
 "TTS Activation Hold Key",
 "Detect Type Swap Hold Key",
-"Text Detect Type",
 "Reverse Translate Language",
 "Detect PDF",
 "Enable OCR",
@@ -86,22 +87,22 @@ def getTranslateLangCode(lang):
     else:
         return lang
 
-
+def translate(text,lang):
+    try:
+        time.sleep(2)
+        return translator.translate(text, src="auto", dest=getTranslateLangCode(lang)).text
+    except Exception as e: 
+        print(lang)
+        print(e)
+        return text
 
 def addBasicDescription(jsonDict,locale):
     if "appName" not in jsonDict:
-        jsonDict["appName"]={"message":appName}
+        jsonDict["appName"]={"message":translate(appName,locale)}
+
     if "appDesc" not in jsonDict:
-        try:
-            time.sleep(2)
-            jsonDict["appDesc"]={"message":translator.translate(appDesc, src="auto", dest=getTranslateLangCode(locale)).text}
-        except Exception as e: 
-            print(locale)
-            print(e)
-            jsonDict["appDesc"]={"message":appDesc}
+        jsonDict["appDesc"]={"message":translate(appDesc,locale)}
 
-
-        
 def getI18IdList():
     return [getI18Id(i18) for i18 in i18List]
 

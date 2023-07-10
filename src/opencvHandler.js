@@ -104,10 +104,10 @@ function detectText(canvasIn) {
     }
 
     let rect = cv.boundingRect(cnt);
-    var left = Math.max(parseInt(rect.x - 10), 0);
-    var top = Math.max(parseInt(rect.y - 10), 0);
-    var width = Math.min(parseInt(rect.width + 20), w);
-    var height = Math.min(parseInt(rect.height + 20), h);
+    var left = parseInt(Math.max(rect.x - 10, 0));
+    var top = parseInt(Math.max(rect.y - 10, 0));
+    var width = parseInt(Math.min(rect.width + 20, w-left));
+    var height = parseInt(Math.min(rect.height + 20, h-top));
 
     var bbox = { left, top, width, height };
     bboxList.push(bbox);

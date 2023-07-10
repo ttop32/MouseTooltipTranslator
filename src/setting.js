@@ -1,11 +1,11 @@
 // load setting from chrome storage
 // automatic setting update class===============================
 export class Setting {
-  updateCallbackFnList = [];
-  defaultList = {};
+  updateCallbackFnList=[];
+  defaultList={};
 
-  constructor(defaultList={}){
-    this.defaultList =defaultList;
+  constructor(defaultList){
+    this.defaultList=defaultList;
   }
 
   static async loadSetting(defaultList={}) {
@@ -39,7 +39,7 @@ export class Setting {
 
     return new Promise((resolve, reject) => {
       chrome.storage.local.get(Object.keys(settingData), function(storage) {
-        for (var key in settingData) {
+        for (var key in storage) {
           settingData[key] = storage[key] ? storage[key] : settingData[key];
         }
         resolve();
@@ -47,9 +47,12 @@ export class Setting {
     });
   }
 
-  initSettingListener() {
+  initSettingListener() {    
     chrome.storage.onChanged.addListener((changes, namespace) => {
-      for (var key in changes) {
+      for (var key in changes) {   
+        if(key=="updateCallbackFnList"){
+          continue;
+        }
         this[key] = changes[key].newValue;
       }
 
@@ -64,7 +67,7 @@ export class Setting {
     if (keys.length == 0) {
       return;
     }
-
+    
     for (var fn of this.updateCallbackFnList) {
       fn(changes);
     }
@@ -82,15 +85,7 @@ export class Setting {
     this["ignoreCallbackOptionList"].push(option);
     save();
   }
-
-  getSpecificOptions(keyword){
-    var specificOptions={}
-    for (var key in this) {
-      if(key.includes(keyword)){
-        specificOptions[key]=this[key];
-      }
-    }
-    return specificOptions
-  }
+  
+  
 }
 

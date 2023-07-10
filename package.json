@@ -8,7 +8,11 @@
     "build": "webpack --mode=production --config config/webpack.config.js",
     "zip": "npm-build-zip",
     "delete": "del-cli --force ./build",
-    "build-zip": "npm run delete && npm run build && npm run zip"
+    "build-zip": "npm run delete && npm run build && npm run zip",
+
+    "delete-en": "del-cli --force ./build/_locales/*  !./build/_locales/en",
+    "zip-en":"npm-build-zip --name _en",
+    "build-zip-en": "npm run build-zip && npm run delete-en && npm run zip-en"
   },
   "devDependencies": {
     "@mdi/font": "^5.9.55",
@@ -46,6 +50,7 @@
     "tesseract.js": "^4.0.2",
     "throttle-debounce": "^5.0.0",
     "typeface-roboto": "^1.1.13",
+    "uuid": "^9.0.0",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",

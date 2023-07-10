@@ -17,6 +17,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.69
+  - fix css conflict on baidu
 - 0.1.68
   - fix shortcut key action
   - fix youtube subtitle detection

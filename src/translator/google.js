@@ -2,7 +2,7 @@ import BaseTranslator from "./BaseTranslator";
 import { decode } from "he";
 
 const googleTranslateTKK = "448487.932609646";
-const apiPath = "https://translate.googleapis.com/translate_a/t?";
+const apiPath = "https://translate.googleapis.com/translate_a/t";
 
 export default class google extends BaseTranslator {
   static async requestTranslate(text, fromLang, targetLang) {
@@ -10,7 +10,7 @@ export default class google extends BaseTranslator {
 
     var tk = getToken(text, googleTranslateTKK);
 
-    return await this.fetchMessage(apiPath, {
+    return await this.fetchJson(apiPath, {
       client: "te_lib",
       sl: fromLang,
       tl: targetLang,

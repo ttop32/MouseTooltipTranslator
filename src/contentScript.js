@@ -59,6 +59,7 @@ function startMouseoverDetector() {
       document.visibilityState == "visible" &&
       setting["translateWhen"].includes("mouseover")
     ) {
+      checkImage();
       let word = getMouseOverWord(clientX, clientY);
       await processWord(word, "mouseover");
     }
@@ -131,9 +132,6 @@ async function processWord(word, actionType) {
 }
 
 function getMouseOverWord(x, y) {
-  //check is image for ocr
-  checkImage();
-  
   var range = util.caretRangeFromPoint(x,y); 
   var range = range ? range: util.caretRangeFromPointOnShadowDom(x, y);
   //if no range, skip
@@ -199,6 +197,7 @@ function filterWord(word) {
 
 function showTooltip(text, lang) {
   hideTooltip(); //reset tooltip arrow
+  checkContainer();
   applyLangAlignment(lang);
   tooltipContainer.attr("data-original-title", text); //place text on tooltip
   tooltipContainer.tooltip("show");
@@ -211,6 +210,14 @@ function hideTooltip() {
 function applyLangAlignment(lang) {
   var isRtl = rtlLangList.includes(lang) ? "rtl" : "ltr";
   tooltipContainer.attr("dir", isRtl);
+}
+
+function checkContainer(){
+  //restart container if not exist
+  if(!tooltipContainer.parent().is('body')){
+    tooltipContainer.appendTo(document.body);  
+    style.appendTo("head");
+  }
 }
 
 function setTooltipPosition() {
@@ -361,15 +368,15 @@ async function updateRecentTranslated(sourceText, targetText, actionType) {
 
 // setting handling===============================================================
 
-async function getSetting() {
-  setting = await Setting.loadSetting(await util.getDefaultData());
-  setting.addUpdateCallback(settingUpdateCallbackFn);
-}
-
 function settingUpdateCallbackFn(changes) {
   applyStyleSetting();
   selectedText = "";
   removeOcrBlock();
+}
+
+async function getSetting() {
+  setting = await Setting.loadSetting(await util.getDefaultData());
+  setting.addUpdateCallback(settingUpdateCallbackFn);
 }
 
 function applyStyleSetting() {
@@ -414,7 +421,6 @@ function applyStyleSetting() {
       color: ` +
       setting["tooltipFontColor"] +
       ` !important;
-      border-radius: .25rem !important;
       pointer-events: none !important;
     }
     .bootstrapiso .arrow::before {
@@ -422,12 +428,15 @@ function applyStyleSetting() {
       setting["tooltipBackgroundColor"] +
       ` !important;
     }
+    .bootstrapiso .arrow::after {
+      display:none !important;
+    }
     .ocr_text_div{
       position: absolute;
       opacity: 0.7;
       z-index: 100000;
       pointer-events: auto;
-      font-size: 1.5rem;
+      font-size: 2.5em;
       overflow: hidden;
       border: 2px solid CornflowerBlue;
       color:#00000000 !important;

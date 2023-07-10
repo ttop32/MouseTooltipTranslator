@@ -1,7 +1,7 @@
 import BaseTranslator from "./BaseTranslator";
 
 let bingAccessToken;
-let bingBaseUrl = "https://www.bing.com/ttranslatev3?isVertical=1\u0026&";
+let bingBaseUrl = "https://www.bing.com/ttranslatev3";
 var bingLangCode = {
   auto: "auto-detect",
   af: "af",
@@ -84,20 +84,24 @@ export default class google extends BaseTranslator {
   static async requestTranslate(text, fromLang, targetLang) {
     const { token, key, IG, IID } = await getBingAccessToken();
 
-    return await this.fetchMessageWithBody(
+    return await this.fetchJson(
       bingBaseUrl,
       {
         IG,
         IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+        isVertical:"1"
       },
-      "POST",
-      new URLSearchParams({
-        text,
-        fromLang: fromLang,
-        to: targetLang,
-        token,
-        key,
-      })
+      { 
+        method:"POST",
+        body:new URLSearchParams({
+          text,
+          fromLang: fromLang,
+          to: targetLang,
+          token,
+          key,
+        })
+      }
+
     );
   }
   static wrapResponse(res, fromLang, targetLang) {

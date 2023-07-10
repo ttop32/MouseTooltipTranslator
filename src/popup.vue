@@ -508,6 +508,10 @@ var settingListData = {
     description: chrome.i18n.getMessage("Translator"),
     optionList: translatorList,
   },
+  detectType: {
+    description: chrome.i18n.getMessage("Text_Detect_Type"),
+    optionList: detectTypeList,
+  },
   keyDownTooltip: {
     description: chrome.i18n.getMessage("Tooltip_Activation_Hold_Key"),
     optionList: keyList,
@@ -519,10 +523,6 @@ var settingListData = {
   keyDownDetectSwap:{
     description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
     optionList: keyList,
-  },
-  detectType: {
-    description: chrome.i18n.getMessage("Text_Detect_Type"),
-    optionList: detectTypeList,
   },
   translateReverseTarget: {
     description: chrome.i18n.getMessage("Reverse_Translate_Language"),
@@ -600,7 +600,7 @@ var tabItems={
 
 
 var remainSettingDesc={
-  "appName":chrome.i18n.getMessage("appName"),
+  "appName":chrome.i18n.getMessage("Mouse_Tooltip_Translator"),
   "Voice_for_":chrome.i18n.getMessage("Voice_for_"),
 }
 
