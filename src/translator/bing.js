@@ -110,7 +110,6 @@ export default class google extends BaseTranslator {
     if (res && res[0]) {
       var transliteration = ''
       if(ENABLED_TRANSLITERATION.includes(fromLang) && res[1]){
-        // console.log(res[1]['inputTransliteration'])
         transliteration = `<br><br> <h5>${res[1]['inputTransliteration']}</h5>`
       }
       var detectedLang = res[0]["detectedLanguage"]["language"];
