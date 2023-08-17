@@ -462,6 +462,7 @@ function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
     class: "bootstrapiso notranslate", //use bootstrapiso class to apply bootstrap isolation css, prevent google web translate
+    'data-html': "true"
   }).appendTo(document.body);
 
   tooltipContainer.tooltip({
