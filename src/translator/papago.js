@@ -30,7 +30,7 @@ var urlTranslate = "https://papago.naver.com/apis/n2mt/translate";
 var urlDect = "https://papago.naver.com/apis/langs/dect";
 var mainUrl = "https://papago.naver.com/";
 
-export default class google extends BaseTranslator {
+export default class papago extends BaseTranslator {
   static langCodeJson = papagoLangCode;
   static version = "";
 
