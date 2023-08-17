@@ -39,6 +39,9 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - [Blueberryy](https://github.com/Blueberryy)
 - [neoOpus](https://github.com/neoOpus)
 
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
+
 # Change Log
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)   
 
