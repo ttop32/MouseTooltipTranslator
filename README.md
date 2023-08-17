@@ -35,11 +35,38 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - process OCR when mouse over on image      
   
 # Contributors
-- [sanprojects](https://github.com/sanprojects)
-- [Blueberryy](https://github.com/Blueberryy)
-- [neoOpus](https://github.com/neoOpus)
-
 <!-- readme: contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/ttop32">
+            <img src="https://avatars.githubusercontent.com/u/46513852?v=4" width="100;" alt="ttop32"/>
+            <br />
+            <sub><b>Daniel K</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/ardasatata">
+            <img src="https://avatars.githubusercontent.com/u/17568508?v=4" width="100;" alt="ardasatata"/>
+            <br />
+            <sub><b>Arda Satata Fitriajie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/neoOpus">
+            <img src="https://avatars.githubusercontent.com/u/1388336?v=4" width="100;" alt="neoOpus"/>
+            <br />
+            <sub><b>Anoir Ben Tanfous</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Blueberryy">
+            <img src="https://avatars.githubusercontent.com/u/36592509?v=4" width="100;" alt="Blueberryy"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
 
 # Change Log
