@@ -128,7 +128,6 @@ async function processWord(word, actionType) {
     setting["useTooltip"] == "true" ||
     keyDownList[setting["keyDownTooltip"]]
   ) {
-    console.log(setting["useTransliteration"]);
     var tooltipText = concatTransliteration(translatedText, transliteration);
     showTooltip(tooltipText, targetLang);
     updateRecentTranslated(word, translatedText, actionType);

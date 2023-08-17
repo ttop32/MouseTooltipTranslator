@@ -78,9 +78,7 @@ var bingLangCode = {
   "zh-TW": "zh-Hant",
 };
 
-const ENABLED_TRANSLITERATION = ["ja"];
-
-export default class google extends BaseTranslator {
+export default class bing extends BaseTranslator {
   static langCodeJson = bingLangCode;
 
   static async requestTranslate(text, fromLang, targetLang) {
