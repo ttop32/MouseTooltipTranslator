@@ -1,6 +1,7 @@
 
 
 #python -m pip install --pre googletrans
+# pip install tqdm
 # python ./doc/insertLocale.py
 
 import os
@@ -40,6 +41,8 @@ i18List=[
 
 "Tooltip Font Size",
 "Tooltip Width",
+"Tooltip Distance",
+"Tooltip Position",
 "Tooltip Text Align",
 "Tooltip Background Blur",
 "Tooltip Font Color",

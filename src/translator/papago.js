@@ -71,6 +71,7 @@ export default class google extends BaseTranslator {
     return {
       translatedText: res["translatedText"],
       detectedLang: res["srcLangType"],
+      transliteration: "",
     };
   }
 

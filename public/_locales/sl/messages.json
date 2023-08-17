@@ -53,6 +53,12 @@
 	"Tooltip_Width": {
 		"message": "Tooltip Width"
 	},
+	"Tooltip_Distance": {
+		"message": "Tooltip Distance"
+	},
+	"Tooltip_Position": {
+		"message": "Tooltip Position"
+	},
 	"Tooltip_Text_Align": {
 		"message": "Tooltip Text Align"
 	},

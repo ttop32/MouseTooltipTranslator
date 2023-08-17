@@ -78,7 +78,7 @@ var bingLangCode = {
   "zh-TW": "zh-Hant",
 };
 
-const ENABLED_TRANSLITERATION = ['ja']
+const ENABLED_TRANSLITERATION = ["ja"];
 
 export default class google extends BaseTranslator {
   static langCodeJson = bingLangCode;
@@ -91,30 +91,31 @@ export default class google extends BaseTranslator {
       {
         IG,
         IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-        isVertical:"1"
+        isVertical: "1",
       },
-      { 
-        method:"POST",
-        body:new URLSearchParams({
+      {
+        method: "POST",
+        body: new URLSearchParams({
           text,
           fromLang: fromLang,
           to: targetLang,
           token,
           key,
-        })
+        }),
       }
-
     );
   }
   static wrapResponse(res, fromLang, targetLang) {
     if (res && res[0]) {
-      var transliteration = ''
-      if(ENABLED_TRANSLITERATION.includes(fromLang) && res[1]){
-        transliteration = `<br><br> <h5>${res[1]['inputTransliteration']}</h5>`
+      var transliteration = "";
+
+      if (res[1]) {
+        transliteration = res[1]["inputTransliteration"];
       }
+
       var detectedLang = res[0]["detectedLanguage"]["language"];
-      var translatedText = `${res[0]["translations"][0]["text"]}${transliteration}`;
-      return { translatedText, detectedLang };
+      var translatedText = res[0]["translations"][0]["text"];
+      return { translatedText, detectedLang, transliteration };
     }
   }
 }

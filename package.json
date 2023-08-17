@@ -9,9 +9,8 @@
     "zip": "npm-build-zip",
     "delete": "del-cli --force ./build",
     "build-zip": "npm run delete && npm run build && npm run zip",
-
     "delete-en": "del-cli --force ./build/_locales/*  !./build/_locales/en",
-    "zip-en":"npm-build-zip --name _en",
+    "zip-en": "npm-build-zip --name _en",
     "build-zip-en": "npm run build-zip && npm run delete-en && npm run zip-en"
   },
   "devDependencies": {
@@ -43,7 +42,6 @@
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
     "load-script-once": "^2.0.1",
-    "nodepapago": "^3.1.1",
     "popper.js": "^1.16.1",
     "source-map-support": "^0.5.21",
     "stream-browserify": "^3.0.0",

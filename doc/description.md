@@ -17,6 +17,9 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.70
+  - add transliteration (contributed by ardasatata)
+  - add distance adjustment for tooltip (requested by 이준혁)
 - 0.1.69
   - fix css conflict on baidu
 - 0.1.68
