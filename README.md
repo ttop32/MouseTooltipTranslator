@@ -35,10 +35,6 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - process OCR when mouse over on image      
   
 # Contributors
-- [sanprojects](https://github.com/sanprojects)
-- [Blueberryy](https://github.com/Blueberryy)
-- [neoOpus](https://github.com/neoOpus)
-
 <!-- readme: contributors -start -->
 <table>
 <tr>
