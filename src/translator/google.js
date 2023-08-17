@@ -28,6 +28,7 @@ export default class google extends BaseTranslator {
   static wrapResponse(res, fromLang, targetLang) {
     var translatedText = "";
     var detectedLang = "";
+    var transliteration = "";
 
     if (res && res[0] && res[0][0]) {
       if (fromLang == "auto") {
@@ -45,8 +46,8 @@ export default class google extends BaseTranslator {
         translatedText = bTag.join(" ");
       }
 
-      return { translatedText, detectedLang };
-    } 
+      return { translatedText, detectedLang, transliteration };
+    }
   }
 }
 

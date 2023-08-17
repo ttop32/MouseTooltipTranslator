@@ -8,7 +8,7 @@ export default class BaseTranslator {
       targetLang = this.encodeLangCode(targetLang);
       var response = await this.requestTranslate(text, fromLang, targetLang);
 
-      var { translatedText, detectedLang } = this.wrapResponse(
+      var { translatedText, detectedLang, transliteration } = this.wrapResponse(
         response,
         fromLang,
         targetLang
@@ -16,6 +16,7 @@ export default class BaseTranslator {
 
       return {
         translatedText,
+        transliteration,
         sourceLang: this.decodeLangCode(detectedLang),
         targetLang: this.decodeLangCode(targetLang),
       };
@@ -36,13 +37,13 @@ export default class BaseTranslator {
       : lang;
   }
 
-  static async fetchJson(url,  urlParams = "",options = {}) {
+  static async fetchJson(url, urlParams = "", options = {}) {
     var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
     return await fetch(url + urlParams, options)
       .then((response) => response.json())
       .catch((err) => console.log(err));
   }
-  static async fetchText(url,  urlParams = "",options = {}) {
+  static async fetchText(url, urlParams = "", options = {}) {
     var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
     return await fetch(url + urlParams, options)
       .then((response) => response.text())

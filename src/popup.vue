@@ -465,7 +465,12 @@ var tooltipWidth = getRangeOption(1,11,100,0);
 var ttsVolumeList=getRangeOption(1,11,0.1,1);
 var ttsRateList=getRangeOption(5,21,0.1,1);
 var tooltipBackgroundBlurList=getRangeOption(0,21,1,0);
+var tooltipDistanceList=getRangeOption(0,21,1,0);
 
+var tooltipPositionList={
+  Follow: "follow",
+  Fixed: "fixed",
+}
 
 var detectTypeList = {
   Word: "word",
@@ -532,6 +537,10 @@ var settingListData = {
     description: chrome.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
+  useTransliteration: {
+    description: "Enable Transliteration (Experimental)",
+    optionList: toggleList,
+  },
   useOCR: {
     description: chrome.i18n.getMessage("Enable_OCR"),
     optionList: toggleList,
@@ -555,6 +564,14 @@ var visualTabData={
   tooltipWidth: {
     description: chrome.i18n.getMessage("Tooltip_Width"),
     optionList: tooltipWidth,
+  },
+  tooltipDistance: {
+    description: chrome.i18n.getMessage("Tooltip_Distance"),
+    optionList: tooltipDistanceList,
+  },
+  tooltipPosition: {
+    description: chrome.i18n.getMessage("Tooltip_Position"),
+    optionList: tooltipPositionList,
   },
   tooltipTextAlign: {
     description: chrome.i18n.getMessage("Tooltip_Text_Align"),

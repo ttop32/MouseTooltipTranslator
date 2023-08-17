@@ -19,7 +19,7 @@ getSetting();
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   (async () => {
     await getSetting();
-    
+
     if (request.type === "translate") {
       var translatedResult = await translateWithCache(
         // var translatedResult = await doTranslate(
@@ -28,12 +28,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         request.translateTarget,
         setting["translatorVendor"]
       );
-      
-      translatedResult=translatedResult?translatedResult:{
-        translatedText: "",
-        sourceLang: "en",
-        targetLang: "en",
-      }
+
+      translatedResult = translatedResult
+        ? translatedResult
+        : {
+            translatedText: "",
+            transliteration: "",
+            sourceLang: "en",
+            targetLang: "en",
+          };
 
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
@@ -58,7 +61,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 async function getSetting() {
-  setting=setting?setting: await Setting.loadSetting(await util.getDefaultData());
+  setting = setting
+    ? setting
+    : await Setting.loadSetting(await util.getDefaultData());
 }
 
 function recordHistory(request, force = false) {
@@ -176,11 +181,10 @@ chrome.commands.onCommand.addListener((command) => {
   })();
 });
 
-
 async function getCurrentTab() {
   let queryOptions = { active: true, lastFocusedWindow: true };
   let [tab] = await chrome.tabs.query(queryOptions);
-  console.log( await chrome.tabs.query(queryOptions));
+  console.log(await chrome.tabs.query(queryOptions));
   return tab;
 }
 
