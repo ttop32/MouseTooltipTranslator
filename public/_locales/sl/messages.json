@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Prevajalec orodij za miško For Productivity"
+	},
+	"appDesc": {
+		"message": "Prevajalec za mišjo orodje Translate MuseOver besedilo z uporabo Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Prevajalec orodij za miško"
-	},
-	"appDesc": {
-		"message": "Prevajalec za mišjo orodje Translate MuseOver besedilo z uporabo Google Translate"
 	}
 }

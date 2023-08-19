@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Μεταφραστής εργαλείων ποντικιού : Translate Image and Text"
+	},
+	"appDesc": {
+		"message": "Μεταφραστής εργαλείων ποντικιού Μεταφράστε κείμενο ποντικιού χρησιμοποιώντας το Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Μεταφραστής εργαλείων ποντικιού : Translate Image and Text"
-	},
-	"appDesc": {
-		"message": "Μεταφραστής εργαλείων ποντικιού Μεταφράστε κείμενο ποντικιού χρησιμοποιώντας το Google Translate"
 	}
 }

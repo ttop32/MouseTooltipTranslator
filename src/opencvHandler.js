@@ -3,24 +3,25 @@ window.addEventListener(
   function(request) {
     if (request.data.type === "segmentBox") {
       segmentBox(request.data);
+    } else if (request.data.type === "resizeImage") {
+      resizeImage(request.data);
     }
   },
   false
 );
 
-
 async function segmentBox(request) {
   var type = "segmentSuccess";
   var bboxList = [];
   var base64 = request.base64Url;
-  var ratio=1;
+  var ratio = 1;
 
   try {
     var canvas1 = await loadImage(request.base64Url);
-    var [canvas2,ratio] = preprocessImage(canvas1);
+    var [canvas2, ratio] = preprocessImage(canvas1);
+    // var canvas2 = canvas1;
     bboxList = detectText(canvas2);
 
-    // document.body.appendChild(canvasOut);
     base64 = canvas2.toDataURL();
   } catch (err) {
     console.log(err);
@@ -34,7 +35,19 @@ async function segmentBox(request) {
     lang: request.lang,
     bboxList,
     timeId: request.timeId,
-    ratio
+    cvratio: ratio,
+  });
+}
+
+async function resizeImage(request) {
+  var canvas1 = await loadImage(request.base64Url);
+  var [canvas2, ratio] = preprocessImage(canvas1);
+  base64 = canvas2.toDataURL();
+
+  response({
+    base64Url: base64,
+    timeId: request.timeId,
+    cvratio: ratio,
   });
 }
 
@@ -59,10 +72,10 @@ function response(data) {
 }
 
 // opencv=========================================
-
+var paddingSize = 10;
 function detectText(canvasIn) {
-    // https://github.com/qzane/text-detection
-    
+  // https://github.com/qzane/text-detection
+
   var canvasOut = document.createElement("canvas");
   let src = cv.imread(canvasIn);
   let dst = new cv.Mat();
@@ -93,37 +106,53 @@ function detectText(canvasIn) {
     let isRightAngle = [0, 90, 180, 270].some(
       (x) => Math.abs(x - angle) <= 30.0
     );
-    if (cnt.rows < 100) {
-      continue;
-    }
-    if (area < 500 || area > (h / 10) * (w / 10)) {
-      continue;
-    }
-    if (!isRightAngle) {
-      continue;
-    }
-
     let rect = cv.boundingRect(cnt);
-    var left = parseInt(Math.max(rect.x - 10, 0));
-    var top = parseInt(Math.max(rect.y - 10, 0));
-    var width = parseInt(Math.min(rect.width + 20, w-left));
-    var height = parseInt(Math.min(rect.height + 20, h-top));
+    var left = parseInt(Math.max(rect.x - paddingSize, 0));
+    var top = parseInt(Math.max(rect.y - paddingSize, 0));
+    var width = parseInt(Math.min(rect.width + paddingSize * 2, w - left));
+    var height = parseInt(Math.min(rect.height + paddingSize * 2, h - top));
+    var whRatio = Math.max(width / height, height / width);
+
+    // if not sharp, small size, wrong angle, too side pos
+    if (
+      cnt.rows < 100 ||
+      area < 500 ||
+      area > (h / 10) * (w / 10) ||
+      !isRightAngle ||
+      left == 0 ||
+      top == 0 ||
+      left + width == w ||
+      top + height == h
+    ) {
+      continue;
+    }
 
     var bbox = { left, top, width, height };
     bboxList.push(bbox);
 
     // let color = new cv.Scalar(
-    //     Math.round(Math.random() * 255),
-    //     Math.round(Math.random() * 255),
-    //     Math.round(Math.random() * 255)
-    //   );  
+    //   Math.round(Math.random() * 255),
+    //   Math.round(Math.random() * 255),
+    //   Math.round(Math.random() * 255)
+    // );
     // let point1 = new cv.Point(left, top);
     // let point2 = new cv.Point(left + width, top + height);
     // cv.rectangle(src, point1, point2, color, 2, cv.LINE_AA, 0);
+    // console.log(bbox);
   }
+  // cv.imshow(canvasOut, src);
+  // document.body.appendChild(canvasOut);
 
-//   cv.imshow(canvasOut, src);
+  bboxList = sortBbox(bboxList);
   return bboxList;
+}
+
+function sortBbox(bboxList) {
+  return bboxList.sort((a, b) => {
+    if (a.top < b.top) {
+      return -1;
+    }
+  });
 }
 
 function image_resize(src, width, height) {
@@ -159,7 +188,7 @@ function preprocessImage(canvasIn) {
   let dst = new cv.Mat();
 
   cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
-  var ratio=image_resize(src, 700);
+  var ratio = image_resize(src, 700);
 
   cv.imshow(canvasOut, src);
   src.delete();

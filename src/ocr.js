@@ -1,4 +1,5 @@
 import Tesseract from "tesseract.js";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 
 //ocr process, listen image from contents js and respond text
 //1. listen to get image from iframe host
@@ -8,10 +9,14 @@ import Tesseract from "tesseract.js";
 window.addEventListener(
   "message",
   async function(request) {
-    if (request.data.type === "ocr") {
-      doOcr(request.data);
-    } else if (request.data.type === "getBase64") {
+    var request = request.data;
+
+    if (request.type === "ocr") {
+      doOcr(request);
+    } else if (request.type === "getBase64") {
       processBase64(request);
+    } else if (request.type === "initTesseract") {
+      initTesseract(request);
     }
   },
   false
@@ -23,16 +28,12 @@ var schedulerList = {};
 async function doOcr(request) {
   var type = "ocrSuccess";
   var ocrData = [];
-  
+
   try {
     var canvas = await loadImage(request.base64Url);
     // document.body.appendChild(canvas);
 
-    // const start = Date.now();
-    ocrData = await useTesseract(canvas, request.lang, request.bboxList); 
-    // const end = Date.now();
-    // console.log(`Execution time: ${end - start} ms`);
-
+    ocrData = await useTesseract(canvas, request.lang, request.bboxList);
   } catch (err) {
     console.log(err);
     type = "ocrFail";
@@ -67,24 +68,25 @@ function loadImage(url) {
 function useTesseract(image, lang, rectangles) {
   return new Promise(async function(resolve, reject) {
     try {
-      await loadScheduler(lang);
-      var data=[]
+      var data = [];
+      var mode = rectangles.length == 0 ? "auto" : "bbox";
+      var scheduler = await getScheduler(lang, mode);
 
-      
       // //ocr on plain image
-      if(rectangles.length==0){
-        var d = await schedulerList[lang].addJob('recognize', image);
-        data=[d];
-  
-      //ocr on opencv processed image with bbox
-      }else{
+      if (mode == "auto") {
+        var d = await scheduler.addJob("recognize", image);
+        data = [d];
+
+        //ocr on opencv processed image with bbox
+      } else {
         data = await Promise.all(
           rectangles.map((rectangle) =>
-            schedulerList[lang].addJob("recognize", image, { rectangle })
+            scheduler.addJob("recognize", image, {
+              rectangle,
+            })
           )
         );
       }
-
 
       resolve(data);
     } catch (err) {
@@ -93,17 +95,24 @@ function useTesseract(image, lang, rectangles) {
     }
   });
 }
-async function loadScheduler(lang){
-  if (schedulerList[lang]) {
-      return schedulerList[lang];
+async function getScheduler(lang, mode) {
+  await waitUntil(() => schedulerList[lang + "_" + mode] != null, {
+    timeout: WAIT_FOREVER, // === Number.POSITIVE_INFINITY
+  });
+  return schedulerList[lang + "_" + mode];
+}
+
+async function loadScheduler(lang, mode) {
+  if (schedulerList[lang + "_" + mode]) {
+    return schedulerList[lang + "_" + mode];
   }
 
   var isLocal = lang == "jpn_vert" || lang == "jpn_vert_old";
   var scheduler = Tesseract.createScheduler();
-
+  var workerIndexList = mode == "auto" ? [0] : [0, 1];
 
   await Promise.all(
-    [0,1].map(async(i) =>{
+    workerIndexList.map(async (i) => {
       var worker = await Tesseract.createWorker({
         workerBlobURL: false,
         workerPath: chrome.runtime.getURL("/tesseract/worker.min.js"),
@@ -117,17 +126,18 @@ async function loadScheduler(lang){
       await worker.loadLanguage(lang);
       await worker.initialize(lang);
       await worker.setParameters({
-        tessedit_pageseg_mode: Tesseract.PSM.AUTO_ONLY,
-        // user_defined_dpi: "100"
-        // tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT,
+        user_defined_dpi: "100",
+        tessedit_pageseg_mode:
+          mode == "auto"
+            ? Tesseract.PSM.AUTO_ONLY
+            : Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT,
       });
-
       scheduler.addWorker(worker);
     })
   );
 
-
-  schedulerList[lang] = scheduler;
+  schedulerList[lang + "_" + mode] = scheduler;
+  return schedulerList[lang + "_" + mode];
 }
 
 function response(data) {
@@ -135,8 +145,8 @@ function response(data) {
 }
 
 async function processBase64(request) {
-  request.data["base64Url"] = await getBase64(request.data.url);
-  response(request.data);
+  request["base64Url"] = await getBase64(request.url);
+  response(request);
 }
 
 function getBase64(url) {
@@ -151,4 +161,9 @@ function getBase64(url) {
         reader.readAsDataURL(blob);
       });
   });
+}
+
+function initTesseract(request) {
+  loadScheduler(request.lang, "auto");
+  loadScheduler(request.lang, "bbox");
 }

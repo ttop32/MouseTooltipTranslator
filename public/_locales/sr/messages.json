@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Моусе Тоолтип Транслатор With OCR"
+	},
+	"appDesc": {
+		"message": "Моусе Тоолтип преводилац Преведи текст миша помоћу Гоогле Транслате"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Моусе Тоолтип Транслатор : Im my me"
-	},
-	"appDesc": {
-		"message": "Моусе Тоолтип преводилац Преведи текст миша помоћу Гоогле Транслате"
 	}
 }

@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "鼠標工具提示翻譯器"
+	},
+	"appDesc": {
+		"message": "鼠標工具提示轉換器使用Google Translate翻譯鼠標文本"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "鼠標工具提示翻譯器"
-	},
-	"appDesc": {
-		"message": "鼠標工具提示轉換器使用Google Translate翻譯鼠標文本"
 	}
 }

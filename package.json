@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.70",
+  "version": "0.1.71",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@vespaiach/axios-fetch-adapter": "0.2.1",
+    "async-wait-until": "^2.0.12",
     "axios": "^0.21.1",
     "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",

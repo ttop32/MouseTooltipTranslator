@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "마우스 툴팁 번역기"
+	},
+	"appDesc": {
+		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "마우스 툴팁 번역기"
-	},
-	"appDesc": {
-		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다"
 	}
 }

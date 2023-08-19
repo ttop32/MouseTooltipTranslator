@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Перекладач підказки миші with PDF Reader"
+	},
+	"appDesc": {
+		"message": "Перекладач підказки миші перекладати текст MouseOver за допомогою Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Перекладач підказки миші"
-	},
-	"appDesc": {
-		"message": "Перекладач підказки миші перекладати текст MouseOver за допомогою Google Translate"
 	}
 }

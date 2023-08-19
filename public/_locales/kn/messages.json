@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ : Click Translate"
+	},
+	"appDesc": {
+		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ ಗೂಗಲ್ ಅನುವಾದವನ್ನು ಬಳಸಿಕೊಂಡು ಮೌಸೋವರ್ ಪಠ್ಯವನ್ನು ಅನುವಾದಿಸಿ"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ"
-	},
-	"appDesc": {
-		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ ಗೂಗಲ್ ಅನುವಾದವನ್ನು ಬಳಸಿಕೊಂಡು ಮೌಸೋವರ್ ಪಠ್ಯವನ್ನು ಅನುವಾದಿಸಿ"
 	}
 }

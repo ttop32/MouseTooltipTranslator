@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Tłumacz myszy"
+	},
+	"appDesc": {
+		"message": "Tłumacz myszy tłumacz tłumacza tekst myszy za pomocą tłumacza Google"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Tłumacz myszy"
-	},
-	"appDesc": {
-		"message": "Tłumacz myszy tłumacz tłumacza tekst myszy za pomocą tłumacza Google"
 	}
 }

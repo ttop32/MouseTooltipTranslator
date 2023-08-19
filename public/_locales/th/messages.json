@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "เครื่องแปลคำแนะนำเครื่องมือเมาส์ : PDF & TTS"
+	},
+	"appDesc": {
+		"message": "Mouse Tooltip Translator แปลข้อความ MouseOver โดยใช้ Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "เครื่องแปลคำแนะนำเครื่องมือเมาส์"
-	},
-	"appDesc": {
-		"message": "Mouse Tooltip Translator แปลข้อความ MouseOver โดยใช้ Google Translate"
 	}
 }

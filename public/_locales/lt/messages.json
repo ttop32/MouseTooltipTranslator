@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Pelės patarimų vertėjas : Translate Youtube and Manga "
+	},
+	"appDesc": {
+		"message": "Pelės patarimo vertėjas vertėjas versti pelės viršų"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Pelės patarimų vertėjas"
-	},
-	"appDesc": {
-		"message": "Pelės patarimo vertėjas vertėjas versti pelės viršų"
 	}
 }
