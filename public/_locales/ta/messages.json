@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "சுட்டி உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் : Translate Email"
+	},
+	"appDesc": {
+		"message": "மவுஸ் உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் கூகிள் மொழிபெயர்ப்பைப் பயன்படுத்தி மவுஸ்ஓவர் உரையை மொழிபெயர்க்கவும்"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "சுட்டி உதவிக்குறிப்பு மொழிபெயர்ப்பாளர்"
-	},
-	"appDesc": {
-		"message": "மவுஸ் உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் கூகிள் மொழிபெயர்ப்பைப் பயன்படுத்தி மவுஸ்ஓவர் உரையை மொழிபெயர்க்கவும்"
 	}
 }

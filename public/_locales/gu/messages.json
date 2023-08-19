@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "માઉસ ટૂલટિપ અનુવાદક - Online Translator"
+	},
+	"appDesc": {
+		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "માઉસ ટૂલટિપ અનુવાદક - Online Translator"
-	},
-	"appDesc": {
-		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે"
 	}
 }

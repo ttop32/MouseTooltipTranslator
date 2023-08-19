@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Hiire tööriistatõlkija For Chrome and Edge"
+	},
+	"appDesc": {
+		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Hiire tööriistatõlkija For Chrome and Edge"
-	},
-	"appDesc": {
-		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil"
 	}
 }

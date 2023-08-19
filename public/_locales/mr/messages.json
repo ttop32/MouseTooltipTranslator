@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "माउस टूलटिप ट्रान्सलेटर : Simple Translator"
+	},
+	"appDesc": {
+		"message": "माउस टूलटिप ट्रान्सलेटर Google भाषांतर वापरून माउसओव्हर मजकूराचे भाषांतर करा"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "माउस टूलटिप ट्रान्सलेटर"
-	},
-	"appDesc": {
-		"message": "माउस टूलटिप ट्रान्सलेटर Google भाषांतर वापरून माउसओव्हर मजकूराचे भाषांतर करा"
 	}
 }

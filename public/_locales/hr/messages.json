@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Translator Alat -a za miša : Translator & Dictionary"
+	},
+	"appDesc": {
+		"message": "Translator Mouse Tooltip Prevodite tekst MouseOver pomoću Google Translatea"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Translator Alat -a za miša : Translator & Dictionary"
-	},
-	"appDesc": {
-		"message": "Translator Mouse Tooltip Prevodite tekst MouseOver pomoću Google Translatea"
 	}
 }

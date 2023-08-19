@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "מתרגם מסבר כלים לעכבר - Translate Manga"
+	},
+	"appDesc": {
+		"message": "מתרגם מסביר כלים לעכבר תרגם טקסט עכבר באמצעות Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "מתרגם מסבר כלים לעכבר - Translate PDF & Manga"
-	},
-	"appDesc": {
-		"message": "מתרגם מסביר כלים לעכבר תרגם טקסט עכבר באמצעות Google Translate"
 	}
 }

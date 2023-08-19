@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Mtafsiri wa zana ya panya With PDF Reader"
+	},
+	"appDesc": {
+		"message": "Tafsiri ya Tooltip ya Panya Tafsiri maandishi ya Mouseover kwa kutumia Google Tafsiri"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Mtafsiri wa zana ya panya"
-	},
-	"appDesc": {
-		"message": "Tafsiri ya Tooltip ya Panya Tafsiri maandishi ya Mouseover kwa kutumia Google Tafsiri"
 	}
 }

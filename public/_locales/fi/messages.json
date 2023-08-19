@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Hiiren työkaluvihje kääntäjä - Web Translate"
+	},
+	"appDesc": {
+		"message": "Hiiren työkaluvihje kääntäjä Käännä hiirensiirtoteksti Google Translate -sovelluksella"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Hiiren työkaluvihje kääntäjä - Web Translate"
-	},
-	"appDesc": {
-		"message": "Hiiren työkaluvihje kääntäjä Käännä hiirensiirtoteksti Google Translate -sovelluksella"
 	}
 }

@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Traducteur info-bulle de souris"
+	},
+	"appDesc": {
+		"message": "Traducteur d'info-bulle de souris traduire le texte de la souris à l'aide de Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Traducteur info-bulle de souris"
-	},
-	"appDesc": {
-		"message": "Traducteur d'info-bulle de souris traduire le texte de la souris à l'aide de Google Translate"
 	}
 }

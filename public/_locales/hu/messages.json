@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Egér ToolTip fordító with Papago"
+	},
+	"appDesc": {
+		"message": "Egér ToolTip Translator fordítása MouseOver szöveget a Google Translate segítségével"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Egér ToolTip fordító with Papago"
-	},
-	"appDesc": {
-		"message": "Egér ToolTip Translator fordítása MouseOver szöveget a Google Translate segítségével"
 	}
 }

@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Tradutor da dica de ferramenta do mouse"
+	},
+	"appDesc": {
+		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Tradutor da dica de ferramenta do mouse"
-	},
-	"appDesc": {
-		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate"
 	}
 }

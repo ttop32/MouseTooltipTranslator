@@ -1,4 +1,10 @@
 {
+	"appName": {
+		"message": "Mus Tooltip Translator - PDF Translator"
+	},
+	"appDesc": {
+		"message": "Mus Tooltip Translator Translate Mouseover -tekst ved hjælp af Google Translate"
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
@@ -103,11 +109,5 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
-	},
-	"appName": {
-		"message": "Mus Tooltip Translator - PDF Translator"
-	},
-	"appDesc": {
-		"message": "Mus Tooltip Translator Translate Mouseover -tekst ved hjælp af Google Translate"
 	}
 }

@@ -114,7 +114,8 @@ async function processWord(word, actionType) {
   if (
     !translatedText ||
     sourceLang == targetLang ||
-    setting["langExcludeList"].includes(sourceLang)
+    setting["langExcludeList"].includes(sourceLang) ||
+    word == translatedText
   ) {
     hideTooltip();
     return;
@@ -269,11 +270,6 @@ async function translate(word) {
     response = await translateSentence(word, setting["translateReverseTarget"]);
   }
 
-  if (word == response["translatedText"]) {
-    response["translatedText"] = "";
-    response["transliteration"] = "";
-  }
-
   return response;
 }
 
@@ -418,6 +414,7 @@ function settingUpdateCallbackFn(changes) {
   applyStyleSetting();
   selectedText = "";
   removeOcrBlock();
+  initIframeTesseract();
 }
 
 async function getSetting() {
@@ -441,14 +438,14 @@ function applyStyleSetting() {
       `px  !important;
       position: fixed !important;
       z-index: 100000200 !important;
-      background-color: #00000000  !important;
+      background: none !important;
       pointer-events: none !important;
       display: inline-block !important;
     }
     .bootstrapiso .tooltip {
       width:auto  !important;
       height:auto  !important;
-      background:transparent  !important;
+      background: none !important;
       border:none !important;
       border-radius: 0px !important;
       visibility: visible  !important;
@@ -486,13 +483,11 @@ function applyStyleSetting() {
     .ocr_text_div{
       position: absolute;
       opacity: 0.7;
-      z-index: 100000;
-      pointer-events: auto;
-      font-size: 2.5em;
+      font-size: 20px;
       overflow: hidden;
       border: 2px solid CornflowerBlue;
-      color:#00000000 !important;
-      background-color: #00000000 !important
+      color: transparent !important;
+      background: none !important;
     }
     `
   );
@@ -576,7 +571,7 @@ async function checkImage() {
   ) {
     return;
   }
-
+  var ratio = 1;
   var ele = mouseTarget;
   var url = ele.src;
   var ocrBaseData = {
@@ -589,12 +584,21 @@ async function checkImage() {
   await initOCR();
 
   var base64Url = await getBase64Image(url);
-  var _ = [
-    await processOcr(ocrBaseData, base64Url, ele, "BLUE"),
-    await processOcr(ocrBaseData, base64Url, ele, "RED", true),
-  ];
+
+  //run both,  ocr with opencv rect, ocr without opencv
+  // const start = Date.now();
+  await Promise.all([
+    processOcr(ocrBaseData, base64Url, ele, "BLUE", ratio),
+    processOcr(ocrBaseData, base64Url, ele, "RED", ratio, "segment"),
+  ]);
+  // const end = Date.now();
+  // console.log(`Execution time: ${end - start} ms`);
 
   setElementMouseStatusIdle(ele);
+}
+
+async function base64Resize(base64Url) {
+  return await getMessageResponse({ type: "resizeImage", base64Url });
 }
 
 function setElementMouseStatusLoading(ele) {
@@ -609,18 +613,48 @@ async function processOcr(
   base64Url,
   mouseTarget,
   color,
-  segment = false
+  ratio,
+  mode = ""
 ) {
   var bboxList = [];
-  var ratio = 1;
+
   //ocr process with opencv , then display
-  if (segment) {
-    var { bboxList, base64Url, ratio } = await requestSegmentBox(
+  if (mode == "segment") {
+    var { bboxList, base64Url, cvratio } = await requestSegmentBox(
       ocrBaseData,
       base64Url
     );
+    if (bboxList.length == 0) {
+      return;
+    }
+    ratio *= cvratio;
+    await Promise.all(
+      bboxList.map(async (bbox) => {
+        await getOcrAndShow(ocrBaseData, base64Url, mouseTarget, color, ratio, [
+          bbox,
+        ]);
+      })
+    );
+  } else {
+    await getOcrAndShow(
+      ocrBaseData,
+      base64Url,
+      mouseTarget,
+      color,
+      ratio,
+      bboxList
+    );
   }
+}
 
+async function getOcrAndShow(
+  ocrBaseData,
+  base64Url,
+  mouseTarget,
+  color,
+  ratio,
+  bboxList
+) {
   var res = await requestOcr(ocrBaseData, bboxList, base64Url);
   showOcrData(mouseTarget, res.ocrData, ratio, color);
 }
@@ -628,6 +662,14 @@ async function processOcr(
 async function initOCR() {
   await createIframe("ocrFrame", "/ocr.html");
   await createIframe("opencvFrame", "/opencvHandler.html");
+  initIframeTesseract();
+}
+
+function initIframeTesseract() {
+  getMessageResponse({
+    type: "initTesseract",
+    lang: setting["ocrDetectionLang"],
+  });
 }
 
 async function createIframe(name, htmlPath) {
@@ -637,15 +679,19 @@ async function createIframe(name, htmlPath) {
       return;
     }
 
+    var showFrame = false;
+    var css = showFrame
+      ? {
+          width: "700",
+          height: "700",
+        }
+      : { display: "none" };
+
     iFrames[name] = $("<iframe />", {
       name: name,
       id: name,
       src: chrome.runtime.getURL(htmlPath),
-      css: {
-        display: "none",
-        // width:"700",
-        // height:"700"
-      },
+      css,
     })
       .appendTo("body")
       .on("load", function() {
@@ -659,7 +705,7 @@ function showOcrData(target, ocrData, ratio, color) {
   var textBoxList = getTextBoxList(ocrData);
 
   for (var textBox of textBoxList) {
-    createOcrTextBlock(target, textBox["bbox"], textBox["text"], ratio, color);
+    createOcrTextBlock(target, textBox, ratio, color);
   }
 }
 
@@ -668,42 +714,53 @@ function getTextBoxList(ocrData) {
   for (var ocrDataItem of ocrData) {
     var { data } = ocrDataItem;
     for (var block of data.blocks) {
-      for (var paragraph of block.paragraphs) {
-        var text = getTextWithoutSpecialChar(paragraph["text"]);
-        text = filterWord(text); //filter out one that is url,over 1000length,no normal char
-        paragraph["text"] = text;
+      // for (var paragraph of block.paragraphs) {
+      var text = filterOcrText(block["text"]);
+      text = filterWord(text); //filter out one that is url,over 1000length,no normal char
+      // console.log(text);
+      // console.log(block["confidence"]);
 
-        //if string contains only whitespace, skip
-        if (/^\s*$/.test(paragraph["text"])) {
-          continue;
-        }
-        // console.log(paragraph["confidence"] + "==" + text);
-        // console.log(paragraph);
-        textBoxList.push(paragraph);
+      //if string contains only whitespace, skip
+      if (/^\s*$/.test(text) || text.length < 3 || block["confidence"] < 60) {
+        continue;
       }
+
+      block["confidence"] = parseInt(block["confidence"]);
+      block["text"] = text;
+      textBoxList.push(block);
+      // }
     }
   }
   return textBoxList;
 }
 
-function createOcrTextBlock(target, bbox, text, ratio, color) {
+function createOcrTextBlock(target, textBox, ratio, color) {
   //init bbox
   var $div = $("<div/>", {
     class: "ocr_text_div notranslate",
-    text: text,
+    text: textBox["text"],
     css: {
       border: "2px solid " + color,
     },
   }).appendTo(target.parentElement);
 
+  // change z-index
+  var zIndex =
+    Math.max(0, 100000 - getBboxSize(textBox["bbox"])) + textBox["confidence"];
+  $div.css("z-index", zIndex);
+
   // position
-  setLeftTopWH(target, bbox, $div, ratio);
+  setLeftTopWH(target, textBox["bbox"], $div, ratio);
   $(window).on("resize", (e) => {
-    setLeftTopWH(target, bbox, $div, ratio);
+    setLeftTopWH(target, textBox["bbox"], $div, ratio);
   });
 
   //record current ocr block list for future delete
   ocrBlock.push($div);
+}
+
+function getBboxSize(bbox) {
+  return (bbox["x1"] - bbox["x0"]) * (bbox["y1"] - bbox["y0"]);
 }
 
 function setLeftTopWH(target, bbox, $div, ratio) {
@@ -726,9 +783,9 @@ function setLeftTopWH(target, bbox, $div, ratio) {
   });
 }
 
-function getTextWithoutSpecialChar(text) {
+function filterOcrText(text) {
   return text.replace(
-    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&*()_|+\-=;:'"<>\{\}\[\]\\\/]/gi,
+    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&“*()_|+\-=;【】:'"<>\{\}\[\]\\\/]/gi,
     ""
   ); //remove special char
 }
@@ -768,7 +825,7 @@ async function requestSegmentBox(ocrBaseData, base64Url) {
 
 async function getMessageResponse(data) {
   return new Promise(function(resolve, reject) {
-    var timeId = Date.now();
+    var timeId = Date.now() + Math.random();
     data["timeId"] = timeId;
 
     //listen iframe response
