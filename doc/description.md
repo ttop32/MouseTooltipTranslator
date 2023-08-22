@@ -17,6 +17,10 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.72
+  - change default keyset
+  - add writing translating feature
+  - add website filter (requested by Serge)
 - 0.1.71
   - fix ocr block recognition
 - 0.1.70

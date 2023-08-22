@@ -9,7 +9,8 @@ var isUrl = require("is-url");
 import { enableSelectionEndEvent, getSelectionText } from "./selection";
 import { Setting } from "./setting";
 import * as util from "./util.js";
-import { encode } from "he";
+import { encode, decode } from "he";
+import matchUrl from "match-url-wildcard";
 
 //init environment var======================================================================\
 var setting;
@@ -28,6 +29,7 @@ const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
 var mouseoverIntervalTime = 700;
+var currentWritingElement = "";
 var rtlLangList = [
   "ar", //Arabic
   "iw", //Hebrew
@@ -42,10 +44,13 @@ var rtlLangList = [
 
 $(async function() {
   loadDestructor(); //remove previous tooltip script
-  addElementEnv(); //add tooltip container
   await getSetting(); //load setting
-  applyStyleSetting(); //add tooltip style
+  if (checkExcludeUrl()) {
+    return;
+  }
   detectPDF(); //check current page is pdf
+  addElementEnv(); //add tooltip container
+  applyStyleSetting(); //add tooltip style
   loadEventListener(); //load event listener to detect mouse move
   startMouseoverDetector(); // start current mouseover text detector
   startTextSelectDetector(); // start current text select detector
@@ -108,7 +113,7 @@ async function processWord(word, actionType) {
     sourceLang,
     targetLang,
     transliteration,
-  } = await translate(word);
+  } = await translateWithReverse(word);
   //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
   if (
@@ -126,8 +131,8 @@ async function processWord(word, actionType) {
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
   if (
-    setting["useTooltip"] == "true" ||
-    keyDownList[setting["keyDownTooltip"]]
+    setting["showTooltipWhen"] == "always" ||
+    keyDownList[setting["showTooltipWhen"]]
   ) {
     var tooltipText = concatTransliteration(translatedText, transliteration);
     showTooltip(tooltipText, targetLang);
@@ -135,7 +140,7 @@ async function processWord(word, actionType) {
   }
 
   //if use_tts is on or activation key is pressed, do tts
-  if (setting["useTTS"] == "true" || keyDownList[setting["keyDownTTS"]]) {
+  if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
     tts(word, sourceLang);
   }
 }
@@ -259,15 +264,23 @@ function setTooltipPosition(calledFrom = "") {
   );
 }
 
-async function translate(word) {
-  var response = await translateSentence(word, setting["translateTarget"]);
+async function translateWithReverse(word) {
+  var response = await getTranslation(
+    word,
+    setting["translateSource"],
+    setting["translateTarget"]
+  );
 
   //if to,from lang are same and reverse translate on
   if (
     setting["translateTarget"] == response.sourceLang &&
     setting["translateReverseTarget"] != "null"
   ) {
-    response = await translateSentence(word, setting["translateReverseTarget"]);
+    response = await getTranslation(
+      word,
+      response.sourceLang,
+      setting["translateReverseTarget"]
+    );
   }
 
   return response;
@@ -283,25 +296,70 @@ function concatTransliteration(translatedText, transliteration) {
   )}</h5>`;
 }
 
+async function translateWriting() {
+  if (!currentWritingElement) {
+    return;
+  }
+  var stagedWritingElement = currentWritingElement;
+
+  // get writing text
+  var writingText = getWritingText();
+
+  // skip if no text
+  if (!writingText) {
+    return;
+  }
+
+  // translate
+  var { translatedText } = await getTranslation(
+    writingText,
+    "auto",
+    setting["writingLanguage"]
+  );
+
+  if (
+    !translatedText ||
+    stagedWritingElement != currentWritingElement ||
+    writingText != getWritingText()
+  ) {
+    return;
+  }
+
+  // document.execCommand("insertText", false, translatedText);
+  document.execCommand("insertHTML", false, translatedText);
+}
+
+function getWritingText() {
+  // get current selected text, if no select, get all
+  if (!window.getSelection().toString()) {
+    document.execCommand("selectAll", false, null);
+  }
+
+  //get html
+  var writingText = "";
+  var sel = window.getSelection();
+  var html = "";
+  if (sel.rangeCount) {
+    var container = document.createElement("div");
+    for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+      container.appendChild(sel.getRangeAt(i).cloneContents());
+    }
+    html = container.innerHTML;
+  }
+
+  writingText = html.toString() ? html : window.getSelection().toString();
+  return writingText;
+}
+
 //event Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
 
 function loadEventListener() {
+  loadWritingFocusListener();
+
   //use mouse position for tooltip position
   addEventHandler("mousemove", (e) => {
     //if mouse moved far distance two times, check as mouse moved
-    if (
-      mouseMoved == false &&
-      Math.abs(e.clientX - clientX) + Math.abs(e.clientY - clientY) > 3
-    ) {
-      if (mouseMovedCount < 2) {
-        mouseMovedCount += 1;
-      } else {
-        mouseMoved = true;
-      }
-    }
-    clientX = e.clientX;
-    clientY = e.clientY;
-    mouseTarget = e.target;
+    setMouseStatus(e);
     checkImage();
     setTooltipPosition("mousemove");
   });
@@ -322,16 +380,24 @@ function loadEventListener() {
 
     if (
       [
-        setting["keyDownTooltip"],
-        setting["keyDownTTS"],
+        setting["showTooltipWhen"],
+        setting["TTSWhen"],
         setting["keyDownDetectSwap"],
+        setting["keyDownTranslateWriting"],
       ].includes(e.code)
     ) {
       // check activation hold key pressed, run tooltip again with key down value
       activatedWord = null; //restart word process
+      //restart select if selected value exist
       if (selectedText != "") {
-        //restart select if selected value exist
         processWord(selectedText, "select");
+      }
+
+      if (setting["keyDownTranslateWriting"] == e.code) {
+        translateWriting();
+      }
+      if (e.key == "Alt") {
+        e.preventDefault();
       }
     }
   });
@@ -359,6 +425,46 @@ function loadEventListener() {
   });
 }
 
+function loadWritingFocusListener() {
+  var writingField =
+    ':text[type="text"], :text[type="search"], textarea, [contenteditable="true"]';
+
+  // check already has focus
+  var currentFocus = $(":focus");
+  if (currentFocus.is(writingField)) {
+    currentWritingElement = currentFocus;
+  }
+
+  // add focus listener
+  $(writingField)
+    .on("focus", function() {
+      currentWritingElement = $(this);
+    })
+    .on("blur", function() {
+      currentWritingElement = "";
+    });
+}
+
+function setMouseStatus(e) {
+  checkMouseMovedWithoutZiggle(e.clientX, e.clientY);
+  clientX = e.clientX;
+  clientY = e.clientY;
+  mouseTarget = e.target;
+}
+
+function checkMouseMovedWithoutZiggle(x, y) {
+  if (
+    mouseMoved == false &&
+    Math.abs(x - clientX) + Math.abs(y - clientY) > 3
+  ) {
+    if (mouseMovedCount < 2) {
+      mouseMovedCount += 1;
+    } else {
+      mouseMoved = true;
+    }
+  }
+}
+
 //send to background.js for background processing  ===========================================================================
 function sendMessagePromise(params) {
   return new Promise((resolve, reject) => {
@@ -376,11 +482,12 @@ function sendMessagePromise(params) {
   });
 }
 
-async function translateSentence(word, translateTarget) {
+async function getTranslation(word, translateSource, translateTarget) {
   return await sendMessagePromise({
     type: "translate",
     word: word,
-    translateTarget: translateTarget,
+    translateSource,
+    translateTarget,
   });
 }
 
@@ -505,6 +612,15 @@ function detectPDF() {
   }
 }
 
+function checkExcludeUrl() {
+  // iframe parent url check
+  var url =
+    window.location != window.parent.location
+      ? document.referrer
+      : document.location.href;
+  return matchUrl(url, setting["websiteExcludeList"]);
+}
+
 function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
@@ -516,6 +632,7 @@ function addElementEnv() {
     placement: "top",
     container: "#mttContainer",
     trigger: "manual",
+    boundary: "document",
   });
 
   style = $("<style/>", {

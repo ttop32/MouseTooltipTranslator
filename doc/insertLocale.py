@@ -21,23 +21,27 @@ localeList = ['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB
               'ja', 'kn', 'ko', 'lt', 'lv', 'ml', 'mr', 'ms', 'nl', 'no', 'pl', 'pt_BR', 'pt_PT',  'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW']
 translateLangCodeDict = {"zh_CN": "zh-CN", "zh_TW": "zh-TW"}
 i18List = [
+
+    "Main                                      ",
     "Mouse Tooltip Translator",
-    "Enable Tooltip",
-    "Enable TTS",
+    "Show Tooltip When",
+    "TTS When",
     "Translate When",
     "Translate From",
     "Translate Into",
     "Translator",
     "Text Detect Type",
-    "Tooltip Activation Hold Key",
-    "TTS Activation Hold Key",
     "Detect Type Swap Hold Key",
+    "Translate Writing Hotkey",
+    "Writing Language",
     "Reverse Translate Language",
     "Detect PDF",
     "Enable OCR",
     "OCR Detection Language",
     "Exclude Language",
+    "Exclude Website",
 
+    "Visual                                      ",
     "Tooltip Font Size",
     "Tooltip Width",
     "Tooltip Distance",
@@ -47,10 +51,12 @@ i18List = [
     "Tooltip Font Color",
     "Tooltip Background Color",
 
+    "Voice                                      ",
     "TTS Speed",
     "TTS Volume",
     "Voice for ",
 
+    "About                                      ",
     "Review Page",
     "Comment on this extension",
     "Source code",
