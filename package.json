@@ -43,6 +43,7 @@
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
     "load-script-once": "^2.0.1",
+    "match-url-wildcard": "^0.0.5",
     "popper.js": "^1.16.1",
     "source-map-support": "^0.5.21",
     "stream-browserify": "^3.0.0",

@@ -3,16 +3,16 @@
 import { parse } from "bcp-47";
 
 var defaultData = {
-  useTooltip: "true",
-  useTTS: "false",
+  showTooltipWhen: "always",
+  TTSWhen: "ControlLeft",
   translateWhen: "mouseoverselect",
   translateSource: "auto",
   //translateTarget: getDefaultLang(),
   translatorVendor: "google",
   detectType: "sentence",
-  keyDownTooltip: "null",
-  keyDownTTS: "null",
   keyDownDetectSwap: "null",
+  keyDownTranslateWriting: "AltLeft",
+  writingLanguage: "en",
   translateReverseTarget: "null",
   detectPDF: "true",
   useTransliteration: "false",
@@ -31,6 +31,7 @@ var defaultData = {
   historyList: [],
   historyRecordActions: [],
   langExcludeList: [],
+  websiteExcludeList: ["*.test.com"],
   ignoreCallbackOptionList: ["historyList"],
 };
 

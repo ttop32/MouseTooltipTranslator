@@ -40,13 +40,12 @@ export default class google extends BaseTranslator {
       }
 
       //clear html tag and decode html entity
-      var translatedText = decode(translatedText);
-      var bTag = translatedText.match(/(?<=<b>).+?(?=<\/b>)/g); //text between <b> </b>
-      if (bTag && bTag[0]) {
-        translatedText = bTag.join(" ");
-      }
+      var textDecoded = decode(translatedText);
+      var textWithoutITag = textDecoded.replace(/(<i>).+?(<\/i>)/gi, " ");
+      var textWithoutBTag = textWithoutITag.replace(/<\/?b[^>]*>/g, " ");
+      var textWithTrim = textWithoutBTag.replace(/\s\s+/g, " ").trim();
 
-      return { translatedText, detectedLang, transliteration };
+      return { translatedText: textWithTrim, detectedLang, transliteration };
     }
   }
 }

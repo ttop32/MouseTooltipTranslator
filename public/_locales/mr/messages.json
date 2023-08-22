@@ -5,14 +5,17 @@
 	"appDesc": {
 		"message": "माउस टूलटिप ट्रान्सलेटर Google भाषांतर वापरून माउसओव्हर मजकूराचे भाषांतर करा"
 	},
+	"Main______________________________________": {
+		"message": "Main                                      "
+	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"Enable_Tooltip": {
-		"message": "Enable Tooltip"
+	"Show_Tooltip_When": {
+		"message": "Show Tooltip When"
 	},
-	"Enable_TTS": {
-		"message": "Enable TTS"
+	"TTS_When": {
+		"message": "TTS When"
 	},
 	"Translate_When": {
 		"message": "Translate When"
@@ -29,14 +32,14 @@
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
 	},
-	"Tooltip_Activation_Hold_Key": {
-		"message": "Tooltip Activation Hold Key"
-	},
-	"TTS_Activation_Hold_Key": {
-		"message": "TTS Activation Hold Key"
-	},
 	"Detect_Type_Swap_Hold_Key": {
 		"message": "Detect Type Swap Hold Key"
+	},
+	"Translate_Writing_Hotkey": {
+		"message": "Translate Writing Hotkey"
+	},
+	"Writing_Language": {
+		"message": "Writing Language"
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
@@ -52,6 +55,12 @@
 	},
 	"Exclude_Language": {
 		"message": "Exclude Language"
+	},
+	"Exclude_Website": {
+		"message": "Exclude Website"
+	},
+	"Visual______________________________________": {
+		"message": "Visual                                      "
 	},
 	"Tooltip_Font_Size": {
 		"message": "Tooltip Font Size"
@@ -77,6 +86,9 @@
 	"Tooltip_Background_Color": {
 		"message": "Tooltip Background Color"
 	},
+	"Voice______________________________________": {
+		"message": "Voice                                      "
+	},
 	"TTS_Speed": {
 		"message": "TTS Speed"
 	},
@@ -85,6 +97,9 @@
 	},
 	"Voice_for_": {
 		"message": "Voice for "
+	},
+	"About______________________________________": {
+		"message": "About                                      "
 	},
 	"Review_Page": {
 		"message": "Review Page"

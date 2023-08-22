@@ -71,6 +71,22 @@
                 </template>
               </v-select>
 
+              <!-- combo box option -->
+              <v-combobox
+                v-else-if="option.optionType=='comboBox'"
+                v-model="setting[optionName]"
+                :items="option.optionList"
+                item-text="text"
+                item-value="val"
+                :label="option.description"
+                @change="onSelectChange($event, optionName)"
+                tabName              
+                chips
+                multiple    
+                deletable-chips
+              >
+              </v-combobox>
+
               <!-- color picker option -->
               <v-text-field v-else-if="option.optionType=='colorPicker'" v-model="setting[optionName]" v-mask="mask" :label="option.description" @change="onSelectChange($event, optionName)">
                 <template v-slot:append>
@@ -478,8 +494,12 @@ var detectTypeList = {
   Container: "container",
 };
 
-var translateReverseTargetList = util.copyJson(langList); //copy lang and add auto
-translateReverseTargetList["None"] = "null";
+var translateListWithNone = util.copyJson(langList); //copy lang and add auto
+translateListWithNone["None"] = "null";
+
+var keyListWithAlways = util.copyJson(keyList); //copy lang and add auto
+keyListWithAlways["Always"] = "always";
+
 
 var tooltipTextAlignList={
   Center:"center",
@@ -489,13 +509,13 @@ var tooltipTextAlignList={
 }
 
 var settingListData = {
-  useTooltip: {
-    description: chrome.i18n.getMessage("Enable_Tooltip"),  // public/_locales/en/messages.json is used 
-    optionList: toggleList,
+  showTooltipWhen: {
+    description: chrome.i18n.getMessage("Show_Tooltip_When"),  // public/_locales/en/messages.json is used 
+    optionList: keyListWithAlways,
   },
-  useTTS: {
-    description: chrome.i18n.getMessage("Enable_TTS"),
-    optionList: toggleList,
+  TTSWhen: {
+    description: chrome.i18n.getMessage("TTS_When"),
+    optionList: keyListWithAlways,
   },
   translateWhen: {
     description: chrome.i18n.getMessage("Translate_When"),
@@ -517,21 +537,21 @@ var settingListData = {
     description: chrome.i18n.getMessage("Text_Detect_Type"),
     optionList: detectTypeList,
   },
-  keyDownTooltip: {
-    description: chrome.i18n.getMessage("Tooltip_Activation_Hold_Key"),
-    optionList: keyList,
-  },
-  keyDownTTS: {
-    description: chrome.i18n.getMessage("TTS_Activation_Hold_Key"),
-    optionList: keyList,
-  },
   keyDownDetectSwap:{
     description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
     optionList: keyList,
   },
+  keyDownTranslateWriting:{
+    description: chrome.i18n.getMessage("Translate_Writing_Hotkey"),
+    optionList: keyList,
+  },
+  writingLanguage:{
+    description: chrome.i18n.getMessage("Writing_Language"),
+    optionList: langList,    
+  },
   translateReverseTarget: {
     description: chrome.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: translateReverseTargetList,
+    optionList: translateListWithNone,
   },
   detectPDF: {
     description: chrome.i18n.getMessage("Detect_PDF"),
@@ -553,6 +573,11 @@ var settingListData = {
     description: chrome.i18n.getMessage("Exclude_Language"),
     optionList: langList,
     optionType: "multipleSelect",
+  },
+  websiteExcludeList:{
+    description: chrome.i18n.getMessage("Exclude_Website"),
+    optionList: "",
+    optionType: "comboBox",
   },
 };
 
@@ -696,12 +721,6 @@ export default {
 
   methods: {
     onSelectChange(event, name) {
-      if (name == "keyDownTooltip" && event != "null") {
-        this.setting["useTooltip"] = "false";
-      }
-      if (name == "keyDownTTS" && event != "null") {
-        this.setting["useTTS"] = "false";
-      }
       this.changeSetting();
     },
     changeSetting() {
@@ -791,6 +810,10 @@ export default {
         borderRadius: menu ? '50%' : '4px',
         transition: 'border-radius 200ms ease-in-out'
       }
+    },
+    deleteItem(item) {
+      console.log(item);
+      // this.myModel = this.myModel.filter(find => find !== item);
     }
   },
 };
