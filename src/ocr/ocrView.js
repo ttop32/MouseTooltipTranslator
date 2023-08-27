@@ -35,7 +35,7 @@ export async function checkImage(setting, mouseTarget) {
     setElementMouseStatusIdle(ele);
     return;
   }
-  console.log(base64Url);
+
   //run both,  ocr with opencv rect, ocr without opencv
   // const start = Date.now();
   await Promise.all([

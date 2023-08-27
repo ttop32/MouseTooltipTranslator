@@ -74,9 +74,7 @@ function useTesseract(image, lang, rectangles, mode) {
       var data = [];
       // var mode = rectangles.length == 0 ? "auto" : "bbox";
 
-      console.log(lang + "_=======" + mode);
       var scheduler = await getScheduler(lang, mode);
-      console.log(lang + "_-------" + mode);
       // //ocr on plain image
       if (mode == "auto") {
         var d = await scheduler.addJob("recognize", image);
@@ -140,8 +138,6 @@ async function loadScheduler(lang, mode) {
       scheduler.addWorker(worker);
     })
   );
-
-  console.log(lang + "_" + mode);
 
   schedulerList[lang + "_" + mode] = scheduler;
   return schedulerList[lang + "_" + mode];
