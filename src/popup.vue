@@ -236,7 +236,6 @@
   </v-app>
 </template>
 <script>
-import { Setting } from "./setting";
 import * as util from './util.js';
 
 
@@ -365,6 +364,8 @@ var keyList = {
   "Shift Right":"ShiftRight",
   "Meta Left":"MetaLeft",
   "Meta Right":"MetaRight",
+  "F2":"F2",
+  "F8":"F8",  
 };
 
 var ocrLangList = {
@@ -557,6 +558,10 @@ var settingListData = {
     description: chrome.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
+  detectYoutube: {
+    description: chrome.i18n.getMessage("Detect_Youtube"),
+    optionList: toggleList,
+  },
   useTransliteration: {
     description: "Enable Transliteration (Experimental)",
     optionList: toggleList,
@@ -713,7 +718,7 @@ export default {
     };
   },
   async mounted() {
-    this.setting = await Setting.loadSetting(await util.getDefaultData());
+    this.setting = await util.loadSetting();
 
     this.loadTabOptionList();
     await this.addTtsVoiceTabOption();

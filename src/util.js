@@ -1,6 +1,8 @@
 // import * as util from './util.js';
 
 import { parse } from "bcp-47";
+import { Setting } from "./setting";
+import isUrl from "is-url";
 
 var defaultData = {
   showTooltipWhen: "always",
@@ -15,6 +17,7 @@ var defaultData = {
   writingLanguage: "en",
   translateReverseTarget: "null",
   detectPDF: "true",
+  detectYoutube: "true",
   useTransliteration: "false",
   useOCR: "false",
   ocrDetectionLang: "jpn_vert",
@@ -35,8 +38,15 @@ var defaultData = {
   ignoreCallbackOptionList: ["historyList"],
 };
 
-// ===============
-//default setting load======================================
+//setting util======================================
+
+export async function loadSetting(settingUpdateCallbackFn) {
+  return await Setting.loadSetting(
+    await getDefaultData(),
+    settingUpdateCallbackFn
+  );
+}
+
 export async function getDefaultData() {
   var defaultList = {};
   defaultList = concatJson(defaultList, defaultData);
@@ -94,7 +104,7 @@ export function getAvailableVoiceList() {
   });
 }
 
-// caretRangeFromPointOnShadowDom ===========================
+// range util====================================================================================
 export function caretRangeFromPointOnShadowDom(x, y) {
   var shadows = getAllShadows();
   var textNodes = shadows
@@ -172,7 +182,7 @@ export function checkXYInElement(ele, x, y) {
   return true;
 }
 
-//==================================
+// text util==================================
 
 export function concatJson(x, y) {
   return Object.assign(x, y);
@@ -196,4 +206,75 @@ export function getJsonFromList(list) {
     json[val] = val;
   }
   return json;
+}
+
+export function filterWord(word) {
+  if (!word) {
+    return "";
+  }
+  // filter one that only include num,space and special char(include currency sign) as combination
+  word = word.replace(/\s+/g, " "); //replace whitespace as single space
+  word = word.trim(); // remove whitespaces from begin and end of word
+  if (
+    word.length > 1000 || //filter out text that has over 1000length
+    isUrl(word) || //if it is url
+    !/[^\s\d»«…~`!@#$%^&*()‑_+\-=\[\]{};、':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6\p{Extended_Pictographic}]/gu.test(
+      word
+    )
+  ) {
+    word = "";
+  }
+  return word;
+}
+
+// inject =================================
+export function injectScript(scriptUrl) {
+  return new Promise((resolve) => {
+    var s = document.createElement("script");
+    s.src = chrome.runtime.getURL(scriptUrl);
+    s.onload = function() {
+      this.remove();
+      resolve();
+    };
+    // see also "Dynamic values in the injected code" section in this answer
+    (document.head || document.documentElement).appendChild(s);
+  });
+}
+
+// performance=======================================================
+export function cacheFn(fn) {
+  var cache = {};
+
+  return async function() {
+    var args = arguments;
+    var key = [].slice.call(args).join("");
+    if (5000 < Object.keys(cache).length) {
+      cache = {}; //numbers.shift();
+    }
+
+    if (cache[key]) {
+      return cache[key];
+    } else {
+      cache[key] = await fn.apply(this, args);
+      return cache[key];
+    }
+  };
+}
+
+//image=================================
+export function getBase64(url) {
+  return new Promise(function(resolve, reject) {
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve(this.result); // <--- `this.result` contains a base64 data URI
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(async (error) => {
+        resolve("");
+      });
+  });
 }

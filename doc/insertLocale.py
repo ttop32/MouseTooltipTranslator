@@ -36,6 +36,7 @@ i18List = [
     "Writing Language",
     "Reverse Translate Language",
     "Detect PDF",
+    "Detect Youtube",
     "Enable OCR",
     "OCR Detection Language",
     "Exclude Language",

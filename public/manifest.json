@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "0.1.72",
+  "version": "0.1.73",
   "name": "__MSG_appName__",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
@@ -18,8 +18,10 @@
     "<all_urls>"
   ],
 
+
+
   "web_accessible_resources": [{
-    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html"],
+    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "youtube.js"],
     "matches": ["<all_urls>"]
   }],
   "sandbox": {

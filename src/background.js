@@ -6,19 +6,20 @@
 //for translation, use fetch to get translated  result
 
 //tooltip background===========================================================================
-import { Setting } from "./setting";
 import translator from "./translator/index.js";
+import { waitUntil } from "async-wait-until";
 import * as util from "./util.js";
 
 var setting;
 var recentTranslated = {};
-var translateWithCache = cacheFn(doTranslate);
+var translateWithCache = util.cacheFn(doTranslate); // make cache args function
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   (async () => {
-    await getSetting();
+    // wait setting load
+    await waitUntil(() => setting);
 
     if (request.type === "translate") {
       var translatedResult = await translateWithCache(
@@ -54,16 +55,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       recordHistory(request);
       updateContext(request);
       sendResponse({});
+    } else if (request.type === "requestBase64") {
+      var base64Url = await util.getBase64(request.url);
+      sendResponse({ base64Url });
     }
   })();
-
   return true;
 });
 
 async function getSetting() {
-  setting = setting
-    ? setting
-    : await Setting.loadSetting(await util.getDefaultData());
+  setting = await util.loadSetting();
 }
 
 function recordHistory(request, force = false) {
@@ -189,47 +190,26 @@ async function getCurrentTab() {
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
-chrome.runtime.onInstalled.addListener(async () => {
-  for (const cs of chrome.runtime.getManifest().content_scripts) {
-    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
-      if (
-        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
-          tab.url
-        )
-      ) {
-        continue;
-      }
+// chrome.runtime.onInstalled.addListener(async () => {
+//   for (const cs of chrome.runtime.getManifest().content_scripts) {
+//     for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+//       if (
+//         /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
+//           tab.url
+//         )
+//       ) {
+//         continue;
+//       }
 
-      //load css and js on opened tab
-      chrome.scripting.insertCSS({
-        target: { tabId: tab.id },
-        files: cs.css,
-      });
-      chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: cs.js,
-      });
-    }
-  }
-});
-
-// performance=======================================================
-function cacheFn(fn) {
-  var cache = {};
-
-  return async function() {
-    var args = arguments;
-    var key = [].slice.call(args).join("");
-    if (5000 < Object.keys(cache).length) {
-      cache = {}; //numbers.shift();
-    }
-
-    if (cache[key]) {
-      return cache[key];
-    } else {
-      cache[key] = await fn.apply(this, args);
-      return cache[key];
-    }
-  };
-}
-// debounce
+//       //load css and js on opened tab
+//       chrome.scripting.insertCSS({
+//         target: { tabId: tab.id },
+//         files: cs.css,
+//       });
+//       chrome.scripting.executeScript({
+//         target: { tabId: tab.id },
+//         files: cs.js,
+//       });
+//     }
+//   }
+// });

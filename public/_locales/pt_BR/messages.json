@@ -47,6 +47,9 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
+	"Detect_Youtube": {
+		"message": "Detect Youtube"
+	},
 	"Enable_OCR": {
 		"message": "Enable OCR"
 	},
