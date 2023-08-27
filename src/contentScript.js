@@ -380,33 +380,34 @@ function handleKeydown(e) {
     return;
   }
 
-  if (keyDownList[e.code]) {
-    return;
-  }
-  keyDownList[e.code] = true;
-
+  // check already pressed and key is one of setting key
   if (
-    [
+    keyDownList[e.code] ||
+    ![
       setting["showTooltipWhen"],
       setting["TTSWhen"],
       setting["keyDownDetectSwap"],
       setting["keyDownTranslateWriting"],
     ].includes(e.code)
   ) {
-    // check activation hold key pressed, run tooltip again with key down value
-    activatedWord = null; //restart word process
-    //restart select if selected value exist
-    if (selectedText != "") {
-      processWord(selectedText, "select");
-    }
+    return;
+  }
 
-    if (setting["keyDownTranslateWriting"] == e.code) {
-      translateWriting();
-    }
+  keyDownList[e.code] = true;
 
-    if (e.key == "Alt") {
-      e.preventDefault();
-    }
+  // check activation hold key pressed, run tooltip again with key down value
+  activatedWord = null; //restart word process
+  //restart select if selected value exist
+  if (selectedText != "") {
+    processWord(selectedText, "select");
+  }
+
+  if (setting["keyDownTranslateWriting"] == e.code) {
+    translateWriting();
+  }
+
+  if (e.key == "Alt") {
+    e.preventDefault();
   }
 }
 
