@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Prekladateľ myši With TTS & PDF Viewer"
+		"message": "Prekladateľ myši With PDF Viewer"
 	},
 	"appDesc": {
 		"message": "Prekladač prekladateľ myši prekladač Mouseover text pomocou prekladu Google"
@@ -46,6 +46,9 @@
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
+	},
+	"Detect_Youtube": {
+		"message": "Detect Youtube"
 	},
 	"Enable_OCR": {
 		"message": "Enable OCR"

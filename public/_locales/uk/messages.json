@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Перекладач підказки миші with PDF Reader"
+		"message": "Перекладач підказки миші : Write Translator"
 	},
 	"appDesc": {
 		"message": "Перекладач підказки миші перекладати текст MouseOver за допомогою Google Translate"
@@ -46,6 +46,9 @@
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
+	},
+	"Detect_Youtube": {
+		"message": "Detect Youtube"
 	},
 	"Enable_OCR": {
 		"message": "Enable OCR"

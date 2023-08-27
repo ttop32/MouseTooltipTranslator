@@ -5,12 +5,11 @@
 
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
-var isUrl = require("is-url");
 import { enableSelectionEndEvent, getSelectionText } from "./selection";
-import { Setting } from "./setting";
-import * as util from "./util.js";
 import { encode, decode } from "he";
 import matchUrl from "match-url-wildcard";
+import * as util from "./util.js";
+import * as ocrView from "./ocr/ocrView.js";
 
 //init environment var======================================================================\
 var setting;
@@ -29,7 +28,6 @@ const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
 var mouseoverIntervalTime = 700;
-var currentWritingElement = "";
 var rtlLangList = [
   "ar", //Arabic
   "iw", //Hebrew
@@ -38,17 +36,19 @@ var rtlLangList = [
   "ur", //Urdu
   "yi", //Yiddish
 ]; //right to left language system list
+var writingField =
+  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox]';
+var isYoutubeDetected = false;
 
 //tooltip core======================================================================
-//tooltip init
-
-$(async function() {
+$(async function initMouseTooltipTranslator() {
   loadDestructor(); //remove previous tooltip script
   await getSetting(); //load setting
   if (checkExcludeUrl()) {
     return;
   }
   detectPDF(); //check current page is pdf
+  checkYoutube();
   addElementEnv(); //add tooltip container
   applyStyleSetting(); //add tooltip style
   loadEventListener(); //load event listener to detect mouse move
@@ -61,8 +61,8 @@ function startMouseoverDetector() {
   mouseoverInterval = setInterval(async function() {
     // only work when tab is activated and when mousemove and no selected text
     if (
-      !selectedText &&
       mouseMoved &&
+      !selectedText &&
       document.visibilityState == "visible" &&
       setting["translateWhen"].includes("mouseover")
     ) {
@@ -78,7 +78,7 @@ function startTextSelectDetector() {
   addEventHandler("selectionEnd", async function(event) {
     // if translate on selection is enabled
     if (
-      document.visibilityState === "visible" &&
+      document.visibilityState == "visible" &&
       setting["translateWhen"].includes("select")
     ) {
       selectedText = event.selectedText;
@@ -94,7 +94,7 @@ async function processWord(word, actionType) {
     return;
   }
 
-  word = filterWord(word); //filter out one that is url,over 1000length,no normal char
+  word = util.filterWord(word); //filter out one that is url,over 1000length,no normal char
 
   //hide tooltip, if activated word exist and current word is none
   //do nothing, if no new word or no word change
@@ -114,6 +114,7 @@ async function processWord(word, actionType) {
     targetLang,
     transliteration,
   } = await translateWithReverse(word);
+
   //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
   if (
@@ -203,25 +204,6 @@ function checkMouseTargetIsTooltip() {
   return false;
 }
 
-function filterWord(word) {
-  if (!word) {
-    return "";
-  }
-  // filter one that only include num,space and special char(include currency sign) as combination
-  word = word.replace(/\s+/g, " "); //replace whitespace as single space
-  word = word.trim(); // remove whitespaces from begin and end of word
-  if (
-    word.length > 1000 || //filter out text that has over 1000length
-    isUrl(word) || //if it is url
-    !/[^\s\d»«…~`!@#$%^&*()‑_+\-=\[\]{};、':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6\p{Extended_Pictographic}]/gu.test(
-      word
-    )
-  ) {
-    word = "";
-  }
-  return word;
-}
-
 function showTooltip(text, lang) {
   hideTooltip(); //reset tooltip arrow
   checkTooltipContainer();
@@ -296,16 +278,15 @@ function concatTransliteration(translatedText, transliteration) {
   )}</h5>`;
 }
 
+//Translate Writing feature==========================================================================================
 async function translateWriting() {
-  if (!currentWritingElement) {
+  //check current focus is write box
+  if (!getFocusedWritingBox()) {
     return;
   }
-  var stagedWritingElement = currentWritingElement;
 
   // get writing text
   var writingText = getWritingText();
-
-  // skip if no text
   if (!writingText) {
     return;
   }
@@ -317,21 +298,26 @@ async function translateWriting() {
     setting["writingLanguage"]
   );
 
-  if (
-    !translatedText ||
-    stagedWritingElement != currentWritingElement ||
-    writingText != getWritingText()
-  ) {
+  if (!translatedText) {
     return;
   }
 
-  // document.execCommand("insertText", false, translatedText);
-  document.execCommand("insertHTML", false, translatedText);
+  insertText(translatedText);
+}
+function insertText(inputText) {
+  // document.execCommand("delete", false, null);
+  document.execCommand("insertHTML", false, inputText);
+  // document.execCommand("insertText", false, inputText);
+}
+
+function getFocusedWritingBox() {
+  var writingBox = $(":focus");
+  return writingBox.is(writingField) ? writingBox : null;
 }
 
 function getWritingText() {
   // get current selected text, if no select, get all
-  if (!window.getSelection().toString()) {
+  if (window.getSelection().type == "Caret") {
     document.execCommand("selectAll", false, null);
   }
 
@@ -347,143 +333,152 @@ function getWritingText() {
     html = container.innerHTML;
   }
 
+  // if no html format text , get as string
   writingText = html.toString() ? html : window.getSelection().toString();
   return writingText;
 }
 
-//event Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
-
-function loadEventListener() {
-  loadWritingFocusListener();
-
-  //use mouse position for tooltip position
-  addEventHandler("mousemove", (e) => {
-    //if mouse moved far distance two times, check as mouse moved
-    setMouseStatus(e);
-    checkImage();
-    setTooltipPosition("mousemove");
-  });
-
-  //detect activation hold key pressed
-  addEventHandler("keydown", (e) => {
-    //if user pressed ctrl+f  ctrl+a, hide tooltip
-    if ((e.code == "KeyF" || e.code == "KeyA") && e.ctrlKey) {
-      mouseMoved = false;
-      hideTooltip();
-      return;
-    }
-
-    if (keyDownList[e.code] == true) {
-      return;
-    }
-    keyDownList[e.code] = true;
-
-    if (
-      [
-        setting["showTooltipWhen"],
-        setting["TTSWhen"],
-        setting["keyDownDetectSwap"],
-        setting["keyDownTranslateWriting"],
-      ].includes(e.code)
-    ) {
-      // check activation hold key pressed, run tooltip again with key down value
-      activatedWord = null; //restart word process
-      //restart select if selected value exist
-      if (selectedText != "") {
-        processWord(selectedText, "select");
-      }
-
-      if (setting["keyDownTranslateWriting"] == e.code) {
-        translateWriting();
-      }
-      if (e.key == "Alt") {
-        e.preventDefault();
-      }
-    }
-  });
-
-  addEventHandler("keyup", (e) => {
-    if (keyDownList.hasOwnProperty(e.code)) {
-      keyDownList[e.code] = false;
-    }
-  });
-
-  //detect tab switching to reset env
-  addEventHandler("blur", (e) => {
-    keyDownList = {}; //reset key press
-    mouseMoved = false;
-    mouseMovedCount = 0;
-    selectedText = "";
-    activatedWord = null;
-    hideTooltip();
-    stopTTS();
-  });
-
-  // when refresh web site, stop tts
-  addEventHandler("beforeunload", (e) => {
-    stopTTS();
-  });
+function selectElementContents(ele) {
+  var selection = window.getSelection();
+  var range = document.createRange();
+  range.selectNodeContents(ele);
+  selection.removeAllRanges();
+  selection.addRange(range);
 }
 
-function loadWritingFocusListener() {
-  var writingField =
-    ':text[type="text"], :text[type="search"], textarea, [contenteditable="true"]';
+//event Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
+function loadEventListener() {
+  //use mouse position for tooltip position
+  addEventHandler("mousemove", handleMousemove);
+  //detect activation hold key pressed
+  addEventHandler("keydown", handleKeydown);
+  addEventHandler("keyup", handleKeyup);
+  //detect tab switching to reset env
+  addEventHandler("blur", handleBlur);
+  // when refresh web site, stop tts
+  addEventHandler("beforeunload", stopTTS);
+}
 
-  // check already has focus
-  var currentFocus = $(":focus");
-  if (currentFocus.is(writingField)) {
-    currentWritingElement = currentFocus;
+function handleMousemove(e) {
+  //if mouse moved far distance two times, check as mouse moved
+  if (!checkMouseOnceMoved(e.clientX, e.clientY)) {
+    setMouseStatus(e);
+    return;
+  }
+  setMouseStatus(e);
+  ocrView.checkImage(setting, mouseTarget);
+  checkWritingBox();
+  setTooltipPosition("mousemove");
+  checkMouseTargetIsYoutubeSubtitle();
+}
+
+function handleKeydown(e) {
+  //if user pressed ctrl+f  ctrl+a, hide tooltip
+  if ((e.code == "KeyF" || e.code == "KeyA") && e.ctrlKey) {
+    mouseMoved = false;
+    hideTooltip();
+    return;
   }
 
-  // add focus listener
-  $(writingField)
-    .on("focus", function() {
-      currentWritingElement = $(this);
-    })
-    .on("blur", function() {
-      currentWritingElement = "";
-    });
+  if (keyDownList[e.code]) {
+    return;
+  }
+  keyDownList[e.code] = true;
+
+  if (
+    [
+      setting["showTooltipWhen"],
+      setting["TTSWhen"],
+      setting["keyDownDetectSwap"],
+      setting["keyDownTranslateWriting"],
+    ].includes(e.code)
+  ) {
+    // check activation hold key pressed, run tooltip again with key down value
+    activatedWord = null; //restart word process
+    //restart select if selected value exist
+    if (selectedText != "") {
+      processWord(selectedText, "select");
+    }
+
+    if (setting["keyDownTranslateWriting"] == e.code) {
+      translateWriting();
+    }
+
+    if (e.key == "Alt") {
+      e.preventDefault();
+    }
+  }
+}
+
+function handleKeyup(e) {
+  if (keyDownList.hasOwnProperty(e.code)) {
+    keyDownList[e.code] = false;
+  }
+}
+
+function handleBlur(e) {
+  keyDownList = {}; //reset key press
+  mouseMoved = false;
+  mouseMovedCount = 0;
+  selectedText = "";
+  activatedWord = null;
+  hideTooltip();
+  stopTTS();
+  ocrView.removeAllOcrEnv();
 }
 
 function setMouseStatus(e) {
-  checkMouseMovedWithoutZiggle(e.clientX, e.clientY);
   clientX = e.clientX;
   clientY = e.clientY;
   mouseTarget = e.target;
 }
 
-function checkMouseMovedWithoutZiggle(x, y) {
+function checkWritingBox() {
+  var $writingField = $(writingField);
+  if (!$writingField.is(mouseTarget) || !$writingField.data("mttBound")) {
+    return;
+  }
+
+  $writingField
+    .data("mttBound", true)
+    .off("keydown")
+    .on("keydown", handleKeydown)
+    .off("keyup")
+    .on("keyup", handleKeyup);
+}
+
+function checkMouseOnceMoved(x, y) {
   if (
     mouseMoved == false &&
-    Math.abs(x - clientX) + Math.abs(y - clientY) > 3
+    Math.abs(x - clientX) + Math.abs(y - clientY) > 3 &&
+    mouseMovedCount < 3
   ) {
-    if (mouseMovedCount < 2) {
-      mouseMovedCount += 1;
-    } else {
-      mouseMoved = true;
-    }
+    mouseMovedCount += 1;
+  } else if (3 <= mouseMovedCount) {
+    mouseMoved = true;
   }
+  return mouseMoved;
 }
 
 //send to background.js for background processing  ===========================================================================
-function sendMessagePromise(params) {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.runtime.sendMessage(params, (response) => {
-        resolve(response);
-      });
-    } catch (e) {
-      if (e.message == "Extension context invalidated.") {
-        console.log();
-      } else {
-        console.log(e);
-      }
-    }
-  });
-}
+// function sendMessagePromise(params) {
+//   return new Promise((resolve, reject) => {
+//     try {
+//       chrome.runtime.sendMessage(params, (response) => {
+//         resolve(response);
+//       });
+//     } catch (e) {
+//       if (e.message == "Extension context invalidated.") {
+//         console.log("context invalidated");
+//       } else {
+//         console.log(e);
+//       }
+//     }
+//   });
+// }
 
 async function getTranslation(word, translateSource, translateTarget) {
-  return await sendMessagePromise({
+  return await chrome.runtime.sendMessage({
     type: "translate",
     word: word,
     translateSource,
@@ -492,7 +487,7 @@ async function getTranslation(word, translateSource, translateTarget) {
 }
 
 async function tts(word, lang) {
-  return await sendMessagePromise({
+  return await chrome.runtime.sendMessage({
     type: "tts",
     word: word,
     lang: lang,
@@ -500,14 +495,14 @@ async function tts(word, lang) {
 }
 
 async function stopTTS() {
-  return await sendMessagePromise({
+  return await chrome.runtime.sendMessage({
     type: "stopTTS",
   });
 }
 
 //send history to background.js
 async function updateRecentTranslated(sourceText, targetText, actionType) {
-  return await sendMessagePromise({
+  return await chrome.runtime.sendMessage({
     type: "updateRecentTranslated",
     sourceText,
     targetText,
@@ -517,16 +512,12 @@ async function updateRecentTranslated(sourceText, targetText, actionType) {
 
 // setting handling===============================================================
 
-function settingUpdateCallbackFn(changes) {
-  applyStyleSetting();
-  selectedText = "";
-  removeOcrBlock();
-  initIframeTesseract();
-}
-
 async function getSetting() {
-  setting = await Setting.loadSetting(await util.getDefaultData());
-  setting.addUpdateCallback(settingUpdateCallbackFn);
+  setting = await util.loadSetting(function settingCallbackFn() {
+    applyStyleSetting();
+    selectedText = "";
+    ocrView.removeAllOcrEnv();
+  });
 }
 
 function applyStyleSetting() {
@@ -537,12 +528,8 @@ function applyStyleSetting() {
       top: 0 !important;
       width: 1000px !important;
       margin-left: -500px !important;
-      height: ` +
-      setting["tooltipDistance"] * 2 +
-      `px  !important;
-      margin-top: ` +
-      -setting["tooltipDistance"] +
-      `px  !important;
+      height: ${setting["tooltipDistance"] * 2} px  !important;
+      margin-top: ${-setting["tooltipDistance"]} px  !important;
       position: fixed !important;
       z-index: 100000200 !important;
       background: none !important;
@@ -559,30 +546,16 @@ function applyStyleSetting() {
       pointer-events: none !important;
     }
     .bootstrapiso .tooltip-inner {
-      font-size: ` +
-      setting["tooltipFontSize"] +
-      `px  !important;
-      max-width: ` +
-      setting["tooltipWidth"] +
-      `px  !important;
-      text-align: ` +
-      setting["tooltipTextAlign"] +
-      ` !important;
-      backdrop-filter: blur(` +
-      setting["tooltipBackgroundBlur"] +
-      `px)  !important; 
-      background-color: ` +
-      setting["tooltipBackgroundColor"] +
-      ` !important;
-      color: ` +
-      setting["tooltipFontColor"] +
-      ` !important;
+      font-size: ${setting["tooltipFontSize"]} px  !important;
+      max-width: ${setting["tooltipWidth"]} px  !important;
+      text-align: ${setting["tooltipTextAlign"]} !important;
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]} px) !important; 
+      background-color: ${setting["tooltipBackgroundColor"]} !important;
+      color: ${setting["tooltipFontColor"]} !important;
       pointer-events: auto;
     }
     .bootstrapiso .arrow::before {
-      border-top-color: ` +
-      setting["tooltipBackgroundColor"] +
-      ` !important;
+      border-top-color: ${setting["tooltipBackgroundColor"]} !important;
     }
     .bootstrapiso .arrow::after {
       display:none !important;
@@ -590,19 +563,43 @@ function applyStyleSetting() {
     .ocr_text_div{
       position: absolute;
       opacity: 0.7;
-      font-size: 20px;
+      font-size: calc(100% + 1cqw);
       overflow: hidden;
       border: 2px solid CornflowerBlue;
       color: transparent !important;
       background: none !important;
     }
+
+    ` +
+      (isYoutubeDetected
+        ? `
+      #ytp-caption-window-container .ytp-caption-segment {
+        cursor: text !important;
+        user-select: text !important;
+      }
+      .caption-visual-line{
+        display: flex  !important;
+        align-items: stretch  !important;
+      }
+      .captions-text:hover .caption-visual-line:first-of-type:after {
+        content: '⣿⣿';
+        font-size: 1.5em;
+        background-color: #000000b8;
+        display: inline-block;
+        vertical-align: top;     
+      }
     `
+        : "")
   );
 }
 
+// url check and element env===============================================================
 function detectPDF() {
   if (setting["detectPDF"] == "true") {
-    if (document.body.children[0].type == "application/pdf") {
+    if (
+      document.body.children[0] &&
+      document.body.children[0].type == "application/pdf"
+    ) {
       window.location.replace(
         chrome.runtime.getURL("/pdfjs/web/viewer.html") +
           "?file=" +
@@ -640,10 +637,46 @@ function addElementEnv() {
   }).appendTo("head");
 }
 
-//destruction ===================================
+// youtube================================
+async function checkYoutube() {
+  var vParam = new URLSearchParams(document.location.search).get("v");
 
+  if (
+    !matchUrl(document.location.href, "www.youtube.com") ||
+    !vParam ||
+    setting["detectYoutube"] == "false"
+  ) {
+    return;
+  }
+
+  isYoutubeDetected = true;
+
+  await util.injectScript("youtube.js");
+  reloadSubtitle();
+}
+function reloadSubtitle() {
+  window.postMessage(
+    { type: "ytPlayerSetOption", args: ["captions", "reload", true] },
+    "*"
+  );
+}
+
+function checkMouseTargetIsYoutubeSubtitle() {
+  if (!isYoutubeDetected || !$(mouseTarget).is(".ytp-caption-segment")) {
+    return;
+  }
+
+  // make subtitle selectable
+  $(mouseTarget)
+    .off("mousedown")
+    .on("mousedown", (e) => {
+      $(".caption-window").attr("draggable", "false");
+      e.stopPropagation();
+    });
+}
+
+//destruction ===================================
 function loadDestructor() {
-  // https://stackoverflow.com/questions/25840674/chrome-runtime-sendmessage-throws-exception-from-content-script-after-reloading/25844023#25844023
   // Unload previous content script if needed
   window.dispatchEvent(new CustomEvent(destructionEvent)); //call destructor to remove script
   addEventHandler(destructionEvent, destructor); //add destructor listener for later remove
@@ -664,318 +697,5 @@ function removePrevElement() {
   $("#mttstyle").remove();
   $("#mttContainer").tooltip("dispose");
   $("#mttContainer").remove();
-  for (let key in iFrames) {
-    iFrames[key].remove();
-  }
-  removeOcrBlock();
-}
-
-//ocr==================================================================================
-var ocrHistory = {};
-var iFrames = {};
-var ocrBlock = [];
-
-//detect mouse positioned image to process ocr in ocr.html iframe
-//create text box from ocr result
-async function checkImage() {
-  // if mouse target is not image or ocr is not on, skip
-  // if already ocr processed,skip
-  if (
-    setting["useOCR"] == "false" ||
-    !checkMouseTargetIsImage() ||
-    (ocrHistory[mouseTarget.src] &&
-      ocrHistory[mouseTarget.src]["lang"] == setting["ocrDetectionLang"])
-  ) {
-    return;
-  }
-  var ratio = 1;
-  var ele = mouseTarget;
-  var url = ele.src;
-  var ocrBaseData = {
-    mainUrl: url,
-    lang: setting["ocrDetectionLang"],
-  };
-  ocrHistory[url] = ocrBaseData;
-
-  setElementMouseStatusLoading(ele);
-  await initOCR();
-
-  var base64Url = await getBase64Image(url);
-
-  //run both,  ocr with opencv rect, ocr without opencv
-  // const start = Date.now();
-  await Promise.all([
-    processOcr(ocrBaseData, base64Url, ele, "BLUE", ratio),
-    processOcr(ocrBaseData, base64Url, ele, "RED", ratio, "segment"),
-  ]);
-  // const end = Date.now();
-  // console.log(`Execution time: ${end - start} ms`);
-
-  setElementMouseStatusIdle(ele);
-}
-
-async function base64Resize(base64Url) {
-  return await getMessageResponse({ type: "resizeImage", base64Url });
-}
-
-function setElementMouseStatusLoading(ele) {
-  ele.style.cursor = "wait"; //show mouse loading
-}
-function setElementMouseStatusIdle(ele) {
-  ele.style.cursor = "";
-}
-
-async function processOcr(
-  ocrBaseData,
-  base64Url,
-  mouseTarget,
-  color,
-  ratio,
-  mode = ""
-) {
-  var bboxList = [];
-
-  //ocr process with opencv , then display
-  if (mode == "segment") {
-    var { bboxList, base64Url, cvratio } = await requestSegmentBox(
-      ocrBaseData,
-      base64Url
-    );
-    if (bboxList.length == 0) {
-      return;
-    }
-    ratio *= cvratio;
-    await Promise.all(
-      bboxList.map(async (bbox) => {
-        await getOcrAndShow(ocrBaseData, base64Url, mouseTarget, color, ratio, [
-          bbox,
-        ]);
-      })
-    );
-  } else {
-    await getOcrAndShow(
-      ocrBaseData,
-      base64Url,
-      mouseTarget,
-      color,
-      ratio,
-      bboxList
-    );
-  }
-}
-
-async function getOcrAndShow(
-  ocrBaseData,
-  base64Url,
-  mouseTarget,
-  color,
-  ratio,
-  bboxList
-) {
-  var res = await requestOcr(ocrBaseData, bboxList, base64Url);
-  showOcrData(mouseTarget, res.ocrData, ratio, color);
-}
-
-async function initOCR() {
-  await createIframe("ocrFrame", "/ocr.html");
-  await createIframe("opencvFrame", "/opencvHandler.html");
-  initIframeTesseract();
-}
-
-function initIframeTesseract() {
-  getMessageResponse({
-    type: "initTesseract",
-    lang: setting["ocrDetectionLang"],
-  });
-}
-
-async function createIframe(name, htmlPath) {
-  return new Promise(function(resolve, reject) {
-    if (iFrames[name]) {
-      resolve();
-      return;
-    }
-
-    var showFrame = false;
-    var css = showFrame
-      ? {
-          width: "700",
-          height: "700",
-        }
-      : { display: "none" };
-
-    iFrames[name] = $("<iframe />", {
-      name: name,
-      id: name,
-      src: chrome.runtime.getURL(htmlPath),
-      css,
-    })
-      .appendTo("body")
-      .on("load", function() {
-        resolve();
-      })
-      .get(0);
-  });
-}
-
-function showOcrData(target, ocrData, ratio, color) {
-  var textBoxList = getTextBoxList(ocrData);
-
-  for (var textBox of textBoxList) {
-    createOcrTextBlock(target, textBox, ratio, color);
-  }
-}
-
-function getTextBoxList(ocrData) {
-  var textBoxList = [];
-  for (var ocrDataItem of ocrData) {
-    var { data } = ocrDataItem;
-    for (var block of data.blocks) {
-      // for (var paragraph of block.paragraphs) {
-      var text = filterOcrText(block["text"]);
-      text = filterWord(text); //filter out one that is url,over 1000length,no normal char
-      // console.log(text);
-      // console.log(block["confidence"]);
-
-      //if string contains only whitespace, skip
-      if (/^\s*$/.test(text) || text.length < 3 || block["confidence"] < 60) {
-        continue;
-      }
-
-      block["confidence"] = parseInt(block["confidence"]);
-      block["text"] = text;
-      textBoxList.push(block);
-      // }
-    }
-  }
-  return textBoxList;
-}
-
-function createOcrTextBlock(target, textBox, ratio, color) {
-  //init bbox
-  var $div = $("<div/>", {
-    class: "ocr_text_div notranslate",
-    text: textBox["text"],
-    css: {
-      border: "2px solid " + color,
-    },
-  }).appendTo(target.parentElement);
-
-  // change z-index
-  var zIndex =
-    Math.max(0, 100000 - getBboxSize(textBox["bbox"])) + textBox["confidence"];
-  $div.css("z-index", zIndex);
-
-  // position
-  setLeftTopWH(target, textBox["bbox"], $div, ratio);
-  $(window).on("resize", (e) => {
-    setLeftTopWH(target, textBox["bbox"], $div, ratio);
-  });
-
-  //record current ocr block list for future delete
-  ocrBlock.push($div);
-}
-
-function getBboxSize(bbox) {
-  return (bbox["x1"] - bbox["x0"]) * (bbox["y1"] - bbox["y0"]);
-}
-
-function setLeftTopWH(target, bbox, $div, ratio) {
-  var offsetLeft = target.offsetLeft;
-  var offsetTop = target.offsetTop;
-  var widthRatio = target.offsetWidth / target.naturalWidth;
-  var heightRatio = target.offsetHeight / target.naturalHeight;
-  var x = (widthRatio * bbox["x0"]) / ratio;
-  var y = (heightRatio * bbox["y0"]) / ratio;
-  var w = (widthRatio * (bbox["x1"] - bbox["x0"])) / ratio;
-  var h = (heightRatio * (bbox["y1"] - bbox["y0"])) / ratio;
-  var left = offsetLeft + x;
-  var top = offsetTop + y;
-
-  $div.css({
-    left: left + "px",
-    top: top + "px",
-    width: w + "px",
-    height: h + "px",
-  });
-}
-
-function filterOcrText(text) {
-  return text.replace(
-    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&“*()_|+\-=;【】:'"<>\{\}\[\]\\\/]/gi,
-    ""
-  ); //remove special char
-}
-
-function getBase64Image(url) {
-  return new Promise(function(resolve, reject) {
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        var reader = new FileReader();
-        reader.onload = function() {
-          resolve(this.result); // <--- `this.result` contains a base64 data URI
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch(async (error) => {
-        // console.error('Error:', error);
-        var { base64Url } = await getMessageResponse({
-          type: "getBase64",
-          url,
-        });
-        resolve(base64Url);
-      });
-  });
-}
-
-async function requestOcr(ocrBaseData, bboxList, base64Url) {
-  return await getMessageResponse(
-    $.extend(ocrBaseData, { type: "ocr", bboxList, base64Url })
-  );
-}
-async function requestSegmentBox(ocrBaseData, base64Url) {
-  return await getMessageResponse(
-    $.extend(ocrBaseData, { type: "segmentBox", base64Url })
-  );
-}
-
-async function getMessageResponse(data) {
-  return new Promise(function(resolve, reject) {
-    var timeId = Date.now() + Math.random();
-    data["timeId"] = timeId;
-
-    //listen iframe response
-    addEventHandler("message", function namedListener(response) {
-      if (response.data.timeId == timeId) {
-        window.removeEventListener("click", namedListener);
-        resolve(response.data);
-      }
-    });
-
-    //broadcast message to iframe
-    for (var key in iFrames) {
-      iFrames[key].contentWindow.postMessage(data, "*");
-    }
-  });
-}
-
-function checkMouseTargetIsImage() {
-  // loaded image that has big enough size,
-  if (
-    mouseTarget != null &&
-    mouseTarget.src &&
-    mouseTarget.tagName === "IMG" &&
-    mouseTarget.complete &&
-    mouseTarget.naturalHeight !== 0 &&
-    mouseTarget.width > 300 &&
-    mouseTarget.height > 300
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function removeOcrBlock() {
-  ocrBlock.forEach((block, i) => block.remove());
+  ocrView.removeAllOcrEnv();
 }
