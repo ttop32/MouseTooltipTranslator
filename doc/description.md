@@ -1,6 +1,7 @@
 When mouse hover on text, it shows translated tooltip in any language.  
 
 # Features
+
 - hover or select (highlight) on text to translate  
 - Visualize tooltip on any web page (except chrome web store site)
 - handle google translator and bing translator for translation
@@ -11,12 +12,14 @@ When mouse hover on text, it shows translated tooltip in any language.
 - process OCR when mouse over on image (ex manga)
 
 # Source code  
-- https://github.com/ttop32/MouseTooltipTranslator  
- 
+- <https://github.com/ttop32/MouseTooltipTranslator>  
+
 # Supported Translation Languages (using google translate)
+
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+
 - 0.1.73
   - update tesseract js ocr
   - fix translate writing box
@@ -68,7 +71,7 @@ English, Russian, Japanese, Chinese and so on
   - support bigger translation box (request by Zoelya)
   - add papago translator
 - 0.1.58
-  - use tesseract.js@4.0.1 
+  - use tesseract.js@4.0.1
   - change OCR process flow
   - support more i18 translation
   - add Russian language (contributed by Blueberryy)  
@@ -85,7 +88,7 @@ English, Russian, Japanese, Chinese and so on
   - add context menu for saving translated text
 - 0.1.53
   - add a list of excluded languages to be translated (request by kwisatz haderach)
-  - fix visibility css on translator tooltip 
+  - fix visibility css on translator tooltip
 - 0.1.52
   - fix google translator not working (request by ATU8020)
 - 0.1.51
@@ -114,14 +117,14 @@ English, Russian, Japanese, Chinese and so on
   - fix google translate api handling (request by CONATUS)
   - change tooltip text to non transparency (request by Hakan Özlen)
 - 0.1.43
-  - google reject by tabs permission 
+  - google reject by tabs permission
     - remove open setting page in new tab
 - 0.1.42
-  - fix chinese default language code (request by yc-forever) 
+  - fix chinese default language code (request by yc-forever)
 - 0.1.41
   - fix google translate api request
 - 0.1.40
-  - detect chrome pdf viewer instead of pdf url (request by Justin Brown) 
+  - detect chrome pdf viewer instead of pdf url (request by Justin Brown)
 - 0.1.39
   - fix translator css crash from twitter youtube (request by PedoBearNomsLoli)
 - 0.1.38
@@ -129,13 +132,13 @@ English, Russian, Japanese, Chinese and so on
   - change description
 - 0.1.37
   - google reject by “Having excessive keywords in description”  
-    - Google said "Irrelevant information about Translate"   
-    - remove "Translate" from title   
+    - Google said "Irrelevant information about Translate"
+    - remove "Translate" from title
     - remove some description about "Translate"  
 - 0.1.36  
   - alert local pdf file permission  
-  - fix pdf request header detection    
-  - add pdf detect option to allow pdf translate (request by Meow Meow)   
+  - fix pdf request header detection
+  - add pdf detect option to allow pdf translate (request by Meow Meow)
 - 0.1.35
   - fix pdf viewer problem when open with new tab (request by M9VK)
   - fix pdf viewer url parameter crash (request by sensypo)
@@ -158,12 +161,12 @@ English, Russian, Japanese, Chinese and so on
   - use chrome tts instead of google tts rest api
   - update tooltip translator pdf viewer to use v2.8.335 pdfjs  
   - support command key as translator activation hold key  
-  - support right to left alignment for translate to Persian   
+  - support right to left alignment for translate to Persian
   - move background ocr translate process to iframe  
   - fix translator tooltip position (problem when it is first shot)
-- 0.1.29   
+- 0.1.29
   - fix bing translator communication crash(request by zx xu)  
-  - support right to left alignment for translate to Arabic (request by mohamad-b)   
+  - support right to left alignment for translate to Arabic (request by mohamad-b)
   - add translate text history section on popup page (request by TeraStrider)  
 - 0.1.28  
   - support translate on selection (contributed by sanprojects)  
@@ -188,7 +191,7 @@ English, Russian, Japanese, Chinese and so on
     - remove “google translate” from package summarization
     - avoid to use continuously mentioned “google translate”
 - 0.1.22
-  - fix translator type "bing" to correctly handle bing translator api   
+  - fix translator type "bing" to correctly handle bing translator api
 - 0.1.21
   - Support translator to translate word (request by Amir Rezaei)
   - Support reverse translate (request by Amir Rezaei)
@@ -229,7 +232,7 @@ English, Russian, Japanese, Chinese and so on
   - Filter out when only detect currency sign text
 - 0.1.12
   - Fix base64 image OCR response for translate ocr correctly
-  - Use Vue JSX on translator popup page 
+  - Use Vue JSX on translator popup page
 - 0.1.11
   - Use Vue and Vuetify on translator popup page
   - Add options_ui
@@ -278,27 +281,33 @@ English, Russian, Japanese, Chinese and so on
   - Support long sentence for TTS (text to speech)
   - Fix tooltip container arrow display error
   - Fix key hold error (issue on tab switching)
-- 0.1.0   
+- 0.1.0
   - First release of Mouse tooltip translator
 
-
 # Intro  
+
 Mouse tooltip translator is a google chrome extension that focus on providing convenient translate experience for user. To achieve convenient experience, this translator extension minimize current generally required step to translate word in website. In modern days, copying and pasting are getting generalized to obtain translated sentence from google translate site. This extension uses text hovering event to decide which text is required to be translated for user. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language text using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with clean pop-over tooltip. User does not require any other more action for translate text. This extension process surely replaces general user translation action process which open new tab for using google translate to getting translated sentence.  
 
 # TTS  
+
 For supporting translate feature, this translator extension provides feature that spoke source text pronunciation using google TTS (text to speech). It handles google TTS to speak pointed text to user to listen its voice. To using this feature, user need to enable TTS (text to speech) feature from translator pop up configuration page. When TTS feature is on, this translator extension send mouseover text to google TTS to speak original text based on computer voice to give user to have an idea on how to pronounce its text. With this translator extension, any language learner student can enhance pronunciation skill by listening this translator extension’s google TTS speech voice.  
 
 # PDF  
+
 Built-in PDF viewer is contained in this translator extension. Mouse tooltip translator uses PDF.js as built-in PDF viewer to support pdf file to provide translate feature over pdf text. This translator extension’s pdf supporting feature give a possibility to user to read foreign essay paper with translate service. This translator extension does not use chrome pdf reader. Chrome pdf reader provide pdf as embed text format which has difficulty on text crawling process for translate with this translator extension. This translator extension intercept pdf URL and redirect to mouse tooltip pdf.js page to provide pdf reader with tooltip translate feature. Local pdf file is also supported when user give local URL permission to this translator extension.  
 
 # OCR  
+
 Currently, this translator extension has under development OCR feature to translate image text. Mouse tooltip translator’s OCR feature is turned off initially. To use OCR translate feature, user need to turn on “enable OCR”. When user mouse over on image (manga, comics, webtoon and etc), this translator extension process OCR using tesseract.js to get its text for translating image.  
 
 # Language Detect  
+
 In this translator extension, user does not require a process to select source translate language for translate correctly because this extension handle language detection feature based on google translate language detection. This translator extension sends its mouse pointed text data to google translate and receive translated text with language detection data at the same time. This translator extension handles its auto language detection feature to minimize user interaction on source language selection for translate. And, auto language detection is used to filter out user known language text to prevent tooltip translate for providing clear web site experience. This translator extension detect same source target language to decide display translated tooltip or not for minimize disturbing on web site experience by displaying tooltip every time.  
 
 # Translate API
-This extension is positioned between user and translator API for providing simple translate experience with google translate service. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension handles given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Additionally, Bing translator is also support to give variety on user translate experience in this translator extension. Moreover, there is also another supported translator, Papago translator. Papago translator is a powerful tool that uses neural machine to translate any text. This characteristic of papago helps user to get more realistic translated result. Currently, this translator extension does not have any plan to support remained other translator like deepL translator.  DeepL are payment requirement service to use. 
+
+This extension is positioned between user and translator API for providing simple translate experience with google translate service. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension handles given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Additionally, Bing translator is also support to give variety on user translate experience in this translator extension. Moreover, there is also another supported translator, Papago translator. Papago translator is a powerful tool that uses neural machine to translate any text. This characteristic of papago helps user to get more realistic translated result. Currently, this translator extension does not have any plan to support remained other translator like deepL translator.  DeepL are payment requirement service to use.
 
 # Ownership  
+
 Mouse tooltip translator is individual developer’s created extension that is not officially made by google. It just handles google translate and google text to speech service to give ease translate experience to user. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension handles Google’s provided google translate service to user without any profit. Main purpose of this translator extension gives free translate experience on any web site without include any advertisement for show only translate result. This translator extension provides simple tooltip translate service on anywhere include YouTube, pdf and any text web site.  

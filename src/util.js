@@ -278,3 +278,8 @@ export function getBase64(url) {
       });
   });
 }
+
+export function postMessage(data) {
+  var targetWindow = self == top ? window : window.parent;
+  targetWindow.postMessage(data, "*");
+}

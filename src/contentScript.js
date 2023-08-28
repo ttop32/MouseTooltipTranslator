@@ -1,4 +1,3 @@
-"use strict";
 // inject translation tooltip based on user text hover event
 //it gets translation and tts from background.js
 //intercept pdf url
@@ -120,8 +119,8 @@ async function processWord(word, actionType) {
   if (
     !translatedText ||
     sourceLang == targetLang ||
-    setting["langExcludeList"].includes(sourceLang) ||
-    word == translatedText
+    word == translatedText ||
+    setting["langExcludeList"].includes(sourceLang)
   ) {
     hideTooltip();
     return;
@@ -137,12 +136,12 @@ async function processWord(word, actionType) {
   ) {
     var tooltipText = concatTransliteration(translatedText, transliteration);
     showTooltip(tooltipText, targetLang);
-    updateRecentTranslated(word, translatedText, actionType);
+    requestHistoryUpdate(word, translatedText, actionType);
   }
 
   //if use_tts is on or activation key is pressed, do tts
   if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
-    tts(word, sourceLang);
+    requestTTS(word, sourceLang);
   }
 }
 
@@ -247,18 +246,19 @@ function setTooltipPosition(calledFrom = "") {
 }
 
 async function translateWithReverse(word) {
-  var response = await getTranslation(
+  var response = await requestTranslate(
     word,
     setting["translateSource"],
     setting["translateTarget"]
   );
+  // console.log(response);
 
   //if to,from lang are same and reverse translate on
   if (
     setting["translateTarget"] == response.sourceLang &&
     setting["translateReverseTarget"] != "null"
   ) {
-    response = await getTranslation(
+    response = await requestTranslate(
       word,
       response.sourceLang,
       setting["translateReverseTarget"]
@@ -279,9 +279,12 @@ function concatTransliteration(translatedText, transliteration) {
 }
 
 //Translate Writing feature==========================================================================================
-async function translateWriting() {
+async function translateWriting(keyInput) {
   //check current focus is write box
-  if (!getFocusedWritingBox()) {
+  if (
+    setting["keyDownTranslateWriting"] != keyInput ||
+    !getFocusedWritingBox()
+  ) {
     return;
   }
 
@@ -292,19 +295,19 @@ async function translateWriting() {
   }
 
   // translate
-  var { translatedText } = await getTranslation(
+  var { translatedText } = await requestTranslate(
     writingText,
     "auto",
     setting["writingLanguage"]
   );
 
-  if (!translatedText) {
-    return;
-  }
-
   insertText(translatedText);
 }
+
 function insertText(inputText) {
+  if (!inputText) {
+    return;
+  }
   // document.execCommand("delete", false, null);
   document.execCommand("insertHTML", false, inputText);
   // document.execCommand("insertText", false, inputText);
@@ -338,14 +341,6 @@ function getWritingText() {
   return writingText;
 }
 
-function selectElementContents(ele) {
-  var selection = window.getSelection();
-  var range = document.createRange();
-  range.selectNodeContents(ele);
-  selection.removeAllRanges();
-  selection.addRange(range);
-}
-
 //event Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
 function loadEventListener() {
   //use mouse position for tooltip position
@@ -356,7 +351,7 @@ function loadEventListener() {
   //detect tab switching to reset env
   addEventHandler("blur", handleBlur);
   // when refresh web site, stop tts
-  addEventHandler("beforeunload", stopTTS);
+  addEventHandler("beforeunload", reuqestStopTTS);
 }
 
 function handleMousemove(e) {
@@ -394,21 +389,14 @@ function handleKeydown(e) {
   }
 
   keyDownList[e.code] = true;
-
-  // check activation hold key pressed, run tooltip again with key down value
   activatedWord = null; //restart word process
-  //restart select if selected value exist
   if (selectedText != "") {
-    processWord(selectedText, "select");
+    processWord(selectedText, "select"); //restart select if selected value exist
   }
-
-  if (setting["keyDownTranslateWriting"] == e.code) {
-    translateWriting();
-  }
-
   if (e.key == "Alt") {
-    e.preventDefault();
+    e.preventDefault(); // prevent alt site unfocus
   }
+  translateWriting(e.code);
 }
 
 function handleKeyup(e) {
@@ -424,7 +412,7 @@ function handleBlur(e) {
   selectedText = "";
   activatedWord = null;
   hideTooltip();
-  stopTTS();
+  reuqestStopTTS();
   ocrView.removeAllOcrEnv();
 }
 
@@ -462,24 +450,20 @@ function checkMouseOnceMoved(x, y) {
 }
 
 //send to background.js for background processing  ===========================================================================
-// function sendMessagePromise(params) {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       chrome.runtime.sendMessage(params, (response) => {
-//         resolve(response);
-//       });
-//     } catch (e) {
-//       if (e.message == "Extension context invalidated.") {
-//         console.log("context invalidated");
-//       } else {
-//         console.log(e);
-//       }
-//     }
-//   });
-// }
 
-async function getTranslation(word, translateSource, translateTarget) {
-  return await chrome.runtime.sendMessage({
+async function sendMesage(message) {
+  try {
+    return await chrome.runtime.sendMessage(message);
+  } catch (e) {
+    if (e.message != "Extension context invalidated.") {
+      console.log(e);
+    }
+  }
+  return {};
+}
+
+async function requestTranslate(word, translateSource, translateTarget) {
+  return await sendMesage({
     type: "translate",
     word: word,
     translateSource,
@@ -487,24 +471,24 @@ async function getTranslation(word, translateSource, translateTarget) {
   });
 }
 
-async function tts(word, lang) {
-  return await chrome.runtime.sendMessage({
+async function requestTTS(word, lang) {
+  return await sendMesage({
     type: "tts",
     word: word,
     lang: lang,
   });
 }
 
-async function stopTTS() {
-  return await chrome.runtime.sendMessage({
+async function reuqestStopTTS() {
+  return await sendMesage({
     type: "stopTTS",
   });
 }
 
 //send history to background.js
-async function updateRecentTranslated(sourceText, targetText, actionType) {
-  return await chrome.runtime.sendMessage({
-    type: "updateRecentTranslated",
+async function requestHistoryUpdate(sourceText, targetText, actionType) {
+  return await sendMesage({
+    type: "historyUpdate",
     sourceText,
     targetText,
     actionType,
@@ -582,12 +566,17 @@ function applyStyleSetting() {
         display: flex  !important;
         align-items: stretch  !important;
       }
-      .captions-text:hover .caption-visual-line:first-of-type:after {
-        content: '⣿⣿';
+      .captions-text .caption-visual-line:first-of-type:after {
         font-size: 1.5em;
+        content: '⣿⣿';
         background-color: #000000b8;
         display: inline-block;
-        vertical-align: top;     
+        vertical-align: top;
+        opacity:0;
+        transition: opacity 0.7s ease-in-out;   
+      }
+      .captions-text:hover .caption-visual-line:first-of-type:after {
+        opacity:1;
       }
     `
         : "")

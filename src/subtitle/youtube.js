@@ -4,7 +4,7 @@
 // https://www.youtube.com/api/timedtext
 
 // intercept youtube subtitle and concat it
-// restart player subtitle for apply
+// restart playersubtitle for apply
 
 import $ from "jquery";
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
@@ -13,9 +13,7 @@ interceptor.apply();
 
 window.addEventListener(
   "message",
-  async function(request) {
-    var data = request.data;
-
+  async function({ data }) {
     if (data.type == "ytPlayerSetOption") {
       $(".html5-video-player").each((index, element) => {
         element.setOption(...data.args);
@@ -30,9 +28,7 @@ interceptor.on("request", async ({ request, requestId }) => {
     if (request.url.includes("api/timedtext")) {
       var response = await fetch(request.clone());
       var json = await response.json();
-
       var concatSub = concatWordSub(json);
-
       request.respondWith(new Response(JSON.stringify(concatSub), response));
     }
   } catch (error) {

@@ -1,11 +1,6 @@
-"use strict";
+//handle translation
+//it communicate with  contentScript.js(for translation and tts)
 
-//handle translation, setting and pdf
-//it communicate with popup.js(for setting) and contentScript.js(for translation and tts)
-//for setting, it save and load from chrome storage
-//for translation, use fetch to get translated  result
-
-//tooltip background===========================================================================
 import translator from "./translator/index.js";
 import { waitUntil } from "async-wait-until";
 import * as util from "./util.js";
@@ -51,7 +46,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else if (request.type === "stopTTS") {
       chrome.tts.stop();
       sendResponse({});
-    } else if (request.type === "updateRecentTranslated") {
+    } else if (request.type === "historyUpdate") {
       recordHistory(request);
       updateContext(request);
       sendResponse({});
@@ -99,10 +94,8 @@ async function doTranslate(text, fromLang, targetLang, translatorVendor) {
 
 // detect local pdf file and redirect to translated pdf=====================================================================
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  var url = (changeInfo.url ? changeInfo.url : "").toLowerCase();
-
   if (
-    !url ||
+    !changeInfo.url ||
     changeInfo.status != "loading" ||
     (setting && setting["detectPDF"] == "false")
   ) {
@@ -110,14 +103,14 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 
   //check local pdf file, open with viewer
-  if (checkIsLocalPdfUrl(url)) {
-    openPDFViewer(url, tabId);
+  if (checkIsLocalPdfUrl(changeInfo.url)) {
+    openPDFViewer(changeInfo.url, tabId);
   }
 });
 
 //url is end with .pdf, start with file://
 function checkIsLocalPdfUrl(url) {
-  return /^(file:\/\/).*(\.pdf)$/.test(url);
+  return /^(file:\/\/).*(\.pdf)$/.test(url.toLowerCase());
 }
 async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {
@@ -190,26 +183,30 @@ async function getCurrentTab() {
 
 // ================= contents script reinjection after upgrade or install
 // https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
-// chrome.runtime.onInstalled.addListener(async () => {
-//   for (const cs of chrome.runtime.getManifest().content_scripts) {
-//     for (const tab of await chrome.tabs.query({ url: cs.matches })) {
-//       if (
-//         /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
-//           tab.url
-//         )
-//       ) {
-//         continue;
-//       }
+chrome.runtime.onInstalled.addListener(async (details) => {
+  for (const cs of chrome.runtime.getManifest().content_scripts) {
+    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+      if (
+        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
+          tab.url
+        )
+      ) {
+        continue;
+      }
 
-//       //load css and js on opened tab
-//       chrome.scripting.insertCSS({
-//         target: { tabId: tab.id },
-//         files: cs.css,
-//       });
-//       chrome.scripting.executeScript({
-//         target: { tabId: tab.id },
-//         files: cs.js,
-//       });
-//     }
-//   }
-// });
+      try {
+        //load css and js on opened tab
+        chrome.scripting.insertCSS({
+          target: { tabId: tab.id },
+          files: cs.css,
+        });
+        chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: cs.js,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+});
