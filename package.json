@@ -16,6 +16,7 @@
   "devDependencies": {
     "@mdi/font": "^5.9.55",
     "@mdi/js": "^5.9.55",
+    "@reorx/webpack-ext-reloader": "github:ttop32/webpack-ext-reloader",
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
     "deepmerge": "^4.2.2",
@@ -33,9 +34,7 @@
   },
   "dependencies": {
     "@mswjs/interceptors": "^0.23.0",
-    "@vespaiach/axios-fetch-adapter": "0.2.1",
     "async-wait-until": "^2.0.12",
-    "axios": "^0.21.1",
     "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",
     "crx-hotreload": "^1.0.6",
@@ -55,6 +54,7 @@
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
-    "vuetify": "^2.4.4"
+    "vuetify": "^2.4.4",
+    "window-post-message-proxy": "^0.2.6"
   }
 }

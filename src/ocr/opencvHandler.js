@@ -1,10 +1,10 @@
 window.addEventListener(
   "message",
-  function(request) {
-    if (request.data.type === "segmentBox") {
-      segmentBox(request.data);
-    } else if (request.data.type === "resizeImage") {
-      resizeImage(request.data);
+  ({ data }) => {
+    if (data.type === "segmentBox") {
+      segmentBox(data);
+    } else if (data.type === "resizeImage") {
+      resizeImage(data);
     }
   },
   false
@@ -34,8 +34,8 @@ async function segmentBox(request) {
     base64Url: base64,
     lang: request.lang,
     bboxList,
-    timeId: request.timeId,
     cvratio: ratio,
+    windowPostMessageProxy: request.windowPostMessageProxy,
   });
 }
 
@@ -46,8 +46,8 @@ async function resizeImage(request) {
 
   response({
     base64Url: base64,
-    timeId: request.timeId,
     cvratio: ratio,
+    windowPostMessageProxy: request.windowPostMessageProxy,
   });
 }
 

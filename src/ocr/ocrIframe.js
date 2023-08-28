@@ -1,5 +1,6 @@
 import Tesseract from "tesseract.js";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+import * as util from "../util.js";
 
 //ocr process, listen image from contents js and respond text
 //1. listen to get image from iframe host
@@ -8,13 +9,11 @@ import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 
 window.addEventListener(
   "message",
-  async function(request) {
-    var request = request.data;
-
-    if (request.type === "ocr") {
-      doOcr(request);
-    } else if (request.type === "initTesseract") {
-      initTesseract(request);
+  async function({ data }) {
+    if (data.type === "ocr") {
+      doOcr(data);
+    } else if (data.type === "initTesseract") {
+      initTesseract(data);
     }
   },
   false
@@ -48,7 +47,7 @@ async function doOcr(request) {
     base64Url: request.base64Url,
     lang: request.lang,
     ocrData,
-    timeId: request.timeId,
+    windowPostMessageProxy: request.windowPostMessageProxy,
   });
 }
 
@@ -72,9 +71,8 @@ function useTesseract(image, lang, rectangles, mode) {
   return new Promise(async function(resolve, reject) {
     try {
       var data = [];
-      // var mode = rectangles.length == 0 ? "auto" : "bbox";
-
       var scheduler = await getScheduler(lang, mode);
+
       // //ocr on plain image
       if (mode == "auto") {
         var d = await scheduler.addJob("recognize", image);
@@ -144,10 +142,13 @@ async function loadScheduler(lang, mode) {
 }
 
 function response(data) {
-  window.parent.postMessage(data, "*");
+  util.postMessage(data);
 }
 
 function initTesseract(request) {
   loadScheduler(request.lang, "auto");
   loadScheduler(request.lang, "bbox");
+  response({
+    windowPostMessageProxy: request.windowPostMessageProxy,
+  });
 }
