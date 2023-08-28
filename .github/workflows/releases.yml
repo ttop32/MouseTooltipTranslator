@@ -30,4 +30,5 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifacts: "mouse_tooltip_translator_*.zip"
+        body: "[Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)"
         
