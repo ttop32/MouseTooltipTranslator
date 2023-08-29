@@ -8,8 +8,7 @@ When mouse hover on text, it shows translated tooltip in any language.
 - Google translator and bing translator are used for translation
 - Support pdf to display translated tooltip using PDF.js
 - Translate youtube caption when mouse over subtitle block
-- Process OCR when mouse over on image (ex manga)
-
+- Process OCR when hold left shift and mouse over on image (ex manga)
 # Source code  
 
 - <https://github.com/ttop32/MouseTooltipTranslator>  
@@ -20,6 +19,10 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.74
+  - fix select destruction
+  - add intro site
+  - add hotkey for OCR (requested by neoOpus)
 - 0.1.73
   - update tesseract js ocr
   - fix translate writing box

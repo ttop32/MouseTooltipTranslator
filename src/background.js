@@ -7,6 +7,9 @@ import * as util from "./util.js";
 
 var setting;
 var recentTranslated = {};
+var introSiteUrl =
+  "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
+
 var translateWithCache = util.cacheFn(doTranslate); // make cache args function
 getSetting();
 
@@ -182,8 +185,18 @@ async function getCurrentTab() {
 }
 
 // ================= contents script reinjection after upgrade or install
-// https://stackoverflow.com/questions/10994324/chrome-extension-content-script-re-injection-after-upgrade-or-install
 chrome.runtime.onInstalled.addListener(async (details) => {
+  // skip if development mode
+  if (util.checkInDevMode()) {
+    return;
+  }
+
+  injectExtensionScriptForAllTab();
+  openIntroSite(details.reason);
+});
+
+async function injectExtensionScriptForAllTab() {
+  // if extension is upgrade or new install, refresh all tab
   for (const cs of chrome.runtime.getManifest().content_scripts) {
     for (const tab of await chrome.tabs.query({ url: cs.matches })) {
       if (
@@ -209,4 +222,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       }
     }
   }
-});
+}
+
+function openIntroSite(reason) {
+  if (reason == "install") {
+    chrome.tabs.create({ url: introSiteUrl }, function(tab) {});
+  }
+}

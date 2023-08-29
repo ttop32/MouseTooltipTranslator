@@ -50,8 +50,8 @@
 	"Detect_Youtube": {
 		"message": "Detect Youtube"
 	},
-	"Enable_OCR": {
-		"message": "Enable OCR"
+	"OCR_When": {
+		"message": "OCR_When"
 	},
 	"OCR_Detection_Language": {
 		"message": "OCR Detection Language"
