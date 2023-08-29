@@ -566,9 +566,9 @@ var settingListData = {
     description: "Enable Transliteration (Experimental)",
     optionList: toggleList,
   },
-  useOCR: {
-    description: chrome.i18n.getMessage("Enable_OCR"),
-    optionList: toggleList,
+  keyDownOCR: {
+    description: chrome.i18n.getMessage("OCR_When"),
+    optionList: keyListWithAlways,
   },
   ocrDetectionLang: {
     description: chrome.i18n.getMessage("OCR_Detection_Language"),

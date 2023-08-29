@@ -10,11 +10,13 @@ var iFrames = {};
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
-export async function checkImage(setting, mouseTarget) {
-  // if mouse target is not image or ocr is not on, skip
+export async function checkImage(setting, mouseTarget, keyDownList) {
+  // if  ocr is not on or no key bind, skip
+  // if mouse target is not image, skip
   // if already ocr processed,skip
   if (
-    setting["useOCR"] == "false" ||
+    (setting["keyDownOCR"] != "always" &&
+      !keyDownList[setting["keyDownOCR"]]) ||
     !checkMouseTargetIsImage(mouseTarget) ||
     ocrHistory[mouseTarget.src]
   ) {

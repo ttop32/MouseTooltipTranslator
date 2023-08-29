@@ -27,9 +27,14 @@ interceptor.on("request", async ({ request, requestId }) => {
   try {
     if (request.url.includes("api/timedtext")) {
       var response = await fetch(request.clone());
-      var json = await response.json();
-      var concatSub = concatWordSub(json);
-      request.respondWith(new Response(JSON.stringify(concatSub), response));
+      var sub1 = await response.json();
+      var sub1 = concatWordSub(sub1);
+      request.respondWith(new Response(JSON.stringify(sub1), response));
+
+      // var targetLang = "en";
+      // var sub2 = await getTranslatedSubtitle(request.url, targetLang);
+      // var mergedSub = mergeSubtitles(sub1, sub2);
+      // request.respondWith(new Response(JSON.stringify(mergedSub), response));
     }
   } catch (error) {
     console.log(error);
@@ -38,7 +43,7 @@ interceptor.on("request", async ({ request, requestId }) => {
 
 function concatWordSub(subtitle) {
   for (var event of subtitle.events) {
-    if (!event.segs || event.id) {
+    if (!event.segs) {
       continue;
     }
     var oneLineSub = event.segs.reduce((acc, cur) => (acc += cur.utf8), "");
@@ -49,6 +54,25 @@ function concatWordSub(subtitle) {
     ];
   }
   return subtitle;
+}
+
+function mergeSubtitles(sub1, sub2) {
+  var sub1 = concatWordSub(sub1);
+  var sub2 = concatWordSub(sub2);
+
+  for (let [index, event] of sub1.events.entries()) {
+    if (!event.segs || !event.dDurationMs) {
+      continue;
+    }
+    var line1 = event.segs[0]["utf8"].replace(/\s+/g, " ").trim();
+    var line2 = sub2.events[index]
+      ? sub2.events[index].segs[0]["utf8"].replace(/\s+/g, " ").trim()
+      : "";
+
+    event.segs[0]["utf8"] = `${line1}\n${line2 || "\t"}`;
+  }
+
+  return sub1;
 }
 
 async function getYoutubeMetaData(vParam) {
@@ -66,4 +90,11 @@ function getSubtitleList(metaData) {
   return metaData["captions"]["playerCaptionsTracklistRenderer"][
     "captionTracks"
   ];
+}
+
+async function getTranslatedSubtitle(baseUrl, lang) {
+  var url = new URL(baseUrl);
+  var urlParam = url.searchParams;
+  urlParam.set("tlang", lang);
+  return await (await fetch(url.toString())).json();
 }

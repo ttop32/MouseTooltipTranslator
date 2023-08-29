@@ -1,5 +1,6 @@
 // import * as util from './util.js';
 
+import $ from "jquery";
 import { parse } from "bcp-47";
 import { Setting } from "./setting";
 import isUrl from "is-url";
@@ -19,7 +20,7 @@ var defaultData = {
   detectPDF: "true",
   detectYoutube: "true",
   useTransliteration: "false",
-  useOCR: "false",
+  keyDownOCR: "ShiftLeft",
   ocrDetectionLang: "jpn_vert",
   tooltipFontSize: "14",
   tooltipWidth: "200",
@@ -230,14 +231,11 @@ export function filterWord(word) {
 // inject =================================
 export function injectScript(scriptUrl) {
   return new Promise((resolve) => {
-    var s = document.createElement("script");
-    s.src = chrome.runtime.getURL(scriptUrl);
-    s.onload = function() {
-      this.remove();
-      resolve();
-    };
-    // see also "Dynamic values in the injected code" section in this answer
-    (document.head || document.documentElement).appendChild(s);
+    $(`#${scriptUrl}`).remove(); //remove prev script
+    $("<script>", { id: scriptUrl })
+      .on("load", () => resolve())
+      .appendTo("head")
+      .attr("src", chrome.runtime.getURL(scriptUrl));
   });
 }
 
@@ -282,4 +280,15 @@ export function getBase64(url) {
 export function postMessage(data) {
   var targetWindow = self == top ? window : window.parent;
   targetWindow.postMessage(data, "*");
+}
+
+// remain ===================
+
+export function checkInDevMode() {
+  try {
+    if (process.env.NODE_ENV == "development") {
+      return true;
+    }
+  } catch (error) {}
+  return false;
 }

@@ -361,7 +361,7 @@ function handleMousemove(e) {
     return;
   }
   setMouseStatus(e);
-  ocrView.checkImage(setting, mouseTarget);
+  ocrView.checkImage(setting, mouseTarget, keyDownList);
   checkWritingBox();
   setTooltipPosition("mousemove");
   checkMouseTargetIsYoutubeSubtitle();
@@ -375,7 +375,7 @@ function handleKeydown(e) {
     return;
   }
 
-  // check already pressed and key is one of setting key
+  // check already pressed or key is not setting key
   if (
     keyDownList[e.code] ||
     ![
@@ -383,11 +383,13 @@ function handleKeydown(e) {
       setting["TTSWhen"],
       setting["keyDownDetectSwap"],
       setting["keyDownTranslateWriting"],
+      setting["keyDownOCR"],
     ].includes(e.code)
   ) {
     return;
   }
 
+  //reset status to restart process with keybind
   keyDownList[e.code] = true;
   activatedWord = null; //restart word process
   if (selectedText != "") {
@@ -640,10 +642,10 @@ async function checkYoutube() {
   }
 
   isYoutubeDetected = true;
-
   await util.injectScript("youtube.js");
   reloadSubtitle();
 }
+
 function reloadSubtitle() {
   window.postMessage(
     { type: "ytPlayerSetOption", args: ["captions", "reload", true] },
