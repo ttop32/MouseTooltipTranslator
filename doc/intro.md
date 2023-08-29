@@ -1,6 +1,9 @@
 # How to use
 
-- Basic uses : Hover or select (highlight) on text to translate  
+- Basic uses : Hover or select (highlight) on text to translate
+  - Test hover with example text
+    - Toute nation a le gouvernement qu'elle mérite.
+    - Proletarier aller Länder, vereinigt euch!
 ![Alt Text](/doc/result_0.gif)
 - Use <kbd>left ctrl</kbd> to Listen pronunciation with google TTS (text to speech)
 - Use <kbd>left alt</kbd> to translate writing text in input box (or highlighted text)
