@@ -11,7 +11,7 @@
 - Process OCR when hold left shift and mouse over on image (ex manga)
 ![result](doc/screenshot_5.png)
 - Setting page is given for customizing to taste
-![result](doc/screenshot_4.png)
+![result](/doc/screenshot_4.png)
 
 # Exception
 
