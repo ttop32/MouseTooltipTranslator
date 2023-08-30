@@ -19,6 +19,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.75
+  - fix font edit (requested by Musab Almawed)
 - 0.1.74
   - fix select destruction
   - add intro site

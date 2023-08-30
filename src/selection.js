@@ -9,7 +9,7 @@ export function enableSelectionEndEvent() {
   document.addEventListener(
     "selectionchange",
     debounce((event) => {
-      triggerSelectionEnd();
+      triggerSelectionEnd(getSelectionText());
     }, 700),
     false
   );
@@ -17,19 +17,9 @@ export function enableSelectionEndEvent() {
   // Trigger on mouse up immediately. Helps reduce 700 ms delay during mouse selection.
   document.addEventListener(
     "mouseup",
-    function(event) {
-      triggerSelectionEnd();
-    },
-    false
-  );
-
-  // fix no selectionchange detection by none selectable element
-  document.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (isNoneSelectElement(e.target)) {
-        window.getSelection().empty();
-      }
+    function(e) {
+      var text = !isNoneSelectElement(e.target) ? getSelectionText() : "";
+      triggerSelectionEnd(text);
     },
     false
   );
@@ -51,11 +41,11 @@ export function getSelectionText() {
   return text;
 }
 
-function triggerSelectionEnd() {
+function triggerSelectionEnd(text) {
   let event = document.createEvent("HTMLEvents");
   event.initEvent("selectionEnd", true, true);
   event.eventName = "selectionEnd";
-  event.selectedText = getSelectionText();
+  event.selectedText = text;
   // don't fire event twice
   if (event.selectedText === lastSelectedText) {
     return;
