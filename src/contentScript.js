@@ -515,8 +515,8 @@ function applyStyleSetting() {
       top: 0 !important;
       width: 1000px !important;
       margin-left: -500px !important;
-      height: ${setting["tooltipDistance"] * 2} px  !important;
-      margin-top: ${-setting["tooltipDistance"]} px  !important;
+      height: ${setting["tooltipDistance"] * 2}px  !important;
+      margin-top: ${-setting["tooltipDistance"]}px  !important;
       position: fixed !important;
       z-index: 100000200 !important;
       background: none !important;
@@ -533,10 +533,10 @@ function applyStyleSetting() {
       pointer-events: none !important;
     }
     .bootstrapiso .tooltip-inner {
-      font-size: ${setting["tooltipFontSize"]} px  !important;
-      max-width: ${setting["tooltipWidth"]} px  !important;
+      font-size: ${setting["tooltipFontSize"]}px  !important;
+      max-width: ${setting["tooltipWidth"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
-      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]} px) !important; 
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important; 
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
       pointer-events: auto;
@@ -575,7 +575,7 @@ function applyStyleSetting() {
         display: inline-block;
         vertical-align: top;
         opacity:0;
-        transition: opacity 0.7s ease-in-out;   
+        transition: opacity 0.7s ease-in-out;
       }
       .captions-text:hover .caption-visual-line:first-of-type:after {
         opacity:1;
