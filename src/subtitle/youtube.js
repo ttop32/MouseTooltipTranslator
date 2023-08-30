@@ -1,8 +1,3 @@
-// https://stackoverflow.com/questions/9515704/access-variables-and-functions-defined-in-page-context-using-a-content-script/9517879#9517879
-// https://stackoverflow.com/questions/18310484/modify-http-responses-from-a-chrome-extension
-// https://stackoverflow.com/questions/68537608/youtubes-get-video-info-endpoint-no-longer-working
-// https://www.youtube.com/api/timedtext
-
 // intercept youtube subtitle and concat it
 // restart playersubtitle for apply
 

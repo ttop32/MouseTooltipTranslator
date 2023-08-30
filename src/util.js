@@ -106,24 +106,6 @@ export function getAvailableVoiceList() {
 }
 
 // range util====================================================================================
-export function caretRangeFromPointOnShadowDom(x, y) {
-  var shadows = getAllShadows();
-  var textNodes = shadows
-    .map((shadow) => Array.from(getAllTextNodes(shadow)))
-    .flat();
-  var textNodes = textNodes.filter((textNode) =>
-    checkXYInElement(getTextRange(textNode), x, y)
-  );
-  var ranges = textNodes
-    .map((textNode) => Array.from(getCharRanges(textNode)))
-    .flat();
-  var ranges = ranges.filter((range) => checkXYInElement(range, x, y));
-
-  if (ranges.length) {
-    // console.log(ranges[0].toString());
-    return ranges[0];
-  }
-}
 
 export function caretRangeFromPoint(x, y) {
   var range = document.caretRangeFromPoint(x, y);
@@ -132,6 +114,37 @@ export function caretRangeFromPoint(x, y) {
     return;
   }
   return range;
+}
+
+export function caretRangeFromPointOnDocument(x, y) {
+  var textNodes = getAllTextNodes(document.body);
+  return getRangeFromTextNodes(x, y, textNodes);
+}
+
+export function caretRangeFromPointOnShadowDom(x, y) {
+  // get all text from shadows
+  var shadows = getAllShadows();
+  var textNodes = shadows
+    .map((shadow) => Array.from(getAllTextNodes(shadow)))
+    .flat();
+
+  return getRangeFromTextNodes(x, y, textNodes);
+}
+
+function getRangeFromTextNodes(x, y, textNodes) {
+  // text node that position in x y
+  var textNodes = textNodes.filter((textNode) =>
+    checkXYInElement(getTextRange(textNode), x, y)
+  );
+  // convert text node to char range
+  var ranges = textNodes
+    .map((textNode) => Array.from(getCharRanges(textNode)))
+    .flat();
+  // get char range in x y
+  var ranges = ranges.filter((range) => checkXYInElement(range, x, y));
+  if (ranges.length) {
+    return ranges[0];
+  }
 }
 
 export function getAllShadows(el = document.body) {
