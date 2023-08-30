@@ -5,7 +5,7 @@
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
 import { enableSelectionEndEvent, getSelectionText } from "./selection";
-import { encode, decode } from "he";
+import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import * as util from "./util.js";
 import * as ocrView from "./ocr/ocrView.js";
@@ -146,10 +146,10 @@ async function processWord(word, actionType) {
 }
 
 function getMouseOverWord(x, y) {
-  var range = util.caretRangeFromPoint(x, y);
-  var range = range ? range : util.caretRangeFromPointOnShadowDom(x, y);
   //if no range, skip
-  if (range == null) {
+  var range =
+    util.caretRangeFromPoint(x, y) || util.caretRangeFromPointOnShadowDom(x, y);
+  if (!range) {
     return "";
   }
 
@@ -187,7 +187,6 @@ function expandRange(range, type) {
 
 function checkMouseTargetIsSpecialWebBlock() {
   var specialClassNameList = [
-    "ytp-caption-segment", //youtube caption
     "ocr_text_div", //mousetooltip ocr block
   ];
   // if mouse targeted web element contain particular class name, return true
@@ -631,16 +630,12 @@ function addElementEnv() {
 
 // youtube================================
 async function checkYoutube() {
-  var vParam = new URLSearchParams(document.location.search).get("v");
-
   if (
     !matchUrl(document.location.href, "www.youtube.com") ||
-    !vParam ||
     setting["detectYoutube"] == "false"
   ) {
     return;
   }
-
   isYoutubeDetected = true;
   await util.injectScript("youtube.js");
   reloadSubtitle();
@@ -657,7 +652,6 @@ function checkMouseTargetIsYoutubeSubtitle() {
   if (!isYoutubeDetected || !$(mouseTarget).is(".ytp-caption-segment")) {
     return;
   }
-
   // make subtitle selectable
   $(mouseTarget)
     .off("mousedown")
