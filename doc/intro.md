@@ -1,14 +1,17 @@
 # How to use
 
-- Basic uses : Hover or select (highlight) on text to translate  
+- Basic uses : Hover or select (highlight) on text to translate
+  - Test hover with example text
+    - Toute nation a le gouvernement qu'elle mérite.
+    - Proletarier aller Länder, vereinigt euch!
 ![Alt Text](/doc/result_0.gif)
-- Use left ctrl to Listen pronunciation with google TTS (text to speech)
-- Use left alt to translate writing text in input box (or highlighted text)
+- Use <kbd>left ctrl</kbd> to Listen pronunciation with google TTS (text to speech)
+- Use <kbd>left alt</kbd> to translate writing text in input box (or highlighted text)
 - Support pdf to display translated tooltip using PDF.js
 ![result](/doc/screenshot_3.png)
 - Translate youtube caption when mouse over subtitle block
 ![result](/doc/screenshot_6.png)
-- Process OCR when hold left shift and mouse over on image (ex manga)
+- Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/screenshot_5.png)
 - Setting page is given for customizing to taste
 ![result](/doc/screenshot_4.png)
