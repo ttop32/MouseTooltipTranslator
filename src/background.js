@@ -1,16 +1,24 @@
 //handle translation
 //it communicate with  contentScript.js(for translation and tts)
+//listen context menu, uninstall, first install, extension update
 
 import translator from "./translator/index.js";
 import { waitUntil } from "async-wait-until";
 import * as util from "./util.js";
+import { detect } from "detect-browser";
 
+const browser = detect();
 var setting;
 var recentTranslated = {};
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
+var chromeReviewPage =
+  "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews";
+var edgeReviewPage =
+  "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl";
 
 var translateWithCache = util.cacheFn(doTranslate); // make cache args function
+addUninstallUrl();
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
@@ -228,4 +236,14 @@ function openIntroSite(reason) {
   if (reason == "install") {
     chrome.tabs.create({ url: introSiteUrl }, function(tab) {});
   }
+}
+
+function addUninstallUrl() {
+  if (util.checkInDevMode()) {
+    return;
+  }
+
+  var reviewPage =
+    browser.name == "edge-chromium" ? edgeReviewPage : chromeReviewPage;
+  chrome.runtime.setUninstallURL(reviewPage);
 }

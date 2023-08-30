@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 
 - 0.1.75
   - fix font edit (requested by Musab Almawed)
+  - add uninstall callback page
 - 0.1.74
   - fix select destruction
   - add intro site
