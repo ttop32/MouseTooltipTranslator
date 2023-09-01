@@ -7,6 +7,7 @@ import isUrl from "is-url";
 
 var defaultData = {
   showTooltipWhen: "always",
+  languageTutor: "true",
   TTSWhen: "ControlLeft",
   translateWhen: "mouseoverselect",
   translateSource: "auto",

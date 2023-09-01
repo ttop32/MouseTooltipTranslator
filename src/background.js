@@ -3,6 +3,8 @@
 //listen context menu, uninstall, first install, extension update
 
 import translator from "./translator/index.js";
+import openai from "./openai/index.js";
+import dictionary from "./dictionary.js";
 import { waitUntil } from "async-wait-until";
 import * as util from "./util.js";
 import { detect } from "detect-browser";
@@ -44,6 +46,39 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             sourceLang: "en",
             targetLang: "en",
           };
+
+      sendResponse(translatedResult);
+    } else if (request.type === "languageTutor") {
+      var translatedResult = await doTranslateWithOpenAI(
+        request.word,
+        request.translateSource,
+        request.translateTarget,
+        'chatgpt'
+      );
+
+      translatedResult = translatedResult
+        ? translatedResult
+        : {
+            translatedText: "",
+            transliteration: "",
+            sourceLang: "en",
+            targetLang: "en",
+          };
+
+      sendResponse(translatedResult);
+    } else if (request.type === "pronunciation") {
+      var result = await fetchPronunciation(
+        request.word,
+        request.translateSource
+      );
+      var strPhonetics = result[0]?.phonetics?.map(ph => ph.text)?.join(' • ');
+
+      translatedResult = {
+        translatedText: strPhonetics,
+        transliteration: "",
+        sourceLang: "en",
+        targetLang: "en",
+      };
 
       sendResponse(translatedResult);
     } else if (request.type === "tts") {
@@ -101,6 +136,14 @@ async function doTts(word, lang, ttsVolume, ttsRate) {
 
 async function doTranslate(text, fromLang, targetLang, translatorVendor) {
   return translator[translatorVendor].translate(text, fromLang, targetLang);
+}
+
+async function doTranslateWithOpenAI(text, fromLang, targetLang, translatorVendor) {
+  return openai[translatorVendor].translate(text, fromLang, targetLang);
+}
+
+async function fetchPronunciation(text, fromLang) {
+  return await dictionary.fetchPronunciation(text, fromLang);
 }
 
 // detect local pdf file and redirect to translated pdf=====================================================================

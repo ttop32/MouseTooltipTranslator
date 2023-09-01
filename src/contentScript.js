@@ -87,7 +87,7 @@ function startTextSelectDetector() {
 }
 
 //process detected word
-async function processWord(word, actionType) {
+async function processWord(word, actionType, isCtrlPressed = false) {
   // skip if mouse target is tooltip
   if (checkMouseTargetIsTooltip()) {
     return;
@@ -105,20 +105,29 @@ async function processWord(word, actionType) {
     return;
   }
 
+  // language tutor mode
+  var isLanguageTutorMode = setting["languageTutor"];
+  
   //stage current processing word
   activatedWord = word;
+  var result = null;
+  if (isCtrlPressed && word?.trim()?.split(' ')?.length === 1) {
+    result = await fetchPronunciation(word.trim());
+  } else {
+    result = isLanguageTutorMode == "true" ? await translateWithOpenAI(word) : await translateWithReverse(word);
+  }
   var {
-    translatedText,
-    sourceLang,
-    targetLang,
-    transliteration,
-  } = await translateWithReverse(word);
+    translatedText, 
+    sourceLang, 
+    targetLang, 
+    transliteration
+  } = result;
 
   //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
   if (
     !translatedText ||
-    sourceLang == targetLang ||
+    // sourceLang == targetLang ||
     word == translatedText ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
@@ -140,7 +149,7 @@ async function processWord(word, actionType) {
   }
 
   //if use_tts is on or activation key is pressed, do tts
-  if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
+  if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]] || isCtrlPressed) {
     requestTTS(word, sourceLang);
   }
 }
@@ -263,6 +272,25 @@ async function translateWithReverse(word) {
       setting["translateReverseTarget"]
     );
   }
+
+  return response;
+}
+
+async function translateWithOpenAI(word) {
+  var response = await requestLanguageTutor(
+    word,
+    setting["translateSource"],
+    setting["translateTarget"]
+  );
+
+  return response;
+}
+
+async function fetchPronunciation(word) {
+  var response = await requestPronunciation(
+    word,
+    setting["translateSource"]
+  );
 
   return response;
 }
@@ -392,7 +420,7 @@ function handleKeydown(e) {
   keyDownList[e.code] = true;
   activatedWord = null; //restart word process
   if (selectedText != "") {
-    processWord(selectedText, "select"); //restart select if selected value exist
+    processWord(selectedText, "select", true); //restart select if selected value exist
   }
   if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
@@ -469,6 +497,23 @@ async function requestTranslate(word, translateSource, translateTarget) {
     word: word,
     translateSource,
     translateTarget,
+  });
+}
+
+async function requestLanguageTutor(word, translateSource, translateTarget) {
+  return await sendMesage({
+    type: "languageTutor",
+    word: word,
+    translateSource,
+    translateTarget,
+  });
+}
+
+async function requestPronunciation(word, translateSource) {
+  return await sendMesage({
+    type: "pronunciation",
+    word: word,
+    translateSource
   });
 }
 

@@ -514,6 +514,10 @@ var settingListData = {
     description: chrome.i18n.getMessage("Show_Tooltip_When"),  // public/_locales/en/messages.json is used 
     optionList: keyListWithAlways,
   },
+  languageTutor: {
+    description: chrome.i18n.getMessage("Language_Tutor"),
+    optionList: toggleList,
+  },
   TTSWhen: {
     description: chrome.i18n.getMessage("TTS_When"),
     optionList: keyListWithAlways,
