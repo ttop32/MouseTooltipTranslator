@@ -71,8 +71,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         request.word,
         request.translateSource
       );
-      var strPhonetics = result[0]?.phonetics?.map(ph => ph.text)?.join(' • ');
-
+      var strPhonetics = result[0]?.phonetics?.map(ph => ph.text).filter(x => x != undefined)?.join(' • ')?.replaceAll('ɹ', 'r');
+      
       translatedResult = {
         translatedText: strPhonetics,
         transliteration: "",
