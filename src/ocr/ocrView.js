@@ -100,17 +100,7 @@ function checkMouseTargetIsImage(mouseTarget) {
 async function initOCR(lang) {
   await createIframe("ocrFrame", "/ocr.html");
   await createIframe("opencvFrame", "/opencvHandler.html");
-  initIframeTesseract(lang);
-}
-
-async function initIframeTesseract(lang) {
-  return await getMessageResponse(
-    {
-      type: "initTesseract",
-      lang,
-    },
-    "ocrFrame"
-  );
+  requestTesseractInit(lang);
 }
 
 async function createIframe(name, htmlPath) {
@@ -144,24 +134,31 @@ async function createIframe(name, htmlPath) {
 
 // request ocr  i frame ==========
 async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
-  return await getMessageResponse(
+  return await postMessage(
     { mainUrl, lang, type: "ocr", bboxList, base64Url, mode },
-    "ocrFrame"
+    iFrames["ocrFrame"]
   );
 }
 
 async function requestSegmentBox(mainUrl, lang, base64Url) {
-  return await getMessageResponse(
+  return await postMessage(
     { mainUrl, lang, type: "segmentBox", base64Url },
-    "opencvFrame"
+    iFrames["opencvFrame"]
   );
 }
 
-async function getMessageResponse(data, frameName) {
-  return await windowPostMessageProxy.postMessage(
-    iFrames[frameName].contentWindow,
-    data
+async function requestTesseractInit(lang) {
+  return await postMessage(
+    {
+      type: "initTesseract",
+      lang,
+    },
+    iFrames["ocrFrame"]
   );
+}
+
+async function postMessage(data, frame) {
+  return await windowPostMessageProxy.postMessage(frame.contentWindow, data);
 }
 
 async function getBase64Image(url) {

@@ -468,7 +468,8 @@ var ocrLangList = {
 var translatorList = {
   google: "google",
   bing: "bing",
-  "papago (Experimental)": "papago"
+  "papago (Experimental)": "papago",
+  "deepl (Experimental)": "deepl"
 };
 
 var translateActionList = {
@@ -501,6 +502,13 @@ translateListWithNone["None"] = "null";
 var keyListWithAlways = util.copyJson(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
 
+var subtitleTypeList={
+  "Dual Subtitle":"dualsub",
+  "Target Single Subtitle":"targetsinglesub",
+  "Source Single Subtitle":"sourcesinglesub",
+  "Minimized Feature":"minimized",
+  "None":"null"
+}
 
 var tooltipTextAlignList={
   Center:"center",
@@ -558,9 +566,9 @@ var settingListData = {
     description: chrome.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
-  detectYoutube: {
-    description: chrome.i18n.getMessage("Detect_Youtube"),
-    optionList: toggleList,
+  enableYoutube: {
+    description: chrome.i18n.getMessage("Enable_Youtube_Subtitle"),
+    optionList: subtitleTypeList,
   },
   useTransliteration: {
     description: "Enable Transliteration (Experimental)",

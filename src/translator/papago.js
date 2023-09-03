@@ -37,7 +37,7 @@ export default class papago extends BaseTranslator {
   static async requestTranslate(text, fromLang, targetLang) {
     if (fromLang == "auto") {
       var { options, uuid } = await this.getOptionsAndUuid(urlDect);
-      var { langCode } = await this.fetchJson(
+      var { langCode } = await this.fetchWithError(
         urlDect,
         {
           query: text,
@@ -49,7 +49,7 @@ export default class papago extends BaseTranslator {
 
     var { options, uuid } = await this.getOptionsAndUuid(urlTranslate);
 
-    return await this.fetchJson(
+    return await this.fetchWithError(
       urlTranslate,
       {
         deviceId: uuid,
@@ -76,9 +76,9 @@ export default class papago extends BaseTranslator {
   }
 
   static async getVersion() {
-    var data = await this.fetchText(mainUrl);
+    var data = await this.fetchWithError(mainUrl, "", {}, false);
     var scriptUrl = mainUrl + "main." + data.match(/"\/main.([^"]+)"/)[1];
-    var data = await this.fetchText(scriptUrl);
+    var data = await this.fetchWithError(scriptUrl, "", {}, false);
     var version = "v1." + data.match(/"v1.([^"]+)"/)[1];
     return version;
   }

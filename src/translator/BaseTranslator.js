@@ -37,16 +37,15 @@ export default class BaseTranslator {
       : lang;
   }
 
-  static async fetchJson(url, urlParams = "", options = {}) {
+  static async fetchWithError(
+    url,
+    urlParams = "",
+    options = {},
+    isJson = true
+  ) {
     var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
     return await fetch(url + urlParams, options)
-      .then((response) => response.json())
-      .catch((err) => console.log(err));
-  }
-  static async fetchText(url, urlParams = "", options = {}) {
-    var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
-    return await fetch(url + urlParams, options)
-      .then((response) => response.text())
+      .then((response) => (isJson ? response.json() : response.text()))
       .catch((err) => console.log(err));
   }
   static async requestTranslate(text, fromLang, targetLang) {

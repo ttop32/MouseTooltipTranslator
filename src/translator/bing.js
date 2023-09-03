@@ -84,7 +84,7 @@ export default class bing extends BaseTranslator {
   static async requestTranslate(text, fromLang, targetLang) {
     const { token, key, IG, IID } = await getBingAccessToken();
 
-    return await this.fetchJson(
+    return await this.fetchWithError(
       bingBaseUrl,
       {
         IG,

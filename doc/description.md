@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 
 - 0.1.75
+  - add dual subtitle for youtube
+- 0.1.75
   - fix font edit (requested by Musab Almawed)
   - fix youtube word detect
   - add uninstall callback page

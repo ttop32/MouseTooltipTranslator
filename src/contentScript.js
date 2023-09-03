@@ -60,9 +60,8 @@ function startMouseoverDetector() {
   mouseoverInterval = setInterval(async function() {
     // only work when tab is activated and when mousemove and no selected text
     if (
-      mouseMoved &&
+      checkWindowFocus() &&
       !selectedText &&
-      document.visibilityState == "visible" &&
       setting["translateWhen"].includes("mouseover")
     ) {
       let word = getMouseOverWord(clientX, clientY);
@@ -76,10 +75,7 @@ function startTextSelectDetector() {
   enableSelectionEndEvent(); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function(event) {
     // if translate on selection is enabled
-    if (
-      document.visibilityState == "visible" &&
-      setting["translateWhen"].includes("select")
-    ) {
+    if (checkWindowFocus() && setting["translateWhen"].includes("select")) {
       selectedText = event.selectedText;
       await processWord(selectedText, "select");
     }
@@ -200,6 +196,10 @@ function checkMouseTargetIsTooltip() {
     return true;
   }
   return false;
+}
+
+function checkWindowFocus() {
+  return mouseMoved && document.visibilityState == "visible";
 }
 
 function showTooltip(text, lang) {
@@ -632,20 +632,35 @@ function addElementEnv() {
 async function checkYoutube() {
   if (
     !matchUrl(document.location.href, "www.youtube.com") ||
-    setting["detectYoutube"] == "false"
+    setting["enableYoutube"] == "null"
   ) {
     return;
   }
   isYoutubeDetected = true;
   await util.injectScript("youtube.js");
-  reloadSubtitle();
+  initYoutubePlayer();
+  reloadCaption();
+  activateCaption();
 }
 
-function reloadSubtitle() {
-  window.postMessage(
-    { type: "ytPlayerSetOption", args: ["captions", "reload", true] },
-    "*"
-  );
+function reloadCaption() {
+  util.postMessage({ type: "reloadCaption" });
+}
+function activateCaption() {
+  util.postMessage({ type: "activateCaption" });
+}
+function pausePlayer() {
+  util.postMessage({ type: "pausePlayer" });
+}
+function playPlayer() {
+  util.postMessage({ type: "playPlayer" });
+}
+function initYoutubePlayer() {
+  util.postMessage({
+    type: "initYoutubePlayer",
+    targetLang: setting["translateTarget"],
+    enableYoutube: setting["enableYoutube"],
+  });
 }
 
 function checkMouseTargetIsYoutubeSubtitle() {
@@ -653,12 +668,21 @@ function checkMouseTargetIsYoutubeSubtitle() {
     return;
   }
   // make subtitle selectable
-  $(mouseTarget)
-    .off("mousedown")
+  $(".ytp-caption-segment")
+    .off()
     .on("mousedown", (e) => {
       $(".caption-window").attr("draggable", "false");
       e.stopPropagation();
     });
+  $(".caption-window")
+    .off()
+    .on("mouseenter", (e) => {
+      pausePlayer();
+    })
+    .on("mouseleave", (e) => {
+      playPlayer();
+    });
+  pausePlayer();
 }
 
 //destruction ===================================

@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Hiire tööriistatõlkija For Chrome and Edge"
+		"message": "Translator"
 	},
 	"appDesc": {
 		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil"
@@ -47,8 +47,8 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
-	"Detect_Youtube": {
-		"message": "Detect Youtube"
+	"Enable_Youtube_Subtitle": {
+		"message": "Enable Youtube Subtitle"
 	},
 	"OCR_When": {
 		"message": "OCR_When"
