@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator For Chrome and Edge"
 	},
 	"appDesc": {
 		"message": "Mouse Tooltip Translator translate mouseover text using google translate"
@@ -47,8 +47,8 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
-	"Detect_Youtube": {
-		"message": "Detect Youtube"
+	"Enable_Youtube_Subtitle": {
+		"message": "Enable Youtube Subtitle"
 	},
 	"OCR_When": {
 		"message": "OCR_When"

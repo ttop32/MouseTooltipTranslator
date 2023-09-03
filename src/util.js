@@ -18,7 +18,7 @@ var defaultData = {
   writingLanguage: "en",
   translateReverseTarget: "null",
   detectPDF: "true",
-  detectYoutube: "true",
+  enableYoutube: "dualsub",
   useTransliteration: "false",
   keyDownOCR: "ShiftLeft",
   ocrDetectionLang: "jpn_vert",
@@ -290,11 +290,6 @@ export function getBase64(url) {
   });
 }
 
-export function postMessage(data) {
-  var targetWindow = self == top ? window : window.parent;
-  targetWindow.postMessage(data, "*");
-}
-
 // remain ===================
 
 export function checkInDevMode() {
@@ -304,4 +299,9 @@ export function checkInDevMode() {
     }
   } catch (error) {}
   return false;
+}
+
+export function postMessage(data) {
+  var targetWindow = self == top ? window : window.parent;
+  return targetWindow.postMessage(data, "*");
 }

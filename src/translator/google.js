@@ -10,7 +10,7 @@ export default class google extends BaseTranslator {
 
     var tk = getToken(text, googleTranslateTKK);
 
-    return await this.fetchJson(apiPath, {
+    return await this.fetchWithError(apiPath, {
       client: "te_lib",
       sl: fromLang,
       tl: targetLang,

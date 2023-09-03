@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "சுட்டி உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் : Translate Email"
+		"message": "சுட்டி உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் With PDF Reader"
 	},
 	"appDesc": {
 		"message": "மவுஸ் உதவிக்குறிப்பு மொழிபெயர்ப்பாளர் கூகிள் மொழிபெயர்ப்பைப் பயன்படுத்தி மவுஸ்ஓவர் உரையை மொழிபெயர்க்கவும்"
@@ -47,8 +47,8 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
-	"Detect_Youtube": {
-		"message": "Detect Youtube"
+	"Enable_Youtube_Subtitle": {
+		"message": "Enable Youtube Subtitle"
 	},
 	"OCR_When": {
 		"message": "OCR_When"
