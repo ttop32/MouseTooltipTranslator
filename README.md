@@ -29,7 +29,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - Use left alt to translate writing text in input box (or highlighted text)
 - Google translator and bing translator are used for translation
 - Support pdf to display translated tooltip using PDF.js
-- Translate youtube caption when mouse over subtitle block
+- Support dual subtitles for youtube video
 - Process OCR when hold left shift and mouse over on image (ex manga)
   
 # Contributors
