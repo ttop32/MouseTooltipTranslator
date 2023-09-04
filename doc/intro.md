@@ -10,7 +10,7 @@
 ![result](/doc/11.gif)
 - Support pdf to display translated tooltip using PDF.js
 ![result](/doc/12.gif)
-- Translate youtube caption when mouse over subtitle block
+- Support dual subtitles for youtube video
 ![result](/doc/13.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
