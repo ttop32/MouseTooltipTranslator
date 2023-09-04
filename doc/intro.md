@@ -11,7 +11,7 @@
 - Support pdf to display translated tooltip using PDF.js
 ![result](/doc/12.gif)
 - Support dual subtitles for youtube video
-![result](/doc/13.gif)
+![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
 - Setting page is given for customizing to taste
