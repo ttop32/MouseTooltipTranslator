@@ -6,6 +6,7 @@ const common = require("./webpack.common.js");
 const PATHS = require("./paths");
 var glob = require("glob");
 var path = require("path");
+const ExtReloader = require("@reorx/webpack-ext-reloader");
 
 // Merge webpack configuration files
 module.exports = (env, argv) => {
@@ -25,5 +26,16 @@ module.exports = (env, argv) => {
         stream: require.resolve("stream-browserify"),
       },
     },
+    plugins: [
+      argv.mode == "development"
+        ? new ExtReloader({
+            port: 9090, // Which port use to create the server
+            reloadPage: true, // Force the reload of the page also
+            entries: {
+              background: "background",
+            },
+          })
+        : false,
+    ],
   });
 };
