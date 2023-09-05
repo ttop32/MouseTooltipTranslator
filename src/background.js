@@ -239,10 +239,6 @@ function openIntroSite(reason) {
 }
 
 function addUninstallUrl() {
-  if (util.checkInDevMode()) {
-    return;
-  }
-
   var reviewPage =
     browser.name == "edge-chromium" ? edgeReviewPage : chromeReviewPage;
   chrome.runtime.setUninstallURL(reviewPage);

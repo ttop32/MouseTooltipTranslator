@@ -20,6 +20,12 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.78
+  - google reject by "Blue Argon"
+    - make ExtReloader works only on development
+    - remove any unused package
+    - refactor code
+    - double check any existence of eval()
 - 0.1.77
   - fix youtube dual subtitles time mismatch
 - 0.1.76

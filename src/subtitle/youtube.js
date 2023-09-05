@@ -1,5 +1,4 @@
-// https://terrillthompson.com/648
-// intercept youtube subtitle and concat it
+// intercept youtube subtitle and concat dual sub
 // restart playersubtitle for apply
 
 import $ from "jquery";
@@ -29,7 +28,7 @@ window.addEventListener(
   false
 );
 
-// check any subtitle request
+// check any subtitle request and concat dual sub
 interceptor.on("request", async ({ request, requestId }) => {
   try {
     if (request.url.includes("www.youtube.com/api/timedtext")) {
@@ -52,7 +51,7 @@ interceptor.on("request", async ({ request, requestId }) => {
   }
 });
 
-// check url change
+// check url change and turn on sub
 navigation.addEventListener("navigate", (e) => {
   var url = e.destination.url;
   activateCaption(url);
@@ -149,12 +148,6 @@ function concatWordSub(subtitle) {
       newEvents[newEvents.length - 1].segs[0].utf8 += oneLineSub
         ? ` ${oneLineSub}`
         : "";
-
-      // newEvents[newEvents.length - 1].dDurationMs =
-      //   event.tStartMs +
-      //   event.dDurationMs -
-      //   newEvents[newEvents.length - 1].tStartMs -
-      //   100;
     }
   }
 
@@ -205,21 +198,7 @@ async function getYoutubeMetaData(vParam) {
   return json;
 }
 
-async function getSubUrl(v, lang) {
-  var metaData = await getYoutubeMetaData(v);
-  var captionList =
-    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-  var langUrl = captionList.filter(
-    (caption) => !caption?.kind && caption.languageCode == lang
-  )?.[0]?.baseUrl;
-  return langUrl;
-}
-
 async function getTranslatedSubtitle(baseUrl, lang) {
-  // use user generated sub if exist
-  // var v = getVideoIdParam(baseUrl);
-  // var url = await getSubUrl(v, lang) + "&fmt=json3";
-
   var url = new URL(baseUrl);
   url.searchParams.set("tlang", lang);
   return await (await fetch(url.toString())).json();
