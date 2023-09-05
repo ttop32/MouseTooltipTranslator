@@ -9,6 +9,7 @@ When mouse hover on text, it shows translated tooltip in any language.
 - Support pdf to display translated tooltip using PDF.js
 - Support dual subtitles for youtube video
 - Process OCR when hold left shift and mouse over on image (ex manga)
+
 # Source code  
 
 - <https://github.com/ttop32/MouseTooltipTranslator>  
@@ -19,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.77
+  - fix youtube dual subtitles time mismatch
 - 0.1.76
   - add dual subtitle for youtube
 - 0.1.75

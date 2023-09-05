@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "माउस टूलटिप ट्रान्सलेटर : Simple Translator"
+		"message": "माउस टूलटिप ट्रान्सलेटर With Dual Subtitles"
 	},
 	"appDesc": {
 		"message": "माउस टूलटिप ट्रान्सलेटर Google भाषांतर वापरून माउसओव्हर मजकूराचे भाषांतर करा"
@@ -51,7 +51,7 @@
 		"message": "Enable Youtube Subtitle"
 	},
 	"OCR_When": {
-		"message": "OCR_When"
+		"message": "OCR When"
 	},
 	"OCR_Detection_Language": {
 		"message": "OCR Detection Language"

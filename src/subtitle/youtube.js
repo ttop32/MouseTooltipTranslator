@@ -4,21 +4,18 @@
 
 import $ from "jquery";
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
-// import { FetchInterceptor } from "@mswjs/interceptors/fetch";
-// const interceptorFetch = new FetchInterceptor();
-// interceptorFetch.apply();
 
 const interceptor = new XMLHttpRequestInterceptor();
 interceptor.apply();
 var targetLang = "";
 var enableYoutube = "";
+var isEmbed = false;
 
 window.addEventListener(
   "message",
   async function({ data }) {
     if (data.type == "initYoutubePlayer") {
-      targetLang = data.targetLang;
-      enableYoutube = data.enableYoutube;
+      initPlayer(data);
     } else if (data.type == "reloadCaption") {
       handlePlayer((ele) => ele.setOption("captions", "reload", true));
     } else if (data.type == "activateCaption") {
@@ -28,9 +25,6 @@ window.addEventListener(
     } else if (data.type == "playPlayer") {
       handlePlayer((ele) => ele.playVideo());
     }
-    response({
-      windowPostMessageProxy: data.windowPostMessageProxy,
-    });
   },
   false
 );
@@ -66,7 +60,16 @@ navigation.addEventListener("navigate", (e) => {
 
 // ========================================
 
+function initPlayer(data) {
+  targetLang = data.targetLang;
+  enableYoutube = data.enableYoutube;
+  isEmbed = window.location.href.includes("www.youtube.com/embed");
+}
+
 function handlePlayer(callbackFn) {
+  if (isEmbed) {
+    return;
+  }
   var ele = $(".html5-video-player").get(0);
   callbackFn(ele);
 }
@@ -96,7 +99,7 @@ async function activateCaption(url = window.location.href) {
 }
 
 async function getExistSubLang(url, needTargetLang = false) {
-  var vParam = getSearchParam(url, "v");
+  var vParam = getVideoIdParam(url);
   var metaData = await getYoutubeMetaData(vParam);
   var captionMeta =
     metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
@@ -128,6 +131,7 @@ function concatWordSub(subtitle) {
 
     if (
       newEvents.length == 0 ||
+      // 5000 < newEvents[newEvents.length - 1].dDurationMs ||
       newEvents[newEvents.length - 1].tStartMs +
         newEvents[newEvents.length - 1].dDurationMs <=
         event.tStartMs
@@ -145,6 +149,12 @@ function concatWordSub(subtitle) {
       newEvents[newEvents.length - 1].segs[0].utf8 += oneLineSub
         ? ` ${oneLineSub}`
         : "";
+
+      // newEvents[newEvents.length - 1].dDurationMs =
+      //   event.tStartMs +
+      //   event.dDurationMs -
+      //   newEvents[newEvents.length - 1].tStartMs -
+      //   100;
     }
   }
 
@@ -161,12 +171,23 @@ function mergeSubtitles(sub1, sub2) {
   var sub1 = concatWordSub(sub1);
   var sub2 = concatWordSub(sub2);
 
-  for (let [index, event] of sub1.events.entries()) {
-    if (!event.segs || !event.dDurationMs) {
-      continue;
-    }
+  // fix mismatch length between sub1 sub2
+  var j = 0;
+  for (let [i, event] of sub1.events.entries()) {
     var line1 = event.segs[0]["utf8"];
-    var line2 = sub2.events[index] ? sub2.events[index].segs[0]["utf8"] : "\t";
+    var line2 = "";
+
+    // get sub2 line between tStartMs ~ dDurationMs
+    while (j < sub2.events.length && sub2.events[j].tStartMs < event.tStartMs) {
+      j++;
+    }
+    if (
+      j < sub2.events.length &&
+      sub2.events[j].tStartMs < event.tStartMs + event.dDurationMs
+    ) {
+      line2 = sub2.events[j].segs[0]["utf8"];
+      j++;
+    }
     event.segs[0]["utf8"] = `${line1}\n${line2}`;
   }
 
@@ -184,11 +205,31 @@ async function getYoutubeMetaData(vParam) {
   return json;
 }
 
+async function getSubUrl(v, lang) {
+  var metaData = await getYoutubeMetaData(v);
+  var captionList =
+    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+  var langUrl = captionList.filter(
+    (caption) => !caption?.kind && caption.languageCode == lang
+  )?.[0]?.baseUrl;
+  return langUrl;
+}
+
 async function getTranslatedSubtitle(baseUrl, lang) {
+  // use user generated sub if exist
+  // var v = getVideoIdParam(baseUrl);
+  // var url = await getSubUrl(v, lang) + "&fmt=json3";
+
   var url = new URL(baseUrl);
-  var urlParam = url.searchParams;
-  urlParam.set("tlang", lang);
+  url.searchParams.set("tlang", lang);
   return await (await fetch(url.toString())).json();
+}
+
+function getVideoIdParam(url) {
+  if (url.includes("www.youtube.com/embed")) {
+    return url.match(/.*\/([^?]+)/)[1];
+  }
+  return getSearchParam(url, "v");
 }
 
 function getSearchParam(url, param) {
