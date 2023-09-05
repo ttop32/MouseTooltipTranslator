@@ -206,6 +206,10 @@ export function copyJson(json) {
   return JSON.parse(JSON.stringify(json));
 }
 
+export function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 export function swapJsonKeyValue(json) {
   var ret = {};
   for (var key in json) {
@@ -302,6 +306,10 @@ export function checkInDevMode() {
 }
 
 export function postMessage(data) {
-  var targetWindow = self == top ? window : window.parent;
-  return targetWindow.postMessage(data, "*");
+  if (self == top) {
+    window.postMessage(data, "*");
+  } else {
+    window.postMessage(data, "*");
+    window.parent.postMessage(data, "*");
+  }
 }

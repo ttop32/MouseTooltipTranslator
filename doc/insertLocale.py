@@ -37,7 +37,7 @@ i18List = [
     "Reverse Translate Language",
     "Detect PDF",
     "Enable Youtube Subtitle",
-    "OCR_When",
+    "OCR When",
     "OCR Detection Language",
     "Exclude Language",
     "Exclude Website",
