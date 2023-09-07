@@ -263,7 +263,7 @@ export function cacheFn(fn) {
   return async function() {
     var args = arguments;
     var key = [].slice.call(args).join("");
-    if (5000 < Object.keys(cache).length) {
+    if (10000 < Object.keys(cache).length) {
       cache = {}; //numbers.shift();
     }
 

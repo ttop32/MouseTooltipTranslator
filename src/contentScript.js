@@ -503,6 +503,7 @@ async function getSetting() {
     applyStyleSetting();
     selectedText = "";
     ocrView.removeAllOcrEnv();
+    initYoutubePlayer();
   });
 }
 
@@ -568,7 +569,6 @@ function applyStyleSetting() {
         align-items: stretch  !important;
       }
       .captions-text .caption-visual-line:first-of-type:after {
-        font-size: 1.5em;
         content: '⣿⣿';
         background-color: #000000b8;
         display: inline-block;
@@ -639,16 +639,8 @@ async function checkYoutube() {
   isYoutubeDetected = true;
   await util.injectScript("youtube.js");
   initYoutubePlayer();
-  reloadCaption();
-  activateCaption();
 }
 
-function reloadCaption() {
-  util.postMessage({ type: "reloadCaption" });
-}
-function activateCaption() {
-  util.postMessage({ type: "activateCaption" });
-}
 function pausePlayer() {
   util.postMessage({ type: "pausePlayer" });
 }
@@ -656,11 +648,13 @@ function playPlayer() {
   util.postMessage({ type: "playPlayer" });
 }
 function initYoutubePlayer() {
-  util.postMessage({
-    type: "initYoutubePlayer",
-    targetLang: setting["translateTarget"],
-    enableYoutube: setting["enableYoutube"],
-  });
+  if (isYoutubeDetected) {
+    util.postMessage({
+      type: "initYoutubePlayer",
+      targetLang: setting["translateTarget"],
+      subSetting: setting["enableYoutube"],
+    });
+  }
 }
 
 function checkMouseTargetIsYoutubeSubtitle() {
@@ -674,6 +668,12 @@ function checkMouseTargetIsYoutubeSubtitle() {
       $(".caption-window").attr("draggable", "false");
       e.stopPropagation();
     });
+
+  // skip embed video
+  if (document.location.href.includes("www.youtube.com/embed")) {
+    return;
+  }
+  // add auto pause when mouseover
   $(".caption-window")
     .off()
     .on("mouseenter", (e) => {
