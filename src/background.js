@@ -12,13 +12,16 @@ var setting;
 var recentTranslated = {};
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
-var chromeReviewPage =
-  "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews";
-var edgeReviewPage =
-  "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl";
+var reviewUrl = {
+  "edge-chromium":
+    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
+  chrome:
+    "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+};
 
-var translateWithCache = util.cacheFn(doTranslate); // make cache args function
-addUninstallUrl();
+addInstallUrl(introSiteUrl);
+addUninstallUrl(reviewUrl);
+injectContentScriptForAllTab();
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
@@ -28,24 +31,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     await waitUntil(() => setting);
 
     if (request.type === "translate") {
-      var translatedResult = await translateWithCache(
-        // var translatedResult = await doTranslate(
+      var translatedResult = await doTranslate(
         request.word,
         request.translateSource,
         request.translateTarget,
         setting["translatorVendor"]
       );
 
-      translatedResult = translatedResult
-        ? translatedResult
-        : {
-            translatedText: "",
-            transliteration: "",
-            sourceLang: "en",
-            targetLang: "en",
-          };
-
-      sendResponse(translatedResult);
+      sendResponse(
+        translatedResult || {
+          translatedText: "",
+          transliteration: "",
+          sourceLang: "en",
+          targetLang: "en",
+        }
+      );
     } else if (request.type === "tts") {
       doTts(
         request.word,
@@ -73,8 +73,8 @@ async function getSetting() {
   setting = await util.loadSetting();
 }
 
-function recordHistory(request, force = false) {
-  if (force || setting["historyRecordActions"].includes(request.actionType)) {
+function recordHistory(request) {
+  if (setting["historyRecordActions"].includes(request.actionType)) {
     //append history to front
     setting["historyList"].unshift({
       sourceText: request.sourceText,
@@ -89,40 +89,43 @@ function recordHistory(request, force = false) {
 }
 
 async function doTts(word, lang, ttsVolume, ttsRate) {
-  var voice = setting["ttsVoice_" + lang];
-
   chrome.tts.speak(word, {
     lang: lang,
-    voiceName: voice,
+    voiceName: setting["ttsVoice_" + lang],
     volume: Number(ttsVolume),
     rate: Number(ttsRate),
   });
 }
 
-async function doTranslate(text, fromLang, targetLang, translatorVendor) {
-  return translator[translatorVendor].translate(text, fromLang, targetLang);
-}
+const doTranslate = util.cacheFn(
+  async (text, fromLang, targetLang, translatorVendor) => {
+    return await translator[translatorVendor].translate(
+      text,
+      fromLang,
+      targetLang
+    );
+  }
+);
 
 // detect local pdf file and redirect to translated pdf=====================================================================
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  // only run when loading and local pdf file
   if (
-    !changeInfo.url ||
     changeInfo.status != "loading" ||
-    (setting && setting["detectPDF"] == "false")
+    setting?.detectPDF == "false" ||
+    !checkIsLocalPdfUrl(changeInfo?.url)
   ) {
     return;
   }
 
-  //check local pdf file, open with viewer
-  if (checkIsLocalPdfUrl(changeInfo.url)) {
-    openPDFViewer(changeInfo.url, tabId);
-  }
+  openPDFViewer(changeInfo.url, tabId);
 });
 
 //url is end with .pdf, start with file://
 function checkIsLocalPdfUrl(url) {
-  return /^(file:\/\/).*(\.pdf)$/.test(url.toLowerCase());
+  return /^(file:\/\/).*(\.pdf)$/.test(url?.toLowerCase());
 }
+
 async function openPDFViewer(url, tabId) {
   chrome.tabs.update(tabId, {
     url:
@@ -193,53 +196,54 @@ async function getCurrentTab() {
 }
 
 // ================= contents script reinjection after upgrade or install
-chrome.runtime.onInstalled.addListener(async (details) => {
-  // skip if development mode
-  if (util.checkInDevMode()) {
-    return;
-  }
+async function injectContentScriptForAllTab() {
+  chrome.runtime.onInstalled.addListener(async (details) => {
+    // skip if development mode
+    if (util.checkInDevMode()) {
+      return;
+    }
 
-  injectExtensionScriptForAllTab();
-  openIntroSite(details.reason);
-});
+    // if extension is upgrade or new install, refresh all tab
+    for (const cs of chrome.runtime.getManifest().content_scripts) {
+      for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+        if (
+          /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
+            tab.url
+          )
+        ) {
+          continue;
+        }
 
-async function injectExtensionScriptForAllTab() {
-  // if extension is upgrade or new install, refresh all tab
-  for (const cs of chrome.runtime.getManifest().content_scripts) {
-    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
-      if (
-        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
-          tab.url
-        )
-      ) {
-        continue;
-      }
-
-      try {
-        //load css and js on opened tab
-        chrome.scripting.insertCSS({
-          target: { tabId: tab.id },
-          files: cs.css,
-        });
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: cs.js,
-        });
-      } catch (error) {
-        console.log(error);
+        try {
+          //load css and js on opened tab
+          chrome.scripting.insertCSS({
+            target: { tabId: tab.id },
+            files: cs.css,
+          });
+          chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: cs.js,
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
+  });
+}
+
+function addUninstallUrl(uninstallUrlJson) {
+  if (browser.name in uninstallUrlJson) {
+    chrome.runtime.setUninstallURL(uninstallUrlJson[browser.name]);
+  } else {
+    chrome.runtime.setUninstallURL(uninstallUrlJson["chrome"]);
   }
 }
 
-function openIntroSite(reason) {
-  if (reason == "install") {
-    chrome.tabs.create({ url: introSiteUrl }, function(tab) {});
-  }
-}
-
-function addUninstallUrl() {
-  var reviewPage =
-    browser.name == "edge-chromium" ? edgeReviewPage : chromeReviewPage;
-  chrome.runtime.setUninstallURL(reviewPage);
+function addInstallUrl(url) {
+  chrome.runtime.onInstalled.addListener(async (details) => {
+    if (details.reason == "install") {
+      chrome.tabs.create({ url }, function(tab) {});
+    }
+  });
 }

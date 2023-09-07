@@ -20,6 +20,10 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.79
+  - fix youtube null fetch error on dual sub merge
+  - fix youtube trustedHTML error
+  - support dual sub for youtube embed video
 - 0.1.78
   - google reject by "Blue Argon"
     - make ExtReloader works only on development
