@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.80
+  - support yandex translator (requested by Bushrangers)
 - 0.1.79
   - fix youtube null fetch error on dual sub merge
   - fix youtube trustedHTML error
