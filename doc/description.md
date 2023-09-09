@@ -40,9 +40,9 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.76
   - add dual subtitle for youtube
 - 0.1.75
-  - fix font edit (requested by Musab Almawed)
+  - fix translator font customization (requested by Musab Almawed)
   - fix youtube word detect
-  - add uninstall callback page
+  - add uninstall translator callback page
 - 0.1.74
   - fix select destruction
   - add intro site
@@ -95,7 +95,7 @@ English, Russian, Japanese, Chinese and so on
   - fix bing crash (request by Anh Dao)
   - fix ocr schedule process
 - 0.1.59
-  - support bigger translation box (request by Zoelya)
+  - support bigger translate box (request by Zoelya)
   - add papago translator
 - 0.1.58
   - use tesseract.js@4.0.1
@@ -239,7 +239,6 @@ English, Russian, Japanese, Chinese and so on
     - Remove all related description
 - 0.1.16
   - google reject by description
-    - Guideline is provided to fix some description item.
     - Remove “Supported Translation Languages with google translate”
     - Remove “Supported TTS languages with google TTS”
     - Avoid frequently mentioned Mouse tooltip translator in description
@@ -262,8 +261,8 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.11
   - Use Vue and Vuetify on translator popup page
   - Add options_ui
-  - Add step to load base64 image on OCR
-  - Add step to resize image on OCR
+  - Add load base64 image on OCR
+  - Add resize image on OCR
   - Add image preprocessing step on OCR
 - 0.1.10
   - Fix URL text filter
@@ -284,13 +283,13 @@ English, Russian, Japanese, Chinese and so on
   - Change translator popup page container design as cool design
   - Stop played TTS (text to speech) when leave tab
   - Only activate tooltip when tab is focused
-  - Support bubble translate using tesseract.js (OCR) and opencv.js
+  - Support bubble translate using tesseract.js OCR
   - Update translated pdf viewer using PDF.js 2.5.207
   - Filter out text that has over 1000 length
 - 0.1.6
-  - Fix to save translator setting correctly
-  - Change hold key to action immediately
-  - Fix translator popup page capital letter
+  - Fix translator setting error
+  - Change hold key action
+  - Fix popup typo
 - 0.1.5
   - Fix subframe pdf to translate correctly
   - Fix dropdown menu crash from site that use bootstrap
@@ -312,23 +311,19 @@ English, Russian, Japanese, Chinese and so on
 
 # Intro  
 
-Mouse tooltip translator is a google chrome extension that focus on providing convenient translate experience. This translator extension minimize current generally required step to translate word. Copying and pasting process is used to obtain translated sentence from google translate site. This extension uses text hovering event to decide which text is required to be translated for user. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension process surely replaces general user translation action process which open new tab for using google translate to getting translated sentence. This replace translating process makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
+Mouse tooltip translator is a google chrome extension that provide convenient translate experience. This translator extension minimize current generally required step to translate word. Copying and pasting process is used to obtain translated sentence from google translate site. This extension uses text hovering event to decide which text is required to be translated for user. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension process replaces general translate process which open new tab for using google translate to getting translated sentence. This replace translating process makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
 
 # TTS  
 
-For supporting translate feature, this translator extension provides text pronunciation using google TTS (text to speech). It uses google TTS to speak text to user to listen its voice. To using tts, user need to enable TTS (text to speech) from translator configuration page. When TTS is on, this translator extension uses google TTS to speak text. With this translator extension, any language learner student can enhance pronunciation skill by listening this translator extension’s google TTS speech voice.  
+For supporting translate feature, this translator extension provides text pronunciation using google TTS (text to speech). It uses google TTS to speak text to user to listen its voice. To using tts, user use ctrl key to enable TTS (text to speech) from translator. When TTS is on, this translator extension uses google TTS to speak text. With this translator extension, any language learner student can enhance pronunciation skill by listening this translator extension’s google TTS speech voice.  
 
 # PDF  
 
-Built-in PDF viewer is contained in this translator extension. Mouse tooltip translator uses PDF.js as built-in PDF viewer to support pdf file to provide translate feature over pdf. This translator extension has pdf feature to give a possibility to user to read foreign essay paper with translate service. This translator extension does not use chrome pdf reader. Chrome pdf reader provide pdf as embed text format which has difficulty on text crawling process for translate with this translator extension. This translator extension intercept pdf URL and redirect to mouse tooltip pdf.js page to provide pdf reader with tooltip translate feature. Local pdf file is also supported when user give local URL permission to this translator extension.  
+PDF viewer is in this translator extension. Mouse tooltip translator uses PDF.js as built-in PDF reader to support pdf file to provide translate feature over pdf. This translator extension has pdf feature to give a possibility to user to read foreign essay paper with translate service. This translator extension does not use chrome pdf reader. Chrome pdf reader provide pdf as embed text format which has difficulty on text crawling process for translate with this translator extension. This translator extension intercept pdf URL and redirect to mouse tooltip pdf.js page to provide pdf reader with tooltip translate feature. Local pdf file is also supported when user give local URL permission to this translator extension.  
 
 # OCR  
 
-Currently, this translator extension has under development OCR to translate image text. Mouse tooltip translator’s OCR is turned off initially. To use OCR translate feature, user need to turn on “enable OCR”. When user mouse over on image (manga, comics, webtoon and etc), this translator extension process OCR using tesseract.js to get its text for translating image.  
-
-# Language Detect  
-
-In this translator extension, google translate language detection is used. User does not need to select source translate language for translate correctly. This translator extension sends pointed text to google translate and receive translated text with language detection data. This translator extension uses its auto language detection feature to minimize user interaction on source language selection for translate. And, auto language detection is used to filter out user known language text to prevent tooltip translate for providing clear web site experience.
+Currently, this translator extension has OCR to translate image text. Mouse tooltip translator’s OCR is turned off initially. To use OCR translate feature, user need to press shift to enable OCR. When user mouse over on image (manga, comics, webtoon and etc), this translator extension process OCR using tesseract.js to get its text for translate image.  
 
 # Translate API
 
