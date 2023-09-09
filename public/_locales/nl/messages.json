@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Muise -gereedschap vertaler For Web & Youtube"
+		"message": "Muise -gereedschap vertaler For Education"
 	},
 	"appDesc": {
 		"message": "Muis Toltip Translator vertaalt mouseover -tekst met behulp van Google Translate"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

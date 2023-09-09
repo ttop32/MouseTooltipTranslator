@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ : Click Translate"
+		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ : Select to Translate"
 	},
 	"appDesc": {
 		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ ಗೂಗಲ್ ಅನುವಾದವನ್ನು ಬಳಸಿಕೊಂಡು ಮೌಸೋವರ್ ಪಠ್ಯವನ್ನು ಅನುವಾದಿಸಿ"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "مترجم أدوات الماوس : Translate ChatGPT & Youtube Subtitle"
+		"message": "مترجم أدوات الماوس"
 	},
 	"appDesc": {
 		"message": "ترجمة ترجمة ترجمة Tooltip Mouse Mouseover باستخدام Google Translate"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "માઉસ ટૂલટિપ અનુવાદક - Online Translator"
+		"message": "માઉસ ટૂલટિપ અનુવાદક for learning language"
 	},
 	"appDesc": {
 		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

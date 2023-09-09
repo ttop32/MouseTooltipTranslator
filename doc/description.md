@@ -20,6 +20,9 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.81
+  - Support dual sub for youtube shorts
+  - fix youtube pause error (request by shikov)
 - 0.1.80
   - support yandex translator (requested by Bushrangers)
 - 0.1.79

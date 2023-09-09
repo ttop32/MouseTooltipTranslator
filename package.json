@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.80",
+  "version": "0.1.81",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {
@@ -40,10 +40,10 @@
     "crx-hotreload": "^1.0.6",
     "crypto-browserify": "^3.12.0",
     "delay": "^6.0.0",
-    "detect-browser": "^5.3.0",
     "he": "^1.2.0",
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
+    "ky": "^1.0.1",
     "match-url-wildcard": "^0.0.5",
     "popper.js": "^1.16.1",
     "source-map-support": "^0.5.21",
@@ -56,6 +56,7 @@
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.4.4",
+    "webextension-polyfill": "^0.10.0",
     "whatwg-fetch": "^3.6.18",
     "window-post-message-proxy": "^0.2.6"
   }

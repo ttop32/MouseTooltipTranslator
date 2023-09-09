@@ -1,7 +1,6 @@
 import BaseTranslator from "./BaseTranslator";
+import ky from "ky";
 
-let bingAccessToken;
-let bingBaseUrl = "https://www.bing.com/ttranslatev3";
 var bingLangCode = {
   auto: "auto-detect",
   af: "af",
@@ -77,22 +76,22 @@ var bingLangCode = {
   "zh-CN": "zh-Hans",
   "zh-TW": "zh-Hant",
 };
-
+let bingAccessToken;
+let bingBaseUrl = "https://www.bing.com/ttranslatev3";
+let bingTokenUrl = "https://www.bing.com/translator";
 export default class bing extends BaseTranslator {
   static langCodeJson = bingLangCode;
 
   static async requestTranslate(text, fromLang, targetLang) {
     const { token, key, IG, IID } = await getBingAccessToken();
 
-    return await this.fetchWithError(
-      bingBaseUrl,
-      {
-        IG,
-        IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-        isVertical: "1",
-      },
-      {
-        method: "POST",
+    return await ky
+      .post(bingBaseUrl, {
+        searchParams: {
+          IG,
+          IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+          isVertical: "1",
+        },
         body: new URLSearchParams({
           text,
           fromLang: fromLang,
@@ -100,8 +99,8 @@ export default class bing extends BaseTranslator {
           token,
           key,
         }),
-      }
-    );
+      })
+      .json();
   }
   static wrapResponse(res, fromLang, targetLang) {
     if (res && res[0]) {
@@ -127,9 +126,7 @@ async function getBingAccessToken() {
       Date.now() - bingAccessToken["tokenTs"] >
         bingAccessToken["tokenExpiryInterval"]
     ) {
-      const data = await fetch(
-        "https://www.bing.com/translator"
-      ).then((response) => response.text());
+      const data = await ky(bingTokenUrl).text();
       const IG = data.match(/IG:"([^"]+)"/)[1];
       const IID = data.match(/data-iid="([^"]+)"/)[1];
       var [_key, _token, interval] = JSON.parse(

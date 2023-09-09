@@ -1,5 +1,6 @@
 import BaseTranslator from "./BaseTranslator";
 import { decode } from "he";
+import ky from "ky";
 
 const googleTranslateTKK = "448487.932609646";
 const apiPath = "https://translate.googleapis.com/translate_a/t";
@@ -10,34 +11,27 @@ export default class google extends BaseTranslator {
 
     var tk = getToken(text, googleTranslateTKK);
 
-    return await this.fetchWithError(apiPath, {
-      client: "te_lib",
-      sl: fromLang,
-      tl: targetLang,
-      hl: targetLang,
-      anno: 3,
-      format: "html",
-      v: 1.0,
-      tc: 1,
-      sr: 1,
-      mode: 1,
-      q: text,
-      tk,
-    });
+    return await ky(apiPath, {
+      searchParams: {
+        client: "te_lib",
+        sl: fromLang,
+        tl: targetLang,
+        hl: targetLang,
+        anno: 3,
+        format: "html",
+        v: 1.0,
+        tc: 1,
+        sr: 1,
+        mode: 1,
+        q: text,
+        tk,
+      },
+    }).json();
   }
   static wrapResponse(res, fromLang, targetLang) {
-    var translatedText = "";
-    var detectedLang = "";
-    var transliteration = "";
-
     if (res && res[0] && res[0][0]) {
-      if (fromLang == "auto") {
-        translatedText = res[0][0];
-        detectedLang = res[0][1];
-      } else {
-        translatedText = res[0];
-        detectedLang = fromLang;
-      }
+      var translatedText = fromLang == "auto" ? res[0][0] : res[0];
+      var detectedLang = fromLang == "auto" ? res[0][1] : fromLang;
 
       //clear html tag and decode html entity
       var textDecoded = decode(translatedText);
@@ -45,7 +39,11 @@ export default class google extends BaseTranslator {
       var textWithoutBTag = textWithoutITag.replace(/<\/?b[^>]*>/g, " ");
       var textWithTrim = textWithoutBTag.replace(/\s\s+/g, " ").trim();
 
-      return { translatedText: textWithTrim, detectedLang, transliteration };
+      return {
+        translatedText: textWithTrim,
+        detectedLang,
+        transliteration: "",
+      };
     }
   }
 }

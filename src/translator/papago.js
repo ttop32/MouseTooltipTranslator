@@ -1,6 +1,6 @@
-import BaseTranslator from "./BaseTranslator";
-
 // https://github.com/PinMIlk/nodepapago
+import BaseTranslator from "./BaseTranslator";
+import ky from "ky";
 import { v4 as uuidv4 } from "uuid";
 import Crypto from "crypto";
 
@@ -24,7 +24,6 @@ var papagoLangCode = {
   "zh-CN": "zh-CN",
   "zh-TW": "zh-TW",
 };
-
 // var urlTranslate="https://papago.naver.com/apis/nsmt/translate"
 var urlTranslate = "https://papago.naver.com/apis/n2mt/translate";
 var urlDect = "https://papago.naver.com/apis/langs/dect";
@@ -36,35 +35,34 @@ export default class papago extends BaseTranslator {
 
   static async requestTranslate(text, fromLang, targetLang) {
     if (fromLang == "auto") {
-      var { options, uuid } = await this.getOptionsAndUuid(urlDect);
-      var { langCode } = await this.fetchWithError(
-        urlDect,
-        {
-          query: text,
-        },
-        options
-      );
+      var { headers, uuid } = await this.getOptionsAndUuid(urlDect);
+      var { langCode } = await ky
+        .post(urlDect, {
+          searchParams: { query: text },
+          headers,
+        })
+        .json();
       fromLang = langCode;
     }
 
-    var { options, uuid } = await this.getOptionsAndUuid(urlTranslate);
-
-    return await this.fetchWithError(
-      urlTranslate,
-      {
-        deviceId: uuid,
-        locale: "ko",
-        dict: "true",
-        dictDisplay: "30",
-        honorific: "false",
-        instant: "false",
-        paging: "false",
-        source: fromLang,
-        target: targetLang,
-        text: text,
-      },
-      options
-    );
+    var { headers, uuid } = await this.getOptionsAndUuid(urlTranslate);
+    return await ky
+      .post(urlTranslate, {
+        searchParams: {
+          deviceId: uuid,
+          locale: "ko",
+          dict: "true",
+          dictDisplay: "30",
+          honorific: "false",
+          instant: "false",
+          paging: "false",
+          source: fromLang,
+          target: targetLang,
+          text: text,
+        },
+        headers,
+      })
+      .json();
   }
 
   static wrapResponse(res, fromLang, targetLang) {
@@ -76,9 +74,9 @@ export default class papago extends BaseTranslator {
   }
 
   static async getVersion() {
-    var data = await this.fetchWithError(mainUrl, "", {}, false);
+    var data = await ky(mainUrl).text();
     var scriptUrl = mainUrl + "main." + data.match(/"\/main.([^"]+)"/)[1];
-    var data = await this.fetchWithError(scriptUrl, "", {}, false);
+    var data = await ky(scriptUrl).text();
     var version = "v1." + data.match(/"v1.([^"]+)"/)[1];
     return version;
   }
@@ -97,11 +95,14 @@ export default class papago extends BaseTranslator {
   }
   static async getOptionsAndUuid(url) {
     var { uuid, time, hash } = await this.getToken(url);
-    var headers = {
-      Authorization: `PPG ${uuid}:${hash}`,
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      Timestamp: time,
+
+    return {
+      headers: {
+        Authorization: `PPG ${uuid}:${hash}`,
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        Timestamp: time,
+      },
+      uuid,
     };
-    return { options: { method: "POST", headers }, uuid };
   }
 }

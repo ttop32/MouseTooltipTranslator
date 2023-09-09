@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Моусе Тоолтип Транслатор With OCR"
+		"message": "Моусе Тоолтип Транслатор : OCR Translator"
 	},
 	"appDesc": {
 		"message": "Моусе Тоолтип преводилац Преведи текст миша помоћу Гоогле Транслате"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
