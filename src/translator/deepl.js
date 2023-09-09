@@ -1,6 +1,5 @@
 import BaseTranslator from "./BaseTranslator";
-
-var deeplBaseUrl = "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs";
+import ky from "ky";
 
 var deeplLangCode = {
   auto: "auto",
@@ -34,6 +33,7 @@ var deeplLangCode = {
   uk: "UK",
   "zh-CN": "ZH",
 };
+var deeplBaseUrl = "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs";
 
 export default class deepl extends BaseTranslator {
   static langCodeJson = deeplLangCode;

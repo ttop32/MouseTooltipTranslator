@@ -12,6 +12,8 @@ interceptor.apply();
 var targetLang = "";
 var subSetting = "";
 var delayTime = 500;
+var pausedByExtension = false;
+var isPaused = false;
 
 window.addEventListener(
   "message",
@@ -58,7 +60,7 @@ async function initPlayer(data) {
   addPlayerStartListener();
   addUrlListener();
   await delay(delayTime); // embed video start has delay, we need to wait
-  reloadCaption();
+  // reloadCaption();
   activateCaption();
 }
 
@@ -69,12 +71,16 @@ function addPlayerStartListener() {
       if (e == -1) {
         activateCaption();
       }
+
+      //check pause
+      isPaused = e == 2 ? true : false;
     })
   );
 }
 
 function addUrlListener() {
   navigation.addEventListener("navigate", (e) => {
+    pausedByExtension = false;
     var url = e.destination.url;
     activateCaption(url);
   });
@@ -90,10 +96,20 @@ function handlePlayer(callbackFn) {
 function reloadCaption() {
   handlePlayer((ele) => ele.setOption("captions", "reload", true));
 }
-function pausePlayer() {
+
+async function pausePlayer() {
+  if (isPaused == true) {
+    return;
+  }
+  pausedByExtension = true;
   handlePlayer((ele) => ele.pauseVideo());
 }
-function playPlayer() {
+async function playPlayer() {
+  // only restart when paused by extension
+  if (pausedByExtension == false) {
+    return;
+  }
+  pausedByExtension = false;
   handlePlayer((ele) => ele.playVideo());
 }
 function setPlayerCaption(lang, translationLanguage) {
@@ -246,7 +262,10 @@ async function getTranslatedSubtitle(baseUrl, lang) {
 }
 
 function getVideoIdParam(url) {
-  if (url.includes("www.youtube.com/embed")) {
+  if (
+    url.includes("www.youtube.com/embed") ||
+    url.includes("www.youtube.com/shorts")
+  ) {
     return url.match(/.*\/([^?]+)/)[1];
   }
   return getSearchParam(url, "v");

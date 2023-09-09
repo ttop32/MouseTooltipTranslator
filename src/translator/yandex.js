@@ -1,6 +1,7 @@
 // https://github.com/vtosters/lite/blob/cf17ed64c759d366ae7121dc61c4328205963ed4/app/src/main/java/ru/vtosters/lite/translators/YandexTranslator.java#L35
 import BaseTranslator from "./BaseTranslator";
 import { v4 as uuidv4 } from "uuid";
+import ky from "ky";
 
 var yandexLangCode = {
   af: "af",
@@ -91,9 +92,7 @@ var yandexLangCode = {
   jw: "jv",
   "zh-CN": "zh",
 };
-
 // 'ba', 'cv', 'tt',
-
 var mainUrl = "https://translate.yandex.net/api/v1/tr.json/translate";
 
 export default class yandex extends BaseTranslator {
@@ -103,17 +102,15 @@ export default class yandex extends BaseTranslator {
     var uuid = uuidv4().replaceAll("-", "");
     var lang = fromLang == "auto" ? targetLang : `${fromLang}-${targetLang}`;
 
-    return await this.fetchWithError(
-      mainUrl,
-      {
-        id: `${uuid}-0-0`,
-        srv: "android",
-      },
-      {
-        method: "POST",
+    return await ky
+      .post(mainUrl, {
+        searchParams: {
+          id: `${uuid}-0-0`,
+          srv: "android",
+        },
         body: new URLSearchParams(`lang=${lang}&text=${text}`),
-      }
-    );
+      })
+      .json();
   }
 
   static wrapResponse(res, fromLang, targetLang) {

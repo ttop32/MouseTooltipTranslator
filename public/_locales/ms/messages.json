@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Penterjemah Tooltip Mouse"
+		"message": "Penterjemah Tooltip Mouse for Educations"
 	},
 	"appDesc": {
 		"message": "Penterjemah Tooltip Mouse Terjemahkan Teks Mouseover Menggunakan Google Translate"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

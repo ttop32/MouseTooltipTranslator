@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Translate"
+		"message": "Kitafsiri cha Kidokezo cha Panya : Translate ChatGPT & Dual sub Youtube"
 	},
 	"appDesc": {
 		"message": "Tafsiri ya Tooltip ya Panya Tafsiri maandishi ya Mouseover kwa kutumia Google Tafsiri"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

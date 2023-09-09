@@ -539,7 +539,7 @@ var settingListData = {
     optionList: langList,
   },
   translatorVendor: {
-    description: chrome.i18n.getMessage("Translator"),
+    description: chrome.i18n.getMessage("Translator_Engine"),
     optionList: translatorList,
   },
   detectType: {
@@ -823,10 +823,6 @@ export default {
         borderRadius: menu ? '50%' : '4px',
         transition: 'border-radius 200ms ease-in-out'
       }
-    },
-    deleteItem(item) {
-      console.log(item);
-      // this.myModel = this.myModel.filter(find => find !== item);
     }
   },
 };

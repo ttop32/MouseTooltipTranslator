@@ -1,6 +1,6 @@
 {
 	"appName": {
-		"message": "Translator"
+		"message": "Hiire tööriistavihje tõlkija for Studying Language"
 	},
 	"appDesc": {
 		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil"
@@ -26,8 +26,8 @@
 	"Translate_Into": {
 		"message": "Translate Into"
 	},
-	"Translator": {
-		"message": "Translator"
+	"Translator_Engine": {
+		"message": "Translator Engine"
 	},
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"

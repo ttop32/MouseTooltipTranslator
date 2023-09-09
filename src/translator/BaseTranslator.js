@@ -37,17 +37,6 @@ export default class BaseTranslator {
       : lang;
   }
 
-  static async fetchWithError(
-    url,
-    urlParams = "",
-    options = {},
-    isJson = true
-  ) {
-    var urlParams = urlParams ? "?" + new URLSearchParams(urlParams) : "";
-    return await fetch(url + urlParams, options)
-      .then((response) => (isJson ? response.json() : response.text()))
-      .catch((err) => console.log(err));
-  }
   static async requestTranslate(text, fromLang, targetLang) {
     throw new Error("Not implemented");
   }

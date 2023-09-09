@@ -29,7 +29,7 @@ i18List = [
     "Translate When",
     "Translate From",
     "Translate Into",
-    "Translator",
+    "Translator Engine",
     "Text Detect Type",
     "Detect Type Swap Hold Key",
     "Translate Writing Hotkey",
