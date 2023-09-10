@@ -20,6 +20,9 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.82
+  - fix tts lang detect
+  - add deepl translator (request by neoOpus)
 - 0.1.81
   - Support dual sub for youtube shorts
   - fix youtube pause error (request by shikov)
