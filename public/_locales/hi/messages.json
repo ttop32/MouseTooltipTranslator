@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "माउस टूलटिप अनुवादक With TTS Voice Speech"
-	},
-	"appDesc": {
-		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "माउस टूलटिप अनुवादक With TTS Voice Speech"
+	},
+	"appDesc": {
+		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके"
 	}
 }

@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "মাউস টুলটিপ অনুবাদক With Google Translate"
-	},
-	"appDesc": {
-		"message": "মাউস টুলটিপ অনুবাদক গুগল অনুবাদ ব্যবহার করে মাউসওভার পাঠ্য অনুবাদ করুন"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "মাউস টুলটিপ অনুবাদক With Google Translate"
+	},
+	"appDesc": {
+		"message": "মাউস টুলটিপ অনুবাদক গুগল অনুবাদ ব্যবহার করে মাউসওভার পাঠ্য অনুবাদ করুন"
 	}
 }
