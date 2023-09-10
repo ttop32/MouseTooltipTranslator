@@ -1,3 +1,5 @@
+import * as util from "../util.js";
+
 export default class BaseTranslator {
   static langCodeJson = {};
   static langCodeJsonSwapped = {};
@@ -13,7 +15,6 @@ export default class BaseTranslator {
         fromLang,
         targetLang
       );
-
       return {
         translatedText,
         transliteration,
@@ -29,8 +30,8 @@ export default class BaseTranslator {
     return this.langCodeJson[lang] ? this.langCodeJson[lang] : lang;
   }
   static decodeLangCode(lang) {
-    if (!Object.keys(this.langCodeJsonSwapped)) {
-      this.langCodeJsonSwapped = this.util.swapJsonKeyValue(this.langCodeJson);
+    if (util.isEmpty(this.langCodeJsonSwapped)) {
+      this.langCodeJsonSwapped = util.swapJsonKeyValue(this.langCodeJson);
     }
     return this.langCodeJsonSwapped[lang]
       ? this.langCodeJsonSwapped[lang]

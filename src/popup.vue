@@ -470,6 +470,7 @@ var translatorList = {
   bing: "bing",
   "papago (Experimental)": "papago",
   "yandex (Experimental)": "yandex",
+  "deepl (Experimental)":"deepl"
 };
 
 var translateActionList = {
