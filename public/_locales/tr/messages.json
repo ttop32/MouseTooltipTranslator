@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Fare araç ipucu çevirmen with Dual Subtitle"
-	},
-	"appDesc": {
-		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "Fare araç ipucu çevirmen with Dual Subtitle"
+	},
+	"appDesc": {
+		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir"
 	}
 }

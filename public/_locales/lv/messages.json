@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Peles rīku padomu tulkotājs : Click Translate"
-	},
-	"appDesc": {
-		"message": "Peles rīka padomu tulkotājs tulkot peles pārsniegšanas tekstu, izmantojot Google tulkojumu"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "Peles rīku padomu tulkotājs : Click Translate"
+	},
+	"appDesc": {
+		"message": "Peles rīka padomu tulkotājs tulkot peles pārsniegšanas tekstu, izmantojot Google tulkojumu"
 	}
 }

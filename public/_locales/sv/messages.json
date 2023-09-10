@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "Musverktygstipsöversättare : Translate Japanese"
-	},
-	"appDesc": {
-		"message": "Musverktygstip Translator Translate Mouseover Text med Google Translate"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "Musverktygstipsöversättare : Translate Japanese"
+	},
+	"appDesc": {
+		"message": "Musverktygstip Translator Translate Mouseover Text med Google Translate"
 	}
 }

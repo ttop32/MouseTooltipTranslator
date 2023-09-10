@@ -1,10 +1,4 @@
 {
-	"appName": {
-		"message": "マウスツールチップ翻訳者"
-	},
-	"appDesc": {
-		"message": "マウスツールチップ翻訳者は、Google翻訳を使用してマウスオーバーテキストを翻訳します"
-	},
 	"Main______________________________________": {
 		"message": "Main                                      "
 	},
@@ -127,5 +121,14 @@
 	},
 	"Translate_local_PDF_file": {
 		"message": "Translate local PDF file"
+	},
+	"Title______________________________________": {
+		"message": "Title                                      "
+	},
+	"appName": {
+		"message": "マウスツールチップ翻訳者"
+	},
+	"appDesc": {
+		"message": "マウスツールチップ翻訳者は、Google翻訳を使用してマウスオーバーテキストを翻訳します"
 	}
 }

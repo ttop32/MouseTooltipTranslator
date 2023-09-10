@@ -65,7 +65,9 @@ i18List = [
     "Privacy Policy",
     "User privacy policy",
     "PDF Viewer",
-    "Translate local PDF file"
+    "Translate local PDF file",
+
+    "Title                                      ",
 ]
 
 
@@ -140,7 +142,7 @@ def insertI18Json(locale):
 
 
 def recorderJson(jsonData):
-    orderedList = ["appName", "appDesc"] + getI18IdList()
+    orderedList = getI18IdList() + ["appName", "appDesc"]
     newDict = {}
     for name in orderedList:
         newDict[name] = jsonData[name]
