@@ -56,7 +56,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else if (request.type === "stopTTS") {
       browser.tts.stop();
       sendResponse({});
-    } else if (request.type === "historyUpdate") {
+    } else if (request.type === "recordTooltipText") {
       recordHistory(request);
       updateContext(request);
       sendResponse({});
@@ -78,9 +78,15 @@ function recordHistory(request) {
     setting["historyList"].unshift({
       sourceText: request.sourceText,
       targetText: request.targetText,
+      sourceLang: request.sourceLang,
+      targetLang: request.targetLang,
+      date: JSON.stringify(new Date()),
+      translator: setting["translatorVendor"],
+      actionType: request.actionType,
     });
+
     //remove when too many list
-    if (setting["historyList"].length > 5000) {
+    if (setting["historyList"].length > 10000) {
       setting["historyList"].pop();
     }
     setting.save();

@@ -132,7 +132,13 @@ async function processWord(word, actionType) {
   ) {
     var tooltipText = concatTransliteration(translatedText, transliteration);
     showTooltip(tooltipText, targetLang);
-    requestHistoryUpdate(word, translatedText, actionType);
+    requestRecordTooltipText(
+      word,
+      translatedText,
+      sourceLang,
+      targetLang,
+      actionType
+    );
   }
 
   //if use_tts is on or activation key is pressed, do tts
@@ -250,8 +256,6 @@ async function translateWithReverse(word) {
     setting["translateSource"],
     setting["translateTarget"]
   );
-  // console.log(response);
-
   //if to,from lang are same and reverse translate on
   if (
     setting["translateTarget"] == response.sourceLang &&
@@ -263,7 +267,6 @@ async function translateWithReverse(word) {
       setting["translateReverseTarget"]
     );
   }
-
   return response;
 }
 
@@ -487,11 +490,19 @@ async function reuqestStopTTS() {
 }
 
 //send history to background.js
-async function requestHistoryUpdate(sourceText, targetText, actionType) {
+async function requestRecordTooltipText(
+  sourceText,
+  targetText,
+  sourceLang,
+  targetLang,
+  actionType
+) {
   return await sendMesage({
-    type: "historyUpdate",
+    type: "recordTooltipText",
     sourceText,
     targetText,
+    sourceLang,
+    targetLang,
     actionType,
   });
 }
@@ -708,4 +719,27 @@ function removePrevElement() {
   $("#mttContainer").tooltip("dispose");
   $("#mttContainer").remove();
   ocrView.removeAllOcrEnv();
+}
+function a() {
+  var headerLine = [
+    Object.keys(this.setting["historyList"][0])
+      .map((key) => `${key}`)
+      .join(","),
+  ];
+  console.log(headerLine);
+  var csvContent = this.setting["historyList"].map((history) => {
+    var line = "";
+    for (var key in history) {
+      line += (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
+    }
+    return line;
+  });
+
+  csvContent = headerLine.concat(csvContent).join("\n");
+  // ([headerLine]+csvContent);
+  var url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.href = url;
+  link.download = "Mouse_Tooltip_Translator_History.csv";
+  link.click();
 }
