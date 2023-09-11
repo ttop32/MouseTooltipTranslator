@@ -752,19 +752,21 @@ export default {
       this.changeSetting();
     },
     downloadCSV() {
-      var arr = this.setting["historyList"];
-      var csv = arr
-        .map(function (v) {
-          return (
-            v["sourceText"].replace(/\n|\r|,|'|"/g, " ") +
-            "," +
-            v["targetText"].replace(/\n|\r|,|'|"/g, " ")
-          );
-        })
-        .join("\n");
+      var headerKey = Object.keys(this.setting["historyList"]?.[0]).map((key) => `${key}`);
+
+      var csvContent = this.setting["historyList"].map((history) => {
+        var line = "";
+        for (var key of headerKey) {
+          line += (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
+        }
+        return line;
+      });
+
+      csvContent = ([headerKey.join(",")]).concat(csvContent).join("\n");
+      var url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
       var link = document.createElement("a");
-      link.href = encodeURI("data:text/csv;charset=utf-8," + csv);
-      link.download = "export.csv";
+      link.href = url;
+      link.download = "Mouse_Tooltip_Translator_History.csv";
       link.click();
     },
     copyToClipboard(sourceText, targetText) {

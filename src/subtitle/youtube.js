@@ -5,15 +5,20 @@
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
 import { fetch as fetchPolyfill } from "whatwg-fetch";
 import { debounce } from "throttle-debounce";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import delay from "delay";
 
 const interceptor = new XMLHttpRequestInterceptor();
 interceptor.apply();
 var targetLang = "";
 var subSetting = "";
-var delayTime = 500;
+var subStartDelayTime = 2000;
+var googleTrafficDelayTime = 1000;
+var failSkipTime = 5000;
 var pausedByExtension = false;
 var isPaused = false;
+var failTimestamp = 0;
+var isBaseUrlAltered = false;
 
 window.addEventListener(
   "message",
@@ -33,13 +38,16 @@ window.addEventListener(
 interceptor.on("request", async ({ request, requestId }) => {
   try {
     if (request.url.includes("www.youtube.com/api/timedtext")) {
-      var response = await fetch(request.clone());
+      //get source lang sub
+      var response = await requestSubtitle(request.url);
       var sub1 = await response.json();
       var sub1 = concatWordSub(sub1);
       var lang = getSearchParam(request.url, "lang");
       var responseSub = sub1;
 
+      //get target lang sub, if not same lang
       if (lang != targetLang && subSetting == "dualsub") {
+        await delay(googleTrafficDelayTime); //prevent google traffic error
         var sub2 = await getTranslatedSubtitle(request.url, targetLang);
         var mergedSub = mergeSubtitles(sub1, sub2);
         responseSub = mergedSub;
@@ -49,6 +57,8 @@ interceptor.on("request", async ({ request, requestId }) => {
     }
   } catch (error) {
     console.log(error);
+    failTimestamp = Date.now();
+    await delay(googleTrafficDelayTime); //prevent traffic error
   }
 });
 
@@ -56,45 +66,63 @@ interceptor.on("request", async ({ request, requestId }) => {
 async function initPlayer(data) {
   targetLang = data.targetLang;
   subSetting = data.subSetting;
-  // check change and turn on sub
+  // check video and turn on sub
+  await waitVideoPlayerLoad();
   addPlayerStartListener();
   addUrlListener();
-  await delay(delayTime); // embed video start has delay, we need to wait
-  // reloadCaption();
   activateCaption();
 }
 
-function addPlayerStartListener() {
-  handlePlayer((ele) =>
-    ele.addEventListener("onStateChange", (e) => {
-      // turn on caption when first loads a video
-      if (e == -1) {
-        activateCaption();
-      }
-
-      //check pause
-      isPaused = e == 2 ? true : false;
-    })
-  );
+async function addPlayerStartListener() {
+  handlePlayerAll((element) => {
+    // check listner already placed
+    if (element.getAttribute("listener") != "true") {
+      element.setAttribute("listener", "true");
+      element.addEventListener("onStateChange", (e) => {
+        // turn on caption when first loads a video
+        if (e == -1) {
+          activateCaption();
+        }
+        //check pause
+        isPaused = e == 2 ? true : false;
+      });
+    }
+  });
 }
 
 function addUrlListener() {
   navigation.addEventListener("navigate", (e) => {
     pausedByExtension = false;
-    var url = e.destination.url;
-    activateCaption(url);
+    activateCaption(e.destination.url);
+    addPlayerStartListener();
   });
 }
 
 // handle player ==================================================
+function getVideoPlayer() {
+  return document.querySelector(".html5-video-player");
+}
+function getVideoPlayerAll() {
+  return document.querySelectorAll(".html5-video-player");
+}
+
 function handlePlayer(callbackFn) {
-  var ele = document.querySelector(".html5-video-player");
+  var ele = getVideoPlayer();
   if (ele) {
     callbackFn(ele);
   }
 }
-function reloadCaption() {
-  handlePlayer((ele) => ele.setOption("captions", "reload", true));
+function handlePlayerAll(callbackFn) {
+  getVideoPlayerAll().forEach((element) => {
+    callbackFn(element);
+  });
+}
+
+async function waitVideoPlayerLoad() {
+  await waitUntil(() => getVideoPlayer(), {
+    timeout: WAIT_FOREVER,
+    intervalBetweenAttempts: 1000,
+  });
 }
 
 async function pausePlayer() {
@@ -102,7 +130,7 @@ async function pausePlayer() {
     return;
   }
   pausedByExtension = true;
-  handlePlayer((ele) => ele.pauseVideo());
+  handlePlayerAll((element) => element.pauseVideo());
 }
 async function playPlayer() {
   // only restart when paused by extension
@@ -110,30 +138,39 @@ async function playPlayer() {
     return;
   }
   pausedByExtension = false;
-  handlePlayer((ele) => ele.playVideo());
+  handlePlayerAll((element) => element.playVideo());
 }
+
+function reloadCaption() {
+  handlePlayerAll((element) => element.setOption("captions", "reload", true));
+}
+function loadCaption() {
+  handlePlayerAll((element) => element.loadModule("captions"));
+}
+
 function setPlayerCaption(lang, translationLanguage) {
-  handlePlayer((ele) =>
-    ele.setOption("captions", "track", {
+  handlePlayerAll((element) => {
+    element.setOption("captions", "track", {
       languageCode: lang,
       translationLanguage,
-    })
-  );
+    });
+  });
 }
 
 const activateCaption = debounce(
-  delayTime,
+  subStartDelayTime,
   async (url = window.location.href) => {
     if (subSetting == "minimized") {
       return;
     }
     var { lang, translationLanguage } = await getVideoLang(url);
-    setPlayerCaption(lang, translationLanguage);
+    loadCaption(); // turn on caption for embed video
+    // reloadCaption(); //reset previous caption immediately
+    setPlayerCaption(lang, translationLanguage); //turn on caption on specified lang
   }
 );
 
 // concat sub=====================================
-
 function concatWordSub(subtitle) {
   var newEvents = [];
 
@@ -249,7 +286,6 @@ async function getUserGeneratedSubUrl(v, lang) {
 }
 
 async function getTranslatedSubtitle(baseUrl, lang) {
-  // await delay(delayTime); //prevent google traffic error
   // get user generated sub url if exist
   var v = getVideoIdParam(baseUrl);
   var url = await getUserGeneratedSubUrl(v, lang);
@@ -258,21 +294,50 @@ async function getTranslatedSubtitle(baseUrl, lang) {
     var url = new URL(baseUrl);
     url.searchParams.set("tlang", lang);
   }
-  return await (await fetch(url.toString())).json();
+  return await (await requestSubtitle(url.toString())).json();
 }
 
 function getVideoIdParam(url) {
-  if (
-    url.includes("www.youtube.com/embed") ||
-    url.includes("www.youtube.com/shorts")
-  ) {
+  if (isShorts(url) || isEmbed(url)) {
     return url.match(/.*\/([^?]+)/)[1];
   }
   return getSearchParam(url, "v");
 }
-
 function getSearchParam(url, param) {
   var _url = new URL(url);
   var urlParam = _url.searchParams;
   return urlParam.get(param);
+}
+
+function isShorts(url) {
+  return url.includes("www.youtube.com/shorts");
+}
+function isEmbed(url) {
+  return url.includes("www.youtube.com/embed");
+}
+function isFailOccurRecently() {
+  return Date.now() < failTimestamp + failSkipTime;
+}
+
+//=============================
+async function requestSubtitle(url) {
+  var failed = false;
+  try {
+    var res = await fetch(getSubUrl(url));
+  } catch (error) {
+    failed = true;
+  }
+
+  // if fail, change base url and try again
+  if (res?.status != 200 || failed) {
+    await delay(googleTrafficDelayTime);
+    isBaseUrlAltered = !isBaseUrlAltered;
+    res = await fetch(getSubUrl(url));
+  }
+  return res;
+}
+function getSubUrl(url) {
+  return isBaseUrlAltered
+    ? url.replace("www.youtube.com/api/timedtext", "video.google.com/timedtext")
+    : url;
 }
