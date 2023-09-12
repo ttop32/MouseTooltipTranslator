@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.84
+  - fix
 - 0.1.83
   - fix youtube shorts subtitle traffic error
   - fix csv format conflict

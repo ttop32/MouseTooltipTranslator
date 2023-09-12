@@ -427,16 +427,15 @@ function setMouseStatus(e) {
 }
 
 function checkWritingBox() {
+  // if mouse target is not writing box or already bound, return
+  // make key bind for preventDefault
   var $writingField = $(writingField);
-  if (!$writingField.is(mouseTarget) || !$writingField.data("mttBound")) {
+  if (!$writingField.is(mouseTarget) || $writingField.data("mttBound")) {
     return;
   }
-
   $writingField
     .data("mttBound", true)
-    .off("keydown")
     .on("keydown", handleKeydown)
-    .off("keyup")
     .on("keyup", handleKeyup);
 }
 
@@ -675,6 +674,9 @@ function checkMouseTargetIsYoutubeSubtitle() {
   // make subtitle selectable
   $(".ytp-caption-segment")
     .off()
+    .on("contextmenu", (e) => {
+      e.stopPropagation();
+    })
     .on("mousedown", (e) => {
       $(".caption-window").attr("draggable", "false");
       e.stopPropagation();

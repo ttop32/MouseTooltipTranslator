@@ -126,7 +126,7 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "เครื่องแปลคำแนะนำเครื่องมือเมาส์ : PDF & TTS"
+		"message": "เครื่องแปลคำแนะนำเครื่องมือเมาส์ with Text to speech"
 	},
 	"appDesc": {
 		"message": "Mouse Tooltip Translator แปลข้อความ MouseOver โดยใช้ Google Translate"
