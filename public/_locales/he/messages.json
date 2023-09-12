@@ -1,36 +1,36 @@
 {
 	"Main______________________________________": {
-		"message": "Main                                      "
+		"message": "ראשי                                      "
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "מתי להראות את התרגום?"
 	},
 	"TTS_When": {
-		"message": "TTS When"
+		"message": "מתי להשמיע את התרגום?"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "מתי לתרגם?"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "שפת מקור"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "שפת יעד"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "מנוע תרגום"
 	},
 	"Text_Detect_Type": {
-		"message": "Text Detect Type"
+		"message": "מה לתרגם?"
 	},
 	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+		"message": "תרגם בהחזקת מקש"
 	},
 	"Translate_Writing_Hotkey": {
-		"message": "Translate Writing Hotkey"
+		"message": "תרגם בלחיצה על מקש"
 	},
 	"Writing_Language": {
 		"message": "Writing Language"
@@ -39,64 +39,64 @@
 		"message": "Reverse Translate Language"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "זהה pdf"
 	},
 	"Enable_Youtube_Subtitle": {
-		"message": "Enable Youtube Subtitle"
+		"message": "אפשר כתוביות youtube"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "מתי לעשות ocr?"
 	},
 	"OCR_Detection_Language": {
-		"message": "OCR Detection Language"
+		"message": "שפת ocr"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "אל תתרגם את השפות"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "אל תתרגם את האתרים"
 	},
 	"Visual______________________________________": {
-		"message": "Visual                                      "
+		"message": "תצוגה                                      "
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "גודל פונט"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "רוחב טולטיפ"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "מרחק טולטיפ"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "מיקום טולטיפ"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "יישור טקסט"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "טשטוש רקע"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "צבע טקסט"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "צבע טולטיפ"
 	},
 	"Voice______________________________________": {
-		"message": "Voice                                      "
+		"message": "קול                                      "
 	},
 	"TTS_Speed": {
-		"message": "TTS Speed"
+		"message": "מהירות השמעה"
 	},
 	"TTS_Volume": {
-		"message": "TTS Volume"
+		"message": "עוצמת קול השמעה"
 	},
 	"Voice_for_": {
 		"message": "Voice for "
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "אודות                                      "
 	},
 	"Review_Page": {
 		"message": "Review Page"
@@ -105,28 +105,28 @@
 		"message": "Comment on this extension"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "קוד מקור"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "קוד מקור בgithub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "מדיניות פרטיות"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "מדיניות פרטיות למשתמש"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "מציג pdf"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "תרגום pdf מקומי"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "כותרת                                      "
 	},
 	"appName": {
-		"message": "מתרגם מסבר כלים לעכבר - Translate Manga"
+		"message": "מתרגם tooltip"
 	},
 	"appDesc": {
 		"message": "מתרגם מסביר כלים לעכבר תרגם טקסט עכבר באמצעות Google Translate"
