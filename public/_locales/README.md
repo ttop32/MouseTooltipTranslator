@@ -1,3 +1,5 @@
+# Locale  
+
 | Locale code | Language (region) |
 | ------------- | ------------- |
 | ar  | Arabic |
