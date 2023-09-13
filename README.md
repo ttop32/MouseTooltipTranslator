@@ -98,8 +98,7 @@ npm run build        // or 'npm run watch' for developing
 
 # Privacy policy
 
-- Mouse tooltip translator uses user data only for google translation(tts) purpose.
-- It does not share any user data with any other third parties.
+- [Privacy policy](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md)
 
 # Acknowledgement and References  
 
