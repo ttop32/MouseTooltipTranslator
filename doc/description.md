@@ -21,8 +21,12 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 
 - 0.1.84
-  - fix gmail conflict
+  - fix gmail writing translator conflict
   - hebrew locale (contributed by netanel123123)
+  - add memorization for youtube player caption on/off (request by 웃으며살아요)
+  - add esc key to stop tts (request by 나야브)
+  - use vue3
+  - make advanced tab (request by JMFierro)
 - 0.1.83
   - fix youtube shorts subtitle traffic error
   - fix csv format conflict

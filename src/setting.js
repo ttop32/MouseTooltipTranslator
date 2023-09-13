@@ -29,7 +29,7 @@ export class Setting {
     var settingData = this;
 
     return new Promise((resolve, reject) => {
-      chrome.storage.local.get(Object.keys(settingData), function(storage) {
+      chrome.storage.local.get(Object.keys(settingData), function (storage) {
         for (var key in storage) {
           settingData[key] = storage[key] ? storage[key] : settingData[key];
         }
@@ -48,9 +48,8 @@ export class Setting {
   }
 
   runSettingCallback(changes) {
-    var keys = Object.keys(changes);
-    keys = keys.filter(
-      (item) => !this["ignoreCallbackOptionList"].includes(item)
+    var keys = Object.keys(changes).filter(
+      (item) => !this.ignoreCallbackOptionList.includes(item)
     );
     if (keys.length == 0) {
       return;

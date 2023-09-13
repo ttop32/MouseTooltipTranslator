@@ -26,35 +26,11 @@
 	"Text_Detect_Type": {
 		"message": "Text Detect Type"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
-	},
-	"Translate_Writing_Hotkey": {
-		"message": "Translate Writing Hotkey"
-	},
 	"Writing_Language": {
 		"message": "Writing Language"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
-	},
-	"Detect_PDF": {
-		"message": "Detect PDF"
-	},
-	"Enable_Youtube_Subtitle": {
-		"message": "Enable Youtube Subtitle"
-	},
-	"OCR_When": {
-		"message": "OCR When"
-	},
 	"OCR_Detection_Language": {
 		"message": "OCR Detection Language"
-	},
-	"Exclude_Language": {
-		"message": "Exclude Language"
-	},
-	"Exclude_Website": {
-		"message": "Exclude Website"
 	},
 	"Visual______________________________________": {
 		"message": "Visual                                      "
@@ -94,6 +70,36 @@
 	},
 	"Voice_for_": {
 		"message": "Voice for "
+	},
+	"ADVANCED______________________________________": {
+		"message": "ADVANCED                                      "
+	},
+	"Translate_Writing_Hotkey": {
+		"message": "Translate Writing Hotkey"
+	},
+	"OCR_When": {
+		"message": "OCR When"
+	},
+	"Detect_Type_Swap_Hold_Key": {
+		"message": "Detect Type Swap Hold Key"
+	},
+	"Enable_Youtube_Subtitle": {
+		"message": "Enable Youtube Subtitle"
+	},
+	"Detect_PDF": {
+		"message": "Detect PDF"
+	},
+	"Reverse_Translate_Language": {
+		"message": "Reverse Translate Language"
+	},
+	"EXCLUDE______________________________________": {
+		"message": "EXCLUDE                                      "
+	},
+	"Exclude_Language": {
+		"message": "Exclude Language"
+	},
+	"Exclude_Website": {
+		"message": "Exclude Website"
 	},
 	"About______________________________________": {
 		"message": "About                                      "

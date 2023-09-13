@@ -12,14 +12,14 @@ const ExtReloader = require("@reorx/webpack-ext-reloader");
 module.exports = (env, argv) => {
   console.log(argv.mode);
   return merge(common, {
-    entry: glob.sync("./src/**/*.js").reduce(function(obj, el) {
+    entry: glob.sync("./src/**/*.js").reduce(function (obj, el) {
       //every .js file
       obj[path.parse(el).name] = el;
       return obj;
     }, {}),
     resolve: {
       alias: {
-        vue$: "vue/dist/vue.esm.js",
+        vue$: "vue/dist/vue.esm-bundler.js",
       },
       fallback: {
         crypto: require.resolve("crypto-browserify"),
