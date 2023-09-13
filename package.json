@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.83",
+  "version": "0.1.84",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {

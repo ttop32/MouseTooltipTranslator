@@ -21,7 +21,8 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 
 - 0.1.84
-  - fix
+  - fix gmail conflict
+  - hebrew locale (contributed by netanel123123)
 - 0.1.83
   - fix youtube shorts subtitle traffic error
   - fix csv format conflict
