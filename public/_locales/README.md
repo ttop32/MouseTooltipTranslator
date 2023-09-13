@@ -1,4 +1,5 @@
 # Locale  
+Any locale contribution is welcome
 
 | Locale code | Language (region) |
 | ------------- | ------------- |
