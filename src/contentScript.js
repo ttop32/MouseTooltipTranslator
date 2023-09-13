@@ -9,6 +9,7 @@ import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import * as util from "./util.js";
 import * as ocrView from "./ocr/ocrView.js";
+import delay from "delay";
 
 //init environment var======================================================================\
 var setting;
@@ -57,7 +58,7 @@ $(async function initMouseTooltipTranslator() {
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  mouseoverInterval = setInterval(async function() {
+  mouseoverInterval = setInterval(async function () {
     // only work when tab is activated and when mousemove and no selected text
     if (
       checkWindowFocus() &&
@@ -73,7 +74,7 @@ function startMouseoverDetector() {
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
   enableSelectionEndEvent(); //set mouse drag text selection event
-  addEventHandler("selectionEnd", async function(event) {
+  addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (checkWindowFocus() && setting["translateWhen"].includes("select")) {
       selectedText = event.selectedText;
@@ -103,12 +104,8 @@ async function processWord(word, actionType) {
 
   //stage current processing word
   activatedWord = word;
-  var {
-    translatedText,
-    sourceLang,
-    targetLang,
-    transliteration,
-  } = await translateWithReverse(word);
+  var { translatedText, sourceLang, targetLang, transliteration } =
+    await translateWithReverse(word);
 
   //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
@@ -144,6 +141,13 @@ async function processWord(word, actionType) {
   //if use_tts is on or activation key is pressed, do tts
   if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
     requestTTS(word, sourceLang);
+  }
+}
+
+function restartWordProcess() {
+  activatedWord = null; //restart word process, hover interval will be restart
+  if (selectedText != "") {
+    processWord(selectedText, "select"); //restart select if selected value exist
   }
 }
 
@@ -353,7 +357,7 @@ function loadEventListener() {
   //detect tab switching to reset env
   addEventHandler("blur", handleBlur);
   // when refresh web site, stop tts
-  addEventHandler("beforeunload", reuqestStopTTS);
+  addEventHandler("beforeunload", requestStopTTS);
 }
 
 function handleMousemove(e) {
@@ -376,6 +380,9 @@ function handleKeydown(e) {
     hideTooltip();
     return;
   }
+  if (e.key == "Escape") {
+    requestStopTTS();
+  }
 
   // check already pressed or key is not setting key
   if (
@@ -393,10 +400,7 @@ function handleKeydown(e) {
 
   //reset status to restart process with keybind
   keyDownList[e.code] = true;
-  activatedWord = null; //restart word process
-  if (selectedText != "") {
-    processWord(selectedText, "select"); //restart select if selected value exist
-  }
+  restartWordProcess();
   if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
   }
@@ -416,7 +420,7 @@ function handleBlur(e) {
   selectedText = "";
   activatedWord = null;
   hideTooltip();
-  reuqestStopTTS();
+  requestStopTTS();
   ocrView.removeAllOcrEnv();
 }
 
@@ -482,7 +486,7 @@ async function requestTTS(word, lang) {
   });
 }
 
-async function reuqestStopTTS() {
+async function requestStopTTS() {
   return await sendMesage({
     type: "stopTTS",
   });
@@ -649,6 +653,16 @@ async function checkYoutube() {
   isYoutubeDetected = true;
   await util.injectScript("youtube.js");
   initYoutubePlayer();
+  addCaptionButtonListener();
+}
+
+async function addCaptionButtonListener() {
+  await delay(2000);
+  $(".ytp-subtitles-button").on("click", (e) => {
+    var captionOnStatusByUser = e.target.getAttribute("aria-pressed");
+    setting["captionOnStatusByUser"] = captionOnStatusByUser;
+    setting.save();
+  });
 }
 
 function pausePlayer() {
@@ -663,6 +677,7 @@ function initYoutubePlayer() {
       type: "initYoutubePlayer",
       targetLang: setting["translateTarget"],
       subSetting: setting["enableYoutube"],
+      captionOnStatusByUser: setting["captionOnStatusByUser"],
     });
   }
 }
@@ -721,27 +736,4 @@ function removePrevElement() {
   $("#mttContainer").tooltip("dispose");
   $("#mttContainer").remove();
   ocrView.removeAllOcrEnv();
-}
-function a() {
-  var headerLine = [
-    Object.keys(this.setting["historyList"][0])
-      .map((key) => `${key}`)
-      .join(","),
-  ];
-  console.log(headerLine);
-  var csvContent = this.setting["historyList"].map((history) => {
-    var line = "";
-    for (var key in history) {
-      line += (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
-    }
-    return line;
-  });
-
-  csvContent = headerLine.concat(csvContent).join("\n");
-  // ([headerLine]+csvContent);
-  var url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
-  var link = document.createElement("a");
-  link.href = url;
-  link.download = "Mouse_Tooltip_Translator_History.csv";
-  link.click();
 }

@@ -1,4 +1,5 @@
 // https://terrillthompson.com/648
+// https://developers.google.com/youtube/iframe_api_reference
 // intercept youtube subtitle and concat dual sub
 // restart playersubtitle for apply
 
@@ -12,17 +13,19 @@ const interceptor = new XMLHttpRequestInterceptor();
 interceptor.apply();
 var targetLang = "";
 var subSetting = "";
-var subStartDelayTime = 2000;
+var subStartDelayTime = 1500;
 var googleTrafficDelayTime = 1000;
 var failSkipTime = 5000;
 var pausedByExtension = false;
 var isPaused = false;
 var failTimestamp = 0;
 var isBaseUrlAltered = false;
+var captionOnStatusByUser = "true";
+var urlListenerAdded = false;
 
 window.addEventListener(
   "message",
-  async function({ data }) {
+  async function ({ data }) {
     if (data.type == "initYoutubePlayer") {
       initPlayer(data);
     } else if (data.type == "pausePlayer") {
@@ -66,6 +69,7 @@ interceptor.on("request", async ({ request, requestId }) => {
 async function initPlayer(data) {
   targetLang = data.targetLang;
   subSetting = data.subSetting;
+  captionOnStatusByUser = data.captionOnStatusByUser;
   // check video and turn on sub
   await waitVideoPlayerLoad();
   addPlayerStartListener();
@@ -91,6 +95,10 @@ async function addPlayerStartListener() {
 }
 
 function addUrlListener() {
+  if (urlListenerAdded) {
+    return;
+  }
+  urlListenerAdded = true;
   navigation.addEventListener("navigate", (e) => {
     pausedByExtension = false;
     activateCaption(e.destination.url);
@@ -113,6 +121,7 @@ function handlePlayer(callbackFn) {
   }
 }
 function handlePlayerAll(callbackFn) {
+  // there are three players,  shorts video, main video, preview video
   getVideoPlayerAll().forEach((element) => {
     callbackFn(element);
   });
@@ -147,6 +156,9 @@ function reloadCaption() {
 function loadCaption() {
   handlePlayerAll((element) => element.loadModule("captions"));
 }
+function unloadCaption() {
+  handlePlayerAll((element) => element.unloadModule("captions"));
+}
 
 function setPlayerCaption(lang, translationLanguage) {
   handlePlayerAll((element) => {
@@ -160,9 +172,11 @@ function setPlayerCaption(lang, translationLanguage) {
 const activateCaption = debounce(
   subStartDelayTime,
   async (url = window.location.href) => {
-    if (subSetting == "minimized") {
+    // do not turn on caption if user off
+    if (subSetting == "minimized" || captionOnStatusByUser == "false") {
       return;
     }
+
     var { lang, translationLanguage } = await getVideoLang(url);
     loadCaption(); // turn on caption for embed video
     // reloadCaption(); //reset previous caption immediately

@@ -32,6 +32,7 @@ var defaultData = {
   tooltipBackgroundColor: "#000000b8",
   ttsVolume: "1.0",
   ttsRate: "1.0",
+  captionOnStatusByUser: "true",
   historyList: [],
   historyRecordActions: [],
   langExcludeList: [],
@@ -260,7 +261,7 @@ export function injectScript(scriptUrl) {
 export function cacheFn(fn) {
   var cache = {};
 
-  return async function() {
+  return async function () {
     var args = arguments;
     var key = [].slice.call(args).join("");
     if (10000 < Object.keys(cache).length) {
@@ -278,12 +279,12 @@ export function cacheFn(fn) {
 
 //image=================================
 export function getBase64(url) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     fetch(url)
       .then((response) => response.blob())
       .then((blob) => {
         var reader = new FileReader();
-        reader.onload = function() {
+        reader.onload = function () {
           resolve(this.result); // <--- `this.result` contains a base64 data URI
         };
         reader.readAsDataURL(blob);

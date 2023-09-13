@@ -26,35 +26,11 @@
 	"Text_Detect_Type": {
 		"message": "מה לתרגם?"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "תרגם בהחזקת מקש"
-	},
-	"Translate_Writing_Hotkey": {
-		"message": "תרגם בלחיצה על מקש"
-	},
 	"Writing_Language": {
 		"message": "Writing Language"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
-	},
-	"Detect_PDF": {
-		"message": "זהה pdf"
-	},
-	"Enable_Youtube_Subtitle": {
-		"message": "אפשר כתוביות youtube"
-	},
-	"OCR_When": {
-		"message": "מתי לעשות ocr?"
-	},
 	"OCR_Detection_Language": {
 		"message": "שפת ocr"
-	},
-	"Exclude_Language": {
-		"message": "אל תתרגם את השפות"
-	},
-	"Exclude_Website": {
-		"message": "אל תתרגם את האתרים"
 	},
 	"Visual______________________________________": {
 		"message": "תצוגה                                      "
@@ -94,6 +70,36 @@
 	},
 	"Voice_for_": {
 		"message": "Voice for "
+	},
+	"ADVANCED______________________________________": {
+		"message": "ADVANCED                                      "
+	},
+	"Translate_Writing_Hotkey": {
+		"message": "תרגם בלחיצה על מקש"
+	},
+	"OCR_When": {
+		"message": "מתי לעשות ocr?"
+	},
+	"Detect_Type_Swap_Hold_Key": {
+		"message": "תרגם בהחזקת מקש"
+	},
+	"Enable_Youtube_Subtitle": {
+		"message": "אפשר כתוביות youtube"
+	},
+	"Detect_PDF": {
+		"message": "זהה pdf"
+	},
+	"Reverse_Translate_Language": {
+		"message": "Reverse Translate Language"
+	},
+	"EXCLUDE______________________________________": {
+		"message": "EXCLUDE                                      "
+	},
+	"Exclude_Language": {
+		"message": "אל תתרגם את השפות"
+	},
+	"Exclude_Website": {
+		"message": "אל תתרגם את האתרים"
 	},
 	"About______________________________________": {
 		"message": "אודות                                      "

@@ -2,12 +2,11 @@
   <v-app id="app">
     <v-fade-transition hide-on-leave>
       <!-- main page ====================================== -->
-      <v-card v-if="currentPage == 'main'" tile flat>
+      <div v-if="currentPage == 'main'" tile flat>
         <v-toolbar color="blue" dark dense>
           <v-toolbar-title>
-            <div>{{remainSettingDesc['appName']}}</div>
+            <div>{{ remainSettingDesc["appName"] }}</div>
           </v-toolbar-title>
-          <v-spacer></v-spacer>
           <v-btn icon @click="currentPage = 'history'">
             <v-icon>mdi-history</v-icon>
           </v-btn>
@@ -15,142 +14,151 @@
             @click="currentPage = 'about'"
           ></v-app-bar-nav-icon>
 
-
           <!-- tab header -->
           <template v-slot:extension>
             <v-tabs
               v-model="currentTab"
-              align-with-title
+              center-active
+              show-arrows
+              slider-color="red"
             >
-              <v-tabs-slider color="red"></v-tabs-slider>
-              <v-tab
-                v-for="tabName in tabs"
-                :key="tabName"
-              >
+              <v-tab v-for="tabName in tabs" :key="tabName">
                 {{ tabName }}
               </v-tab>
             </v-tabs>
           </template>
         </v-toolbar>
 
-
-
-      <!-- tab body------------------- -->
-      <v-tabs-items v-model="currentTab">
-        <v-tab-item
-          v-for="tabName in tabs"
-          :key="tabName"
-        >
-
-        <div class="scrollList" >
-
-          <v-card flat v-if="tabItems[tabName]">
-            <v-list-item v-for="(option, optionName) in tabItems[tabName]" :key="optionName">
-
-
+        <!-- main page contents -->
+        <v-window v-model="currentTab">
+          <v-window-item
+            v-for="tabName in tabs"
+            :key="tabName"
+            :value="tabName"
+            class="scrollList"
+          >
+            <!-- <v-card flat  > -->
+            <!-- <v-list flat> -->
+            <v-list-item
+              v-for="(option, optionName) in tabItems[tabName]"
+              :key="optionName"
+              flat
+            >
               <!-- single select (default null) and multiple select option -->
               <v-select
-                v-if="!option.optionType  || option.optionType=='multipleSelect' "
+                v-if="
+                  !option.optionType || option.optionType == 'multipleSelect'
+                "
                 v-model="setting[optionName]"
                 :items="option.optionList"
-                item-text="text"
-                item-value="val"
                 :label="option.description"
-                @change="onSelectChange($event, optionName)"
-                :multiple="option.optionType=='multipleSelect'"
-                tabName              
+                :multiple="option.optionType == 'multipleSelect'"
+                :chips="option.optionType == 'multipleSelect'"
+                :closable-chips="option.optionType == 'multipleSelect'"
+                variant="underlined"
               >
-                <!-- multiple select, selected text show -->
-                <template v-if="option.optionType=='multipleSelect'" v-slot:selection="{ item, index }" >
-                  <v-chip v-if="index === 0">
-                    <span>{{ item.text }}</span>
-                  </v-chip>
-                  <span v-if="index === 1" class="grey--text text-caption">
-                    (+{{ setting[optionName].length - 1 }} others)
-                  </span>
-                </template>
               </v-select>
 
               <!-- combo box option -->
               <v-combobox
-                v-else-if="option.optionType=='comboBox'"
+                v-else-if="option.optionType == 'comboBox'"
                 v-model="setting[optionName]"
                 :items="option.optionList"
                 item-text="text"
                 item-value="val"
                 :label="option.description"
-                @change="onSelectChange($event, optionName)"
-                tabName              
+                tabName
                 chips
-                multiple    
-                deletable-chips
+                multiple
+                closable-chips
+                variant="underlined"
               >
               </v-combobox>
 
               <!-- color picker option -->
-              <v-text-field v-else-if="option.optionType=='colorPicker'" v-model="setting[optionName]" v-mask="mask" :label="option.description" @change="onSelectChange($event, optionName)">
+              <v-text-field
+                v-else-if="option.optionType == 'colorPicker'"
+                v-model="setting[optionName]"
+                v-mask="mask"
+                :label="option.description"
+                variant="underlined"
+              >
                 <template v-slot:append>
-                  <v-menu v-model="option.menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
-                    <template v-slot:activator="{ on }">
-                      <div :style="swatchStyle(option, optionName)" v-on="on" class="ma-1" />
+                  <v-menu v-model="option.menu" :close-on-content-click="false">
+                    <template v-slot:activator="{ props }">
+                      <div
+                        :style="swatchStyle(option, optionName)"
+                        v-bind="props"
+                        class="ma-1"
+                      />
                     </template>
                     <v-card>
-                      <v-card-text>
-                        <v-color-picker v-model="setting[optionName]" flat                />
-                      </v-card-text>
+                      <v-color-picker
+                        v-model="setting[optionName]"
+                      ></v-color-picker>
                     </v-card>
                   </v-menu>
                 </template>
               </v-text-field>
+            </v-list-item>
 
-              
+            <!-- </v-list> -->
+            <!-- </v-card> -->
+          </v-window-item>
+        </v-window>
 
-          </v-list-item>
-          </v-card>
-        </div>
-        </v-tab-item>
-      </v-tabs-items>
-      </v-card>
-
+        <!-- tab body------------------- -->
+      </div>
 
       <!-- about page ====================================== -->
       <div v-else-if="currentPage == 'about'">
         <!-- about page img====================================== -->
-        <v-img src="floating-maple-leaf.jpg" height="300px" dark class="vimage">
-          <v-row class="fill-height">
-            <v-card-title>
+        <v-img
+          height="200"
+          src="floating-maple-leaf.jpg"
+          cover
+          class="text-white"
+        >
+          <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
+            <template v-slot:prepend>
+              <!-- <v-btn icon="$menu"></v-btn> -->
               <v-btn dark icon class="mr-4" @click="currentPage = 'main'">
                 <v-icon>mdi-chevron-left</v-icon>
               </v-btn>
-            </v-card-title>
-            <v-spacer></v-spacer>
-            <v-card-title class="white--text">
-              <div class="text-h4 pl-12 pt-12">
-                Mouse Tooltip<br />
-                Translator
-              </div>
-            </v-card-title>
-          </v-row>
+            </template>
+          </v-toolbar>
+          <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
+          <v-spacer></v-spacer>
+          <v-card-title class="white--text">
+            <div class="text-h4 pl-12 pt-12">
+              Mouse Tooltip<br />
+              Translator
+            </div>
+          </v-card-title>
         </v-img>
 
         <!-- about page contents list====================================== -->
-        <v-list-item-group>
+        <v-list>
           <v-list-item
             v-for="(aboutPageItem, key) in aboutPageList"
             :key="key"
             @click="openUrl(aboutPageItem.url)"
+            :title="aboutPageItem.name"
+            :subtitle="aboutPageItem.sub_name"
           >
-            <v-list-item-icon>
-              <v-icon color="primary">
-                {{ aboutPageItem.icon }}
-              </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ aboutPageItem.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{ aboutPageItem.sub_name }}</v-list-item-subtitle>
-            </v-list-item-content>
+            <template v-slot:prepend>
+              <v-avatar color="grey-lighten-1">
+                <v-icon size="25" color="white">{{
+                  aboutPageItem.icon
+                }}</v-icon>
+              </v-avatar>
+            </template>
+
+            <!-- <template v-slot:prepend>
+              <v-icon color="primary">{{ aboutPageItem.icon }}</v-icon>
+            </template> -->
           </v-list-item>
-        </v-list-item-group>
+        </v-list>
       </div>
 
       <!-- history page ====================================== -->
@@ -169,7 +177,7 @@
           </v-btn>
         </v-toolbar>
 
-        <v-list-item-group class="scrollList">
+        <v-list class="scrollList">
           <v-card-text>
             <span class="subheading">Record Text When</span>
             <v-chip-group
@@ -191,32 +199,23 @@
           <v-divider class="mx-4"></v-divider>
 
           <!-- name="list" tag="div" -->
-            <v-list-item
-              v-for="(history, index) in setting['historyList']"
-              :key="history"
-            >
-              <v-list-item-content
-                @click="copyToClipboard(history.sourceText, history.targetText)"
+          <v-list-item
+            v-for="(history, index) in setting['historyList']"
+            :key="history"
+            :title="history.sourceText"
+            :subtitle="history.targetText"
+          >
+            <template v-slot:append>
+              <v-icon
+                color="grey lighten-1"
+                @click.prevent="removeHistory(index)"
+                @mousedown.stop
+                @touchstart.native.stop
+                >mdi-close</v-icon
               >
-                <v-list-item-title
-                  v-text="history.sourceText"
-                ></v-list-item-title>
-                <v-list-item-subtitle
-                  v-text="history.targetText"
-                ></v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn
-                  icon
-                  @click.prevent="removeHistory(index)"
-                  @mousedown.stop
-                  @touchstart.native.stop
-                >
-                  <v-icon color="grey lighten-1">mdi-close</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-        </v-list-item-group>
+            </template>
+          </v-list-item>
+        </v-list>
 
         <v-snackbar v-model="copyAlertBar">
           Item Copied
@@ -236,8 +235,8 @@
   </v-app>
 </template>
 <script>
-import * as util from './util.js';
-
+import * as util from "./util.js";
+import { isProxy, toRaw } from "vue";
 
 var langList = {
   Afrikaans: "af",
@@ -347,7 +346,7 @@ var langList = {
   Zulu: "zu",
 };
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
-var langListOpposite=util.swapJsonKeyValue(langList);
+var langListOpposite = util.swapJsonKeyValue(langList);
 
 var toggleList = {
   On: "true",
@@ -356,16 +355,16 @@ var toggleList = {
 
 var keyList = {
   None: "null",
-  "Ctrl Left":"ControlLeft",
-  "Ctrl Right":"ControlRight",
-  "Alt Left":"AltLeft",
-  "Alt Right":"AltRight",
-  "Shift Left":"ShiftLeft",
-  "Shift Right":"ShiftRight",
-  "Meta Left":"MetaLeft",
-  "Meta Right":"MetaRight",
-  "F2":"F2",
-  "F8":"F8",  
+  "Ctrl Left": "ControlLeft",
+  "Ctrl Right": "ControlRight",
+  "Alt Left": "AltLeft",
+  "Alt Right": "AltRight",
+  "Shift Left": "ShiftLeft",
+  "Shift Right": "ShiftRight",
+  "Meta Left": "MetaLeft",
+  "Meta Right": "MetaRight",
+  F2: "F2",
+  F8: "F8",
 };
 
 var ocrLangList = {
@@ -470,7 +469,7 @@ var translatorList = {
   bing: "bing",
   "papago (Experimental)": "papago",
   "yandex (Experimental)": "yandex",
-  "deepl (Experimental)":"deepl"
+  "deepl (Experimental)": "deepl",
 };
 
 var translateActionList = {
@@ -479,17 +478,17 @@ var translateActionList = {
   "Mouseover & Select": "mouseoverselect",
 };
 
-var tooltipFontSizeList = getRangeOption(5,26,1,0); //font size 5 to 25
-var tooltipWidth = getRangeOption(1,11,100,0);
-var ttsVolumeList=getRangeOption(1,11,0.1,1);
-var ttsRateList=getRangeOption(5,21,0.1,1);
-var tooltipBackgroundBlurList=getRangeOption(0,21,1,0);
-var tooltipDistanceList=getRangeOption(0,21,1,0);
+var tooltipFontSizeList = getRangeOption(5, 26, 1, 0); //font size 5 to 25
+var tooltipWidth = getRangeOption(1, 11, 100, 0);
+var ttsVolumeList = getRangeOption(1, 11, 0.1, 1);
+var ttsRateList = getRangeOption(5, 21, 0.1, 1);
+var tooltipBackgroundBlurList = getRangeOption(0, 21, 1, 0);
+var tooltipDistanceList = getRangeOption(0, 21, 1, 0);
 
-var tooltipPositionList={
+var tooltipPositionList = {
   Follow: "follow",
   Fixed: "fixed",
-}
+};
 
 var detectTypeList = {
   Word: "word",
@@ -503,24 +502,24 @@ translateListWithNone["None"] = "null";
 var keyListWithAlways = util.copyJson(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
 
-var subtitleTypeList={
-  "Dual Subtitle":"dualsub",
-  "Target Single Subtitle":"targetsinglesub",
-  "Source Single Subtitle":"sourcesinglesub",
-  "Minimized Feature":"minimized",
-  "None":"null"
-}
+var subtitleTypeList = {
+  "Dual Subtitle": "dualsub",
+  "Target Single Subtitle": "targetsinglesub",
+  "Source Single Subtitle": "sourcesinglesub",
+  "Minimized Feature": "minimized",
+  None: "null",
+};
 
-var tooltipTextAlignList={
-  Center:"center",
-  Left:"left",
-  Right:"right",
-  Justify:"justify",
-}
+var tooltipTextAlignList = {
+  Center: "center",
+  Left: "left",
+  Right: "right",
+  Justify: "justify",
+};
 
 var settingListData = {
   showTooltipWhen: {
-    description: chrome.i18n.getMessage("Show_Tooltip_When"),  // public/_locales/en/messages.json is used 
+    description: chrome.i18n.getMessage("Show_Tooltip_When"), // public/_locales/en/messages.json is used
     optionList: keyListWithAlways,
   },
   TTSWhen: {
@@ -547,55 +546,17 @@ var settingListData = {
     description: chrome.i18n.getMessage("Text_Detect_Type"),
     optionList: detectTypeList,
   },
-  keyDownDetectSwap:{
-    description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
-    optionList: keyList,
-  },
-  keyDownTranslateWriting:{
-    description: chrome.i18n.getMessage("Translate_Writing_Hotkey"),
-    optionList: keyList,
-  },
-  writingLanguage:{
+  writingLanguage: {
     description: chrome.i18n.getMessage("Writing_Language"),
-    optionList: langList,    
-  },
-  translateReverseTarget: {
-    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: translateListWithNone,
-  },
-  detectPDF: {
-    description: chrome.i18n.getMessage("Detect_PDF"),
-    optionList: toggleList,
-  },
-  enableYoutube: {
-    description: chrome.i18n.getMessage("Enable_Youtube_Subtitle"),
-    optionList: subtitleTypeList,
-  },
-  useTransliteration: {
-    description: "Enable Transliteration (Experimental)",
-    optionList: toggleList,
-  },
-  keyDownOCR: {
-    description: chrome.i18n.getMessage("OCR_When"),
-    optionList: keyListWithAlways,
+    optionList: langList,
   },
   ocrDetectionLang: {
     description: chrome.i18n.getMessage("OCR_Detection_Language"),
     optionList: ocrLangList,
   },
-  langExcludeList: {
-    description: chrome.i18n.getMessage("Exclude_Language"),
-    optionList: langList,
-    optionType: "multipleSelect",
-  },
-  websiteExcludeList:{
-    description: chrome.i18n.getMessage("Exclude_Website"),
-    optionList: "",
-    optionType: "comboBox",
-  },
 };
 
-var visualTabData={
+var visualTabData = {
   tooltipFontSize: {
     description: chrome.i18n.getMessage("Tooltip_Font_Size"),
     optionList: tooltipFontSizeList,
@@ -634,7 +595,7 @@ var visualTabData={
   },
 };
 
-var voiceTabData={
+var voiceTabData = {
   ttsRate: {
     description: chrome.i18n.getMessage("TTS_Speed"),
     optionList: ttsRateList,
@@ -645,22 +606,63 @@ var voiceTabData={
   },
 };
 
-
-var tabs=["MAIN","VISUAL","VOICE"];
-var tabItems={
-  "MAIN":settingListData,
-  "VISUAL":visualTabData,
-  "VOICE":voiceTabData,
+var advancedTabData = {
+  keyDownTranslateWriting: {
+    description: chrome.i18n.getMessage("Translate_Writing_Hotkey"),
+    optionList: keyList,
+  },
+  keyDownOCR: {
+    description: chrome.i18n.getMessage("OCR_When"),
+    optionList: keyListWithAlways,
+  },
+  keyDownDetectSwap: {
+    description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
+    optionList: keyList,
+  },
+  enableYoutube: {
+    description: chrome.i18n.getMessage("Enable_Youtube_Subtitle"),
+    optionList: subtitleTypeList,
+  },
+  detectPDF: {
+    description: chrome.i18n.getMessage("Detect_PDF"),
+    optionList: toggleList,
+  },
+  useTransliteration: {
+    description: "Enable Transliteration (Experimental)",
+    optionList: toggleList,
+  },
+  translateReverseTarget: {
+    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
+    optionList: translateListWithNone,
+  },
 };
 
+var excludeTabData = {
+  langExcludeList: {
+    description: chrome.i18n.getMessage("Exclude_Language"),
+    optionList: langList,
+    optionType: "multipleSelect",
+  },
+  websiteExcludeList: {
+    description: chrome.i18n.getMessage("Exclude_Website"),
+    optionList: "",
+    optionType: "comboBox",
+  },
+};
 
+var tabItems = {
+  MAIN: settingListData,
+  GRAPHIC: visualTabData,
+  VOICE: voiceTabData,
+  ADVANCED: advancedTabData,
+  EXCLUDE: excludeTabData,
+};
+var tabs = Object.keys(tabItems);
 
-var remainSettingDesc={
-  "appName":chrome.i18n.getMessage("Mouse_Tooltip_Translator"),
-  "Voice_for_":chrome.i18n.getMessage("Voice_for_"),
-}
-
-
+var remainSettingDesc = {
+  appName: chrome.i18n.getMessage("Mouse_Tooltip_Translator"),
+  Voice_for_: chrome.i18n.getMessage("Voice_for_"),
+};
 
 var aboutPageList = {
   reviewPage: {
@@ -682,33 +684,33 @@ var aboutPageList = {
     icon: "mdi-shield-account",
   },
   pdfViewer: {
-    name:  chrome.i18n.getMessage("PDF_Viewer"),
-    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file") ,
-    url: chrome.runtime.getURL("/pdfjs/web/viewer.html")+"?file=/pdf_demo.pdf",
+    name: chrome.i18n.getMessage("PDF_Viewer"),
+    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file"),
+    url:
+      chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
     icon: "mdi-file-pdf-box",
   },
 };
 
-function getRangeOption(start,end,scale,roundOff) {
-  var optionList={};
+function getRangeOption(start, end, scale, roundOff) {
+  var optionList = {};
   for (let i = start; i < end; i++) {
-    var num=String((i*scale).toFixed(roundOff));
+    var num = String((i * scale).toFixed(roundOff));
     optionList[num] = num;
   }
   return optionList;
-} 
-
+}
 
 export default {
   name: "app",
-  data: function () {
+  data() {
     return {
-      currentTab: null,
+      currentTab: "MAIN",
       tabs: tabs,
-      tabItems:{},
-      mask: '!#XXXXXXXX',
-      remainSettingDesc:remainSettingDesc,
-      height:window.innerHeight,
+      tabItems: {},
+      mask: "!#XXXXXXXX",
+      remainSettingDesc: remainSettingDesc,
+      height: window.innerHeight,
 
       aboutPageList: aboutPageList,
       setting: {},
@@ -728,41 +730,48 @@ export default {
   },
   async mounted() {
     this.setting = await util.loadSetting();
-
     this.loadTabOptionList();
     await this.addTtsVoiceTabOption();
   },
+  watch: {
+    setting: {
+      deep: true,
+      handler() {
+        this.saveSetting();
+      },
+    },
+  },
 
   methods: {
-    onSelectChange(event, name) {
-      this.changeSetting();
-    },
-    changeSetting() {
-      this.setting.save();
+    saveSetting() {
+      toRaw(this.setting).save();
     },
     openUrl(newURL) {
       window.open(newURL);
     },
     removeAllHistory() {
       this.setting["historyList"] = [];
-      this.changeSetting();
+      this.saveSetting();
     },
     removeHistory(index) {
       this.setting["historyList"].splice(index, 1);
-      this.changeSetting();
+      this.saveSetting();
     },
     downloadCSV() {
-      var headerKey = Object.keys(this.setting["historyList"]?.[0]).map((key) => `${key}`);
+      var headerKey = Object.keys(this.setting["historyList"]?.[0]).map(
+        (key) => `${key}`
+      );
 
       var csvContent = this.setting["historyList"].map((history) => {
         var line = "";
         for (var key of headerKey) {
-          line += (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
+          line +=
+            (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
         }
         return line;
       });
 
-      csvContent = ([headerKey.join(",")]).concat(csvContent).join("\n");
+      csvContent = [headerKey.join(",")].concat(csvContent).join("\n");
       var url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
       var link = document.createElement("a");
       link.href = url;
@@ -775,65 +784,70 @@ export default {
         this.copyAlertBar = true;
       });
     },
-    makeTextValList(inputList) {
-      // convert {key:item}  as {text:key, val:item}
+    wrapWithTitleValueKey(inputList) {
+      // convert {key:item}  as {title:key, value:item}
       var textValList = [];
       for (const [key2, val2] of Object.entries(inputList)) {
         textValList.push({
-          text: key2,
-          val: val2,
+          title: key2,
+          value: val2,
         });
       }
       return textValList;
     },
     loadTabOptionList() {
-      this.tabItems=tabItems;
+      this.tabItems = tabItems;
       for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
         for (const [key1, val1] of Object.entries(tabVal)) {
-          this.tabItems[tabKey][key1]["optionList"] = this.makeTextValList(
-            this.tabItems[tabKey][key1]["optionList"]
-          );
-        }
-      }      
-    },
-    
-    async addTtsVoiceTabOption(){
-      var voiceTabOption={}
-      var availableVoiceList= await util.getAvailableVoiceList();
-      
-      for (var key in availableVoiceList) {
-        var voiceOptionList=util.getJsonFromList(availableVoiceList[key]);
-        if(langListOpposite[key]){
-          voiceTabOption["ttsVoice_"+key]={
-            description: this.remainSettingDesc["Voice_for_"] +langListOpposite[key],
-            optionList: this.makeTextValList(voiceOptionList),          
-          }
+          this.tabItems[tabKey][key1]["optionList"] =
+            this.wrapWithTitleValueKey(
+              this.tabItems[tabKey][key1]["optionList"]
+            );
         }
       }
-      
-      //add voice option
-      this.tabItems["VOICE"] = Object.assign(this.tabItems["VOICE"], voiceTabOption)
     },
-    swatchStyle(value,name){
-      const color=this.setting[name];
-      const menu=value.menu;
+
+    async addTtsVoiceTabOption() {
+      var voiceTabOption = {};
+      var availableVoiceList = await util.getAvailableVoiceList();
+
+      for (var key in availableVoiceList) {
+        var voiceOptionList = util.getJsonFromList(availableVoiceList[key]);
+        if (langListOpposite[key]) {
+          voiceTabOption["ttsVoice_" + key] = {
+            description:
+              this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
+            optionList: this.wrapWithTitleValueKey(voiceOptionList),
+          };
+        }
+      }
+
+      //add voice option
+      this.tabItems["VOICE"] = Object.assign(
+        this.tabItems["VOICE"],
+        voiceTabOption
+      );
+    },
+    swatchStyle(value, name) {
+      const color = this.setting[name];
+      const menu = value.menu;
       return {
         "box-shadow": "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         backgroundColor: color,
-        cursor: 'pointer',
-        height: '30px',
-        width: '30px',
-        borderRadius: menu ? '50%' : '4px',
-        transition: 'border-radius 200ms ease-in-out'
-      }
-    }
+        cursor: "pointer",
+        height: "30px",
+        width: "30px",
+        borderRadius: menu ? "50%" : "4px",
+        transition: "border-radius 200ms ease-in-out",
+      };
+    },
   },
 };
 </script>
 <style>
-
-.v-label {
-  font-size: 18px;
+.v-input .v-label {
+  font-size: 16px !important;
 }
-
+/* .v-input .v-label--active {
+} */
 </style>
