@@ -37,7 +37,7 @@ var rtlLangList = [
   "yi", //Yiddish
 ]; //right to left language system list
 var writingField =
-  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox]';
+  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
 
 //tooltip core======================================================================
@@ -299,7 +299,6 @@ async function translateWriting(keyInput) {
   if (!writingText) {
     return;
   }
-
   // translate
   var { translatedText } = await requestTranslate(
     writingText,
@@ -401,10 +400,10 @@ function handleKeydown(e) {
   //reset status to restart process with keybind
   keyDownList[e.code] = true;
   restartWordProcess();
+  translateWriting(e.code);
   if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
   }
-  translateWriting(e.code);
 }
 
 function handleKeyup(e) {
