@@ -70,6 +70,9 @@ i18List = [
     "User privacy policy",
     "PDF Viewer",
     "Translate local PDF file",
+    "How to use",
+    "Check how to use this extension",
+
 
     "Title                                      ",
 ]
