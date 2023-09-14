@@ -44,6 +44,7 @@
     "is-url": "^1.2.4",
     "jquery": "^3.5.1",
     "ky": "^1.0.1",
+    "maska": "^2.1.10",
     "match-url-wildcard": "^0.0.5",
     "popper.js": "^1.16.1",
     "source-map-support": "^0.5.21",
