@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.85
+  - fix text editor conflict (request by ultrabave) 
 - 0.1.84
   - fix gmail writing translator conflict
   - hebrew locale (contributed by netanel123123)
