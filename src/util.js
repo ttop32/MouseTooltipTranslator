@@ -38,6 +38,7 @@ var defaultData = {
   langExcludeList: [],
   websiteExcludeList: ["*.test.com"],
   ignoreCallbackOptionList: ["historyList"],
+  popupCount: "0",
 };
 
 //setting util======================================

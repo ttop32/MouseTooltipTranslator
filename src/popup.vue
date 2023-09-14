@@ -37,8 +37,26 @@
             :value="tabName"
             class="scrollList"
           >
-            <!-- <v-card flat  > -->
-            <!-- <v-list flat> -->
+            <!-- review request alert box -->
+            <div v-if="tabName == 'MAIN'">
+              <v-alert
+                v-if="2 < setting['popupCount'] && setting['popupCount'] < 6"
+                type="success"
+                border="start"
+                variant="tonal"
+                closable
+                close-label="Close Alert"
+                title="Review this!"
+              >
+                Developer love criticism
+                <template v-slot:append>
+                  <v-btn variant="tonal" @click="openUrl(reviewPageUrl)"
+                    >Open</v-btn
+                  >
+                </template>
+              </v-alert>
+            </div>
+
             <v-list-item
               v-for="(option, optionName) in tabItems[tabName]"
               :key="optionName"
@@ -147,16 +165,12 @@
             :subtitle="aboutPageItem.sub_name"
           >
             <template v-slot:prepend>
-              <v-avatar color="grey-lighten-1">
+              <v-avatar :color="aboutPageItem.color">
                 <v-icon size="25" color="white">{{
                   aboutPageItem.icon
                 }}</v-icon>
               </v-avatar>
             </template>
-
-            <!-- <template v-slot:prepend>
-              <v-icon color="primary">{{ aboutPageItem.icon }}</v-icon>
-            </template> -->
           </v-list-item>
         </v-list>
       </div>
@@ -216,20 +230,6 @@
             </template>
           </v-list-item>
         </v-list>
-
-        <v-snackbar v-model="copyAlertBar">
-          Item Copied
-          <template v-slot:action="{ attrs }">
-            <v-btn
-              color="pink"
-              text
-              v-bind="attrs"
-              @click="copyAlertBar = false"
-            >
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
       </div>
     </v-fade-transition>
   </v-app>
@@ -670,18 +670,22 @@ var aboutPageList = {
     sub_name: chrome.i18n.getMessage("Comment_on_this_extension"),
     url: "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
     icon: "mdi-message-draw",
+
+    color: "primary",
   },
   sourceCode: {
     name: chrome.i18n.getMessage("Source_code"),
     sub_name: chrome.i18n.getMessage("Check_source_code_in_github"),
     url: "https://github.com/ttop32/MouseTooltipTranslator",
     icon: "mdi-github",
+    color: "success",
   },
   privacyPolicy: {
     name: chrome.i18n.getMessage("Privacy_Policy"),
     sub_name: chrome.i18n.getMessage("User_privacy_policy"),
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
     icon: "mdi-shield-account",
+    color: "error",
   },
   pdfViewer: {
     name: chrome.i18n.getMessage("PDF_Viewer"),
@@ -689,6 +693,14 @@ var aboutPageList = {
     url:
       chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
     icon: "mdi-file-pdf-box",
+    color: "warning",
+  },
+  howToUse: {
+    name: chrome.i18n.getMessage("How_to_use"),
+    sub_name: chrome.i18n.getMessage("Check_how_to_use_this_extension"),
+    url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
+    icon: "mdi-help-box",
+    color: "secondary",
   },
 };
 
@@ -725,13 +737,15 @@ export default {
           icon: "mdi-cursor-default-click",
         },
       ],
-      copyAlertBar: false,
+      reviewPageUrl: aboutPageList["reviewPage"]["url"],
     };
   },
   async mounted() {
     this.setting = await util.loadSetting();
     this.loadTabOptionList();
     await this.addTtsVoiceTabOption();
+    this.setting["popupCount"]++;
+    this.saveSetting();
   },
   watch: {
     setting: {
