@@ -97,9 +97,9 @@
               <v-text-field
                 v-else-if="option.optionType == 'colorPicker'"
                 v-model="setting[optionName]"
-                v-mask="mask"
                 :label="option.description"
                 variant="underlined"
+                v-maska:[options]
               >
                 <template v-slot:append>
                   <v-menu v-model="option.menu" :close-on-content-click="false">
@@ -720,9 +720,15 @@ export default {
       currentTab: "MAIN",
       tabs: tabs,
       tabItems: {},
-      mask: "!#XXXXXXXX",
       remainSettingDesc: remainSettingDesc,
       height: window.innerHeight,
+
+      options: {
+        mask: "!#XXXXXXXX",
+        tokens: {
+          X: { pattern: /[0-9a-fA-F]/ },
+        },
+      },
 
       aboutPageList: aboutPageList,
       setting: {},
@@ -751,6 +757,7 @@ export default {
     setting: {
       deep: true,
       handler() {
+        console.log(this.setting);
         this.saveSetting();
       },
     },
