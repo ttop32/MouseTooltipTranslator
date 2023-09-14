@@ -24,7 +24,7 @@ var defaultData = {
   ocrDetectionLang: "jpn_vert",
   tooltipFontSize: "14",
   tooltipWidth: "200",
-  tooltipDistance: "5",
+  tooltipDistance: "15",
   tooltipPosition: "follow",
   tooltipTextAlign: "center",
   tooltipBackgroundBlur: "2",

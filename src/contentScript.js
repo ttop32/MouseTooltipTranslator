@@ -529,8 +529,6 @@ function applyStyleSetting() {
       top: 0 !important;
       width: 1000px !important;
       margin-left: -500px !important;
-      height: ${setting["tooltipDistance"] * 2}px  !important;
-      margin-top: ${-setting["tooltipDistance"]}px  !important;
       position: fixed !important;
       z-index: 100000200 !important;
       background: none !important;
@@ -545,6 +543,12 @@ function applyStyleSetting() {
       border-radius: 0px !important;
       visibility: visible  !important;
       pointer-events: none !important;
+    }
+    .bootstrapiso  .bs-tooltip-top { 
+      margin-bottom: ${setting["tooltipDistance"]}px  !important;
+    }
+    .bootstrapiso  .bs-tooltip-bottom { 
+      margin-top: ${setting["tooltipDistance"]}px  !important;
     }
     .bootstrapiso .tooltip-inner {
       font-size: ${setting["tooltipFontSize"]}px  !important;

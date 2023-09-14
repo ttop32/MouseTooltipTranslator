@@ -478,12 +478,12 @@ var translateActionList = {
   "Mouseover & Select": "mouseoverselect",
 };
 
-var tooltipFontSizeList = getRangeOption(5, 26, 1, 0); //font size 5 to 25
+var tooltipFontSizeList = getRangeOption(5, 41, 1, 0); //font size 5 to 25
 var tooltipWidth = getRangeOption(1, 11, 100, 0);
 var ttsVolumeList = getRangeOption(1, 11, 0.1, 1);
 var ttsRateList = getRangeOption(5, 21, 0.1, 1);
 var tooltipBackgroundBlurList = getRangeOption(0, 21, 1, 0);
-var tooltipDistanceList = getRangeOption(0, 21, 1, 0);
+var tooltipDistanceList = getRangeOption(0, 41, 1, 0);
 
 var tooltipPositionList = {
   Follow: "follow",
