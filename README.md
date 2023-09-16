@@ -84,7 +84,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 
 # Build yourself to install
 
-1. Install node js, <https://nodejs.org/en/>
+1. Install node js, <https://nodejs.org/en/> , node 18
 2. open terminal and type below
 
 ```console
