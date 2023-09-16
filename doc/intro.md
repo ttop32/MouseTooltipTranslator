@@ -8,7 +8,7 @@
 - Use <kbd>left ctrl</kbd> to Listen pronunciation with google TTS (text to speech)
 - Use <kbd>left alt</kbd> to translate writing text in input box (or highlighted text)
 ![result](/doc/11.gif)
-- Support pdf to display translated tooltip using PDF.js
+- Support online pdf to display translated tooltip using PDF.js (local pdf file need aditional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/edit/main/doc/intro.md#exception))
 ![result](/doc/12.gif)
 - Support dual subtitles for youtube video
 ![result](/doc/16.gif)
