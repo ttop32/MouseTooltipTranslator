@@ -15,17 +15,15 @@ export function enableMouseoverTextEvent(_window = window, isIframe) {
   _win = _window;
   _isIframe = isIframe;
   _win.document.addEventListener("scroll", (e) => {
-    triggerMouseoverText();
+    triggerMouseoverText(getMouseoverRange(clientX, clientY));
   });
   _win.document.addEventListener("mousemove", (e) => {
     setMouseStatus(e);
-    triggerMouseoverText();
+    triggerMouseoverText(getMouseoverRange(e.clientX, e.clientY));
   });
 }
 
-export const triggerMouseoverText = throttle(700, (event) => {
-  var range = getMouseoverRange(clientX, clientY);
-
+export const triggerMouseoverText = throttle(700, (range) => {
   var evt = new CustomEvent("mouseoverText", {
     bubbles: true,
     cancelable: false,

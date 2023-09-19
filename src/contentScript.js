@@ -34,7 +34,6 @@ var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome
 const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
-var mouseoverIntervalTime = 700;
 var rtlLangList = [
   "ar", //Arabic
   "iw", //Hebrew
@@ -152,11 +151,12 @@ async function processWord(word, actionType) {
 }
 
 function restartWordProcess() {
+  var word = activatedWord;
   activatedWord = null;
   if (selectedText) {
-    triggerSelectionEnd(selectedText);
+    processWord(selectedText, "select");
   } else {
-    triggerMouseoverText();
+    processWord(word, "mouseover");
   }
 }
 

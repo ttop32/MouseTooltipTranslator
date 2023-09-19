@@ -24,45 +24,22 @@ function bindIFrameEvent(iframe) {
   enableSelectionEndEvent(iframe.contentWindow);
   enableMouseoverTextEvent(iframe.contentWindow, true);
 
-  iframe.contentWindow.addEventListener("mousemove", function (event) {
-    var clRect = iframe.getBoundingClientRect();
-    var evt = new CustomEvent("mousemove", {
-      bubbles: true,
-      cancelable: false,
-    });
+  // bind mouse event
+  ["mousemove", "keydown", "keyup", "mouseup"].forEach((eventName) => {
+    iframe.contentWindow.addEventListener(eventName, (e) => {
+      var evt = new CustomEvent(eventName, {
+        bubbles: true,
+        cancelable: false,
+      });
+      var clRect = iframe.getBoundingClientRect();
 
-    evt.clientX = event.clientX + clRect.left;
-    evt.clientY = event.clientY + clRect.top;
+      evt.key = e?.key;
+      evt.code = e?.code;
+      evt.ctrlKey = e?.ctrlKey;
+      evt.clientX = e?.clientX ? e.clientX + clRect.left : "";
+      evt.clientY = e?.clientY ? e.clientY + clRect.top : "";
 
-    window.dispatchEvent(evt);
-  });
-
-  iframe.contentWindow.addEventListener("keydown", (e) => {
-    var evt = new CustomEvent("keydown", {
-      bubbles: true,
-      cancelable: false,
-      key: e.key,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
+      window.dispatchEvent(evt);
     });
-    window.dispatchEvent(evt);
-  });
-  iframe.contentWindow.addEventListener("keyup", (e) => {
-    var evt = new CustomEvent("keyup", {
-      bubbles: true,
-      cancelable: false,
-      key: e.key,
-      code: e.code,
-      ctrlKey: e.ctrlKey,
-    });
-    window.dispatchEvent(evt);
-  });
-  iframe.contentWindow.addEventListener("mouseup", (e) => {
-    var evt = new CustomEvent("mouseup", {
-      bubbles: true,
-      cancelable: false,
-      target: e.target,
-    });
-    window.dispatchEvent(evt);
   });
 }
