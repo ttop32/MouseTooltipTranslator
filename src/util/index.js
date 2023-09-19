@@ -1,8 +1,6 @@
-// import * as util from './util.js';
-
 import $ from "jquery";
 import { parse } from "bcp-47";
-import { Setting } from "./setting";
+import { Setting } from "/src/util/setting.js";
 import isUrl from "is-url";
 
 var defaultData = {
@@ -109,8 +107,8 @@ export function getAvailableVoiceList() {
 
 // range util====================================================================================
 
-export function caretRangeFromPoint(x, y) {
-  var range = document.caretRangeFromPoint(x, y);
+export function caretRangeFromPoint(x, y, _document = document) {
+  var range = _document.caretRangeFromPoint(x, y);
   //if no range or is not text, give null
   if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
     return;

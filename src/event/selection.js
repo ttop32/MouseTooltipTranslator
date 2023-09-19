@@ -3,10 +3,12 @@
  */
 
 let lastSelectedText = "";
+var _win;
+export function enableSelectionEndEvent(_window = window) {
+  _win = _window;
 
-export function enableSelectionEndEvent() {
   // Listen selection change every 700 ms. It covers keyboard selection and selection from menu (select all option)
-  document.addEventListener(
+  _win.document.addEventListener(
     "selectionchange",
     debounce((event) => {
       triggerSelectionEnd(getSelectionText());
@@ -15,9 +17,9 @@ export function enableSelectionEndEvent() {
   );
 
   // Trigger on mouse up immediately. Helps reduce 700 ms delay during mouse selection.
-  document.addEventListener(
+  _win.document.addEventListener(
     "mouseup",
-    function(e) {
+    function (e) {
       var text = !isNoneSelectElement(e.target) ? getSelectionText() : "";
       triggerSelectionEnd(text);
     },
@@ -33,23 +35,26 @@ function isNoneSelectElement(element) {
 
 export function getSelectionText() {
   let text = "";
-  if (window.getSelection) {
-    text = window.getSelection().toString();
-  } else if (document.selection && document.selection.type !== "Control") {
-    text = document.selection.createRange().text;
+  if (_win.getSelection) {
+    text = _win.getSelection().toString();
+  } else if (
+    _win.document.selection &&
+    _win.document.selection.type !== "Control"
+  ) {
+    text = _win.document.selection.createRange().text;
   }
   return text;
 }
 
 function triggerSelectionEnd(text) {
+  // don't fire event twice
+  if (text === lastSelectedText) {
+    return;
+  }
   let event = document.createEvent("HTMLEvents");
   event.initEvent("selectionEnd", true, true);
   event.eventName = "selectionEnd";
   event.selectedText = text;
-  // don't fire event twice
-  if (event.selectedText === lastSelectedText) {
-    return;
-  }
   lastSelectedText = event.selectedText;
   document.dispatchEvent(event);
 }
@@ -59,7 +64,7 @@ function triggerSelectionEnd(text) {
 function debounce(callback, interval = 300) {
   let debounceTimeoutId;
 
-  return function(...args) {
+  return function (...args) {
     clearTimeout(debounceTimeoutId);
     debounceTimeoutId = setTimeout(() => callback.apply(this, args), interval);
   };

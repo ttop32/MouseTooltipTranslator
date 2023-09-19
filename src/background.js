@@ -4,7 +4,7 @@
 
 import translator from "./translator/index.js";
 import { waitUntil } from "async-wait-until";
-import * as util from "./util.js";
+import * as util from "/src/util";
 import browser from "webextension-polyfill";
 
 var setting;
@@ -24,7 +24,7 @@ injectContentScriptForAllTab();
 getSetting();
 
 //listen message from contents js and popup js =========================================================================================================
-browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   (async () => {
     // wait setting load
     await waitUntil(() => setting);
@@ -113,7 +113,7 @@ const doTranslate = util.cacheFn(
 );
 
 // detect local pdf file and redirect to translated pdf=====================================================================
-browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   // only run when loading and local pdf file
   if (
     changeInfo.status != "loading" ||

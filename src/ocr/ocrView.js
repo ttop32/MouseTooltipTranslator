@@ -1,5 +1,5 @@
 import $ from "jquery";
-import * as util from "../util.js";
+import * as util from "/src/util";
 import { WindowPostMessageProxy } from "window-post-message-proxy";
 
 const windowPostMessageProxy = new WindowPostMessageProxy({
@@ -104,7 +104,7 @@ async function initOCR(lang) {
 }
 
 async function createIframe(name, htmlPath) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (iFrames[name]) {
       resolve();
       return;
@@ -125,7 +125,7 @@ async function createIframe(name, htmlPath) {
       css,
     })
       .appendTo("body")
-      .on("load", function() {
+      .on("load", function () {
         resolve();
       })
       .get(0);

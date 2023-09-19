@@ -62,16 +62,18 @@ i18List = [
     "Exclude Website",
 
     "About                                      ",
+    "How to use",
+    "Check how to use this extension",
+    "PDF Viewer",
+    "Translate local PDF file",
+    "Ebook Reader",
+    "Translate local ebook file",
     "Review Page",
     "Comment on this extension",
     "Source code",
     "Check source code in github",
     "Privacy Policy",
     "User privacy policy",
-    "PDF Viewer",
-    "Translate local PDF file",
-    "How to use",
-    "Check how to use this extension",
 
 
     "Title                                      ",

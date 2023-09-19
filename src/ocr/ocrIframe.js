@@ -1,6 +1,6 @@
 import Tesseract from "tesseract.js";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
-import * as util from "../util.js";
+import * as util from "/src/util";
 
 //ocr process, listen image from contents js and respond text
 //1. listen to get image from iframe host
@@ -9,7 +9,7 @@ import * as util from "../util.js";
 
 window.addEventListener(
   "message",
-  async function({ data }) {
+  async function ({ data }) {
     if (data.type === "ocr") {
       doOcr(data);
     } else if (data.type === "initTesseract") {
@@ -68,7 +68,7 @@ function loadImage(url) {
 
 //create ocr worker and processs ocr
 function useTesseract(image, lang, rectangles, mode) {
-  return new Promise(async function(resolve, reject) {
+  return new Promise(async function (resolve, reject) {
     try {
       var data = [];
       var scheduler = await getScheduler(lang, mode);
