@@ -104,6 +104,24 @@
 	"About______________________________________": {
 		"message": "אודות                                      "
 	},
+	"How_to_use": {
+		"message": "How to use"
+	},
+	"Check_how_to_use_this_extension": {
+		"message": "Check how to use this extension"
+	},
+	"PDF_Viewer": {
+		"message": "מציג pdf"
+	},
+	"Translate_local_PDF_file": {
+		"message": "תרגום pdf מקומי"
+	},
+	"Ebook_Reader": {
+		"message": "Ebook Reader"
+	},
+	"Translate_local_ebook_file": {
+		"message": "Translate local ebook file"
+	},
 	"Review_Page": {
 		"message": "Review Page"
 	},
@@ -121,18 +139,6 @@
 	},
 	"User_privacy_policy": {
 		"message": "מדיניות פרטיות למשתמש"
-	},
-	"PDF_Viewer": {
-		"message": "מציג pdf"
-	},
-	"Translate_local_PDF_file": {
-		"message": "תרגום pdf מקומי"
-	},
-	"How_to_use": {
-		"message": "How to use"
-	},
-	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
 	},
 	"Title______________________________________": {
 		"message": "כותרת                                      "

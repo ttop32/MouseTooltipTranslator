@@ -104,6 +104,24 @@
 	"About______________________________________": {
 		"message": "About                                      "
 	},
+	"How_to_use": {
+		"message": "How to use"
+	},
+	"Check_how_to_use_this_extension": {
+		"message": "Check how to use this extension"
+	},
+	"PDF_Viewer": {
+		"message": "PDF Viewer"
+	},
+	"Translate_local_PDF_file": {
+		"message": "Translate local PDF file"
+	},
+	"Ebook_Reader": {
+		"message": "Ebook Reader"
+	},
+	"Translate_local_ebook_file": {
+		"message": "Translate local ebook file"
+	},
 	"Review_Page": {
 		"message": "Review Page"
 	},
@@ -122,23 +140,11 @@
 	"User_privacy_policy": {
 		"message": "User privacy policy"
 	},
-	"PDF_Viewer": {
-		"message": "PDF Viewer"
-	},
-	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
-	},
-	"How_to_use": {
-		"message": "How to use"
-	},
-	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
-	},
 	"Title______________________________________": {
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "മൗസ് ടൂൾടിപ്പ് പരിഭാഷകൻ : PDF Translate"
+		"message": "മൗസ് ടൂൾടിപ്പ് പരിഭാഷകൻ : translate pdf ebook subtitle"
 	},
 	"appDesc": {
 		"message": "മ mouse സ് ടൂൾടിപ്പ് ട്രാൻസ്ലേറ്റർ വിവർത്തനം ചെയ്യുക മസോവർ ടെക്സ്റ്റ് Google വിവർത്തനം ഉപയോഗിച്ച്"
