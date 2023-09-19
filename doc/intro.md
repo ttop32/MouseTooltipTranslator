@@ -6,9 +6,9 @@
     - Proletarier aller Länder, vereinigt euch!
 ![Alt Text](/doc/result_0.gif)
 - Use <kbd>left ctrl</kbd> to Listen pronunciation with google TTS (text to speech)
-- Use <kbd>left alt</kbd> to translate writing text in input box (or highlighted text)
+- Use <kbd>left alt</kbd> to translate writing text (or highlighted text) in input box. (To undo, press <kbd>ctrl</kbd> +<kbd>z</kbd>)
 ![result](/doc/11.gif)
-- Support pdf to display translated tooltip using PDF.js
+- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
 ![result](/doc/12.gif)
 - Support dual subtitles for youtube video
 ![result](/doc/16.gif)

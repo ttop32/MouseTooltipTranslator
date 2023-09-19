@@ -82,9 +82,14 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 
 - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
 
+# How to use
+- [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
+
+
+
 # Build yourself to install
 
-1. Install node js, <https://nodejs.org/en/>
+1. Install node js, <https://nodejs.org/en/> , node 18
 2. open terminal and type below
 
 ```console
