@@ -139,6 +139,7 @@ npm run build        // or 'npm run watch' for developing
 - [EdgeTranslate](https://github.com/EdgeTranslate/EdgeTranslate)
 - [translatte](https://github.com/extensionsapp/translatte)
 - [doq](https://github.com/shivaprsd/doq)
+- [foliate-js](https://github.com/johnfactotum/foliate-js)
 - [google-translate-api](https://github.com/vitalets/google-translate-api)
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
