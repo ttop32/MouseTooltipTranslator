@@ -5,10 +5,6 @@
 import { throttle } from "throttle-debounce";
 import * as util from "/src/util";
 
-let lastSelectedText = "";
-
-// throttle 700
-
 var clientX = 0;
 var clientY = 0;
 var mouseTarget;
@@ -19,15 +15,15 @@ export function enableMouseoverTextEvent(_window = window, isIframe) {
   _win = _window;
   _isIframe = isIframe;
   _win.document.addEventListener("scroll", (e) => {
-    checkMouseoverText();
+    triggerMouseoverText();
   });
   _win.document.addEventListener("mousemove", (e) => {
     setMouseStatus(e);
-    checkMouseoverText();
+    triggerMouseoverText();
   });
 }
 
-const checkMouseoverText = throttle(700, (event) => {
+export const triggerMouseoverText = throttle(700, (event) => {
   var range = getMouseoverRange(clientX, clientY);
 
   var evt = new CustomEvent("mouseoverText", {
