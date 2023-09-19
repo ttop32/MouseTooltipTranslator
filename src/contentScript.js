@@ -4,8 +4,14 @@
 
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
-import { enableSelectionEndEvent } from "/src/event/selection";
-import { enableMouseoverTextEvent } from "/src/event/mouseover";
+import {
+  enableSelectionEndEvent,
+  triggerSelectionEnd,
+} from "/src/event/selection";
+import {
+  enableMouseoverTextEvent,
+  triggerMouseoverText,
+} from "/src/event/mouseover";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import * as util from "/src/util";
@@ -91,7 +97,6 @@ async function processWord(word, actionType) {
   if (checkMouseTargetIsTooltip()) {
     return;
   }
-
   word = util.filterWord(word); //filter out one that is url,over 1000length,no normal char
 
   //hide tooltip, if activated word exist and current word is none
@@ -147,9 +152,11 @@ async function processWord(word, actionType) {
 }
 
 function restartWordProcess() {
-  activatedWord = null; //restart word process, hover interval will be restart
-  if (selectedText != "") {
-    processWord(selectedText, "select"); //restart select if selected value exist
+  activatedWord = null;
+  if (selectedText) {
+    triggerSelectionEnd(selectedText);
+  } else {
+    triggerMouseoverText();
   }
 }
 
