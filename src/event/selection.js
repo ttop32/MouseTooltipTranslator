@@ -43,9 +43,13 @@ export function enableSelectionEndEvent(_window = window) {
 }
 
 function isNoneSelectElement(element) {
-  var styles = getComputedStyle(element);
-  var selectStyle = styles.getPropertyValue("user-select");
-  return selectStyle == "none";
+  try {
+    var styles = getComputedStyle(element);
+    var selectStyle = styles.getPropertyValue("user-select");
+    return selectStyle == "none";
+  } catch (error) {
+    return false;
+  }
 }
 
 export function getSelectionText() {
