@@ -104,6 +104,24 @@
 	"About______________________________________": {
 		"message": "About                                      "
 	},
+	"How_to_use": {
+		"message": "How to use"
+	},
+	"Check_how_to_use_this_extension": {
+		"message": "Check how to use this extension"
+	},
+	"PDF_Viewer": {
+		"message": "PDF Viewer"
+	},
+	"Translate_local_PDF_file": {
+		"message": "Translate local PDF file"
+	},
+	"Ebook_Reader": {
+		"message": "Ebook Reader"
+	},
+	"Translate_local_ebook_file": {
+		"message": "Translate local ebook file"
+	},
 	"Review_Page": {
 		"message": "Review Page"
 	},
@@ -122,23 +140,11 @@
 	"User_privacy_policy": {
 		"message": "User privacy policy"
 	},
-	"PDF_Viewer": {
-		"message": "PDF Viewer"
-	},
-	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
-	},
-	"How_to_use": {
-		"message": "How to use"
-	},
-	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
-	},
 	"Title______________________________________": {
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "माउस टूलटिप अनुवादक With TTS Voice Speech"
+		"message": "माउस टूलटिप अनुवादक With TTS Voice Speech translator"
 	},
 	"appDesc": {
 		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके"
