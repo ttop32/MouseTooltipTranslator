@@ -1,4 +1,4 @@
-import * as util from "../util.js";
+import * as util from "/src/util";
 
 export default class BaseTranslator {
   static langCodeJson = {};

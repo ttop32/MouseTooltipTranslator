@@ -235,7 +235,7 @@
   </v-app>
 </template>
 <script>
-import * as util from "./util.js";
+import * as util from "/src/util";
 import { isProxy, toRaw } from "vue";
 
 var langList = {
@@ -665,12 +665,33 @@ var remainSettingDesc = {
 };
 
 var aboutPageList = {
+  howToUse: {
+    name: chrome.i18n.getMessage("How_to_use"),
+    sub_name: chrome.i18n.getMessage("Check_how_to_use_this_extension"),
+    url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
+    icon: "mdi-help-box",
+    color: "secondary",
+  },
+  pdfViewer: {
+    name: chrome.i18n.getMessage("PDF_Viewer"),
+    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file"),
+    url:
+      chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
+    icon: "mdi-file-pdf-box",
+    color: "warning",
+  },
+  epub: {
+    name: chrome.i18n.getMessage("Ebook_Reader"),
+    sub_name: chrome.i18n.getMessage("Translate_local_ebook_file"),
+    url: chrome.runtime.getURL("/foliate-js/reader.html"),
+    icon: "mdi-book-open-blank-variant",
+    color: "cyan",
+  },
   reviewPage: {
     name: chrome.i18n.getMessage("Review_Page"),
     sub_name: chrome.i18n.getMessage("Comment_on_this_extension"),
     url: "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
     icon: "mdi-message-draw",
-
     color: "primary",
   },
   sourceCode: {
@@ -686,21 +707,6 @@ var aboutPageList = {
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
     icon: "mdi-shield-account",
     color: "error",
-  },
-  pdfViewer: {
-    name: chrome.i18n.getMessage("PDF_Viewer"),
-    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file"),
-    url:
-      chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
-    icon: "mdi-file-pdf-box",
-    color: "warning",
-  },
-  howToUse: {
-    name: chrome.i18n.getMessage("How_to_use"),
-    sub_name: chrome.i18n.getMessage("Check_how_to_use_this_extension"),
-    url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
-    icon: "mdi-help-box",
-    color: "secondary",
   },
 };
 

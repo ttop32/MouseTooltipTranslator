@@ -4,11 +4,12 @@
 
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
-import { enableSelectionEndEvent, getSelectionText } from "./selection";
+import { enableSelectionEndEvent } from "/src/event/selection";
+import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
-import * as util from "./util.js";
-import * as ocrView from "./ocr/ocrView.js";
+import * as util from "/src/util";
+import * as ocrView from "/src/ocr/ocrView.js";
 import delay from "delay";
 
 //init environment var======================================================================\
@@ -58,17 +59,18 @@ $(async function initMouseTooltipTranslator() {
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  mouseoverInterval = setInterval(async function () {
+  enableMouseoverTextEvent();
+  addEventHandler("mouseoverText", async function (event) {
     // only work when tab is activated and when mousemove and no selected text
     if (
       checkWindowFocus() &&
       !selectedText &&
       setting["translateWhen"].includes("mouseover")
     ) {
-      let word = getMouseOverWord(clientX, clientY);
+      var word = getTextFromRange(event.range, event.isIframe);
       await processWord(word, "mouseover");
     }
-  }, mouseoverIntervalTime);
+  });
 }
 
 //determineTooltipShowHide based on selection
@@ -151,10 +153,7 @@ function restartWordProcess() {
   }
 }
 
-function getMouseOverWord(x, y) {
-  //if no range, skip
-  var range =
-    util.caretRangeFromPoint(x, y) || util.caretRangeFromPointOnShadowDom(x, y);
+function getTextFromRange(range, isIframe) {
   if (!range) {
     return "";
   }
@@ -171,7 +170,7 @@ function getMouseOverWord(x, y) {
   detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
   expandRange(range, detectType);
 
-  if (!util.checkXYInElement(range, x, y)) {
+  if (!isIframe && !util.checkXYInElement(range, clientX, clientY)) {
     return "";
   }
   return range.toString();
@@ -197,7 +196,7 @@ function checkMouseTargetIsSpecialWebBlock() {
   ];
   // if mouse targeted web element contain particular class name, return true
   return specialClassNameList.some((className) =>
-    mouseTarget.classList.contains(className)
+    mouseTarget.classList?.contains(className)
   );
 }
 
@@ -560,6 +559,11 @@ function applyStyleSetting() {
     }
     .bootstrapiso .arrow::before {
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
+    }
+    .bootstrapiso .arrow {
+      font-size: 14px  !important;
+      margin: auto  !important;
+      top: auto  !important;
     }
     .bootstrapiso .arrow::after {
       display:none !important;

@@ -20,6 +20,9 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.86
+  - support ebook using foliate-js
+  - french locale (contributed by neoOpus)
 - 0.1.85
   - fix text editor conflict (request by ultrabave) 
 - 0.1.84
