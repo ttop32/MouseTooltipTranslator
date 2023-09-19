@@ -19,7 +19,6 @@
 # Exception
 
 - If source text language and translate language are same, it will skip
-- If source text and result text are same, it will skip
 - If web status is offline, it will not work
 - If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason
 - If no local file permission given, local pdf cannot be handled. (If not working, darg and drop file on tab)
