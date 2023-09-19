@@ -114,7 +114,7 @@ async function processWord(word, actionType) {
   if (
     !translatedText ||
     sourceLang == targetLang ||
-    word == translatedText ||
+    // word == translatedText ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
     hideTooltip();
