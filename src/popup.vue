@@ -506,7 +506,6 @@ var subtitleTypeList = {
   "Dual Subtitle": "dualsub",
   "Target Single Subtitle": "targetsinglesub",
   "Source Single Subtitle": "sourcesinglesub",
-  "Minimized Feature": "minimized",
   None: "null",
 };
 
