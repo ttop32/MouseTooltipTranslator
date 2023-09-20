@@ -570,7 +570,6 @@ function applyStyleSetting() {
     .bootstrapiso .arrow {
       font-size: 14px  !important;
       margin: auto  !important;
-      top: auto  !important;
     }
     .bootstrapiso .arrow::after {
       display:none !important;

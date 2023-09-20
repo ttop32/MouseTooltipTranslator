@@ -22,6 +22,7 @@ var failTimestamp = 0;
 var isBaseUrlAltered = false;
 var captionOnStatusByUser = "true";
 var urlListenerAdded = false;
+var activatedVideoId = "";
 
 window.addEventListener(
   "message",
@@ -40,7 +41,11 @@ window.addEventListener(
 // check any subtitle request and concat dual sub
 interceptor.on("request", async ({ request, requestId }) => {
   try {
-    if (request.url.includes("www.youtube.com/api/timedtext")) {
+    // do sub concat when activation subtitle is done
+    if (
+      request.url.includes("www.youtube.com/api/timedtext") &&
+      activatedVideoId == getVideoIdParam(request.url)
+    ) {
       //get source lang sub
       var response = await requestSubtitle(request.url);
       var sub1 = await response.json();
@@ -100,11 +105,6 @@ function addUrlListener() {
   }
   urlListenerAdded = true;
   navigation.addEventListener("navigate", (e) => {
-    // skip shorts video
-    if (isShorts(e.destination.url)) {
-      return;
-    }
-
     pausedByExtension = false;
     activateCaption(e.destination.url);
     addPlayerStartListener();
@@ -178,14 +178,16 @@ const activateCaption = debounce(
   subStartDelayTime,
   async (url = window.location.href) => {
     // do not turn on caption if user off
-    if (captionOnStatusByUser == "false") {
+    // if is shorts skip
+    if (captionOnStatusByUser == "false" || !isVideoUrl(url) || isShorts(url)) {
       return;
     }
+    activatedVideoId = getVideoIdParam(url);
 
     var { lang, translationLanguage } = await getVideoLang(url);
     loadCaption(); // turn on caption for embed video
-    // reloadCaption(); //reset previous caption immediately
     setPlayerCaption(lang, translationLanguage); //turn on caption on specified lang
+    reloadCaption(); //reset previous caption immediately
   }
 );
 
@@ -327,6 +329,10 @@ function getSearchParam(url, param) {
   var _url = new URL(url);
   var urlParam = _url.searchParams;
   return urlParam.get(param);
+}
+
+function isVideoUrl(url) {
+  return isShorts(url) || isEmbed(url) || url.includes("www.youtube.com/watch");
 }
 
 function isShorts(url) {
