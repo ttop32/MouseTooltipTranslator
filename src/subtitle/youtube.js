@@ -100,6 +100,11 @@ function addUrlListener() {
   }
   urlListenerAdded = true;
   navigation.addEventListener("navigate", (e) => {
+    // skip shorts video
+    if (isShorts(e.destination.url)) {
+      return;
+    }
+
     pausedByExtension = false;
     activateCaption(e.destination.url);
     addPlayerStartListener();
@@ -307,6 +312,7 @@ async function getTranslatedSubtitle(baseUrl, lang) {
   if (!url) {
     var url = new URL(baseUrl);
     url.searchParams.set("tlang", lang);
+    // var url = baseUrl + `&tlang=${lang}`;
   }
   return await (await requestSubtitle(url.toString())).json();
 }
