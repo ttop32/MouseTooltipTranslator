@@ -14,12 +14,16 @@ var _isIframe;
 export function enableMouseoverTextEvent(_window = window, isIframe) {
   _win = _window;
   _isIframe = isIframe;
-  _win.document.addEventListener("scroll", (e) => {
-    triggerMouseoverText(getMouseoverRange(clientX, clientY));
+
+  // Listen mouse move and scroll events
+  ["scroll", "wheel", "keydown", "mousemove"].forEach((eventType) => {
+    _win.document.addEventListener(eventType, (e) => {
+      triggerMouseoverText(getMouseoverRange(clientX, clientY));
+    });
   });
+
   _win.document.addEventListener("mousemove", (e) => {
     setMouseStatus(e);
-    triggerMouseoverText(getMouseoverRange(e.clientX, e.clientY));
   });
 }
 
