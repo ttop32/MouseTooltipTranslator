@@ -12,9 +12,7 @@ export function enableSelectionEndEvent(_window = window) {
   // Listen selection change every 700 ms. It covers keyboard selection and selection from menu (select all option)
   _win.document.addEventListener(
     "selectionchange",
-    debounce(700, (event) => {
-      triggerSelectionEnd(getSelectionText());
-    }),
+    triggerSelectionEndWithDelay,
     false
   );
 
@@ -64,6 +62,10 @@ export function getSelectionText() {
   }
   return text;
 }
+
+const triggerSelectionEndWithDelay = debounce(700, () => {
+  triggerSelectionEnd(getSelectionText());
+});
 
 export const triggerSelectionEnd = (text) => {
   var evt = new CustomEvent("selectionEnd", {

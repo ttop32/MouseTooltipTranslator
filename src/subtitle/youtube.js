@@ -13,8 +13,8 @@ const interceptor = new XMLHttpRequestInterceptor();
 interceptor.apply();
 var targetLang = "";
 var subSetting = "";
-var subStartDelayTime = 1500;
-var googleTrafficDelayTime = 1000;
+var subStartDelayTime = 1000;
+var googleTrafficDelayTime = 300;
 var failSkipTime = 5000;
 var pausedByExtension = false;
 var isPaused = false;
@@ -173,7 +173,7 @@ const activateCaption = debounce(
   subStartDelayTime,
   async (url = window.location.href) => {
     // do not turn on caption if user off
-    if (subSetting == "minimized" || captionOnStatusByUser == "false") {
+    if (captionOnStatusByUser == "false") {
       return;
     }
 
