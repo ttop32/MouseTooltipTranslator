@@ -9,8 +9,8 @@ setInterval(function () {
   var iframe = getIframe();
   if (iframe && iframeSrc != iframe.src) {
     iframeSrc = iframe.src;
-    console.log(iframeSrc);
     bindIFrameEvent(iframe);
+    iframe.contentWindow.focus(); //make focus to get event from iframe
   }
 }, 1000);
 
