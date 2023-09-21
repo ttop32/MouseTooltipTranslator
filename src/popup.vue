@@ -522,7 +522,7 @@ var settingListData = {
     optionList: keyListWithAlways,
   },
   TTSWhen: {
-    description: chrome.i18n.getMessage("TTS_When"),
+    description: chrome.i18n.getMessage("Voice_When"),
     optionList: keyListWithAlways,
   },
   translateWhen: {

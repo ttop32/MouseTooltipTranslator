@@ -8,7 +8,7 @@
 	"Show_Tooltip_When": {
 		"message": "מתי להראות את התרגום?"
 	},
-	"TTS_When": {
+	"Voice_When": {
 		"message": "מתי להשמיע את התרגום?"
 	},
 	"Translate_When": {

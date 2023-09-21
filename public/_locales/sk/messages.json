@@ -8,8 +8,8 @@
 	"Show_Tooltip_When": {
 		"message": "Show Tooltip When"
 	},
-	"TTS_When": {
-		"message": "TTS When"
+	"Voice_When": {
+		"message": "Voice When"
 	},
 	"Translate_When": {
 		"message": "Translate When"
@@ -144,7 +144,7 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Prekladateľ myši With PDF Viewer"
+		"message": "Prekladateľ myši With PDF Viewer and Speech Voice Reader"
 	},
 	"appDesc": {
 		"message": "Prekladač prekladateľ myši prekladač Mouseover text pomocou prekladu Google"
