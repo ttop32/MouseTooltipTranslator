@@ -142,6 +142,8 @@ async function processWord(word, actionType) {
       targetLang,
       actionType
     );
+  } else {
+    hideTooltip();
   }
 
   //if use_tts is on or activation key is pressed, do tts
