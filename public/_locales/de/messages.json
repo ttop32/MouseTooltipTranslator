@@ -8,8 +8,8 @@
 	"Show_Tooltip_When": {
 		"message": "Show Tooltip When"
 	},
-	"TTS_When": {
-		"message": "TTS When"
+	"Voice_When": {
+		"message": "Voice When"
 	},
 	"Translate_When": {
 		"message": "Translate When"

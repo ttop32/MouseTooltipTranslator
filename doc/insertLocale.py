@@ -25,7 +25,7 @@ i18List = [
     "Main                                      ",
     "Mouse Tooltip Translator",
     "Show Tooltip When",
-    "TTS When",
+    "Voice When",
     "Translate When",
     "Translate From",
     "Translate Into",
