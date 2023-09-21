@@ -39,10 +39,11 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
       sendResponse(
         translatedResult || {
-          translatedText: "",
+          translatedText: `${setting["translatorVendor"]} is broken`,
           transliteration: "",
-          sourceLang: "en",
-          targetLang: "en",
+          sourceLang: "",
+          targetLang: setting["translateTarget"],
+          isBroken: true,
         }
       );
     } else if (request.type === "tts") {

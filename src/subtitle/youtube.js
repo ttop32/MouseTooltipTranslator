@@ -14,7 +14,7 @@ interceptor.apply();
 var targetLang = "";
 var subSetting = "";
 var subStartDelayTime = 1500;
-var googleTrafficDelayTime = 1000;
+var googleTrafficDelayTime = 0;
 var failSkipTime = 5000;
 var pausedByExtension = false;
 var isPaused = false;
@@ -179,7 +179,8 @@ const activateCaption = debounce(
   async (url = window.location.href) => {
     // do not turn on caption if user off
     // if is shorts skip
-    if (captionOnStatusByUser == "false" || !isVideoUrl(url) || isShorts(url)) {
+    // || isShorts(url)
+    if (captionOnStatusByUser == "false" || !isVideoUrl(url)) {
       return;
     }
     activatedVideoId = getVideoIdParam(url);

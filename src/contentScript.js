@@ -306,11 +306,15 @@ async function translateWriting(keyInput) {
     return;
   }
   // translate
-  var { translatedText } = await requestTranslate(
+  var { translatedText, isBroken } = await requestTranslate(
     writingText,
     "auto",
     setting["writingLanguage"]
   );
+
+  if (isBroken) {
+    return;
+  }
 
   insertText(translatedText);
 }
