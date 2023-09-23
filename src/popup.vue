@@ -757,6 +757,7 @@ export default {
     await this.addTtsVoiceTabOption();
     this.setting["popupCount"]++;
     this.saveSetting();
+    this.changeLocale(util.getDefaultLang());
   },
   watch: {
     setting: {
@@ -769,6 +770,9 @@ export default {
   },
 
   methods: {
+    changeLocale(locale) {
+      this.$vuetify.locale.current = locale;
+    },
     saveSetting() {
       toRaw(this.setting).save();
     },
