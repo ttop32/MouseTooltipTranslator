@@ -108,7 +108,7 @@ async function loadScheduler(lang, mode) {
     return schedulerList[lang + "_" + mode];
   }
 
-  var isLocal = lang == "jpn_vert" || lang == "jpn_vert_old";
+  var isLocal = lang == "jpn_vert";
   var scheduler = Tesseract.createScheduler();
   var workerIndexList = mode == "auto" ? [0] : [0, 1];
 

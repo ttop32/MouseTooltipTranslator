@@ -39,6 +39,8 @@ var defaultData = {
   popupCount: "0",
 };
 
+const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
+
 //setting util======================================
 
 export async function loadSetting(settingUpdateCallbackFn) {
@@ -117,7 +119,7 @@ export function caretRangeFromPoint(x, y, _document = document) {
 }
 
 export function caretRangeFromPointOnDocument(x, y) {
-  var textNodes = getAllTextNodes(document.body);
+  var textNodes = textNodesUnder(document.body);
   return getRangeFromTextNodes(x, y, textNodes);
 }
 
@@ -125,7 +127,7 @@ export function caretRangeFromPointOnShadowDom(x, y) {
   // get all text from shadows
   var shadows = getAllShadows();
   var textNodes = shadows
-    .map((shadow) => Array.from(getAllTextNodes(shadow)))
+    .map((shadow) => Array.from(textNodesUnder(shadow)))
     .flat();
 
   return getRangeFromTextNodes(x, y, textNodes);
@@ -168,6 +170,40 @@ export function getAllTextNodes(el) {
     walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
   while ((n = walk.nextNode())) a.push(n);
   return a;
+}
+
+function textNodesUnder(el) {
+  return walkNodeTree(el, NodeFilter.SHOW_TEXT, {
+    inspect: (textNode) =>
+      !PARENT_TAGS_TO_EXCLUDE.includes(textNode.parentElement?.nodeName),
+  });
+}
+
+function walkNodeTree(
+  root,
+  whatToShow = NodeFilter.SHOW_ALL,
+  { inspect, collect, callback } = {}
+) {
+  const walker = document.createTreeWalker(root, whatToShow, {
+    acceptNode(node) {
+      if (inspect && !inspect(node)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      if (collect && !collect(node)) {
+        return NodeFilter.FILTER_SKIP;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) {
+    callback?.(n);
+    nodes.push(n);
+  }
+
+  return nodes;
 }
 
 export function getTextRange(textNode) {
