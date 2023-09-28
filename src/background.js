@@ -61,6 +61,9 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       recordHistory(request);
       updateContext(request);
       sendResponse({});
+    } else if (request.type === "removeContextAll") {
+      removeContextAll();
+      sendResponse({});
     } else if (request.type === "requestBase64") {
       var base64Url = await util.getBase64(request.url);
       sendResponse({ base64Url });
@@ -142,21 +145,35 @@ async function openPDFViewer(url, tabId) {
 }
 
 // ================= context menu
-browser.runtime.onInstalled.addListener(() => {
+async function updateContext(request) {
+  // remove previous
+  await removeContext("copy");
+  //create new menu
   browser.contextMenus.create({
     id: "copy",
-    title: "copy",
-    contexts: ["all"],
-    visible: false,
-  });
-});
-
-function updateContext(request) {
-  browser.contextMenus.update("copy", {
     title: "Copy : " + truncate(request.targetText, 20),
+    contexts: [
+      "page",
+      "frame",
+      "selection",
+      "link",
+      "editable",
+      "image",
+      "video",
+      "audio",
+    ],
     visible: true,
   });
   recentTranslated = request;
+}
+
+async function removeContext(id) {
+  try {
+    await browser.contextMenus.remove(id);
+  } catch (error) {}
+}
+async function removeContextAll(id) {
+  await browser.contextMenus.removeAll();
 }
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
