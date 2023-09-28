@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.86",
+  "version": "0.1.87",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {
@@ -54,6 +54,7 @@
     "stream-browserify": "^3.0.0",
     "tesseract.js": "^4.1.1",
     "throttle-debounce": "^5.0.0",
+    "tippy.js": "^6.3.7",
     "typeface-roboto": "^1.1.13",
     "uuid": "^9.0.0",
     "vue": "^3.3.4",

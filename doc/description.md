@@ -20,6 +20,10 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
+- 0.1.87
+  - fix performance issue
+  - Arabic locale (contributed by neoOpus)
+  - indonesian locale (contributed by ardasatata)
 - 0.1.86
   - support ebook using foliate-js
   - french locale (contributed by neoOpus)

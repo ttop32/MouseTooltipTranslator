@@ -413,7 +413,6 @@ var ocrLangList = {
   Italian: "ita",
   Japanese: "jpn",
   "Japanese (vertical)": "jpn_vert",
-  "Japanese (vertical) old": "jpn_vert_old",
   Javanese: "jav",
   Kannada: "kan",
   Kazakh: "kaz",

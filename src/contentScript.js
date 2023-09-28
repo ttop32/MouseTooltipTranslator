@@ -17,6 +17,7 @@ import matchUrl from "match-url-wildcard";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
 import delay from "delay";
+import { debounce } from "throttle-debounce";
 
 //init environment var======================================================================\
 var setting;
@@ -45,6 +46,7 @@ var rtlLangList = [
 var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
+var delayTime = 700;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -441,7 +443,7 @@ function setMouseStatus(e) {
   mouseTarget = e.target;
 }
 
-function checkWritingBox() {
+const checkWritingBox = debounce(delayTime, () => {
   // if mouse target is not writing box or already bound, return
   // make key bind for preventDefault
   var $writingField = $(writingField);
@@ -452,7 +454,7 @@ function checkWritingBox() {
     .data("mttBound", true)
     .on("keydown", handleKeydown)
     .on("keyup", handleKeyup);
-}
+});
 
 function checkMouseOnceMoved(x, y) {
   if (
