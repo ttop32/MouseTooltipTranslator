@@ -370,7 +370,7 @@ function loadEventListener() {
   //detect tab switching to reset env
   addEventHandler("blur", handleBlur);
   // when refresh web site, stop tts
-  addEventHandler("beforeunload", requestStopTTS);
+  addEventHandler("beforeunload", handleBeforeunload);
 }
 
 function handleMousemove(e) {
@@ -434,7 +434,12 @@ function handleBlur(e) {
   activatedWord = null;
   hideTooltip();
   requestStopTTS();
+  requestRemoveAllContext();
   ocrView.removeAllOcrEnv();
+}
+function handleBeforeunload() {
+  requestStopTTS();
+  requestRemoveAllContext();
 }
 
 function setMouseStatus(e) {
@@ -471,7 +476,7 @@ function checkMouseOnceMoved(x, y) {
 
 //send to background.js for background processing  ===========================================================================
 
-async function sendMesage(message) {
+async function sendMessage(message) {
   try {
     return await chrome.runtime.sendMessage(message);
   } catch (e) {
@@ -483,7 +488,7 @@ async function sendMesage(message) {
 }
 
 async function requestTranslate(word, translateSource, translateTarget) {
-  return await sendMesage({
+  return await sendMessage({
     type: "translate",
     word: word,
     translateSource,
@@ -492,7 +497,7 @@ async function requestTranslate(word, translateSource, translateTarget) {
 }
 
 async function requestTTS(word, lang) {
-  return await sendMesage({
+  return await sendMessage({
     type: "tts",
     word: word,
     lang: lang,
@@ -500,7 +505,7 @@ async function requestTTS(word, lang) {
 }
 
 async function requestStopTTS() {
-  return await sendMesage({
+  return await sendMessage({
     type: "stopTTS",
   });
 }
@@ -513,13 +518,19 @@ async function requestRecordTooltipText(
   targetLang,
   actionType
 ) {
-  return await sendMesage({
+  return await sendMessage({
     type: "recordTooltipText",
     sourceText,
     targetText,
     sourceLang,
     targetLang,
     actionType,
+  });
+}
+
+async function requestRemoveAllContext() {
+  return await sendMessage({
+    type: "removeContextAll",
   });
 }
 
