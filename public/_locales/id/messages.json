@@ -1,152 +1,152 @@
 {
 	"Main______________________________________": {
-		"message": "Main                                      "
+		"message": "Utama                                      "
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Penerjemah Tooltip Mouse"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "Tampilkan Tooltip Saat"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Gunakan Suara Saat"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Terjemahkan Saat"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Terjemahkan Dari"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Terjemahkan Ke"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Mesin Penerjemah"
 	},
 	"Text_Detect_Type": {
-		"message": "Text Detect Type"
+		"message": "Jenis Deteksi Teks"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Bahasa Tulisan"
 	},
 	"OCR_Detection_Language": {
-		"message": "OCR Detection Language"
+		"message": "Bahasa Deteksi OCR"
 	},
 	"Visual______________________________________": {
 		"message": "Visual                                      "
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Ukuran Font Tooltip"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Lebar Tooltip"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Jarak Tooltip"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Posisi Tooltip"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Penyelarasan Teks Tooltip"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Latar Belakang Blur Tooltip"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Warna Font Tooltip"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Warna Latar Belakang Tooltip"
 	},
 	"Voice______________________________________": {
-		"message": "Voice                                      "
+		"message": "Suara                                      "
 	},
 	"TTS_Speed": {
-		"message": "TTS Speed"
+		"message": "Kecepatan TTS"
 	},
 	"TTS_Volume": {
-		"message": "TTS Volume"
+		"message": "Volume TTS"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Suara untuk "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "LANJUTAN                                      "
 	},
 	"Translate_Writing_Hotkey": {
-		"message": "Translate Writing Hotkey"
+		"message": "Hotkey Terjemahan Tulisan"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "Gunakan OCR Saat"
 	},
 	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+		"message": "Tukar Jenis Deteksi Tombol Tahan"
 	},
 	"Enable_Youtube_Subtitle": {
-		"message": "Enable Youtube Subtitle"
+		"message": "Aktifkan Subtitle YouTube"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "Deteksi PDF"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Terjemahkan Bahasa Balik"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "KECUALI                                      "
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Kecualikan Bahasa"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Kecualikan Situs Web"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "Tentang                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Cara Menggunakan"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "Periksa cara menggunakan ekstensi ini"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "Pembaca PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "Terjemahkan file PDF lokal"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "Pembaca Ebook"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "Terjemahkan file ebook lokal"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "Halaman Ulasan"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "Komentari ekstensi ini"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "Kode Sumber"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "Periksa kode sumber di GitHub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "Kebijakan Privasi"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "Kebijakan Privasi Pengguna"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Judul                                      "
 	},
 	"appName": {
-		"message": "Penerjemah Tooltip Mouse : AI Translator"
+		"message": "Penerjemah Tooltip Mouse : Penerjemah AI"
 	},
 	"appDesc": {
-		"message": "Translator Tooltip Mouse Translate Teks Mouseover Menggunakan Google Translate"
+		"message": "Penerjemah Tooltip Mouse yang Menerjemahkan Teks Saat Diarahkan Mouse Menggunakan Google Translate"
 	}
 }

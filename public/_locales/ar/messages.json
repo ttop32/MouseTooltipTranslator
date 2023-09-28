@@ -1,152 +1,152 @@
 {
 	"Main______________________________________": {
-		"message": "Main                                      "
+		"message": "رئيسي                                      "
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "متى يظهر تلميح الأداة"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "متى يقرأ النص صوتيا"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "متى يترجم"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "الترجمة من"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "الترجمة إلى"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "محرك الترجمة"
 	},
 	"Text_Detect_Type": {
-		"message": "Text Detect Type"
+		"message": "نوع الكشف عن النص"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "لغة الكتابة"
 	},
 	"OCR_Detection_Language": {
-		"message": "OCR Detection Language"
+		"message": "لغة الكشف عن التعرف الضوئي على الحروف OCR"
 	},
 	"Visual______________________________________": {
-		"message": "Visual                                      "
+		"message": "مرئي                                      "
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "حجم خط تلميح الأداة"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "عرض تلميح الأداة"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "مسافة تلميح الأداة"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "موضع تلميح الأداة"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "محاذاة نص تلميح الأداة"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "طمس الخلفية تلميح الأداة"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "لون خط تلميح الأداة"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "لون خلفية تلميح الأداة"
 	},
 	"Voice______________________________________": {
-		"message": "Voice                                      "
+		"message": "صوت                                      "
 	},
 	"TTS_Speed": {
-		"message": "TTS Speed"
+		"message": "سرعة تحويل النص إلى كلام"
 	},
 	"TTS_Volume": {
-		"message": "TTS Volume"
+		"message": "علو صوت تحويل النص إلى كلام"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "صوت ل "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "متقدم                                      "
 	},
 	"Translate_Writing_Hotkey": {
-		"message": "Translate Writing Hotkey"
+		"message": "ترجمة مفتاح التشغيل السريع للكتابة"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "متى يقع التعرف الضوئي على الحروف OCR"
 	},
 	"Detect_Type_Swap_Hold_Key": {
-		"message": "Detect Type Swap Hold Key"
+		"message": "ما هو نوع مفتاح تعليق المبادلة للكشف"
 	},
 	"Enable_Youtube_Subtitle": {
-		"message": "Enable Youtube Subtitle"
+		"message": "تمكين الترجمة ليوتيوب"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "كشف PDF"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "عكس لغة الترجمة"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "استبعاد                                      "
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "استبعاد اللغة"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "استبعاد موقع الويب"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "عن                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "كيفية الاستعمال"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "تحقق من كيفية استخدام هذه الإضافة"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "عارض PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "ترجمة ملف PDF المحلي"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "قارئ الكتاب الاليكتروني"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "ترجمة ملف الكتاب الإلكتروني المحلي"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "صفحة المراجعة"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "التعليق على هذا التمديد"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "كود المصدر"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "تحقق من كود المصدر في Github"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "سياسة الخصوصية"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "سياسة خصوصية المستخدم"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "عنوان                                      "
 	},
 	"appName": {
-		"message": "مترجم أدوات الماوس"
+		"message": "مترجم تلميح الأدوات بالفأرة"
 	},
 	"appDesc": {
-		"message": "ترجمة ترجمة ترجمة Tooltip Mouse Mouseover باستخدام Google Translate"
+		"message": "ترجمة نص تحت مؤشر الفأرة باستخدام محركات ترجمة مختلفة من ضمنها Googleو Bingو Yandexو DeepLو Naver Papagoو"
 	}
 }
