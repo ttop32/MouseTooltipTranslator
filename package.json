@@ -1,6 +1,6 @@
 {
   "name": "mouse_tooltip_translator",
-  "version": "0.1.88",
+  "version": "0.1.89",
   "description": "Mouse over to translate",
   "private": true,
   "scripts": {
@@ -36,7 +36,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@mswjs/interceptors": "^0.24.1",
+    "@mswjs/interceptors": "^0.25.7",
     "async-wait-until": "^2.0.12",
     "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",

@@ -9,10 +9,10 @@ import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import delay from "delay";
 
 const interceptor = new XMLHttpRequestInterceptor();
-interceptor.apply();
+var interceptorLoaded = false;
 var targetLang = "";
 var subSetting = "";
-var subStartDelayTime = 2000;
+var subStartDelayTime = 1500;
 var googleTrafficDelayTime = 0;
 var failSkipTime = 5000;
 var pausedByExtension = false;
@@ -37,38 +37,6 @@ window.addEventListener(
   false
 );
 
-// check any subtitle request and concat dual sub
-interceptor.on("request", async ({ request, requestId }) => {
-  try {
-    // do sub concat when activation subtitle is done
-    if (
-      request.url.includes("www.youtube.com/api/timedtext") &&
-      activatedVideoId == getVideoIdParam(request.url)
-    ) {
-      //get source lang sub
-      var response = await requestSubtitle(request.url);
-      var sub1 = await response.json();
-      var sub1 = concatWordSub(sub1);
-      var lang = getSearchParam(request.url, "lang");
-      var responseSub = sub1;
-
-      //get target lang sub, if not same lang
-      if (lang != targetLang && subSetting == "dualsub") {
-        await delay(googleTrafficDelayTime); //prevent google traffic error
-        var sub2 = await getTranslatedSubtitle(request.url, targetLang);
-        var mergedSub = mergeSubtitles(sub1, sub2);
-        responseSub = mergedSub;
-      }
-
-      request.respondWith(new Response(JSON.stringify(responseSub), response));
-    }
-  } catch (error) {
-    console.log(error);
-    failTimestamp = Date.now();
-    await delay(googleTrafficDelayTime); //prevent traffic error
-  }
-});
-
 // listener start ========================================
 async function initPlayer(data) {
   targetLang = data.targetLang;
@@ -79,6 +47,11 @@ async function initPlayer(data) {
   addPlayerStartListener();
   addUrlListener();
   activateCaption();
+
+  //if not embed, load interceptor directly else load when start video // embed has interceptor conflict
+  if (!isEmbed(window.location.href)) {
+    loadInterceptor();
+  }
 }
 
 async function addPlayerStartListener() {
@@ -89,6 +62,7 @@ async function addPlayerStartListener() {
       element.addEventListener("onStateChange", (e) => {
         // turn on caption when first loads a video
         if (e == -1) {
+          loadInterceptor();
           activateCaption();
         }
         //check pause
@@ -107,6 +81,48 @@ function addUrlListener() {
     pausedByExtension = false;
     activateCaption(e.destination.url);
     addPlayerStartListener();
+  });
+}
+
+//intercept sub request ===================================================================
+// check any subtitle request and concat dual sub
+function loadInterceptor() {
+  if (interceptorLoaded == true) {
+    return;
+  }
+  interceptorLoaded = true;
+  interceptor.apply();
+  interceptor.on("request", async ({ request, requestId }) => {
+    try {
+      // do sub concat when activation subtitle is done
+      if (
+        request.url.includes("www.youtube.com/api/timedtext") &&
+        activatedVideoId == getVideoIdParam(request.url)
+      ) {
+        //get source lang sub
+        var response = await requestSubtitle(request.url);
+        var sub1 = await response.json();
+        var sub1 = concatWordSub(sub1);
+        var lang = getSearchParam(request.url, "lang");
+        var responseSub = sub1;
+
+        //get target lang sub, if not same lang
+        if (lang != targetLang && subSetting == "dualsub") {
+          await delay(googleTrafficDelayTime); //prevent google traffic error
+          var sub2 = await getTranslatedSubtitle(request.url, targetLang);
+          var mergedSub = mergeSubtitles(sub1, sub2);
+          responseSub = mergedSub;
+        }
+
+        request.respondWith(
+          new Response(JSON.stringify(responseSub), response)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      failTimestamp = Date.now();
+      await delay(googleTrafficDelayTime); //prevent traffic error
+    }
   });
 }
 
@@ -178,7 +194,7 @@ const activateCaption = debounce(
   async (url = window.location.href) => {
     // do not turn on caption if user off
     // if is shorts skip
-    // || isShorts(url)
+
     if (captionOnStatusByUser == "false" || !isVideoUrl(url)) {
       return;
     }
