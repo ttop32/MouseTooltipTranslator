@@ -62,11 +62,17 @@
 	"Voice______________________________________": {
 		"message": "صوت                                      "
 	},
-	"TTS_Speed": {
-		"message": "سرعة تحويل النص إلى كلام"
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
-	"TTS_Volume": {
-		"message": "علو صوت تحويل النص إلى كلام"
+	"Voice_Volume": {
+		"message": "Voice Volume"
+	},
+	"Voice_Target": {
+		"message": "Voice Target"
+	},
+	"Voice_Repeat": {
+		"message": "Voice Repeat"
 	},
 	"Voice_for_": {
 		"message": "صوت ل "

@@ -45,8 +45,10 @@ i18List = [
     "Tooltip Background Color",
 
     "Voice                                      ",
-    "TTS Speed",
-    "TTS Volume",
+    "Voice Volume",
+    "Voice Speed",
+    "Voice Target",
+    "Voice Repeat",
     "Voice for ",
 
     "ADVANCED                                      ",

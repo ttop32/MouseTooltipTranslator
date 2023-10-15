@@ -62,11 +62,17 @@
 	"Voice______________________________________": {
 		"message": "Voix                                      "
 	},
-	"TTS_Speed": {
-		"message": "Vitesse TTS"
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
-	"TTS_Volume": {
-		"message": "Volume TTS"
+	"Voice_Volume": {
+		"message": "Voice Volume"
+	},
+	"Voice_Target": {
+		"message": "Voice Target"
+	},
+	"Voice_Repeat": {
+		"message": "Voice Repeat"
 	},
 	"Voice_for_": {
 		"message": "La voix pour "

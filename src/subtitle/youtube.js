@@ -4,7 +4,6 @@
 // restart playersubtitle for apply
 
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
-import { fetch as fetchPolyfill } from "whatwg-fetch";
 import { debounce } from "throttle-debounce";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import delay from "delay";
@@ -13,7 +12,7 @@ const interceptor = new XMLHttpRequestInterceptor();
 interceptor.apply();
 var targetLang = "";
 var subSetting = "";
-var subStartDelayTime = 1500;
+var subStartDelayTime = 2000;
 var googleTrafficDelayTime = 0;
 var failSkipTime = 5000;
 var pausedByExtension = false;
@@ -183,9 +182,9 @@ const activateCaption = debounce(
     if (captionOnStatusByUser == "false" || !isVideoUrl(url)) {
       return;
     }
-    activatedVideoId = getVideoIdParam(url);
-
     var { lang, translationLanguage } = await getVideoLang(url);
+    activatedVideoId = getVideoIdParam(url); //stage current video id
+
     loadCaption(); // turn on caption for embed video
     setPlayerCaption(lang, translationLanguage); //turn on caption on specified lang
     reloadCaption(); //reset previous caption immediately
@@ -286,7 +285,7 @@ async function getVideoLang(url) {
 }
 
 async function getYoutubeMetaData(vParam) {
-  var res = await fetchPolyfill(`https://www.youtube.com/watch?v=${vParam}`); // no override fetch function, we need pure one
+  var res = await fetch(`https://www.youtube.com/watch?v=${vParam}`);
   var resText = await res.text();
   var matches = resText.match(
     /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/

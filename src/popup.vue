@@ -479,8 +479,9 @@ var translateActionList = {
 
 var tooltipFontSizeList = getRangeOption(5, 41, 1, 0); //font size 5 to 25
 var tooltipWidth = getRangeOption(1, 11, 100, 0);
-var ttsVolumeList = getRangeOption(1, 11, 0.1, 1);
-var ttsRateList = getRangeOption(5, 21, 0.1, 1);
+var voiceVolumeList = getRangeOption(0, 11, 0.1, 1);
+var voiceRateList = getRangeOption(5, 21, 0.1, 1);
+var voiceRepeatList = getRangeOption(1, 11, 1, 0);
 var tooltipBackgroundBlurList = getRangeOption(0, 21, 1, 0);
 var tooltipDistanceList = getRangeOption(0, 41, 1, 0);
 
@@ -500,6 +501,13 @@ translateListWithNone["None"] = "null";
 
 var keyListWithAlways = util.copyJson(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
+
+var voiceTargetList = {
+  "Source Text": "source",
+  "Translated Text": "target",
+  "Source & Translated": "sourcetarget",
+  "Translated & Source": "targetsource",
+};
 
 var subtitleTypeList = {
   "Dual Subtitle": "dualsub",
@@ -594,13 +602,21 @@ var visualTabData = {
 };
 
 var voiceTabData = {
-  ttsRate: {
-    description: chrome.i18n.getMessage("TTS_Speed"),
-    optionList: ttsRateList,
+  voiceVolume: {
+    description: chrome.i18n.getMessage("Voice_Volume"),
+    optionList: voiceVolumeList,
   },
-  ttsVolume: {
-    description: chrome.i18n.getMessage("TTS_Volume"),
-    optionList: ttsVolumeList,
+  voiceRate: {
+    description: chrome.i18n.getMessage("Voice_Speed"),
+    optionList: voiceRateList,
+  },
+  voiceTarget: {
+    description: chrome.i18n.getMessage("Voice_Target"),
+    optionList: voiceTargetList,
+  },
+  voiceRepeat: {
+    description: chrome.i18n.getMessage("Voice_Repeat"),
+    optionList: voiceRepeatList,
   },
 };
 
@@ -688,7 +704,7 @@ var aboutPageList = {
   reviewPage: {
     name: chrome.i18n.getMessage("Review_Page"),
     sub_name: chrome.i18n.getMessage("Comment_on_this_extension"),
-    url: "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+    url: util.getReviewUrl(),
     icon: "mdi-message-draw",
     color: "primary",
   },

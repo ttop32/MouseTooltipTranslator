@@ -11,15 +11,9 @@ var setting;
 var recentTranslated = {};
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
-var reviewUrl = {
-  nnodgmifnfgkolmakhcfkkbbjjcobhbl:
-    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
-  hmigninkgibhdckiaphhmbgcghochdjc:
-    "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
-};
 
 addInstallUrl(introSiteUrl);
-addUninstallUrl(reviewUrl);
+addUninstallUrl(util.getReviewUrl());
 injectContentScriptForAllTab();
 getSetting();
 
@@ -48,10 +42,14 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       );
     } else if (request.type === "tts") {
       doTts(
-        request.word,
-        request.lang,
-        setting["ttsVolume"],
-        setting["ttsRate"]
+        request.sourceText,
+        request.sourceLang,
+        request.targetText,
+        request.targetLang,
+        Number(setting["voiceVolume"]),
+        Number(setting["voiceRate"]),
+        setting["voiceTarget"],
+        Number(setting["voiceRepeat"])
       );
       sendResponse({});
     } else if (request.type === "stopTTS") {
@@ -97,15 +95,6 @@ function recordHistory(request) {
   }
 }
 
-async function doTts(word, lang, ttsVolume, ttsRate) {
-  browser.tts.speak(word, {
-    lang: lang,
-    voiceName: setting["ttsVoice_" + lang],
-    volume: Number(ttsVolume),
-    rate: Number(ttsRate),
-  });
-}
-
 const doTranslate = util.cacheFn(
   async (text, fromLang, targetLang, translatorVendor) => {
     return await translator[translatorVendor].translate(
@@ -115,6 +104,45 @@ const doTranslate = util.cacheFn(
     );
   }
 );
+
+// tts=============================================================================
+
+async function doTts(
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  ttsVolume,
+  ttsRate,
+  ttsTarget,
+  ttsRepeat
+) {
+  browser.tts.stop(); //remove prev voice
+
+  for (var i = 0; i < ttsRepeat; i++) {
+    if (ttsTarget == "source") {
+      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
+    } else if (ttsTarget == "target") {
+      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
+    } else if (ttsTarget == "sourcetarget") {
+      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
+      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
+    } else if (ttsTarget == "targetsource") {
+      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
+      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
+    }
+  }
+}
+
+function enqueueTts(text, lang, volume, rate) {
+  browser.tts.speak(text, {
+    lang,
+    voiceName: setting["ttsVoice_" + lang],
+    volume,
+    rate,
+    enqueue: true,
+  });
+}
 
 // detect local pdf file and redirect to translated pdf=====================================================================
 browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
@@ -255,12 +283,8 @@ async function injectContentScriptForAllTab() {
   });
 }
 
-function addUninstallUrl(uninstallUrlJson) {
-  var urlId =
-    browser.runtime.id in uninstallUrlJson
-      ? browser.runtime.id
-      : "hmigninkgibhdckiaphhmbgcghochdjc";
-  browser.runtime.setUninstallURL(uninstallUrlJson[urlId]);
+function addUninstallUrl(url) {
+  browser.runtime.setUninstallURL(url);
 }
 
 function addInstallUrl(url) {
