@@ -2,6 +2,7 @@ import $ from "jquery";
 import { parse } from "bcp-47";
 import { Setting } from "/src/util/setting.js";
 import isUrl from "is-url";
+import browser from "webextension-polyfill";
 
 var defaultData = {
   showTooltipWhen: "always",
@@ -28,18 +29,28 @@ var defaultData = {
   tooltipBackgroundBlur: "4",
   tooltipFontColor: "#ffffffff",
   tooltipBackgroundColor: "#000000b8",
-  ttsVolume: "1.0",
-  ttsRate: "1.0",
+  voiceVolume: "1.0",
+  voiceRate: "1.0",
+  voiceTarget: "source",
+  voiceRepeat: "1",
+  langExcludeList: [],
+  websiteExcludeList: ["*.test.com"],
+
   captionOnStatusByUser: "true",
   historyList: [],
   historyRecordActions: [],
-  langExcludeList: [],
-  websiteExcludeList: ["*.test.com"],
   ignoreCallbackOptionList: ["historyList"],
   popupCount: "0",
 };
 
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
+
+var reviewUrlJson = {
+  nnodgmifnfgkolmakhcfkkbbjjcobhbl:
+    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
+  hmigninkgibhdckiaphhmbgcghochdjc:
+    "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+};
 
 //setting util======================================
 
@@ -348,4 +359,13 @@ export function postMessage(data) {
     window.postMessage(data, "*");
     window.parent.postMessage(data, "*");
   }
+}
+
+export function getReviewUrl() {
+  var extId =
+    browser.runtime.id in reviewUrlJson
+      ? browser.runtime.id
+      : "hmigninkgibhdckiaphhmbgcghochdjc";
+
+  return reviewUrlJson[extId];
 }

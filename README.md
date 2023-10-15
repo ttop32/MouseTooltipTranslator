@@ -26,7 +26,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 
 - Hover or select (highlight) on text to translate  
 - Use left ctrl to Listen pronunciation with google TTS (text to speech)
-- Use left alt to translate writing text in input box (or highlighted text)
+- Use right alt to translate writing text in input box (or highlighted text)
 - Google translator and bing translator are used for translation
 - Support pdf to display translated tooltip using PDF.js
 - Support dual subtitles for youtube video

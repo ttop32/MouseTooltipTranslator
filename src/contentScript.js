@@ -120,7 +120,6 @@ async function processWord(word, actionType) {
   if (
     !translatedText ||
     sourceLang == targetLang ||
-    // word == translatedText ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
     hideTooltip();
@@ -150,7 +149,7 @@ async function processWord(word, actionType) {
 
   //if use_tts is on or activation key is pressed, do tts
   if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
-    requestTTS(word, sourceLang);
+    requestTTS(word, sourceLang, translatedText, targetLang);
   }
 }
 
@@ -496,11 +495,13 @@ async function requestTranslate(word, translateSource, translateTarget) {
   });
 }
 
-async function requestTTS(word, lang) {
+async function requestTTS(sourceText, sourceLang, targetText, targetLang) {
   return await sendMessage({
     type: "tts",
-    word: word,
-    lang: lang,
+    sourceText,
+    sourceLang,
+    targetText,
+    targetLang,
   });
 }
 
