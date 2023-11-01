@@ -2389,6 +2389,12 @@ function webViewerKeyDown(evt) {
       case 115:
         PDFViewerApplication.pdfSidebar?.toggle();
         break;
+      case 84:
+        document.getElementById("editorFreeText")?.click();
+        break;
+      case 68:
+        document.getElementById("editorInk")?.click();
+        break;
     }
     if (turnPage !== 0 && (!turnOnlyIfPageFit || pdfViewer.currentScaleValue === "page-fit")) {
       if (turnPage > 0) {
