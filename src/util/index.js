@@ -280,6 +280,7 @@ export function filterWord(word) {
   // filter one that only include num,space and special char(include currency sign) as combination
   word = word.replace(/\s+/g, " "); //replace whitespace as single space
   word = word.trim(); // remove whitespaces from begin and end of word
+  // word=word.slice(0,1000);
   if (
     word.length > 1000 || //filter out text that has over 1000length
     isUrl(word) || //if it is url

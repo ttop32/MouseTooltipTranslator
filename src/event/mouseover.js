@@ -1,52 +1,91 @@
-/**
- * Selection related functions
- */
+// get mouse over text using range
+// 1. get mouse xy
+// 2. get range from overlapped xy element
+// 3. expand range for char -> string
+// 4. range to text
 
 import { throttle } from "throttle-debounce";
 import * as util from "/src/util";
 
 var clientX = 0;
 var clientY = 0;
-var mouseTarget;
 var _win;
-var _isIframe;
+var _isIframe = false;
 
-export function enableMouseoverTextEvent(_window = window, isIframe) {
+export function enableMouseoverTextEvent(_window = window) {
   _win = _window;
-  _isIframe = isIframe;
 
-  // Listen mouse move and scroll events
-  ["scroll", "wheel", "keydown", "mousemove"].forEach((eventType) => {
-    _win.document.addEventListener(eventType, (e) => {
-      triggerMouseoverText(getMouseoverRange(clientX, clientY));
-    });
-  });
+  setInterval(() => {
+    triggerMouseoverText(getMouseoverText(clientX, clientY));
+  }, 700);
 
-  _win.document.addEventListener("mousemove", (e) => {
-    setMouseStatus(e);
+  window.addEventListener("mousemove", (e) => {
+    //if is ebook viewer event, take ebook window
+    if (e.ebookWindow) {
+      _win = e.ebookWindow;
+      _isIframe = true;
+      clientX = e.iframeX;
+      clientY = e.iframeY;
+    }
+    if (_isIframe == true) {
+      return;
+    }
+    //else record mouse xy
+    clientX = e.clientX;
+    clientY = e.clientY;
   });
 }
 
-export const triggerMouseoverText = throttle(700, (range) => {
+export const triggerMouseoverText = (mouseoverText) => {
   var evt = new CustomEvent("mouseoverText", {
     bubbles: true,
     cancelable: false,
   });
-  evt.range = range;
-  evt.isIframe = _isIframe;
+  evt.mouseoverText = mouseoverText;
   document.dispatchEvent(evt);
-});
+};
 
-function setMouseStatus(e) {
-  clientX = e.clientX;
-  clientY = e.clientY;
-  mouseTarget = e.target;
-}
-
-function getMouseoverRange(x, y) {
+function getMouseoverText(x, y) {
+  //get range
   var range =
     util.caretRangeFromPoint(x, y, _win.document) ||
     util.caretRangeFromPointOnShadowDom(x, y);
 
-  return range;
+  //get text from range
+  var mouseoverText = getTextFromRange(range);
+  return mouseoverText;
+}
+
+function getTextFromRange(range) {
+  var output = {};
+
+  ["word", "sentence", "container"].forEach((detectType) => {
+    if (range) {
+      //expand range
+      expandRange(range, detectType);
+
+      //check mouse xy overlap the range element
+      if (util.checkXYInElement(range, clientX, clientY)) {
+        output[detectType] = range.toString();
+      }
+    }
+
+    output[detectType] = output[detectType] || ""; //if no text, give empty ""
+  });
+
+  return output;
+}
+
+function expandRange(range, type) {
+  try {
+    if (type == "container") {
+      range.setStartBefore(range.startContainer);
+      range.setEndAfter(range.startContainer);
+      range.setStart(range.startContainer, 0);
+    } else {
+      range.expand(type); // "word" or "sentence"
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

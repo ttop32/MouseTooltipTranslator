@@ -21,6 +21,8 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 
 - 0.1.89
+  - add pdf shortcut for note & draw (contributed by michael-nhat)
+- 0.1.89
   - fix youtube embed conflict (request by BH J)
 - 0.1.88
   - fix youtube sub conflict

@@ -4,14 +4,8 @@
 
 import $ from "jquery";
 import "bootstrap/js/dist/tooltip";
-import {
-  enableSelectionEndEvent,
-  triggerSelectionEnd,
-} from "/src/event/selection";
-import {
-  enableMouseoverTextEvent,
-  triggerMouseoverText,
-} from "/src/event/mouseover";
+import { enableSelectionEndEvent } from "/src/event/selection";
+import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import * as util from "/src/util";
@@ -74,8 +68,8 @@ function startMouseoverDetector() {
       !selectedText &&
       setting["translateWhen"].includes("mouseover")
     ) {
-      var word = getTextFromRange(event.range, event.isIframe);
-      await processWord(word, "mouseover");
+      var mouseoverText = event.mouseoverText[getDetectType()];
+      await processWord(mouseoverText, "mouseover");
     }
   });
 }
@@ -98,7 +92,7 @@ async function processWord(word, actionType) {
   if (checkMouseTargetIsTooltip()) {
     return;
   }
-  word = util.filterWord(word); //filter out one that is url,over 1000length,no normal char
+  word = util.filterWord(word); //filter out one that is url,no normal char
 
   //hide tooltip, if activated word exist and current word is none
   //do nothing, if no new word or no word change
@@ -163,12 +157,7 @@ function restartWordProcess() {
   }
 }
 
-function getTextFromRange(range, isIframe) {
-  if (!range) {
-    return "";
-  }
-
-  //expand char to get word,sentence based on setting
+function getDetectType() {
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
   var detectType = setting["detectType"];
@@ -177,27 +166,9 @@ function getTextFromRange(range, isIframe) {
       ? "sentence"
       : "word"
     : detectType;
+
   detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
-  expandRange(range, detectType);
-
-  if (!isIframe && !util.checkXYInElement(range, clientX, clientY)) {
-    return "";
-  }
-  return range.toString();
-}
-
-function expandRange(range, type) {
-  try {
-    if (type == "container") {
-      range.setStartBefore(range.startContainer);
-      range.setEndAfter(range.startContainer);
-      range.setStart(range.startContainer, 0);
-    } else {
-      range.expand(type); // "word" or "sentence"
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  return detectType;
 }
 
 function checkMouseTargetIsSpecialWebBlock() {
@@ -569,17 +540,17 @@ function applyStyleSetting() {
       visibility: visible  !important;
       pointer-events: none !important;
     }
-    .bootstrapiso  .bs-tooltip-top { 
+    .bootstrapiso  .bs-tooltip-top {
       margin-bottom: ${setting["tooltipDistance"]}px  !important;
     }
-    .bootstrapiso  .bs-tooltip-bottom { 
+    .bootstrapiso  .bs-tooltip-bottom {
       margin-top: ${setting["tooltipDistance"]}px  !important;
     }
     .bootstrapiso .tooltip-inner {
       font-size: ${setting["tooltipFontSize"]}px  !important;
       max-width: ${setting["tooltipWidth"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
-      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important; 
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
       pointer-events: auto;
@@ -692,10 +663,19 @@ async function checkYoutube() {
 async function addCaptionButtonListener() {
   await delay(2000);
   $(".ytp-subtitles-button").on("click", (e) => {
-    var captionOnStatusByUser = e.target.getAttribute("aria-pressed");
-    setting["captionOnStatusByUser"] = captionOnStatusByUser;
-    setting.save();
+    handleCaptionOnOff();
   });
+  $(document).on("keydown", (e) => {
+    if (e.code == "KeyC") {
+      handleCaptionOnOff();
+    }
+  });
+}
+
+function handleCaptionOnOff() {
+  var captionOnStatusByUser = $(".ytp-subtitles-button").attr("aria-pressed");
+  setting["captionOnStatusByUser"] = captionOnStatusByUser;
+  setting.save();
 }
 
 function pausePlayer() {

@@ -1,7 +1,5 @@
 import * as util from "/src/util/index.js";
 import { enableSelectionEndEvent } from "/src/event/selection";
-import { enableMouseoverTextEvent } from "/src/event/mouseover";
-import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 
 var iframeSrc = "";
 
@@ -21,23 +19,26 @@ function getIframe() {
 }
 
 function bindIFrameEvent(iframe) {
+  //bind text selection
   enableSelectionEndEvent(iframe.contentWindow);
-  enableMouseoverTextEvent(iframe.contentWindow, true);
 
-  // bind mouse event
-  ["mousemove", "keydown", "keyup", "mouseup"].forEach((eventName) => {
+  // bind mouse for mouse over event
+  ["mousemove"].forEach((eventName) => {
     iframe.contentWindow.addEventListener(eventName, (e) => {
       var evt = new CustomEvent(eventName, {
         bubbles: true,
         cancelable: false,
       });
       var clRect = iframe.getBoundingClientRect();
-
+      evt.ebookWindow = iframe.contentWindow;
       evt.key = e?.key;
       evt.code = e?.code;
       evt.ctrlKey = e?.ctrlKey;
       evt.clientX = e?.clientX ? e.clientX + clRect.left : "";
       evt.clientY = e?.clientY ? e.clientY + clRect.top : "";
+
+      evt.iframeX = e?.clientX;
+      evt.iframeY = e?.clientY;
 
       window.dispatchEvent(evt);
     });
