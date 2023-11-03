@@ -65,6 +65,13 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/michael-nhat">
+            <img src="https://avatars.githubusercontent.com/u/66666570?v=4" width="100;" alt="michael-nhat"/>
+            <br />
+            <sub><b>Hoang Van Nhat</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/netanel123123">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanel123123"/>
             <br />
