@@ -1,34 +1,34 @@
 name: Releases
 
-on: 
+on:
   push:
     tags:
-    - '*'
+      - "*"
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     strategy:
-        matrix:
-          node-version: [18.x]
+      matrix:
+        node-version: [18.x]
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
+      - name: Write package version json
+        run: cat <<< $(jq '.version=${{github.ref_name}}' package.json ) > package.json
+      - name: Write manifest version json
+        run: cat <<< $(jq '.version=${{github.ref_name}}' public/manifest.json ) > public/manifest.json
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build-zip-en 
-    
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build-zip-en
 
-
-    - uses: ncipollo/release-action@v1
-      with:
-        artifacts: "mouse_tooltip_translator_*.zip"
-        body: "[Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)"
-        
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "mouse_tooltip_translator_*.zip"
+          body: "[Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)"

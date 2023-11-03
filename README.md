@@ -11,7 +11,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 [<img alt="chrome web store" width="128px" src="doc/google.png" />](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc?hl=en)
 [<img alt="microsoft store" width="128px" src="doc/microsoft.png" />](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
 [<img alt="softpedia" width="128px" src="doc/softpedia.png" />](https://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/Mouse-Tooltip-Translator-for-Chrome.shtml)
- 
+
 # Result
 
 ![Alt Text](doc/result_0.gif)
@@ -62,13 +62,6 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
             <img src="https://avatars.githubusercontent.com/u/36592509?v=4" width="100;" alt="Blueberryy"/>
             <br />
             <sub><b>Null</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/michael-nhat">
-            <img src="https://avatars.githubusercontent.com/u/66666570?v=4" width="100;" alt="michael-nhat"/>
-            <br />
-            <sub><b>Hoang Van Nhat</b></sub>
         </a>
     </td>
     <td align="center">
