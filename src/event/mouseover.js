@@ -61,12 +61,13 @@ function getTextFromRange(range) {
 
   ["word", "sentence", "container"].forEach((detectType) => {
     if (range) {
+      var rangeClone = range.cloneRange();
       //expand range
-      expandRange(range, detectType);
+      expandRange(rangeClone, detectType);
 
       //check mouse xy overlap the range element
-      if (util.checkXYInElement(range, clientX, clientY)) {
-        output[detectType] = range.toString();
+      if (util.checkXYInElement(rangeClone, clientX, clientY)) {
+        output[detectType] = rangeClone.toString();
       }
     }
 
