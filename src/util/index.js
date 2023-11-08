@@ -45,6 +45,15 @@ var defaultData = {
 
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 
+var rtlLangList = [
+  "ar", //Arabic
+  "iw", //Hebrew
+  "ku", //Kurdish
+  "fa", //Persian
+  "ur", //Urdu
+  "yi", //Yiddish
+]; //right to left language system list
+
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
     "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
@@ -293,6 +302,14 @@ export function filterWord(word) {
   return word;
 }
 
+export function truncate(str, n) {
+  return str.length > n ? str.slice(0, n - 1) + "..." : str;
+}
+
+export function copyTextToClipboard(text) {
+  navigator.clipboard.writeText(text);
+}
+
 // inject =================================
 export function injectScript(scriptUrl) {
   return new Promise((resolve) => {
@@ -344,6 +361,10 @@ export function getBase64(url) {
 
 // remain ===================
 
+export function isRtl(lang) {
+  return rtlLangList.includes(lang) ? "rtl" : "ltr";
+}
+
 export function checkInDevMode() {
   try {
     if (process.env.NODE_ENV == "development") {
@@ -352,6 +373,17 @@ export function checkInDevMode() {
   } catch (error) {}
   return false;
 }
+
+export function getReviewUrl() {
+  var extId =
+    browser.runtime.id in reviewUrlJson
+      ? browser.runtime.id
+      : "hmigninkgibhdckiaphhmbgcghochdjc";
+
+  return reviewUrlJson[extId];
+}
+
+// browser Listener handler========================
 
 export function postMessage(data) {
   if (self == top) {
@@ -362,11 +394,43 @@ export function postMessage(data) {
   }
 }
 
-export function getReviewUrl() {
-  var extId =
-    browser.runtime.id in reviewUrlJson
-      ? browser.runtime.id
-      : "hmigninkgibhdckiaphhmbgcghochdjc";
+export async function sendMessage(message) {
+  try {
+    return await browser.runtime.sendMessage(message);
+  } catch (e) {
+    if (e.message != "Extension context invalidated.") {
+      console.log(e);
+    }
+  }
+  return {};
+}
 
-  return reviewUrlJson[extId];
+export function sendMessageToCurrentTab(message) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(tabs[0].id, message);
+  });
+}
+
+export function addMessageListener(type, handler) {
+  browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type == type) {
+      handler(message);
+    }
+  });
+}
+
+export function addContextListener(type, handler) {
+  browser.contextMenus.onClicked.addListener((info, tab) => {
+    if (info.menuItemId == type) {
+      handler();
+    }
+  });
+}
+
+export function addCommandListener(type, handler) {
+  browser.commands.onCommand.addListener((command) => {
+    if (command == type) {
+      handler();
+    }
+  });
 }

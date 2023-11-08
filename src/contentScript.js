@@ -29,14 +29,6 @@ var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome
 const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
-var rtlLangList = [
-  "ar", //Arabic
-  "iw", //Hebrew
-  "ku", //Kurdish
-  "fa", //Persian
-  "ur", //Urdu
-  "yi", //Yiddish
-]; //right to left language system list
 var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
@@ -53,6 +45,7 @@ $(async function initMouseTooltipTranslator() {
   checkYoutube();
   addElementEnv(); //add tooltip container
   applyStyleSetting(); //add tooltip style
+  addBackgroundListener();
   loadEventListener(); //load event listener to detect mouse move
   startMouseoverDetector(); // start current mouseover text detector
   startTextSelectDetector(); // start current text select detector
@@ -196,7 +189,7 @@ function showTooltip(text, lang) {
   hideTooltip(); //reset tooltip arrow
   checkTooltipContainer();
   setTooltipPosition("showTooltip");
-  applyLangAlignment(lang);
+  applyRtl(lang);
   tooltipContainer.attr("data-original-title", text); //place text on tooltip
   tooltipContainer.tooltip("show");
 }
@@ -205,9 +198,8 @@ function hideTooltip() {
   tooltipContainer.tooltip("hide");
 }
 
-function applyLangAlignment(lang) {
-  var isRtl = rtlLangList.includes(lang) ? "rtl" : "ltr";
-  tooltipContainer.attr("dir", isRtl);
+function applyRtl(lang) {
+  tooltipContainer.attr("dir", util.isRtl(lang));
 }
 
 function checkTooltipContainer() {
@@ -330,7 +322,7 @@ function getWritingText() {
   return writingText;
 }
 
-//event Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
+// Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
 function loadEventListener() {
   //use mouse position for tooltip position
   addEventHandler("mousemove", handleMousemove);
@@ -444,21 +436,17 @@ function checkMouseOnceMoved(x, y) {
   return mouseMoved;
 }
 
-//send to background.js for background processing  ===========================================================================
-
-async function sendMessage(message) {
-  try {
-    return await chrome.runtime.sendMessage(message);
-  } catch (e) {
-    if (e.message != "Extension context invalidated.") {
-      console.log(e);
-    }
-  }
-  return {};
+function addBackgroundListener() {
+  //handle copy
+  util.addMessageListener("CopyRequest", (message) => {
+    util.copyTextToClipboard(message.text);
+  });
 }
 
+//send to background.js for background processing  ===========================================================================
+
 async function requestTranslate(word, translateSource, translateTarget) {
-  return await sendMessage({
+  return await util.sendMessage({
     type: "translate",
     word: word,
     translateSource,
@@ -467,7 +455,7 @@ async function requestTranslate(word, translateSource, translateTarget) {
 }
 
 async function requestTTS(sourceText, sourceLang, targetText, targetLang) {
-  return await sendMessage({
+  return await util.sendMessage({
     type: "tts",
     sourceText,
     sourceLang,
@@ -477,7 +465,7 @@ async function requestTTS(sourceText, sourceLang, targetText, targetLang) {
 }
 
 async function requestStopTTS() {
-  return await sendMessage({
+  return await util.sendMessage({
     type: "stopTTS",
   });
 }
@@ -490,7 +478,7 @@ async function requestRecordTooltipText(
   targetLang,
   actionType
 ) {
-  return await sendMessage({
+  return await util.sendMessage({
     type: "recordTooltipText",
     sourceText,
     targetText,
@@ -501,7 +489,7 @@ async function requestRecordTooltipText(
 }
 
 async function requestRemoveAllContext() {
-  return await sendMessage({
+  return await util.sendMessage({
     type: "removeContextAll",
   });
 }

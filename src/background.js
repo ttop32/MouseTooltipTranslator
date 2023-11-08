@@ -14,6 +14,7 @@ var introSiteUrl =
 
 addInstallUrl(introSiteUrl);
 addUninstallUrl(util.getReviewUrl());
+addCopyRequestListener();
 injectContentScriptForAllTab();
 getSetting();
 
@@ -57,7 +58,7 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       sendResponse({});
     } else if (request.type === "recordTooltipText") {
       recordHistory(request);
-      updateContext(request);
+      updateCopyContext(request);
       sendResponse({});
     } else if (request.type === "removeContextAll") {
       removeContextAll();
@@ -172,24 +173,23 @@ async function openPDFViewer(url, tabId) {
   });
 }
 
-// ================= context menu
-async function updateContext(request) {
+// ================= Copy
+
+function addCopyRequestListener() {
+  // context menu handler for copy
+  util.addContextListener("copy", requestCopyForTargetText);
+  //command shortcut key handler for copy
+  util.addCommandListener("copy-translated-text", requestCopyForTargetText);
+}
+
+async function updateCopyContext(request) {
   // remove previous
   await removeContext("copy");
   //create new menu
   browser.contextMenus.create({
     id: "copy",
-    title: "Copy : " + truncate(request.targetText, 20),
-    contexts: [
-      "page",
-      "frame",
-      "selection",
-      "link",
-      "editable",
-      "image",
-      "video",
-      "audio",
-    ],
+    title: "Copy : " + util.truncate(request.targetText, 20),
+    contexts: ["all"],
     visible: true,
   });
   recentTranslated = request;
@@ -204,46 +204,12 @@ async function removeContextAll(id) {
   await browser.contextMenus.removeAll();
 }
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == "copy") {
-    copyOntab(tab, recentTranslated.targetText);
-  }
-});
-
-function copyText(text) {
-  navigator.clipboard.writeText(text);
+function requestCopyForTargetText() {
+  requestCopyOnTab(recentTranslated.targetText);
 }
 
-function runFunctionOnTab(tabId, func, args) {
-  browser.scripting.executeScript({
-    target: { tabId: tabId },
-    func: func,
-    args: args,
-  });
-}
-
-function copyOntab(tab, text) {
-  runFunctionOnTab(tab.id, copyText, [text]);
-}
-
-function truncate(str, n) {
-  return str.length > n ? str.slice(0, n - 1) + "..." : str;
-}
-
-//command shortcut key=====================================
-browser.commands.onCommand.addListener((command) => {
-  (async () => {
-    if (command == "copy-translated-text") {
-      var recentTab = await getCurrentTab();
-      copyOntab(recentTab, recentTranslated.targetText);
-    }
-  })();
-});
-
-async function getCurrentTab() {
-  let queryOptions = { active: true, lastFocusedWindow: true };
-  let [tab] = await browser.tabs.query(queryOptions);
-  return tab;
+function requestCopyOnTab(text) {
+  util.sendMessageToCurrentTab({ type: "CopyRequest", text });
 }
 
 // ================= contents script reinjection after upgrade or install
