@@ -20,7 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 
-- 0.1.89
+- 0.1.90
   - add animation option (request by WellingtonmpdNeves)
   - add pdf shortcut for note & draw (contributed by michael-nhat)
 - 0.1.89
