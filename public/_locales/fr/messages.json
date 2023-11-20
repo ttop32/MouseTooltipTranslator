@@ -44,6 +44,9 @@
 	"Tooltip_Distance": {
 		"message": "Distance de l'infobulle"
 	},
+	"Tooltip_Animation": {
+		"message": "Tooltip Animation"
+	},
 	"Tooltip_Position": {
 		"message": "Position de l'infobulle"
 	},
@@ -62,11 +65,11 @@
 	"Voice______________________________________": {
 		"message": "Voix                                      "
 	},
-	"Voice_Speed": {
-		"message": "Voice Speed"
-	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
+	},
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"

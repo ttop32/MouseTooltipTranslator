@@ -38,5 +38,6 @@ module.exports = (env, argv) => {
           })
         : false,
     ],
+    devtool: argv.mode == "development" ? "source-map" : false,
   });
 };

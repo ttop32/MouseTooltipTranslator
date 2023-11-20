@@ -44,6 +44,9 @@
 	"Tooltip_Distance": {
 		"message": "مسافة تلميح الأداة"
 	},
+	"Tooltip_Animation": {
+		"message": "Tooltip Animation"
+	},
 	"Tooltip_Position": {
 		"message": "موضع تلميح الأداة"
 	},
@@ -62,11 +65,11 @@
 	"Voice______________________________________": {
 		"message": "صوت                                      "
 	},
-	"Voice_Speed": {
-		"message": "Voice Speed"
-	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
+	},
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"

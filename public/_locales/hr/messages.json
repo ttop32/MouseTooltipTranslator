@@ -44,6 +44,9 @@
 	"Tooltip_Distance": {
 		"message": "Tooltip Distance"
 	},
+	"Tooltip_Animation": {
+		"message": "Tooltip Animation"
+	},
 	"Tooltip_Position": {
 		"message": "Tooltip Position"
 	},
@@ -62,11 +65,11 @@
 	"Voice______________________________________": {
 		"message": "Voice                                      "
 	},
-	"Voice_Speed": {
-		"message": "Voice Speed"
-	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
+	},
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"

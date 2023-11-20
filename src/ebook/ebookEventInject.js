@@ -41,6 +41,7 @@ function bindIFrameEvent(iframe) {
       evt.iframeY = e?.clientY;
 
       window.dispatchEvent(evt);
+      document.dispatchEvent(evt);
     });
   });
 }

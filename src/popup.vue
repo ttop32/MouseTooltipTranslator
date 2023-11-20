@@ -489,6 +489,13 @@ var tooltipPositionList = {
   Follow: "follow",
   Fixed: "fixed",
 };
+var tooltipAnimationList = {
+  Fade: "fade",
+  Scale: "scale",
+  "Shift-away": "shift-away",
+  "Shift-toward": "shift-toward",
+  Perspective: "perspective",
+};
 
 var detectTypeList = {
   Word: "word",
@@ -574,6 +581,10 @@ var visualTabData = {
   tooltipDistance: {
     description: chrome.i18n.getMessage("Tooltip_Distance"),
     optionList: tooltipDistanceList,
+  },
+  tooltipAnimation: {
+    description: chrome.i18n.getMessage("Tooltip_Animation"),
+    optionList: tooltipAnimationList,
   },
   tooltipPosition: {
     description: chrome.i18n.getMessage("Tooltip_Position"),
@@ -772,7 +783,7 @@ export default {
     await this.addTtsVoiceTabOption();
     this.setting["popupCount"]++;
     this.saveSetting();
-    this.changeLocale(util.getDefaultLang());
+    this.applyRtl(util.getDefaultLang());
   },
   watch: {
     setting: {
@@ -785,8 +796,10 @@ export default {
   },
 
   methods: {
-    changeLocale(locale) {
-      this.$vuetify.locale.current = locale;
+    applyRtl(locale) {
+      if (util.isRtl(locale) == "rtl") {
+        this.$vuetify.locale.current = locale;
+      }
     },
     saveSetting() {
       toRaw(this.setting).save();

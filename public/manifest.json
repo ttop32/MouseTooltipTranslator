@@ -43,7 +43,7 @@
 
   "content_scripts": [{
     "js": ["contentScript.js"],
-    "css": ["bootstrapcustom.min.css"],
+    "css": ["tippy.css"],
     "run_at": "document_idle",
     "all_frames": true,
     "matches": ["<all_urls>"]

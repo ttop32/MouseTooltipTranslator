@@ -17,9 +17,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Write package version json
-        run: cat <<< $(jq '.version=${{github.ref_name}}' package.json ) > package.json
+        run: cat <<< $(jq '.version="${{github.ref_name}}"' package.json ) > package.json
       - name: Write manifest version json
-        run: cat <<< $(jq '.version=${{github.ref_name}}' public/manifest.json ) > public/manifest.json
+        run: cat <<< $(jq '.version="${{github.ref_name}}"' public/manifest.json ) > public/manifest.json
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
