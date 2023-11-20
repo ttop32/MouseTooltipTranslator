@@ -507,6 +507,7 @@ function applyStyleSetting() {
       backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
+      overflow-wrap: break-word !important;
     }
     .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
