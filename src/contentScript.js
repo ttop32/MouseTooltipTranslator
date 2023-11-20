@@ -228,9 +228,9 @@ async function translateWithReverse(word) {
 }
 
 function wrapInlineHtml(translatedText, transliteration, targetLang) {
-  var text = `<div dir=${util.isRtl(targetLang)} class="notranslate">  ${encode(
-    translatedText
-  )} </div>`;
+  var text = `<span dir=${util.isRtl(
+    targetLang
+  )} class="notranslate">  ${encode(translatedText)} </span>`;
 
   if (transliteration && setting["useTransliteration"] == "true") {
     text = `
