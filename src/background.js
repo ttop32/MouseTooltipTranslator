@@ -260,3 +260,39 @@ function addInstallUrl(url) {
     }
   });
 }
+
+// bing tts test ==============================================================================
+// manifest offscreen permission required
+// playTts();
+
+async function playTts() {
+  var ttsBlob = await translator["bing"].requestTts("hello world", "");
+  var base64Url = await getUrl(ttsBlob);
+  playSound(base64Url);
+}
+
+function getUrl(blob) {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var dataUrl = reader.result;
+      resolve(dataUrl);
+    };
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function playSound(source = "default.wav", volume = 1) {
+  await createOffscreen();
+  await chrome.runtime.sendMessage({ play: { source, volume } });
+}
+
+// Create the offscreen document if it doesn't already exist
+async function createOffscreen() {
+  if (await chrome.offscreen.hasDocument()) return;
+  await chrome.offscreen.createDocument({
+    url: "offscreen.html",
+    reasons: ["AUDIO_PLAYBACK"],
+    justification: "play tts", // details for using the API
+  });
+}

@@ -79,6 +79,8 @@ var bingLangCode = {
 let bingAccessToken;
 let bingBaseUrl = "https://www.bing.com/ttranslatev3";
 let bingTokenUrl = "https://www.bing.com/translator";
+let bingTtsUrl = "https://www.bing.com/tfettts";
+
 export default class bing extends BaseTranslator {
   static langCodeJson = bingLangCode;
 
@@ -114,6 +116,29 @@ export default class bing extends BaseTranslator {
       var translatedText = res[0]["translations"][0]["text"];
       return { translatedText, detectedLang, transliteration };
     }
+  }
+
+  static async requestTts(text, lang) {
+    const { token, key, IG, IID } = await getBingAccessToken();
+    var bingLang = this.encodeLangCode(lang);
+    var voice = "en-US-AriaNeural";
+    // <prosody pitch='+${pitch}Hz' rate ='+${rate}%' volume='+${volume}%'></prosody>
+    //  <voice xml:lang='en-US' xml:gender='Female' name='en-US-AriaNeural'></voice>
+
+    return await ky
+      .post(bingTtsUrl, {
+        searchParams: {
+          IG,
+          IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+          isVertical: "1",
+        },
+        body: new URLSearchParams({
+          ssml: `<speak version='1.0' xml:lang='en-US'><voice  name='${voice}'><prosody rate='-20%'>${text}</prosody></voice></speak>`,
+          token,
+          key,
+        }),
+      })
+      .blob();
   }
 }
 
