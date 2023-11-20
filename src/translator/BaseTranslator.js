@@ -1,4 +1,4 @@
-import * as util from "/src/util";
+import { isEmpty, swapJsonKeyValue } from "/src/util";
 
 export default class BaseTranslator {
   static langCodeJson = {};
@@ -30,8 +30,8 @@ export default class BaseTranslator {
     return this.langCodeJson[lang] ? this.langCodeJson[lang] : lang;
   }
   static decodeLangCode(lang) {
-    if (util.isEmpty(this.langCodeJsonSwapped)) {
-      this.langCodeJsonSwapped = util.swapJsonKeyValue(this.langCodeJson);
+    if (isEmpty(this.langCodeJsonSwapped)) {
+      this.langCodeJsonSwapped = swapJsonKeyValue(this.langCodeJson);
     }
     return this.langCodeJsonSwapped[lang]
       ? this.langCodeJsonSwapped[lang]

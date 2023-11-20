@@ -13,7 +13,7 @@ var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 
 addInstallUrl(introSiteUrl);
-addUninstallUrl(util.getReviewUrl());
+// addUninstallUrl(util.getReviewUrl());
 addCopyRequestListener();
 injectContentScriptForAllTab();
 getSetting();

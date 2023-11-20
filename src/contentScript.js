@@ -3,19 +3,21 @@
 //intercept pdf url
 
 import $ from "jquery";
-import "bootstrap/js/dist/tooltip";
-import { enableSelectionEndEvent } from "/src/event/selection";
-import { enableMouseoverTextEvent } from "/src/event/mouseover";
+import tippy, { followCursor, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
-import * as util from "/src/util";
-import * as ocrView from "/src/ocr/ocrView.js";
 import delay from "delay";
 import { debounce } from "throttle-debounce";
+// import "bootstrap/js/dist/tooltip";
+
+import { enableSelectionEndEvent } from "/src/event/selection";
+import { enableMouseoverTextEvent } from "/src/event/mouseover";
+import * as util from "/src/util";
+import * as ocrView from "/src/ocr/ocrView.js";
 
 //init environment var======================================================================\
 var setting;
-var tooltipContainer;
+var tooltip;
 var clientX = 0;
 var clientY = 0;
 var mouseTarget = null;
@@ -72,7 +74,11 @@ function startTextSelectDetector() {
   enableSelectionEndEvent(); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
-    if (checkWindowFocus() && setting["translateWhen"].includes("select")) {
+    if (
+      checkWindowFocus() &&
+      setting["translateWhen"].includes("select") &&
+      ((selectedText && event.selectedText == "") || event.selectedText)
+    ) {
       selectedText = event.selectedText;
       await processWord(selectedText, "select");
     }
@@ -121,8 +127,12 @@ async function processWord(word, actionType) {
     setting["showTooltipWhen"] == "always" ||
     keyDownList[setting["showTooltipWhen"]]
   ) {
-    var tooltipText = concatTransliteration(translatedText, transliteration);
-    showTooltip(tooltipText, targetLang);
+    var tooltipText = wrapInlineHtml(
+      translatedText,
+      transliteration,
+      targetLang
+    );
+    showTooltip(tooltipText);
     requestRecordTooltipText(
       word,
       translatedText,
@@ -175,55 +185,26 @@ function checkMouseTargetIsSpecialWebBlock() {
 }
 
 function checkMouseTargetIsTooltip() {
-  if (tooltipContainer.has(mouseTarget).length) {
-    return true;
+  try {
+    return $(tooltip?.popper)?.get(0)?.contains(mouseTarget);
+  } catch (error) {
+    return false;
   }
-  return false;
 }
 
 function checkWindowFocus() {
   return mouseMoved && document.visibilityState == "visible";
 }
 
-function showTooltip(text, lang) {
+function showTooltip(text) {
+  hideAll({ duration: 0 }); //hide all tippy
   hideTooltip(); //reset tooltip arrow
-  checkTooltipContainer();
-  setTooltipPosition("showTooltip");
-  applyRtl(lang);
-  tooltipContainer.attr("data-original-title", text); //place text on tooltip
-  tooltipContainer.tooltip("show");
+  tooltip.setContent(text);
+  tooltip.show();
 }
 
 function hideTooltip() {
-  tooltipContainer.tooltip("hide");
-}
-
-function applyRtl(lang) {
-  tooltipContainer.attr("dir", util.isRtl(lang));
-}
-
-function checkTooltipContainer() {
-  //restart container if not exist
-  if (!tooltipContainer.parent().is("body")) {
-    tooltipContainer.appendTo(document.body);
-    style.appendTo("head");
-  }
-}
-
-function setTooltipPosition(calledFrom = "") {
-  if (calledFrom == "showTooltip" && setting["tooltipPosition"] == "follow") {
-    return;
-  } else if (
-    calledFrom == "mousemove" &&
-    setting["tooltipPosition"] == "fixed"
-  ) {
-    return;
-  }
-
-  tooltipContainer.css(
-    "transform",
-    "translate(" + clientX + "px," + clientY + "px)"
-  );
+  tooltip?.hide();
 }
 
 async function translateWithReverse(word) {
@@ -246,14 +227,19 @@ async function translateWithReverse(word) {
   return response;
 }
 
-function concatTransliteration(translatedText, transliteration) {
-  // if no transliteration or setting is off, skip
-  if (!transliteration || setting["useTransliteration"] == "false") {
-    return encode(translatedText);
+function wrapInlineHtml(translatedText, transliteration, targetLang) {
+  var text = `<div dir=${util.isRtl(targetLang)} class="notranslate">  ${encode(
+    translatedText
+  )} </div>`;
+
+  if (transliteration && setting["useTransliteration"] == "true") {
+    text = `
+    <br><br>
+    <h5>${encode(transliteration)}</h5>
+    `;
   }
-  return `${encode(translatedText)}<br><br> <h5>${encode(
-    transliteration
-  )}</h5>`;
+
+  return text;
 }
 
 //Translate Writing feature==========================================================================================
@@ -344,7 +330,6 @@ function handleMousemove(e) {
   setMouseStatus(e);
   ocrView.checkImage(setting, mouseTarget, keyDownList);
   checkWritingBox();
-  setTooltipPosition("mousemove");
   checkMouseTargetIsYoutubeSubtitle();
 }
 
@@ -506,52 +491,34 @@ async function getSetting() {
 }
 
 function applyStyleSetting() {
+  tooltip.setProps({
+    offset: [0, setting["tooltipDistance"]],
+    followCursor: setting["tooltipPosition"] == "follow" ? true : "initial",
+    interactive: setting["tooltipPosition"] == "follow" ? false : true,
+    animation: setting["tooltipAnimation"],
+  });
+
   style.html(
     `
-    #mttContainer {
-      left: 0 !important;
-      top: 0 !important;
-      width: 1000px !important;
-      margin-left: -500px !important;
-      position: fixed !important;
-      z-index: 100000200 !important;
-      background: none !important;
-      pointer-events: none !important;
-      display: inline-block !important;
-    }
-    .bootstrapiso .tooltip {
-      width:auto  !important;
-      height:auto  !important;
-      background: none !important;
-      border:none !important;
-      border-radius: 0px !important;
-      visibility: visible  !important;
-      pointer-events: none !important;
-    }
-    .bootstrapiso  .bs-tooltip-top {
-      margin-bottom: ${setting["tooltipDistance"]}px  !important;
-    }
-    .bootstrapiso  .bs-tooltip-bottom {
-      margin-top: ${setting["tooltipDistance"]}px  !important;
-    }
-    .bootstrapiso .tooltip-inner {
+    .tippy-box[data-theme~="custom"] {
       font-size: ${setting["tooltipFontSize"]}px  !important;
       max-width: ${setting["tooltipWidth"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
       backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
-      pointer-events: auto;
     }
-    .bootstrapiso .arrow::before {
+    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
     }
-    .bootstrapiso .arrow {
-      font-size: 14px  !important;
-      margin: auto  !important;
+    .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before {
+      border-bottom-color: ${setting["tooltipBackgroundColor"]} !important;
     }
-    .bootstrapiso .arrow::after {
-      display:none !important;
+    .tippy-box[data-theme~='custom'][data-placement^='left'] > .tippy-arrow::before {
+      border-left-color: ${setting["tooltipBackgroundColor"]} !important;
+    }
+    .tippy-box[data-theme~='custom'][data-placement^='right'] > .tippy-arrow::before {
+      border-right-color: ${setting["tooltipBackgroundColor"]} !important;
     }
     .ocr_text_div{
       position: absolute;
@@ -562,7 +529,6 @@ function applyStyleSetting() {
       color: transparent !important;
       background: none !important;
     }
-
     ` +
       (isYoutubeDetected
         ? `
@@ -616,17 +582,16 @@ function checkExcludeUrl() {
 }
 
 function addElementEnv() {
-  tooltipContainer = $("<div/>", {
-    id: "mttContainer",
-    class: "bootstrapiso notranslate", //use bootstrapiso class to apply bootstrap isolation css, prevent google web translate
-    "data-html": "true",
-  }).appendTo(document.body);
-
-  tooltipContainer.tooltip({
-    placement: "top",
-    container: "#mttContainer",
+  tooltip = tippy(document.body, {
+    content: "",
     trigger: "manual",
-    boundary: "document",
+    allowHTML: true,
+    theme: "custom",
+    zIndex: 100000200,
+    hideOnClick: false,
+    role: "mtttooltip",
+    followCursor: true,
+    plugins: [followCursor],
   });
 
   style = $("<style/>", {
@@ -734,7 +699,5 @@ function addEventHandler(eventName, callbackFunc) {
 
 function removePrevElement() {
   $("#mttstyle").remove();
-  $("#mttContainer").tooltip("dispose");
-  $("#mttContainer").remove();
   ocrView.removeAllOcrEnv();
 }

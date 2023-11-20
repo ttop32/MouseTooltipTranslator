@@ -44,6 +44,9 @@
 	"Tooltip_Distance": {
 		"message": "מרחק טולטיפ"
 	},
+	"Tooltip_Animation": {
+		"message": "Tooltip Animation"
+	},
 	"Tooltip_Position": {
 		"message": "מיקום טולטיפ"
 	},
@@ -62,11 +65,11 @@
 	"Voice______________________________________": {
 		"message": "קול                                      "
 	},
-	"Voice_Speed": {
-		"message": "Voice Speed"
-	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
+	},
+	"Voice_Speed": {
+		"message": "Voice Speed"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"

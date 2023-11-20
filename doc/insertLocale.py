@@ -38,6 +38,7 @@ i18List = [
     "Tooltip Font Size",
     "Tooltip Width",
     "Tooltip Distance",
+    "Tooltip Animation",
     "Tooltip Position",
     "Tooltip Text Align",
     "Tooltip Background Blur",
