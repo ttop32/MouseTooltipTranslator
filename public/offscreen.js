@@ -1,18 +1,35 @@
 var audio;
 
 // Listen for messages from the extension
-chrome.runtime.onMessage.addListener((msg) => {
-  if ("play" in msg) playAudio(msg.play);
-  if ("stop" in msg) stopAudio();
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  (async () => {
+    if ("play" in request) {
+      // await playAudio(request.play);
+      stopAudio();
+      await play(
+        request?.play?.source,
+        request?.play?.volume,
+        request?.play?.rate
+      );
+      sendResponse();
+    }
+    if ("stop" in request) {
+      stopAudio();
+      sendResponse();
+    }
+  })();
+
+  return true;
 });
 
-// Play sound with access to DOM APIs
-async function playAudio({ source, volume }) {
-  audio = new Audio(source);
-  audio.volume = volume;
-  // audio.playbackRate=0.5;
-  audio.play();
-  // audio.onended = onended
+function play(url, volume = 1.0, rate = 1.0) {
+  return new Promise((resolve, reject) => {
+    audio = new Audio(url);
+    audio.volume = volume;
+    audio.playbackRate = rate;
+    audio.onended = () => resolve();
+    audio.play();
+  });
 }
 
 function stopAudio() {

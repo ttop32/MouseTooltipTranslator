@@ -76,6 +76,7 @@ var bingLangCode = {
   "zh-CN": "zh-Hans",
   "zh-TW": "zh-Hant",
 };
+
 let bingAccessToken;
 let bingBaseUrl = "https://www.bing.com/ttranslatev3";
 let bingTokenUrl = "https://www.bing.com/translator";
@@ -118,12 +119,15 @@ export default class bing extends BaseTranslator {
     }
   }
 
-  static async requestTts(text, lang) {
+  static async requestTts(text, voice = "en-US-AriaNeural", rate, volume) {
     const { token, key, IG, IID } = await getBingAccessToken();
-    var bingLang = this.encodeLangCode(lang);
-    var voice = "en-US-AriaNeural";
-    // <prosody pitch='+${pitch}Hz' rate ='+${rate}%' volume='+${volume}%'></prosody>
+    // `<prosody pitch='+${pitch}Hz' rate ='+${rate}%' volume='+${volume}%'></prosody>`
     //  <voice xml:lang='en-US' xml:gender='Female' name='en-US-AriaNeural'></voice>
+    var voice = voice.replace("BingTTS_", "");
+    var voiceSplit = voice.split("-");
+    voiceSplit = voiceSplit.slice(0, -1);
+    var locale = voiceSplit.join("-");
+    var rate100 = rate * 100 - 100;
 
     return await ky
       .post(bingTtsUrl, {
@@ -133,7 +137,7 @@ export default class bing extends BaseTranslator {
           isVertical: "1",
         },
         body: new URLSearchParams({
-          ssml: `<speak version='1.0' xml:lang='en-US'><voice  name='${voice}'><prosody rate='-20%'>${text}</prosody></voice></speak>`,
+          ssml: `<speak version='1.0' xml:lang='${locale}'><voice name='${voice}'><prosody rate='${rate100}%'>${text}</prosody></voice></speak>`,
           token,
           key,
         }),
