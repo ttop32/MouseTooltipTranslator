@@ -867,7 +867,7 @@ export default {
 
     async addTtsVoiceTabOption() {
       var voiceTabOption = {};
-      var availableVoiceList = await util.getAvailableVoiceList();
+      var availableVoiceList = await util.getAllVoiceList();
 
       for (var key in availableVoiceList) {
         var voiceOptionList = util.getJsonFromList(availableVoiceList[key]);

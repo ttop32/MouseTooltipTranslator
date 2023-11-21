@@ -2,15 +2,17 @@
 //it communicate with  contentScript.js(for translation and tts)
 //listen context menu, uninstall, first install, extension update
 
-import translator from "./translator/index.js";
-import { waitUntil } from "async-wait-until";
-import * as util from "/src/util";
 import browser from "webextension-polyfill";
+import { waitUntil } from "async-wait-until";
+
+import translator from "./translator/index.js";
+import * as util from "/src/util";
 
 var setting;
 var recentTranslated = {};
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
+var stopTtsTimestamp = 0;
 
 addInstallUrl(introSiteUrl);
 // addUninstallUrl(util.getReviewUrl());
@@ -42,19 +44,17 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
       );
     } else if (request.type === "tts") {
-      doTts(
+      playTtsQueue(
         request.sourceText,
         request.sourceLang,
         request.targetText,
         request.targetLang,
-        Number(setting["voiceVolume"]),
-        Number(setting["voiceRate"]),
         setting["voiceTarget"],
         Number(setting["voiceRepeat"])
       );
       sendResponse({});
     } else if (request.type === "stopTTS") {
-      browser.tts.stop();
+      stopTts();
       sendResponse({});
     } else if (request.type === "recordTooltipText") {
       recordHistory(request);
@@ -105,45 +105,6 @@ const doTranslate = util.cacheFn(
     );
   }
 );
-
-// tts=============================================================================
-
-async function doTts(
-  sourceText,
-  sourceLang,
-  targetText,
-  targetLang,
-  ttsVolume,
-  ttsRate,
-  ttsTarget,
-  ttsRepeat
-) {
-  browser.tts.stop(); //remove prev voice
-
-  for (var i = 0; i < ttsRepeat; i++) {
-    if (ttsTarget == "source") {
-      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
-    } else if (ttsTarget == "target") {
-      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
-    } else if (ttsTarget == "sourcetarget") {
-      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
-      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
-    } else if (ttsTarget == "targetsource") {
-      enqueueTts(targetText, targetLang, ttsVolume, ttsRate);
-      enqueueTts(sourceText, sourceLang, ttsVolume, ttsRate);
-    }
-  }
-}
-
-function enqueueTts(text, lang, volume, rate) {
-  browser.tts.speak(text, {
-    lang,
-    voiceName: setting["ttsVoice_" + lang],
-    volume,
-    rate,
-    enqueue: true,
-  });
-}
 
 // detect local pdf file and redirect to translated pdf=====================================================================
 browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
@@ -261,17 +222,89 @@ function addInstallUrl(url) {
   });
 }
 
-// bing tts test ==============================================================================
-// manifest offscreen permission required
-// playTts();
+// tts=============================================================================
 
-async function playTts() {
-  var ttsBlob = await translator["bing"].requestTts("hello world", "");
-  var base64Url = await getUrl(ttsBlob);
-  playSound(base64Url);
+async function playTtsQueue(
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  ttsTarget,
+  ttsRepeat
+) {
+  // browser.tts.stop(); //remove prev voice
+  stopTts();
+  var startTimeStamp = Date.now() + 10;
+
+  for (var i = 0; i < ttsRepeat; i++) {
+    if (ttsTarget == "source") {
+      await playTts(sourceText, sourceLang, startTimeStamp);
+    } else if (ttsTarget == "target") {
+      await playTts(targetText, targetLang, startTimeStamp);
+    } else if (ttsTarget == "sourcetarget") {
+      await playTts(sourceText, sourceLang, startTimeStamp);
+      await playTts(targetText, targetLang, startTimeStamp);
+    } else if (ttsTarget == "targetsource") {
+      await playTts(targetText, targetLang, startTimeStamp);
+      await playTts(sourceText, sourceLang, startTimeStamp);
+    }
+  }
 }
 
-function getUrl(blob) {
+function stopTts() {
+  stopTtsTimestamp = Date.now();
+  browser.tts.stop(); //remove prev voice
+  stopTtsOffscreen();
+}
+
+async function playTts(text, lang, startTimeStamp) {
+  if (startTimeStamp < stopTtsTimestamp) {
+    return;
+  }
+  // if is not bing tts, use browser tts
+  if (!setting?.["ttsVoice_" + lang]?.includes("BingTTS")) {
+    await playBrowserTts(text, lang);
+  } else {
+    await playBingTts(text, setting["ttsVoice_" + lang]);
+  }
+}
+
+function playBrowserTts(text, lang) {
+  return new Promise((resolve, reject) => {
+    browser.tts.speak(text, {
+      lang,
+      voiceName: setting["ttsVoice_" + lang],
+      volume: Number(setting["voiceVolume"]),
+      rate: Number(setting["voiceRate"]),
+
+      // enqueue: true,
+      onEvent: (event) => {
+        if (["end", "interrupted", "cancelled", "error"].includes(event.type)) {
+          resolve();
+        }
+      },
+    });
+  });
+}
+
+// bing tts  ==============================================================================
+// manifest offscreen permission required
+
+async function playBingTts(text, voice) {
+  try {
+    var ttsBlob = await translator["bing"].requestTts(
+      text,
+      voice,
+      Number(setting["voiceRate"])
+    );
+    var base64Url = await getBase64Url(ttsBlob);
+    await playSound(base64Url);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function getBase64Url(blob) {
   return new Promise((resolve, reject) => {
     var reader = new FileReader();
     reader.onload = function () {
@@ -282,17 +315,55 @@ function getUrl(blob) {
   });
 }
 
-async function playSound(source = "default.wav", volume = 1) {
+async function playSound(source) {
   await createOffscreen();
-  await chrome.runtime.sendMessage({ play: { source, volume } });
+  await chrome.runtime.sendMessage({
+    play: {
+      source,
+      volume: Number(setting["voiceVolume"]),
+    },
+  });
+}
+
+async function stopTtsOffscreen() {
+  await createOffscreen();
+  await chrome.runtime.sendMessage({ stop: {} });
 }
 
 // Create the offscreen document if it doesn't already exist
 async function createOffscreen() {
-  if (await chrome.offscreen.hasDocument()) return;
+  if (await chrome.offscreen.hasDocument()) {
+    // await removeOffscreen();
+    return;
+  }
   await chrome.offscreen.createDocument({
     url: "offscreen.html",
     reasons: ["AUDIO_PLAYBACK"],
     justification: "play tts", // details for using the API
   });
 }
+
+function removeOffscreen() {
+  return new Promise((resolve, reject) => {
+    chrome.offscreen.closeDocument(() => resolve());
+  });
+}
+
+// async function testBingTts() {
+//   var voiceList = util.getBingTtsVoiceList();
+//   for (var key in voiceList) {
+//     for (var voice of voiceList[key]) {
+//       var voiceName = voice.split("_")[1];
+//       try {
+//         await delay(2000);
+//         console.log(voiceName);
+//         await playBingTts("hello world", voiceName);
+//       } catch (error) {
+//         console.log(error);
+//       }
+
+//     }
+//   }
+// }
+// test();
+// playBingTts("hello world");

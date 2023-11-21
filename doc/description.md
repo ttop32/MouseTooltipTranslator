@@ -19,7 +19,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-
+- 0.1.91
+  - add bing tts
 - 0.1.90
   - add animation option (request by WellingtonmpdNeves)
   - add pdf shortcut for note & draw (contributed by michael-nhat)
