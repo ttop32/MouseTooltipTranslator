@@ -869,15 +869,16 @@ export default {
       var voiceTabOption = {};
       var availableVoiceList = await util.getAllVoiceList();
 
-      for (var key in availableVoiceList) {
-        var voiceOptionList = util.getJsonFromList(availableVoiceList[key]);
-        if (langListOpposite[key]) {
-          voiceTabOption["ttsVoice_" + key] = {
-            description:
-              this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
-            optionList: this.wrapWithTitleValueKey(voiceOptionList),
-          };
+      for (var key in langListOpposite) {
+        if (!(key in availableVoiceList)) {
+          continue;
         }
+        var voiceOptionList = util.getJsonFromList(availableVoiceList[key]);
+        voiceTabOption["ttsVoice_" + key] = {
+          description:
+            this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
+          optionList: this.wrapWithTitleValueKey(voiceOptionList),
+        };
       }
 
       //add voice option

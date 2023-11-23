@@ -183,7 +183,7 @@ var bingTtsVoiceList = {
     "en-US-SteffanNeural",
   ],
   et: ["et-EE-AnuNeural", "et-EE-KertNeural"],
-  fil: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
+  tl: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
   fi: ["fi-FI-HarriNeural", "fi-FI-NooraNeural"],
   fr: [
     "fr-BE-CharlineNeural",
@@ -211,7 +211,7 @@ var bingTtsVoiceList = {
   ],
   el: ["el-GR-AthinaNeural", "el-GR-NestorasNeural"],
   gu: ["gu-IN-DhwaniNeural", "gu-IN-NiranjanNeural"],
-  he: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
+  iw: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
   hi: ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"],
   hu: ["hu-HU-NoemiNeural", "hu-HU-TamasNeural"],
   is: ["is-IS-GudrunNeural", "is-IS-GunnarNeural"],
@@ -330,6 +330,68 @@ var bingTtsVoiceList = {
   cy: ["cy-GB-AledNeural", "cy-GB-NiaNeural"],
   zu: ["zu-ZA-ThandoNeural", "zu-ZA-ThembaNeural"],
 };
+
+var googleTranslateTtsLangList = [
+  "af",
+  "sq",
+  "ar",
+  "bn",
+  "bs",
+  "bg",
+  "ca",
+  "zh-CN",
+  "zh-TW",
+  "hr",
+  "cs",
+  "da",
+  "nl",
+  "en",
+  "et",
+  "tl",
+  "fi",
+  "fr",
+  "de",
+  "el",
+  "gu",
+  "iw",
+  "hi",
+  "hu",
+  "is",
+  "id",
+  "it",
+  "ja",
+  "jw",
+  "kn",
+  "km",
+  "ko",
+  "la",
+  "lv",
+  "ms",
+  "ml",
+  "mr",
+  "my",
+  "ne",
+  "no",
+  "pl",
+  "pt",
+  "ro",
+  "ru",
+  "sr",
+  "si",
+  "sk",
+  "es",
+  "su",
+  "sw",
+  "sv",
+  "ta",
+  "te",
+  "th",
+  "tr",
+  "uk",
+  "ur",
+  "vi",
+];
+
 //setting util======================================
 
 export async function loadSetting(settingUpdateCallbackFn) {
@@ -368,7 +430,9 @@ export async function getDefaultVoice() {
 export async function getAllVoiceList() {
   var browserVoices = await getBrowserTtsVoiceList();
   var bingVoices = getBingTtsVoiceList();
+  var googleTranslateVoices = getgoogleTranslateTtsVoiceList();
   var voiceList = concatVoice(browserVoices, bingVoices);
+  var voiceList = concatVoice(voiceList, googleTranslateVoices);
   voiceList = sortJsonByKey(voiceList);
   return voiceList;
 }
@@ -414,6 +478,14 @@ export function getBingTtsVoiceList() {
     bingTaggedVoiceList[key] = voiceList;
   }
   return bingTaggedVoiceList;
+}
+
+export function getgoogleTranslateTtsVoiceList() {
+  var voiceList = {};
+  for (var lang of googleTranslateTtsLangList) {
+    voiceList[lang] = ["GoogleTranslateTTS_" + lang];
+  }
+  return voiceList;
 }
 
 function concatVoice(voiceList1, voiceList2) {

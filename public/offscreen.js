@@ -8,8 +8,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       stopAudio();
       await play(
         request?.play?.source,
-        request?.play?.volume,
-        request?.play?.rate
+        request?.play?.rate,
+        request?.play?.volume
       );
       sendResponse();
     }
@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function play(url, volume = 1.0, rate = 1.0) {
+function play(url, rate = 1.0, volume = 1.0) {
   return new Promise((resolve, reject) => {
     audio = new Audio(url);
     audio.volume = volume;
