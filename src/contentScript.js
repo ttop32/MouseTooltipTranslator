@@ -233,7 +233,7 @@ function wrapInlineHtml(translatedText, transliteration, targetLang) {
   )} class="notranslate">  ${encode(translatedText)} </span>`;
 
   if (transliteration && setting["useTransliteration"] == "true") {
-    text = `
+    text += `
     <br><br>
     <h5>${encode(transliteration)}</h5>
     `;
