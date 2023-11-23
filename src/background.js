@@ -4,6 +4,7 @@
 
 import browser from "webextension-polyfill";
 import { waitUntil } from "async-wait-until";
+import delay from "delay";
 
 import translator from "./translator/index.js";
 import * as util from "/src/util";
@@ -261,23 +262,26 @@ async function playTts(text, lang, startTimeStamp) {
   if (startTimeStamp < stopTtsTimestamp) {
     return;
   }
-  // if is not bing tts, use browser tts
-  if (!setting?.["ttsVoice_" + lang]?.includes("BingTTS")) {
-    await playBrowserTts(text, lang);
+  var voice = setting?.["ttsVoice_" + lang];
+  var volume = Number(setting["voiceVolume"]);
+  var rate = Number(setting["voiceRate"]);
+
+  if (voice?.includes("BingTTS")) {
+    await playBingTts(text, voice, rate, volume);
+  } else if (voice?.includes("GoogleTranslateTTS_")) {
+    await playGoogleTranslateTts(text, lang, rate, volume);
   } else {
-    await playBingTts(text, setting["ttsVoice_" + lang]);
+    await playBrowserTts(text, lang, voice, rate, volume);
   }
 }
 
-function playBrowserTts(text, lang) {
+function playBrowserTts(text, lang, voiceName, rate, volume) {
   return new Promise((resolve, reject) => {
     browser.tts.speak(text, {
       lang,
-      voiceName: setting["ttsVoice_" + lang],
-      volume: Number(setting["voiceVolume"]),
-      rate: Number(setting["voiceRate"]),
-
-      // enqueue: true,
+      voiceName,
+      volume,
+      rate,
       onEvent: (event) => {
         if (["end", "interrupted", "cancelled", "error"].includes(event.type)) {
           resolve();
@@ -287,18 +291,22 @@ function playBrowserTts(text, lang) {
   });
 }
 
-// bing tts  ==============================================================================
-// manifest offscreen permission required
-
-async function playBingTts(text, voice) {
+async function playBingTts(text, voice, rate, volume) {
   try {
-    var ttsBlob = await translator["bing"].requestTts(
-      text,
-      voice,
-      Number(setting["voiceRate"])
-    );
+    var ttsBlob = await translator["bing"].requestTts(text, voice, rate);
     var base64Url = await getBase64Url(ttsBlob);
-    await playSound(base64Url);
+    await playSound(base64Url, 1, volume);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function playGoogleTranslateTts(text, lang, rate, volume) {
+  try {
+    var googleTranslateTtsUrl = `https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+      text
+    )}&tl=${lang}&client=tw-ob`;
+    await playSound(googleTranslateTtsUrl, rate, volume);
   } catch (error) {
     console.log(error);
   }
@@ -315,12 +323,13 @@ function getBase64Url(blob) {
   });
 }
 
-async function playSound(source) {
+async function playSound(source, rate, volume) {
   await createOffscreen();
   await chrome.runtime.sendMessage({
     play: {
       source,
-      volume: Number(setting["voiceVolume"]),
+      rate,
+      volume,
     },
   });
 }
@@ -328,19 +337,20 @@ async function playSound(source) {
 async function stopTtsOffscreen() {
   await createOffscreen();
   await chrome.runtime.sendMessage({ stop: {} });
+  // removeOffscreen();
 }
 
-// Create the offscreen document if it doesn't already exist
+// Create the offscreen document
 async function createOffscreen() {
-  if (await chrome.offscreen.hasDocument()) {
-    // await removeOffscreen();
-    return;
+  try {
+    await chrome.offscreen.createDocument({
+      url: "offscreen.html",
+      reasons: ["AUDIO_PLAYBACK"],
+      justification: "play tts", // details for using the API
+    });
+  } catch (error) {
+    if (!error.message.startsWith("Only a single offscreen")) throw error;
   }
-  await chrome.offscreen.createDocument({
-    url: "offscreen.html",
-    reasons: ["AUDIO_PLAYBACK"],
-    justification: "play tts", // details for using the API
-  });
 }
 
 function removeOffscreen() {
@@ -348,22 +358,3 @@ function removeOffscreen() {
     chrome.offscreen.closeDocument(() => resolve());
   });
 }
-
-// async function testBingTts() {
-//   var voiceList = util.getBingTtsVoiceList();
-//   for (var key in voiceList) {
-//     for (var voice of voiceList[key]) {
-//       var voiceName = voice.split("_")[1];
-//       try {
-//         await delay(2000);
-//         console.log(voiceName);
-//         await playBingTts("hello world", voiceName);
-//       } catch (error) {
-//         console.log(error);
-//       }
-
-//     }
-//   }
-// }
-// test();
-// playBingTts("hello world");
