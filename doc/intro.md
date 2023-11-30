@@ -5,7 +5,7 @@
     - Toute nation a le gouvernement qu'elle mérite.
     - Proletarier aller Länder, vereinigt euch!
 ![Alt Text](/doc/result_0.gif)
-- Use <kbd>left ctrl</kbd> to Listen tts pronunciation (Press <kbd>esc</kbd> to stop voice)
+- Use <kbd>left ctrl</kbd> to listen tts pronunciation when tooltip is shown(Press <kbd>esc</kbd> to stop voice)
 - Use <kbd>right alt</kbd> to translate writing text (or highlighted text) in input box. (Do undo, press <kbd>ctrl</kbd> +<kbd>z</kbd>)
 ![result](/doc/11.gif)
 - Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
