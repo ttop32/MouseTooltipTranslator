@@ -1,13 +1,11 @@
-'use strict';
-
-
-
+import isUrl from "is-url";
 
 async function initPdf() {
-  checkCurrentUrlIsLocalFileUrl();
-  addCallbackForPdfTextLoad(addSpaceBetweenPdfText);  
+  checkUrlIsDecoded(); // redirect  url with file url encoded if not encoded
+  checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
+  addCallbackForPdfTextLoad(addSpaceBetweenPdfText); //make line break for spaced text
   await waitUntilPdfLoad();
-  changeUrlParam();
+  checkUrlIsEncoded(); //change encoded url to decoded for copy url
 }
 initPdf();
 
@@ -40,78 +38,103 @@ function openSettingPage(id) {
   });
 }
 
-
-function addCallbackForPdfTextLoad(callback) { 
-    document.addEventListener("webviewerloaded", function() {
-      PDFViewerApplication.initializedPromise.then(function() {
-        PDFViewerApplication.eventBus.on("documentloaded", function(event) { //when pdf loaded
-          window.PDFViewerApplication.eventBus.on('textlayerrendered', function pagechange(evt) { //when textlayerloaded
+function addCallbackForPdfTextLoad(callback) {
+  document.addEventListener("webviewerloaded", function () {
+    PDFViewerApplication.initializedPromise.then(function () {
+      PDFViewerApplication.eventBus.on("documentloaded", function (event) {
+        //when pdf loaded
+        window.PDFViewerApplication.eventBus.on(
+          "textlayerrendered",
+          function pagechange(evt) {
+            //when textlayerloaded
             callback();
-          })
-        });
+          }
+        );
       });
-    }); 
+    });
+  });
 }
 
-function waitUntilPdfLoad(){
+function waitUntilPdfLoad() {
   return new Promise((resolve, reject) => {
     addCallbackForPdfTextLoad(resolve);
   });
 }
 
-function changeUrlParam() {
-  var baseUrl=window.location.origin+window.location.pathname
-  var fileParam=window.location.search.slice(6)  //slice "?page="
-
-  //url is decoded, redirect with encoded url to read correctly in pdf viewer
-  if(decodeURIComponent(fileParam)==fileParam){
-    redirect(baseUrl+"?file="+encodeURIComponent(fileParam))
-  }
+function checkUrlIsEncoded() {
+  var fileParam = getFileParam();
 
   //change to decoded url for ease of url copy
-  changeUrlWithoutRedirect(decodeURIComponent(fileParam));
+  if (!isUrl(fileParam)) {
+    changeUrlFileParam(decodeURIComponent(fileParam));
+  }
 }
 
-function redirect(url){
+function checkUrlIsDecoded() {
+  var fileParam = getFileParam();
+  var baseUrl = getBaseUrl();
+  //url is decoded, redirect with encoded url to read correctly in pdf viewer
+  if (isUrl(fileParam)) {
+    redirect(baseUrl + "?file=" + encodeURIComponent(fileParam));
+  }
+}
+
+function getFileParam() {
+  return window.location.search.slice(6); //slice "?page="
+}
+function getBaseUrl() {
+  return window.location.origin + window.location.pathname;
+}
+
+function redirect(url) {
   window.location.replace(url);
 }
-function changeUrlWithoutRedirect(fileParam){
-  history.replaceState("", "", "/pdfjs/web/viewer.html?file="+fileParam);
+function changeUrlFileParam(fileParam) {
+  history.replaceState("", "", "/pdfjs/web/viewer.html?file=" + fileParam);
 }
 
-
-
 // change space system for tooltip
-function addSpaceBetweenPdfText(){
-
+function addSpaceBetweenPdfText() {
   // remove all br
-  document.querySelectorAll('br').forEach(function(item, index) {
+  document.querySelectorAll("br").forEach(function (item, index) {
     item.remove();
-  })
+  });
 
   // add manual new line
   var lastY;
   var lastItem;
-  document.querySelectorAll(".page span[role='presentation']").forEach(function(item, index) {
-    var currentY = parseFloat(item.getBoundingClientRect().top);
-    var currentFontSize = parseFloat(window.getComputedStyle(item).fontSize);
+  document
+    .querySelectorAll(".page span[role='presentation']")
+    .forEach(function (item, index) {
+      var currentY = parseFloat(item.getBoundingClientRect().top);
+      var currentFontSize = parseFloat(window.getComputedStyle(item).fontSize);
 
-    // if between element size is big enough, add new line 
-    // else add space
-    if (index === 0) { //skip first index
-
-    } else {
-      if (lastY < currentY - currentFontSize * 2 || currentY + currentFontSize * 2 < lastY) { //if y diff double, give end line
-        if (!(/\n $/.test(lastItem.textContent))) { //if no end line, give end line
-          lastItem.textContent = lastItem.textContent + "\n ";
-        }
-      } else if (lastY < currentY - currentFontSize || currentY + currentFontSize < lastY) { // if y diff, give end space
-        if (!(/ $/.test(lastItem.textContent))) { //if no end space, give end space
-          lastItem.textContent = lastItem.textContent + " ";
+      // if between element size is big enough, add new line
+      // else add space
+      if (index === 0) {
+        //skip first index
+      } else {
+        if (
+          lastY < currentY - currentFontSize * 2 ||
+          currentY + currentFontSize * 2 < lastY
+        ) {
+          //if y diff double, give end line
+          if (!/\n $/.test(lastItem.textContent)) {
+            //if no end line, give end line
+            lastItem.textContent = lastItem.textContent + "\n ";
+          }
+        } else if (
+          lastY < currentY - currentFontSize ||
+          currentY + currentFontSize < lastY
+        ) {
+          // if y diff, give end space
+          if (!/ $/.test(lastItem.textContent)) {
+            //if no end space, give end space
+            lastItem.textContent = lastItem.textContent + " ";
+          }
         }
       }
-    }
-    lastY = currentY
-    lastItem = item;
-  })
+      lastY = currentY;
+      lastItem = item;
+    });
 }
