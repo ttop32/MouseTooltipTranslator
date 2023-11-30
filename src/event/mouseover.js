@@ -60,7 +60,11 @@ function getTextFromRange(range) {
   var output = {};
 
   ["word", "sentence", "container"].forEach((detectType) => {
-    if (range) {
+    output[detectType] = "";
+    if (!range) {
+      return;
+    }
+    try {
       var rangeClone = range.cloneRange();
       //expand range
       expandRange(rangeClone, detectType);
@@ -68,10 +72,11 @@ function getTextFromRange(range) {
       //check mouse xy overlap the range element
       if (util.checkXYInElement(rangeClone, clientX, clientY)) {
         output[detectType] = rangeClone.toString();
+        output[detectType + "_range"] = rangeClone;
       }
+    } catch (error) {
+      console.log(error);
     }
-
-    output[detectType] = output[detectType] || ""; //if no text, give empty ""
   });
 
   return output;

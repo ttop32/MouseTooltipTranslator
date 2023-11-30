@@ -63,8 +63,9 @@ function startMouseoverDetector() {
       !selectedText &&
       setting["translateWhen"].includes("mouseover")
     ) {
-      var mouseoverText = event.mouseoverText[getDetectType()];
-      await processWord(mouseoverText, "mouseover");
+      var mouseoverText = event?.mouseoverText?.[getDetectType()];
+      var mouseoverRange = event?.mouseoverText?.[getDetectType() + "_range"];
+      await processWord(mouseoverText, "mouseover", mouseoverRange);
     }
   });
 }
@@ -79,14 +80,14 @@ function startTextSelectDetector() {
       setting["translateWhen"].includes("select") &&
       ((selectedText && event.selectedText == "") || event.selectedText)
     ) {
-      selectedText = event.selectedText;
+      selectedText = event?.selectedText;
       await processWord(selectedText, "select");
     }
   });
 }
 
 //process detected word
-async function processWord(word, actionType) {
+async function processWord(word, actionType, range) {
   // skip if mouse target is tooltip
   if (checkMouseTargetIsTooltip()) {
     return;
@@ -140,6 +141,8 @@ async function processWord(word, actionType) {
       targetLang,
       actionType
     );
+
+    highlightText(range);
   } else {
     hideTooltip();
   }
@@ -148,6 +151,40 @@ async function processWord(word, actionType) {
   if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
     requestTTS(word, sourceLang, translatedText, targetLang);
   }
+}
+
+function highlightText(range) {
+  if (!range) {
+    return;
+  }
+
+  // ver1
+  // $(".mtt-highlight").remove();
+  // var box = range.getBoundingClientRect();
+  // var wrappingNode = $("<div/>", {
+  //   class: "mtt-highlight",
+  // })
+  //   .css({
+  //     left: box.left,
+  //     top: box.top,
+  //     width: box.right - box.left,
+  //     height: box.bottom - box.top,
+  //   })
+  //   .appendTo("body")
+  //   .get(0);
+
+  //ver2
+  //remove prev highlight
+  // $(".mtt-highlight").contents().unwrap();
+
+  // //make highlight ele
+  // var contents = range.extractContents();
+  // var wrappingNode = $("<span/>", {
+  //   class: "mtt-highlight",
+  // })
+  //   .append(contents)
+  //   .get(0);
+  // range.insertNode(wrappingNode);
 }
 
 function restartWordProcess() {
@@ -520,6 +557,13 @@ function applyStyleSetting() {
     }
     .tippy-box[data-theme~='custom'][data-placement^='right'] > .tippy-arrow::before {
       border-right-color: ${setting["tooltipBackgroundColor"]} !important;
+    }
+    .mtt-highlight{
+      background-color: #21dc6d40 !important;
+      position: fixed !important;      
+      z-index: 100000100 !important;
+      pointer-events: none !important;
+      display: inline !important;
     }
     .ocr_text_div{
       position: absolute;
