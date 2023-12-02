@@ -12,15 +12,18 @@ var defaultData = {
   //translateTarget: getDefaultLang(),
   translatorVendor: "google",
   detectType: "sentence",
-  keyDownDetectSwap: "null",
-  keyDownTranslateWriting: "AltRight",
   writingLanguage: "en",
-  translateReverseTarget: "null",
-  detectPDF: "true",
-  enableYoutube: "dualsub",
-  useTransliteration: "false",
-  keyDownOCR: "ShiftLeft",
   ocrDetectionLang: "jpn_vert",
+  //advanced
+  keyDownTranslateWriting: "AltRight",
+  keyDownOCR: "ShiftLeft",
+  keyDownDetectSwap: "null",
+  enableYoutube: "dualsub",
+  detectPDF: "true",
+  translateReverseTarget: "null",
+  useTransliteration: "false",
+  highlightMouseoverText: "false",
+  // graphic
   tooltipFontSize: "14",
   tooltipWidth: "200",
   tooltipDistance: "20",
@@ -30,13 +33,16 @@ var defaultData = {
   tooltipBackgroundBlur: "4",
   tooltipFontColor: "#ffffffff",
   tooltipBackgroundColor: "#000000b8",
+  highlightColor: "#21dc6d40",
+  // voice
   voiceVolume: "1.0",
   voiceRate: "1.0",
   voiceTarget: "source",
   voiceRepeat: "1",
+  // exclude
   langExcludeList: [],
   websiteExcludeList: ["*.test.com"],
-
+  // remains
   captionOnStatusByUser: "true",
   historyList: [],
   historyRecordActions: [],
