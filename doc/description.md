@@ -19,6 +19,8 @@ When mouse hover on text, it shows translated tooltip in any language.
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.93
+  - fix pdf url
 - 0.1.92
   - add google translate tts
 - 0.1.91
