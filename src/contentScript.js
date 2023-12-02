@@ -35,6 +35,7 @@ var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
 var delayTime = 700;
+var highlightNode;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -154,37 +155,52 @@ async function processWord(word, actionType, range) {
 }
 
 function highlightText(range) {
-  if (!range) {
+  if (!range || setting["highlightMouseoverText"] == "false") {
     return;
   }
+  hideHighlight();
+  var rects = range.getClientRects();
 
-  // ver1
-  // $(".mtt-highlight").remove();
-  // var box = range.getBoundingClientRect();
-  // var wrappingNode = $("<div/>", {
-  //   class: "mtt-highlight",
-  // })
-  //   .css({
-  //     left: box.left,
-  //     top: box.top,
-  //     width: box.right - box.left,
-  //     height: box.bottom - box.top,
-  //   })
-  //   .appendTo("body")
-  //   .get(0);
+  for (var i = 0; i < rects.length; i++) {
+    //filter covered rect by other rect
+    var covered = false;
+    for (var j = Number(i) + 1; j < rects.length; j++) {
+      if (rectCovered(rects[i], rects[j])) {
+        covered = true;
+        break;
+      }
+    }
+    if (covered) {
+      continue;
+    }
 
-  //ver2
-  //remove prev highlight
-  // $(".mtt-highlight").contents().unwrap();
+    var rect = rects[i];
 
-  // //make highlight ele
-  // var contents = range.extractContents();
-  // var wrappingNode = $("<span/>", {
-  //   class: "mtt-highlight",
-  // })
-  //   .append(contents)
-  //   .get(0);
-  // range.insertNode(wrappingNode);
+    highlightNode = $("<div/>", {
+      class: "mtt-highlight",
+    })
+      .css({
+        left: rect.left,
+        top: rect.top,
+        width: rect.width,
+        height: rect.height,
+      })
+      .appendTo("body")
+      .get(0);
+  }
+}
+
+function rectCovered(rect1, rect2) {
+  return (
+    rect2.top <= rect1.top &&
+    rect1.top <= rect2.bottom &&
+    rect2.top <= rect1.bottom &&
+    rect1.bottom <= rect2.bottom &&
+    rect2.left <= rect1.left &&
+    rect1.left <= rect2.right &&
+    rect2.left <= rect1.right &&
+    rect1.right <= rect2.right
+  );
 }
 
 function restartWordProcess() {
@@ -242,6 +258,14 @@ function showTooltip(text) {
 
 function hideTooltip() {
   tooltip?.hide();
+  hideHighlight();
+}
+
+function hideHighlight() {
+  if (highlightNode) {
+    highlightNode = null;
+    $(".mtt-highlight").remove();
+  }
 }
 
 async function translateWithReverse(word) {
@@ -559,7 +583,7 @@ function applyStyleSetting() {
       border-right-color: ${setting["tooltipBackgroundColor"]} !important;
     }
     .mtt-highlight{
-      background-color: #21dc6d40 !important;
+      background-color: ${setting["highlightColor"]}  !important;
       position: fixed !important;      
       z-index: 100000100 !important;
       pointer-events: none !important;

@@ -44,6 +44,7 @@ i18List = [
     "Tooltip Background Blur",
     "Tooltip Font Color",
     "Tooltip Background Color",
+    "Highlight Color",
 
     "Voice                                      ",
     "Voice Volume",
@@ -80,6 +81,8 @@ i18List = [
 
 
     "Title                                      ",
+
+
 ]
 
 

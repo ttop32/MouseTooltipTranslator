@@ -610,6 +610,12 @@ var visualTabData = {
     menu: false,
     optionList: {},
   },
+  highlightColor: {
+    description: chrome.i18n.getMessage("Highlight_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
 };
 
 var voiceTabData = {
@@ -652,13 +658,17 @@ var advancedTabData = {
     description: chrome.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
+  translateReverseTarget: {
+    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
+    optionList: translateListWithNone,
+  },
   useTransliteration: {
     description: "Enable Transliteration (Experimental)",
     optionList: toggleList,
   },
-  translateReverseTarget: {
-    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: translateListWithNone,
+  highlightMouseoverText: {
+    description: "Highlight Mouseover Text (Experimental)",
+    optionList: toggleList,
   },
 };
 

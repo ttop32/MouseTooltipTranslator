@@ -62,6 +62,9 @@
 	"Tooltip_Background_Color": {
 		"message": "צבע טולטיפ"
 	},
+	"Highlight_Color": {
+		"message": "Highlight Color"
+	},
 	"Voice______________________________________": {
 		"message": "קול                                      "
 	},

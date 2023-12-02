@@ -62,6 +62,9 @@
 	"Tooltip_Background_Color": {
 		"message": "Warna Latar Belakang Tooltip"
 	},
+	"Highlight_Color": {
+		"message": "Highlight Color"
+	},
 	"Voice______________________________________": {
 		"message": "Suara                                      "
 	},
