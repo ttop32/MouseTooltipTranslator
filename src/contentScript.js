@@ -160,34 +160,49 @@ function highlightText(range) {
   }
   hideHighlight();
   var rects = range.getClientRects();
-
-  for (var i = 0; i < rects.length; i++) {
-    //filter covered rect by other rect
-    var covered = false;
-    for (var j = Number(i) + 1; j < rects.length; j++) {
-      if (rectCovered(rects[i], rects[j])) {
-        covered = true;
-        break;
-      }
-    }
-    if (covered) {
-      continue;
-    }
-
-    var rect = rects[i];
-
+  rects = filterOverlappedRect(rects);
+  for (var rect of rects) {
     highlightNode = $("<div/>", {
       class: "mtt-highlight",
     })
       .css({
-        left: rect.left,
-        top: rect.top,
+        left: rect.left + window.scrollX,
+        top: rect.top + window.scrollY,
         width: rect.width,
         height: rect.height,
       })
       .appendTo("body")
       .get(0);
   }
+}
+
+function filterOverlappedRect(rects) {
+  //filter duplicate rect
+  var rectSet = new Set();
+  rects = Array.from(rects).filter((rect) => {
+    var key = getRectKey(rect);
+    if (!rectSet.has(key)) {
+      rectSet.add(key);
+      return true;
+    }
+    return false;
+  });
+
+  //filter covered rect by other rect
+  rects = rects.filter((rect1) => {
+    for (const rect2 of rects) {
+      if (getRectKey(rect1) != getRectKey(rect2) && rectCovered(rect1, rect2)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  return rects;
+}
+
+function getRectKey(rect) {
+  return `${rect.left}${rect.top}${rect.width}${rect.height}`;
 }
 
 function rectCovered(rect1, rect2) {
@@ -584,10 +599,11 @@ function applyStyleSetting() {
     }
     .mtt-highlight{
       background-color: ${setting["highlightColor"]}  !important;
-      position: fixed !important;      
+      position: absolute !important;   
       z-index: 100000100 !important;
       pointer-events: none !important;
       display: inline !important;
+      border-radius: 2px !important;
     }
     .ocr_text_div{
       position: absolute;
@@ -627,17 +643,27 @@ function applyStyleSetting() {
 
 // url check and element env===============================================================
 function detectPDF() {
-  if (setting["detectPDF"] == "true") {
-    if (
-      document.body.children[0] &&
-      document.body.children[0].type == "application/pdf"
-    ) {
-      window.location.replace(
-        chrome.runtime.getURL("/pdfjs/web/viewer.html") +
-          "?file=" +
-          encodeURIComponent(window.location.href)
-      );
-    }
+  if (
+    setting["detectPDF"] == "true" &&
+    document?.body?.children?.[0]?.type == "application/pdf"
+  ) {
+    //remove browser pdf viewer
+    $("embed").remove();
+    //create mouse tooltip translator pdf viewer
+    $("<iframe/>", {
+      src: chrome.runtime.getURL(
+        `/pdfjs/web/viewer.html?file=${encodeURIComponent(
+          window.location.href
+        )}`
+      ),
+
+      css: {
+        display: "block",
+        border: "none",
+        height: "100vh",
+        width: "100vw",
+      },
+    }).appendTo("body");
   }
 }
 

@@ -1,13 +1,12 @@
-import isUrl from "is-url";
+import delay from "delay";
+
+initPdf();
 
 async function initPdf() {
-  checkUrlIsDecoded(); // redirect  url with file url encoded if not encoded
   checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
-  addCallbackForPdfTextLoad(addSpaceBetweenPdfText); //make line break for spaced text
-  await waitUntilPdfLoad();
-  checkUrlIsEncoded(); //change encoded url to decoded for copy url
+  await Promise.all([waitUntilPdfLoad(), delay(2000)]); //wait pdf load or 2 sec
+  addSpaceBetweenPdfText(); //make line break for spaced text
 }
-initPdf();
 
 //if current url is local file and no file permission
 //alert user need permmsion
@@ -59,38 +58,6 @@ function waitUntilPdfLoad() {
   return new Promise((resolve, reject) => {
     addCallbackForPdfTextLoad(resolve);
   });
-}
-
-function checkUrlIsEncoded() {
-  var fileParam = getFileParam();
-
-  //change to decoded url for ease of url copy
-  if (!isUrl(fileParam)) {
-    changeUrlFileParam(decodeURIComponent(fileParam));
-  }
-}
-
-function checkUrlIsDecoded() {
-  var fileParam = getFileParam();
-  var baseUrl = getBaseUrl();
-  //url is decoded, redirect with encoded url to read correctly in pdf viewer
-  if (isUrl(fileParam)) {
-    redirect(baseUrl + "?file=" + encodeURIComponent(fileParam));
-  }
-}
-
-function getFileParam() {
-  return window.location.search.slice(6); //slice "?page="
-}
-function getBaseUrl() {
-  return window.location.origin + window.location.pathname;
-}
-
-function redirect(url) {
-  window.location.replace(url);
-}
-function changeUrlFileParam(fileParam) {
-  history.replaceState("", "", "/pdfjs/web/viewer.html?file=" + fileParam);
 }
 
 // change space system for tooltip
