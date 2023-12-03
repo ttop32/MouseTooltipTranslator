@@ -1,11 +1,15 @@
 import delay from "delay";
+import $ from "jquery";
 
 initPdf();
 
 async function initPdf() {
   checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
-  await Promise.all([waitUntilPdfLoad(), delay(2000)]); //wait pdf load or 2 sec
-  addSpaceBetweenPdfText(); //make line break for spaced text
+
+  //make line break for spaced text
+  addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
+  await delay(2000); //wait pdf load
+  addSpaceBetweenPdfText(); // run again if text rendered not called
 }
 
 //if current url is local file and no file permission
@@ -61,47 +65,39 @@ function waitUntilPdfLoad() {
 }
 
 // change space system for tooltip
-function addSpaceBetweenPdfText() {
-  // remove all br
-  document.querySelectorAll("br").forEach(function (item, index) {
-    item.remove();
-  });
-
-  // add manual new line
+async function addSpaceBetweenPdfText() {
   var lastY;
   var lastItem;
-  document
-    .querySelectorAll(".page span[role='presentation']")
-    .forEach(function (item, index) {
+
+  // remove all br
+  $("br").remove();
+
+  // add new line for split text
+  $(".page span").each(function (index, item) {
+    try {
       var currentY = parseFloat(item.getBoundingClientRect().top);
       var currentFontSize = parseFloat(window.getComputedStyle(item).fontSize);
 
-      // if between element size is big enough, add new line
-      // else add space
-      if (index === 0) {
-        //skip first index
-      } else {
+      //if prev item is too far pos, add new line to prev item
+      //if not too far add space
+      //skip if already has space
+      if (index != 0 && !/ $/.test(lastItem.textContent)) {
         if (
           lastY < currentY - currentFontSize * 2 ||
           currentY + currentFontSize * 2 < lastY
         ) {
-          //if y diff double, give end line
-          if (!/\n $/.test(lastItem.textContent)) {
-            //if no end line, give end line
-            lastItem.textContent = lastItem.textContent + "\n ";
-          }
+          lastItem.textContent = lastItem.textContent + "\n ";
         } else if (
           lastY < currentY - currentFontSize ||
           currentY + currentFontSize < lastY
         ) {
-          // if y diff, give end space
-          if (!/ $/.test(lastItem.textContent)) {
-            //if no end space, give end space
-            lastItem.textContent = lastItem.textContent + " ";
-          }
+          lastItem.textContent = lastItem.textContent + " ";
         }
       }
       lastY = currentY;
       lastItem = item;
-    });
+    } catch (error) {
+      console.log(error);
+    }
+  });
 }
