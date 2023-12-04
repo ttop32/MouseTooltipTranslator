@@ -1,4 +1,4 @@
-When mouse hover on text, it shows translated tooltip in any language.  
+Mouseover Translate Any Language At Once 
  
 # Features        
      
