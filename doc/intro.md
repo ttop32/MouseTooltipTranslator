@@ -8,14 +8,15 @@
 - Use <kbd>left ctrl</kbd> to listen tts pronunciation when tooltip is shown(Press <kbd>esc</kbd> to stop voice)
 - Use <kbd>right alt</kbd> to translate writing text (or highlighted text) in input box. (Do undo, press <kbd>ctrl</kbd> +<kbd>z</kbd>)
 ![result](/doc/11.gif)
+- Setting page is given for customizing to taste
+![result](/doc/14.gif)
 - Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
 ![result](/doc/12.gif)
 - Support dual subtitles for youtube video
 ![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
-- Setting page is given for customizing to taste
-![result](/doc/14.gif)
+
 # Exception
 
 - If source text language and translate language are same, it will skip

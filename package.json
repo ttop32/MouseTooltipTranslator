@@ -6,17 +6,16 @@
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",
     "build": "webpack --mode=production --config config/webpack.config.js",
-    "zip": "npm-build-zip",
     "delete": "del-cli --force ./build",
-    "build-zip": "npm run delete && npm run build && npm run zip",
     "delete-en": "del-cli --force ./build/_locales/*  !./build/_locales/en",
+    "zip": "npm-build-zip",
     "zip-en": "npm-build-zip --name _en",
+    "build-zip": "npm run delete && npm run build && npm run zip",
     "build-zip-en": "npm run build-zip && npm run delete-en && npm run zip-en"
   },
   "devDependencies": {
     "@mdi/font": "^5.9.55",
     "@mdi/js": "^5.9.55",
-    "@reorx/webpack-ext-reloader": "github:ttop32/webpack-ext-reloader",
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
@@ -34,10 +33,11 @@
     "vue-template-compiler": "^2.7.14",
     "webpack": "^5.74.0",
     "webpack-cli": "^5.0.1",
+    "webpack-ext-reloader": "^1.1.12",
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@mswjs/interceptors": "^0.25.12",
+    "@mswjs/interceptors": "^0.25.13",
     "async-wait-until": "^2.0.12",
     "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",

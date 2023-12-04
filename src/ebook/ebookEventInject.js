@@ -4,7 +4,7 @@ import { enableSelectionEndEvent } from "/src/event/selection";
 var iframeSrc = "";
 
 setInterval(function () {
-  var iframe = getIframe();
+  var iframe = util.getEbookIframe();
   if (iframe && iframeSrc != iframe.src) {
     iframeSrc = iframe.src;
     bindIFrameEvent(iframe);
@@ -12,18 +12,12 @@ setInterval(function () {
   }
 }, 1000);
 
-function getIframe() {
-  var shadows = util.getAllShadows();
-  var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
-  return iframe;
-}
-
 function bindIFrameEvent(iframe) {
   //bind text selection
   enableSelectionEndEvent(iframe.contentWindow);
 
   // bind mouse for mouse over event
-  ["mousemove"].forEach((eventName) => {
+  ["mousemove", "keydown", "keyup"].forEach((eventName) => {
     iframe.contentWindow.addEventListener(eventName, (e) => {
       var evt = new CustomEvent(eventName, {
         bubbles: true,

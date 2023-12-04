@@ -66,36 +66,36 @@ function waitUntilPdfLoad() {
 
 // change space system for tooltip
 async function addSpaceBetweenPdfText() {
-  var lastY;
-  var lastItem;
+  var prevY;
+  var prevLine;
 
   // remove all br
   $("br").remove();
 
   // add new line for split text
-  $(".page span").each(function (index, item) {
+  $(".page span").each(function (index, line) {
     try {
-      var currentY = parseFloat(item.getBoundingClientRect().top);
-      var currentFontSize = parseFloat(window.getComputedStyle(item).fontSize);
+      var lineY = parseFloat(line.getBoundingClientRect().top);
+      var lineFontSize = parseFloat(window.getComputedStyle(line).fontSize);
 
       //if prev item is too far pos, add new line to prev item
       //if not too far add space
       //skip if already has space
-      if (index != 0 && !/ $/.test(lastItem.textContent)) {
+      if (prevLine && !/[\n ]$/.test(prevLine.textContent)) {
         if (
-          lastY < currentY - currentFontSize * 2 ||
-          currentY + currentFontSize * 2 < lastY
+          prevY < lineY - lineFontSize * 2 ||
+          lineY + lineFontSize * 2 < prevY
         ) {
-          lastItem.textContent = lastItem.textContent + "\n ";
+          prevLine.textContent += "\n";
         } else if (
-          lastY < currentY - currentFontSize ||
-          currentY + currentFontSize < lastY
+          prevY < lineY - lineFontSize ||
+          lineY + lineFontSize < prevY
         ) {
-          lastItem.textContent = lastItem.textContent + " ";
+          prevLine.textContent += " ";
         }
       }
-      lastY = currentY;
-      lastItem = item;
+      prevY = lineY;
+      prevLine = line;
     } catch (error) {
       console.log(error);
     }
