@@ -6,7 +6,7 @@ const common = require("./webpack.common.js");
 const PATHS = require("./paths");
 var glob = require("glob");
 var path = require("path");
-const ExtReloader = require("@reorx/webpack-ext-reloader");
+const ExtReloader = require("webpack-ext-reloader");
 
 // Merge webpack configuration files
 module.exports = (env, argv) => {

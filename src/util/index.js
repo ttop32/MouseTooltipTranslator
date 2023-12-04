@@ -774,6 +774,26 @@ export function getReviewUrl() {
   return reviewUrlJson[extId];
 }
 
+export function isIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
+export function isEbookReader() {
+  return (
+    window.location.href == chrome.runtime.getURL("/foliate-js/reader.html")
+  );
+}
+
+export function getEbookIframe() {
+  var shadows = getAllShadows();
+  var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
+  return iframe;
+}
+
 // browser Listener handler========================
 
 export function postMessage(data) {
@@ -824,4 +844,47 @@ export function addCommandListener(type, handler) {
       handler();
     }
   });
+}
+
+//rect =======================================
+export function filterOverlappedRect(rects) {
+  //filter duplicate rect
+  var rectSet = new Set();
+  rects = Array.from(rects).filter((rect) => {
+    var key = getRectKey(rect);
+    if (!rectSet.has(key)) {
+      rectSet.add(key);
+      return true;
+    }
+    return false;
+  });
+
+  //filter covered rect by other rect
+  rects = rects.filter((rect1) => {
+    for (const rect2 of rects) {
+      if (getRectKey(rect1) != getRectKey(rect2) && rectCovered(rect1, rect2)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  return rects;
+}
+
+function getRectKey(rect) {
+  return `${rect.left}${rect.top}${rect.width}${rect.height}`;
+}
+
+function rectCovered(rect1, rect2) {
+  return (
+    rect2.top <= rect1.top &&
+    rect1.top <= rect2.bottom &&
+    rect2.top <= rect1.bottom &&
+    rect1.bottom <= rect2.bottom &&
+    rect2.left <= rect1.left &&
+    rect1.left <= rect2.right &&
+    rect2.left <= rect1.right &&
+    rect1.right <= rect2.right
+  );
 }
