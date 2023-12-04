@@ -1,7 +1,6 @@
 import $ from "jquery";
 import * as util from "/src/util";
 import { WindowPostMessageProxy } from "window-post-message-proxy";
-
 const windowPostMessageProxy = new WindowPostMessageProxy({
   suppressWarnings: true,
 });
@@ -10,39 +9,32 @@ var iFrames = {};
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
-export async function checkImage(setting, mouseTarget, keyDownList) {
+export async function checkImage(img, setting, keyDownList) {
   // if  ocr is not on or no key bind, skip
   // if mouse target is not image, skip
   // if already ocr processed,skip
   if (
     (setting["keyDownOCR"] != "always" &&
       !keyDownList[setting["keyDownOCR"]]) ||
-    !checkMouseTargetIsImage(mouseTarget) ||
-    ocrHistory[mouseTarget.src]
+    !checkIsImage(img) ||
+    ocrHistory[img.src]
   ) {
     return;
   }
 
-  var img = mouseTarget;
-  var mainUrl = img.src;
   var lang = setting["ocrDetectionLang"];
-  ocrHistory[mainUrl] = { mainUrl };
-
-  setElementMouseStatusLoading(img);
-  await initOCR(lang);
-  var base64Url = await getBase64Image(mainUrl);
-  if (!base64Url) {
-    setElementMouseStatusIdle(img);
-    return;
-  }
+  ocrHistory[img.src] = img.src;
+  makeLoadingMouseStyle(img);
 
   //run both,  ocr with opencv rect, ocr without opencv
+  await initOCR(lang);
+  var base64Url = await getBase64Image(img.src);
   await Promise.all([
-    processOcr(mainUrl, lang, base64Url, img, "BLUE", "auto"),
-    processOcr(mainUrl, lang, base64Url, img, "RED", "bbox"),
+    processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
+    processOcr(img.src, lang, base64Url, img, "RED", "bbox"),
   ]);
 
-  setElementMouseStatusIdle(img);
+  makeNormalMouseStyle(img);
 }
 
 export function removeAllOcrEnv() {
@@ -53,22 +45,19 @@ export function removeAllOcrEnv() {
 }
 
 async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
+  if (!base64Url) {
+    return;
+  }
   var ratio = 1;
-  var bboxList = [];
+  var bboxList = [[]];
 
   //ocr process with opencv , then display
-  if (mode == "bbox") {
-    var { bboxList, base64Url, cvratio } = await requestSegmentBox(
+  if (mode != "auto") {
+    var { bboxList, base64Url, ratio } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url
     );
-    if (bboxList.length == 0) {
-      return;
-    }
-    ratio *= cvratio;
-  } else {
-    bboxList = [[]];
   }
 
   // request ocr per bbox
@@ -80,20 +69,16 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   );
 }
 
-function checkMouseTargetIsImage(mouseTarget) {
+function checkIsImage(ele) {
   // loaded image that has big enough size,
-  if (
-    mouseTarget != null &&
-    mouseTarget.src &&
-    mouseTarget.tagName === "IMG" &&
-    mouseTarget.complete &&
-    mouseTarget.naturalHeight !== 0 &&
-    mouseTarget.width > 300 &&
-    mouseTarget.height > 300
-  ) {
-    return true;
-  }
-  return false;
+  return (
+    ele?.src &&
+    ele?.tagName == "IMG" &&
+    ele?.complete &&
+    ele?.naturalHeight !== 0 &&
+    ele?.width > 300 &&
+    ele?.height > 300
+  );
 }
 
 // create ocr==================
@@ -111,48 +96,40 @@ async function createIframe(name, htmlPath) {
     }
 
     var showFrame = false;
-    var css = showFrame
-      ? {
-          width: "700",
-          height: "700",
-        }
-      : { display: "none" };
-
     iFrames[name] = $("<iframe />", {
       name: name,
       id: name,
       src: chrome.runtime.getURL(htmlPath),
-      css,
+      css: {
+        width: "700",
+        height: "700",
+        display: showFrame ? "block" : "none",
+      },
     })
       .appendTo("body")
-      .on("load", function () {
-        resolve();
-      })
+      .on("load", () => resolve())
       .get(0);
   });
 }
 
-// request ocr  i frame ==========
-async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
+// request ocr  iframe ==========
+async function requestSegmentBox(mainUrl, lang, base64Url) {
   return await postMessage(
-    { mainUrl, lang, type: "ocr", bboxList, base64Url, mode },
-    iFrames["ocrFrame"]
+    { type: "segmentBox", mainUrl, lang, base64Url },
+    iFrames["opencvFrame"]
   );
 }
 
-async function requestSegmentBox(mainUrl, lang, base64Url) {
+async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
   return await postMessage(
-    { mainUrl, lang, type: "segmentBox", base64Url },
-    iFrames["opencvFrame"]
+    { type: "ocr", mainUrl, lang, bboxList, base64Url, mode },
+    iFrames["ocrFrame"]
   );
 }
 
 async function requestTesseractInit(lang) {
   return await postMessage(
-    {
-      type: "initTesseract",
-      lang,
-    },
+    { type: "initTesseract", lang },
     iFrames["ocrFrame"]
   );
 }
@@ -162,10 +139,9 @@ async function postMessage(data, frame) {
 }
 
 async function getBase64Image(url) {
-  var base64Url = "";
-  base64Url = await util.getBase64(url);
+  var base64Url = await util.getBase64(url); //load from tab
   if (!base64Url) {
-    var { base64Url } = await requestBase64(url);
+    var { base64Url } = await requestBase64(url); //load from background
   }
   return base64Url;
 }
@@ -275,9 +251,9 @@ function removeOcrIFrame() {
 }
 
 // set style ==============
-function setElementMouseStatusLoading(ele) {
+function makeLoadingMouseStyle(ele) {
   ele.style.cursor = "wait"; //show mouse loading
 }
-function setElementMouseStatusIdle(ele) {
+function makeNormalMouseStyle(ele) {
   ele.style.cursor = "";
 }
