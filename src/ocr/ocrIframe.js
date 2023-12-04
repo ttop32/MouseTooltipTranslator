@@ -111,6 +111,12 @@ async function loadScheduler(lang, mode) {
   var isLocal = lang == "jpn_vert";
   var scheduler = Tesseract.createScheduler();
   var workerIndexList = mode == "auto" ? [0] : [0, 1];
+  var tessedit_pageseg_mode =
+    mode == "auto"
+      ? Tesseract.PSM.AUTO_ONLY
+      : lang == "jpn_vert"
+      ? Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT
+      : Tesseract.PSM.SINGLE_BLOCK;
 
   await Promise.all(
     workerIndexList.map(async (i) => {
@@ -128,11 +134,9 @@ async function loadScheduler(lang, mode) {
       await worker.initialize(lang);
       await worker.setParameters({
         user_defined_dpi: "100",
-        tessedit_pageseg_mode:
-          mode == "auto"
-            ? Tesseract.PSM.AUTO_ONLY
-            : Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT,
+        tessedit_pageseg_mode,
       });
+
       scheduler.addWorker(worker);
     })
   );
@@ -148,6 +152,7 @@ function response(data) {
 function initTesseract(request) {
   loadScheduler(request.lang, "auto");
   loadScheduler(request.lang, "bbox");
+
   response({
     windowPostMessageProxy: request.windowPostMessageProxy,
   });

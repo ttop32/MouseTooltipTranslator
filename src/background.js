@@ -15,62 +15,72 @@ var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var stopTtsTimestamp = 0;
 
-addInstallUrl(introSiteUrl);
-// addUninstallUrl(util.getReviewUrl());
-addCopyRequestListener();
-injectContentScriptForAllTab();
-getSetting();
+backgroundInit();
+
+function backgroundInit() {
+  getSetting();
+  injectContentScriptForAllTab();
+  addInstallUrl(introSiteUrl);
+  // addUninstallUrl(util.getReviewUrl());
+  addCopyRequestListener();
+  addTabSwitchEventListener();
+  addPdfFileTabListener();
+  addMessageListener();
+}
 
 //listen message from contents js and popup js =========================================================================================================
-browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  (async () => {
-    // wait setting load
-    await waitUntil(() => setting);
+function addMessageListener() {
+  browser.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    (async () => {
+      // wait setting load
+      await waitUntil(() => setting);
 
-    if (request.type === "translate") {
-      var translatedResult = await doTranslate(
-        request.word,
-        request.translateSource,
-        request.translateTarget,
-        setting["translatorVendor"]
-      );
+      if (request.type === "translate") {
+        var translatedResult = await doTranslate(
+          request.word,
+          request.translateSource,
+          request.translateTarget,
+          setting["translatorVendor"]
+        );
 
-      sendResponse(
-        translatedResult || {
-          translatedText: `${setting["translatorVendor"]} is broken`,
-          transliteration: "",
-          sourceLang: "",
-          targetLang: setting["translateTarget"],
-          isBroken: true,
-        }
-      );
-    } else if (request.type === "tts") {
-      playTtsQueue(
-        request.sourceText,
-        request.sourceLang,
-        request.targetText,
-        request.targetLang,
-        setting["voiceTarget"],
-        Number(setting["voiceRepeat"])
-      );
-      sendResponse({});
-    } else if (request.type === "stopTTS") {
-      stopTts();
-      sendResponse({});
-    } else if (request.type === "recordTooltipText") {
-      recordHistory(request);
-      updateCopyContext(request);
-      sendResponse({});
-    } else if (request.type === "removeContextAll") {
-      removeContextAll();
-      sendResponse({});
-    } else if (request.type === "requestBase64") {
-      var base64Url = await util.getBase64(request.url);
-      sendResponse({ base64Url });
-    }
-  })();
-  return true;
-});
+        sendResponse(
+          translatedResult || {
+            translatedText: `${setting["translatorVendor"]} is broken`,
+            transliteration: "",
+            sourceLang: "",
+            targetLang: setting["translateTarget"],
+            isBroken: true,
+          }
+        );
+      } else if (request.type === "tts") {
+        playTtsQueue(
+          request.sourceText,
+          request.sourceLang,
+          request.targetText,
+          request.targetLang,
+          setting["voiceTarget"],
+          Number(setting["voiceRepeat"])
+        );
+        sendResponse({});
+      } else if (request.type === "stopTTS") {
+        stopTts();
+        sendResponse({});
+      } else if (request.type === "recordTooltipText") {
+        recordHistory(request);
+        updateCopyContext(request);
+        sendResponse({});
+      } else if (request.type === "requestBase64") {
+        var base64Url = await util.getBase64(request.url);
+        sendResponse({ base64Url });
+      }
+    })();
+    return true;
+  });
+}
 
 async function getSetting() {
   setting = await util.loadSetting();
@@ -97,6 +107,7 @@ function recordHistory(request) {
   }
 }
 
+// cached translate function
 const doTranslate = util.cacheFn(
   async (text, fromLang, targetLang, translatorVendor) => {
     return await translator[translatorVendor].translate(
@@ -107,41 +118,11 @@ const doTranslate = util.cacheFn(
   }
 );
 
-// detect local pdf file and redirect to translated pdf=====================================================================
-browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  // only run when loading and local pdf file
-  if (
-    changeInfo.status != "loading" ||
-    setting?.detectPDF == "false" ||
-    !checkIsLocalPdfUrl(changeInfo?.url)
-  ) {
-    return;
-  }
-
-  openPDFViewer(changeInfo.url, tabId);
-});
-
-//url is end with .pdf, start with file://
-function checkIsLocalPdfUrl(url) {
-  return /^(file:\/\/).*(\.pdf)$/.test(url?.toLowerCase());
-}
-
-async function openPDFViewer(url, tabId) {
-  browser.tabs.update(tabId, {
-    url:
-      browser.runtime.getURL("/pdfjs/web/viewer.html") +
-      "?file=" +
-      encodeURIComponent(url),
-  });
-}
-
 // ================= Copy
 
 function addCopyRequestListener() {
-  // context menu handler for copy
-  util.addContextListener("copy", requestCopyForTargetText);
-  //command shortcut key handler for copy
-  util.addCommandListener("copy-translated-text", requestCopyForTargetText);
+  util.addContextListener("copy", requestCopyForTargetText); // context menu handler for copy
+  util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy
 }
 
 async function updateCopyContext(request) {
@@ -357,4 +338,44 @@ function removeOffscreen() {
   return new Promise((resolve, reject) => {
     chrome.offscreen.closeDocument(() => resolve());
   });
+}
+
+//detect tab swtich ===================================
+function addTabSwitchEventListener() {
+  browser.tabs.onActivated.addListener(handleTabSwitch);
+  browser.tabs.onRemoved.addListener(handleTabSwitch);
+  browser.tabs.onUpdated.addListener(handleTabSwitch);
+}
+
+function handleTabSwitch() {
+  stopTts();
+  removeContextAll();
+}
+
+// detect local pdf file and redirect to translated pdf=====================================================================
+function addPdfFileTabListener() {
+  browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    // only run when loading and local pdf file
+    if (changeInfo.status != "loading" || setting?.detectPDF == "false") {
+      return;
+    }
+
+    openPDFViewer(changeInfo?.url, tabId);
+  });
+}
+
+async function openPDFViewer(url, tabId) {
+  if (!checkIsLocalPdfUrl(url)) {
+    return;
+  }
+  browser.tabs.update(tabId, {
+    url: browser.runtime.getURL(
+      `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
+    ),
+  });
+}
+
+//url is end with .pdf, start with file://
+function checkIsLocalPdfUrl(url) {
+  return /^(file:\/\/).*(\.pdf)$/.test(url?.toLowerCase());
 }

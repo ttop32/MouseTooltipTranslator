@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.95
+  - fix emoji tts
 - 0.1.94
   - hide pdf viewer url
   - add highlight (request by imymexxx)

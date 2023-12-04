@@ -35,13 +35,11 @@ var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
 var delayTime = 700;
-var highlightNode;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
   try {
     loadDestructor(); //remove previous tooltip script
-    stopPrevBackgroundAction(); //stop prev tts and clear context menu
     await getSetting(); //load setting
     if (checkExcludeUrl()) {
       return;
@@ -147,7 +145,6 @@ async function processWord(word, actionType, range) {
       targetLang,
       actionType
     );
-
     highlightText(range);
   } else {
     hideTooltip();
@@ -155,7 +152,8 @@ async function processWord(word, actionType, range) {
 
   //if use_tts is on or activation key is pressed, do tts
   if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
-    requestTTS(word, sourceLang, translatedText, targetLang);
+    var wordWithoutEmoji = util.filterEmoji(word);
+    requestTTS(wordWithoutEmoji, sourceLang, translatedText, targetLang);
   }
 }
 
@@ -175,17 +173,15 @@ function highlightText(range) {
   }
 
   for (var rect of rects) {
-    highlightNode = $("<div/>", {
+    $("<div/>", {
       class: "mtt-highlight",
-    })
-      .css({
+      css: {
         left: rect.left + adjustX,
         top: rect.top + adjustY,
         width: rect.width,
         height: rect.height,
-      })
-      .appendTo("body")
-      .get(0);
+      },
+    }).appendTo("body");
   }
 }
 
@@ -213,12 +209,10 @@ function getDetectType() {
 }
 
 function checkMouseTargetIsSpecialWebBlock() {
-  var specialClassNameList = [
-    "ocr_text_div", //mousetooltip ocr block
-  ];
   // if mouse targeted web element contain particular class name, return true
-  return specialClassNameList.some((className) =>
-    mouseTarget.classList?.contains(className)
+  //mousetooltip ocr block
+  return ["ocr_text_div"].some((className) =>
+    mouseTarget?.classList?.contains(className)
   );
 }
 
@@ -369,7 +363,7 @@ function handleMousemove(e) {
     return;
   }
   setMouseStatus(e);
-  ocrView.checkImage(setting, mouseTarget, keyDownList);
+  ocrView.checkImage(mouseTarget, setting, keyDownList);
   checkWritingBox();
   checkMouseTargetIsYoutubeSubtitle();
 }
@@ -421,8 +415,6 @@ function handleBlur(e) {
   selectedText = "";
   activatedWord = null;
   hideTooltip();
-  requestStopTTS();
-  requestRemoveAllContext();
   ocrView.removeAllOcrEnv();
 }
 
@@ -507,12 +499,6 @@ async function requestRecordTooltipText(
     sourceLang,
     targetLang,
     actionType,
-  });
-}
-
-async function requestRemoveAllContext() {
-  return await util.sendMessage({
-    type: "removeContextAll",
   });
 }
 
@@ -756,11 +742,4 @@ function addEventHandler(eventName, callbackFunc) {
 function removePrevElement() {
   $("#mttstyle").remove();
   ocrView.removeAllOcrEnv();
-}
-
-function stopPrevBackgroundAction() {
-  if (!util.isIframe()) {
-    requestStopTTS();
-    requestRemoveAllContext();
-  }
 }

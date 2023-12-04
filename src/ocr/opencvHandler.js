@@ -10,19 +10,20 @@ window.addEventListener(
   false
 );
 
-async function segmentBox(request) {
+async function segmentBox(request, isResize = true) {
   var type = "segmentSuccess";
   var bboxList = [];
   var base64 = request.base64Url;
   var ratio = 1;
 
   try {
+    //get image
     var canvas1 = await loadImage(request.base64Url);
-    var [canvas2, ratio] = preprocessImage(canvas1);
-    // var canvas2 = canvas1;
-    bboxList = detectText(canvas2);
+    var [canvas1, ratio] = preprocessImage(canvas1, isResize);
+    base64 = canvas1.toDataURL();
 
-    base64 = canvas2.toDataURL();
+    // get bbox from image
+    bboxList = detectText(canvas1);
   } catch (err) {
     console.log(err);
     type = "segmentFail";
@@ -34,7 +35,7 @@ async function segmentBox(request) {
     base64Url: base64,
     lang: request.lang,
     bboxList,
-    cvratio: ratio,
+    ratio,
     windowPostMessageProxy: request.windowPostMessageProxy,
   });
 }
@@ -72,7 +73,6 @@ function response(data) {
 }
 
 // opencv=========================================
-var paddingSize = 10;
 function detectText(canvasIn) {
   // https://github.com/qzane/text-detection
 
@@ -86,6 +86,7 @@ function detectText(canvasIn) {
   let hierarchy = new cv.Mat();
   let ksize = new cv.Size(10, 10);
   var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+  var paddingSize = 10;
 
   cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
   cv.Sobel(dst, dst, cv.CV_8U, 1, 0, 3, 1, 0, cv.BORDER_DEFAULT);
@@ -140,6 +141,7 @@ function detectText(canvasIn) {
     // cv.rectangle(src, point1, point2, color, 2, cv.LINE_AA, 0);
     // console.log(bbox);
   }
+
   // cv.imshow(canvasOut, src);
   // document.body.appendChild(canvasOut);
 
@@ -181,14 +183,17 @@ function image_resize(src, width, height) {
   return r;
 }
 
-function preprocessImage(canvasIn) {
+function preprocessImage(canvasIn, isResize) {
   var canvasOut = document.createElement("canvas");
-
+  var ratio = 1;
   let src = cv.imread(canvasIn);
   let dst = new cv.Mat();
 
   cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
-  var ratio = image_resize(src, 700);
+
+  if (isResize) {
+    var ratio = image_resize(src, 700);
+  }
 
   cv.imshow(canvasOut, src);
   src.delete();
