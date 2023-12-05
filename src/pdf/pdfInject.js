@@ -73,7 +73,8 @@ async function addSpaceBetweenPdfText() {
   $("br").remove();
 
   // add new line for split text
-  $(".page span").each(function (index, line) {
+  //only select leaf element, not item has child
+  $(".page span:not(:has(*))").each(function (index, line) {
     try {
       var lineY = parseFloat(line.getBoundingClientRect().top);
       var lineFontSize = parseFloat(window.getComputedStyle(line).fontSize);
