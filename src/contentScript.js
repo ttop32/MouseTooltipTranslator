@@ -230,13 +230,15 @@ function checkWindowFocus() {
 }
 
 function showTooltip(text) {
-  hideTooltip(); //reset tooltip arrow
+  hideTooltip(true); //reset tooltip arrow
   tooltip?.setContent(text);
   tooltip?.show();
 }
 
-function hideTooltip() {
-  hideAll({ duration: 0 }); //hide all tippy
+function hideTooltip(immediately = false) {
+  if (immediately) {
+    hideAll({ duration: 0 }); //hide all tippy
+  }
   tooltip?.hide();
   hideHighlight();
 }
