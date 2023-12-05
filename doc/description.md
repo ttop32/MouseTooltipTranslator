@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.97
+  - fix pdf conflict (request by Mai Thy Đặng)
 - 0.1.96
   - fix bing chat conflict (request by BlinkDev2k2)
   - change review url
