@@ -65,7 +65,7 @@ var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
     "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
   hmigninkgibhdckiaphhmbgcghochdjc:
-    "https://chrome.google.com/webstore/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
 };
 
 var bingTtsVoiceList = {
