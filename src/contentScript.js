@@ -65,7 +65,8 @@ function startMouseoverDetector() {
     if (
       checkWindowFocus() &&
       !selectedText &&
-      setting["translateWhen"].includes("mouseover")
+      setting["translateWhen"].includes("mouseover") &&
+      event?.mouseoverText != null
     ) {
       var mouseoverText = event?.mouseoverText?.[getDetectType()];
       var mouseoverRange = event?.mouseoverText?.[getDetectType() + "_range"];
@@ -229,13 +230,13 @@ function checkWindowFocus() {
 }
 
 function showTooltip(text) {
-  hideAll({ duration: 0 }); //hide all tippy
   hideTooltip(); //reset tooltip arrow
-  tooltip.setContent(text);
-  tooltip.show();
+  tooltip?.setContent(text);
+  tooltip?.show();
 }
 
 function hideTooltip() {
+  hideAll({ duration: 0 }); //hide all tippy
   tooltip?.hide();
   hideHighlight();
 }
@@ -741,5 +742,7 @@ function addEventHandler(eventName, callbackFunc) {
 
 function removePrevElement() {
   $("#mttstyle").remove();
+  tooltip?.destroy();
+
   ocrView.removeAllOcrEnv();
 }
