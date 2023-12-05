@@ -533,6 +533,10 @@ function applyStyleSetting() {
       color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
     }
+    [data-tippy-root] {
+      display: inline-block !important;
+      visibility: visible  !important;
+    }
     .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
     }

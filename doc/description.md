@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.96
+  - fix bing chat conflict (request by BlinkDev2k2)
   - change review url
 - 0.1.95
   - fix emoji tts
