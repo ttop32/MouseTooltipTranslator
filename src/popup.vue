@@ -363,8 +363,6 @@ var keyList = {
   "Shift Right": "ShiftRight",
   "Meta Left": "MetaLeft",
   "Meta Right": "MetaRight",
-  F2: "F2",
-  F8: "F8",
 };
 
 var ocrLangList = {
@@ -705,7 +703,7 @@ var aboutPageList = {
     sub_name: chrome.i18n.getMessage("Check_how_to_use_this_extension"),
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
     icon: "mdi-help-box",
-    color: "secondary",
+    color: "green",
   },
   pdfViewer: {
     name: chrome.i18n.getMessage("PDF_Viewer"),
@@ -713,13 +711,20 @@ var aboutPageList = {
     url:
       chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
     icon: "mdi-file-pdf-box",
-    color: "warning",
+    color: "red",
   },
   epub: {
     name: chrome.i18n.getMessage("Ebook_Reader"),
     sub_name: chrome.i18n.getMessage("Translate_local_ebook_file"),
     url: chrome.runtime.getURL("/foliate-js/reader.html"),
     icon: "mdi-book-open-blank-variant",
+    color: "orange",
+  },
+  twitter: {
+    name: chrome.i18n.getMessage("Twitter"),
+    sub_name: chrome.i18n.getMessage("Retweet_twitter_post"),
+    url: "https://twitter.com/MouseTooltip",
+    icon: "mdi-twitter",
     color: "cyan",
   },
   reviewPage: {
@@ -734,7 +739,7 @@ var aboutPageList = {
     sub_name: chrome.i18n.getMessage("Check_source_code_in_github"),
     url: "https://github.com/ttop32/MouseTooltipTranslator",
     icon: "mdi-github",
-    color: "success",
+    color: "black",
   },
   privacyPolicy: {
     name: chrome.i18n.getMessage("Privacy_Policy"),
