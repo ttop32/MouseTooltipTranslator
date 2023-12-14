@@ -72,6 +72,8 @@ i18List = [
     "Translate local PDF file",
     "Ebook Reader",
     "Translate local ebook file",
+    "Twitter",
+    "Retweet twitter post",
     "Review Page",
     "Comment on this extension",
     "Source code",

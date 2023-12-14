@@ -21,7 +21,7 @@
 
 
   "web_accessible_resources": [{
-    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "youtube.js"],
+    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "youtube.js","googleDocInject.js"],
     "matches": ["<all_urls>"]
   }],
   "sandbox": {
@@ -41,13 +41,21 @@
 
 
 
-  "content_scripts": [{
-    "js": ["contentScript.js"],
-    "css": ["tippy.css"],
-    "run_at": "document_idle",
-    "all_frames": true,
-    "matches": ["<all_urls>"]
-  }],
+  "content_scripts": [
+    {
+      "js": ["contentScript.js"],
+      "css": ["tippy.css"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "matches": ["<all_urls>"]
+    },
+    {
+      "matches": ["*://docs.google.com/document/*"],
+      "run_at": "document_start",
+      "js": ["googleDocInject.js"],
+      "world": "MAIN"
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },

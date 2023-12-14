@@ -1,15 +1,22 @@
 import delay from "delay";
 import $ from "jquery";
 
+// <link rel="stylesheet" href="../../tippy.css" />
+// <script src="../../contentScript.js"></script>
+// <script src="../../pdfInject.js"></script>
+// <script type="module" src="../../doq/doq.js"></script>
+// validateFileURL(file);
+
 initPdf();
 
 async function initPdf() {
   checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
-
+  checkPdfError();
+  addCustomKeystroke();
   //make line break for spaced text
   addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
-  await delay(2000); //wait pdf load
-  addSpaceBetweenPdfText(); // run again if text rendered not called
+  await delay(1000); //wait pdf load // run again if text rendered not called
+  addSpaceBetweenPdfText();
 }
 
 //if current url is local file and no file permission
@@ -42,17 +49,27 @@ function openSettingPage(id) {
 }
 
 function addCallbackForPdfTextLoad(callback) {
+  //when pdf loaded             //when textlayerloaded
   document.addEventListener("webviewerloaded", function () {
     PDFViewerApplication.initializedPromise.then(function () {
       PDFViewerApplication.eventBus.on("documentloaded", function (event) {
-        //when pdf loaded
         window.PDFViewerApplication.eventBus.on(
           "textlayerrendered",
           function pagechange(evt) {
-            //when textlayerloaded
             callback();
           }
         );
+      });
+    });
+  });
+}
+
+function checkPdfError() {
+  document.addEventListener("webviewerloaded", function () {
+    PDFViewerApplication.initializedPromise.then(function () {
+      PDFViewerApplication.eventBus.on("documenterror", function (event) {
+        console.log(event);
+        window.top.postMessage({ type: "documenterror" }, "*");
       });
     });
   });
@@ -104,6 +121,24 @@ async function addSpaceBetweenPdfText() {
       prevLine = line;
     } catch (error) {
       console.log(error);
+    }
+  });
+}
+
+function addCustomKeystroke() {
+  document.addEventListener("keydown", function onPress(evt) {
+    //skip if text input running
+    if ($("[contenteditable=true][role=textbox]")?.get(0)) {
+      return;
+    }
+
+    switch (evt.code) {
+      case "KeyT":
+        document.getElementById("editorFreeText")?.click();
+        break;
+      case "KeyD":
+        document.getElementById("editorInk")?.click();
+        break;
     }
   });
 }

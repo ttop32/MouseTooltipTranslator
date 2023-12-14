@@ -12,13 +12,16 @@ Mouseover Translate Any Language At Once
 
 # Source code  
 
-- <https://github.com/ttop32/MouseTooltipTranslator>  
+- https://github.com/ttop32/MouseTooltipTranslator
 
 # Supported Translation Languages (using google translate)
 
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.99
+  - fix sciencedirect pdf conflict (request by Tamer)
+  - make bidirectional translate for writing (request by IkiamJ)
 - 0.1.98
   - fix pdf line space
 - 0.1.97

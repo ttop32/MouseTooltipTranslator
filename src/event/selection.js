@@ -5,7 +5,7 @@
 import { debounce } from "throttle-debounce";
 
 var _win;
-var noneSelectStart = false;
+var prevNoneSelect = false;
 export function enableSelectionEndEvent(_window = window) {
   _win = _window;
 
@@ -21,7 +21,9 @@ export function enableSelectionEndEvent(_window = window) {
     "mouseup",
     function (e) {
       var text =
-        isNoneSelectElement() && noneSelectStart ? "" : getSelectionText();
+        isNoneSelectElement(e.target) && prevNoneSelect
+          ? ""
+          : getSelectionText();
 
       triggerSelectionEnd(text);
     },
@@ -30,11 +32,7 @@ export function enableSelectionEndEvent(_window = window) {
   _win.document.addEventListener(
     "mousedown",
     function (e) {
-      if (isNoneSelectElement(e.target)) {
-        noneSelectStart = true;
-      } else {
-        noneSelectStart = false;
-      }
+      prevNoneSelect = isNoneSelectElement(e.target);
     },
     false
   );

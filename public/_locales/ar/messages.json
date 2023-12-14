@@ -134,6 +134,12 @@
 	"Translate_local_ebook_file": {
 		"message": "ترجمة ملف الكتاب الإلكتروني المحلي"
 	},
+	"Twitter": {
+		"message": "Twitter"
+	},
+	"Retweet_twitter_post": {
+		"message": "Retweet twitter post"
+	},
 	"Review_Page": {
 		"message": "صفحة المراجعة"
 	},

@@ -8,7 +8,7 @@ import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import delay from "delay";
 import { debounce } from "throttle-debounce";
-// import "bootstrap/js/dist/tooltip";
+// import * as GoogleDocsUtils from "google-docs-utils";
 
 import { enableSelectionEndEvent } from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
@@ -35,6 +35,8 @@ var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
 var isYoutubeDetected = false;
 var delayTime = 700;
+var isBlobPdf = false;
+var prevWordParam = [];
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -44,8 +46,9 @@ $(async function initMouseTooltipTranslator() {
     if (checkExcludeUrl()) {
       return;
     }
-    detectPDF(); //check current page is pdf
+    await detectPDF(); //check current page is pdf
     checkYoutube();
+    checkGoogleDoc();
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addBackgroundListener();
@@ -93,6 +96,8 @@ function startTextSelectDetector() {
 
 //process detected word
 async function processWord(word, actionType, range) {
+  prevWordParam = Array.prototype.slice.call(arguments); //record args
+
   // skip if mouse target is tooltip
   if (checkMouseTargetIsTooltip()) {
     return;
@@ -112,7 +117,12 @@ async function processWord(word, actionType, range) {
   //stage current processing word
   activatedWord = word;
   var { translatedText, sourceLang, targetLang, transliteration } =
-    await translateWithReverse(word);
+    await translateWithReverse(
+      word,
+      setting["translateSource"],
+      setting["translateTarget"],
+      setting["translateReverseTarget"]
+    );
 
   //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
@@ -190,9 +200,7 @@ function restartWordProcess() {
   // mouseover text will be trigger when no activate word
   //restart selected text
   activatedWord = null;
-  if (selectedText) {
-    processWord(selectedText, "select");
-  }
+  processWord(...prevWordParam);
 }
 
 function getDetectType() {
@@ -247,22 +255,16 @@ function hideHighlight() {
   $(".mtt-highlight")?.remove();
 }
 
-async function translateWithReverse(word) {
-  var response = await requestTranslate(
-    word,
-    setting["translateSource"],
-    setting["translateTarget"]
-  );
+async function translateWithReverse(word, sourceLang, targetLang, reverseLang) {
+  var response = await requestTranslate(word, sourceLang, targetLang);
   //if to,from lang are same and reverse translate on
   if (
-    setting["translateTarget"] == response.sourceLang &&
-    setting["translateReverseTarget"] != "null"
+    !response.isBroken &&
+    targetLang == response.sourceLang &&
+    reverseLang != "null" &&
+    targetLang != reverseLang
   ) {
-    response = await requestTranslate(
-      word,
-      response.sourceLang,
-      setting["translateReverseTarget"]
-    );
+    response = await requestTranslate(word, response.sourceLang, reverseLang);
   }
   return response;
 }
@@ -298,10 +300,11 @@ async function translateWriting(keyInput) {
     return;
   }
   // translate
-  var { translatedText, isBroken } = await requestTranslate(
+  var { translatedText, isBroken } = await translateWithReverse(
     writingText,
     "auto",
-    setting["writingLanguage"]
+    setting["writingLanguage"],
+    setting["translateTarget"]
   );
 
   if (isBroken) {
@@ -534,6 +537,7 @@ function applyStyleSetting() {
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
+      font-family: Arial !important;
     }
     [data-tippy-root] {
       display: inline-block !important;
@@ -596,29 +600,50 @@ function applyStyleSetting() {
 }
 
 // url check and element env===============================================================
-function detectPDF() {
+async function detectPDF() {
   if (
     setting["detectPDF"] == "true" &&
     document?.body?.children?.[0]?.type == "application/pdf"
   ) {
-    //remove browser pdf viewer
-    $("embed").remove();
-    //create mouse tooltip translator pdf viewer
-    $("<iframe/>", {
-      src: chrome.runtime.getURL(
-        `/pdfjs/web/viewer.html?file=${encodeURIComponent(
-          window.location.href
-        )}`
-      ),
-
-      css: {
-        display: "block",
-        border: "none",
-        height: "100vh",
-        width: "100vw",
-      },
-    }).appendTo("body");
+    checkPdfError();
+    openPdfIframe(window.location.href);
   }
+}
+function checkPdfError() {
+  //if pdf not working message come, try open using blob url
+  window.addEventListener("message", function (event) {
+    if (event?.data?.type == "documenterror") {
+      openPdfIframeBlob();
+    }
+  });
+}
+
+async function openPdfIframeBlob() {
+  if (isBlobPdf) {
+    return;
+  }
+  isBlobPdf = true;
+  // wrap url for bypass referrer check, sciencedirect
+  var url = window.location.href;
+  var blob = await fetch(url).then((r) => r.blob());
+  var url = URL.createObjectURL(blob);
+  openPdfIframe(url);
+}
+
+function openPdfIframe(url) {
+  $("embed").remove();
+
+  $("<embed/>", {
+    src: chrome.runtime.getURL(
+      `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
+    ),
+    css: {
+      display: "block",
+      border: "none",
+      height: "100vh",
+      width: "100vw",
+    },
+  }).appendTo("body");
 }
 
 function checkExcludeUrl() {
@@ -646,6 +671,37 @@ function addElementEnv() {
   style = $("<style/>", {
     id: "mttstyle",
   }).appendTo("head");
+}
+
+// googleDoc================================
+function checkGoogleDoc() {
+  if (!matchUrl(document.location.href, "docs.google.com")) {
+    return;
+  }
+
+  // todo, select and mouseover for google doc
+
+  //get select word by using copy hijack
+  // run this code on $(".docs-texteventtarget-iframe")
+  //manifest "match_about_blank": true, is required to inject
+
+  // setInterval(() => {
+  //   const el = document.querySelector("[contenteditable=true]");
+  //   var evt = new CustomEvent("copy");
+  //   el?.dispatchEvent(evt);
+  //   var b = document.querySelector("b");
+  //   if (b?.innerText) {
+  //     console.log(b.innerText);
+  //   }
+  // }, 1000);
+
+  // $(".docs-texteventtarget-iframe")
+  // .contents()
+  // .find("body")
+  // .append($("<script>").html(script));
+
+  // about:blank
+  // }
 }
 
 // youtube================================

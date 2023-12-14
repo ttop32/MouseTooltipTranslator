@@ -4,24 +4,20 @@
 // restart playersubtitle for apply
 
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
+import { waitUntil } from "async-wait-until";
 import { debounce } from "throttle-debounce";
-import { waitUntil, WAIT_FOREVER } from "async-wait-until";
-import delay from "delay";
 
 const interceptor = new XMLHttpRequestInterceptor();
 var interceptorLoaded = false;
 var targetLang = "";
 var subSetting = "";
-var subStartDelayTime = 1500;
-var googleTrafficDelayTime = 0;
-var failSkipTime = 5000;
 var pausedByExtension = false;
 var isPaused = false;
-var failTimestamp = 0;
 var isBaseUrlAltered = false;
 var captionOnStatusByUser = "true";
 var urlListenerAdded = false;
 var activatedVideoId = "";
+var subStartDelayTime = 700;
 
 window.addEventListener(
   "message",
@@ -56,19 +52,20 @@ async function initPlayer(data) {
 
 async function addPlayerStartListener() {
   handlePlayerAll((element) => {
-    // check listner already placed
-    if (element.getAttribute("listener") != "true") {
-      element.setAttribute("listener", "true");
-      element.addEventListener("onStateChange", (e) => {
-        // turn on caption when first loads a video
-        if (e == -1) {
-          loadInterceptor();
-          activateCaption();
-        }
-        //check pause
-        isPaused = e == 2 ? true : false;
-      });
+    // skip if already has listener
+    if (element.getAttribute("listener") == "true") {
+      return;
     }
+    element.setAttribute("listener", "true");
+    element.addEventListener("onStateChange", (e) => {
+      // turn on caption when first loads a video
+      if (e == -1) {
+        loadInterceptor();
+        activateCaption();
+      }
+      //check pause
+      isPaused = e == 2 ? true : false;
+    });
   });
 }
 
@@ -97,18 +94,17 @@ function loadInterceptor() {
       // do sub concat when activation subtitle is done
       if (
         request.url.includes("www.youtube.com/api/timedtext") &&
-        activatedVideoId == getVideoIdParam(request.url)
+        activatedVideoId == getUrlParam(request.url)?.["v"]
       ) {
         //get source lang sub
         var response = await requestSubtitle(request.url);
         var sub1 = await response.json();
         var sub1 = concatWordSub(sub1);
-        var lang = getSearchParam(request.url, "lang");
+        var { lang } = getUrlParam(request.url);
         var responseSub = sub1;
 
         //get target lang sub, if not same lang
         if (lang != targetLang && subSetting == "dualsub") {
-          await delay(googleTrafficDelayTime); //prevent google traffic error
           var sub2 = await getTranslatedSubtitle(request.url, targetLang);
           var mergedSub = mergeSubtitles(sub1, sub2);
           responseSub = mergedSub;
@@ -120,8 +116,6 @@ function loadInterceptor() {
       }
     } catch (error) {
       console.log(error);
-      failTimestamp = Date.now();
-      await delay(googleTrafficDelayTime); //prevent traffic error
     }
   });
 }
@@ -148,10 +142,7 @@ function handlePlayerAll(callbackFn) {
 }
 
 async function waitVideoPlayerLoad() {
-  await waitUntil(() => getVideoPlayer(), {
-    timeout: WAIT_FOREVER,
-    intervalBetweenAttempts: 1000,
-  });
+  await waitUntil(() => getVideoPlayer());
 }
 
 async function pausePlayer() {
@@ -192,20 +183,127 @@ function setPlayerCaption(lang, translationLanguage) {
 const activateCaption = debounce(
   subStartDelayTime,
   async (url = window.location.href) => {
-    // do not turn on caption if user off
-    // if is shorts skip
-
-    if (captionOnStatusByUser == "false" || !isVideoUrl(url)) {
+    // async function activateCaption(url = window.location.href) {
+    // skip if user caption off, is shorts skip
+    if (captionOnStatusByUser == "false" || isShorts(url)) {
       return;
     }
-    var { lang, translationLanguage } = await getVideoLang(url);
-    activatedVideoId = getVideoIdParam(url); //stage current video id
 
+    //get video lang
+    var { lang, tlang } = await getVideoLang(url);
+    activatedVideoId = getUrlParam(url)?.["v"]; //stage current video id
+
+    //turn on caption
     loadCaption(); // turn on caption for embed video
-    setPlayerCaption(lang, translationLanguage); //turn on caption on specified lang
+    setPlayerCaption(lang, tlang); //turn on caption on specified lang
     reloadCaption(); //reset previous caption immediately
   }
 );
+
+// getter ===============================
+
+async function getVideoLang(url) {
+  var tlang;
+  var { v } = getUrlParam(url);
+  var metaData = await getYoutubeMetaData(v);
+  var captionMeta =
+    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+  // get auto generated lang
+  var captionAsr = captionMeta?.filter((sub) => sub.kind);
+  var lang = captionAsr?.[0]?.languageCode;
+  // get target lang if targetsinglesub setting
+  if (subSetting == "targetsinglesub") {
+    var caption = captionMeta?.filter((sub) => sub.languageCode == targetLang);
+    lang = caption?.[0]?.languageCode || lang;
+    tlang = lang != targetLang ? { languageCode: targetLang } : "";
+  }
+  return {
+    lang: lang || "en",
+    tlang,
+  };
+}
+
+async function getYoutubeMetaData(vParam) {
+  var res = await fetch(`https://www.youtube.com/watch?v=${vParam}`);
+  var resText = await res.text();
+  var matches = resText.match(
+    /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/
+  );
+  var json = JSON.parse(matches[1]);
+  return json;
+  // return ytInitialPlayerResponse;  // get metadata from  global variable declaration
+}
+
+async function getUserGeneratedSubUrl(v, lang) {
+  var metaData = await getYoutubeMetaData(v);
+  var captionList =
+    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+  var langUrl = captionList.filter(
+    (caption) => !caption?.kind && caption.languageCode == lang
+  )?.[0]?.baseUrl;
+  langUrl = langUrl ? langUrl + "&fmt=json3" : "";
+  return langUrl;
+}
+
+async function getTranslatedSubtitle(baseUrl, lang) {
+  // get user generated sub url if exist
+  var { v } = getUrlParam(baseUrl);
+  var url = await getUserGeneratedSubUrl(v, lang);
+  // get auto translated sub url
+  if (!url) {
+    var url = new URL(baseUrl);
+    url.searchParams.set("tlang", lang);
+    // var url = baseUrl + `&tlang=${lang}`;
+  }
+  return await (await requestSubtitle(url.toString())).json();
+}
+
+function getUrlParam(url) {
+  var vJson = {};
+  if (isShorts(url) || isEmbed(url)) {
+    vJson["v"] = url.match(/.*\/([^?]+)/)[1];
+  }
+
+  let params = new URL(url).searchParams;
+  var paramsJson = Object.fromEntries(params);
+  return concatJson(vJson, paramsJson);
+}
+function isVideoUrl(url) {
+  return isShorts(url) || isEmbed(url) || isMainVideoUrl(url);
+}
+
+function isMainVideoUrl(url) {
+  return url.includes("www.youtube.com/watch");
+}
+
+function isShorts(url) {
+  return url.includes("www.youtube.com/shorts");
+}
+function isEmbed(url) {
+  return url.includes("www.youtube.com/embed");
+}
+
+//=============================
+async function requestSubtitle(url) {
+  var failed = false;
+  try {
+    var res = await fetch(getSubUrl(url));
+  } catch (error) {
+    failed = true;
+  }
+
+  // if fail, change base url and try again
+  if (res?.status != 200 || failed) {
+    isBaseUrlAltered = !isBaseUrlAltered;
+    res = await fetch(getSubUrl(url));
+  }
+  return res;
+}
+function getSubUrl(url) {
+  return isBaseUrlAltered
+    ? url.replace("www.youtube.com/api/timedtext", "video.google.com/timedtext")
+    : url;
+}
 
 // concat sub=====================================
 function concatWordSub(subtitle) {
@@ -276,110 +374,6 @@ function mergeSubtitles(sub1, sub2) {
   return sub1;
 }
 
-// getter ===============================
-
-async function getVideoLang(url) {
-  var translationLanguage;
-  var vParam = getVideoIdParam(url);
-  var metaData = await getYoutubeMetaData(vParam);
-  var captionMeta =
-    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-  // get auto generated lang
-  var captionAsr = captionMeta?.filter((sub) => sub.kind);
-  var lang = captionAsr?.[0]?.languageCode;
-  // get target lang if targetsinglesub setting
-  if (subSetting == "targetsinglesub") {
-    var caption = captionMeta?.filter((sub) => sub.languageCode == targetLang);
-    lang = caption?.[0]?.languageCode || lang;
-    translationLanguage =
-      lang != targetLang ? { languageCode: targetLang } : "";
-  }
-  return {
-    lang: lang || "en",
-    translationLanguage,
-  };
-}
-
-async function getYoutubeMetaData(vParam) {
-  var res = await fetch(`https://www.youtube.com/watch?v=${vParam}`);
-  var resText = await res.text();
-  var matches = resText.match(
-    /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/
-  );
-  var json = JSON.parse(matches[1]);
-  return json;
-  // return ytInitialPlayerResponse;  // get metadata from  global variable declaration
-}
-
-async function getUserGeneratedSubUrl(v, lang) {
-  var metaData = await getYoutubeMetaData(v);
-  var captionList =
-    metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-  var langUrl = captionList.filter(
-    (caption) => !caption?.kind && caption.languageCode == lang
-  )?.[0]?.baseUrl;
-  langUrl = langUrl ? langUrl + "&fmt=json3" : "";
-  return langUrl;
-}
-
-async function getTranslatedSubtitle(baseUrl, lang) {
-  // get user generated sub url if exist
-  var v = getVideoIdParam(baseUrl);
-  var url = await getUserGeneratedSubUrl(v, lang);
-  // get auto translated sub url
-  if (!url) {
-    var url = new URL(baseUrl);
-    url.searchParams.set("tlang", lang);
-    // var url = baseUrl + `&tlang=${lang}`;
-  }
-  return await (await requestSubtitle(url.toString())).json();
-}
-
-function getVideoIdParam(url) {
-  if (isShorts(url) || isEmbed(url)) {
-    return url.match(/.*\/([^?]+)/)[1];
-  }
-  return getSearchParam(url, "v");
-}
-function getSearchParam(url, param) {
-  var _url = new URL(url);
-  var urlParam = _url.searchParams;
-  return urlParam.get(param);
-}
-
-function isVideoUrl(url) {
-  return isShorts(url) || isEmbed(url) || url.includes("www.youtube.com/watch");
-}
-
-function isShorts(url) {
-  return url.includes("www.youtube.com/shorts");
-}
-function isEmbed(url) {
-  return url.includes("www.youtube.com/embed");
-}
-function isFailOccurRecently() {
-  return Date.now() < failTimestamp + failSkipTime;
-}
-
-//=============================
-async function requestSubtitle(url) {
-  var failed = false;
-  try {
-    var res = await fetch(getSubUrl(url));
-  } catch (error) {
-    failed = true;
-  }
-
-  // if fail, change base url and try again
-  if (res?.status != 200 || failed) {
-    await delay(googleTrafficDelayTime);
-    isBaseUrlAltered = !isBaseUrlAltered;
-    res = await fetch(getSubUrl(url));
-  }
-  return res;
-}
-function getSubUrl(url) {
-  return isBaseUrlAltered
-    ? url.replace("www.youtube.com/api/timedtext", "video.google.com/timedtext")
-    : url;
+function concatJson(x, y) {
+  return Object.assign(x, y);
 }
