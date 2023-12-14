@@ -7,7 +7,7 @@ import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
 import { waitUntil } from "async-wait-until";
 import { debounce } from "throttle-debounce";
 
-const interceptor = new XMLHttpRequestInterceptor();
+var interceptor = new XMLHttpRequestInterceptor();
 var interceptorLoaded = false;
 var targetLang = "";
 var subSetting = "";

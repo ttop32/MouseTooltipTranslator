@@ -167,7 +167,7 @@ async function injectContentScriptForAllTab() {
     for (const cs of browser.runtime.getManifest().content_scripts) {
       for (const tab of await browser.tabs.query({ url: cs.matches })) {
         if (
-          /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com\/webstore|chrome-extension:\/\/).*/.test(
+          /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com|https:\/\/chromewebstore\.google\.com|chrome-extension:\/\/).*/.test(
             tab.url
           )
         ) {
@@ -176,14 +176,18 @@ async function injectContentScriptForAllTab() {
 
         try {
           //load css and js on opened tab
-          browser.scripting.insertCSS({
-            target: { tabId: tab.id },
-            files: cs.css,
-          });
-          browser.scripting.executeScript({
-            target: { tabId: tab.id },
-            files: cs.js,
-          });
+          if (cs.css) {
+            browser.scripting.insertCSS({
+              target: { tabId: tab.id },
+              files: cs.css,
+            });
+          }
+          if (cs.js) {
+            browser.scripting.executeScript({
+              target: { tabId: tab.id },
+              files: cs.js,
+            });
+          }
         } catch (error) {
           console.log(error);
         }
