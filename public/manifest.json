@@ -47,7 +47,8 @@
       "css": ["tippy.css"],
       "run_at": "document_idle",
       "all_frames": true,
-      "matches": ["<all_urls>"]
+      "matches": ["<all_urls>"],
+      "match_about_blank": true
     },
     {
       "matches": ["*://docs.google.com/*"],
