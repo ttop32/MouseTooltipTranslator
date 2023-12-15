@@ -37,6 +37,7 @@ var isYoutubeDetected = false;
 var delayTime = 700;
 var isBlobPdf = false;
 var prevWordParam = [];
+var isGoogleDoc = false;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -80,7 +81,7 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(); //set mouse drag text selection event
+  enableSelectionEndEvent(window, isGoogleDoc); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (
@@ -679,29 +680,7 @@ function checkGoogleDoc() {
     return;
   }
 
-  // todo, select and mouseover for google doc
-
-  //get select word by using copy hijack
-  // run this code on $(".docs-texteventtarget-iframe")
-  //manifest "match_about_blank": true, is required to inject
-
-  // setInterval(() => {
-  //   const el = document.querySelector("[contenteditable=true]");
-  //   var evt = new CustomEvent("copy");
-  //   el?.dispatchEvent(evt);
-  //   var b = document.querySelector("b");
-  //   if (b?.innerText) {
-  //     console.log(b.innerText);
-  //   }
-  // }, 1000);
-
-  // $(".docs-texteventtarget-iframe")
-  // .contents()
-  // .find("body")
-  // .append($("<script>").html(script));
-
-  // about:blank
-  // }
+  isGoogleDoc = true;
 }
 
 // youtube================================
