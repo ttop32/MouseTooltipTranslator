@@ -50,7 +50,7 @@
       "matches": ["<all_urls>"]
     },
     {
-      "matches": ["*://docs.google.com/document/*"],
+      "matches": ["*://docs.google.com/*"],
       "run_at": "document_start",
       "js": ["googleDocInject.js"],
       "world": "MAIN"

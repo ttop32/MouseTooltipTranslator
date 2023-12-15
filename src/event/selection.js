@@ -1,13 +1,15 @@
 /**
  * Selection related functions
  */
-
+import $ from "jquery";
 import { debounce } from "throttle-debounce";
 
 var _win;
 var prevNoneSelect = false;
-export function enableSelectionEndEvent(_window = window) {
+var _isGoogleDoc = false;
+export function enableSelectionEndEvent(_window = window, isGoogleDoc = false) {
   _win = _window;
+  _isGoogleDoc = isGoogleDoc;
 
   // Listen selection change every 700 ms. It covers keyboard selection and selection from menu (select all option)
   _win.document.addEventListener(
@@ -49,6 +51,14 @@ function isNoneSelectElement(element) {
 }
 
 export function getSelectionText() {
+  if (!_isGoogleDoc) {
+    return getWindowSelection();
+  } else {
+    return getGoogleDocSelection();
+  }
+}
+
+function getWindowSelection() {
   let text = "";
   if (_win.getSelection) {
     text = _win.getSelection().toString();
@@ -73,3 +83,23 @@ export const triggerSelectionEnd = (text) => {
   evt.selectedText = text;
   document.dispatchEvent(evt);
 };
+
+//google doc ==========================
+function getGoogleDocSelection() {
+  //get google doc text event iframe
+  var iframe = $(".docs-texteventtarget-iframe").contents();
+  var textBox = iframe.find("[contenteditable=true]");
+
+  //request copy for hijack copy text element as select text from iframe
+  var el = textBox.get(0);
+  var evt = new CustomEvent("copy");
+  el?.dispatchEvent(evt);
+
+  //get select text
+  var text = "";
+  iframe.find("span").each(function () {
+    text += $(this).text() + " ";
+  });
+  text = text.trim();
+  return text;
+}

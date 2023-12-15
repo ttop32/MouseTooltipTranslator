@@ -22,6 +22,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.99
   - fix sciencedirect pdf conflict (request by Tamer)
   - make bidirectional translate for writing (request by IkiamJ)
+  - support text select on google document
 - 0.1.98
   - fix pdf line space
 - 0.1.97
