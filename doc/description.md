@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.100
+  - make hijack injection tighter for support more site (request by AstudilloMarillo)
 - 0.1.99
   - fix sciencedirect pdf conflict (request by Tamer)
   - make bidirectional translate for writing (request by IkiamJ)
