@@ -7,6 +7,7 @@ import tippy, { followCursor, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import delay from "delay";
+import { waitUntil } from "async-wait-until";
 import { debounce } from "throttle-debounce";
 // import * as GoogleDocsUtils from "google-docs-utils";
 
@@ -24,7 +25,8 @@ var mouseTarget = null;
 var activatedWord = null;
 var mouseMoved = false;
 var mouseMovedCount = 0;
-var keyDownList = {}; //use key down for enable translation partially
+var keyDownList = { always: true }; //use key down for enable translation partially
+var keyDownReleaseList = {};
 var style;
 let selectedText = "";
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
@@ -33,11 +35,13 @@ const { signal } = controller;
 var mouseoverInterval;
 var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
-var isYoutubeDetected = false;
+var isYoutubeOn = false;
 var delayTime = 700;
 var isBlobPdf = false;
 var prevWordParam = [];
 var isGoogleDoc = false;
+var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
+var prevTooltipText = "";
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -98,21 +102,25 @@ function startTextSelectDetector() {
 //process detected word
 async function processWord(word, actionType, range) {
   prevWordParam = Array.prototype.slice.call(arguments); //record args
+  word = util.filterWord(word); //filter out one that is url,no normal char
+  var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
+  var isTtsOn = keyDownList[setting["TTSWhen"]];
+  applyReleaseKeydownList();
 
   // skip if mouse target is tooltip
+  //hide tooltip, if activated word exist and current word is none
+  //do nothing, if no new word or no word change, or if isTooltipOn isTtsOn both are down
+  //if isTooltipOn is off, hide tooltip
   if (checkMouseTargetIsTooltip()) {
     return;
-  }
-  word = util.filterWord(word); //filter out one that is url,no normal char
-
-  //hide tooltip, if activated word exist and current word is none
-  //do nothing, if no new word or no word change
-  if (!word && activatedWord) {
+  } else if (!word && activatedWord) {
     activatedWord = word;
     hideTooltip();
     return;
   } else if (activatedWord == word || !word) {
     return;
+  } else if (!isTooltipOn) {
+    hideTooltip();
   }
 
   //stage current processing word
@@ -140,16 +148,19 @@ async function processWord(word, actionType, range) {
 
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
-  if (
-    setting["showTooltipWhen"] == "always" ||
-    keyDownList[setting["showTooltipWhen"]]
-  ) {
-    var tooltipText = wrapInlineHtml(
-      translatedText,
-      transliteration,
-      targetLang
-    );
-    showTooltip(tooltipText);
+  if (isTooltipOn) {
+    var tooltipTransliteration =
+      setting["useTransliteration"] == "true" ? transliteration : "";
+    var tooltipLang =
+      setting["showSourceLang"] == "true"
+        ? util.langListOpposite[sourceLang]
+        : "";
+    var tooltipText = wrapRtlHtml(translatedText, targetLang);
+    tooltipText += concatTooltipText(tooltipTransliteration, tooltipLang);
+    var resetPrevTooltip = prevTooltipText != tooltipText;
+    prevTooltipText = tooltipText;
+
+    showTooltip(tooltipText, resetPrevTooltip);
     requestRecordTooltipText(
       word,
       translatedText,
@@ -158,12 +169,10 @@ async function processWord(word, actionType, range) {
       actionType
     );
     highlightText(range);
-  } else {
-    hideTooltip();
   }
 
   //if use_tts is on or activation key is pressed, do tts
-  if (setting["TTSWhen"] == "always" || keyDownList[setting["TTSWhen"]]) {
+  if (isTtsOn) {
     var wordWithoutEmoji = util.filterEmoji(word);
     requestTTS(wordWithoutEmoji, sourceLang, translatedText, targetLang);
   }
@@ -198,10 +207,12 @@ function highlightText(range) {
 }
 
 function restartWordProcess() {
-  // mouseover text will be trigger when no activate word
+  //trigger mouseover text by reset activate word
   //restart selected text
   activatedWord = null;
-  processWord(...prevWordParam);
+  if (selectedText) {
+    processWord(...prevWordParam);
+  }
 }
 
 function getDetectType() {
@@ -238,14 +249,14 @@ function checkWindowFocus() {
   return mouseMoved && document.visibilityState == "visible";
 }
 
-function showTooltip(text) {
-  hideTooltip(true); //reset tooltip arrow
+function showTooltip(text, resetPrevTooltip) {
+  hideTooltip(resetPrevTooltip); //reset tooltip arrow
   tooltip?.setContent(text);
   tooltip?.show();
 }
 
-function hideTooltip(immediately = false) {
-  if (immediately) {
+function hideTooltip(resetPrevTooltip = false) {
+  if (resetPrevTooltip) {
     hideAll({ duration: 0 }); //hide all tippy
   }
   tooltip?.hide();
@@ -270,26 +281,27 @@ async function translateWithReverse(word, sourceLang, targetLang, reverseLang) {
   return response;
 }
 
-function wrapInlineHtml(translatedText, transliteration, targetLang) {
-  var text = `<span dir=${util.isRtl(
-    targetLang
-  )} class="notranslate">  ${encode(translatedText)} </span>`;
-
-  if (transliteration && setting["useTransliteration"] == "true") {
-    text += `
-    <br><br>
-    <h5>${encode(transliteration)}</h5>
-    `;
-  }
-
+function wrapRtlHtml(translatedText, targetLang) {
+  var text = `<span dir=${util.isRtl(targetLang)} class="notranslate">${encode(
+    translatedText
+  )}</span>`;
   return text;
 }
 
+function concatTooltipText(...texts) {
+  texts = texts.filter((text) => text);
+  var concatText = "";
+  for (var text of texts) {
+    concatText += `<br><span style="font-weight:bold;">${encode(text)}</span>`;
+  }
+  return concatText;
+}
+
 //Translate Writing feature==========================================================================================
-async function translateWriting(keyInput) {
+async function translateWriting() {
   //check current focus is write box
   if (
-    setting["keyDownTranslateWriting"] != keyInput ||
+    !keyDownList[setting["keyDownTranslateWriting"]] ||
     !getFocusedWritingBox()
   ) {
     return;
@@ -359,6 +371,9 @@ function loadEventListener() {
   //detect activation hold key pressed
   addEventHandler("keydown", handleKeydown);
   addEventHandler("keyup", handleKeyup);
+  addEventHandler("mousedown", handleMouseKeyDown);
+  addEventHandler("mouseup", handleMouseKeyUp);
+
   //detect tab switching to reset env
   addEventHandler("blur", handleBlur);
 }
@@ -377,46 +392,57 @@ function handleMousemove(e) {
 
 function handleKeydown(e) {
   //if user pressed ctrl+f  ctrl+a, hide tooltip
-  if ((e.code == "KeyF" || e.code == "KeyA") && e.ctrlKey) {
+  if (/KeyA|KeyF/.test(e.code) && e.ctrlKey) {
     mouseMoved = false;
     hideTooltip();
-    return;
-  }
-  if (e.key == "Escape") {
+  } else if (e.code == "Escape") {
     requestStopTTS();
-  }
-
-  // check already pressed or key is not setting key
-  if (
-    keyDownList[e.code] ||
-    ![
-      setting["showTooltipWhen"],
-      setting["TTSWhen"],
-      setting["keyDownDetectSwap"],
-      setting["keyDownTranslateWriting"],
-      setting["keyDownOCR"],
-    ].includes(e.code)
-  ) {
-    return;
-  }
-
-  //reset status to restart process with keybind
-  keyDownList[e.code] = true;
-  restartWordProcess();
-  translateWriting(e.code);
-  if (e.key == "Alt") {
+  } else if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
   }
+
+  holdKeydownList(e.code);
 }
 
 function handleKeyup(e) {
-  if (keyDownList.hasOwnProperty(e.code)) {
-    keyDownList[e.code] = false;
+  releaseKeydownList(e.code);
+}
+
+function handleMouseKeyDown(e) {
+  holdKeydownList(mouseKeyMap[e.button]);
+}
+function handleMouseKeyUp(e) {
+  releaseKeydownList(mouseKeyMap[e.button]);
+}
+
+function holdKeydownList(key) {
+  // skip text key
+  if (key && !keyDownList[key] && !/Key|Digit|Numpad/.test(key)) {
+    keyDownList[key] = true;
+    restartWordProcess();
+    translateWriting();
   }
 }
 
+function releaseKeydownList(key) {
+  if (keyDownList[key]) {
+    keyDownReleaseList[key] = false;
+    // keyDownList[key] = false;
+  }
+  if (selectedText) {
+    applyReleaseKeydownList();
+  }
+}
+
+function applyReleaseKeydownList() {
+  for (var key in keyDownReleaseList) {
+    keyDownList[key] = keyDownReleaseList[key];
+  }
+  keyDownReleaseList = {};
+}
+
 function handleBlur(e) {
-  keyDownList = {}; //reset key press
+  keyDownList = { always: true }; //reset key press
   mouseMoved = false;
   mouseMovedCount = 0;
   selectedText = "";
@@ -528,8 +554,7 @@ function applyStyleSetting() {
     animation: setting["tooltipAnimation"],
   });
 
-  style.html(
-    `
+  var cssText = `
     .tippy-box[data-theme~="custom"] {
       font-size: ${setting["tooltipFontSize"]}px  !important;
       max-width: ${setting["tooltipWidth"]}px  !important;
@@ -573,32 +598,33 @@ function applyStyleSetting() {
       border: 2px solid CornflowerBlue;
       color: transparent !important;
       background: none !important;
-    }
-    ` +
-      (isYoutubeDetected
-        ? `
-      #ytp-caption-window-container .ytp-caption-segment {
-        cursor: text !important;
-        user-select: text !important;
-      }
-      .caption-visual-line{
-        display: flex  !important;
-        align-items: stretch  !important;
-      }
-      .captions-text .caption-visual-line:first-of-type:after {
-        content: '⣿⣿';
-        background-color: #000000b8;
-        display: inline-block;
-        vertical-align: top;
-        opacity:0;
-        transition: opacity 0.7s ease-in-out;
-      }
-      .captions-text:hover .caption-visual-line:first-of-type:after {
-        opacity:1;
-      }
-    `
-        : "")
-  );
+    }`;
+
+  cssText += isYoutubeOn
+    ? `
+        #ytp-caption-window-container .ytp-caption-segment {
+          cursor: text !important;
+          user-select: text !important;
+        }
+        .caption-visual-line{
+          display: flex  !important;
+          align-items: stretch  !important;
+        }
+        .captions-text .caption-visual-line:first-of-type:after {
+          content: '⣿⣿';
+          background-color: #000000b8;
+          display: inline-block;
+          vertical-align: top;
+          opacity:0;
+          transition: opacity 0.7s ease-in-out;
+        }
+        .captions-text:hover .caption-visual-line:first-of-type:after {
+          opacity:1;
+        }
+      `
+    : "";
+
+  style.html(cssText);
 }
 
 // url check and element env===============================================================
@@ -692,14 +718,15 @@ async function checkYoutube() {
   ) {
     return;
   }
-  isYoutubeDetected = true;
+  isYoutubeOn = true;
   await util.injectScript("youtube.js");
   initYoutubePlayer();
   addCaptionButtonListener();
 }
 
 async function addCaptionButtonListener() {
-  await delay(2000);
+  await waitUntil(() => $(".ytp-subtitles-button").get(0));
+
   $(".ytp-subtitles-button").on("click", (e) => {
     handleCaptionOnOff();
   });
@@ -723,7 +750,7 @@ function playPlayer() {
   util.postMessage({ type: "playPlayer" });
 }
 function initYoutubePlayer() {
-  if (isYoutubeDetected) {
+  if (isYoutubeOn) {
     util.postMessage({
       type: "initYoutubePlayer",
       targetLang: setting["translateTarget"],
@@ -734,7 +761,7 @@ function initYoutubePlayer() {
 }
 
 function checkMouseTargetIsYoutubeSubtitle() {
-  if (!isYoutubeDetected || !$(mouseTarget).is(".ytp-caption-segment")) {
+  if (!isYoutubeOn || !$(mouseTarget).is(".ytp-caption-segment")) {
     return;
   }
   // make subtitle selectable

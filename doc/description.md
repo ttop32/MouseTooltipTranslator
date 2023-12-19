@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.101
+  - add source language & mouse click for tooltip (request by محمد ع. أبو الحسن)
 - 0.1.100
   - make hijack injection tighter for support more site (request by AstudilloMarillo)
 - 0.1.99
