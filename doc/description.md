@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.102
+  - fix touch recognition
 - 0.1.101
   - add source language & mouse click for tooltip (request by محمد ع. أبو الحسن)
 - 0.1.100
