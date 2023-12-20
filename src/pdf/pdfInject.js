@@ -1,6 +1,8 @@
 import delay from "delay";
 import $ from "jquery";
 
+import * as util from "/src/util";
+
 // <link rel="stylesheet" href="../../tippy.css" />
 // <script src="../../contentScript.js"></script>
 // <script src="../../pdfInject.js"></script>
@@ -69,7 +71,7 @@ function checkPdfError() {
     PDFViewerApplication.initializedPromise.then(function () {
       PDFViewerApplication.eventBus.on("documenterror", function (event) {
         console.log(event);
-        window.top.postMessage({ type: "documenterror" }, "*");
+        util.postFrame({ type: "pdfErrorLoadDocument" });
       });
     });
   });
@@ -85,6 +87,8 @@ function waitUntilPdfLoad() {
 async function addSpaceBetweenPdfText() {
   var prevY;
   var prevLine;
+  var newLineScale = 1.5;
+  var spaceScale = 1.0;
 
   // remove all br
   $("br").remove();
@@ -106,13 +110,13 @@ async function addSpaceBetweenPdfText() {
       //skip if already has space
       if (prevLine && !/[\n ]$/.test(prevLine.textContent)) {
         if (
-          prevY < lineY - lineFontSize * 2 ||
-          lineY + lineFontSize * 2 < prevY
+          prevY < lineY - lineFontSize * newLineScale ||
+          lineY + lineFontSize * newLineScale < prevY
         ) {
           prevLine.textContent += "\n";
         } else if (
-          prevY < lineY - lineFontSize ||
-          lineY + lineFontSize < prevY
+          prevY < lineY - lineFontSize * spaceScale ||
+          lineY + lineFontSize * spaceScale < prevY
         ) {
           prevLine.textContent += " ";
         }

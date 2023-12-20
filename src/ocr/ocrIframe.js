@@ -145,10 +145,6 @@ async function loadScheduler(lang, mode) {
   return schedulerList[lang + "_" + mode];
 }
 
-function response(data) {
-  util.postMessage(data);
-}
-
 function initTesseract(request) {
   loadScheduler(request.lang, "auto");
   loadScheduler(request.lang, "bbox");
@@ -156,4 +152,8 @@ function initTesseract(request) {
   response({
     windowPostMessageProxy: request.windowPostMessageProxy,
   });
+}
+
+function response(data) {
+  util.postFrame(data);
 }

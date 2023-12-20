@@ -4,11 +4,14 @@
 // restart playersubtitle for apply
 
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
-import { waitUntil } from "async-wait-until";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { debounce } from "throttle-debounce";
+import $ from "jquery";
+import delay from "delay";
 
 var interceptor = new XMLHttpRequestInterceptor();
 var interceptorLoaded = false;
+var captionButtonListenerLoaded = false;
 var targetLang = "";
 var subSetting = "";
 var pausedByExtension = false;
@@ -43,6 +46,7 @@ async function initPlayer(data) {
   addPlayerStartListener();
   addUrlListener();
   activateCaption();
+  addCaptionButtonListener();
 
   //if not embed, load interceptor directly else load when start video // embed has interceptor conflict
   if (!isEmbed(window.location.href)) {
@@ -79,6 +83,39 @@ function addUrlListener() {
     activateCaption(e.destination.url);
     addPlayerStartListener();
   });
+}
+
+async function addCaptionButtonListener() {
+  if (captionButtonListenerLoaded == true) {
+    return;
+  }
+  captionButtonListenerLoaded = true;
+
+  await waitUntil(() => $(".ytp-subtitles-button").get(0));
+
+  $(".ytp-subtitles-button").on("click", (e) => {
+    handleCaptionOnOff();
+  });
+  $(document).on("keydown", (e) => {
+    if (e.code == "KeyC") {
+      handleCaptionOnOff();
+    }
+  });
+}
+
+async function handleCaptionOnOff() {
+  await delay(200);
+  captionOnStatusByUser = $(".ytp-subtitles-button").attr("aria-pressed");
+  postFrame({ type: "youtubeCaptionOnOff", captionOnStatusByUser });
+}
+
+function postFrame(data) {
+  if (self == top) {
+    window.postMessage(data, "*");
+  } else {
+    window.postMessage(data, "*");
+    window.parent.postMessage(data, "*");
+  }
 }
 
 //intercept sub request ===================================================================
@@ -142,7 +179,9 @@ function handlePlayerAll(callbackFn) {
 }
 
 async function waitVideoPlayerLoad() {
-  await waitUntil(() => getVideoPlayer());
+  await waitUntil(() => getVideoPlayer(), {
+    timeout: WAIT_FOREVER,
+  });
 }
 
 async function pausePlayer() {

@@ -14,8 +14,7 @@ export async function checkImage(img, setting, keyDownList) {
   // if mouse target is not image, skip
   // if already ocr processed,skip
   if (
-    (setting["keyDownOCR"] != "always" &&
-      !keyDownList[setting["keyDownOCR"]]) ||
+    !keyDownList[setting["keyDownOCR"]] ||
     !checkIsImage(img) ||
     ocrHistory[img.src]
   ) {
