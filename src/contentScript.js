@@ -107,17 +107,14 @@ async function processWord(word, actionType, range) {
   var isTtsOn = keyDownList[setting["TTSWhen"]];
   applyReleaseKeydownList();
 
-  // skip if mouse target is tooltip
-  //hide tooltip, if activated word exist and current word is none
-  //do nothing, if no new word or no word change, or if isTooltipOn isTtsOn both are down
-  //if isTooltipOn is off, hide tooltip
-  if (checkMouseTargetIsTooltip()) {
+  // skip if mouse target is tooltip or no text, if no new word
+  // hide tooltip, if  no text
+  // if tooltip is off, hide tooltip
+  if (checkMouseTargetIsTooltip() || activatedWord == word) {
     return;
-  } else if (!word && activatedWord) {
+  } else if (!word) {
     activatedWord = word;
     hideTooltip();
-    return;
-  } else if (activatedWord == word || !word) {
     return;
   } else if (!isTooltipOn) {
     hideTooltip();
@@ -368,6 +365,8 @@ function getWritingText() {
 function loadEventListener() {
   //use mouse position for tooltip position
   addEventHandler("mousemove", handleMousemove);
+  addEventHandler("touchstart", handleTouchstart);
+
   //detect activation hold key pressed
   addEventHandler("keydown", handleKeydown);
   addEventHandler("keyup", handleKeyup);
@@ -388,6 +387,10 @@ function handleMousemove(e) {
   ocrView.checkImage(mouseTarget, setting, keyDownList);
   checkWritingBox();
   checkMouseTargetIsYoutubeSubtitle();
+}
+
+function handleTouchstart(e) {
+  mouseMoved = true;
 }
 
 function handleKeydown(e) {
@@ -633,17 +636,13 @@ async function detectPDF() {
     setting["detectPDF"] == "true" &&
     document?.body?.children?.[0]?.type == "application/pdf"
   ) {
-    checkPdfError();
+    addPdfListener();
     openPdfIframe(window.location.href);
   }
 }
-function checkPdfError() {
+function addPdfListener() {
   //if pdf not working message come, try open using blob url
-  window.addEventListener("message", function (event) {
-    if (event?.data?.type == "documenterror") {
-      openPdfIframeBlob();
-    }
-  });
+  util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
 }
 
 async function openPdfIframeBlob() {
@@ -721,37 +720,24 @@ async function checkYoutube() {
   isYoutubeOn = true;
   await util.injectScript("youtube.js");
   initYoutubePlayer();
-  addCaptionButtonListener();
+  addCaptionOnOffListener();
 }
-
-async function addCaptionButtonListener() {
-  await waitUntil(() => $(".ytp-subtitles-button").get(0));
-
-  $(".ytp-subtitles-button").on("click", (e) => {
-    handleCaptionOnOff();
+function addCaptionOnOffListener() {
+  util.addFrameListener("youtubeCaptionOnOff", ({ captionOnStatusByUser }) => {
+    setting["captionOnStatusByUser"] = captionOnStatusByUser;
+    setting.save();
   });
-  $(document).on("keydown", (e) => {
-    if (e.code == "KeyC") {
-      handleCaptionOnOff();
-    }
-  });
-}
-
-function handleCaptionOnOff() {
-  var captionOnStatusByUser = $(".ytp-subtitles-button").attr("aria-pressed");
-  setting["captionOnStatusByUser"] = captionOnStatusByUser;
-  setting.save();
 }
 
 function pausePlayer() {
-  util.postMessage({ type: "pausePlayer" });
+  util.postFrame({ type: "pausePlayer" });
 }
 function playPlayer() {
-  util.postMessage({ type: "playPlayer" });
+  util.postFrame({ type: "playPlayer" });
 }
 function initYoutubePlayer() {
   if (isYoutubeOn) {
-    util.postMessage({
+    util.postFrame({
       type: "initYoutubePlayer",
       targetLang: setting["translateTarget"],
       subSetting: setting["enableYoutube"],

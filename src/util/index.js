@@ -915,7 +915,8 @@ export function getEbookIframe() {
 
 // browser Listener handler========================
 
-export function postMessage(data) {
+//from body to parent or iframe message
+export function postFrame(data) {
   if (self == top) {
     window.postMessage(data, "*");
   } else {
@@ -924,6 +925,15 @@ export function postMessage(data) {
   }
 }
 
+export function addFrameListener(type, handler) {
+  window.addEventListener("message", function (event) {
+    if (event?.data?.type == type) {
+      handler(event?.data);
+    }
+  });
+}
+
+//fron content script to background
 export async function sendMessage(message) {
   try {
     return await browser.runtime.sendMessage(message);
