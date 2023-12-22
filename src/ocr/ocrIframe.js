@@ -2,6 +2,9 @@ import Tesseract from "tesseract.js";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import * as util from "/src/util";
 
+var schedulerList = {};
+var loadingList = {};
+
 //ocr process, listen image from contents js and respond text
 //1. listen to get image from iframe host
 //2. use tesseract to process ocr to image to get text
@@ -20,7 +23,6 @@ window.addEventListener(
 );
 
 // ocr ===========================================================
-var schedulerList = {};
 
 async function doOcr(request) {
   var type = "ocrSuccess";
@@ -72,7 +74,6 @@ function useTesseract(image, lang, rectangles, mode) {
     try {
       var data = [];
       var scheduler = await getScheduler(lang, mode);
-
       // //ocr on plain image
       if (mode == "auto") {
         var d = await scheduler.addJob("recognize", image);
@@ -97,41 +98,43 @@ function useTesseract(image, lang, rectangles, mode) {
   });
 }
 async function getScheduler(lang, mode) {
-  await waitUntil(() => schedulerList[lang + "_" + mode], {
+  var id = lang + "_" + mode;
+  await waitUntil(() => schedulerList[id], {
     timeout: WAIT_FOREVER,
   });
-  return schedulerList[lang + "_" + mode];
+  return schedulerList[id];
 }
 
 async function loadScheduler(lang, mode) {
-  if (schedulerList[lang + "_" + mode]) {
-    return schedulerList[lang + "_" + mode];
+  var id = lang + "_" + mode;
+  if (loadingList[id]) {
+    return;
   }
+  loadingList[id] = true;
 
-  var isLocal = lang == "jpn_vert";
   var scheduler = Tesseract.createScheduler();
-  var workerIndexList = mode == "auto" ? [0] : [0, 1];
+  var workerIndexList = mode == "auto" ? [0] : [0, 1, 2, 3];
+  var workerPath = chrome.runtime.getURL("/tesseract/worker.min.js");
+  var corePath = chrome.runtime.getURL(
+    "/tesseract/tesseract-core-lstm.wasm.js"
+  );
+
   var tessedit_pageseg_mode =
     mode == "auto"
       ? Tesseract.PSM.AUTO_ONLY
-      : lang == "jpn_vert"
+      : lang.includes("vert")
       ? Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT
       : Tesseract.PSM.SINGLE_BLOCK;
 
   await Promise.all(
     workerIndexList.map(async (i) => {
-      var worker = await Tesseract.createWorker({
+      var worker = await Tesseract.createWorker(lang, 1, {
         workerBlobURL: false,
-        workerPath: chrome.runtime.getURL("/tesseract/worker.min.js"),
-        corePath: chrome.runtime.getURL("/tesseract/tesseract-core.wasm.js"),
-        langPath: isLocal
-          ? chrome.runtime.getURL("/traindata")
-          : "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0", //https://github.com/zodiac3539/jpn_vert
-        gzip: isLocal ? false : true,
-        // logger: m => console.log(m), // Add logger here
+        workerPath,
+        corePath,
+        // logger: (m) => console.log(m), // Add logger here
       });
-      await worker.loadLanguage(lang);
-      await worker.initialize(lang);
+
       await worker.setParameters({
         user_defined_dpi: "100",
         tessedit_pageseg_mode,
@@ -141,13 +144,11 @@ async function loadScheduler(lang, mode) {
     })
   );
 
-  schedulerList[lang + "_" + mode] = scheduler;
-  return schedulerList[lang + "_" + mode];
+  schedulerList[id] = scheduler;
 }
 
 function initTesseract(request) {
-  loadScheduler(request.lang, "auto");
-  loadScheduler(request.lang, "bbox");
+  loadScheduler(request.lang, request.mode);
 
   response({
     windowPostMessageProxy: request.windowPostMessageProxy,

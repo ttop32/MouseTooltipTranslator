@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.103
+  - update tesseract js v5.0.3
+  - fix pdf shortcut key (request by woong park)
 - 0.1.102
   - fix touch recognition
 - 0.1.101

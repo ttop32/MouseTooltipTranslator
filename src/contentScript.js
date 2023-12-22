@@ -6,10 +6,7 @@ import $ from "jquery";
 import tippy, { followCursor, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
-import delay from "delay";
-import { waitUntil } from "async-wait-until";
 import { debounce } from "throttle-debounce";
-// import * as GoogleDocsUtils from "google-docs-utils";
 
 import { enableSelectionEndEvent } from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
@@ -33,15 +30,15 @@ var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome
 const controller = new AbortController();
 const { signal } = controller;
 var mouseoverInterval;
-var writingField =
-  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
-var isYoutubeOn = false;
 var delayTime = 700;
 var isBlobPdf = false;
 var prevWordParam = [];
 var isGoogleDoc = false;
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var prevTooltipText = "";
+var isYoutubeOn = false;
+var isYoutubeScriptOn = false;
+var isYoutubeListenerOn = false;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -229,7 +226,7 @@ function getDetectType() {
 function checkMouseTargetIsSpecialWebBlock() {
   // if mouse targeted web element contain particular class name, return true
   //mousetooltip ocr block
-  return ["ocr_text_div"].some((className) =>
+  return ["ocr_text_div", "textFitted"].some((className) =>
     mouseTarget?.classList?.contains(className)
   );
 }
@@ -299,7 +296,7 @@ async function translateWriting() {
   //check current focus is write box
   if (
     !keyDownList[setting["keyDownTranslateWriting"]] ||
-    !getFocusedWritingBox()
+    !util.getFocusedWritingBox()
   ) {
     return;
   }
@@ -331,11 +328,6 @@ function insertText(inputText) {
   // document.execCommand("delete", false, null);
   document.execCommand("insertHTML", false, inputText);
   // document.execCommand("insertText", false, inputText);
-}
-
-function getFocusedWritingBox() {
-  var writingBox = $(":focus");
-  return writingBox.is(writingField) ? writingBox : null;
 }
 
 function getWritingText() {
@@ -463,7 +455,7 @@ function setMouseStatus(e) {
 const checkWritingBox = debounce(delayTime, () => {
   // if mouse target is not writing box or already bound, return
   // make key bind for preventDefault
-  var $writingField = $(writingField);
+  var $writingField = $(util.writingField);
   if (!$writingField.is(mouseTarget) || $writingField.data("mttBound")) {
     return;
   }
@@ -545,7 +537,7 @@ async function getSetting() {
     applyStyleSetting();
     selectedText = "";
     ocrView.removeAllOcrEnv();
-    initYoutubePlayer();
+    checkYoutube();
   });
 }
 
@@ -596,10 +588,8 @@ function applyStyleSetting() {
     .ocr_text_div{
       position: absolute;
       opacity: 0.7;
-      font-size: calc(100% + 1cqw);
-      overflow: hidden;
-      border: 2px solid CornflowerBlue;
       color: transparent !important;
+      border: 2px solid CornflowerBlue;
       background: none !important;
     }`;
 
@@ -715,14 +705,33 @@ async function checkYoutube() {
     !matchUrl(document.location.href, "www.youtube.com") ||
     setting["enableYoutube"] == "null"
   ) {
+    isYoutubeOn = false;
     return;
   }
+
   isYoutubeOn = true;
-  await util.injectScript("youtube.js");
-  initYoutubePlayer();
+  await injectYoutubeScript();
+  util.postFrame({
+    type: "initYoutubePlayer",
+    targetLang: setting["translateTarget"],
+    subSetting: setting["enableYoutube"],
+    captionOnStatusByUser: setting["captionOnStatusByUser"],
+  });
   addCaptionOnOffListener();
 }
+async function injectYoutubeScript() {
+  if (isYoutubeScriptOn) {
+    return;
+  }
+  isYoutubeScriptOn = true;
+  await util.injectScript("youtube.js");
+}
+
 function addCaptionOnOffListener() {
+  if (isYoutubeListenerOn) {
+    return;
+  }
+  isYoutubeListenerOn = true;
   util.addFrameListener("youtubeCaptionOnOff", ({ captionOnStatusByUser }) => {
     setting["captionOnStatusByUser"] = captionOnStatusByUser;
     setting.save();
@@ -734,16 +743,6 @@ function pausePlayer() {
 }
 function playPlayer() {
   util.postFrame({ type: "playPlayer" });
-}
-function initYoutubePlayer() {
-  if (isYoutubeOn) {
-    util.postFrame({
-      type: "initYoutubePlayer",
-      targetLang: setting["translateTarget"],
-      subSetting: setting["enableYoutube"],
-      captionOnStatusByUser: setting["captionOnStatusByUser"],
-    });
-  }
 }
 
 function checkMouseTargetIsYoutubeSubtitle() {

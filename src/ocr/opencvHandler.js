@@ -1,3 +1,7 @@
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+
+var showResult = false;
+
 window.addEventListener(
   "message",
   ({ data }) => {
@@ -17,6 +21,8 @@ async function segmentBox(request, isResize = true) {
   var ratio = 1;
 
   try {
+    await checkOpencvLoad();
+
     //get image
     var canvas1 = await loadImage(request.base64Url);
     var [canvas1, ratio] = preprocessImage(canvas1, isResize);
@@ -37,6 +43,18 @@ async function segmentBox(request, isResize = true) {
     bboxList,
     ratio,
     windowPostMessageProxy: request.windowPostMessageProxy,
+  });
+}
+
+async function checkOpencvLoad() {
+  await waitUntil(() => {
+    try {
+      let mat = cv?.matFromArray(2, 3, cv?.CV_8UC1, [1, 2, 3, 4, 5, 6]);
+      return mat?.cols;
+    } catch (error) {
+      console.log(error);
+    }
+    return "";
   });
 }
 
@@ -76,7 +94,6 @@ function response(data) {
 function detectText(canvasIn) {
   // https://github.com/qzane/text-detection
 
-  var canvasOut = document.createElement("canvas");
   let src = cv.imread(canvasIn);
   let dst = new cv.Mat();
   var bboxList = [];
@@ -89,9 +106,22 @@ function detectText(canvasIn) {
   var paddingSize = 10;
 
   cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
-  cv.Sobel(dst, dst, cv.CV_8U, 1, 0, 3, 1, 0, cv.BORDER_DEFAULT);
   cv.threshold(dst, dst, 0, 255, cv.THRESH_OTSU | cv.THRESH_BINARY);
-  cv.morphologyEx(dst, dst, cv.MORPH_CLOSE, element);
+  cv.Sobel(dst, dst, cv.CV_8U, 1, 0, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3,
+  cv.Sobel(dst, dst, cv.CV_8U, 0, 1, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3, remove straight line
+
+  // var blurSize = new cv.Size(3, 3);
+  // // cv.blur(dst, dst, blurSize);
+  // cv.GaussianBlur(dst, dst, blurSize, 1.0);
+
+  // var dsize = new cv.Size(3, 3);
+  // var delement = cv.getStructuringElement(cv.MORPH_RECT, dsize);
+  // cv.dilate(dst, dst, delement);
+  // cv.erode(dst, dst, delement);
+  // cv.medianBlur(dst, dst, 1);
+
+  cv.threshold(dst, dst, 0, 255, cv.THRESH_OTSU | cv.THRESH_BINARY); //remove smooth color diff
+  cv.morphologyEx(dst, dst, cv.MORPH_CLOSE, element); //make bigger for char grouping
   cv.findContours(
     dst,
     contours,
@@ -105,7 +135,7 @@ function detectText(canvasIn) {
     let area = cv.contourArea(cnt);
     let angle = Math.abs(cv.minAreaRect(cnt).angle);
     let isRightAngle = [0, 90, 180, 270].some(
-      (x) => Math.abs(x - angle) <= 30.0
+      (x) => Math.abs(x - angle) <= 10.0
     );
     let rect = cv.boundingRect(cnt);
     var left = parseInt(Math.max(rect.x - paddingSize, 0));
@@ -117,8 +147,8 @@ function detectText(canvasIn) {
     // if not sharp, small size, wrong angle, too side pos
     if (
       cnt.rows < 100 ||
-      area < 500 ||
-      area > (h / 10) * (w / 10) ||
+      area < 150 ||
+      area > (h / 8) * (w / 8) ||
       !isRightAngle ||
       left == 0 ||
       top == 0 ||
@@ -131,19 +161,27 @@ function detectText(canvasIn) {
     var bbox = { left, top, width, height };
     bboxList.push(bbox);
 
-    // let color = new cv.Scalar(
-    //   Math.round(Math.random() * 255),
-    //   Math.round(Math.random() * 255),
-    //   Math.round(Math.random() * 255)
-    // );
-    // let point1 = new cv.Point(left, top);
-    // let point2 = new cv.Point(left + width, top + height);
-    // cv.rectangle(src, point1, point2, color, 2, cv.LINE_AA, 0);
-    // console.log(bbox);
+    if (showResult) {
+      let color = new cv.Scalar(
+        Math.round(Math.random() * 255),
+        Math.round(Math.random() * 255),
+        Math.round(Math.random() * 255)
+      );
+      let point1 = new cv.Point(left, top);
+      let point2 = new cv.Point(left + width, top + height);
+      cv.rectangle(src, point1, point2, color, 2, cv.LINE_AA, 0);
+      console.log(bbox);
+    }
   }
-
-  // cv.imshow(canvasOut, src);
-  // document.body.appendChild(canvasOut);
+  if (showResult) {
+    var canvasOut1 = document.createElement("canvas");
+    var canvasOut2 = document.createElement("canvas");
+    cv.imshow(canvasOut1, src);
+    document.body.appendChild(canvasOut1);
+    cv.imshow(canvasOut2, dst);
+    document.body.appendChild(canvasOut2);
+  }
+  console.log(bboxList.length);
 
   bboxList = sortBbox(bboxList);
   return bboxList;

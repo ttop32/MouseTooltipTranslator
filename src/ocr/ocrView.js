@@ -1,11 +1,17 @@
 import $ from "jquery";
 import * as util from "/src/util";
+
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { WindowPostMessageProxy } from "window-post-message-proxy";
+import textfit from "textfit";
+
 const windowPostMessageProxy = new WindowPostMessageProxy({
   suppressWarnings: true,
 });
 var ocrHistory = {};
 var iFrames = {};
+var iframeLoadingList = {};
+var showFrame = false;
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
@@ -20,18 +26,20 @@ export async function checkImage(img, setting, keyDownList) {
   ) {
     return;
   }
-
-  var lang = setting["ocrDetectionLang"];
   ocrHistory[img.src] = img.src;
+  var lang = setting["ocrDetectionLang"];
   makeLoadingMouseStyle(img);
 
   //run both,  ocr with opencv rect, ocr without opencv
-  await initOCR(lang);
   var base64Url = await getBase64Image(img.src);
+  // var start = new Date().getTime();
   await Promise.all([
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox"),
   ]);
+  // var end = new Date().getTime();
+  // var time = end - start;
+  // console.log("Execution time: " + time);
 
   makeNormalMouseStyle(img);
 }
@@ -40,6 +48,7 @@ export function removeAllOcrEnv() {
   removeOcrIFrame();
   removeOcrBlock();
   iFrames = {};
+  iframeLoadingList = {};
   ocrHistory = {};
 }
 
@@ -49,6 +58,7 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   }
   var ratio = 1;
   var bboxList = [[]];
+  await initOCR(lang, mode);
 
   //ocr process with opencv , then display
   if (mode != "auto") {
@@ -81,21 +91,24 @@ function checkIsImage(ele) {
 }
 
 // create ocr==================
-async function initOCR(lang) {
-  await createIframe("ocrFrame", "/ocr.html");
+async function initOCR(lang, mode) {
   await createIframe("opencvFrame", "/opencvHandler.html");
-  requestTesseractInit(lang);
+  await createIframe("ocrFrame", "/ocr.html");
+  requestTesseractInit(lang, mode);
 }
 
 async function createIframe(name, htmlPath) {
-  return new Promise(function (resolve, reject) {
-    if (iFrames[name]) {
+  return new Promise(async function (resolve, reject) {
+    if (iframeLoadingList[name]) {
+      await waitUntil(() => iFrames[name], {
+        timeout: WAIT_FOREVER,
+      });
       resolve();
       return;
     }
+    iframeLoadingList[name] = true;
 
-    var showFrame = false;
-    iFrames[name] = $("<iframe />", {
+    var iFrame = $("<iframe />", {
       name: name,
       id: name,
       src: chrome.runtime.getURL(htmlPath),
@@ -106,7 +119,10 @@ async function createIframe(name, htmlPath) {
       },
     })
       .appendTo("body")
-      .on("load", () => resolve())
+      .on("load", () => {
+        iFrames[name] = iFrame;
+        resolve();
+      })
       .get(0);
   });
 }
@@ -126,9 +142,9 @@ async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
   );
 }
 
-async function requestTesseractInit(lang) {
+async function requestTesseractInit(lang, mode) {
   return await postMessage(
-    { type: "initTesseract", lang },
+    { type: "initTesseract", lang, mode },
     iFrames["ocrFrame"]
   );
 }
@@ -169,9 +185,8 @@ function getTextBoxList(ocrData) {
       // for (var paragraph of block.paragraphs) {
       var text = filterOcrText(block["text"]);
       text = util.filterWord(text); //filter out one that is url,over 1000length,no normal char
-      // console.log(text);
-      // console.log(block["confidence"]);
 
+      // console.log(text);
       //if string contains only whitespace, skip
       if (/^\s*$/.test(text) || text.length < 3 || block["confidence"] < 60) {
         continue;
@@ -190,10 +205,10 @@ function createOcrTextBlock(img, textBox, ratio, color) {
   //init bbox
   var $div = $("<div/>", {
     class: "ocr_text_div notranslate",
-    text: textBox["text"],
     css: {
       border: "2px solid " + color,
     },
+    text: textBox["text"],
   }).appendTo(img.parentElement);
 
   // change z-index
@@ -201,10 +216,12 @@ function createOcrTextBlock(img, textBox, ratio, color) {
     Math.max(0, 100000 - getBboxSize(textBox["bbox"])) + textBox["confidence"];
   $div.css("z-index", zIndex);
 
-  // position
+  // position and size
   setLeftTopWH(img, textBox["bbox"], $div, ratio);
+  textfit($div);
   $(window).on("resize", (e) => {
     setLeftTopWH(img, textBox["bbox"], $div, ratio);
+    textfit($div);
   });
 }
 
