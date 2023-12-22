@@ -132,7 +132,7 @@ async function addSpaceBetweenPdfText() {
 function addCustomKeystroke() {
   document.addEventListener("keydown", function onPress(evt) {
     //skip if text input running
-    if ($("[contenteditable=true][role=textbox]")?.get(0)) {
+    if (util.getFocusedWritingBox()) {
       return;
     }
 

@@ -9,6 +9,8 @@ import { debounce } from "throttle-debounce";
 import $ from "jquery";
 import delay from "delay";
 
+// caption on off, detect url redirect
+
 var interceptor = new XMLHttpRequestInterceptor();
 var interceptorLoaded = false;
 var captionButtonListenerLoaded = false;
@@ -21,6 +23,7 @@ var captionOnStatusByUser = "true";
 var urlListenerAdded = false;
 var activatedVideoId = "";
 var subStartDelayTime = 700;
+var interceptKillTime = 5 * 60 * 1000;
 
 window.addEventListener(
   "message",
@@ -41,6 +44,7 @@ async function initPlayer(data) {
   targetLang = data.targetLang;
   subSetting = data.subSetting;
   captionOnStatusByUser = data.captionOnStatusByUser;
+
   // check video and turn on sub
   await waitVideoPlayerLoad();
   addPlayerStartListener();
@@ -125,6 +129,7 @@ function loadInterceptor() {
     return;
   }
   interceptorLoaded = true;
+
   interceptor.apply();
   interceptor.on("request", async ({ request, requestId }) => {
     try {
@@ -233,11 +238,18 @@ const activateCaption = debounce(
     activatedVideoId = getUrlParam(url)?.["v"]; //stage current video id
 
     //turn on caption
+    loadInterceptor();
     loadCaption(); // turn on caption for embed video
     setPlayerCaption(lang, tlang); //turn on caption on specified lang
     reloadCaption(); //reset previous caption immediately
+    killIntercept();
   }
 );
+
+const killIntercept = debounce(interceptKillTime, () => {
+  interceptor.dispose();
+  interceptorLoaded = false;
+});
 
 // getter ===============================
 
@@ -357,6 +369,7 @@ function concatWordSub(subtitle) {
       .replace(/\s+/g, " ")
       .trim();
 
+    // if prev sub time overlapped current sub, concat
     if (
       newEvents.length == 0 ||
       // 5000 < newEvents[newEvents.length - 1].dDurationMs ||

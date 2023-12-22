@@ -1,2 +1,2 @@
-https://unpkg.com/tesseract.js-core@4.0.4/tesseract-core.wasm.js
-https://unpkg.com/tesseract.js@4.1.1/dist/worker.min.js
+https://unpkg.com/tesseract.js-core@5.0.0/tesseract-core-lstm.wasm.js
+https://unpkg.com/tesseract.js@5.0.3/dist/worker.min.js
