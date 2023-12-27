@@ -98,6 +98,9 @@ const common = {
         {
           from: "**/*",
           context: "public",
+          filter: (resourcePath) => {
+            return !resourcePath.includes(".map");
+          },
         },
       ],
     }),

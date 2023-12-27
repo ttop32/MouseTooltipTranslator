@@ -43,7 +43,7 @@ var defaultData = {
   voiceRepeat: "1",
   // exclude
   langExcludeList: [],
-  websiteExcludeList: ["*.test.com"],
+  websiteExcludeList: ["*.example.com"],
   // remains
   captionOnStatusByUser: "true",
   historyList: [],
@@ -564,7 +564,7 @@ export function getBrowserTtsVoiceList() {
     try {
       // get voice list and sort by remote first
       // get matched lang voice
-      chrome.tts.getVoices((voices) => {
+      browser.tts.getVoices((voices) => {
         let filtered = voices.filter((e) => {
           return e.remote != null && e.lang != null && e.voiceName != null;
         }); //get one that include remote, lang, voiceName
@@ -642,6 +642,11 @@ export function caretRangeFromPointOnDocument(x, y) {
 export function caretRangeFromPointOnShadowDom(x, y) {
   // get all text from shadows
   var shadows = getAllShadows();
+
+  //filter shadow dom by parent position overlap
+  shadows = shadows.filter((shadow) => checkXYInElement(shadow?.host, x, y));
+
+  //get all text node
   var textNodes = shadows
     .map((shadow) => Array.from(textNodesUnder(shadow)))
     .flat();
@@ -741,11 +746,15 @@ export function getCharRanges(textNode) {
 }
 
 export function checkXYInElement(ele, x, y) {
-  var rect = ele.getBoundingClientRect(); //mouse in word rect
-  if (rect.left > x || rect.right < x || rect.top > y || rect.bottom < y) {
+  try {
+    var rect = ele.getBoundingClientRect(); //mouse in word rect
+    if (rect.left > x || rect.right < x || rect.top > y || rect.bottom < y) {
+      return false;
+    }
+    return true;
+  } catch (error) {
     return false;
   }
-  return true;
 }
 
 // text util==================================
@@ -830,7 +839,7 @@ export function injectScript(scriptUrl) {
     $("<script>", { id: scriptUrl })
       .on("load", () => resolve())
       .appendTo("head")
-      .attr("src", chrome.runtime.getURL(scriptUrl));
+      .attr("src", browser.runtime.getURL(scriptUrl));
   });
 }
 
@@ -906,7 +915,7 @@ export function isIframe() {
 
 export function isEbookReader() {
   return (
-    window.location.href == chrome.runtime.getURL("/foliate-js/reader.html")
+    window.location.href == browser.runtime.getURL("/foliate-js/reader.html")
   );
 }
 
@@ -949,8 +958,8 @@ export async function sendMessage(message) {
 }
 
 export function sendMessageToCurrentTab(message) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, message);
+  browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    browser.tabs.sendMessage(tabs[0].id, message);
   });
 }
 
@@ -958,6 +967,7 @@ export function addMessageListener(type, handler) {
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type == type) {
       handler(message);
+      sendResponse({});
     }
   });
 }

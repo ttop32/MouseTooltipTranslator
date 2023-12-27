@@ -4,7 +4,6 @@
 
 import browser from "webextension-polyfill";
 import { waitUntil } from "async-wait-until";
-import delay from "delay";
 
 import translator from "./translator/index.js";
 import * as util from "/src/util";
@@ -310,7 +309,7 @@ function getBase64Url(blob) {
 
 async function playSound(source, rate, volume) {
   await createOffscreen();
-  await chrome.runtime.sendMessage({
+  await util.sendMessage({
     play: {
       source,
       rate,
@@ -321,14 +320,13 @@ async function playSound(source, rate, volume) {
 
 async function stopTtsOffscreen() {
   await createOffscreen();
-  await chrome.runtime.sendMessage({ stop: {} });
-  // removeOffscreen();
+  util.sendMessage({ stop: {} });
 }
 
 // Create the offscreen document
 async function createOffscreen() {
   try {
-    await chrome.offscreen.createDocument({
+    await browser.offscreen.createDocument({
       url: "offscreen.html",
       reasons: ["AUDIO_PLAYBACK"],
       justification: "play tts", // details for using the API
@@ -340,7 +338,7 @@ async function createOffscreen() {
 
 function removeOffscreen() {
   return new Promise((resolve, reject) => {
-    chrome.offscreen.closeDocument(() => resolve());
+    browser.offscreen.closeDocument(() => resolve());
   });
 }
 

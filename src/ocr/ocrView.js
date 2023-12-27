@@ -4,6 +4,7 @@ import * as util from "/src/util";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { WindowPostMessageProxy } from "window-post-message-proxy";
 import textfit from "textfit";
+import delay from "delay";
 
 const windowPostMessageProxy = new WindowPostMessageProxy({
   suppressWarnings: true,
@@ -31,6 +32,8 @@ export async function checkImage(img, setting, keyDownList) {
   makeLoadingMouseStyle(img);
 
   //run both,  ocr with opencv rect, ocr without opencv
+  // auto= no opencv only tesseract
+  // bbox use opencv and tesseract
   var base64Url = await getBase64Image(img.src);
   // var start = new Date().getTime();
   await Promise.all([
@@ -58,14 +61,15 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   }
   var ratio = 1;
   var bboxList = [[]];
-  await initOCR(lang, mode);
+  await initOCR();
 
   //ocr process with opencv , then display
-  if (mode != "auto") {
+  if (!mode.includes("auto")) {
     var { bboxList, base64Url, ratio } = await requestSegmentBox(
       mainUrl,
       lang,
-      base64Url
+      base64Url,
+      mode
     );
   }
 
@@ -91,10 +95,9 @@ function checkIsImage(ele) {
 }
 
 // create ocr==================
-async function initOCR(lang, mode) {
+async function initOCR() {
   await createIframe("opencvFrame", "/opencvHandler.html");
   await createIframe("ocrFrame", "/ocr.html");
-  requestTesseractInit(lang, mode);
 }
 
 async function createIframe(name, htmlPath) {
@@ -128,9 +131,9 @@ async function createIframe(name, htmlPath) {
 }
 
 // request ocr  iframe ==========
-async function requestSegmentBox(mainUrl, lang, base64Url) {
+async function requestSegmentBox(mainUrl, lang, base64Url, mode) {
   return await postMessage(
-    { type: "segmentBox", mainUrl, lang, base64Url },
+    { type: "segmentBox", mainUrl, lang, base64Url, mode },
     iFrames["opencvFrame"]
   );
 }
@@ -201,7 +204,7 @@ function getTextBoxList(ocrData) {
   return textBoxList;
 }
 
-function createOcrTextBlock(img, textBox, ratio, color) {
+async function createOcrTextBlock(img, textBox, ratio, color) {
   //init bbox
   var $div = $("<div/>", {
     class: "ocr_text_div notranslate",
@@ -216,13 +219,16 @@ function createOcrTextBlock(img, textBox, ratio, color) {
     Math.max(0, 100000 - getBboxSize(textBox["bbox"])) + textBox["confidence"];
   $div.css("z-index", zIndex);
 
-  // position and size
+  //set box position and szie
   setLeftTopWH(img, textBox["bbox"], $div, ratio);
-  textfit($div);
   $(window).on("resize", (e) => {
     setLeftTopWH(img, textBox["bbox"], $div, ratio);
-    textfit($div);
+    // textfit($div);
   });
+
+  //set text font size
+  await delay(100);
+  textfit($div, { alignHoriz: true, multiLine: true, reProcess: false });
 }
 
 function getBboxSize(bbox) {

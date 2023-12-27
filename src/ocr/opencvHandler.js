@@ -19,6 +19,7 @@ async function segmentBox(request, isResize = true) {
   var bboxList = [];
   var base64 = request.base64Url;
   var ratio = 1;
+  var mode = request.mode;
 
   try {
     await checkOpencvLoad();
@@ -29,7 +30,7 @@ async function segmentBox(request, isResize = true) {
     base64 = canvas1.toDataURL();
 
     // get bbox from image
-    bboxList = detectText(canvas1);
+    bboxList = detectText(canvas1, mode);
   } catch (err) {
     console.log(err);
     type = "segmentFail";
@@ -91,7 +92,7 @@ function response(data) {
 }
 
 // opencv=========================================
-function detectText(canvasIn) {
+function detectText(canvasIn, mode) {
   // https://github.com/qzane/text-detection
 
   let src = cv.imread(canvasIn);
@@ -99,26 +100,22 @@ function detectText(canvasIn) {
   var bboxList = [];
   var w = src.cols;
   var h = src.rows;
+  var paddingSize = 10;
   let contours = new cv.MatVector();
   let hierarchy = new cv.Mat();
-  let ksize = new cv.Size(10, 10);
+  var ksize = new cv.Size(10, 10);
   var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
-  var paddingSize = 10;
+
+  // var ksize = new cv.Size(20, 20);
+  // var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
+  // cv.erode(dst, dst, delement);
+  // cv.dilate(dst, dst, delement);
+  // cv.medianBlur(dst, dst, 5);
 
   cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
   cv.threshold(dst, dst, 0, 255, cv.THRESH_OTSU | cv.THRESH_BINARY);
   cv.Sobel(dst, dst, cv.CV_8U, 1, 0, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3,
   cv.Sobel(dst, dst, cv.CV_8U, 0, 1, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3, remove straight line
-
-  // var blurSize = new cv.Size(3, 3);
-  // // cv.blur(dst, dst, blurSize);
-  // cv.GaussianBlur(dst, dst, blurSize, 1.0);
-
-  // var dsize = new cv.Size(3, 3);
-  // var delement = cv.getStructuringElement(cv.MORPH_RECT, dsize);
-  // cv.dilate(dst, dst, delement);
-  // cv.erode(dst, dst, delement);
-  // cv.medianBlur(dst, dst, 1);
 
   cv.threshold(dst, dst, 0, 255, cv.THRESH_OTSU | cv.THRESH_BINARY); //remove smooth color diff
   cv.morphologyEx(dst, dst, cv.MORPH_CLOSE, element); //make bigger for char grouping
@@ -134,7 +131,7 @@ function detectText(canvasIn) {
     let cnt = contours.get(i);
     let area = cv.contourArea(cnt);
     let angle = Math.abs(cv.minAreaRect(cnt).angle);
-    let isRightAngle = [0, 90, 180, 270].some(
+    let isRightAngle = [0, 90, 180, 270, 360].some(
       (x) => Math.abs(x - angle) <= 10.0
     );
     let rect = cv.boundingRect(cnt);
@@ -143,12 +140,13 @@ function detectText(canvasIn) {
     var width = parseInt(Math.min(rect.width + paddingSize * 2, w - left));
     var height = parseInt(Math.min(rect.height + paddingSize * 2, h - top));
     var whRatio = Math.max(width / height, height / width);
+    var r = area / (rect.width * rect.height);
 
     // if not sharp, small size, wrong angle, too side pos
     if (
+      r < 0.2 ||
       cnt.rows < 100 ||
       area < 150 ||
-      area > (h / 8) * (w / 8) ||
       !isRightAngle ||
       left == 0 ||
       top == 0 ||
@@ -174,17 +172,19 @@ function detectText(canvasIn) {
     }
   }
   if (showResult) {
-    var canvasOut1 = document.createElement("canvas");
-    var canvasOut2 = document.createElement("canvas");
-    cv.imshow(canvasOut1, src);
-    document.body.appendChild(canvasOut1);
-    cv.imshow(canvasOut2, dst);
-    document.body.appendChild(canvasOut2);
+    console.log(bboxList.length);
+    showImage(src);
+    showImage(dst);
   }
-  console.log(bboxList.length);
 
   bboxList = sortBbox(bboxList);
   return bboxList;
+}
+
+function showImage(cvImage) {
+  var canvas = document.createElement("canvas");
+  cv.imshow(canvas, cvImage);
+  document.body.appendChild(canvas);
 }
 
 function sortBbox(bboxList) {
@@ -195,25 +195,20 @@ function sortBbox(bboxList) {
   });
 }
 
-function image_resize(src, width, height) {
+function image_resize(src, minSize) {
   var dim;
   var r;
   var w = src.cols;
   var h = src.rows;
 
-  // # if both the width and height are None, then return the
-  // # original image
-  if (!width && !height) {
+  if (!minSize) {
     return src;
-  }
-
-  // # check to see if the width is None
-  if (!width) {
-    r = height / h;
-    dim = [parseInt(w * r), height];
+  } else if (h < w) {
+    r = minSize / h;
+    dim = [parseInt(w * r), minSize];
   } else {
-    r = width / w;
-    dim = [width, parseInt(h * r)];
+    r = minSize / w;
+    dim = [minSize, parseInt(h * r)];
   }
 
   let dsize = new cv.Size(...dim);
