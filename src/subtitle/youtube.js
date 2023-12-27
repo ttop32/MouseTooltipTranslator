@@ -95,7 +95,9 @@ async function addCaptionButtonListener() {
   }
   captionButtonListenerLoaded = true;
 
-  await waitUntil(() => $(".ytp-subtitles-button").get(0));
+  await waitUntil(() => $(".ytp-subtitles-button").get(0), {
+    timeout: WAIT_FOREVER,
+  });
 
   $(".ytp-subtitles-button").on("click", (e) => {
     handleCaptionOnOff();
@@ -124,11 +126,15 @@ function postFrame(data) {
 
 //intercept sub request ===================================================================
 // check any subtitle request and concat dual sub
+
+//interceptor api has bug that does not pass skipped one
+//need to kill this interceptor when done for above reason
 function loadInterceptor() {
   if (interceptorLoaded == true) {
     return;
   }
   interceptorLoaded = true;
+  killIntercept();
 
   interceptor.apply();
   interceptor.on("request", async ({ request, requestId }) => {
@@ -242,7 +248,6 @@ const activateCaption = debounce(
     loadCaption(); // turn on caption for embed video
     setPlayerCaption(lang, tlang); //turn on caption on specified lang
     reloadCaption(); //reset previous caption immediately
-    killIntercept();
   }
 );
 
