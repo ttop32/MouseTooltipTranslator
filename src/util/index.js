@@ -510,7 +510,7 @@ export var langList = {
 export var langListOpposite = swapJsonKeyValue(langList);
 
 export var writingField =
-  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable="true"], [role=textbox], [spellcheck]';
+  'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
 
 //setting util======================================
 
