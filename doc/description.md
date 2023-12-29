@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.105
+  - fix copy (request by J-Corleone)
 - 0.1.104
   - fix shadow dom performance
 - 0.1.103
