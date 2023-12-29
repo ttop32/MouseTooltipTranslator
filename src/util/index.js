@@ -1031,6 +1031,15 @@ function rectCovered(rect1, rect2) {
 }
 
 export function getFocusedWritingBox() {
+  //check doucment input box focused
   var writingBox = $(":focus");
-  return writingBox.is(writingField) ? writingBox : null;
+  if (writingBox.is(writingField)) {
+    return writingBox.get(0);
+  }
+
+  //check shadow dom input box focusd
+  var shadows = getAllShadows().filter((shadow) =>
+    $(shadow.activeElement).is(writingField)
+  );
+  return shadows?.[0]?.activeElement;
 }
