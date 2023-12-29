@@ -957,10 +957,9 @@ export async function sendMessage(message) {
   return {};
 }
 
-export function sendMessageToCurrentTab(message) {
-  browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    browser.tabs.sendMessage(tabs[0].id, message);
-  });
+export async function sendMessageToCurrentTab(message) {
+  var tabs = await browser.tabs.query({ active: true, currentWindow: true });
+  browser.tabs.sendMessage(tabs?.[0]?.id, message);
 }
 
 export function addMessageListener(type, handler) {
