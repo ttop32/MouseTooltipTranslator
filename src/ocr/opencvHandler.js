@@ -22,7 +22,7 @@ async function segmentBox(request, isResize = true) {
   var mode = request.mode;
 
   try {
-    await checkOpencvLoad();
+    await waitOpencvLoad();
 
     //get image
     var canvas1 = await loadImage(request.base64Url);
@@ -47,7 +47,7 @@ async function segmentBox(request, isResize = true) {
   });
 }
 
-async function checkOpencvLoad() {
+async function waitOpencvLoad() {
   await waitUntil(() => {
     try {
       let mat = cv?.matFromArray(2, 3, cv?.CV_8UC1, [1, 2, 3, 4, 5, 6]);
