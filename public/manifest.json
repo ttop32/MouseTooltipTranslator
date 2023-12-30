@@ -21,7 +21,7 @@
 
 
   "web_accessible_resources": [{
-    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "youtube.js","googleDocInject.js"],
+    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js"],
     "matches": ["<all_urls>"]
   }],
   "sandbox": {

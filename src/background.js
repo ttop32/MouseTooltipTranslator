@@ -3,9 +3,9 @@
 //listen context menu, uninstall, first install, extension update
 
 import browser from "webextension-polyfill";
-import { waitUntil } from "async-wait-until";
 
 import translator from "./translator/index.js";
+import tts from "./tts/index.js";
 import * as util from "/src/util";
 
 var setting;
@@ -16,9 +16,9 @@ var stopTtsTimestamp = 0;
 
 backgroundInit();
 
-function backgroundInit() {
-  getSetting();
+async function backgroundInit() {
   injectContentScriptForAllTab();
+  await getSetting();
   addInstallUrl(introSiteUrl);
   // addUninstallUrl(util.getReviewUrl());
   addCopyRequestListener();
@@ -35,9 +35,6 @@ function addMessageListener() {
     sendResponse
   ) {
     (async () => {
-      // wait setting load
-      await waitUntil(() => setting);
-
       if (request.type === "translate") {
         var translatedResult = await doTranslate(
           request.word,
@@ -238,108 +235,20 @@ async function playTtsQueue(
 
 function stopTts() {
   stopTtsTimestamp = Date.now();
-  browser.tts.stop(); //remove prev voice
-  stopTtsOffscreen();
+  tts["BrowserTTS"].stopTTS();
 }
 
 async function playTts(text, lang, startTimeStamp) {
   if (startTimeStamp < stopTtsTimestamp) {
     return;
   }
-  var voice = setting?.["ttsVoice_" + lang];
   var volume = Number(setting["voiceVolume"]);
   var rate = Number(setting["voiceRate"]);
-
-  if (voice?.includes("BingTTS")) {
-    await playBingTts(text, voice, rate, volume);
-  } else if (voice?.includes("GoogleTranslateTTS_")) {
-    await playGoogleTranslateTts(text, lang, rate, volume);
-  } else {
-    await playBrowserTts(text, lang, voice, rate, volume);
-  }
-}
-
-function playBrowserTts(text, lang, voiceName, rate, volume) {
-  return new Promise((resolve, reject) => {
-    browser.tts.speak(text, {
-      lang,
-      voiceName,
-      volume,
-      rate,
-      onEvent: (event) => {
-        if (["end", "interrupted", "cancelled", "error"].includes(event.type)) {
-          resolve();
-        }
-      },
-    });
-  });
-}
-
-async function playBingTts(text, voice, rate, volume) {
-  try {
-    var ttsBlob = await translator["bing"].requestTts(text, voice, rate);
-    var base64Url = await getBase64Url(ttsBlob);
-    await playSound(base64Url, 1, volume);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function playGoogleTranslateTts(text, lang, rate, volume) {
-  try {
-    var googleTranslateTtsUrl = `https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
-      text
-    )}&tl=${lang}&client=tw-ob`;
-    await playSound(googleTranslateTtsUrl, rate, volume);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-function getBase64Url(blob) {
-  return new Promise((resolve, reject) => {
-    var reader = new FileReader();
-    reader.onload = function () {
-      var dataUrl = reader.result;
-      resolve(dataUrl);
-    };
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function playSound(source, rate, volume) {
-  await createOffscreen();
-  await util.sendMessage({
-    play: {
-      source,
-      rate,
-      volume,
-    },
-  });
-}
-
-async function stopTtsOffscreen() {
-  await createOffscreen();
-  util.sendMessage({ stop: {} });
-}
-
-// Create the offscreen document
-async function createOffscreen() {
-  try {
-    await browser.offscreen.createDocument({
-      url: "offscreen.html",
-      reasons: ["AUDIO_PLAYBACK"],
-      justification: "play tts", // details for using the API
-    });
-  } catch (error) {
-    if (!error.message.startsWith("Only a single offscreen")) throw error;
-  }
-}
-
-function removeOffscreen() {
-  return new Promise((resolve, reject) => {
-    browser.offscreen.closeDocument(() => resolve());
-  });
+  var voiceFullName = setting?.["ttsVoice_" + lang];
+  var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
+  var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;
+  var engine = isExternalTts ? voiceFullName.split("_")[0] : "BrowserTTS";
+  await tts[engine].playTTS(text, voice, lang, rate, volume);
 }
 
 //detect tab swtich ===================================

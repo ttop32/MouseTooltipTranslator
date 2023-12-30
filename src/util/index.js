@@ -1,8 +1,10 @@
 import $ from "jquery";
 import { parse } from "bcp-47";
-import { Setting } from "/src/util/setting.js";
 import isUrl from "is-url";
 import browser from "webextension-polyfill";
+import _ from "lodash";
+
+import { Setting } from "./setting.js";
 
 var defaultData = {
   showTooltipWhen: "always",
@@ -507,7 +509,8 @@ export var langList = {
   Yoruba: "yo",
   Zulu: "zu",
 };
-export var langListOpposite = swapJsonKeyValue(langList);
+
+export var langListOpposite = _.invert(langList);
 
 export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
@@ -772,11 +775,7 @@ export function isEmpty(obj) {
 }
 
 export function swapJsonKeyValue(json) {
-  var ret = {};
-  for (var key in json) {
-    ret[json[key]] = key;
-  }
-  return ret;
+  return _.invert(json);
 }
 
 export function sortJsonByKey(json) {
@@ -817,11 +816,14 @@ export function filterWord(word) {
 }
 
 export function filterEmoji(word) {
-  word = word.replace(
+  return word.replace(
     /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
     ""
   );
-  return word;
+}
+
+export function filterSpecialText(word) {
+  return word.replace(/[^a-zA-Z ]/g, "");
 }
 
 export function truncate(str, n) {
@@ -835,11 +837,17 @@ export function copyTextToClipboard(text) {
 // inject =================================
 export function injectScript(scriptUrl) {
   return new Promise((resolve) => {
-    $(`#${scriptUrl}`).remove(); //remove prev script
-    $("<script>", { id: scriptUrl })
+    var url = browser.runtime.getURL(scriptUrl);
+    var id = filterSpecialText(url);
+    if ($(`#${id}`)?.get(0)) {
+      resolve();
+      return;
+    }
+
+    $("<script>", { id })
       .on("load", () => resolve())
       .appendTo("head")
-      .attr("src", browser.runtime.getURL(scriptUrl));
+      .attr("src", url);
   });
 }
 
@@ -863,7 +871,7 @@ export function cacheFn(fn) {
   };
 }
 
-//image=================================
+//base64=================================
 export function getBase64(url) {
   return new Promise(function (resolve, reject) {
     fetch(url)
@@ -878,6 +886,17 @@ export function getBase64(url) {
       .catch(async (error) => {
         resolve("");
       });
+  });
+}
+
+export function getBase64Url(blob) {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var dataUrl = reader.result;
+      resolve(dataUrl);
+    };
+    reader.readAsDataURL(blob);
   });
 }
 

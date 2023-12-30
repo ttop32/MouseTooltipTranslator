@@ -1,5 +1,5 @@
 // https://github.com/vtosters/lite/blob/cf17ed64c759d366ae7121dc61c4328205963ed4/app/src/main/java/ru/vtosters/lite/translators/YandexTranslator.java#L35
-import BaseTranslator from "./BaseTranslator";
+import BaseTranslator from "./baseTranslator";
 import { v4 as uuidv4 } from "uuid";
 import ky from "ky";
 
