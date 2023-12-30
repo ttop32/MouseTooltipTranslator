@@ -24,14 +24,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function play(url, rate = 1.0, volume = 1.0) {
   return new Promise((resolve, reject) => {
-    audio = new Audio();
-
-    audio.onloadeddata = () => audio.play();
-    audio.onended = () => resolve();
-    audio.preload = "auto";
+    audio = new Audio(url);
     audio.volume = volume;
     audio.playbackRate = rate;
-    audio.src = url;
+    audio.onended = () => resolve();
+    audio.onloadeddata = () => audio.play();
   });
 }
 

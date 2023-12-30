@@ -1,5 +1,5 @@
 // https://github.com/PinMIlk/nodepapago
-import BaseTranslator from "./BaseTranslator";
+import BaseTranslator from "./baseTranslator";
 import ky from "ky";
 import { v4 as uuidv4 } from "uuid";
 import Crypto from "crypto";

@@ -1,4 +1,4 @@
-import BaseTranslator from "./BaseTranslator";
+import BaseTranslator from "./baseTranslator";
 import ky from "ky";
 
 var bingLangCode = {
@@ -77,22 +77,21 @@ var bingLangCode = {
   "zh-TW": "zh-Hant",
 };
 
-let bingAccessToken;
-let bingBaseUrl = "https://www.bing.com/ttranslatev3";
-let bingTokenUrl = "https://www.bing.com/translator";
-let bingTtsUrl = "https://www.bing.com/tfettts";
-
 export default class bing extends BaseTranslator {
+  static bingBaseUrl = "https://www.bing.com/ttranslatev3";
+  static bingTokenUrl = "https://www.bing.com/translator";
   static langCodeJson = bingLangCode;
+  static bingAccessToken;
 
   static async requestTranslate(text, fromLang, targetLang) {
-    const { token, key, IG, IID } = await getBingAccessToken();
+    const { token, key, IG, IID } = await this.getBingAccessToken();
 
     return await ky
-      .post(bingBaseUrl, {
+      .post(this.bingBaseUrl, {
         searchParams: {
           IG,
-          IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
+          IID:
+            IID && IID.length ? IID + "." + this.bingAccessToken.count++ : "",
           isVertical: "1",
         },
         body: new URLSearchParams({
@@ -119,61 +118,35 @@ export default class bing extends BaseTranslator {
     }
   }
 
-  static async requestTts(text, voice = "en-US-AriaNeural", rate, volume) {
-    const { token, key, IG, IID } = await getBingAccessToken();
-    // `<prosody pitch='+${pitch}Hz' rate ='+${rate}%' volume='+${volume}%'></prosody>`
-    //  <voice xml:lang='en-US' xml:gender='Female' name='en-US-AriaNeural'></voice>
-    var voice = voice.replace("BingTTS_", "");
-    var voiceSplit = voice.split("-");
-    voiceSplit = voiceSplit.slice(0, -1);
-    var locale = voiceSplit.join("-");
-    var rate100 = rate * 100 - 100;
-
-    return await ky
-      .post(bingTtsUrl, {
-        searchParams: {
+  static async getBingAccessToken() {
+    // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
+    try {
+      //if no access token or token is timeout, get new token
+      if (
+        !this.bingAccessToken ||
+        Date.now() - this.bingAccessToken["tokenTs"] >
+          this.bingAccessToken["tokenExpiryInterval"]
+      ) {
+        const data = await ky(this.bingTokenUrl).text();
+        const IG = data.match(/IG:"([^"]+)"/)[1];
+        const IID = data.match(/data-iid="([^"]+)"/)[1];
+        var [_key, _token, interval] = JSON.parse(
+          data.match(/params_AbusePreventionHelper\s?=\s?([^\]]+\])/)[1]
+        );
+        this.bingAccessToken = {
           IG,
-          IID: IID && IID.length ? IID + "." + bingAccessToken.count++ : "",
-          isVertical: "1",
-        },
-        body: new URLSearchParams({
-          ssml: `<speak version='1.0' xml:lang='${locale}'><voice name='${voice}'><prosody rate='${rate100}%'>${text}</prosody></voice></speak>`,
-          token,
-          key,
-        }),
-      })
-      .blob();
-  }
-}
-
-async function getBingAccessToken() {
-  // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
-  try {
-    //if no access token or token is timeout, get new token
-    if (
-      !bingAccessToken ||
-      Date.now() - bingAccessToken["tokenTs"] >
-        bingAccessToken["tokenExpiryInterval"]
-    ) {
-      const data = await ky(bingTokenUrl).text();
-      const IG = data.match(/IG:"([^"]+)"/)[1];
-      const IID = data.match(/data-iid="([^"]+)"/)[1];
-      var [_key, _token, interval] = JSON.parse(
-        data.match(/params_AbusePreventionHelper\s?=\s?([^\]]+\])/)[1]
-      );
-      bingAccessToken = {
-        IG,
-        IID,
-        key: _key,
-        token: _token,
-        tokenTs: _key,
-        tokenExpiryInterval: interval,
-        isAuthv2: undefined,
-        count: 0,
-      };
+          IID,
+          key: _key,
+          token: _token,
+          tokenTs: _key,
+          tokenExpiryInterval: interval,
+          isAuthv2: undefined,
+          count: 0,
+        };
+      }
+      return this.bingAccessToken;
+    } catch (e) {
+      console.log(e);
     }
-    return bingAccessToken;
-  } catch (e) {
-    console.log(e);
   }
 }

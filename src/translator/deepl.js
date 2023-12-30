@@ -1,6 +1,6 @@
 // https://github.com/akl7777777/bob-plugin-akl-deepl-free-translate/blob/fc8460a8e24776e4e95961fc4607f77994f6b2ab/src/main.js#L8
 
-import BaseTranslator from "./BaseTranslator";
+import BaseTranslator from "./baseTranslator";
 import ky from "ky";
 
 var deeplLangCode = {

@@ -1,4 +1,4 @@
-import BaseTranslator from "./BaseTranslator";
+import BaseTranslator from "./baseTranslator";
 import { decode } from "he";
 import ky from "ky";
 

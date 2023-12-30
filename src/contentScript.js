@@ -37,7 +37,6 @@ var isGoogleDoc = false;
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var prevTooltipText = "";
 var isYoutubeOn = false;
-var isYoutubeScriptOn = false;
 var isYoutubeListenerOn = false;
 
 //tooltip core======================================================================
@@ -378,7 +377,6 @@ function handleMousemove(e) {
   setMouseStatus(e);
   ocrView.checkImage(mouseTarget, setting, keyDownList);
   checkWritingBox();
-  checkMouseTargetIsYoutubeSubtitle();
 }
 
 function handleTouchstart(e) {
@@ -534,10 +532,10 @@ async function requestRecordTooltipText(
 
 async function getSetting() {
   setting = await util.loadSetting(function settingCallbackFn() {
+    checkYoutube();
     applyStyleSetting();
     selectedText = "";
     ocrView.removeAllOcrEnv();
-    checkYoutube();
   });
 }
 
@@ -710,21 +708,22 @@ async function checkYoutube() {
   }
 
   isYoutubeOn = true;
-  await injectYoutubeScript();
+  await injectVideoPlayerScript();
+  initPlayer();
+  addCaptionOnOffListener();
+}
+
+async function injectVideoPlayerScript() {
+  await util.injectScript("videoHandler.js");
+}
+
+function initPlayer() {
   util.postFrame({
-    type: "initYoutubePlayer",
+    type: "initPlayer",
     targetLang: setting["translateTarget"],
     subSetting: setting["enableYoutube"],
     captionOnStatusByUser: setting["captionOnStatusByUser"],
   });
-  addCaptionOnOffListener();
-}
-async function injectYoutubeScript() {
-  if (isYoutubeScriptOn) {
-    return;
-  }
-  isYoutubeScriptOn = true;
-  await util.injectScript("youtube.js");
 }
 
 function addCaptionOnOffListener() {
@@ -736,44 +735,6 @@ function addCaptionOnOffListener() {
     setting["captionOnStatusByUser"] = captionOnStatusByUser;
     setting.save();
   });
-}
-
-function pausePlayer() {
-  util.postFrame({ type: "pausePlayer" });
-}
-function playPlayer() {
-  util.postFrame({ type: "playPlayer" });
-}
-
-function checkMouseTargetIsYoutubeSubtitle() {
-  if (!isYoutubeOn || !$(mouseTarget).is(".ytp-caption-segment")) {
-    return;
-  }
-  // make subtitle selectable
-  $(".ytp-caption-segment")
-    .off()
-    .on("contextmenu", (e) => {
-      e.stopPropagation();
-    })
-    .on("mousedown", (e) => {
-      $(".caption-window").attr("draggable", "false");
-      e.stopPropagation();
-    });
-
-  // skip embed video
-  if (document.location.href.includes("www.youtube.com/embed")) {
-    return;
-  }
-  // add auto pause when mouseover
-  $(".caption-window")
-    .off()
-    .on("mouseenter", (e) => {
-      pausePlayer();
-    })
-    .on("mouseleave", (e) => {
-      playPlayer();
-    });
-  pausePlayer();
 }
 
 //destruction ===================================
@@ -797,6 +758,5 @@ function addEventHandler(eventName, callbackFunc) {
 function removePrevElement() {
   $("#mttstyle").remove();
   tooltip?.destroy();
-
   ocrView.removeAllOcrEnv();
 }
