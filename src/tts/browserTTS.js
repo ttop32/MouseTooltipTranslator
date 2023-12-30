@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill";
+
 import BaseTTS from "./baseTTS";
 
 export default class BrowserTTS extends BaseTTS {
