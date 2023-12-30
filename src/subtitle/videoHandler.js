@@ -190,7 +190,9 @@ async function waitVideoFrameLoad() {
   );
 }
 async function waitCaptionBox() {
-  await waitUntilForever(() => $(".ytp-caption-window-container").length);
+  await waitUntilForever(
+    () => $("#movie_player .ytp-caption-window-container").length
+  );
 }
 
 async function pausePlayer() {
