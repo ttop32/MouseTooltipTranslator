@@ -48,7 +48,7 @@ $(async function initMouseTooltipTranslator() {
       return;
     }
     await detectPDF(); //check current page is pdf
-    checkYoutube();
+    checkVideo();
     checkGoogleDoc();
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
@@ -532,7 +532,7 @@ async function requestRecordTooltipText(
 
 async function getSetting() {
   setting = await util.loadSetting(function settingCallbackFn() {
-    checkYoutube();
+    checkVideo();
     applyStyleSetting();
     selectedText = "";
     ocrView.removeAllOcrEnv();
@@ -698,7 +698,7 @@ function checkGoogleDoc() {
 }
 
 // youtube================================
-async function checkYoutube() {
+async function checkVideo() {
   if (
     !matchUrl(document.location.href, "www.youtube.com") ||
     setting["enableYoutube"] == "null"

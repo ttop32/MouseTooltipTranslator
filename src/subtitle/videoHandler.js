@@ -317,7 +317,7 @@ async function getTranslatedSubtitle(baseUrl, lang) {
 function getUrlParam(url) {
   var vJson = {};
   if (isShorts(url) || isEmbed(url)) {
-    vJson["v"] = url.match(/.*\/([^?]+)/)[1];
+    vJson["v"] = new URL(url).pathname.split("/")[2];
   }
 
   let params = new URL(url).searchParams;
