@@ -21,7 +21,7 @@
 
 
   "web_accessible_resources": [{
-    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js"],
+    "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js"],
     "matches": ["<all_urls>"]
   }],
   "sandbox": {
@@ -49,12 +49,6 @@
       "all_frames": true,
       "matches": ["<all_urls>"],
       "match_about_blank": true
-    },
-    {
-      "matches": ["*://docs.google.com/*"],
-      "run_at": "document_start",
-      "js": ["googleDocInject.js"],
-      "world": "MAIN"
     }
   ],
   "background": {

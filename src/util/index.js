@@ -31,7 +31,7 @@ var defaultData = {
   tooltipFontSize: "14",
   tooltipWidth: "200",
   tooltipDistance: "20",
-  tooltipAnimation: "scale",
+  tooltipAnimation: "fade",
   tooltipPosition: "follow",
   tooltipTextAlign: "center",
   tooltipBackgroundBlur: "4",
@@ -822,33 +822,12 @@ export function filterEmoji(word) {
   );
 }
 
-export function filterSpecialText(word) {
-  return word.replace(/[^a-zA-Z ]/g, "");
-}
-
 export function truncate(str, n) {
   return str.length > n ? str.slice(0, n - 1) + "..." : str;
 }
 
 export function copyTextToClipboard(text) {
   navigator.clipboard.writeText(text);
-}
-
-// inject =================================
-export function injectScript(scriptUrl) {
-  return new Promise((resolve) => {
-    var url = browser.runtime.getURL(scriptUrl);
-    var id = filterSpecialText(url);
-    if ($(`#${id}`)?.get(0)) {
-      resolve();
-      return;
-    }
-
-    $("<script>", { id })
-      .on("load", () => resolve())
-      .appendTo("head")
-      .attr("src", url);
-  });
 }
 
 // performance=======================================================
@@ -1046,6 +1025,14 @@ function rectCovered(rect1, rect2) {
     rect1.left <= rect2.right &&
     rect2.left <= rect1.right &&
     rect1.right <= rect2.right
+  );
+}
+function rectCollide(rect1, rect2) {
+  return !(
+    rect1.top > rect2.bottom ||
+    rect1.right < rect2.left ||
+    rect1.bottom < rect2.top ||
+    rect1.left > rect2.right
   );
 }
 

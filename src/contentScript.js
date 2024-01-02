@@ -12,6 +12,7 @@ import { enableSelectionEndEvent } from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
+import video from "./subtitle/subtitle.js";
 
 //init environment var======================================================================\
 var setting;
@@ -36,8 +37,6 @@ var prevWordParam = [];
 var isGoogleDoc = false;
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var prevTooltipText = "";
-var isYoutubeOn = false;
-var isYoutubeListenerOn = false;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -532,10 +531,10 @@ async function requestRecordTooltipText(
 
 async function getSetting() {
   setting = await util.loadSetting(function settingCallbackFn() {
-    checkVideo();
     applyStyleSetting();
     selectedText = "";
     ocrView.removeAllOcrEnv();
+    checkVideo();
   });
 }
 
@@ -591,8 +590,9 @@ function applyStyleSetting() {
       background: none !important;
     }`;
 
-  cssText += isYoutubeOn
-    ? `
+  cssText +=
+    setting["enableYoutube"] != "null"
+      ? `
         #ytp-caption-window-container .ytp-caption-segment {
           cursor: text !important;
           user-select: text !important;
@@ -613,7 +613,7 @@ function applyStyleSetting() {
           opacity:1;
         }
       `
-    : "";
+      : "";
 
   style.html(cssText);
 }
@@ -699,42 +699,7 @@ function checkGoogleDoc() {
 
 // youtube================================
 async function checkVideo() {
-  if (
-    !matchUrl(document.location.href, "www.youtube.com") ||
-    setting["enableYoutube"] == "null"
-  ) {
-    isYoutubeOn = false;
-    return;
-  }
-
-  isYoutubeOn = true;
-  await injectVideoPlayerScript();
-  initPlayer();
-  addCaptionOnOffListener();
-}
-
-async function injectVideoPlayerScript() {
-  await util.injectScript("videoHandler.js");
-}
-
-function initPlayer() {
-  util.postFrame({
-    type: "initPlayer",
-    targetLang: setting["translateTarget"],
-    subSetting: setting["enableYoutube"],
-    captionOnStatusByUser: setting["captionOnStatusByUser"],
-  });
-}
-
-function addCaptionOnOffListener() {
-  if (isYoutubeListenerOn) {
-    return;
-  }
-  isYoutubeListenerOn = true;
-  util.addFrameListener("youtubeCaptionOnOff", ({ captionOnStatusByUser }) => {
-    setting["captionOnStatusByUser"] = captionOnStatusByUser;
-    setting.save();
-  });
+  video["Youtube"].handleVideo(setting);
 }
 
 //destruction ===================================
