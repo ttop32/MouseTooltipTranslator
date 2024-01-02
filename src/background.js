@@ -36,7 +36,7 @@ function addMessageListener() {
   ) {
     (async () => {
       if (request.type === "translate") {
-        var translatedResult = await doTranslate(
+        var translatedResult = await doTranslateCached(
           request.word,
           request.translateSource,
           request.translateTarget,
@@ -104,15 +104,15 @@ function recordHistory(request) {
 }
 
 // cached translate function
-const doTranslate = util.cacheFn(
-  async (text, fromLang, targetLang, translatorVendor) => {
-    return await translator[translatorVendor].translate(
-      text,
-      fromLang,
-      targetLang
-    );
-  }
-);
+const doTranslateCached = util.cacheFn(doTranslate);
+
+async function doTranslate(text, fromLang, targetLang, translatorVendor) {
+  return await translator[translatorVendor].translate(
+    text,
+    fromLang,
+    targetLang
+  );
+}
 
 // ================= Copy
 
