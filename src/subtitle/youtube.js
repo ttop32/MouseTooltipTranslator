@@ -51,9 +51,9 @@ export default class Youtube extends BaseVideo {
     //get video lang
     var { lang, tlang } = await this.guessVideoLang(url);
     //turn on caption
+    await this.waitPlayerReady(); //wait player load
     this.killInterceptDebounce(); // end caption intercept
     await this.interceptCaption(); // start caption intercept
-    await this.waitPlayerReady(); //wait player load
     this.loadCaption(); // turn on caption for embed video
     this.setPlayerCaption(lang, tlang); //turn on caption on specified lang
     this.reloadCaption(); //reset previous caption immediately
