@@ -21,7 +21,7 @@ export default class Youtube extends BaseVideo {
   static captionRequestPattern =
     /^(https:\/\/)(www\.youtube\.com)(\/api\/timedtext)/;
   static playerSelector = "#movie_player video";
-  static playerApiSelector = "#movie_player";
+  static playerApiSelector = ".html5-video-player";
   static captionContainerSelector =
     "#movie_player .ytp-caption-window-container";
   static captionWindowSelector = "#movie_player .caption-window";
@@ -61,21 +61,29 @@ export default class Youtube extends BaseVideo {
 
   // player control advance================================
   static getPlayerApi() {
-    return $("#movie_player")?.get(0);
+    return $(this.playerApiSelector);
   }
   static reloadCaption() {
-    this.getPlayerApi().setOption("captions", "reload", true);
+    this.getPlayerApi().each((index, ele) => {
+      ele.setOption("captions", "reload", true);
+    });
   }
   static loadCaption() {
-    this.getPlayerApi().loadModule("captions");
+    this.getPlayerApi().each((index, ele) => {
+      ele.loadModule("captions");
+    });
   }
   static unloadCaption() {
-    this.getPlayerApi().unloadModule("captions");
+    this.getPlayerApi().each((index, ele) => {
+      ele.unloadModule("captions");
+    });
   }
   static setPlayerCaption(lang, translationLanguage) {
-    this.getPlayerApi().setOption("captions", "track", {
-      languageCode: lang,
-      translationLanguage,
+    this.getPlayerApi().each((index, ele) => {
+      ele.setOption("captions", "track", {
+        languageCode: lang,
+        translationLanguage,
+      });
     });
   }
 
@@ -146,7 +154,7 @@ export default class Youtube extends BaseVideo {
   static parseSubtitle(subtitle) {
     var newEvents = [];
     for (var event of subtitle.events) {
-      if (!event.segs || !event.dDurationMs) {
+      if (!event.segs) {
         continue;
       }
       var oneLineSub = event.segs

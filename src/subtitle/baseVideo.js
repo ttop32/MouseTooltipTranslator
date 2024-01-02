@@ -46,8 +46,8 @@ export default class BaseVideo {
       return;
     }
     this.isEventListenerLoaded = true;
-    await this.waitPlayer();
     this.listenUrl();
+    await this.waitPlayer();
     this.listenPlay();
     this.listenPause();
     this.listenCaptionHover();
