@@ -154,7 +154,7 @@ export default class Youtube extends BaseVideo {
   static parseSubtitle(subtitle) {
     var newEvents = [];
     for (var event of subtitle.events) {
-      if (!event.segs) {
+      if (!event.segs || !event.dDurationMs) {
         continue;
       }
       var oneLineSub = event.segs

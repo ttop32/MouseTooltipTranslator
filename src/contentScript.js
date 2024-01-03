@@ -612,6 +612,12 @@ function applyStyleSetting() {
         .captions-text:hover .caption-visual-line:first-of-type:after {
           opacity:1;
         }
+        .ytp-pause-overlay {
+          display: none !important;
+        }
+        .ytp-expand-pause-overlay .caption-window {
+          display: block !important;
+        }
       `
       : "";
 
