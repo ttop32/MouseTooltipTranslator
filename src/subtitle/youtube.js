@@ -20,6 +20,7 @@ export default class Youtube extends BaseVideo {
   static sitePattern = /^(https:\/\/)(www\.youtube\.com)/;
   static captionRequestPattern =
     /^(https:\/\/)(www\.youtube\.com)(\/api\/timedtext)/;
+  static baseUrl = "https://www.youtube.com";
   static playerSelector = "#movie_player video";
   static playerApiSelector = ".html5-video-player";
   static captionContainerSelector =
@@ -36,7 +37,6 @@ export default class Youtube extends BaseVideo {
     this.listenMessageFrameFromInject();
   })();
 
-  //
   static async handleUrlChange(url = window.location.href) {
     this.pausedByExtension = false;
     this.callMethodFromInject("activateCaption", url);
@@ -101,12 +101,12 @@ export default class Youtube extends BaseVideo {
   }
 
   //requestSubtitle=============================
-  static async requestSubtitle(baseUrl, lang, tlang, videoId) {
+  static async requestSubtitle(subUrl, lang, tlang, videoId) {
     if (lang) {
-      baseUrl = await this.getTranslatedSubtitleUrl(baseUrl, lang);
+      subUrl = await this.getTranslatedSubtitleUrl(subUrl, lang);
     }
     try {
-      var res = await fetch(this.getTrafficSafeUrl(baseUrl));
+      var res = await fetch(this.getTrafficSafeUrl(subUrl));
     } catch (error) {
       console.log(error);
     }
@@ -114,26 +114,26 @@ export default class Youtube extends BaseVideo {
     // if fail, change base url and try again
     if (res?.status != 200) {
       this.isSubtitleRequestFailed = !this.isSubtitleRequestFailed;
-      res = await fetch(this.getTrafficSafeUrl(baseUrl));
+      res = await fetch(this.getTrafficSafeUrl(subUrl));
     }
     return await res.json();
   }
   static getTrafficSafeUrl(url) {
     return this.isSubtitleRequestFailed
       ? url.replace(
-          "www.youtube.com/api/timedtext",
+          `${this.baseUrl}/api/timedtext`,
           "video.google.com/timedtext"
         )
       : url;
   }
 
-  static async getTranslatedSubtitleUrl(baseUrl, lang) {
+  static async getTranslatedSubtitleUrl(subUrl, lang) {
     // get user generated sub url if exist
-    var v = this.getVideoId(baseUrl);
+    var v = this.getVideoId(subUrl);
     var url = await this.getUserGeneratedSubUrl(v, lang);
     // get auto translated sub url
     if (!url) {
-      var url = new URL(baseUrl);
+      var url = new URL(subUrl);
       url.searchParams.set("tlang", lang);
     }
     return url.toString();
@@ -221,36 +221,19 @@ export default class Youtube extends BaseVideo {
     return this.isShorts(url) || this.isEmbed(url) || this.isMainVideoUrl(url);
   }
   static isMainVideoUrl(url) {
-    return url.includes("www.youtube.com/watch");
+    return url.includes(`${this.baseUrl}/watch`);
   }
   static isShorts(url) {
-    return url.includes("www.youtube.com/shorts");
+    return url.includes(`${this.baseUrl}/shorts`);
   }
   static isEmbed(url) {
-    return url.includes("www.youtube.com/embed");
+    return url.includes(`${this.baseUrl}/embed`);
   }
   static getVideoId(url) {
     return this.getUrlParam(url)?.["v"] || this.getUrlParam(url)?.[2]; //2 for shorts and embed
   }
   static guessSubtitleLang(url, subtitle) {
     return this.getUrlParam(url)?.["lang"];
-  }
-
-  static getYoutubeMetaDataCached = memoizee(this.getYoutubeMetaData);
-
-  static async getYoutubeMetaData(videoId) {
-    // use global variable
-    if (ytInitialPlayerResponse?.videoDetails?.videoId == videoId) {
-      return ytInitialPlayerResponse;
-    }
-    // https://github.com/timelens/timelens-youtube/issues/2
-    var res = await fetch(`https://www.youtube.com/watch?v=${videoId}`);
-    var resText = await res.text();
-    var matches = resText.match(
-      /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/
-    );
-    var json = JSON.parse(matches[1]);
-    return json;
   }
 
   static async guessVideoLang(url) {
@@ -274,5 +257,62 @@ export default class Youtube extends BaseVideo {
       lang: lang || "en",
       tlang,
     };
+  }
+
+  static getYoutubeMetaDataCached = memoizee(this.getYoutubeMetaData);
+
+  static async getYoutubeMetaData(videoId) {
+    // use global variable
+    if (ytInitialPlayerResponse?.videoDetails?.videoId == videoId) {
+      return ytInitialPlayerResponse;
+    }
+    var metadata = await this.getYoutubeMetaDataFromAPI(videoId);
+    if (metadata?.captions) {
+      return metadata;
+    }
+    var metadata = await this.getYoutubeMetaDataFromWatch(videoId);
+    return metadata;
+  }
+
+  static async getYoutubeMetaDataFromWatch(videoId) {
+    try {
+      var res = await fetch(`${this.baseUrl}/watch?v=${videoId}`);
+      var resText = await res.text();
+      var matches = resText.match(
+        /ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|<\/script|\n)/
+      );
+      var json = JSON.parse(matches[1]);
+      return json;
+    } catch (error) {
+      return {};
+    }
+  }
+
+  static async getYoutubeMetaDataFromAPI(videoId) {
+    // https://github.com/timelens/timelens-youtube/issues/2
+    try {
+      let fetch_data = await fetch(
+        `${this.baseUrl}/youtubei/v1/player?key=${window.yt.config_.INNERTUBE_API_KEY}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            videoId: videoId,
+            context: {
+              client: {
+                clientName: window.yt.config_.INNERTUBE_CLIENT_NAME,
+                clientVersion: window.yt.config_.INNERTUBE_CLIENT_VERSION,
+              },
+            },
+          }),
+          method: "POST",
+        }
+      );
+      var json = await fetch_data.json();
+      return json;
+    } catch (error) {
+      return {};
+    }
   }
 }

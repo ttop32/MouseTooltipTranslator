@@ -6,6 +6,7 @@ import BaseVideo from "./baseVideo";
 export default class Netflix extends BaseVideo {
   static sitePattern = /^(https:\/\/)(www\.netflix\.com)/;
   static captionRequestPattern = /^(https:\/\/).*(nflxvideo\.net)/;
+  static baseUrl = "https://www.netflix.com";
 
   static playerSelector = "";
   static playerApiSelector = "";
