@@ -7,6 +7,7 @@ import * as memoizee from "memoizee";
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
   static captionRequestPattern = /^(https:\/\/)(example\.com)/;
+  static baseUrl = "https://example.com";
   static playerSelector = "video";
   static captionContainerSelector = "";
   static captionWindowSelector = "";
@@ -66,7 +67,7 @@ export default class BaseVideo {
   static guessSubtitleLang(url, subtitle) {
     throw new Error("Not implemented");
   }
-  static requestSubtitle(baseUrl, lang, tlang, videoId) {
+  static requestSubtitle(subUrl, lang, tlang, videoId) {
     throw new Error("Not implemented");
   }
   static parseSubtitle(sub) {
@@ -223,12 +224,12 @@ export default class BaseVideo {
   );
 
   static requestSubtitleCached = memoizee(async function (
-    baseUrl,
+    subUrl,
     lang,
     tlang,
     videoId
   ) {
-    return await this.requestSubtitle(baseUrl, lang, tlang, videoId);
+    return await this.requestSubtitle(subUrl, lang, tlang, videoId);
   });
 
   //util =======================

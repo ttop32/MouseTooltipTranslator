@@ -706,6 +706,7 @@ function checkGoogleDoc() {
 // youtube================================
 async function checkVideo() {
   video["Youtube"].handleVideo(setting);
+  video["YoutubeNoCookie"].handleVideo(setting);
 }
 
 //destruction ===================================
