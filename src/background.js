@@ -18,9 +18,10 @@ backgroundInit();
 
 async function backgroundInit() {
   injectContentScriptForAllTab();
-  await getSetting();
   addInstallUrl(introSiteUrl);
   // addUninstallUrl(util.getReviewUrl());
+
+  await getSetting();
   addCopyRequestListener();
   addTabSwitchEventListener();
   addPdfFileTabListener();
