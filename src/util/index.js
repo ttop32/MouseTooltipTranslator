@@ -1048,7 +1048,10 @@ export function getEbookIframe() {
 }
 
 export function isGoogleDoc() {
-  return matchUrl(document.location.href, "docs.google.com");
+  return (
+    document.location.href.includes("https://docs.google.com/document") ||
+    document.location.href.includes("https://docs.google.com/presentation")
+  );
 }
 
 export async function waitUntilForever(fn) {
