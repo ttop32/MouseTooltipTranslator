@@ -3,13 +3,12 @@
  */
 import $ from "jquery";
 import { debounce } from "throttle-debounce";
+import * as util from "/src/util";
 
 var _win;
 var prevNoneSelect = false;
-var _isGoogleDoc = false;
-export function enableSelectionEndEvent(_window = window, isGoogleDoc = false) {
+export function enableSelectionEndEvent(_window = window) {
   _win = _window;
-  _isGoogleDoc = isGoogleDoc;
 
   // Listen selection change every 700 ms. It covers keyboard selection and selection from menu (select all option)
   _win.document.addEventListener(
@@ -51,7 +50,7 @@ function isNoneSelectElement(element) {
 }
 
 export function getSelectionText() {
-  if (!_isGoogleDoc) {
+  if (!util.isGoogleDoc()) {
     return getWindowSelection();
   } else {
     return getGoogleDocSelection();
@@ -71,6 +70,20 @@ function getWindowSelection() {
   return text;
 }
 
+export function getWindowSelectionHTML() {
+  var sel = window.getSelection();
+  var html = "";
+  if (sel.rangeCount) {
+    var container = document.createElement("div");
+    for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+      container.appendChild(sel.getRangeAt(i).cloneContents());
+    }
+    html = container.innerHTML;
+  }
+  // if no html format text , get as string
+  return html.toString() ? html : window.getSelection().toString();
+}
+
 const triggerSelectionEndWithDelay = debounce(700, () => {
   triggerSelectionEnd(getSelectionText());
 });
@@ -84,7 +97,9 @@ export const triggerSelectionEnd = (text) => {
   document.dispatchEvent(evt);
 };
 
-//google doc ==========================
+//google doc select ==========================
+// https://github.com/Amaimersion/google-docs-utils/issues/10
+
 function getGoogleDocSelection() {
   //get google doc text event iframe
   var iframe = $(".docs-texteventtarget-iframe").contents();

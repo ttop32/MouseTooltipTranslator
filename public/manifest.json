@@ -49,6 +49,12 @@
       "all_frames": true,
       "matches": ["<all_urls>"],
       "match_about_blank": true
+    },
+    {
+      "matches": ["*://docs.google.com/*"],
+      "run_at": "document_start",
+      "js": ["googleDocInject.js"],
+      "world": "MAIN"
     }
   ],
   "background": {

@@ -8,7 +8,10 @@ import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import { debounce } from "throttle-debounce";
 
-import { enableSelectionEndEvent } from "/src/event/selection";
+import {
+  enableSelectionEndEvent,
+  getWindowSelectionHTML,
+} from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
@@ -34,7 +37,6 @@ var mouseoverInterval;
 var delayTime = 700;
 var isBlobPdf = false;
 var prevWordParam = [];
-var isGoogleDoc = false;
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var prevTooltipText = "";
 
@@ -48,7 +50,7 @@ $(async function initMouseTooltipTranslator() {
     }
     await detectPDF(); //check current page is pdf
     checkVideo();
-    checkGoogleDoc();
+    checkGoogleDocs();
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addBackgroundListener();
@@ -80,7 +82,7 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window, isGoogleDoc); //set mouse drag text selection event
+  enableSelectionEndEvent(window); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (
@@ -329,26 +331,11 @@ function insertText(inputText) {
 }
 
 function getWritingText() {
-  // get current selected text, if no select, get all
+  // get current selected text, if no select, select all to get all
   if (window.getSelection().type == "Caret") {
     document.execCommand("selectAll", false, null);
   }
-
-  //get html
-  var writingText = "";
-  var sel = window.getSelection();
-  var html = "";
-  if (sel.rangeCount) {
-    var container = document.createElement("div");
-    for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-      container.appendChild(sel.getRangeAt(i).cloneContents());
-    }
-    html = container.innerHTML;
-  }
-
-  // if no html format text , get as string
-  writingText = html.toString() ? html : window.getSelection().toString();
-  return writingText;
+  return getWindowSelectionHTML();
 }
 
 // Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
@@ -694,13 +681,31 @@ function addElementEnv() {
   }).appendTo("head");
 }
 
-// googleDoc================================
-function checkGoogleDoc() {
-  if (!matchUrl(document.location.href, "docs.google.com")) {
+async function checkGoogleDocs() {
+  if (!util.isGoogleDoc()) {
     return;
   }
 
-  isGoogleDoc = true;
+  interceptGoogleDocKeyEvent();
+}
+
+async function interceptGoogleDocKeyEvent() {
+  await util.waitUntilForever(() => $(".docs-texteventtarget-iframe")?.get(0));
+  var iframe = $(".docs-texteventtarget-iframe")?.get(0);
+
+  ["keydown", "keyup"].forEach((eventName) => {
+    iframe?.contentWindow.addEventListener(eventName, (e) => {
+      var evt = new CustomEvent(eventName, {
+        bubbles: true,
+        cancelable: false,
+      });
+      evt.key = e?.key;
+      evt.code = e?.code;
+      evt.ctrlKey = e?.ctrlKey;
+      window.dispatchEvent(evt);
+      document.dispatchEvent(evt);
+    });
+  });
 }
 
 // youtube================================

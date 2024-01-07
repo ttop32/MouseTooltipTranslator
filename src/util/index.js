@@ -3,6 +3,8 @@ import { parse } from "bcp-47";
 import isUrl from "is-url";
 import browser from "webextension-polyfill";
 import _ from "lodash";
+import matchUrl from "match-url-wildcard";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 
 import { Setting } from "./setting.js";
 
@@ -561,32 +563,27 @@ export async function getAllVoiceList() {
 }
 
 export function getBrowserTtsVoiceList() {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     var voiceList = {};
-
     try {
-      // get voice list and sort by remote first
-      // get matched lang voice
-      browser.tts.getVoices((voices) => {
-        let filtered = voices.filter((e) => {
+      // get voice list
+      //get one that include remote, lang, voiceName
+      //sort remote first;
+      var voices = await browser.tts.getVoices();
+      let filtered = voices
+        .filter((e) => {
           return e.remote != null && e.lang != null && e.voiceName != null;
-        }); //get one that include remote, lang, voiceName
-
-        filtered.sort((x, y) => {
+        })
+        .sort((x, y) => {
           return y.remote - x.remote;
-        }); //get remote first;
-
-        //find matched lang voice and speak
-        for (var item of filtered) {
-          var lang = parseLocaleLang(item.lang);
-          if (voiceList[lang]) {
-            voiceList[lang].push(item.voiceName);
-          } else {
-            voiceList[lang] = [item.voiceName];
-          }
-        }
-        resolve(voiceList);
-      });
+        });
+      //find matched lang voice and speak
+      for (var item of filtered) {
+        var lang = parseLocaleLang(item.lang);
+        voiceList[lang] = voiceList[lang] || [];
+        voiceList[lang].push(item.voiceName);
+      }
+      resolve(voiceList);
     } catch (err) {
       resolve(voiceList);
     }
@@ -879,50 +876,6 @@ export function getBase64Url(blob) {
   });
 }
 
-// remain ===================
-
-export function isRtl(lang) {
-  return rtlLangList.includes(lang) ? "rtl" : "ltr";
-}
-
-export function checkInDevMode() {
-  try {
-    if (process.env.NODE_ENV == "development") {
-      return true;
-    }
-  } catch (error) {}
-  return false;
-}
-
-export function getReviewUrl() {
-  var extId =
-    browser.runtime.id in reviewUrlJson
-      ? browser.runtime.id
-      : "hmigninkgibhdckiaphhmbgcghochdjc";
-
-  return reviewUrlJson[extId];
-}
-
-export function isIframe() {
-  try {
-    return window.self !== window.top;
-  } catch (e) {
-    return true;
-  }
-}
-
-export function isEbookReader() {
-  return (
-    window.location.href == browser.runtime.getURL("/foliate-js/reader.html")
-  );
-}
-
-export function getEbookIframe() {
-  var shadows = getAllShadows();
-  var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
-  return iframe;
-}
-
 // browser Listener handler========================
 
 //from body to parent or iframe message
@@ -1048,4 +1001,58 @@ export function getFocusedWritingBox() {
     $(shadow.activeElement).is(writingField)
   );
   return shadows?.[0]?.activeElement;
+}
+
+// remain ===================
+
+export function isRtl(lang) {
+  return rtlLangList.includes(lang) ? "rtl" : "ltr";
+}
+
+export function checkInDevMode() {
+  try {
+    if (process.env.NODE_ENV == "development") {
+      return true;
+    }
+  } catch (error) {}
+  return false;
+}
+
+export function getReviewUrl() {
+  var extId =
+    browser.runtime.id in reviewUrlJson
+      ? browser.runtime.id
+      : "hmigninkgibhdckiaphhmbgcghochdjc";
+
+  return reviewUrlJson[extId];
+}
+
+export function isIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
+export function isEbookReader() {
+  return (
+    window.location.href == browser.runtime.getURL("/foliate-js/reader.html")
+  );
+}
+
+export function getEbookIframe() {
+  var shadows = getAllShadows();
+  var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
+  return iframe;
+}
+
+export function isGoogleDoc() {
+  return matchUrl(document.location.href, "docs.google.com");
+}
+
+export async function waitUntilForever(fn) {
+  await waitUntil(fn, {
+    timeout: WAIT_FOREVER,
+  });
 }
