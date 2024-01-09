@@ -5,12 +5,16 @@ import ky from "ky";
 const googleTranslateTKK = "448487.932609646";
 const apiPath = "https://translate.googleapis.com/translate_a/t";
 
+var tokenUrl = "https://translate.google.com";
+var newGoogleUrl =
+  "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute";
+var token;
+var tokenTTL = 60 * 60 * 1000; //1hour
+
 export default class google extends BaseTranslator {
   static async requestTranslate(text, fromLang, targetLang) {
     // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
-
     var tk = getToken(text, googleTranslateTKK);
-
     return await ky(apiPath, {
       searchParams: {
         client: "te_lib",
@@ -32,13 +36,11 @@ export default class google extends BaseTranslator {
     if (res && res[0] && res[0][0]) {
       var translatedText = fromLang == "auto" ? res[0][0] : res[0];
       var detectedLang = fromLang == "auto" ? res[0][1] : fromLang;
-
       //clear html tag and decode html entity
       var textDecoded = decode(translatedText);
       var textWithoutITag = textDecoded.replace(/(<i>).+?(<\/i>)/gi, " ");
       var textWithoutBTag = textWithoutITag.replace(/<\/?b[^>]*>/g, " ");
       var textWithTrim = textWithoutBTag.replace(/\s\s+/g, " ").trim();
-
       return {
         translatedText: textWithTrim,
         detectedLang,
@@ -123,4 +125,67 @@ function getToken(query, windowTkk) {
 
   const normalizedResult = encondingRound % 1000000;
   return normalizedResult.toString() + "." + (normalizedResult ^ tkkIndex);
+}
+
+async function googleTranslateRequestV2(text, fromLang, targetLang) {
+  var { sid, bl, at } = await getTokenV2();
+
+  let req = JSON.stringify([
+    [
+      [
+        "MkEWBc",
+        JSON.stringify([[text, fromLang, targetLang, true], [null]]),
+        null,
+        "generic",
+      ],
+    ],
+  ]);
+  return await ky
+    .post(newGoogleUrl, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      searchParams: {
+        rpcids: "MkEWBc",
+        "source-path": "/",
+        "f.sid": sid,
+        bl,
+        hl: "ko",
+        "soc-app": 1,
+        "soc-platform": 1,
+        "soc-device": 1,
+        _reqid: Math.floor(10000 + 10000 * Math.random()),
+        rt: "c",
+      },
+      body: new URLSearchParams({ "f.req": req, at }), //
+      anonymous: true,
+      nocache: true,
+    })
+    .text();
+}
+function googleTranslateRequestWrapV2(res) {
+  var json = JSON.parse(JSON.parse(/\[.*\]/.exec(res))[0][2]);
+  var translatedText = json[1][0][0][5]
+    .map((text) => text?.[0])
+    .filter((text) => text)
+    .join(" ");
+
+  return {
+    translatedText,
+    detectedLang: json[0][2],
+    transliteration: json[1][0][0][1],
+  };
+}
+
+async function getTokenV2() {
+  if (token && token.time + tokenTTL > Date.now()) {
+    return token;
+  }
+  var res = await ky(tokenUrl).text();
+  var sid = res.match(/"FdrFJe":"(.*?)"/)[1];
+  let bl = res.match(/"cfb2h":"(.*?)"/)[1];
+  let at = res.match(/"SNlM0e":"(.*?)"/)?.[1] || "";
+  var time = Date.now();
+  token = { sid, bl, at, time };
+  return token;
 }

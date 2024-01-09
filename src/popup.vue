@@ -364,6 +364,7 @@ var translatorList = {
   "papago (Experimental)": "papago",
   "yandex (Experimental)": "yandex",
   "deepl (Experimental)": "deepl",
+  "baidu (Experimental)": "baidu",
 };
 
 var translateActionList = {
