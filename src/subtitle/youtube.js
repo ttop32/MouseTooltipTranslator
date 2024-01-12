@@ -263,8 +263,8 @@ export default class Youtube extends BaseVideo {
 
   static async getYoutubeMetaData(videoId) {
     // use global variable
-    if (ytInitialPlayerResponse?.videoDetails?.videoId == videoId) {
-      return ytInitialPlayerResponse;
+    if (window?.ytInitialPlayerResponse?.videoDetails?.videoId == videoId) {
+      return window.ytInitialPlayerResponse;
     }
     var metadata = await this.getYoutubeMetaDataFromAPI(videoId);
     if (metadata?.captions) {

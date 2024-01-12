@@ -540,7 +540,9 @@ export function getDefaultLang() {
 
 export function parseLocaleLang(localeLang) {
   var lang = parse(localeLang).language;
-  return lang == "zh" ? localeLang : lang; // chinese lang code fix
+  lang = lang == "zh" ? "zh-CN" : lang; // chinese lang code fix
+  lang = localeLang == "zh-TW" ? "zh-TW" : lang;
+  return lang;
 }
 
 export async function getDefaultVoice() {

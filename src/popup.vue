@@ -391,7 +391,6 @@ var tooltipAnimationList = {
   "Shift-away": "shift-away",
   "Shift-toward": "shift-toward",
   Perspective: "perspective",
-  None: "",
 };
 
 var detectTypeList = {
