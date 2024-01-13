@@ -27,7 +27,7 @@ export async function checkImage(img, setting, keyDownList) {
   ) {
     return;
   }
-  ocrHistory[img.src] = img.src;
+  ocrHistory[img.src] = img;
   var lang = setting["ocrDetectionLang"];
   makeLoadingMouseStyle(img);
 
@@ -48,6 +48,9 @@ export async function checkImage(img, setting, keyDownList) {
 }
 
 export function removeAllOcrEnv() {
+  for (var key in ocrHistory) {
+    makeNormalMouseStyle(ocrHistory[key]);
+  }
   removeOcrIFrame();
   removeOcrBlock();
   iFrames = {};
