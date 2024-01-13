@@ -1,14 +1,13 @@
-import Tesseract from "tesseract.js";
-import { waitUntil, WAIT_FOREVER } from "async-wait-until";
-import * as util from "/src/util";
-
-var schedulerList = {};
-var loadingList = {};
-
 //ocr process, listen image from contents js and respond text
 //1. listen to get image from iframe host
 //2. use tesseract to process ocr to image to get text
 //3. resend result to host
+
+import Tesseract from "tesseract.js";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+
+var schedulerList = {};
+var loadingList = {};
 
 window.addEventListener(
   "message",
@@ -143,5 +142,5 @@ async function getScheduler(lang, mode) {
 }
 
 function response(data) {
-  util.postFrame(data);
+  window.parent.postMessage(data, "*");
 }

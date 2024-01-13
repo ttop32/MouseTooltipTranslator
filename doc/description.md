@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.109
+  - rollback opencv library
 - 0.1.108
   - add baidu
   - support google doc hover
