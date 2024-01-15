@@ -10,7 +10,7 @@ import { debounce } from "throttle-debounce";
 
 import {
   enableSelectionEndEvent,
-  getWindowSelectionHTML,
+  getSelectionText,
 } from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
@@ -293,10 +293,11 @@ function concatTooltipText(...texts) {
 
 //Translate Writing feature==========================================================================================
 async function translateWriting() {
-  //check current focus is write box
+  //check current focus is write box and hot key pressed
+  // if is google doc do not check writing box
   if (
     !keyDownList[setting["keyDownTranslateWriting"]] ||
-    !util.getFocusedWritingBox()
+    (!util.getFocusedWritingBox() && !util.isGoogleDoc())
   ) {
     return;
   }
@@ -313,7 +314,6 @@ async function translateWriting() {
     setting["writingLanguage"],
     setting["translateTarget"]
   );
-
   if (isBroken) {
     return;
   }
@@ -321,21 +321,40 @@ async function translateWriting() {
   insertText(translatedText);
 }
 
-function insertText(inputText) {
-  if (!inputText) {
-    return;
-  }
-  // document.execCommand("delete", false, null);
-  document.execCommand("insertHTML", false, inputText);
-  // document.execCommand("insertText", false, inputText);
-}
-
 function getWritingText() {
   // get current selected text, if no select, select all to get all
   if (window.getSelection().type == "Caret") {
     document.execCommand("selectAll", false, null);
   }
-  return getWindowSelectionHTML();
+  return getSelectionText(true);
+}
+
+function insertText(inputText) {
+  if (!inputText) {
+    return;
+  }
+  document.execCommand("insertHTML", false, inputText);
+  pasteTextGoogleDoc(inputText);
+}
+
+function pasteTextGoogleDoc(text) {
+  if (!util.isGoogleDoc()) {
+    return;
+  }
+  // https://github.com/matthewsot/docs-plus
+  var el = document.getElementsByClassName("docs-texteventtarget-iframe")[0];
+  el = el.contentDocument.querySelector("[contenteditable=true]");
+
+  var data = new DataTransfer();
+  data.setData("text/plain", text);
+  var paste = new ClipboardEvent("paste", {
+    clipboardData: data,
+    data: text,
+    dataType: "text/plain",
+  });
+  paste.docs_plus_ = true;
+
+  el.dispatchEvent(paste);
 }
 
 // Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
