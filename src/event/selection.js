@@ -49,11 +49,26 @@ function isNoneSelectElement(element) {
   }
 }
 
-export function getSelectionText() {
-  if (!util.isGoogleDoc()) {
-    return getWindowSelection();
-  } else {
+const triggerSelectionEndWithDelay = debounce(700, () => {
+  triggerSelectionEnd(getSelectionText());
+});
+
+export const triggerSelectionEnd = (text) => {
+  var evt = new CustomEvent("selectionEnd", {
+    bubbles: true,
+    cancelable: false,
+  });
+  evt.selectedText = text;
+  document.dispatchEvent(evt);
+};
+
+export function getSelectionText(isHtml = false) {
+  if (util.isGoogleDoc()) {
     return getGoogleDocSelection();
+  } else if (isHtml == true) {
+    return getWindowSelectionHTML();
+  } else {
+    return getWindowSelection();
   }
 }
 
@@ -83,19 +98,6 @@ export function getWindowSelectionHTML() {
   // if no html format text , get as string
   return html.toString() ? html : window.getSelection().toString();
 }
-
-const triggerSelectionEndWithDelay = debounce(700, () => {
-  triggerSelectionEnd(getSelectionText());
-});
-
-export const triggerSelectionEnd = (text) => {
-  var evt = new CustomEvent("selectionEnd", {
-    bubbles: true,
-    cancelable: false,
-  });
-  evt.selectedText = text;
-  document.dispatchEvent(evt);
-};
 
 //google doc select ==========================
 // https://github.com/Amaimersion/google-docs-utils/issues/10
