@@ -3,9 +3,7 @@ import { parse } from "bcp-47";
 import isUrl from "is-url";
 import browser from "webextension-polyfill";
 import _ from "lodash";
-import matchUrl from "match-url-wildcard";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
-
 import { Setting } from "./setting.js";
 
 var defaultData = {
