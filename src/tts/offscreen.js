@@ -3,19 +3,13 @@ var audio;
 // Listen for messages from the extension
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
-    if ("play" in request) {
-      // await playAudio(request.play);
+    if (request.type === "playTTSOffscreen") {
       stopAudio();
-      await play(
-        request?.play?.source,
-        request?.play?.rate,
-        request?.play?.volume
-      );
-      sendResponse();
-    }
-    if ("stop" in request) {
+      await play(request?.source, request?.rate, request?.volume);
+      sendResponse({});
+    } else if (request.type === "stopTTSOffscreen") {
       stopAudio();
-      sendResponse();
+      sendResponse({});
     }
   })();
 

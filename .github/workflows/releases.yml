@@ -26,9 +26,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build-zip-en
+      - run: npm run build-zip
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "mouse_tooltip_translator_*.zip"
+          artifacts: "*.zip"
           body: "[Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)"

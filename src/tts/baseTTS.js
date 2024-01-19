@@ -5,21 +5,17 @@ import * as util from "/src/util";
 export default class BaseTTS {
   static async playTTS(text, voice, lang, rate, volume) {
     try {
+      var volume = Number(volume);
+      var rate = Number(rate);
+      this.stopTTS();
       await this.playTTSEngine(text, voice, lang, rate, volume);
     } catch (error) {
       console.log(error);
     }
   }
 
-  static async playSound(source, rate, volume) {
-    await this.createOffscreen();
-    await util.sendMessage({
-      play: {
-        source,
-        rate,
-        volume,
-      },
-    });
+  static async playTTSEngine(text, voice, lang, rate, volume) {
+    throw new Error("Not implemented");
   }
 
   static stopTTS() {
@@ -27,9 +23,19 @@ export default class BaseTTS {
     this.stopTtsOffscreen();
   }
 
+  static async playSound(source, rate, volume) {
+    await this.createOffscreen();
+    await util.sendMessage({
+      type: "playTTSOffscreen",
+      source,
+      rate,
+      volume,
+    });
+  }
+
   static async stopTtsOffscreen() {
     await this.createOffscreen();
-    util.sendMessage({ stop: {} });
+    util.sendMessage({ type: "stopTTSOffscreen" });
   }
 
   // Create the offscreen document
@@ -49,9 +55,5 @@ export default class BaseTTS {
     return new Promise((resolve, reject) => {
       browser.offscreen.closeDocument(() => resolve());
     });
-  }
-
-  static async playTTSEngine(text, voice, lang, rate, volume) {
-    throw new Error("Not implemented");
   }
 }

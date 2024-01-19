@@ -243,8 +243,8 @@ async function playTts(text, lang, startTimeStamp) {
   if (startTimeStamp < stopTtsTimestamp) {
     return;
   }
-  var volume = Number(setting["voiceVolume"]);
-  var rate = Number(setting["voiceRate"]);
+  var volume = setting["voiceVolume"];
+  var rate = setting["voiceRate"];
   var voiceFullName = setting?.["ttsVoice_" + lang];
   var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
   var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;

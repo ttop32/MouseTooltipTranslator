@@ -3,7 +3,7 @@
 //intercept pdf url
 
 import $ from "jquery";
-import tippy, { followCursor, hideAll } from "tippy.js";
+import tippy, { sticky, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import { debounce } from "throttle-debounce";
@@ -27,7 +27,6 @@ var activatedWord = null;
 var mouseMoved = false;
 var mouseMovedCount = 0;
 var keyDownList = { always: true }; //use key down for enable translation partially
-var keyDownReleaseList = {};
 var style;
 let selectedText = "";
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
@@ -39,6 +38,8 @@ var isBlobPdf = false;
 var prevWordParam = [];
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var prevTooltipText = "";
+var tooltipContainer;
+var tooltipContainerEle;
 
 //tooltip core======================================================================
 $(async function initMouseTooltipTranslator() {
@@ -66,13 +67,8 @@ $(async function initMouseTooltipTranslator() {
 function startMouseoverDetector() {
   enableMouseoverTextEvent();
   addEventHandler("mouseoverText", async function (event) {
-    // only work when tab is activated and when mousemove and no selected text
-    if (
-      checkWindowFocus() &&
-      !selectedText &&
-      setting["translateWhen"].includes("mouseover") &&
-      event?.mouseoverText != null
-    ) {
+    // if no selected text
+    if (setting["translateWhen"].includes("mouseover") && !selectedText) {
       var mouseoverText = event?.mouseoverText?.[getDetectType()];
       var mouseoverRange = event?.mouseoverText?.[getDetectType() + "_range"];
       await processWord(mouseoverText, "mouseover", mouseoverRange);
@@ -85,11 +81,7 @@ function startTextSelectDetector() {
   enableSelectionEndEvent(window); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
-    if (
-      checkWindowFocus() &&
-      setting["translateWhen"].includes("select") &&
-      ((selectedText && event.selectedText == "") || event.selectedText)
-    ) {
+    if (setting["translateWhen"].includes("select")) {
       selectedText = event?.selectedText;
       await processWord(selectedText, "select");
     }
@@ -102,12 +94,15 @@ async function processWord(word, actionType, range) {
   word = util.filterWord(word); //filter out one that is url,no normal char
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
-  applyReleaseKeydownList();
 
-  // skip if mouse target is tooltip or no text, if no new word
+  // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
   // if tooltip is off, hide tooltip
-  if (checkMouseTargetIsTooltip() || activatedWord == word) {
+  if (
+    !checkWindowFocus() ||
+    checkMouseTargetIsTooltip() ||
+    activatedWord == word
+  ) {
     return;
   } else if (!word) {
     activatedWord = word;
@@ -191,6 +186,7 @@ function highlightText(range) {
     $("<div/>", {
       class: "mtt-highlight",
       css: {
+        position: "absolute",
         left: rect.left + adjustX,
         top: rect.top + adjustY,
         width: rect.width,
@@ -380,6 +376,7 @@ function handleMousemove(e) {
     return;
   }
   setMouseStatus(e);
+  setTooltipPosition(e.clientX, e.clientY);
   ocrView.checkImage(mouseTarget, setting, keyDownList);
   checkWritingBox();
 }
@@ -423,20 +420,7 @@ function holdKeydownList(key) {
 }
 
 function releaseKeydownList(key) {
-  if (keyDownList[key]) {
-    keyDownReleaseList[key] = false;
-    // keyDownList[key] = false;
-  }
-  if (selectedText) {
-    applyReleaseKeydownList();
-  }
-}
-
-function applyReleaseKeydownList() {
-  for (var key in keyDownReleaseList) {
-    keyDownList[key] = keyDownReleaseList[key];
-  }
-  keyDownReleaseList = {};
+  keyDownList[key] = false;
 }
 
 function handleBlur(e) {
@@ -453,6 +437,9 @@ function setMouseStatus(e) {
   clientX = e.clientX;
   clientY = e.clientY;
   mouseTarget = e.target;
+}
+function setTooltipPosition(x, y) {
+  tooltipContainer?.css("transform", `translate(${x}px,${y}px)`);
 }
 
 const checkWritingBox = debounce(delayTime, () => {
@@ -545,14 +532,27 @@ async function getSetting() {
 }
 
 function applyStyleSetting() {
+  var isSticky = setting["tooltipPosition"] == "follow";
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
-    followCursor: setting["tooltipPosition"] == "follow" ? true : "initial",
-    interactive: setting["tooltipPosition"] == "follow" ? false : true,
+    sticky: isSticky ? "reference" : "popper",
+    appendTo: isSticky ? tooltipContainerEle : document.body,
     animation: setting["tooltipAnimation"],
   });
 
   var cssText = `
+    #mttContainer {
+      left: 0 !important;
+      top: 0 !important;
+      width: 1000px !important;
+      margin-left: -500px !important;
+      position: fixed !important;
+      z-index: 100000200 !important;
+      background: none !important;
+      pointer-events: none !important;
+      display: inline-block !important;
+      visibility: visible  !important;
+    }
     .tippy-box[data-theme~="custom"] {
       font-size: ${setting["tooltipFontSize"]}px  !important;
       max-width: ${setting["tooltipWidth"]}px  !important;
@@ -682,8 +682,17 @@ function checkExcludeUrl() {
   return matchUrl(url, setting["websiteExcludeList"]);
 }
 
-function addElementEnv() {
-  tooltip = tippy(document.body, {
+async function addElementEnv() {
+  tooltipContainer = $("<div/>", {
+    id: "mttContainer",
+  }).appendTo(document.body);
+  tooltipContainerEle = tooltipContainer.get(0);
+
+  style = $("<style/>", {
+    id: "mttstyle",
+  }).appendTo("head");
+
+  tooltip = tippy(tooltipContainerEle, {
     content: "",
     trigger: "manual",
     allowHTML: true,
@@ -691,13 +700,9 @@ function addElementEnv() {
     zIndex: 100000200,
     hideOnClick: false,
     role: "mtttooltip",
-    followCursor: true,
-    plugins: [followCursor],
+    interactive: true,
+    plugins: [sticky],
   });
-
-  style = $("<style/>", {
-    id: "mttstyle",
-  }).appendTo("head");
 }
 
 async function checkGoogleDocs() {
