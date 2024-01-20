@@ -20,8 +20,14 @@ export class Setting {
   }
 
   async loadDefaultData() {
+    this.loadData(defaultSettingList);
+  }
+
+  async loadData(data) {
     for (let [key, value] of Object.entries(defaultSettingList)) {
-      this[key] = value;
+      if (this[key] == null) {
+        this[key] = value;
+      }
     }
   }
 

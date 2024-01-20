@@ -25,6 +25,7 @@ async function backgroundInit() {
   addCopyRequestListener();
   addTabSwitchEventListener();
   addPdfFileTabListener();
+  addSearchBarListener();
   addMessageListener();
 }
 
@@ -37,22 +38,22 @@ function addMessageListener() {
   ) {
     (async () => {
       if (request.type === "translate") {
-        var translatedResult = await doTranslateCached(
+        var translatedResult = await translateWithError(
           request.word,
-          request.translateSource,
-          request.translateTarget,
+          request.sourceLang,
+          request.targetLang,
           setting["translatorVendor"]
         );
-
-        sendResponse(
-          translatedResult || {
-            translatedText: `${setting["translatorVendor"]} is broken`,
-            transliteration: "",
-            sourceLang: "",
-            targetLang: setting["translateTarget"],
-            isBroken: true,
-          }
+        sendResponse(translatedResult);
+      } else if (request.type === "translateWithReverse") {
+        var translatedResult = await translateWithReverse(
+          request.word,
+          request.sourceLang,
+          request.targetLang,
+          request.reverseLang,
+          setting["translatorVendor"]
         );
+        sendResponse(translatedResult);
       } else if (request.type === "tts") {
         playTtsQueue(
           request.sourceText,
@@ -105,6 +106,19 @@ function recordHistory(request) {
 }
 
 // cached translate function
+
+async function translateWithError(...args) {
+  return (
+    (await doTranslateCached(...args)) || {
+      translatedText: `${setting["translatorVendor"]} is broken`,
+      transliteration: "",
+      sourceLang: "",
+      targetLang: setting["translateTarget"],
+      isBroken: true,
+    }
+  );
+}
+
 const doTranslateCached = util.cacheFn(doTranslate);
 
 async function doTranslate(text, fromLang, targetLang, translatorVendor) {
@@ -113,6 +127,36 @@ async function doTranslate(text, fromLang, targetLang, translatorVendor) {
     fromLang,
     targetLang
   );
+}
+
+async function translateWithReverse(
+  word,
+  sourceLang,
+  targetLang,
+  reverseLang,
+  translatorVendor
+) {
+  var response = await translateWithError(
+    word,
+    sourceLang,
+    targetLang,
+    translatorVendor
+  );
+  //if to,from lang are same and reverse translate on
+  if (
+    !response.isBroken &&
+    targetLang == response.sourceLang &&
+    reverseLang != "null" &&
+    targetLang != reverseLang
+  ) {
+    response = await translateWithError(
+      word,
+      response.sourceLang,
+      reverseLang,
+      translatorVendor
+    );
+  }
+  return response;
 }
 
 // ================= Copy
@@ -290,4 +334,27 @@ async function openPDFViewer(url, tabId) {
 //url is end with .pdf, start with file://
 function checkIsLocalPdfUrl(url) {
   return /^(file:\/\/).*(\.pdf)$/.test(url?.toLowerCase());
+}
+
+//search bar================================================
+
+function addSearchBarListener() {
+  chrome.omnibox.setDefaultSuggestion({
+    description: "search with translator",
+  });
+
+  chrome.omnibox.onInputEntered.addListener(async (text) => {
+    var translatedResult = await translateWithReverse(
+      text,
+      "auto",
+      setting["writingLanguage"],
+      setting["translateTarget"],
+      setting["translatorVendor"]
+    );
+    var text = translatedResult.isBroken
+      ? text
+      : translatedResult.translatedText;
+    //search with default search engine on current tab
+    chrome.search.query({ text });
+  });
 }

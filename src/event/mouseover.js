@@ -50,8 +50,8 @@ function getMouseoverText(x, y) {
   //get range
   var textElement;
   var range =
-    util.caretRangeFromPoint(x, y, _win.document) ||
-    util.caretRangeFromPointOnShadowDom(x, y);
+    caretRangeFromPoint(x, y, _win.document) ||
+    caretRangeFromPointOnShadowDom(x, y);
 
   //get google doc select
   if (util.isGoogleDoc()) {
@@ -78,7 +78,7 @@ function getTextFromRange(range) {
       expandRange(rangeClone, detectType);
 
       //check mouse xy overlap the range element
-      if (util.checkXYInElement(rangeClone, clientX, clientY)) {
+      if (checkXYInElement(rangeClone, clientX, clientY)) {
         output[detectType] = rangeClone.toString();
         output[detectType + "_range"] = rangeClone;
       }
@@ -101,6 +101,126 @@ function expandRange(range, type) {
     }
   } catch (error) {
     console.log(error);
+  }
+}
+
+//browser range===================================================
+
+export function caretRangeFromPoint(x, y, _document = document) {
+  var range = _document.caretRangeFromPoint(x, y);
+  //if no range or is not text, give null
+  if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
+    return;
+  }
+  return range;
+}
+
+export function caretRangeFromPointOnDocument(x, y) {
+  var textNodes = textNodesUnder(document.body);
+  return getRangeFromTextNodes(x, y, textNodes);
+}
+
+export function caretRangeFromPointOnShadowDom(x, y) {
+  // get all text from shadows
+  var shadows = util.getAllShadows();
+
+  //filter shadow dom by parent position overlap
+  shadows = shadows.filter((shadow) => checkXYInElement(shadow?.host, x, y));
+
+  //get all text node
+  var textNodes = shadows
+    .map((shadow) => Array.from(textNodesUnder(shadow)))
+    .flat();
+
+  return getRangeFromTextNodes(x, y, textNodes);
+}
+
+function getRangeFromTextNodes(x, y, textNodes) {
+  // text node that position in x y
+  var textNodes = textNodes.filter((textNode) =>
+    checkXYInElement(getTextRange(textNode), x, y)
+  );
+  // convert text node to char range
+  var ranges = textNodes
+    .map((textNode) => Array.from(getCharRanges(textNode)))
+    .flat();
+  // get char range in x y
+  var ranges = ranges.filter((range) => checkXYInElement(range, x, y));
+  if (ranges.length) {
+    return ranges[0];
+  }
+}
+
+export function getAllTextNodes(el) {
+  // https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
+  var n,
+    a = [],
+    walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+  while ((n = walk.nextNode())) a.push(n);
+  return a;
+}
+
+function textNodesUnder(el) {
+  return walkNodeTree(el, NodeFilter.SHOW_TEXT, {
+    inspect: (textNode) =>
+      !PARENT_TAGS_TO_EXCLUDE.includes(textNode.parentElement?.nodeName),
+  });
+}
+
+function walkNodeTree(
+  root,
+  whatToShow = NodeFilter.SHOW_ALL,
+  { inspect, collect, callback } = {}
+) {
+  const walker = document.createTreeWalker(root, whatToShow, {
+    acceptNode(node) {
+      if (inspect && !inspect(node)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      if (collect && !collect(node)) {
+        return NodeFilter.FILTER_SKIP;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  const nodes = [];
+  let n;
+  while ((n = walker.nextNode())) {
+    callback?.(n);
+    nodes.push(n);
+  }
+
+  return nodes;
+}
+
+export function getTextRange(textNode) {
+  var range = document.createRange();
+  range.setStart(textNode, 0);
+  range.setEnd(textNode, textNode.length);
+  return range;
+}
+
+export function getCharRanges(textNode) {
+  var ranges = [];
+  for (let i = 0; i < textNode.length - 1; i++) {
+    var range = document.createRange();
+    range.setStart(textNode, i);
+    range.setEnd(textNode, i + 1);
+    ranges.push(range);
+  }
+  return ranges;
+}
+
+export function checkXYInElement(ele, x, y) {
+  try {
+    var rect = ele.getBoundingClientRect(); //mouse in word rect
+    if (rect.left > x || rect.right < x || rect.top > y || rect.bottom < y) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
   }
 }
 

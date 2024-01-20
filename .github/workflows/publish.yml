@@ -26,4 +26,5 @@ jobs:
         uses: PlasmoHQ/bpp@v3
         with:
           keys: ${{ secrets.BPP_KEYS }}
+          chrome-file: "${{env.EDGE_RELEASE_FILE}}"
           edge-file: "${{env.EDGE_RELEASE_FILE}}"
