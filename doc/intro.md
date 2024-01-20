@@ -2,7 +2,7 @@
 
 - Basic uses : Hover or select (highlight) on text to translate. 
   - Test hover with example text: 
-    - $${\color{red}Proletarier aller Länder, vereinigt euch!}$$
+    <font color="red"> Proletarier aller Länder, vereinigt euch! </font>   
   - If not working, check current target language. 
     - The translator will skip text if source text language and target language are same.
 ![Alt Text](/doc/result_0.gif)
