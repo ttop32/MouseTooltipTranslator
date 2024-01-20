@@ -1,8 +1,8 @@
 # How to use
 
 - Basic uses : Hover or select (highlight) on text to translate. 
-  - Test hover with example text: 
-$\color[RGB]{155,127,0} Proletarier aller Länder, vereinigt euch!$
+  - Test hover with example text:  
+    - $\color[RGB]{155,127,0} Proletarier aller Länder, vereinigt euch!$
   - If not working, check current target language. 
     - The translator will skip text if source text language and target language are same.
 ![Alt Text](/doc/result_0.gif)
