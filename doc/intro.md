@@ -5,7 +5,7 @@
 ```console
 Proletarier aller Länder, vereinigt euch!
 ```
-  - If not working, check current target language in the setting. 
+  - If not working, check current target language in the setting (Setting page can be found in browser top right puzzle button). 
     - The translator will skip text if source text language and target language are same.
 ![Alt Text](/doc/result_0.gif)
 - Hold <kbd>left ctrl</kbd> to listen tts pronunciation when tooltip is shown(Press <kbd>esc</kbd> to stop voice)
