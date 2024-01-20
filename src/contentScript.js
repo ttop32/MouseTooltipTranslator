@@ -115,7 +115,7 @@ async function processWord(word, actionType, range) {
   //stage current processing word
   activatedWord = word;
   var { translatedText, sourceLang, targetLang, transliteration } =
-    await translateWithReverse(
+    await requestTranslateWithReverse(
       word,
       setting["translateSource"],
       setting["translateTarget"],
@@ -304,13 +304,14 @@ async function translateWriting() {
     return;
   }
   // translate
-  var { translatedText, isBroken } = await translateWithReverse(
+  var { translatedText, isBroken } = await requestTranslateWithReverse(
     writingText,
     "auto",
     setting["writingLanguage"],
     setting["translateTarget"]
   );
-  if (isBroken) {
+  //skip no translation or is too late to respond
+  if (isBroken || writingText != getWritingText()) {
     return;
   }
 
@@ -477,12 +478,27 @@ function addBackgroundListener() {
 
 //send to background.js for background processing  ===========================================================================
 
-async function requestTranslate(word, translateSource, translateTarget) {
+async function requestTranslate(word, sourceLang, targetLang) {
   return await util.sendMessage({
     type: "translate",
     word: word,
-    translateSource,
-    translateTarget,
+    sourceLang,
+    targetLang,
+  });
+}
+
+async function requestTranslateWithReverse(
+  word,
+  sourceLang,
+  targetLang,
+  reverseLang
+) {
+  return await util.sendMessage({
+    type: "translateWithReverse",
+    word: word,
+    sourceLang,
+    targetLang,
+    reverseLang,
   });
 }
 
@@ -562,13 +578,14 @@ function applyStyleSetting() {
       color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
       font-family: Arial !important;
+      border: 1px solid ${setting["tooltipBorderColor"]};
     }
     [data-tippy-root] {
       display: inline-block !important;
       visibility: visible  !important;
       position: absolute !important;
     }
-    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
+    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before { 
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
     }
     .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before {
