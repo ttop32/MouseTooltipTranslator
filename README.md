@@ -30,6 +30,14 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 - Support pdf to display translated tooltip using PDF.js
 - Support dual subtitles for youtube video
 - Process OCR when hold left shift and mouse over on image (ex manga)
+
+# How to use
+- [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
+
+# Change Log
+- [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
+
+
   
 # Contributors
 <!-- readme: contributors -start -->
@@ -80,14 +88,6 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 </table>
 <!-- readme: contributors -end -->
 
-
-
-
-# How to use
-- [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
-
-# Change Log
-- [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
 
 
 
