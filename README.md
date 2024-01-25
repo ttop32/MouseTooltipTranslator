@@ -17,7 +17,6 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 ![result](doc/screenshot_3.png)
 ![result](doc/screenshot_5.png)
 ![result](doc/screenshot_6.png)
-![result](doc/screenshot_4.png)
 
 # Features
 
