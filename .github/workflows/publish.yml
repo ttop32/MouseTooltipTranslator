@@ -18,13 +18,12 @@ jobs:
           fileName: "*.zip"
 
       - name: Get Release File Name
-        run: echo "EDGE_RELEASE_FILE=$(ls | grep *.zip)" >> $GITHUB_ENV
+        run: echo "RELEASE_FILE=$(ls | grep *.zip)" >> $GITHUB_ENV
       - name: Test
-        run: echo ${{env.EDGE_RELEASE_FILE}}
+        run: echo ${{env.RELEASE_FILE}}
 
       - name: Publish to store
         uses: PlasmoHQ/bpp@v3.5.0
         with:
-          keys: ${{ secrets.BPP_KEYS }}
-          chrome-file: "${{env.EDGE_RELEASE_FILE}}"
-          edge-file: "${{env.EDGE_RELEASE_FILE}}"
+          keys: ${{ secrets.EDGE_BPP_KEYS }}
+          edge-file: "${{env.RELEASE_FILE}}"
