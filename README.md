@@ -14,10 +14,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 # Result
 
 ![Alt Text](doc/result_0.gif)
-![result](doc/screenshot_1.png)
-![result](doc/screenshot_2.png)
 ![result](doc/screenshot_3.png)
-![result](doc/screenshot_4.png)
 ![result](doc/screenshot_5.png)
 ![result](doc/screenshot_6.png)
 
@@ -111,7 +108,7 @@ npm run build        // or 'npm run watch' for developing
 
 
 # Language locale
-We are looking for any locacle contributor. Make any pull request.
+We are looking for any locale contributor. Make any pull request.
 - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
 
 | Locale code | Language (region) |
