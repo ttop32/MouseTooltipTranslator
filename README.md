@@ -14,7 +14,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 # Result
 
 ![Alt Text](doc/result_0.gif)
-![result](doc/screenshot_1.png)
+![result](doc/screenshot_3.png)
 ![result](doc/screenshot_4.png)
 ![result](doc/screenshot_5.png)
 ![result](doc/screenshot_6.png)
