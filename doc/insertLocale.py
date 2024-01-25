@@ -87,6 +87,10 @@ i18List = [
     "Privacy Policy",
     "User privacy policy",
 
+    "Review                                      ",
+    "Review this",
+    "Developer love criticism",
+
 
     "Title                                      ",
 
