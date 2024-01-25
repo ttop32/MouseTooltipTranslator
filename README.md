@@ -80,9 +80,35 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 </table>
 <!-- readme: contributors -end -->
 
-# Change Log
 
+
+
+# How to use
+- [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
+
+# Change Log
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
+
+
+
+# Build yourself to install
+
+1. Install node js, <https://nodejs.org/en/> , node 18
+2. open terminal and type below
+
+```console
+git clone https://github.com/ttop32/MouseTooltipTranslator.git
+cd MouseTooltipTranslator
+npm install 
+npm run build        // or 'npm run watch' for developing
+```
+
+3. You will see MouseTooltipTranslator/build path
+4. Open chrome browser and goto chrome://extensions/
+5. Turn on top right corner developer mode
+6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
+
+
 
 # Language locale
 We are looking for any locacle contributor  
@@ -148,34 +174,10 @@ We are looking for any locacle contributor
 
 
 
-# How to use
-- [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
-
-
-
-# Build yourself to install
-
-1. Install node js, <https://nodejs.org/en/> , node 18
-2. open terminal and type below
-
-```console
-git clone https://github.com/ttop32/MouseTooltipTranslator.git
-cd MouseTooltipTranslator
-npm install 
-npm run build        // or 'npm run watch' for developing
-```
-
-3. You will see MouseTooltipTranslator/build path
-4. Open chrome browser and goto chrome://extensions/
-5. Turn on top right corner developer mode
-6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
-
 # OCR
-
 - Japanese OCR uses <https://github.com/ttop32/jpn_vert_traineddata>
 
 # Privacy policy
-
 - [Privacy policy](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md)
 
 # Acknowledgement and References  
