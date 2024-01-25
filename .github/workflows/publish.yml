@@ -23,7 +23,7 @@ jobs:
         run: echo ${{env.EDGE_RELEASE_FILE}}
 
       - name: Publish to store
-        uses: PlasmoHQ/bpp@v3
+        uses: PlasmoHQ/bpp@v3.5.0
         with:
           keys: ${{ secrets.BPP_KEYS }}
           chrome-file: "${{env.EDGE_RELEASE_FILE}}"
