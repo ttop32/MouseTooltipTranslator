@@ -173,10 +173,6 @@ We are looking for any locacle contributor. Make any pull request.
 | zh_TW  | Chinese (Taiwan) |
 
 
-
-# OCR
-- Japanese OCR uses <https://github.com/ttop32/jpn_vert_traineddata>
-
 # Privacy policy
 - [Privacy policy](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md)
 
