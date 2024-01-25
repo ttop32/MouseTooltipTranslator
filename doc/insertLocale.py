@@ -22,7 +22,8 @@ localeList = ['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_GB
 translateLangCodeDict = {"zh_CN": "zh-CN", "zh_TW": "zh-TW"}
 i18List = [
 
-    "Main                                      ",
+    "MAIN                                      ",
+    "MAIN",
     "Mouse Tooltip Translator",
     "Show Tooltip When",
     "Voice When",
@@ -34,7 +35,8 @@ i18List = [
     "Writing Language",
     "OCR Detection Language",
 
-    "Visual                                      ",
+    "GRAPHIC                                      ",
+    "GRAPHIC",
     "Tooltip Font Size",
     "Tooltip Width",
     "Tooltip Distance",
@@ -47,7 +49,8 @@ i18List = [
     "Tooltip Border Color",
     "Highlight Color",
 
-    "Voice                                      ",
+    "VOICE                                      ",
+    "VOICE",
     "Voice Volume",
     "Voice Speed",
     "Voice Target",
@@ -55,6 +58,7 @@ i18List = [
     "Voice for ",
 
     "ADVANCED                                      ",
+    "ADVANCED",
     "Translate Writing Hotkey",
     "OCR When",
     "Detect Type Swap Hold Key",
@@ -63,6 +67,7 @@ i18List = [
     "Reverse Translate Language",
 
     "EXCLUDE                                      ",
+    "EXCLUDE",
     "Exclude Language",
     "Exclude Website",
 

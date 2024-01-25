@@ -1,6 +1,9 @@
 {
-	"Main______________________________________": {
-		"message": "ראשי                                      "
+	"MAIN______________________________________": {
+		"message": "MAIN                                      "
+	},
+	"MAIN": {
+		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
@@ -32,8 +35,11 @@
 	"OCR_Detection_Language": {
 		"message": "שפת ocr"
 	},
-	"Visual______________________________________": {
-		"message": "תצוגה                                      "
+	"GRAPHIC______________________________________": {
+		"message": "GRAPHIC                                      "
+	},
+	"GRAPHIC": {
+		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
 		"message": "גודל פונט"
@@ -68,8 +74,11 @@
 	"Highlight_Color": {
 		"message": "Highlight Color"
 	},
-	"Voice______________________________________": {
-		"message": "קול                                      "
+	"VOICE______________________________________": {
+		"message": "VOICE                                      "
+	},
+	"VOICE": {
+		"message": "VOICE"
 	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
@@ -88,6 +97,9 @@
 	},
 	"ADVANCED______________________________________": {
 		"message": "ADVANCED                                      "
+	},
+	"ADVANCED": {
+		"message": "ADVANCED"
 	},
 	"Translate_Writing_Hotkey": {
 		"message": "תרגם בלחיצה על מקש"
@@ -109,6 +121,9 @@
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
 	},
 	"Exclude_Language": {
 		"message": "אל תתרגם את השפות"

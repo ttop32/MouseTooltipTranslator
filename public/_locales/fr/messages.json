@@ -1,6 +1,9 @@
 {
-	"Main______________________________________": {
-		"message": "Principal                                      "
+	"MAIN______________________________________": {
+		"message": "MAIN                                      "
+	},
+	"MAIN": {
+		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Traduction Souris Info-bulle"
@@ -32,8 +35,11 @@
 	"OCR_Detection_Language": {
 		"message": "Langue de détection de l'OCR"
 	},
-	"Visual______________________________________": {
-		"message": "Visuel                                      "
+	"GRAPHIC______________________________________": {
+		"message": "GRAPHIC                                      "
+	},
+	"GRAPHIC": {
+		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
 		"message": "Taille de la police de l'infobulle"
@@ -68,8 +74,11 @@
 	"Highlight_Color": {
 		"message": "Highlight Color"
 	},
-	"Voice______________________________________": {
-		"message": "Voix                                      "
+	"VOICE______________________________________": {
+		"message": "VOICE                                      "
+	},
+	"VOICE": {
+		"message": "VOICE"
 	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
@@ -88,6 +97,9 @@
 	},
 	"ADVANCED______________________________________": {
 		"message": "AVANCÉ                                      "
+	},
+	"ADVANCED": {
+		"message": "ADVANCED"
 	},
 	"Translate_Writing_Hotkey": {
 		"message": "Touche de raccourci pour traduire l'écriture"
@@ -109,6 +121,9 @@
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLURE                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
 	},
 	"Exclude_Language": {
 		"message": "Exclure la langue"
