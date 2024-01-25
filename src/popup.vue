@@ -46,11 +46,11 @@
                 variant="tonal"
                 closable
                 close-label="Close Alert"
-                title="Review this!"
+                :title="reviewReminder.name"
               >
-                Developer love criticism
+                {{ reviewReminder.sub_name }}
                 <template v-slot:append>
-                  <v-btn variant="tonal" @click="openUrl(reviewPageUrl)"
+                  <v-btn variant="tonal" @click="openUrl(reviewReminder.url)"
                     >Open</v-btn
                   >
                 </template>
@@ -569,6 +569,12 @@ var remainSettingDesc = {
   Voice_for_: chrome.i18n.getMessage("Voice_for_"),
 };
 
+var reviewReminder = {
+  name: chrome.i18n.getMessage("Review_this"),
+  sub_name: chrome.i18n.getMessage("Developer_love_criticism"),
+  url: util.getReviewUrl(),
+};
+
 function getRangeOption(start, end, scale, roundOff) {
   var optionList = {};
   for (let i = start; i < end; i++) {
@@ -606,7 +612,7 @@ export default {
           icon: "mdi-cursor-default-click",
         },
       ],
-      reviewPageUrl: util.getReviewUrl(),
+      reviewReminder,
     };
   },
   async mounted() {
