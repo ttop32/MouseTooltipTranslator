@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.112
+  - fix tooltip highlight (request by marcello-pietrobon)
 - 0.1.111
   - support tooltip border (request by pussykiller)
   - support writing translate on url search box (type "/ " to start) (request by Enlight432)

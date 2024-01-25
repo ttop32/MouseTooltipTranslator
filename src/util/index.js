@@ -645,14 +645,6 @@ export function copyJson(json) {
   return JSON.parse(JSON.stringify(json));
 }
 
-export function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
-export function swapJsonKeyValue(json) {
-  return _.invert(json);
-}
-
 export function sortJsonByKey(json) {
   return Object.keys(json)
     .sort()
@@ -703,6 +695,58 @@ export function truncate(str, n) {
 
 export function copyTextToClipboard(text) {
   navigator.clipboard.writeText(text);
+}
+
+//rect===============================
+
+export function filterOverlappedRect(rects) {
+  //filter duplicate rect
+  var rectSet = new Set();
+  rects = Array.from(rects).filter((rect) => {
+    var key = getRectKey(rect);
+    if (!rectSet.has(key)) {
+      rectSet.add(key);
+      return true;
+    }
+    return false;
+  });
+
+  //filter covered rect by other rect
+  rects = rects.filter((rect1) => {
+    for (const rect2 of rects) {
+      if (getRectKey(rect1) != getRectKey(rect2) && rectCovered(rect1, rect2)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  return rects;
+}
+
+function getRectKey(rect) {
+  return `${rect.left}${rect.top}${rect.width}${rect.height}`;
+}
+
+function rectCovered(rect1, rect2) {
+  return (
+    rect2.top <= rect1.top &&
+    rect1.top <= rect2.bottom &&
+    rect2.top <= rect1.bottom &&
+    rect1.bottom <= rect2.bottom &&
+    rect2.left <= rect1.left &&
+    rect1.left <= rect2.right &&
+    rect2.left <= rect1.right &&
+    rect1.right <= rect2.right
+  );
+}
+function rectCollide(rect1, rect2) {
+  return !(
+    rect1.top > rect2.bottom ||
+    rect1.right < rect2.left ||
+    rect1.bottom < rect2.top ||
+    rect1.left > rect2.right
+  );
 }
 
 // performance=======================================================

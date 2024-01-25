@@ -1,4 +1,4 @@
-import { isEmpty, swapJsonKeyValue } from "/src/util";
+import { isEmpty, invert } from "lodash";
 
 export default class BaseTranslator {
   static langCodeJson = {};
@@ -31,7 +31,7 @@ export default class BaseTranslator {
   }
   static decodeLangCode(lang) {
     if (isEmpty(this.langCodeJsonSwapped)) {
-      this.langCodeJsonSwapped = swapJsonKeyValue(this.langCodeJson);
+      this.langCodeJsonSwapped = invert(this.langCodeJson);
     }
     return this.langCodeJsonSwapped[lang]
       ? this.langCodeJsonSwapped[lang]

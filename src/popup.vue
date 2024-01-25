@@ -196,9 +196,11 @@
 import * as util from "/src/util";
 import { isProxy, toRaw } from "vue";
 import AboutPage from "./components/about.vue";
+import { cloneDeep } from "lodash";
 
 var langList = util.langList;
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
+var langListWithNone = util.concatJson({ None: "null" }, langList); //copy lang and add none
 var langListOpposite = util.langListOpposite;
 
 var toggleList = {
@@ -358,10 +360,7 @@ var detectTypeList = {
   Container: "container",
 };
 
-var translateListWithNone = util.copyJson(langList); //copy lang and add auto
-translateListWithNone["None"] = "null";
-
-var keyListWithAlways = util.copyJson(keyList); //copy lang and add auto
+var keyListWithAlways = cloneDeep(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
 
 var voiceTargetList = {
@@ -521,7 +520,7 @@ var advancedTabData = {
   },
   translateReverseTarget: {
     description: chrome.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: translateListWithNone,
+    optionList: langListWithNone,
   },
   useTransliteration: {
     description: "Enable Transliteration (Experimental)",
@@ -662,12 +661,6 @@ export default {
       link.href = url;
       link.download = "Mouse_Tooltip_Translator_History.csv";
       link.click();
-    },
-    copyToClipboard(sourceText, targetText) {
-      var text = sourceText + " \n" + targetText;
-      navigator.clipboard.writeText(text).then((response) => {
-        this.copyAlertBar = true;
-      });
     },
     wrapWithTitleValueKey(inputList) {
       // convert {key:item}  as {title:key, value:item}
