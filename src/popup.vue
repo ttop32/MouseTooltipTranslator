@@ -22,7 +22,7 @@
               show-arrows
               slider-color="red"
             >
-              <v-tab v-for="tabName in tabs" :key="tabName">
+              <v-tab v-for="(tabName, tabId) in tabs" :key="tabId">
                 {{ tabName }}
               </v-tab>
             </v-tabs>
@@ -32,13 +32,13 @@
         <!-- main page contents -->
         <v-window v-model="currentTab">
           <v-window-item
-            v-for="tabName in tabs"
-            :key="tabName"
-            :value="tabName"
+            v-for="(tabName, tabId) in tabs"
+            :key="tabId"
+            :value="tabId"
             class="scrollList"
           >
             <!-- review request alert box -->
-            <div v-if="tabName == 'MAIN'">
+            <div v-if="tabId == 'MAIN'">
               <v-alert
                 v-if="2 < setting['popupCount'] && setting['popupCount'] < 6"
                 type="success"
@@ -58,7 +58,7 @@
             </div>
 
             <v-list-item
-              v-for="(option, optionName) in tabItems[tabName]"
+              v-for="(option, optionName) in tabItems[tabId]"
               :key="optionName"
               flat
             >
@@ -556,7 +556,13 @@ var tabItems = {
   ADVANCED: advancedTabData,
   EXCLUDE: excludeTabData,
 };
-var tabs = Object.keys(tabItems);
+var tabs = {
+  MAIN: chrome.i18n.getMessage("MAIN"),
+  GRAPHIC: chrome.i18n.getMessage("GRAPHIC"),
+  VOICE: chrome.i18n.getMessage("VOICE"),
+  ADVANCED: chrome.i18n.getMessage("ADVANCED"),
+  EXCLUDE: chrome.i18n.getMessage("EXCLUDE"),
+};
 
 var remainSettingDesc = {
   appName: chrome.i18n.getMessage("Mouse_Tooltip_Translator"),

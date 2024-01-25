@@ -1,6 +1,9 @@
 {
-	"Main______________________________________": {
-		"message": "Utama                                      "
+	"MAIN______________________________________": {
+		"message": "MAIN                                      "
+	},
+	"MAIN": {
+		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Penerjemah Tooltip Mouse"
@@ -32,8 +35,11 @@
 	"OCR_Detection_Language": {
 		"message": "Bahasa Deteksi OCR"
 	},
-	"Visual______________________________________": {
-		"message": "Visual                                      "
+	"GRAPHIC______________________________________": {
+		"message": "GRAPHIC                                      "
+	},
+	"GRAPHIC": {
+		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
 		"message": "Ukuran Font Tooltip"
@@ -68,8 +74,11 @@
 	"Highlight_Color": {
 		"message": "Highlight Color"
 	},
-	"Voice______________________________________": {
-		"message": "Suara                                      "
+	"VOICE______________________________________": {
+		"message": "VOICE                                      "
+	},
+	"VOICE": {
+		"message": "VOICE"
 	},
 	"Voice_Volume": {
 		"message": "Voice Volume"
@@ -88,6 +97,9 @@
 	},
 	"ADVANCED______________________________________": {
 		"message": "LANJUTAN                                      "
+	},
+	"ADVANCED": {
+		"message": "ADVANCED"
 	},
 	"Translate_Writing_Hotkey": {
 		"message": "Hotkey Terjemahan Tulisan"
@@ -109,6 +121,9 @@
 	},
 	"EXCLUDE______________________________________": {
 		"message": "KECUALI                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
 	},
 	"Exclude_Language": {
 		"message": "Kecualikan Bahasa"
