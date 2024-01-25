@@ -111,7 +111,7 @@ npm run build        // or 'npm run watch' for developing
 
 
 # Language locale
-We are looking for any locacle contributor. Make any pull request.
+We are looking for any locale contributor. Make any pull request.
 - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
 
 | Locale code | Language (region) |
