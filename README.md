@@ -87,6 +87,7 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
 # Language locale
 We are looking for any locacle contributor  
 - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
+
 | Locale code | Language (region) |
 | ------------- | ------------- |
 | ar  | Arabic |
