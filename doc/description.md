@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.113
+  - change writing text logic
 - 0.1.112
   - fix tooltip highlight (request by marcello-pietrobon)
 - 0.1.111

@@ -297,9 +297,8 @@ async function translateWriting() {
   ) {
     return;
   }
-
   // get writing text
-  var writingText = getWritingText();
+  var writingText = await getWritingText();
   if (!writingText) {
     return;
   }
@@ -311,37 +310,56 @@ async function translateWriting() {
     setting["translateTarget"]
   );
   //skip no translation or is too late to respond
-  if (isBroken || writingText != getWritingText()) {
+  if (isBroken) {
     return;
   }
 
   insertText(translatedText);
 }
 
-function getWritingText() {
+async function getWritingText() {
   // get current selected text, if no select, select all to get all
-  if (window.getSelection().type == "Caret") {
-    document.execCommand("selectAll", false, null);
+  if (window.getSelection().type != "Caret") {
+    return getSelectionText(true);
   }
-  return getSelectionText(true);
+  document.execCommand("selectAll", false, null);
+  var text = getSelectionText(true);
+  await makeNonEnglishTypingFinish();
+  return text;
 }
 
-function insertText(inputText) {
-  if (!inputText) {
+async function makeNonEnglishTypingFinish() {
+  //refocus input text to prevent prev typing
+  var ele = document.activeElement;
+  await util.wait(10);
+  ele.blur();
+  await util.wait(10);
+  ele.focus();
+  document.execCommand("selectAll", false, null);
+}
+
+async function insertText(text) {
+  if (!text) {
     return;
+  } else if (matchUrl(document.location.href, "discord.com")) {
+    pasteTextInputBox(text);
+  } else if (util.isGoogleDoc()) {
+    pasteTextGoogleDoc(text);
+  } else {
+    document.execCommand("insertHTML", false, text);
   }
-  document.execCommand("insertHTML", false, inputText);
-  pasteTextGoogleDoc(inputText);
 }
-
+function pasteTextInputBox(text) {
+  var ele = document.activeElement;
+  pasteText(ele, text);
+}
 function pasteTextGoogleDoc(text) {
-  if (!util.isGoogleDoc()) {
-    return;
-  }
   // https://github.com/matthewsot/docs-plus
   var el = document.getElementsByClassName("docs-texteventtarget-iframe")[0];
   el = el.contentDocument.querySelector("[contenteditable=true]");
-
+  pasteText(el, text);
+}
+function pasteText(ele, text) {
   var data = new DataTransfer();
   data.setData("text/plain", text);
   var paste = new ClipboardEvent("paste", {
@@ -350,8 +368,7 @@ function pasteTextGoogleDoc(text) {
     dataType: "text/plain",
   });
   paste.docs_plus_ = true;
-
-  el.dispatchEvent(paste);
+  ele.dispatchEvent(paste);
 }
 
 // Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
@@ -379,7 +396,6 @@ function handleMousemove(e) {
   setMouseStatus(e);
   setTooltipPosition(e.clientX, e.clientY);
   ocrView.checkImage(mouseTarget, setting, keyDownList);
-  checkWritingBox();
 }
 
 function handleTouchstart(e) {
@@ -393,6 +409,8 @@ function handleKeydown(e) {
     hideTooltip();
   } else if (e.code == "Escape") {
     requestStopTTS();
+  } else if (e.key == "HangulMode") {
+    return;
   } else if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
   }
@@ -442,19 +460,6 @@ function setMouseStatus(e) {
 function setTooltipPosition(x, y) {
   tooltipContainer?.css("transform", `translate(${x}px,${y}px)`);
 }
-
-const checkWritingBox = debounce(delayTime, () => {
-  // if mouse target is not writing box or already bound, return
-  // make key bind for preventDefault
-  var $writingField = $(util.writingField);
-  if (!$writingField.is(mouseTarget) || $writingField.data("mttBound")) {
-    return;
-  }
-  $writingField
-    .data("mttBound", true)
-    .on("keydown", handleKeydown)
-    .on("keyup", handleKeyup);
-});
 
 function checkMouseOnceMoved(x, y) {
   if (
@@ -726,7 +731,6 @@ async function checkGoogleDocs() {
   if (!util.isGoogleDoc()) {
     return;
   }
-
   interceptGoogleDocKeyEvent();
 }
 
@@ -770,7 +774,10 @@ function destructor() {
 
 function addEventHandler(eventName, callbackFunc) {
   //record event for later event signal kill
-  return window.addEventListener(eventName, callbackFunc, { signal });
+  return window.addEventListener(eventName, callbackFunc, {
+    capture: true,
+    signal,
+  });
 }
 
 function removePrevElement() {
