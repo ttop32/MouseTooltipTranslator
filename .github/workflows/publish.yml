@@ -7,6 +7,11 @@ jobs:
   publish:
     name: Publish Extension to Store
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
