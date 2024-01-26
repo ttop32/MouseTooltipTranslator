@@ -930,3 +930,7 @@ export async function waitUntilForever(fn) {
     timeout: WAIT_FOREVER,
   });
 }
+
+export async function wait(time) {
+  await new Promise((r) => setTimeout(r, time));
+}
