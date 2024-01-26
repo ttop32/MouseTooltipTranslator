@@ -332,10 +332,12 @@ async function makeNonEnglishTypingFinish() {
   //refocus input text to prevent prev typing
   var ele = document.activeElement;
   await util.wait(10);
+  window.getSelection().removeAllRanges();
   ele.blur();
   await util.wait(10);
   ele.focus();
   document.execCommand("selectAll", false, null);
+  await util.wait(100);
 }
 
 async function insertText(text) {
