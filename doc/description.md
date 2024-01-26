@@ -20,7 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.114
-  - change writing language for non english conflict
+  - fix non english writing conflict
 - 0.1.113
   - change writing text logic (request by Enlight432)
 - 0.1.112
