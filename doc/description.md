@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.115
+  - fix bing chat writing
 - 0.1.114
   - fix non english writing conflict
 - 0.1.113

@@ -55,8 +55,6 @@ export var defaultData = {
   popupCount: "0",
 };
 
-const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
-
 var rtlLangList = [
   "ar", //Arabic
   "iw", //Hebrew
@@ -933,4 +931,22 @@ export async function waitUntilForever(fn) {
 
 export async function wait(time) {
   await new Promise((r) => setTimeout(r, time));
+}
+
+export function isExtensionOnline() {
+  return chrome.runtime?.id;
+}
+
+export function getActiveElement(root = document) {
+  const activeEl = root.activeElement;
+
+  if (!activeEl) {
+    return null;
+  }
+
+  if (activeEl.shadowRoot) {
+    return getActiveElement(activeEl.shadowRoot);
+  } else {
+    return activeEl;
+  }
 }
