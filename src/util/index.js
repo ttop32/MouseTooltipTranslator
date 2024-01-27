@@ -915,10 +915,6 @@ export async function waitUntilForever(fn) {
   });
 }
 
-export async function wait(time) {
-  await new Promise((r) => setTimeout(r, time));
-}
-
 export function isExtensionOnline() {
   return chrome.runtime?.id;
 }
