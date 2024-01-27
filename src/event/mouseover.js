@@ -12,6 +12,7 @@ var clientY = 0;
 var _win;
 var _isIframe = false;
 var styleElement;
+const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 
 export function enableMouseoverTextEvent(_window = window) {
   _win = _window;
@@ -92,7 +93,8 @@ function getTextFromRange(range) {
 
 function expandRange(range, type) {
   try {
-    if (type == "container") {
+    if (type == "container" && range.startContainer) {
+      console.log(range.startContainer);
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
       range.setStart(range.startContainer, 0);

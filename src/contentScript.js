@@ -68,9 +68,13 @@ function startMouseoverDetector() {
   enableMouseoverTextEvent();
   addEventHandler("mouseoverText", async function (event) {
     // if no selected text
-    if (setting["translateWhen"].includes("mouseover") && !selectedText) {
-      var mouseoverText = event?.mouseoverText?.[getDetectType()];
-      var mouseoverRange = event?.mouseoverText?.[getDetectType() + "_range"];
+    if (
+      setting["translateWhen"].includes("mouseover") &&
+      !selectedText &&
+      event?.mouseoverText
+    ) {
+      var mouseoverText = event.mouseoverText[getDetectType()];
+      var mouseoverRange = event.mouseoverText[getDetectType() + "_range"];
       await processWord(mouseoverText, "mouseover", mouseoverRange);
     }
   });
@@ -101,7 +105,8 @@ async function processWord(word, actionType, range) {
   if (
     !checkWindowFocus() ||
     checkMouseTargetIsTooltip() ||
-    activatedWord == word
+    activatedWord == word ||
+    !util.isExtensionOnline()
   ) {
     return;
   } else if (!word) {
@@ -122,16 +127,16 @@ async function processWord(word, actionType, range) {
       setting["translateReverseTarget"]
     );
 
-  //if translated text is empty, hide tooltip
   // if translation is not recent one, do not update
-  if (
+  //if translated text is empty, hide tooltip
+  if (activatedWord != word) {
+    return;
+  } else if (
     !translatedText ||
     sourceLang == targetLang ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
     hideTooltip();
-    return;
-  } else if (activatedWord != word) {
     return;
   }
 
@@ -313,7 +318,6 @@ async function translateWriting() {
   if (isBroken) {
     return;
   }
-
   insertText(translatedText);
 }
 
@@ -330,12 +334,12 @@ async function getWritingText() {
 
 async function makeNonEnglishTypingFinish() {
   //refocus input text to prevent prev typing
-  var ele = document.activeElement;
+  var ele = util.getActiveElement();
   await util.wait(10);
   window.getSelection().removeAllRanges();
-  ele.blur();
+  ele?.blur();
   await util.wait(10);
-  ele.focus();
+  ele?.focus();
   document.execCommand("selectAll", false, null);
   await util.wait(100);
 }
