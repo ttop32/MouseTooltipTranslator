@@ -132,7 +132,7 @@ function detectText(canvasIn, mode) {
     let area = cv.contourArea(cnt);
     let angle = Math.abs(cv.minAreaRect(cnt).angle);
     let isRightAngle = [0, 90, 180, 270, 360].some(
-      (x) => Math.abs(x - angle) <= 10.0
+      (x) => Math.abs(x - angle) <= 15.0
     );
     let rect = cv.boundingRect(cnt);
     var left = parseInt(Math.max(rect.x - paddingSize, 0));

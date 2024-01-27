@@ -148,13 +148,6 @@ async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
   );
 }
 
-async function requestTesseractInit(lang, mode) {
-  return await postMessage(
-    { type: "initTesseract", lang, mode },
-    iFrames["ocrFrame"]
-  );
-}
-
 async function postMessage(data, frame) {
   return await windowPostMessageProxy.postMessage(frame.contentWindow, data);
 }
@@ -194,7 +187,7 @@ function getTextBoxList(ocrData) {
 
       // console.log(text);
       //if string contains only whitespace, skip
-      if (/^\s*$/.test(text) || text.length < 3 || block["confidence"] < 60) {
+      if (/^\s*$/.test(text) || text.length < 2 || block["confidence"] < 60) {
         continue;
       }
 

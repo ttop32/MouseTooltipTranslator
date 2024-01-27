@@ -6,7 +6,7 @@ import $ from "jquery";
 import tippy, { sticky, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
-import { debounce } from "throttle-debounce";
+import delay from "delay";
 
 import {
   enableSelectionEndEvent,
@@ -321,7 +321,7 @@ async function translateWriting() {
 
 async function getWritingText() {
   // get current selected text,
-  if (window.getSelection().type != "Caret") {
+  if (hasSelection()) {
     return getSelectionText();
   }
   // if no select, select all to get all
@@ -331,17 +331,21 @@ async function getWritingText() {
   return text;
 }
 
+function hasSelection() {
+  return window.getSelection().type != "Caret";
+}
+
 async function makeNonEnglishTypingFinish() {
   //refocus input text to prevent prev remain typing
-  await util.wait(10);
+  await delay(10);
   var ele = util.getActiveElement();
   window.getSelection().removeAllRanges();
   ele?.blur();
-  await util.wait(100);
+  await delay(100);
   ele?.focus();
-  await util.wait(100);
+  await delay(100);
   document.execCommand("selectAll", false, null);
-  await util.wait(100);
+  await delay(100);
 }
 
 async function insertText(text) {
@@ -349,12 +353,19 @@ async function insertText(text) {
     return;
   } else if (util.isGoogleDoc()) {
     pasteTextGoogleDoc(text);
-  } else if ($(util.getActiveElement()).is("[spellcheck='true']")) {
-    pasteTextInputBox(text);
   } else {
+    pasteTextDom(text);
+  }
+}
+
+async function pasteTextDom(text) {
+  pasteTextInputBox(text);
+  await delay(10);
+  if (hasSelection()) {
     document.execCommand("insertText", false, text);
   }
 }
+
 function pasteTextInputBox(text) {
   var ele = util.getActiveElement();
   pasteText(ele, text);
