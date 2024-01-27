@@ -94,7 +94,6 @@ function getTextFromRange(range) {
 function expandRange(range, type) {
   try {
     if (type == "container" && range.startContainer) {
-      console.log(range.startContainer);
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
       range.setStart(range.startContainer, 0);
