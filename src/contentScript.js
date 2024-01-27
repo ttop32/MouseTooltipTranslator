@@ -32,8 +32,6 @@ let selectedText = "";
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
 const controller = new AbortController();
 const { signal } = controller;
-var mouseoverInterval;
-var delayTime = 700;
 var isBlobPdf = false;
 var prevWordParam = [];
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
@@ -322,24 +320,26 @@ async function translateWriting() {
 }
 
 async function getWritingText() {
-  // get current selected text, if no select, select all to get all
+  // get current selected text,
   if (window.getSelection().type != "Caret") {
-    return getSelectionText(true);
+    return getSelectionText();
   }
+  // if no select, select all to get all
   document.execCommand("selectAll", false, null);
-  var text = getSelectionText(true);
+  var text = getSelectionText();
   await makeNonEnglishTypingFinish();
   return text;
 }
 
 async function makeNonEnglishTypingFinish() {
-  //refocus input text to prevent prev typing
-  var ele = util.getActiveElement();
+  //refocus input text to prevent prev remain typing
   await util.wait(10);
+  var ele = util.getActiveElement();
   window.getSelection().removeAllRanges();
   ele?.blur();
-  await util.wait(10);
+  await util.wait(100);
   ele?.focus();
+  await util.wait(100);
   document.execCommand("selectAll", false, null);
   await util.wait(100);
 }
@@ -347,16 +347,16 @@ async function makeNonEnglishTypingFinish() {
 async function insertText(text) {
   if (!text) {
     return;
-  } else if (matchUrl(document.location.href, "discord.com")) {
-    pasteTextInputBox(text);
   } else if (util.isGoogleDoc()) {
     pasteTextGoogleDoc(text);
+  } else if ($(util.getActiveElement()).is("[spellcheck='true']")) {
+    pasteTextInputBox(text);
   } else {
-    document.execCommand("insertHTML", false, text);
+    document.execCommand("insertText", false, text);
   }
 }
 function pasteTextInputBox(text) {
-  var ele = document.activeElement;
+  var ele = util.getActiveElement();
   pasteText(ele, text);
 }
 function pasteTextGoogleDoc(text) {
@@ -366,15 +366,18 @@ function pasteTextGoogleDoc(text) {
   pasteText(el, text);
 }
 function pasteText(ele, text) {
-  var data = new DataTransfer();
-  data.setData("text/plain", text);
+  var clipboardData = new DataTransfer();
+  clipboardData.setData("text/plain", text);
   var paste = new ClipboardEvent("paste", {
-    clipboardData: data,
+    clipboardData,
     data: text,
     dataType: "text/plain",
+    bubbles: true,
+    cancelable: true,
   });
   paste.docs_plus_ = true;
   ele.dispatchEvent(paste);
+  clipboardData.clearData();
 }
 
 // Listener - detect mouse move, key press, mouse press, tab switch==========================================================================================
@@ -390,7 +393,7 @@ function loadEventListener() {
   addEventHandler("mouseup", handleMouseKeyUp);
 
   //detect tab switching to reset env
-  addEventHandler("blur", handleBlur);
+  addEventHandler("blur", resetTooltipStatus);
 }
 
 function handleMousemove(e) {
@@ -448,7 +451,7 @@ function releaseKeydownList(key) {
   keyDownList[key] = false;
 }
 
-function handleBlur(e) {
+function resetTooltipStatus() {
   keyDownList = { always: true }; //reset key press
   mouseMoved = false;
   mouseMovedCount = 0;
@@ -551,9 +554,8 @@ async function requestRecordTooltipText(
 
 async function getSetting() {
   setting = await util.loadSetting(function settingCallbackFn() {
+    resetTooltipStatus();
     applyStyleSetting();
-    selectedText = "";
-    ocrView.removeAllOcrEnv();
     checkVideo();
   });
 }
@@ -773,7 +775,7 @@ function loadDestructor() {
 }
 
 function destructor() {
-  clearInterval(mouseoverInterval); //clear mouseover interval
+  resetTooltipStatus();
   removePrevElement(); //remove element
   controller.abort(); //clear all event Listener by controller signal
 }
@@ -789,5 +791,4 @@ function addEventHandler(eventName, callbackFunc) {
 function removePrevElement() {
   $("#mttstyle").remove();
   tooltip?.destroy();
-  ocrView.removeAllOcrEnv();
 }

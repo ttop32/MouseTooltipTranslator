@@ -860,20 +860,6 @@ export function addCommandListener(type, handler) {
 
 // remain ===================
 
-export function getFocusedWritingBox() {
-  //check doucment input box focused
-  var writingBox = $(":focus");
-  if (writingBox.is(writingField)) {
-    return writingBox.get(0);
-  }
-
-  //check shadow dom input box focusd
-  var shadows = getAllShadows().filter((shadow) =>
-    $(shadow.activeElement).is(writingField)
-  );
-  return shadows?.[0]?.activeElement;
-}
-
 export function isRtl(lang) {
   return rtlLangList.includes(lang) ? "rtl" : "ltr";
 }
@@ -948,5 +934,13 @@ export function getActiveElement(root = document) {
     return getActiveElement(activeEl.shadowRoot);
   } else {
     return activeEl;
+  }
+}
+
+export function getFocusedWritingBox() {
+  //check doucment input box focused
+  var writingBox = $(getActiveElement());
+  if (writingBox.is(writingField)) {
+    return writingBox.get(0);
   }
 }
