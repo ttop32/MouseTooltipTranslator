@@ -193,10 +193,12 @@
   </v-app>
 </template>
 <script>
-import * as util from "/src/util";
+import browser from "webextension-polyfill";
 import { isProxy, toRaw } from "vue";
 import AboutPage from "./components/about.vue";
 import { cloneDeep } from "lodash";
+
+import * as util from "/src/util";
 
 var langList = util.langList;
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
@@ -386,92 +388,92 @@ var tooltipTextAlignList = {
 
 var settingListData = {
   showTooltipWhen: {
-    description: chrome.i18n.getMessage("Show_Tooltip_When"), // public/_locales/en/messages.json is used
+    description: browser.i18n.getMessage("Show_Tooltip_When"), // public/_locales/en/messages.json is used
     optionList: keyListWithAlways,
   },
   TTSWhen: {
-    description: chrome.i18n.getMessage("Voice_When"),
+    description: browser.i18n.getMessage("Voice_When"),
     optionList: keyListWithAlways,
   },
   translateWhen: {
-    description: chrome.i18n.getMessage("Translate_When"),
+    description: browser.i18n.getMessage("Translate_When"),
     optionList: translateActionList,
   },
   translateSource: {
-    description: chrome.i18n.getMessage("Translate_From"),
+    description: browser.i18n.getMessage("Translate_From"),
     optionList: langListWithAuto,
   },
   translateTarget: {
-    description: chrome.i18n.getMessage("Translate_Into"),
+    description: browser.i18n.getMessage("Translate_Into"),
     optionList: langList,
   },
   translatorVendor: {
-    description: chrome.i18n.getMessage("Translator_Engine"),
+    description: browser.i18n.getMessage("Translator_Engine"),
     optionList: translatorList,
   },
   detectType: {
-    description: chrome.i18n.getMessage("Text_Detect_Type"),
+    description: browser.i18n.getMessage("Text_Detect_Type"),
     optionList: detectTypeList,
   },
   writingLanguage: {
-    description: chrome.i18n.getMessage("Writing_Language"),
+    description: browser.i18n.getMessage("Writing_Language"),
     optionList: langList,
   },
   ocrDetectionLang: {
-    description: chrome.i18n.getMessage("OCR_Detection_Language"),
+    description: browser.i18n.getMessage("OCR_Detection_Language"),
     optionList: ocrLangList,
   },
 };
 
 var visualTabData = {
   tooltipFontSize: {
-    description: chrome.i18n.getMessage("Tooltip_Font_Size"),
+    description: browser.i18n.getMessage("Tooltip_Font_Size"),
     optionList: tooltipFontSizeList,
   },
   tooltipWidth: {
-    description: chrome.i18n.getMessage("Tooltip_Width"),
+    description: browser.i18n.getMessage("Tooltip_Width"),
     optionList: tooltipWidth,
   },
   tooltipDistance: {
-    description: chrome.i18n.getMessage("Tooltip_Distance"),
+    description: browser.i18n.getMessage("Tooltip_Distance"),
     optionList: tooltipDistanceList,
   },
   tooltipAnimation: {
-    description: chrome.i18n.getMessage("Tooltip_Animation"),
+    description: browser.i18n.getMessage("Tooltip_Animation"),
     optionList: tooltipAnimationList,
   },
   tooltipPosition: {
-    description: chrome.i18n.getMessage("Tooltip_Position"),
+    description: browser.i18n.getMessage("Tooltip_Position"),
     optionList: tooltipPositionList,
   },
   tooltipTextAlign: {
-    description: chrome.i18n.getMessage("Tooltip_Text_Align"),
+    description: browser.i18n.getMessage("Tooltip_Text_Align"),
     optionList: tooltipTextAlignList,
   },
   tooltipBackgroundBlur: {
-    description: chrome.i18n.getMessage("Tooltip_Background_Blur"),
+    description: browser.i18n.getMessage("Tooltip_Background_Blur"),
     optionList: tooltipBackgroundBlurList,
   },
   tooltipFontColor: {
-    description: chrome.i18n.getMessage("Tooltip_Font_Color"),
+    description: browser.i18n.getMessage("Tooltip_Font_Color"),
     optionType: "colorPicker",
     menu: false,
     optionList: {},
   },
   tooltipBackgroundColor: {
-    description: chrome.i18n.getMessage("Tooltip_Background_Color"),
+    description: browser.i18n.getMessage("Tooltip_Background_Color"),
     optionType: "colorPicker",
     menu: false,
     optionList: {},
   },
   tooltipBorderColor: {
-    description: chrome.i18n.getMessage("Tooltip_Border_Color"),
+    description: browser.i18n.getMessage("Tooltip_Border_Color"),
     optionType: "colorPicker",
     menu: false,
     optionList: {},
   },
   highlightColor: {
-    description: chrome.i18n.getMessage("Highlight_Color"),
+    description: browser.i18n.getMessage("Highlight_Color"),
     optionType: "colorPicker",
     menu: false,
     optionList: {},
@@ -480,46 +482,46 @@ var visualTabData = {
 
 var voiceTabData = {
   voiceVolume: {
-    description: chrome.i18n.getMessage("Voice_Volume"),
+    description: browser.i18n.getMessage("Voice_Volume"),
     optionList: voiceVolumeList,
   },
   voiceRate: {
-    description: chrome.i18n.getMessage("Voice_Speed"),
+    description: browser.i18n.getMessage("Voice_Speed"),
     optionList: voiceRateList,
   },
   voiceTarget: {
-    description: chrome.i18n.getMessage("Voice_Target"),
+    description: browser.i18n.getMessage("Voice_Target"),
     optionList: voiceTargetList,
   },
   voiceRepeat: {
-    description: chrome.i18n.getMessage("Voice_Repeat"),
+    description: browser.i18n.getMessage("Voice_Repeat"),
     optionList: voiceRepeatList,
   },
 };
 
 var advancedTabData = {
   keyDownTranslateWriting: {
-    description: chrome.i18n.getMessage("Translate_Writing_Hotkey"),
+    description: browser.i18n.getMessage("Translate_Writing_Hotkey"),
     optionList: keyList,
   },
   keyDownOCR: {
-    description: chrome.i18n.getMessage("OCR_When"),
+    description: browser.i18n.getMessage("OCR_When"),
     optionList: keyListWithAlways,
   },
   keyDownDetectSwap: {
-    description: chrome.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
+    description: browser.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
     optionList: keyList,
   },
   enableYoutube: {
-    description: chrome.i18n.getMessage("Enable_Youtube_Subtitle"),
+    description: browser.i18n.getMessage("Enable_Youtube_Subtitle"),
     optionList: subtitleTypeList,
   },
   detectPDF: {
-    description: chrome.i18n.getMessage("Detect_PDF"),
+    description: browser.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
   translateReverseTarget: {
-    description: chrome.i18n.getMessage("Reverse_Translate_Language"),
+    description: browser.i18n.getMessage("Reverse_Translate_Language"),
     optionList: langListWithNone,
   },
   useTransliteration: {
@@ -538,12 +540,12 @@ var advancedTabData = {
 
 var excludeTabData = {
   langExcludeList: {
-    description: chrome.i18n.getMessage("Exclude_Language"),
+    description: browser.i18n.getMessage("Exclude_Language"),
     optionList: langList,
     optionType: "multipleSelect",
   },
   websiteExcludeList: {
-    description: chrome.i18n.getMessage("Exclude_Website"),
+    description: browser.i18n.getMessage("Exclude_Website"),
     optionList: "",
     optionType: "comboBox",
   },
@@ -557,21 +559,21 @@ var tabItems = {
   EXCLUDE: excludeTabData,
 };
 var tabs = {
-  MAIN: chrome.i18n.getMessage("MAIN"),
-  GRAPHIC: chrome.i18n.getMessage("GRAPHIC"),
-  VOICE: chrome.i18n.getMessage("VOICE"),
-  ADVANCED: chrome.i18n.getMessage("ADVANCED"),
-  EXCLUDE: chrome.i18n.getMessage("EXCLUDE"),
+  MAIN: browser.i18n.getMessage("MAIN"),
+  GRAPHIC: browser.i18n.getMessage("GRAPHIC"),
+  VOICE: browser.i18n.getMessage("VOICE"),
+  ADVANCED: browser.i18n.getMessage("ADVANCED"),
+  EXCLUDE: browser.i18n.getMessage("EXCLUDE"),
 };
 
 var remainSettingDesc = {
-  appName: chrome.i18n.getMessage("Mouse_Tooltip_Translator"),
-  Voice_for_: chrome.i18n.getMessage("Voice_for_"),
+  appName: browser.i18n.getMessage("Mouse_Tooltip_Translator"),
+  Voice_for_: browser.i18n.getMessage("Voice_for_"),
 };
 
 var reviewReminder = {
-  name: chrome.i18n.getMessage("Review_this"),
-  sub_name: chrome.i18n.getMessage("Developer_love_criticism"),
+  name: browser.i18n.getMessage("Review_this"),
+  sub_name: browser.i18n.getMessage("Developer_love_criticism"),
   url: util.getReviewUrl(),
 };
 

@@ -40,55 +40,57 @@
   </div>
 </template>
 <script>
+import browser from "webextension-polyfill";
+
 import * as util from "/src/util";
 
 var aboutPageList = {
   howToUse: {
-    name: chrome.i18n.getMessage("How_to_use"),
-    sub_name: chrome.i18n.getMessage("Check_how_to_use_this_extension"),
+    name: browser.i18n.getMessage("How_to_use"),
+    sub_name: browser.i18n.getMessage("Check_how_to_use_this_extension"),
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
     icon: "mdi-help-box",
     color: "green",
   },
   pdfViewer: {
-    name: chrome.i18n.getMessage("PDF_Viewer"),
-    sub_name: chrome.i18n.getMessage("Translate_local_PDF_file"),
+    name: browser.i18n.getMessage("PDF_Viewer"),
+    sub_name: browser.i18n.getMessage("Translate_local_PDF_file"),
     url:
       chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
     icon: "mdi-file-pdf-box",
     color: "red",
   },
   epub: {
-    name: chrome.i18n.getMessage("Ebook_Reader"),
-    sub_name: chrome.i18n.getMessage("Translate_local_ebook_file"),
+    name: browser.i18n.getMessage("Ebook_Reader"),
+    sub_name: browser.i18n.getMessage("Translate_local_ebook_file"),
     url: chrome.runtime.getURL("/foliate-js/reader.html"),
     icon: "mdi-book-open-blank-variant",
     color: "orange",
   },
   twitter: {
-    name: chrome.i18n.getMessage("Twitter"),
-    sub_name: chrome.i18n.getMessage("Retweet_twitter_post"),
+    name: browser.i18n.getMessage("Twitter"),
+    sub_name: browser.i18n.getMessage("Retweet_twitter_post"),
     url: "https://twitter.com/MouseTooltip",
     icon: "mdi-twitter",
     color: "cyan",
   },
   reviewPage: {
-    name: chrome.i18n.getMessage("Review_Page"),
-    sub_name: chrome.i18n.getMessage("Comment_on_this_extension"),
+    name: browser.i18n.getMessage("Review_Page"),
+    sub_name: browser.i18n.getMessage("Comment_on_this_extension"),
     url: util.getReviewUrl(),
     icon: "mdi-message-draw",
     color: "primary",
   },
   sourceCode: {
-    name: chrome.i18n.getMessage("Source_code"),
-    sub_name: chrome.i18n.getMessage("Check_source_code_in_github"),
+    name: browser.i18n.getMessage("Source_code"),
+    sub_name: browser.i18n.getMessage("Check_source_code_in_github"),
     url: "https://github.com/ttop32/MouseTooltipTranslator",
     icon: "mdi-github",
     color: "black",
   },
   privacyPolicy: {
-    name: chrome.i18n.getMessage("Privacy_Policy"),
-    sub_name: chrome.i18n.getMessage("User_privacy_policy"),
+    name: browser.i18n.getMessage("Privacy_Policy"),
+    sub_name: browser.i18n.getMessage("User_privacy_policy"),
     url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
     icon: "mdi-shield-account",
     color: "error",

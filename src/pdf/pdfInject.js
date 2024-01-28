@@ -23,31 +23,25 @@ async function initPdf() {
 
 //if current url is local file and no file permission
 //alert user need permmsion
-function checkCurrentUrlIsLocalFileUrl() {
+async function checkCurrentUrlIsLocalFileUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   const url = urlParams.get("file");
 
   if (/^file:\/\//.test(url)) {
     //check current url is file url
-    chrome.extension.isAllowedFileSchemeAccess((isAllowedAccess) => {
-      //check file url permmision
-      if (isAllowedAccess == false) {
-        alert(`
+    var isAllowedAccess = await util.hasFilePermission();
+
+    //check file url permmision
+    if (isAllowedAccess == false) {
+      alert(`
     ------------------------------------------------------------------
     Mouse tooltip translator require permission for local pdf file.
     User need to turn on 'Allow access to file URLs' from setting.
     This page will be redirected to setting page after confirm.
     -------------------------------------------------------------------`);
-        openSettingPage(window.location.host);
-      }
-    });
+      util.openSettingPage();
+    }
   }
-}
-
-function openSettingPage(id) {
-  chrome.tabs.create({
-    url: "chrome://extensions/?id=" + id,
-  });
 }
 
 function addCallbackForPdfTextLoad(callback) {
