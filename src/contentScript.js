@@ -296,7 +296,7 @@ async function translateWriting() {
   // if is google doc do not check writing box
   if (
     !keyDownList[setting["keyDownTranslateWriting"]] ||
-    (!util.getFocusedWritingBox() && !util.isGoogleDoc())
+    !util.getFocusedWritingBox()
   ) {
     return;
   }
@@ -351,14 +351,7 @@ async function makeNonEnglishTypingFinish() {
 async function insertText(text) {
   if (!text) {
     return;
-  } else if (util.isGoogleDoc()) {
-    pasteTextGoogleDoc(text);
-  } else {
-    pasteTextDom(text);
   }
-}
-
-async function pasteTextDom(text) {
   pasteTextInputBox(text);
   await delay(10);
   if (hasSelection()) {
