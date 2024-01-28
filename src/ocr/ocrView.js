@@ -1,17 +1,15 @@
 import $ from "jquery";
-import * as util from "/src/util";
-
-import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { WindowPostMessageProxy } from "window-post-message-proxy";
 import textfit from "textfit";
 import delay from "delay";
+
+import * as util from "/src/util";
 
 const windowPostMessageProxy = new WindowPostMessageProxy({
   suppressWarnings: true,
 });
 var ocrHistory = {};
 var iFrames = {};
-var iframeLoadingList = {};
 var showFrame = false;
 
 //detect mouse positioned image to process ocr in ocr.html iframe
@@ -30,6 +28,7 @@ export async function checkImage(img, setting, keyDownList) {
   ocrHistory[img.src] = img;
   var lang = setting["ocrDetectionLang"];
   makeLoadingMouseStyle(img);
+  await initOCR();
 
   //run both,  ocr with opencv rect, ocr without opencv
   // auto= no opencv only tesseract
@@ -54,7 +53,6 @@ export function removeAllOcrEnv() {
   removeOcrIFrame();
   removeOcrBlock();
   iFrames = {};
-  iframeLoadingList = {};
   ocrHistory = {};
 }
 
@@ -64,7 +62,6 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   }
   var ratio = 1;
   var bboxList = [[]];
-  await initOCR();
 
   //ocr process with opencv , then display
   if (!mode.includes("auto")) {
@@ -104,20 +101,19 @@ async function initOCR() {
 }
 
 async function createIframe(name, htmlPath) {
-  return new Promise(async function (resolve, reject) {
-    if (iframeLoadingList[name]) {
-      await waitUntil(() => iFrames[name], {
-        timeout: WAIT_FOREVER,
-      });
-      resolve();
-      return;
-    }
-    iframeLoadingList[name] = true;
+  if (iFrames[name]) {
+    return iFrames[name];
+  }
+  iFrames[name] = await loadScript(name, htmlPath);
+  return iFrames[name];
+}
 
+function loadScript(name, htmlPath) {
+  return new Promise(function (resolve, reject) {
     var iFrame = $("<iframe />", {
       name: name,
       id: name,
-      src: chrome.runtime.getURL(htmlPath),
+      src: util.getUrlExt(htmlPath),
       css: {
         width: "700",
         height: "700",
@@ -126,8 +122,7 @@ async function createIframe(name, htmlPath) {
     })
       .appendTo("body")
       .on("load", () => {
-        iFrames[name] = iFrame;
-        resolve();
+        resolve(iFrame);
       })
       .get(0);
   });
@@ -161,7 +156,7 @@ async function getBase64Image(url) {
 }
 
 async function requestBase64(url) {
-  return await chrome.runtime.sendMessage({
+  return await util.sendMessage({
     type: "requestBase64",
     url,
   });

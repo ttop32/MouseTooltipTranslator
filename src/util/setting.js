@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill";
+
 // load setting from chrome storage
 // automatic setting update class===============================
 var updateCallbackFn = [];
@@ -31,21 +33,16 @@ export class Setting {
     }
   }
 
-  loadStorageData() {
+  async loadStorageData() {
     var settingData = this;
-
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(Object.keys(settingData), function (storage) {
-        for (var key in storage) {
-          settingData[key] = storage[key] ? storage[key] : settingData[key];
-        }
-        resolve();
-      });
-    });
+    var storage = await browser.storage.local.get(Object.keys(settingData));
+    for (var key in storage) {
+      settingData[key] = storage[key] ? storage[key] : settingData[key];
+    }
   }
 
   initSettingListener() {
-    chrome.storage.onChanged.addListener((changes, namespace) => {
+    browser.storage.onChanged.addListener((changes, namespace) => {
       for (var key in changes) {
         this[key] = changes[key].newValue;
       }
@@ -67,6 +64,6 @@ export class Setting {
   }
 
   save() {
-    chrome.storage.local.set(this, () => {});
+    browser.storage.local.set(this);
   }
 }

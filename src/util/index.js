@@ -821,9 +821,7 @@ export async function sendMessage(message) {
   try {
     return await browser.runtime.sendMessage(message);
   } catch (e) {
-    if (e.message != "Extension context invalidated.") {
-      console.log(e);
-    }
+    console.log(e);
   }
   return {};
 }
@@ -915,10 +913,6 @@ export async function waitUntilForever(fn) {
   });
 }
 
-export function isExtensionOnline() {
-  return chrome.runtime?.id;
-}
-
 export function getActiveElement(root = document) {
   const activeEl = root.activeElement;
 
@@ -939,4 +933,21 @@ export function getFocusedWritingBox() {
   if (writingBox.is(writingField)) {
     return writingBox.get(0);
   }
+}
+
+export function isExtensionOnline() {
+  return browser.runtime?.id;
+}
+
+export function openSettingPage() {
+  browser.tabs.create({
+    url: "chrome://extensions/?id=" + browser.runtime?.id,
+  });
+}
+export function getUrlExt(path) {
+  return browser.runtime.getURL(path);
+}
+
+export async function hasFilePermission() {
+  return await browser.extension.isAllowedFileSchemeAccess();
 }

@@ -339,11 +339,11 @@ function checkIsLocalPdfUrl(url) {
 //search bar================================================
 
 function addSearchBarListener() {
-  chrome.omnibox.setDefaultSuggestion({
+  browser.omnibox.setDefaultSuggestion({
     description: "search with translator",
   });
 
-  chrome.omnibox.onInputEntered.addListener(async (text) => {
+  browser.omnibox.onInputEntered.addListener(async (text) => {
     var translatedResult = await translateWithReverse(
       text,
       "auto",
@@ -355,6 +355,6 @@ function addSearchBarListener() {
       ? text
       : translatedResult.translatedText;
     //search with default search engine on current tab
-    chrome.search.query({ text });
+    browser.search.query({ text });
   });
 }

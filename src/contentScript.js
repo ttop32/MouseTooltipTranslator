@@ -695,7 +695,7 @@ function openPdfIframe(url) {
   $("embed").remove();
 
   $("<embed/>", {
-    src: chrome.runtime.getURL(
+    src: util.getUrlExt(
       `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
     ),
     css: {
