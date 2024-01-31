@@ -98,9 +98,10 @@ var mainUrl = "https://translate.yandex.net/api/v1/tr.json/translate";
 export default class yandex extends BaseTranslator {
   static langCodeJson = yandexLangCode;
 
-  static async requestTranslate(text, fromLang, targetLang) {
+  static async requestTranslate(text, sourceLang, targetLang) {
     var uuid = uuidv4().replaceAll("-", "");
-    var lang = fromLang == "auto" ? targetLang : `${fromLang}-${targetLang}`;
+    var lang =
+      sourceLang == "auto" ? targetLang : `${sourceLang}-${targetLang}`;
 
     return await ky
       .post(mainUrl, {
@@ -113,7 +114,7 @@ export default class yandex extends BaseTranslator {
       .json();
   }
 
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     if (res.code == "200") {
       return {
         translatedText: res["text"][0],

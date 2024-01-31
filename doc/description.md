@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.116
+  - Fix tooltip container removed error (request by di4m0nds)
 - 0.1.115
   - fix bing chat writing
 - 0.1.114

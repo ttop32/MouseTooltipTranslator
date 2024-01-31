@@ -93,7 +93,9 @@ function getTextFromRange(range) {
 
 function expandRange(range, type) {
   try {
-    if (type == "container" && range.startContainer) {
+    if (!isAttachedToDom(range.startContainer)) {
+      return;
+    } else if (type == "container" || !range.expand) {
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
       range.setStart(range.startContainer, 0);
@@ -105,12 +107,29 @@ function expandRange(range, type) {
   }
 }
 
+function isAttachedToDom(element) {
+  if (element.parentNode) {
+    return isAttachedToDom(element.parentNode);
+  }
+  return element == document;
+}
+
 //browser range===================================================
 
 export function caretRangeFromPoint(x, y, _document = document) {
-  var range = _document.caretRangeFromPoint(x, y);
+  var range;
+  if (!_document?.caretRangeFromPoint) {
+    //firefox support
+    var caretPos = _document.caretPositionFromPoint(x, y);
+    range = document.createRange();
+    range.setStart(caretPos.offsetNode, caretPos.offset);
+    range.setEnd(caretPos.offsetNode, caretPos.offset);
+  } else {
+    range = _document?.caretRangeFromPoint(x, y);
+  }
+
   //if no range or is not text, give null
-  if (range == null || range.startContainer.nodeType !== Node.TEXT_NODE) {
+  if (range?.startContainer.nodeType !== Node.TEXT_NODE) {
     return;
   }
   return range;

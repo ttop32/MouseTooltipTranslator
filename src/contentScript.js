@@ -40,6 +40,8 @@ var tooltipContainer;
 var tooltipContainerEle;
 
 //tooltip core======================================================================
+injectGoogleDocAnnotation();
+
 $(async function initMouseTooltipTranslator() {
   try {
     loadDestructor(); //remove previous tooltip script
@@ -243,6 +245,7 @@ function checkWindowFocus() {
 }
 
 function showTooltip(text, resetPrevTooltip) {
+  checkTooltipContainer();
   hideTooltip(resetPrevTooltip); //reset tooltip arrow
   tooltip?.setContent(text);
   tooltip?.show();
@@ -739,6 +742,13 @@ async function addElementEnv() {
   });
 }
 
+function checkTooltipContainer() {
+  if (!$("#mttContainer").get(0)) {
+    tooltipContainer.appendTo(document.body);
+  }
+}
+
+//check google docs=========================================================
 async function checkGoogleDocs() {
   if (!util.isGoogleDoc()) {
     return;
@@ -763,6 +773,15 @@ async function interceptGoogleDocKeyEvent() {
       document.dispatchEvent(evt);
     });
   });
+}
+
+function injectGoogleDocAnnotation() {
+  if (!util.isGoogleDoc()) {
+    return;
+  }
+  var s = document.createElement("script");
+  s.src = util.getUrlExt("googleDocInject.js"); //chrome.runtime.getURL("js/docs-canvas.js");
+  document.documentElement.appendChild(s);
 }
 
 // youtube================================

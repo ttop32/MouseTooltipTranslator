@@ -83,7 +83,7 @@ export default class bing extends BaseTranslator {
   static langCodeJson = bingLangCode;
   static bingAccessToken;
 
-  static async requestTranslate(text, fromLang, targetLang) {
+  static async requestTranslate(text, sourceLang, targetLang) {
     const { token, key, IG, IID } = await this.getBingAccessToken();
 
     return await ky
@@ -96,7 +96,7 @@ export default class bing extends BaseTranslator {
         },
         body: new URLSearchParams({
           text,
-          fromLang: fromLang,
+          fromLang: sourceLang,
           to: targetLang,
           token,
           key,
@@ -104,7 +104,7 @@ export default class bing extends BaseTranslator {
       })
       .json();
   }
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     if (res && res[0]) {
       var transliteration = "";
 
