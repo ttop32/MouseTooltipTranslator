@@ -46,16 +46,10 @@
     {
       "js": ["contentScript.js"],
       "css": ["tippy.css"],
-      "run_at": "document_idle",
+      "run_at": "document_start",
       "all_frames": true,
       "matches": ["<all_urls>"],
       "match_about_blank": true
-    },
-    {
-      "matches": ["*://docs.google.com/*"],
-      "run_at": "document_start",
-      "js": ["googleDocInject.js"],
-      "world": "MAIN"
     }
   ],
   "background": {

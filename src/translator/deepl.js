@@ -40,8 +40,8 @@ var deeplBaseUrl = "https://www2.deepl.com/jsonrpc";
 export default class deepl extends BaseTranslator {
   static langCodeJson = deeplLangCode;
 
-  static async requestTranslate(text, fromLang, targetLang) {
-    const post_data = initData(text, fromLang, targetLang);
+  static async requestTranslate(text, sourceLang, targetLang) {
+    const post_data = initData(text, sourceLang, targetLang);
     post_data.id = getRandomNumber();
     post_data.params.timestamp = getTimeStamp(getICount(text));
     let post_str = getDeeplJsonText(post_data);
@@ -57,7 +57,7 @@ export default class deepl extends BaseTranslator {
       })
       .json();
   }
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     if (res.result) {
       return {
         translatedText: res.result.texts[0].text,

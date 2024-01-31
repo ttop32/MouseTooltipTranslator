@@ -587,6 +587,43 @@ export function getBrowserTtsVoiceList() {
   });
 }
 
+export async function getSpeechTTSVoiceList() {
+  if (isBacgroundServiceWorker()) {
+    return {};
+  }
+  // get voice list
+  //get one that include remote, lang, voiceName
+  //sort remote first;
+  var voiceList = {};
+  var voices = await getSpeechVoices();
+  let filtered = voices
+    .filter((i) => i.lang && i.name)
+    .sort((x, y) => {
+      return y.localService - x.localService;
+    });
+  //find matched lang voice and speak
+  for (var item of filtered) {
+    var lang = parseLocaleLang(item.lang);
+    voiceList[lang] = voiceList[lang] || [];
+    voiceList[lang].push(item.name);
+  }
+  return voiceList;
+}
+
+export async function getSpeechVoices() {
+  return new Promise(function (resolve, reject) {
+    let voices = window.speechSynthesis.getVoices();
+    if (voices.length !== 0) {
+      resolve(voices);
+    } else {
+      window.speechSynthesis.addEventListener("voiceschanged", function () {
+        voices = window.speechSynthesis.getVoices();
+        resolve(voices);
+      });
+    }
+  });
+}
+
 export function getBingTtsVoiceList() {
   var bingTaggedVoiceList = {};
   for (var key in bingTtsVoiceList) {
@@ -950,4 +987,12 @@ export function getUrlExt(path) {
 
 export async function hasFilePermission() {
   return await browser.extension.isAllowedFileSchemeAccess();
+}
+
+function isBacgroundServiceWorker() {
+  try {
+    return !document;
+  } catch (error) {
+    return true;
+  }
 }

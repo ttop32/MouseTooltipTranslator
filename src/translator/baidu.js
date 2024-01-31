@@ -35,15 +35,15 @@ var baiduLangCode = {
 export default class baidu extends BaseTranslator {
   static langCodeJson = baiduLangCode;
 
-  static async requestTranslate(text, fromLang, targetLang) {
+  static async requestTranslate(text, sourceLang, targetLang) {
     return await ky
       .post(baseUrl, {
         searchParams: {
-          from: fromLang,
+          from: sourceLang,
           to: targetLang,
         },
         body: new URLSearchParams({
-          from: fromLang,
+          from: sourceLang,
           to: targetLang,
           query: text,
           source: "txt",
@@ -52,7 +52,7 @@ export default class baidu extends BaseTranslator {
       .json();
   }
 
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     var translatedText = res["data"][0]["result"]
       .map((text) => text?.[1])
       .filter((text) => text)

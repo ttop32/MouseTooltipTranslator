@@ -4,15 +4,15 @@ export default class BaseTranslator {
   static langCodeJson = {};
   static langCodeJsonSwapped = {};
 
-  static async translate(text, fromLang, targetLang) {
+  static async translate(text, sourceLang, targetLang) {
     try {
-      fromLang = this.encodeLangCode(fromLang);
+      sourceLang = this.encodeLangCode(sourceLang);
       targetLang = this.encodeLangCode(targetLang);
-      var response = await this.requestTranslate(text, fromLang, targetLang);
+      var response = await this.requestTranslate(text, sourceLang, targetLang);
 
       var { translatedText, detectedLang, transliteration } = this.wrapResponse(
         response,
-        fromLang,
+        sourceLang,
         targetLang
       );
       return {
@@ -38,11 +38,11 @@ export default class BaseTranslator {
       : lang;
   }
 
-  static async requestTranslate(text, fromLang, targetLang) {
+  static async requestTranslate(text, sourceLang, targetLang) {
     throw new Error("Not implemented");
   }
 
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     throw new Error("Not implemented");
   }
 }

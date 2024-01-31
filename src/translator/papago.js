@@ -33,8 +33,8 @@ export default class papago extends BaseTranslator {
   static langCodeJson = papagoLangCode;
   static version = "";
 
-  static async requestTranslate(text, fromLang, targetLang) {
-    if (fromLang == "auto") {
+  static async requestTranslate(text, sourceLang, targetLang) {
+    if (sourceLang == "auto") {
       var { headers, uuid } = await this.getOptionsAndUuid(urlDect);
       var { langCode } = await ky
         .post(urlDect, {
@@ -42,7 +42,7 @@ export default class papago extends BaseTranslator {
           headers,
         })
         .json();
-      fromLang = langCode;
+      sourceLang = langCode;
     }
 
     var { headers, uuid } = await this.getOptionsAndUuid(urlTranslate);
@@ -56,7 +56,7 @@ export default class papago extends BaseTranslator {
           honorific: "false",
           instant: "false",
           paging: "false",
-          source: fromLang,
+          source: sourceLang,
           target: targetLang,
           text: text,
         },
@@ -65,7 +65,7 @@ export default class papago extends BaseTranslator {
       .json();
   }
 
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     return {
       translatedText: res["translatedText"],
       detectedLang: res["srcLangType"],

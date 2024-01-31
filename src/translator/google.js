@@ -12,13 +12,13 @@ var token;
 var tokenTTL = 60 * 60 * 1000; //1hour
 
 export default class google extends BaseTranslator {
-  static async requestTranslate(text, fromLang, targetLang) {
+  static async requestTranslate(text, sourceLang, targetLang) {
     // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
     var tk = getToken(text, googleTranslateTKK);
     return await ky(apiPath, {
       searchParams: {
         client: "te_lib",
-        sl: fromLang,
+        sl: sourceLang,
         tl: targetLang,
         hl: targetLang,
         anno: 3,
@@ -32,10 +32,10 @@ export default class google extends BaseTranslator {
       },
     }).json();
   }
-  static wrapResponse(res, fromLang, targetLang) {
+  static wrapResponse(res, sourceLang, targetLang) {
     if (res && res[0] && res[0][0]) {
-      var translatedText = fromLang == "auto" ? res[0][0] : res[0];
-      var detectedLang = fromLang == "auto" ? res[0][1] : fromLang;
+      var translatedText = sourceLang == "auto" ? res[0][0] : res[0];
+      var detectedLang = sourceLang == "auto" ? res[0][1] : sourceLang;
       //clear html tag and decode html entity
       var textDecoded = decode(translatedText);
       var textWithoutITag = textDecoded.replace(/(<i>).+?(<\/i>)/gi, " ");
@@ -127,14 +127,14 @@ function getToken(query, windowTkk) {
   return normalizedResult.toString() + "." + (normalizedResult ^ tkkIndex);
 }
 
-async function googleTranslateRequestV2(text, fromLang, targetLang) {
+async function googleTranslateRequestV2(text, sourceLang, targetLang) {
   var { sid, bl, at } = await getTokenV2();
 
   let req = JSON.stringify([
     [
       [
         "MkEWBc",
-        JSON.stringify([[text, fromLang, targetLang, true], [null]]),
+        JSON.stringify([[text, sourceLang, targetLang, true], [null]]),
         null,
         "generic",
       ],

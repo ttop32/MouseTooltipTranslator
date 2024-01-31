@@ -56,14 +56,14 @@ var aboutPageList = {
     name: browser.i18n.getMessage("PDF_Viewer"),
     sub_name: browser.i18n.getMessage("Translate_local_PDF_file"),
     url:
-      chrome.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
+      browser.runtime.getURL("/pdfjs/web/viewer.html") + "?file=/pdf_demo.pdf",
     icon: "mdi-file-pdf-box",
     color: "red",
   },
   epub: {
     name: browser.i18n.getMessage("Ebook_Reader"),
     sub_name: browser.i18n.getMessage("Translate_local_ebook_file"),
-    url: chrome.runtime.getURL("/foliate-js/reader.html"),
+    url: browser.runtime.getURL("/foliate-js/reader.html"),
     icon: "mdi-book-open-blank-variant",
     color: "orange",
   },
