@@ -46,19 +46,19 @@ var prevTooltipText = "";
 
 (async function initMouseTooltipTranslator() {
   try {
-    injectGoogleDocAnnotation();
+    injectGoogleDocAnnotation(); //check google doc and add annotation env var
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
     if (checkExcludeUrl()) {
       return;
     }
-    await waitJquery();
+    await waitJquery(); //wait jquery load
     detectPDF(); //check current page is pdf
-    checkVideo();
-    checkGoogleDocs();
+    checkVideo(); // check  video  site for subtitle
+    checkGoogleDocs(); // check google doc
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
-    addBackgroundListener();
+    addBackgroundListener(); // get background listener for copy request
     loadEventListener(); //load event listener to detect mouse move
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
