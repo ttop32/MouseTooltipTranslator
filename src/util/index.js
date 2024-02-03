@@ -588,7 +588,7 @@ export async function getDefaultVoice() {
 }
 
 export async function getAllVoiceList() {
-  var browserVoices = await getBrowserTtsVoiceList();
+  var browserVoices = {}; // await getBrowserTtsVoiceList();
   var bingVoices = getBingTtsVoiceList();
   var googleTranslateVoices = getgoogleTranslateTtsVoiceList();
   var voiceList = concatVoice(browserVoices, bingVoices);

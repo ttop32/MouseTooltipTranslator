@@ -1,0 +1,66 @@
+{
+    "manifest_version": 2,
+    "version": "0.1.89",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+    "icons": {
+        "16": "icons/icon_16.png",
+        "32": "icons/icon_32.png",
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'"
+    },
+    "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus", "offscreen", "search"],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+
+
+    "web_accessible_resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js"],
+    "sandbox": {
+        "pages": [
+        "opencvHandler.html"
+        ]
+    },
+    "commands": {
+        "copy-translated-text": {
+        "suggested_key": {
+            "default": "Ctrl+Shift+1"
+        },
+        "description": "Copy Translated Text"
+        }
+    },
+    "omnibox": { "keyword" : "/" },
+    "browser_specific_settings": {
+        "gecko": {
+        "id": "mtt@com"
+        }
+    },
+
+
+
+    "content_scripts": [
+        {
+        "js": ["contentScript.js"],
+        "css": ["tippy.css"],
+        "run_at": "document_start",
+        "all_frames": true,
+        "matches": ["<all_urls>"],
+        "match_about_blank": true
+        }
+    ],
+    "background": {
+        "scripts": ["background.js","offscreen.js"]
+    },
+    "action": {
+        "default_title": "Mouse Tooltip Translator",
+        "default_popup": "popup.html"
+    },
+    "options_ui": {
+        "page": "popup.html"
+    }
+}
