@@ -218,6 +218,9 @@ function checkTooltipContainer() {
   if (!$("#mttContainer").get(0)) {
     tooltipContainer.appendTo(document.body);
   }
+  if (!$("#mttstyle").get(0)) {
+    style.appendTo("head");
+  }
 }
 
 function hideHighlight() {
