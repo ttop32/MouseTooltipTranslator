@@ -23,7 +23,6 @@ var yandexLangCode = {
   en: "en",
   eo: "eo",
   et: "et",
-  tl: "tl",
   fi: "fi",
   fr: "fr",
   gl: "gl",
@@ -88,7 +87,8 @@ var yandexLangCode = {
   xh: "xh",
   yi: "yi",
 
-  iw: "he",
+  fil: "tl",
+  he: "he",
   jw: "jv",
   "zh-CN": "zh",
 };
@@ -114,7 +114,7 @@ export default class yandex extends BaseTranslator {
       .json();
   }
 
-  static wrapResponse(res, sourceLang, targetLang) {
+  static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res.code == "200") {
       return {
         translatedText: res["text"][0],

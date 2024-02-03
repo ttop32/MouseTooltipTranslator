@@ -15,6 +15,11 @@ window.addEventListener(
   async function ({ data }) {
     if (data.type === "ocr") {
       doOcr(data);
+    } else if (data.type === "init") {
+      await getScheduler(data.lang, data.mode);
+      response({
+        windowPostMessageProxy: data.windowPostMessageProxy,
+      });
     }
   },
   false
@@ -106,7 +111,7 @@ async function getScheduler(lang, mode) {
   loadingList[id] = true;
 
   var scheduler = Tesseract.createScheduler();
-  var workerIndexList = mode.includes("auto") ? [0] : [0, 1, 2, 3];
+  var workerIndexList = mode.includes("auto") ? [0] : [0, 1, 2, 3, 4];
   var workerPath = util.getUrlExt("/tesseract/worker.min.js");
   var corePath = util.getUrlExt("/tesseract/tesseract-core-lstm.wasm.js");
 
@@ -115,7 +120,6 @@ async function getScheduler(lang, mode) {
     : lang.includes("vert")
     ? Tesseract.PSM.SINGLE_BLOCK_VERT_TEXT
     : Tesseract.PSM.SINGLE_BLOCK;
-
   await Promise.all(
     workerIndexList.map(async (i) => {
       var worker = await Tesseract.createWorker(lang, 1, {

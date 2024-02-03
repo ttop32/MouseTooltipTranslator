@@ -26,8 +26,8 @@ export class Setting {
   }
 
   async loadData(data) {
-    for (let [key, value] of Object.entries(defaultSettingList)) {
-      if (this[key] == null) {
+    for (let [key, value] of Object.entries(data)) {
+      if (value != null) {
         this[key] = value;
       }
     }
@@ -36,9 +36,7 @@ export class Setting {
   async loadStorageData() {
     var settingData = this;
     var storage = await browser.storage.local.get(Object.keys(settingData));
-    for (var key in storage) {
-      settingData[key] = storage[key] ? storage[key] : settingData[key];
-    }
+    this.loadData(storage);
   }
 
   initSettingListener() {

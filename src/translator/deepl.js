@@ -57,7 +57,7 @@ export default class deepl extends BaseTranslator {
       })
       .json();
   }
-  static wrapResponse(res, sourceLang, targetLang) {
+  static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res.result) {
       return {
         translatedText: res.result.texts[0].text,

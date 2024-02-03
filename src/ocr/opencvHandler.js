@@ -140,11 +140,11 @@ function detectText(canvasIn, mode) {
     var width = parseInt(Math.min(rect.width + paddingSize * 2, w - left));
     var height = parseInt(Math.min(rect.height + paddingSize * 2, h - top));
     var whRatio = Math.max(width / height, height / width);
-    var r = area / (rect.width * rect.height);
+    var rectCoverRatio = area / (rect.width * rect.height);
 
     // if not sharp, small size, wrong angle, too side pos
     if (
-      r < 0.2 ||
+      rectCoverRatio < 0.2 ||
       cnt.rows < 100 ||
       area < 150 ||
       !isRightAngle ||

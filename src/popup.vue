@@ -629,7 +629,6 @@ export default {
     setting: {
       deep: true,
       handler() {
-        console.log(this.setting);
         this.saveSetting();
       },
     },

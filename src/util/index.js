@@ -2,6 +2,8 @@ import $ from "jquery";
 import isUrl from "is-url";
 import browser from "webextension-polyfill";
 import _ from "lodash";
+import { iso6393To1 } from "iso-639-3";
+import { francAll } from "franc";
 import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { Setting } from "./setting.js";
@@ -57,11 +59,18 @@ export var defaultData = {
 
 var rtlLangList = [
   "ar", //Arabic
-  "iw", //Hebrew
+  "he", //Hebrew
   "ku", //Kurdish
   "fa", //Persian
   "ur", //Urdu
   "yi", //Yiddish
+  "az", // Azerbaijani
+  "ps", //Pashto
+  "ug", //Uyghur
+  "ckb", //Kurdish Sorani
+  "pa", //Punjabi
+  "sd", //Sindhi
+  "ha", //Hausa
 ]; //right to left language system list
 
 var reviewUrlJson = {
@@ -77,26 +86,32 @@ export var langList = {
   Amharic: "am",
   Arabic: "ar",
   Armenian: "hy",
+  Assamese: "as",
+  Aymara: "ay",
   Azerbaijani: "az",
+  Bambara: "bm",
   Basque: "eu",
   Belarusian: "be",
   Bengali: "bn",
+  Bhojpuri: "bho",
   Bosnian: "bs",
   Bulgarian: "bg",
   Catalan: "ca",
   Cebuano: "ceb",
-  Chichewa: "ny",
-  "Chinese Simplified": "zh-CN",
-  "Chinese Traditional": "zh-TW",
+  ChineseSimplified: "zh-CN",
+  ChineseTraditional: "zh-TW",
   Corsican: "co",
   Croatian: "hr",
   Czech: "cs",
   Danish: "da",
+  Dhivehi: "dv",
+  Dogri: "doi",
   Dutch: "nl",
   English: "en",
   Esperanto: "eo",
   Estonian: "et",
-  Filipino: "tl",
+  Ewe: "ee",
+  Filipino: "fil",
   Finnish: "fi",
   French: "fr",
   Frisian: "fy",
@@ -104,16 +119,18 @@ export var langList = {
   Georgian: "ka",
   German: "de",
   Greek: "el",
+  Guarani: "gn",
   Gujarati: "gu",
-  "Haitian Creole": "ht",
+  HaitianCreole: "ht",
   Hausa: "ha",
   Hawaiian: "haw",
-  Hebrew: "iw",
+  Hebrew: "he",
   Hindi: "hi",
   Hmong: "hmn",
   Hungarian: "hu",
   Icelandic: "is",
   Igbo: "ig",
+  Ilocano: "ilo",
   Indonesian: "id",
   Irish: "ga",
   Italian: "it",
@@ -122,34 +139,49 @@ export var langList = {
   Kannada: "kn",
   Kazakh: "kk",
   Khmer: "km",
+  Kinyarwanda: "rw",
+  Konkani: "gom",
   Korean: "ko",
-  "Kurdish (Kurmanji)": "ku",
+  Krio: "kri",
+  Kurdish: "ku",
+  KurdishSorani: "ckb",
   Kyrgyz: "ky",
   Lao: "lo",
   Latin: "la",
   Latvian: "lv",
+  Lingala: "ln",
   Lithuanian: "lt",
+  Luganda: "lg",
   Luxembourgish: "lb",
   Macedonian: "mk",
+  Maithili: "mai",
   Malagasy: "mg",
   Malay: "ms",
   Malayalam: "ml",
   Maltese: "mt",
   Maori: "mi",
   Marathi: "mr",
+  // Meiteilon: "mni-Mtei",
+  Mizo: "lus",
   Mongolian: "mn",
-  "Myanmar (Burmese)": "my",
+  Myanmar: "my",
   Nepali: "ne",
   Norwegian: "no",
+  Nyanja: "ny",
+  Odia: "or",
+  Oromo: "om",
   Pashto: "ps",
   Persian: "fa",
   Polish: "pl",
   Portuguese: "pt",
   Punjabi: "pa",
+  Quechua: "qu",
   Romanian: "ro",
   Russian: "ru",
   Samoan: "sm",
-  "Scots Gaelic": "gd",
+  Sanskrit: "sa",
+  ScotsGaelic: "gd",
+  Sepedi: "nso",
   Serbian: "sr",
   Sesotho: "st",
   Shona: "sn",
@@ -162,11 +194,17 @@ export var langList = {
   Sundanese: "su",
   Swahili: "sw",
   Swedish: "sv",
+  Tagalog: "tl",
   Tajik: "tg",
   Tamil: "ta",
+  Tatar: "tt",
   Telugu: "te",
   Thai: "th",
+  Tigrinya: "ti",
+  Tsonga: "ts",
   Turkish: "tr",
+  Turkmen: "tk",
+  Twi: "ak",
   Ukrainian: "uk",
   Urdu: "ur",
   Uyghur: "ug",
@@ -305,7 +343,7 @@ var bingTtsVoiceList = {
     "en-US-SteffanNeural",
   ],
   et: ["et-EE-AnuNeural", "et-EE-KertNeural"],
-  tl: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
+  fil: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
   fi: ["fi-FI-HarriNeural", "fi-FI-NooraNeural"],
   fr: [
     "fr-BE-CharlineNeural",
@@ -333,7 +371,7 @@ var bingTtsVoiceList = {
   ],
   el: ["el-GR-AthinaNeural", "el-GR-NestorasNeural"],
   gu: ["gu-IN-DhwaniNeural", "gu-IN-NiranjanNeural"],
-  iw: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
+  he: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
   hi: ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"],
   hu: ["hu-HU-NoemiNeural", "hu-HU-TamasNeural"],
   is: ["is-IS-GudrunNeural", "is-IS-GunnarNeural"],
@@ -469,13 +507,13 @@ var googleTranslateTtsLangList = [
   "nl",
   "en",
   "et",
-  "tl",
+  "fil",
   "fi",
   "fr",
   "de",
   "el",
   "gu",
-  "iw",
+  "he",
   "hi",
   "hu",
   "is",
@@ -995,4 +1033,25 @@ function isBacgroundServiceWorker() {
   } catch (error) {
     return true;
   }
+}
+
+export function detectLangFranc(text) {
+  var detectLangData = francAll(text, { minLength: 0 })?.[0]?.[0];
+  var lang = iso6393To1[detectLangData];
+  // console.log(detectLangData);
+  return lang;
+}
+
+export async function detectLangBrowser(text) {
+  var detectLangData = await browser.i18n.detectLanguage(text);
+  var lang = detectLangData?.languages?.[0]?.language;
+  // console.log(detectLangData);
+  lang = lang == "zh" ? "zh-CN" : lang;
+  return lang;
+}
+
+export function getCurrentUrl() {
+  return window.location != window.parent.location
+    ? document.referrer
+    : document.location.href;
 }

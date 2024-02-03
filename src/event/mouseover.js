@@ -4,7 +4,6 @@
 // 3. expand range for char -> string
 // 4. range to text
 
-import { throttle } from "throttle-debounce";
 import * as util from "/src/util";
 
 var clientX = 0;
@@ -108,10 +107,7 @@ function expandRange(range, type) {
 }
 
 function isAttachedToDom(element) {
-  if (element.parentNode) {
-    return isAttachedToDom(element.parentNode);
-  }
-  return element == document;
+  return _win.document.contains(element);
 }
 
 //browser range===================================================

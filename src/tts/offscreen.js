@@ -7,12 +7,11 @@ const speech = window.speechSynthesis;
 // Listen for messages from the extension
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
-    if (request.type === "playTTSOffscreen") {
-      stopAudio();
-      await play(request?.source, request?.rate, request?.volume);
+    if (request.type === "playAudioOffscreen") {
+      await playAudio(request.data);
       sendResponse({});
-    } else if (request.type === "playSpeechTTS") {
-      await playBrowserTts(request.browserTTSData);
+    } else if (request.type === "playSpeechTTSOffscreen") {
+      await playSpeechTTS(request.data);
       sendResponse({});
     } else if (request.type === "stopTTSOffscreen") {
       stopAudio();
@@ -23,9 +22,9 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function play(url, rate = 1.0, volume = 1.0) {
+function playAudio({ source, rate = 1.0, volume = 1.0 }) {
   return new Promise((resolve, reject) => {
-    audio = new Audio(url);
+    audio = new Audio(source);
     audio.volume = volume;
     audio.playbackRate = rate;
     audio.onended = () => resolve();
@@ -33,7 +32,7 @@ function play(url, rate = 1.0, volume = 1.0) {
   });
 }
 
-async function playBrowserTts({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
+async function playSpeechTTS({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
   return new Promise(async (resolve, reject) => {
     var voices = await util.getSpeechVoices();
     let voiceSelected = voices.filter((voiceData) => {
@@ -56,7 +55,7 @@ async function playBrowserTts({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
 }
 
 function stopAudio() {
-  // speech?.cancel();
+  speech?.cancel();
   if (audio) {
     audio.pause();
     audio.currentTime = 0;
