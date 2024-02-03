@@ -19,7 +19,7 @@ var stopTtsTimestamp = 0;
   try {
     injectContentScriptForAllTab(); // check extension updated, then re inject content script
     addInstallUrl(introSiteUrl); // check first start and redirect to how to use url
-    // addUninstallUrl(util.getReviewUrl());
+    // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
     addCopyRequestListener(); // listen copy context menu and shortcut key
