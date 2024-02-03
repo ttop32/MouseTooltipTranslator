@@ -18,7 +18,7 @@ export default class BaseTTS {
   }
 
   static stopTTS() {
-    browser.tts.stop(); //remove prev voice
+    browser?.tts?.stop(); //remove prev voice
     this.stopTtsOffscreen();
   }
 
@@ -42,7 +42,7 @@ export default class BaseTTS {
   // Create the offscreen document
   static async createOffscreen() {
     try {
-      await browser.offscreen.createDocument({
+      await browser?.offscreen?.createDocument({
         url: "offscreen.html",
         reasons: ["AUDIO_PLAYBACK"],
         justification: "play tts", // details for using the API

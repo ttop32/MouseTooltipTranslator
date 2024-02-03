@@ -5,7 +5,7 @@ import BaseTTS from "./baseTTS";
 export default class BrowserTTS extends BaseTTS {
   static async playTTSEngine(text, voice, lang, rate, volume) {
     return new Promise((resolve, reject) => {
-      browser.tts.speak(text, {
+      browser?.tts?.speak(text, {
         lang,
         voiceName: voice,
         volume,
