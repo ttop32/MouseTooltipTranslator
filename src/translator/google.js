@@ -32,7 +32,7 @@ export default class google extends BaseTranslator {
       },
     }).json();
   }
-  static wrapResponse(res, sourceLang, targetLang) {
+  static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res && res[0] && res[0][0]) {
       var translatedText = sourceLang == "auto" ? res[0][0] : res[0];
       var detectedLang = sourceLang == "auto" ? res[0][1] : sourceLang;

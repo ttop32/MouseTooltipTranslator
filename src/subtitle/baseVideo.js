@@ -4,6 +4,11 @@ import $ from "jquery";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import * as memoizee from "memoizee";
 
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
+
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
   static captionRequestPattern = /^(https:\/\/)(example\.com)/;
@@ -278,12 +283,12 @@ export default class BaseVideo {
     }
   }
   static checkIsInjectedScript() {
-    return chrome?.runtime?.id == null;
+    return browser?.runtime?.id == null;
   }
 
   static injectScript(scriptUrl = this.scriptUrl) {
     return new Promise((resolve) => {
-      var url = chrome.runtime.getURL(scriptUrl);
+      var url = browser.runtime.getURL(scriptUrl);
       var id = this.filterSpecialText(url);
       if (!scriptUrl || $(`#${id}`)?.get(0)) {
         resolve();

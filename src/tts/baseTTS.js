@@ -7,7 +7,6 @@ export default class BaseTTS {
     try {
       var volume = Number(volume);
       var rate = Number(rate);
-      this.stopTTS();
       await this.playTTSEngine(text, voice, lang, rate, volume);
     } catch (error) {
       console.log(error);
@@ -26,10 +25,12 @@ export default class BaseTTS {
   static async playSound(source, rate, volume) {
     await this.createOffscreen();
     await util.sendMessage({
-      type: "playTTSOffscreen",
-      source,
-      rate,
-      volume,
+      type: "playAudioOffscreen",
+      data: {
+        source,
+        rate,
+        volume,
+      },
     });
   }
 

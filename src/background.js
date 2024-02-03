@@ -3,31 +3,34 @@
 //listen context menu, uninstall, first install, extension update
 
 import browser from "webextension-polyfill";
+import delay from "delay";
 
 import translator from "./translator/index.js";
 import tts from "./tts/index.js";
 import * as util from "/src/util";
 
 var setting;
-var recentTranslated = {};
+var recentTranslated = "";
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var stopTtsTimestamp = 0;
 
-backgroundInit();
+(async function backgroundInit() {
+  try {
+    injectContentScriptForAllTab();
+    addInstallUrl(introSiteUrl);
+    // addUninstallUrl(util.getReviewUrl());
 
-async function backgroundInit() {
-  injectContentScriptForAllTab();
-  addInstallUrl(introSiteUrl);
-  // addUninstallUrl(util.getReviewUrl());
-
-  await getSetting();
-  addCopyRequestListener();
-  addTabSwitchEventListener();
-  addPdfFileTabListener();
-  addSearchBarListener();
-  addMessageListener();
-}
+    await getSetting();
+    addCopyRequestListener();
+    addTabSwitchEventListener();
+    addPdfFileTabListener();
+    addSearchBarListener();
+    addMessageListener();
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 //listen message from contents js and popup js =========================================================================================================
 function addMessageListener() {
@@ -38,38 +41,20 @@ function addMessageListener() {
   ) {
     (async () => {
       if (request.type === "translate") {
-        var translatedResult = await translateWithError(
-          request.word,
-          request.sourceLang,
-          request.targetLang,
-          setting["translatorVendor"]
-        );
+        var translatedResult = await translate(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "translateWithReverse") {
-        var translatedResult = await translateWithReverse(
-          request.word,
-          request.sourceLang,
-          request.targetLang,
-          request.reverseLang,
-          setting["translatorVendor"]
-        );
+        var translatedResult = await translateWithReverse(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
-        playTtsQueue(
-          request.sourceText,
-          request.sourceLang,
-          request.targetText,
-          request.targetLang,
-          setting["voiceTarget"],
-          Number(setting["voiceRepeat"])
-        );
+        playTtsQueue(request.data);
         sendResponse({});
       } else if (request.type === "stopTTS") {
         stopTts();
         sendResponse({});
       } else if (request.type === "recordTooltipText") {
-        recordHistory(request);
-        updateCopyContext(request);
+        recordHistory(request.data);
+        updateCopyContext(request.data);
         sendResponse({});
       } else if (request.type === "requestBase64") {
         var base64Url = await util.getBase64(request.url);
@@ -84,17 +69,23 @@ async function getSetting() {
   setting = await util.loadSetting();
 }
 
-function recordHistory(request) {
-  if (setting["historyRecordActions"].includes(request.actionType)) {
+function recordHistory({
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  actionType,
+}) {
+  if (setting["historyRecordActions"].includes(actionType)) {
     //append history to front
     setting["historyList"].unshift({
-      sourceText: request.sourceText,
-      targetText: request.targetText,
-      sourceLang: request.sourceLang,
-      targetLang: request.targetLang,
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+      actionType,
       date: JSON.stringify(new Date()),
       translator: setting["translatorVendor"],
-      actionType: request.actionType,
     });
 
     //remove when too many list
@@ -107,10 +98,11 @@ function recordHistory(request) {
 
 // cached translate function
 
-async function translateWithError(...args) {
+async function translate({ text, sourceLang, targetLang }) {
+  var engine = setting["translatorVendor"];
   return (
-    (await doTranslateCached(...args)) || {
-      translatedText: `${setting["translatorVendor"]} is broken`,
+    (await getTranslateCached(text, sourceLang, targetLang, engine)) || {
+      translatedText: `${engine} is broken`,
       transliteration: "",
       sourceLang: "",
       targetLang: setting["translateTarget"],
@@ -119,29 +111,19 @@ async function translateWithError(...args) {
   );
 }
 
-const doTranslateCached = util.cacheFn(doTranslate);
+const getTranslateCached = util.cacheFn(getTranslate);
 
-async function doTranslate(text, fromLang, targetLang, translatorVendor) {
-  return await translator[translatorVendor].translate(
-    text,
-    fromLang,
-    targetLang
-  );
+async function getTranslate(text, sourceLang, targetLang, engine) {
+  return await translator[engine].translate(text, sourceLang, targetLang);
 }
 
-async function translateWithReverse(
-  word,
+async function translateWithReverse({
+  text,
   sourceLang,
   targetLang,
   reverseLang,
-  translatorVendor
-) {
-  var response = await translateWithError(
-    word,
-    sourceLang,
-    targetLang,
-    translatorVendor
-  );
+}) {
+  var response = await translate({ text, sourceLang, targetLang });
   //if to,from lang are same and reverse translate on
   if (
     !response.isBroken &&
@@ -149,12 +131,11 @@ async function translateWithReverse(
     reverseLang != "null" &&
     targetLang != reverseLang
   ) {
-    response = await translateWithError(
-      word,
-      response.sourceLang,
+    response = await translate({
+      text,
+      sourceLang: response.sourceLang,
       reverseLang,
-      translatorVendor
-    );
+    });
   }
   return response;
 }
@@ -166,17 +147,17 @@ function addCopyRequestListener() {
   util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy
 }
 
-async function updateCopyContext(request) {
+async function updateCopyContext({ targetText }) {
   // remove previous
   await removeContext("copy");
   //create new menu
   browser.contextMenus.create({
     id: "copy",
-    title: "Copy : " + util.truncate(request.targetText, 20),
+    title: "Copy : " + util.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });
-  recentTranslated = request;
+  recentTranslated = targetText;
 }
 
 async function removeContext(id) {
@@ -189,7 +170,7 @@ async function removeContextAll(id) {
 }
 
 function requestCopyForTargetText() {
-  requestCopyOnTab(recentTranslated.targetText);
+  requestCopyOnTab(recentTranslated);
 }
 
 function requestCopyOnTab(text) {
@@ -251,17 +232,18 @@ function addInstallUrl(url) {
 
 // tts=============================================================================
 
-async function playTtsQueue(
+async function playTtsQueue({
   sourceText,
   sourceLang,
   targetText,
   targetLang,
-  ttsTarget,
-  ttsRepeat
-) {
+}) {
   // browser.tts.stop(); //remove prev voice
+  var ttsTarget = setting["voiceTarget"];
+  var ttsRepeat = Number(setting["voiceRepeat"]);
   stopTts();
-  var startTimeStamp = Date.now() + 10;
+  await delay(10);
+  var startTimeStamp = Date.now();
 
   for (var i = 0; i < ttsRepeat; i++) {
     if (ttsTarget == "source") {
@@ -344,13 +326,12 @@ function addSearchBarListener() {
   });
 
   browser.omnibox.onInputEntered.addListener(async (text) => {
-    var translatedResult = await translateWithReverse(
+    var translatedResult = await translateWithReverse({
       text,
-      "auto",
-      setting["writingLanguage"],
-      setting["translateTarget"],
-      setting["translatorVendor"]
-    );
+      sourceLang: "auto",
+      targetLang: setting["writingLanguage"],
+      reverseLang: setting["translateTarget"],
+    });
     var text = translatedResult.isBroken
       ? text
       : translatedResult.translatedText;

@@ -32,7 +32,7 @@ var bingLangCode = {
   id: "id",
   is: "is",
   it: "it",
-  iw: "he",
+  he: "he",
   ja: "ja",
   kk: "kk",
   km: "km",
@@ -68,7 +68,7 @@ var bingLangCode = {
   ta: "ta",
   te: "te",
   th: "th",
-  tl: "fil",
+  fil: "fil",
   tr: "tr",
   uk: "uk",
   ur: "ur",
@@ -104,7 +104,7 @@ export default class bing extends BaseTranslator {
       })
       .json();
   }
-  static wrapResponse(res, sourceLang, targetLang) {
+  static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res && res[0]) {
       var transliteration = "";
 

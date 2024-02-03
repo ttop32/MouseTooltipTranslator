@@ -10,11 +10,8 @@ export default class BaseTranslator {
       targetLang = this.encodeLangCode(targetLang);
       var response = await this.requestTranslate(text, sourceLang, targetLang);
 
-      var { translatedText, detectedLang, transliteration } = this.wrapResponse(
-        response,
-        sourceLang,
-        targetLang
-      );
+      var { translatedText, detectedLang, transliteration } =
+        await this.wrapResponse(response, text, sourceLang, targetLang);
       return {
         translatedText,
         transliteration,
@@ -42,7 +39,7 @@ export default class BaseTranslator {
     throw new Error("Not implemented");
   }
 
-  static wrapResponse(res, sourceLang, targetLang) {
+  static async wrapResponse(res, text, sourceLang, targetLang) {
     throw new Error("Not implemented");
   }
 }

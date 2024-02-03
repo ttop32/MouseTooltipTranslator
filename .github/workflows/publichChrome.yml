@@ -1,0 +1,34 @@
+name: Publish Extension
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: Publish Extension to Store
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download Extension
+        uses: robinraju/release-downloader@v1.8
+        with:
+          latest: true
+          fileName: "*.zip"
+
+      - name: Get Release File Name
+        run: echo "RELEASE_FILE=$(ls | grep *.zip)" >> $GITHUB_ENV
+      - name: Test
+        run: echo ${{env.RELEASE_FILE}}
+
+      - name: Publish to store
+        uses: PlasmoHQ/bpp@v3.5.0
+        with:
+          keys: ${{ secrets.CHROME_BPP_KEYS }}
+          chrome-file: "${{env.RELEASE_FILE}}"

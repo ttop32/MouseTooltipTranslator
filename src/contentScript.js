@@ -20,36 +20,40 @@ import video from "./subtitle/subtitle.js";
 //init environment var======================================================================\
 var setting;
 var tooltip;
+var style;
+var tooltipContainer;
+var tooltipContainerEle;
+
 var clientX = 0;
 var clientY = 0;
 var mouseTarget = null;
-var activatedWord = null;
 var mouseMoved = false;
 var mouseMovedCount = 0;
 var keyDownList = { always: true }; //use key down for enable translation partially
-var style;
-let selectedText = "";
+var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
+
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
 const controller = new AbortController();
 const { signal } = controller;
 var isBlobPdf = false;
-var prevWordParam = [];
-var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
+
+var selectedText = "";
+var stagedText = null;
+var prevStagedParams = [];
 var prevTooltipText = "";
-var tooltipContainer;
-var tooltipContainerEle;
 
 //tooltip core======================================================================
-injectGoogleDocAnnotation();
 
-$(async function initMouseTooltipTranslator() {
+(async function initMouseTooltipTranslator() {
   try {
+    injectGoogleDocAnnotation();
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
     if (checkExcludeUrl()) {
       return;
     }
-    await detectPDF(); //check current page is pdf
+    await waitJquery();
+    detectPDF(); //check current page is pdf
     checkVideo();
     checkGoogleDocs();
     addElementEnv(); //add tooltip container
@@ -61,7 +65,7 @@ $(async function initMouseTooltipTranslator() {
   } catch (error) {
     console.log(error);
   }
-});
+})();
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
@@ -75,7 +79,7 @@ function startMouseoverDetector() {
     ) {
       var mouseoverText = event.mouseoverText[getDetectType()];
       var mouseoverRange = event.mouseoverText[getDetectType() + "_range"];
-      await processWord(mouseoverText, "mouseover", mouseoverRange);
+      await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
     }
   });
 }
@@ -87,15 +91,15 @@ function startTextSelectDetector() {
     // if translate on selection is enabled
     if (setting["translateWhen"].includes("select")) {
       selectedText = event?.selectedText;
-      await processWord(selectedText, "select");
+      await stageTooltipText(selectedText, "select");
     }
   });
 }
 
 //process detected word
-async function processWord(word, actionType, range) {
-  prevWordParam = Array.prototype.slice.call(arguments); //record args
-  word = util.filterWord(word); //filter out one that is url,no normal char
+async function stageTooltipText(text, actionType, range) {
+  prevStagedParams = Array.prototype.slice.call(arguments); //record args
+  text = util.filterWord(text); //filter out one that is url,no normal char
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
 
@@ -105,12 +109,12 @@ async function processWord(word, actionType, range) {
   if (
     !checkWindowFocus() ||
     checkMouseTargetIsTooltip() ||
-    activatedWord == word ||
+    stagedText == text ||
     !util.isExtensionOnline()
   ) {
     return;
-  } else if (!word) {
-    activatedWord = word;
+  } else if (!text) {
+    stagedText = text;
     hideTooltip();
     return;
   } else if (!isTooltipOn) {
@@ -118,10 +122,10 @@ async function processWord(word, actionType, range) {
   }
 
   //stage current processing word
-  activatedWord = word;
+  stagedText = text;
   var { translatedText, sourceLang, targetLang, transliteration } =
     await requestTranslateWithReverse(
-      word,
+      text,
       setting["translateSource"],
       setting["translateTarget"],
       setting["translateReverseTarget"]
@@ -129,7 +133,7 @@ async function processWord(word, actionType, range) {
 
   // if translation is not recent one, do not update
   //if translated text is empty, hide tooltip
-  if (activatedWord != word) {
+  if (stagedText != text) {
     return;
   } else if (
     !translatedText ||
@@ -143,22 +147,13 @@ async function processWord(word, actionType, range) {
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
   if (isTooltipOn) {
-    var tooltipTransliteration =
-      setting["useTransliteration"] == "true" ? transliteration : "";
-    var tooltipLang =
-      setting["showSourceLang"] == "true"
-        ? util.langListOpposite[sourceLang]
-        : "";
     var tooltipText = wrapRtlHtml(translatedText, targetLang);
-    tooltipText += concatTooltipText(tooltipTransliteration, tooltipLang);
-    var resetPrevTooltip = prevTooltipText != tooltipText;
-    prevTooltipText = tooltipText;
-
-    showTooltip(tooltipText, resetPrevTooltip);
+    tooltipText += concatTooltipInfoText({ transliteration, sourceLang });
+    showTooltip(tooltipText);
     requestRecordTooltipText(
-      word,
-      translatedText,
+      text,
       sourceLang,
+      translatedText,
       targetLang,
       actionType
     );
@@ -167,46 +162,8 @@ async function processWord(word, actionType, range) {
 
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    var wordWithoutEmoji = util.filterEmoji(word);
+    var wordWithoutEmoji = util.filterEmoji(text);
     requestTTS(wordWithoutEmoji, sourceLang, translatedText, targetLang);
-  }
-}
-
-function highlightText(range) {
-  if (!range || setting["highlightMouseoverText"] == "false") {
-    return;
-  }
-  hideHighlight();
-  var rects = range.getClientRects();
-  rects = util.filterOverlappedRect(rects);
-  var adjustX = window.scrollX;
-  var adjustY = window.scrollY;
-  if (util.isEbookReader()) {
-    var ebookViewerRect = util.getEbookIframe()?.getBoundingClientRect();
-    adjustX += ebookViewerRect?.left;
-    adjustY += ebookViewerRect?.top;
-  }
-
-  for (var rect of rects) {
-    $("<div/>", {
-      class: "mtt-highlight",
-      css: {
-        position: "absolute",
-        left: rect.left + adjustX,
-        top: rect.top + adjustY,
-        width: rect.width,
-        height: rect.height,
-      },
-    }).appendTo("body");
-  }
-}
-
-function restartWordProcess() {
-  //trigger mouseover text by reset activate word
-  //restart selected text
-  activatedWord = null;
-  if (selectedText) {
-    processWord(...prevWordParam);
   }
 }
 
@@ -240,11 +197,9 @@ function checkMouseTargetIsTooltip() {
   }
 }
 
-function checkWindowFocus() {
-  return mouseMoved && document.visibilityState == "visible";
-}
-
-function showTooltip(text, resetPrevTooltip) {
+function showTooltip(text) {
+  var resetPrevTooltip = prevTooltipText != text;
+  prevTooltipText = text;
   checkTooltipContainer();
   hideTooltip(resetPrevTooltip); //reset tooltip arrow
   tooltip?.setContent(text);
@@ -259,22 +214,14 @@ function hideTooltip(resetPrevTooltip = false) {
   hideHighlight();
 }
 
-function hideHighlight() {
-  $(".mtt-highlight")?.remove();
+function checkTooltipContainer() {
+  if (!$("#mttContainer").get(0)) {
+    tooltipContainer.appendTo(document.body);
+  }
 }
 
-async function translateWithReverse(word, sourceLang, targetLang, reverseLang) {
-  var response = await requestTranslate(word, sourceLang, targetLang);
-  //if to,from lang are same and reverse translate on
-  if (
-    !response.isBroken &&
-    targetLang == response.sourceLang &&
-    reverseLang != "null" &&
-    targetLang != reverseLang
-  ) {
-    response = await requestTranslate(word, response.sourceLang, reverseLang);
-  }
-  return response;
+function hideHighlight() {
+  $(".mtt-highlight")?.remove();
 }
 
 function wrapRtlHtml(translatedText, targetLang) {
@@ -284,13 +231,50 @@ function wrapRtlHtml(translatedText, targetLang) {
   return text;
 }
 
-function concatTooltipText(...texts) {
+function concatTooltipInfoText({ transliteration, sourceLang }) {
+  var isTransliterationOn = setting["useTransliteration"] == "true";
+  var isShowLangOn = setting["showSourceLang"] == "true";
+  var tooltipTransliteration = isTransliterationOn ? transliteration : "";
+  var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
+  return getHtmlWrapText(tooltipTransliteration, tooltipLang);
+}
+
+function getHtmlWrapText(...texts) {
   texts = texts.filter((text) => text);
   var concatText = "";
   for (var text of texts) {
     concatText += `<br><span style="font-weight:bold;">${encode(text)}</span>`;
   }
   return concatText;
+}
+
+function highlightText(range) {
+  if (!range || setting["highlightMouseoverText"] == "false") {
+    return;
+  }
+  hideHighlight();
+  var rects = range.getClientRects();
+  rects = util.filterOverlappedRect(rects);
+  var adjustX = window.scrollX;
+  var adjustY = window.scrollY;
+  if (util.isEbookReader()) {
+    var ebookViewerRect = util.getEbookIframe()?.getBoundingClientRect();
+    adjustX += ebookViewerRect?.left;
+    adjustY += ebookViewerRect?.top;
+  }
+
+  for (var rect of rects) {
+    $("<div/>", {
+      class: "mtt-highlight",
+      css: {
+        position: "absolute",
+        left: rect.left + adjustX,
+        top: rect.top + adjustY,
+        width: rect.width,
+        height: rect.height,
+      },
+    }).appendTo("body");
+  }
 }
 
 //Translate Writing feature==========================================================================================
@@ -463,9 +447,18 @@ function resetTooltipStatus() {
   mouseMoved = false;
   mouseMovedCount = 0;
   selectedText = "";
-  activatedWord = null;
+  stagedText = null;
   hideTooltip();
   ocrView.removeAllOcrEnv();
+}
+
+function restartWordProcess() {
+  //trigger mouseover text by reset activate word
+  //restart selected text
+  stagedText = null;
+  if (selectedText) {
+    stageTooltipText(...prevStagedParams);
+  }
 }
 
 function setMouseStatus(e) {
@@ -490,6 +483,10 @@ function checkMouseOnceMoved(x, y) {
   return mouseMoved;
 }
 
+function checkWindowFocus() {
+  return mouseMoved && document.visibilityState == "visible";
+}
+
 function addBackgroundListener() {
   //handle copy
   util.addMessageListener("CopyRequest", (message) => {
@@ -497,14 +494,29 @@ function addBackgroundListener() {
   });
 }
 
+function waitJquery() {
+  return new Promise(async (resolve, reject) => {
+    $(() => {
+      resolve();
+    });
+  });
+}
+
+function checkExcludeUrl() {
+  var url = util.getCurrentUrl();
+  return matchUrl(url, setting["websiteExcludeList"]);
+}
+
 //send to background.js for background processing  ===========================================================================
 
 async function requestTranslate(word, sourceLang, targetLang) {
   return await util.sendMessage({
     type: "translate",
-    word: word,
-    sourceLang,
-    targetLang,
+    data: {
+      text: word,
+      sourceLang,
+      targetLang,
+    },
   });
 }
 
@@ -516,20 +528,24 @@ async function requestTranslateWithReverse(
 ) {
   return await util.sendMessage({
     type: "translateWithReverse",
-    word: word,
-    sourceLang,
-    targetLang,
-    reverseLang,
+    data: {
+      text: word,
+      sourceLang,
+      targetLang,
+      reverseLang,
+    },
   });
 }
 
 async function requestTTS(sourceText, sourceLang, targetText, targetLang) {
   return await util.sendMessage({
     type: "tts",
-    sourceText,
-    sourceLang,
-    targetText,
-    targetLang,
+    data: {
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+    },
   });
 }
 
@@ -542,28 +558,53 @@ async function requestStopTTS() {
 //send history to background.js
 async function requestRecordTooltipText(
   sourceText,
-  targetText,
   sourceLang,
+  targetText,
   targetLang,
   actionType
 ) {
   return await util.sendMessage({
     type: "recordTooltipText",
-    sourceText,
-    targetText,
-    sourceLang,
-    targetLang,
-    actionType,
+    data: {
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+      actionType,
+    },
   });
 }
 
-// setting handling===============================================================
+// setting handling & container style===============================================================
 
 async function getSetting() {
   setting = await util.loadSetting(function settingCallbackFn() {
     resetTooltipStatus();
     applyStyleSetting();
     checkVideo();
+  });
+}
+
+async function addElementEnv() {
+  tooltipContainer = $("<div/>", {
+    id: "mttContainer",
+  }).appendTo(document.body);
+  tooltipContainerEle = tooltipContainer.get(0);
+
+  style = $("<style/>", {
+    id: "mttstyle",
+  }).appendTo("head");
+
+  tooltip = tippy(tooltipContainerEle, {
+    content: "",
+    trigger: "manual",
+    allowHTML: true,
+    theme: "custom",
+    zIndex: 100000200,
+    hideOnClick: false,
+    role: "mtttooltip",
+    interactive: true,
+    plugins: [sticky],
   });
 }
 
@@ -708,44 +749,6 @@ function openPdfIframe(url) {
       width: "100vw",
     },
   }).appendTo("body");
-}
-
-function checkExcludeUrl() {
-  // iframe parent url check
-  var url =
-    window.location != window.parent.location
-      ? document.referrer
-      : document.location.href;
-  return matchUrl(url, setting["websiteExcludeList"]);
-}
-
-async function addElementEnv() {
-  tooltipContainer = $("<div/>", {
-    id: "mttContainer",
-  }).appendTo(document.body);
-  tooltipContainerEle = tooltipContainer.get(0);
-
-  style = $("<style/>", {
-    id: "mttstyle",
-  }).appendTo("head");
-
-  tooltip = tippy(tooltipContainerEle, {
-    content: "",
-    trigger: "manual",
-    allowHTML: true,
-    theme: "custom",
-    zIndex: 100000200,
-    hideOnClick: false,
-    role: "mtttooltip",
-    interactive: true,
-    plugins: [sticky],
-  });
-}
-
-function checkTooltipContainer() {
-  if (!$("#mttContainer").get(0)) {
-    tooltipContainer.appendTo(document.body);
-  }
 }
 
 //check google docs=========================================================

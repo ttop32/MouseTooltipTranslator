@@ -75,7 +75,7 @@ export function getSelectionText(isHtml = false) {
 function getWindowSelection() {
   let text = "";
   if (_win.getSelection) {
-    text = _win.getSelection().toString();
+    text = _win.getSelection()?.toString();
   } else if (
     _win.document.selection &&
     _win.document.selection.type !== "Control"

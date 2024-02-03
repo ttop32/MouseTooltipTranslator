@@ -28,20 +28,24 @@ export async function checkImage(img, setting, keyDownList) {
   ocrHistory[img.src] = img;
   var lang = setting["ocrDetectionLang"];
   makeLoadingMouseStyle(img);
-  await initOCR();
 
-  //run both,  ocr with opencv rect, ocr without opencv
-  // auto= no opencv only tesseract
-  // bbox use opencv and tesseract
-  var base64Url = await getBase64Image(img.src);
+  //init env, load iframe and image
   // var start = new Date().getTime();
+  var base64Url = (
+    await Promise.all([
+      getBase64Image(img.src),
+      initOCRIframe().then(() => initOCRLibrary(lang)),
+    ])
+  )[0];
+  // console.log("Execution time: " + (new Date().getTime() - start));
+
+  //pass image for ocr, run both,  ocr with opencv rect, ocr without opencv
+  // auto, no opencv only tesseract
+  // bbox, use opencv and tesseract
   await Promise.all([
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox"),
   ]);
-  // var end = new Date().getTime();
-  // var time = end - start;
-  // console.log("Execution time: " + time);
 
   makeNormalMouseStyle(img);
 }
@@ -95,9 +99,15 @@ function checkIsImage(ele) {
 }
 
 // create ocr==================
-async function initOCR() {
-  await createIframe("opencvFrame", "/opencvHandler.html");
-  await createIframe("ocrFrame", "/ocr.html");
+async function initOCRIframe() {
+  await Promise.all([
+    createIframe("opencvFrame", "/opencvHandler.html"),
+    createIframe("ocrFrame", "/ocr.html"),
+  ]);
+}
+async function initOCRLibrary(lang) {
+  requestOcrInit(lang, "auto");
+  requestOcrInit(lang, "bbox");
 }
 
 async function createIframe(name, htmlPath) {
@@ -141,6 +151,10 @@ async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
     { type: "ocr", mainUrl, lang, bboxList, base64Url, mode },
     iFrames["ocrFrame"]
   );
+}
+
+async function requestOcrInit(lang, mode) {
+  return await postMessage({ type: "init", lang, mode }, iFrames["ocrFrame"]);
 }
 
 async function postMessage(data, frame) {
@@ -248,7 +262,7 @@ function setLeftTopWH(img, bbox, $div, ratio) {
 
 function filterOcrText(text) {
   return text.replace(
-    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&“*()_|+\-=;【】:'"<>\{\}\[\]\\\/]/gi,
+    /[`・〉«¢~「」〃ゝゞヽヾ●▲♩ヽ÷①↓®▽■◆『£〆∴∞▼™↑←~@#$%^&“*()_|+\-=;…【】:'"<>\{\}\[\]\\\/]/gi,
     ""
   ); //remove special char
 }
