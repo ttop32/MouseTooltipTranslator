@@ -17,16 +17,16 @@ var stopTtsTimestamp = 0;
 
 (async function backgroundInit() {
   try {
-    injectContentScriptForAllTab();
-    addInstallUrl(introSiteUrl);
+    injectContentScriptForAllTab(); // check extension updated, then re inject content script
+    addInstallUrl(introSiteUrl); // check first start and redirect to how to use url
     // addUninstallUrl(util.getReviewUrl());
 
-    await getSetting();
-    addCopyRequestListener();
-    addTabSwitchEventListener();
-    addPdfFileTabListener();
-    addSearchBarListener();
-    addMessageListener();
+    await getSetting(); //  load setting
+    addCopyRequestListener(); // listen copy context menu and shortcut key
+    addTabSwitchEventListener(); // listen tab switch for kill tts
+    addPdfFileTabListener(); //listen drag and drop pdf
+    addSearchBarListener(); // listen url search bar for translate omnibox
+    addMessageListener(); // listen message from content script for handle translate & tts
   } catch (error) {
     console.log(error);
   }
