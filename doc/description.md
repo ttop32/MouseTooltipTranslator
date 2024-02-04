@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.118
+  - Add language priority on setting (request by marcello-pietrobon)
 - 0.1.117
   - Add youtube subtitle stop option (request by Daifer Ant. Ramirez Ramirez)
   - Change option structure

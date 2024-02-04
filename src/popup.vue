@@ -592,6 +592,13 @@ function getRangeOption(start, end, scale, roundOff) {
   return optionList;
 }
 
+var langPriorityOptionList = [
+  "translateSource",
+  "translateTarget",
+  "writingLanguage",
+  "translateReverseTarget",
+];
+
 export default {
   name: "app",
   components: { AboutPage },
@@ -631,10 +638,17 @@ export default {
     this.saveSetting();
     this.applyRtl(util.getDefaultLang());
   },
+
+  computed: {
+    settingWrapper() {
+      return Object.assign({}, this.setting);
+    },
+  },
   watch: {
-    setting: {
+    settingWrapper: {
       deep: true,
-      handler() {
+      handler(newSetting, oldSetting) {
+        this.checkSettingLangPriority(newSetting, oldSetting);
         this.saveSetting();
       },
     },
@@ -681,7 +695,7 @@ export default {
       link.download = "Mouse_Tooltip_Translator_History.csv";
       link.click();
     },
-    wrapWithTitleValueKey(inputList) {
+    wrapTitleValueJson(inputList, optionName) {
       // convert {key:item}  as {title:key, value:item}
       var textValList = [];
       for (const [key2, val2] of Object.entries(inputList)) {
@@ -690,16 +704,40 @@ export default {
           value: val2,
         });
       }
+      textValList = this.sortLangOption(textValList, optionName);
       return textValList;
     },
     loadTabOptionList() {
       this.tabItems = tabItems;
       for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
         for (const [key1, val1] of Object.entries(tabVal)) {
-          this.tabItems[tabKey][key1]["optionList"] =
-            this.wrapWithTitleValueKey(
-              this.tabItems[tabKey][key1]["optionList"]
-            );
+          this.tabItems[tabKey][key1]["optionList"] = this.wrapTitleValueJson(
+            this.tabItems[tabKey][key1]["optionList"],
+            key1
+          );
+        }
+      }
+    },
+    sortLangOption(textValList, optionName) {
+      if (!langPriorityOptionList.includes(optionName)) {
+        return textValList;
+      }
+      textValList.sort((i1, i2) => {
+        var i1Priority = this.setting["langPriority"][i1.value] || 0;
+        var i2Priority = this.setting["langPriority"][i2.value] || 0;
+        return i2Priority - i1Priority;
+      });
+      return textValList;
+    },
+    checkSettingLangPriority(newSetting, oldSetting) {
+      for (var option of langPriorityOptionList) {
+        if (
+          newSetting[option] != oldSetting[option] &&
+          oldSetting[option] != null
+        ) {
+          var lang = newSetting[option];
+          var langPriority = this.setting?.["langPriority"]?.[lang] || 0;
+          this.setting["langPriority"][lang] = langPriority + 1;
         }
       }
     },
@@ -716,7 +754,7 @@ export default {
         voiceTabOption["ttsVoice_" + key] = {
           description:
             this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
-          optionList: this.wrapWithTitleValueKey(voiceOptionList),
+          optionList: this.wrapTitleValueJson(voiceOptionList),
         };
       }
 
