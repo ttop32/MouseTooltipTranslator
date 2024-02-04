@@ -59,7 +59,7 @@ export var defaultData = {
 
 var rtlLangList = [
   "ar", //Arabic
-  "he", //Hebrew
+  "iw", //Hebrew
   "ku", //Kurdish
   "fa", //Persian
   "ur", //Urdu
@@ -111,7 +111,7 @@ export var langList = {
   Esperanto: "eo",
   Estonian: "et",
   Ewe: "ee",
-  Filipino: "fil",
+  Filipino: "tl",
   Finnish: "fi",
   French: "fr",
   Frisian: "fy",
@@ -124,7 +124,7 @@ export var langList = {
   HaitianCreole: "ht",
   Hausa: "ha",
   Hawaiian: "haw",
-  Hebrew: "he",
+  Hebrew: "iw",
   Hindi: "hi",
   Hmong: "hmn",
   Hungarian: "hu",
@@ -194,7 +194,6 @@ export var langList = {
   Sundanese: "su",
   Swahili: "sw",
   Swedish: "sv",
-  Tagalog: "tl",
   Tajik: "tg",
   Tamil: "ta",
   Tatar: "tt",
@@ -343,7 +342,7 @@ var bingTtsVoiceList = {
     "en-US-SteffanNeural",
   ],
   et: ["et-EE-AnuNeural", "et-EE-KertNeural"],
-  fil: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
+  tl: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
   fi: ["fi-FI-HarriNeural", "fi-FI-NooraNeural"],
   fr: [
     "fr-BE-CharlineNeural",
@@ -371,7 +370,7 @@ var bingTtsVoiceList = {
   ],
   el: ["el-GR-AthinaNeural", "el-GR-NestorasNeural"],
   gu: ["gu-IN-DhwaniNeural", "gu-IN-NiranjanNeural"],
-  he: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
+  iw: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
   hi: ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"],
   hu: ["hu-HU-NoemiNeural", "hu-HU-TamasNeural"],
   is: ["is-IS-GudrunNeural", "is-IS-GunnarNeural"],
@@ -507,13 +506,13 @@ var googleTranslateTtsLangList = [
   "nl",
   "en",
   "et",
-  "fil",
+  "tl",
   "fi",
   "fr",
   "de",
   "el",
   "gu",
-  "he",
+  "iw",
   "hi",
   "hu",
   "is",

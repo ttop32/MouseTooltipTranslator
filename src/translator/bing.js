@@ -32,7 +32,6 @@ var bingLangCode = {
   id: "id",
   is: "is",
   it: "it",
-  he: "he",
   ja: "ja",
   kk: "kk",
   km: "km",
@@ -68,11 +67,13 @@ var bingLangCode = {
   ta: "ta",
   te: "te",
   th: "th",
-  fil: "fil",
   tr: "tr",
   uk: "uk",
   ur: "ur",
   vi: "vi",
+
+  iw: "he",
+  tl: "fil",
   "zh-CN": "zh-Hans",
   "zh-TW": "zh-Hant",
 };

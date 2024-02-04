@@ -10,13 +10,8 @@ var newGoogleUrl =
   "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute";
 var token;
 var tokenTTL = 60 * 60 * 1000; //1hour
-var googleLangCode = {
-  he: "iw",
-};
 
 export default class google extends BaseTranslator {
-  static langCodeJson = googleLangCode;
-
   static async requestTranslate(text, sourceLang, targetLang) {
     // code brought from https://github.com/translate-tools/core/blob/master/src/translators/GoogleTranslator/token.js
     var tk = getToken(text, googleTranslateTKK);
