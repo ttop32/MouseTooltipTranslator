@@ -32,8 +32,8 @@
 	"Writing_Language": {
 		"message": "Bahasa Tulisan"
 	},
-	"OCR_Detection_Language": {
-		"message": "Bahasa Deteksi OCR"
+	"OCR_Language": {
+		"message": "OCR Language"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -101,23 +101,29 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Translate_Writing_Hotkey": {
-		"message": "Hotkey Terjemahan Tulisan"
+	"Reverse_Translate_Language": {
+		"message": "Terjemahkan Bahasa Balik"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
 	},
 	"OCR_When": {
 		"message": "Gunakan OCR Saat"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "Tukar Jenis Deteksi Tombol Tahan"
-	},
-	"Enable_Youtube_Subtitle": {
-		"message": "Aktifkan Subtitle YouTube"
+	"Detect_Subtitle": {
+		"message": "Detect Subtitle"
 	},
 	"Detect_PDF": {
 		"message": "Deteksi PDF"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Terjemahkan Bahasa Balik"
+	"Mouseover_Highlight_Text": {
+		"message": "Mouseover Highlight Text"
+	},
+	"Mouseover_Pause_Subtitle": {
+		"message": "Mouseover Pause Subtitle"
+	},
+	"Text_Detect_Type_Swap_Hold_Key": {
+		"message": "Text Detect Type Swap Hold Key"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "KECUALI                                      "

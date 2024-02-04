@@ -19,9 +19,6 @@ export default class BaseVideo {
   static captionBoxSelector = "";
   static listenButtonSelector = "";
 
-  static targetLang = "";
-  static subSetting = "";
-  static captionOnStatusByUser = "true";
   static isPaused = false;
   static pausedByExtension = false;
   static isEventListenerLoaded = false;
@@ -42,9 +39,6 @@ export default class BaseVideo {
     this.handleUrlChange();
   }
   static initVariable(setting) {
-    this.targetLang = setting?.translateTarget;
-    this.subSetting = setting?.enableYoutube;
-    this.captionOnStatusByUser = setting?.captionOnStatusByUser;
     this.setting = setting;
   }
   static async loadEventListener() {
@@ -93,7 +87,10 @@ export default class BaseVideo {
   }
   static pause() {
     //if already paused skip
-    if (this.isPaused == true) {
+    if (
+      this.isPaused == true ||
+      this.setting["mouseoverPauseSubtitle"] == "false"
+    ) {
       return;
     }
     this.pausedByExtension = true;
@@ -200,10 +197,13 @@ export default class BaseVideo {
           var lang = this.guessSubtitleLang(request.url);
           var responseSub = sub1;
           //get target lang sub, if not same lang
-          if (lang != this.targetLang && this.subSetting == "dualsub") {
+          if (
+            lang != this.setting["translateTarget"] &&
+            this.setting["enableYoutube"] == "dualsub"
+          ) {
             var sub2 = await this.requestSubtitleCached(
               request.url,
-              this.targetLang
+              this.setting["translateTarget"]
             );
             var sub2 = this.parseSubtitle(sub2);
             var mergedSub = this.mergeSubtitles(sub1, sub2);

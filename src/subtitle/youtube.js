@@ -45,7 +45,10 @@ export default class Youtube extends BaseVideo {
   static async activateCaption(url) {
     // async function activateCaption(url = window.location.href) {
     // skip if user caption off, is shorts skip
-    if (this.captionOnStatusByUser == "false" || !this.isVideoUrl(url)) {
+    if (
+      this.setting["captionOnStatusByUser"] == "false" ||
+      !this.isVideoUrl(url)
+    ) {
       return;
     }
     //get video lang
@@ -246,12 +249,15 @@ export default class Youtube extends BaseVideo {
     var captionAsr = captionMeta?.filter((sub) => sub.kind);
     var lang = captionAsr?.[0]?.languageCode;
     // get target lang if targetsinglesub setting
-    if (this.subSetting == "targetsinglesub") {
+    if (this.setting["enableYoutube"] == "targetsinglesub") {
       var caption = captionMeta?.filter(
-        (sub) => sub.languageCode == this.targetLang
+        (sub) => sub.languageCode == this.setting["translateTarget"]
       );
       lang = caption?.[0]?.languageCode || lang;
-      tlang = lang != this.targetLang ? { languageCode: this.targetLang } : "";
+      tlang =
+        lang != this.setting["translateTarget"]
+          ? { languageCode: this.setting["translateTarget"] }
+          : "";
     }
     return {
       lang: lang || "en",

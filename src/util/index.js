@@ -19,14 +19,15 @@ export var defaultData = {
   writingLanguage: "en",
   ocrDetectionLang: "jpn_vert",
   //advanced
+  translateReverseTarget: "null",
   keyDownTranslateWriting: "AltRight",
   keyDownOCR: "ShiftLeft",
-  keyDownDetectSwap: "null",
   enableYoutube: "dualsub",
   detectPDF: "true",
-  translateReverseTarget: "null",
-  useTransliteration: "false",
   highlightMouseoverText: "false",
+  mouseoverPauseSubtitle: "true",
+  keyDownDetectSwap: "null",
+  useTransliteration: "false",
   showSourceLang: "false",
 
   // graphic
