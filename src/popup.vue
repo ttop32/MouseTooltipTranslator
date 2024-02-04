@@ -533,11 +533,11 @@ var advancedTabData = {
     optionList: keyList,
   },
   useTransliteration: {
-    description: "Enable Transliteration (Experimental)",
+    description: "Tooltip Info Transliteration (Experimental)",
     optionList: toggleList,
   },
   showSourceLang: {
-    description: "Show Source Language (Experimental)",
+    description: "Tooltip Info Source Language (Experimental)",
     optionList: toggleList,
   },
 };

@@ -124,6 +124,8 @@ function migrateSetting() {
     mouseoverTextType: "detectType",
     mouseoverHighlightText: "highlightMouseoverText",
     keyDownMouseoverTextSwap: "keyDownDetectSwap",
+    tooltipInfoTransliteration: "useTransliteration",
+    tooltipInfoSourceLanguage: "showSourceLang",
   };
 
   for (let [key, value] of Object.entries(migrateSettingJson)) {
