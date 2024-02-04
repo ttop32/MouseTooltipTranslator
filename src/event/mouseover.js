@@ -92,9 +92,7 @@ function getTextFromRange(range) {
 
 function expandRange(range, type) {
   try {
-    if (!isAttachedToDom(range.startContainer)) {
-      return;
-    } else if (type == "container" || !range.expand) {
+    if (type == "container" || !range.expand) {
       range.setStartBefore(range.startContainer);
       range.setEndAfter(range.startContainer);
       range.setStart(range.startContainer, 0);
@@ -102,7 +100,7 @@ function expandRange(range, type) {
       range.expand(type); // "word" or "sentence"
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
