@@ -71,8 +71,8 @@
 	"Tooltip_Border_Color": {
 		"message": "Tooltip Border Color"
 	},
-	"Highlight_Color": {
-		"message": "Highlight Color"
+	"Mouseover_Text_Highlight_Color": {
+		"message": "Mouseover Text Highlight Color"
 	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "

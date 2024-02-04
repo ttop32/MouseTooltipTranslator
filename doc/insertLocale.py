@@ -47,7 +47,7 @@ i18List = [
     "Tooltip Font Color",
     "Tooltip Background Color",
     "Tooltip Border Color",
-    "Highlight Color",
+    "Mouseover Text Highlight Color",
 
     "VOICE                                      ",
     "VOICE",
