@@ -31,7 +31,7 @@ i18List = [
     "Translate From",
     "Translate Into",
     "Translator Engine",
-    "Text Detect Type",
+    "Mouseover Text Type",
     "Writing Language",
     "OCR Language",
 
@@ -66,7 +66,7 @@ i18List = [
     "Detect PDF",
     "Mouseover Highlight Text",
     "Mouseover Pause Subtitle",
-    "Text Detect Type Swap Hold Key",
+    "Mouseover Text Type Swap Key",
 
 
     "EXCLUDE                                      ",
