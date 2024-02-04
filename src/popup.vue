@@ -473,7 +473,7 @@ var visualTabData = {
     optionList: {},
   },
   highlightColor: {
-    description: browser.i18n.getMessage("Highlight_Color"),
+    description: browser.i18n.getMessage("Mouseover_Text_Highlight_Color"),
     optionType: "colorPicker",
     menu: false,
     optionList: {},
