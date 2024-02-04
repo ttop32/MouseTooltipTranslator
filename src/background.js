@@ -22,7 +22,6 @@ var stopTtsTimestamp = 0;
     // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
-    migrateSetting();
     addCopyRequestListener(); // listen copy context menu and shortcut key
     addTabSwitchEventListener(); // listen tab switch for kill tts
     addPdfFileTabListener(); //listen drag and drop pdf
@@ -114,27 +113,6 @@ async function translateWithReverse({
 
 async function getSetting() {
   setting = await util.loadSetting();
-}
-
-function migrateSetting() {
-  var migrateSettingJson = {
-    detectSubtitle: "enableYoutube",
-    subtitleButtonToggle: "captionOnStatusByUser",
-    ocrLang: "ocrDetectionLang",
-    mouseoverTextType: "detectType",
-    mouseoverHighlightText: "highlightMouseoverText",
-    keyDownMouseoverTextSwap: "keyDownDetectSwap",
-    tooltipInfoTransliteration: "useTransliteration",
-    tooltipInfoSourceLanguage: "showSourceLang",
-    mouseoverTextHighlightColor: "highlightColor",
-  };
-
-  for (let [key, value] of Object.entries(migrateSettingJson)) {
-    if (setting[key] == null) {
-      setting[key] = setting[value];
-      setting.save();
-    }
-  }
 }
 
 function recordHistory({

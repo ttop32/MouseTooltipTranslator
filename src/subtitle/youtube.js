@@ -46,7 +46,7 @@ export default class Youtube extends BaseVideo {
     // async function activateCaption(url = window.location.href) {
     // skip if user caption off, is shorts skip
     if (
-      this.setting["captionOnStatusByUser"] == "false" ||
+      this.setting["subtitleButtonToggle"] == "false" ||
       !this.isVideoUrl(url)
     ) {
       return;
@@ -96,7 +96,7 @@ export default class Youtube extends BaseVideo {
   }
   static async handleCaptionOnOff(e) {
     if (e?.code == "KeyC" || e?.button == 0) {
-      this.setting["captionOnStatusByUser"] = $(this.listenButtonSelector).attr(
+      this.setting["subtitleButtonToggle"] = $(this.listenButtonSelector).attr(
         "aria-pressed"
       );
       this.setting.save();
@@ -249,7 +249,7 @@ export default class Youtube extends BaseVideo {
     var captionAsr = captionMeta?.filter((sub) => sub.kind);
     var lang = captionAsr?.[0]?.languageCode;
     // get target lang if targetsinglesub setting
-    if (this.setting["enableYoutube"] == "targetsinglesub") {
+    if (this.setting["detectSubtitle"] == "targetsinglesub") {
       var caption = captionMeta?.filter(
         (sub) => sub.languageCode == this.setting["translateTarget"]
       );

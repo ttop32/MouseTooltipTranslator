@@ -21,7 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.117
   - Add youtube subtitle stop option (request by Daifer Ant. Ramirez Ramirez)
-  - Change option UI name
+  - Change option structure
 - 0.1.116
   - Fix tooltip container removed error (request by di4m0nds)
 - 0.1.115
