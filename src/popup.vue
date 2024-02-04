@@ -420,7 +420,7 @@ var settingListData = {
     optionList: langList,
   },
   ocrDetectionLang: {
-    description: browser.i18n.getMessage("OCR_Detection_Language"),
+    description: browser.i18n.getMessage("OCR_Language"),
     optionList: ocrLangList,
   },
 };
@@ -500,36 +500,40 @@ var voiceTabData = {
 };
 
 var advancedTabData = {
+  translateReverseTarget: {
+    description: browser.i18n.getMessage("Reverse_Translate_Language"),
+    optionList: langListWithNone,
+  },
   keyDownTranslateWriting: {
-    description: browser.i18n.getMessage("Translate_Writing_Hotkey"),
+    description: browser.i18n.getMessage("Translate_Writing_When"),
     optionList: keyList,
   },
   keyDownOCR: {
     description: browser.i18n.getMessage("OCR_When"),
     optionList: keyListWithAlways,
   },
-  keyDownDetectSwap: {
-    description: browser.i18n.getMessage("Detect_Type_Swap_Hold_Key"),
-    optionList: keyList,
-  },
   enableYoutube: {
-    description: browser.i18n.getMessage("Enable_Youtube_Subtitle"),
+    description: browser.i18n.getMessage("Detect_Subtitle"),
     optionList: subtitleTypeList,
   },
   detectPDF: {
     description: browser.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
-  translateReverseTarget: {
-    description: browser.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: langListWithNone,
+  highlightMouseoverText: {
+    description: browser.i18n.getMessage("Mouseover_Highlight_Text"),
+    optionList: toggleList,
+  },
+  mouseoverPauseSubtitle: {
+    description: browser.i18n.getMessage("Mouseover_Pause_Subtitle"),
+    optionList: toggleList,
+  },
+  keyDownDetectSwap: {
+    description: browser.i18n.getMessage("Text_Detect_Type_Swap_Hold_Key"),
+    optionList: keyList,
   },
   useTransliteration: {
     description: "Enable Transliteration (Experimental)",
-    optionList: toggleList,
-  },
-  highlightMouseoverText: {
-    description: "Highlight Mouseover Text (Experimental)",
     optionList: toggleList,
   },
   showSourceLang: {

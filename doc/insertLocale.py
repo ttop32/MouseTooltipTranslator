@@ -33,7 +33,7 @@ i18List = [
     "Translator Engine",
     "Text Detect Type",
     "Writing Language",
-    "OCR Detection Language",
+    "OCR Language",
 
     "GRAPHIC                                      ",
     "GRAPHIC",
@@ -59,12 +59,15 @@ i18List = [
 
     "ADVANCED                                      ",
     "ADVANCED",
-    "Translate Writing Hotkey",
-    "OCR When",
-    "Detect Type Swap Hold Key",
-    "Enable Youtube Subtitle",
-    "Detect PDF",
     "Reverse Translate Language",
+    "Translate Writing When",
+    "OCR When",
+    "Detect Subtitle",
+    "Detect PDF",
+    "Mouseover Highlight Text",
+    "Mouseover Pause Subtitle",
+    "Text Detect Type Swap Hold Key",
+
 
     "EXCLUDE                                      ",
     "EXCLUDE",

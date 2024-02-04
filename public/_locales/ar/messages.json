@@ -32,8 +32,8 @@
 	"Writing_Language": {
 		"message": "لغة الكتابة"
 	},
-	"OCR_Detection_Language": {
-		"message": "لغة الكشف عن التعرف الضوئي على الحروف OCR"
+	"OCR_Language": {
+		"message": "OCR Language"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -101,23 +101,29 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Translate_Writing_Hotkey": {
-		"message": "ترجمة مفتاح التشغيل السريع للكتابة"
+	"Reverse_Translate_Language": {
+		"message": "عكس لغة الترجمة"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
 	},
 	"OCR_When": {
 		"message": "متى يقع التعرف الضوئي على الحروف OCR"
 	},
-	"Detect_Type_Swap_Hold_Key": {
-		"message": "ما هو نوع مفتاح تعليق المبادلة للكشف"
-	},
-	"Enable_Youtube_Subtitle": {
-		"message": "تمكين الترجمة ليوتيوب"
+	"Detect_Subtitle": {
+		"message": "Detect Subtitle"
 	},
 	"Detect_PDF": {
 		"message": "كشف PDF"
 	},
-	"Reverse_Translate_Language": {
-		"message": "عكس لغة الترجمة"
+	"Mouseover_Highlight_Text": {
+		"message": "Mouseover Highlight Text"
+	},
+	"Mouseover_Pause_Subtitle": {
+		"message": "Mouseover Pause Subtitle"
+	},
+	"Text_Detect_Type_Swap_Hold_Key": {
+		"message": "Text Detect Type Swap Hold Key"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "استبعاد                                      "

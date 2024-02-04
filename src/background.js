@@ -22,6 +22,7 @@ var stopTtsTimestamp = 0;
     // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
+    migrateSetting();
     addCopyRequestListener(); // listen copy context menu and shortcut key
     addTabSwitchEventListener(); // listen tab switch for kill tts
     addPdfFileTabListener(); //listen drag and drop pdf
@@ -65,38 +66,7 @@ function addMessageListener() {
   });
 }
 
-async function getSetting() {
-  setting = await util.loadSetting();
-}
-
-function recordHistory({
-  sourceText,
-  sourceLang,
-  targetText,
-  targetLang,
-  actionType,
-}) {
-  if (setting["historyRecordActions"].includes(actionType)) {
-    //append history to front
-    setting["historyList"].unshift({
-      sourceText,
-      sourceLang,
-      targetText,
-      targetLang,
-      actionType,
-      date: JSON.stringify(new Date()),
-      translator: setting["translatorVendor"],
-    });
-
-    //remove when too many list
-    if (setting["historyList"].length > 10000) {
-      setting["historyList"].pop();
-    }
-    setting.save();
-  }
-}
-
-// cached translate function
+//translate function====================================================
 
 async function translate({ text, sourceLang, targetLang }) {
   var engine = setting["translatorVendor"];
@@ -138,6 +108,57 @@ async function translateWithReverse({
     });
   }
   return response;
+}
+
+//setting ============================================================
+
+async function getSetting() {
+  setting = await util.loadSetting();
+}
+
+function migrateSetting() {
+  var migrateSettingJson = {
+    detectSubtitle: "enableYoutube",
+    keyDownTextDetectSwap: "keyDownDetectSwap",
+    subtitleButtonToggle: "captionOnStatusByUser",
+    ocrLang: "ocrDetectionLang",
+    textDetectType: "detectType",
+    MouseoverHighlightText: "highlightMouseoverText",
+  };
+
+  for (let [key, value] of Object.entries(migrateSettingJson)) {
+    if (setting[key] == null) {
+      setting[key] = setting[value];
+      setting.save();
+    }
+  }
+}
+
+function recordHistory({
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  actionType,
+}) {
+  if (setting["historyRecordActions"].includes(actionType)) {
+    //append history to front
+    setting["historyList"].unshift({
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+      actionType,
+      date: JSON.stringify(new Date()),
+      translator: setting["translatorVendor"],
+    });
+
+    //remove when too many list
+    if (setting["historyList"].length > 10000) {
+      setting["historyList"].pop();
+    }
+    setting.save();
+  }
 }
 
 // ================= Copy
