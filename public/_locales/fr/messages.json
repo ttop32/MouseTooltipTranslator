@@ -125,6 +125,12 @@
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "Mouseover Text Type Swap Key"
 	},
+	"Tooltip_Info_Transliteration": {
+		"message": "Tooltip Info Transliteration"
+	},
+	"Tooltip_Info_Source_Language": {
+		"message": "Tooltip Info Source Language"
+	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLURE                                      "
 	},
