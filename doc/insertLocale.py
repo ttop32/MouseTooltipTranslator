@@ -67,6 +67,8 @@ i18List = [
     "Mouseover Highlight Text",
     "Mouseover Pause Subtitle",
     "Mouseover Text Type Swap Key",
+    "Tooltip Info Transliteration",
+    "Tooltip Info Source Language",
 
 
     "EXCLUDE                                      ",

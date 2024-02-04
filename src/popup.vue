@@ -533,11 +533,13 @@ var advancedTabData = {
     optionList: keyList,
   },
   tooltipInfoTransliteration: {
-    description: "Tooltip Info Transliteration (Experimental)",
+    description:
+      browser.i18n.getMessage("Tooltip Info Transliteration") +
+      " (Experimental)",
     optionList: toggleList,
   },
   tooltipInfoSourceLanguage: {
-    description: "Tooltip Info Source Language (Experimental)",
+    description: browser.i18n.getMessage("Tooltip Info Source Language"),
     optionList: toggleList,
   },
 };
