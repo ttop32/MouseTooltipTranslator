@@ -87,8 +87,8 @@ var yandexLangCode = {
   xh: "xh",
   yi: "yi",
 
-  fil: "tl",
-  he: "he",
+  tl: "tl",
+  iw: "he",
   jw: "jv",
   "zh-CN": "zh",
 };
