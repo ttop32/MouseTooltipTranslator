@@ -60,19 +60,30 @@ export var defaultData = {
 };
 
 var rtlLangList = [
-  "ar", //Arabic
-  "iw", //Hebrew
-  "ku", //Kurdish
-  "fa", //Persian
-  "ur", //Urdu
-  "yi", //Yiddish
-  "az", // Azerbaijani
-  "ps", //Pashto
-  "ug", //Uyghur
-  "ckb", //Kurdish Sorani
-  "pa", //Punjabi
-  "sd", //Sindhi
-  "ha", //Hausa
+  "ar", ///Arabic
+  "az", ///Azerbaijani
+  "bm", ///Bambara
+  "dv", ///Dhivehi
+  "doi", ///Dogri
+  "ha", ///Hausa
+  "iw", ///Hebrew
+  "kk", ///Kazakh
+  "ku", ///Kurdish
+  "ckb", ///Kurdish Sorani
+  "ky", ///Kyrgyz
+  "ml", ///Malayalam
+  "ps", ///Pashto
+  "fa", ///Persian
+  "sd", ///Sindhi
+  "so", ///Somali
+  "su", ///Sundanese
+  "tg", ///Tajik
+  "tk", ///Turkmen
+  "ur", ///Urdu
+  "ug", ///Uyghur
+  "uz", ///Uzbek
+  "yi", ///Yiddish
+  "yo", ///Yoruba
 ]; //right to left language system list
 
 var reviewUrlJson = {
