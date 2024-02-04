@@ -30,7 +30,7 @@ export default class BaseVideo {
   static useManualIntercept = false;
 
   static async handleVideo(setting) {
-    if (!this.isVideoSite() || setting["enableYoutube"] == "null") {
+    if (!this.isVideoSite() || setting["detectSubtitle"] == "null") {
       return;
     }
     this.initVariable(setting);
@@ -199,7 +199,7 @@ export default class BaseVideo {
           //get target lang sub, if not same lang
           if (
             lang != this.setting["translateTarget"] &&
-            this.setting["enableYoutube"] == "dualsub"
+            this.setting["detectSubtitle"] == "dualsub"
           ) {
             var sub2 = await this.requestSubtitleCached(
               request.url,

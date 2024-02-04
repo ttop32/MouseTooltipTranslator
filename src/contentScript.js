@@ -77,8 +77,8 @@ function startMouseoverDetector() {
       !selectedText &&
       event?.mouseoverText
     ) {
-      var mouseoverText = event.mouseoverText[getDetectType()];
-      var mouseoverRange = event.mouseoverText[getDetectType() + "_range"];
+      var mouseoverText = event.mouseoverText[getMouseoverType()];
+      var mouseoverRange = event.mouseoverText[getMouseoverType() + "_range"];
       await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
     }
   });
@@ -167,11 +167,11 @@ async function stageTooltipText(text, actionType, range) {
   }
 }
 
-function getDetectType() {
+function getMouseoverType() {
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
-  var detectType = setting["detectType"];
-  detectType = keyDownList[setting["keyDownDetectSwap"]]
+  var detectType = setting["mouseoverTextType"];
+  detectType = keyDownList[setting["keyDownMouseoverTextSwap"]]
     ? detectType == "word"
       ? "sentence"
       : "word"
@@ -235,8 +235,8 @@ function wrapRtlHtml(translatedText, targetLang) {
 }
 
 function concatTooltipInfoText({ transliteration, sourceLang }) {
-  var isTransliterationOn = setting["useTransliteration"] == "true";
-  var isShowLangOn = setting["showSourceLang"] == "true";
+  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
+  var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
   var tooltipTransliteration = isTransliterationOn ? transliteration : "";
   var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
   return getHtmlWrapText(tooltipTransliteration, tooltipLang);
@@ -252,7 +252,7 @@ function getHtmlWrapText(...texts) {
 }
 
 function highlightText(range) {
-  if (!range || setting["highlightMouseoverText"] == "false") {
+  if (!range || setting["mouseoverHighlightText"] == "false") {
     return;
   }
   hideHighlight();
@@ -662,7 +662,7 @@ function applyStyleSetting() {
       border-right-color: ${setting["tooltipBackgroundColor"]} !important;
     }
     .mtt-highlight{
-      background-color: ${setting["highlightColor"]}  !important;
+      background-color: ${setting["mouseoverTextHighlightColor"]}  !important;
       position: absolute !important;   
       z-index: 100000100 !important;
       pointer-events: none !important;

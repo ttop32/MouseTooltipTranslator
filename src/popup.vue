@@ -411,7 +411,7 @@ var settingListData = {
     description: browser.i18n.getMessage("Translator_Engine"),
     optionList: translatorList,
   },
-  detectType: {
+  mouseoverTextType: {
     description: browser.i18n.getMessage("Mouseover_Text_Type"),
     optionList: detectTypeList,
   },
@@ -419,7 +419,7 @@ var settingListData = {
     description: browser.i18n.getMessage("Writing_Language"),
     optionList: langList,
   },
-  ocrDetectionLang: {
+  ocrLang: {
     description: browser.i18n.getMessage("OCR_Language"),
     optionList: ocrLangList,
   },
@@ -472,7 +472,7 @@ var visualTabData = {
     menu: false,
     optionList: {},
   },
-  highlightColor: {
+  mouseoverTextHighlightColor: {
     description: browser.i18n.getMessage("Mouseover_Text_Highlight_Color"),
     optionType: "colorPicker",
     menu: false,
@@ -512,7 +512,7 @@ var advancedTabData = {
     description: browser.i18n.getMessage("OCR_When"),
     optionList: keyListWithAlways,
   },
-  enableYoutube: {
+  detectSubtitle: {
     description: browser.i18n.getMessage("Detect_Subtitle"),
     optionList: subtitleTypeList,
   },
@@ -520,7 +520,7 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
-  highlightMouseoverText: {
+  mouseoverHighlightText: {
     description: browser.i18n.getMessage("Mouseover_Highlight_Text"),
     optionList: toggleList,
   },
@@ -528,15 +528,15 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Mouseover_Pause_Subtitle"),
     optionList: toggleList,
   },
-  keyDownDetectSwap: {
+  keyDownMouseoverTextSwap: {
     description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
     optionList: keyList,
   },
-  useTransliteration: {
+  tooltipInfoTransliteration: {
     description: "Tooltip Info Transliteration (Experimental)",
     optionList: toggleList,
   },
-  showSourceLang: {
+  tooltipInfoSourceLanguage: {
     description: "Tooltip Info Source Language (Experimental)",
     optionList: toggleList,
   },

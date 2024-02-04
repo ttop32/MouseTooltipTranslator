@@ -26,7 +26,7 @@ export async function checkImage(img, setting, keyDownList) {
     return;
   }
   ocrHistory[img.src] = img;
-  var lang = setting["ocrDetectionLang"];
+  var lang = setting["ocrLang"];
   makeLoadingMouseStyle(img);
 
   //init env, load iframe and image
