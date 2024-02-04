@@ -119,11 +119,11 @@ async function getSetting() {
 function migrateSetting() {
   var migrateSettingJson = {
     detectSubtitle: "enableYoutube",
-    keyDownTextDetectSwap: "keyDownDetectSwap",
     subtitleButtonToggle: "captionOnStatusByUser",
     ocrLang: "ocrDetectionLang",
-    textDetectType: "detectType",
-    MouseoverHighlightText: "highlightMouseoverText",
+    mouseoverTextType: "detectType",
+    mouseoverHighlightText: "highlightMouseoverText",
+    keyDownMouseoverTextSwap: "keyDownDetectSwap",
   };
 
   for (let [key, value] of Object.entries(migrateSettingJson)) {

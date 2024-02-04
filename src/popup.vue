@@ -412,7 +412,7 @@ var settingListData = {
     optionList: translatorList,
   },
   detectType: {
-    description: browser.i18n.getMessage("Text_Detect_Type"),
+    description: browser.i18n.getMessage("Mouseover_Text_Type"),
     optionList: detectTypeList,
   },
   writingLanguage: {
@@ -529,7 +529,7 @@ var advancedTabData = {
     optionList: toggleList,
   },
   keyDownDetectSwap: {
-    description: browser.i18n.getMessage("Text_Detect_Type_Swap_Hold_Key"),
+    description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
     optionList: keyList,
   },
   useTransliteration: {

@@ -26,8 +26,8 @@
 	"Translator_Engine": {
 		"message": "Translator Engine"
 	},
-	"Text_Detect_Type": {
-		"message": "Text Detect Type"
+	"Mouseover_Text_Type": {
+		"message": "Mouseover Text Type"
 	},
 	"Writing_Language": {
 		"message": "Writing Language"
@@ -122,8 +122,8 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
 	},
-	"Text_Detect_Type_Swap_Hold_Key": {
-		"message": "Text Detect Type Swap Hold Key"
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Mouseover Text Type Swap Key"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
