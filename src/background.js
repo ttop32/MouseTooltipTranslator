@@ -97,13 +97,14 @@ async function translateWithReverse({
   if (
     !response.isBroken &&
     targetLang == response.sourceLang &&
+    // text == response.translatedText &&
     reverseLang != "null" &&
     targetLang != reverseLang
   ) {
     response = await translate({
       text,
       sourceLang: response.sourceLang,
-      reverseLang,
+      targetLang: reverseLang,
     });
   }
   return response;
