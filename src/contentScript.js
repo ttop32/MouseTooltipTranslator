@@ -286,7 +286,7 @@ async function translateWriting() {
   // if is google doc do not check writing box
   if (
     !keyDownList[setting["keyDownTranslateWriting"]] ||
-    !util.getFocusedWritingBox()
+    (!util.getFocusedWritingBox() && !util.isGoogleDoc())
   ) {
     return;
   }
@@ -342,7 +342,11 @@ async function insertText(text) {
   if (!text) {
     return;
   }
-  pasteTextInputBox(text);
+  if (util.isGoogleDoc()) {
+    pasteTextGoogleDoc(text);
+  } else {
+    pasteTextInputBox(text);
+  }
   await delay(10);
   if (hasSelection()) {
     document.execCommand("insertText", false, text);
@@ -355,7 +359,7 @@ function pasteTextInputBox(text) {
 }
 function pasteTextGoogleDoc(text) {
   // https://github.com/matthewsot/docs-plus
-  var el = document.getElementsByClassName("docs-texteventtarget-iframe")[0];
+  var el = document.getElementsByClassName("docs-texteventtarget-iframe")?.[0];
   el = el.contentDocument.querySelector("[contenteditable=true]");
   pasteText(el, text);
 }
