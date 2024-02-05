@@ -328,6 +328,9 @@ var translatorList = {
   "yandex (Experimental)": "yandex",
   "deepl (Experimental)": "deepl",
   "baidu (Experimental)": "baidu",
+  // googleGTX: "googleGTX",
+  // googleWeb: "googleWeb",
+  // googleV2: "googleV2",
 };
 
 var translateActionList = {
