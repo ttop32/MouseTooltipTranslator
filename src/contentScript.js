@@ -690,7 +690,7 @@ function applyStyleSetting() {
     }`;
 
   cssText +=
-    setting["enableYoutube"] != "null"
+    setting["detectSubtitle"] != "null"
       ? `
         #ytp-caption-window-container .ytp-caption-segment {
           cursor: text !important;
