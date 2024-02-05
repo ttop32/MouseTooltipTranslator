@@ -1005,9 +1005,7 @@ export function getActiveElement(root = document) {
 
   if (!activeEl) {
     return null;
-  }
-
-  if (activeEl.shadowRoot) {
+  } else if (activeEl.shadowRoot) {
     return getActiveElement(activeEl.shadowRoot);
   } else {
     return activeEl;

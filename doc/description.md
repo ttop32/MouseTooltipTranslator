@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.120
+  - fix bard text writing  (request by Enlight432)
 - 0.1.119
   - fix ocr build conflict
 - 0.1.118

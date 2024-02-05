@@ -340,17 +340,20 @@ async function makeNonEnglishTypingFinish() {
 }
 
 async function insertText(text) {
+  var writingBox = util.getFocusedWritingBox();
   if (!text) {
     return;
-  }
-  if (util.isGoogleDoc()) {
+  } else if (util.isGoogleDoc()) {
     pasteTextGoogleDoc(text);
+  } else if ($(writingBox).is("[data-gramm='false']")) {
+    //for bard website
+    document.execCommand("insertText", false, text);
   } else {
     pasteTextInputBox(text);
-  }
-  await delay(10);
-  if (hasSelection()) {
-    document.execCommand("insertText", false, text);
+    await delay(10);
+    if (hasSelection()) {
+      document.execCommand("insertText", false, text);
+    }
   }
 }
 
@@ -646,7 +649,7 @@ function applyStyleSetting() {
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
-      font-family: Arial !important;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif  !important;
       border: 1px solid ${setting["tooltipBorderColor"]};
     }
     [data-tippy-root] {
