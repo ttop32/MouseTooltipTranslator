@@ -1065,3 +1065,6 @@ export function getCurrentUrl() {
     ? document.referrer
     : document.location.href;
 }
+
+TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;

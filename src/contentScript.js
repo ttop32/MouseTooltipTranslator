@@ -649,7 +649,11 @@ function applyStyleSetting() {
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif  !important;
+      font-family: 
+        -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif  !important;
       border: 1px solid ${setting["tooltipBorderColor"]};
     }
     [data-tippy-root] {
