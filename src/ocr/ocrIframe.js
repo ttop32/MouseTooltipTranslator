@@ -4,8 +4,8 @@
 //3. resend result to host
 
 import Tesseract from "tesseract.js";
-
-import * as util from "/src/util";
+import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+import browser from "webextension-polyfill";
 
 var schedulerList = {};
 var loadingList = {};
@@ -105,15 +105,19 @@ async function getScheduler(lang, mode) {
   if (schedulerList[id]) {
     return schedulerList[id];
   } else if (loadingList[id]) {
-    await util.waitUntilForever(() => schedulerList[id]);
+    await waitUntil(() => schedulerList[id], {
+      timeout: WAIT_FOREVER,
+    });
     return schedulerList[id];
   }
   loadingList[id] = true;
 
   var scheduler = Tesseract.createScheduler();
   var workerIndexList = mode.includes("auto") ? [0] : [0, 1, 2, 3, 4];
-  var workerPath = util.getUrlExt("/tesseract/worker.min.js");
-  var corePath = util.getUrlExt("/tesseract/tesseract-core-lstm.wasm.js");
+  var workerPath = browser.runtime.getURL("/tesseract/worker.min.js");
+  var corePath = browser.runtime.getURL(
+    "/tesseract/tesseract-core-lstm.wasm.js"
+  );
 
   var tessedit_pageseg_mode = mode.includes("auto")
     ? Tesseract.PSM.AUTO_ONLY
