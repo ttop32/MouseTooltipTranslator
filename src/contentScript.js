@@ -7,6 +7,7 @@ import tippy, { sticky, hideAll } from "tippy.js";
 import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import delay from "delay";
+import browser from "webextension-polyfill";
 
 import {
   enableSelectionEndEvent,
@@ -746,7 +747,7 @@ function openPdfIframe(url) {
   $("embed").remove();
 
   $("<embed/>", {
-    src: util.getUrlExt(
+    src: browser.runtime.getURL(
       `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
     ),
     css: {
@@ -790,7 +791,7 @@ function injectGoogleDocAnnotation() {
     return;
   }
   var s = document.createElement("script");
-  s.src = util.getUrlExt("googleDocInject.js"); //chrome.runtime.getURL("js/docs-canvas.js");
+  s.src = browser.runtime.getURL("googleDocInject.js"); //chrome.runtime.getURL("js/docs-canvas.js");
   document.documentElement.appendChild(s);
 }
 
