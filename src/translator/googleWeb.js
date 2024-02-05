@@ -1,13 +1,12 @@
 import ky from "ky";
 import * as cheerio from "cheerio";
 
-import BaseTranslator from "./baseTranslator";
-import google from "./google.js";
+import BaseTranslator from "./baseTranslator.js";
 import * as util from "/src/util";
 
 var googleSearchUrl = "https://www.google.com/search";
 
-export default class googleDictionary extends BaseTranslator {
+export default class googleWeb extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {
     var lang = "en";
     return await ky(googleSearchUrl, {
@@ -26,17 +25,6 @@ export default class googleDictionary extends BaseTranslator {
     // var detectedLang1 = util.detectLangFranc(text);
     var detectedLang2 = await util.detectLangBrowser(text);
     var detectedLang = sourceLang != "auto" ? sourceLang : detectedLang2;
-
-    //if no result use google translate
-    if (!translatedText) {
-      var res = await google.requestTranslate(text, sourceLang, targetLang);
-      var { translatedText, detectedLang } = await google.wrapResponse(
-        res,
-        text,
-        sourceLang,
-        targetLang
-      );
-    }
 
     return {
       translatedText,
