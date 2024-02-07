@@ -22,6 +22,7 @@ import video from "./subtitle/subtitle.js";
 var setting;
 var tooltip;
 var style;
+var styleSubtitle;
 var tooltipContainer;
 var tooltipContainerEle;
 
@@ -42,6 +43,7 @@ var selectedText = "";
 var stagedText = null;
 var prevStagedParams = [];
 var prevTooltipText = "";
+var textDetectTime = 700;
 
 //tooltip core======================================================================
 
@@ -70,7 +72,7 @@ var prevTooltipText = "";
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent();
+  enableMouseoverTextEvent(window, textDetectTime);
   addEventHandler("mouseoverText", async function (event) {
     // if no selected text
     if (
@@ -87,7 +89,7 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window); //set mouse drag text selection event
+  enableSelectionEndEvent(window, textDetectTime); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (setting["translateWhen"].includes("select")) {
@@ -605,6 +607,9 @@ async function addElementEnv() {
   style = $("<style/>", {
     id: "mttstyle",
   }).appendTo("head");
+  styleSubtitle = $("<style/>", {
+    id: "mttstyleSubtitle",
+  }).appendTo("head");
 
   tooltip = tippy(tooltipContainerEle, {
     content: "",
@@ -628,7 +633,7 @@ function applyStyleSetting() {
     animation: setting["tooltipAnimation"],
   });
 
-  var cssText = `
+  style.html(`
     #mttContainer {
       left: 0 !important;
       top: 0 !important;
@@ -687,40 +692,38 @@ function applyStyleSetting() {
       color: transparent !important;
       border: 2px solid CornflowerBlue;
       background: none !important;
-    }`;
-
-  cssText +=
-    setting["detectSubtitle"] != "null"
-      ? `
-        #ytp-caption-window-container .ytp-caption-segment {
-          cursor: text !important;
-          user-select: text !important;
-        }
-        .caption-visual-line{
-          display: flex  !important;
-          align-items: stretch  !important;
-        }
-        .captions-text .caption-visual-line:first-of-type:after {
-          content: '⣿⣿';
-          background-color: #000000b8;
-          display: inline-block;
-          vertical-align: top;
-          opacity:0;
-          transition: opacity 0.7s ease-in-out;
-        }
-        .captions-text:hover .caption-visual-line:first-of-type:after {
-          opacity:1;
-        }
-        .ytp-pause-overlay {
-          display: none !important;
-        }
-        .ytp-expand-pause-overlay .caption-window {
-          display: block !important;
-        }
+    }`);
+  styleSubtitle
+    .html(
       `
-      : "";
-
-  style.html(cssText);
+    #ytp-caption-window-container .ytp-caption-segment {
+      cursor: text !important;
+      user-select: text !important;
+    }
+    .caption-visual-line{
+      display: flex  !important;
+      align-items: stretch  !important;
+    }
+    .captions-text .caption-visual-line:first-of-type:after {
+      content: '⣿⣿';
+      background-color: #000000b8;
+      display: inline-block;
+      vertical-align: top;
+      opacity:0;
+      transition: opacity 0.7s ease-in-out;
+    }
+    .captions-text:hover .caption-visual-line:first-of-type:after {
+      opacity:1;
+    }
+    .ytp-pause-overlay {
+      display: none !important;
+    }
+    .ytp-expand-pause-overlay .caption-window {
+      display: block !important;
+    }
+  `
+    )
+    .prop("disabled", setting["detectSubtitle"] == "null");
 }
 
 // url check and element env===============================================================
@@ -831,5 +834,6 @@ function addEventHandler(eventName, callbackFunc) {
 
 function removePrevElement() {
   $("#mttstyle").remove();
+  $("#mttstyleSubtitle").remove();
   tooltip?.destroy();
 }

@@ -13,12 +13,15 @@ var _isIframe = false;
 var styleElement;
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 
-export function enableMouseoverTextEvent(_window = window) {
+export function enableMouseoverTextEvent(
+  _window = window,
+  textDetectTime = 700
+) {
   _win = _window;
 
   setInterval(() => {
     triggerMouseoverText(getMouseoverText(clientX, clientY));
-  }, 700);
+  }, textDetectTime);
 
   window.addEventListener("mousemove", (e) => {
     //if is ebook viewer event, take ebook window
