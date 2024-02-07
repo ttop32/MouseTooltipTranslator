@@ -18,6 +18,7 @@ export function enableMouseoverTextEvent(
   textDetectTime = 700
 ) {
   _win = _window;
+  textDetectTime = Number(textDetectTime);
 
   setInterval(() => {
     triggerMouseoverText(getMouseoverText(clientX, clientY));

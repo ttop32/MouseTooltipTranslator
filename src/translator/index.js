@@ -7,6 +7,7 @@ import baidu from "./baidu.js";
 import googleWeb from "./googleWeb.js";
 import googleV2 from "./googleV2.js";
 import googleGTX from "./googleGTX.js";
+import chatgpt from "./chatgpt.js";
 
 export default {
   google,
@@ -18,4 +19,5 @@ export default {
   deepl,
   yandex,
   baidu,
+  chatgpt,
 };
