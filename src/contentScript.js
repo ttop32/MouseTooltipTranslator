@@ -43,7 +43,7 @@ var selectedText = "";
 var stagedText = null;
 var prevStagedParams = [];
 var prevTooltipText = "";
-var textDetectTime = 700;
+var textDetectTime = 300;
 
 //tooltip core======================================================================
 
@@ -72,7 +72,7 @@ var textDetectTime = 700;
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent(window, textDetectTime);
+  enableMouseoverTextEvent(window, setting["textDetectTime"]);
   addEventHandler("mouseoverText", async function (event) {
     // if no selected text
     if (
@@ -89,7 +89,7 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window, textDetectTime); //set mouse drag text selection event
+  enableSelectionEndEvent(window, setting["textDetectTime"]); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (setting["translateWhen"].includes("select")) {
@@ -126,7 +126,7 @@ async function stageTooltipText(text, actionType, range) {
 
   //stage current processing word
   stagedText = text;
-  var { translatedText, sourceLang, targetLang, transliteration } =
+  var { translatedText, sourceLang, targetLang, transliteration, dict } =
     await requestTranslateWithReverse(
       text,
       setting["translateSource"],
@@ -150,6 +150,7 @@ async function stageTooltipText(text, actionType, range) {
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
   if (isTooltipOn) {
+    var tooltipText = dict || translatedText;
     var tooltipText = wrapRtlHtml(translatedText, targetLang);
     tooltipText += concatTooltipInfoText({ transliteration, sourceLang });
     showTooltip(tooltipText);
@@ -645,6 +646,7 @@ function applyStyleSetting() {
       pointer-events: none !important;
       display: inline-block !important;
       visibility: visible  !important;
+      white-space: pre-line;
     }
     .tippy-box[data-theme~="custom"] {
       font-size: ${setting["tooltipFontSize"]}px  !important;

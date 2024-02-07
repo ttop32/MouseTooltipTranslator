@@ -331,6 +331,7 @@ var translatorList = {
   // googleGTX: "googleGTX",
   // googleWeb: "googleWeb",
   // googleV2: "googleV2",
+  // chatgpt: "chatgpt",
 };
 
 var translateActionList = {

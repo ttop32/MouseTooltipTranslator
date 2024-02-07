@@ -5,27 +5,37 @@ var apiUrl = "https://translate.googleapis.com/translate_a/single";
 
 export default class googleGTX extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {
-    return await ky(apiUrl, {
-      searchParams: {
+    var params =
+      new URLSearchParams({
         client: "gtx",
         q: text,
         sl: sourceLang,
         tl: targetLang,
-        dt: "t",
         dj: 1,
-      },
-    }).json();
+      }).toString() + "&dt=rm&dt=bd&dt=t";
+
+    return await ky(`${apiUrl}?${params}`).json();
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     var translatedText = res.sentences
-      .map((sentence) => sentence.trans)
+      ?.map((sentence) => sentence.trans)
+      .filter((trans) => trans)
       .join(" ");
+    var transliteration = res.sentences
+      ?.map((sentence) => sentence.src_translit)
+      .filter((translit) => translit)
+      .join(" ")
+      ?.trim();
+    var dict = res.dict
+      ?.map((sentence) => sentence.pos + ": " + sentence.terms.join(", "))
+      .join("\n");
     var detectedLang = res.src;
 
     return {
       translatedText,
       detectedLang,
-      transliteration: "",
+      transliteration,
+      dict,
     };
   }
 }
