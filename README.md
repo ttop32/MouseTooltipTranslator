@@ -5,7 +5,7 @@
 
 Mouseover Translate Any Language At Once - Chrome Extension 
 
-download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) and [Edge Extension store](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
+Download from [chrome web store](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc) and [Edge Extension store](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
   
 [<img alt="chrome web store" height="64px" src="doc/google.png" />](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc)
 [<img alt="microsoft store" height="64px" src="doc/microsoft.png" />](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
@@ -75,6 +75,14 @@ download from [chrome web store](https://chrome.google.com/webstore/detail/mouse
             <sub><b>Hoang Van Nhat</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/newmind">
+            <img src="https://avatars.githubusercontent.com/u/379460?v=4" width="100;" alt="newmind"/>
+            <br />
+            <sub><b>JG</b></sub>
+        </a>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/netanel123123">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanel123123"/>
