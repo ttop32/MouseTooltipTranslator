@@ -7,8 +7,25 @@ import * as util from "/src/util";
 
 var _win;
 var prevNoneSelect = false;
-export function enableSelectionEndEvent(_window = window) {
+export function enableSelectionEndEvent(
+  _window = window,
+  textDetectTime = 700
+) {
   _win = _window;
+
+  const triggerSelectionEndWithDelay = debounce(textDetectTime, () => {
+    triggerSelectionEnd(getSelectionText());
+  });
+
+  function isNoneSelectElement(element) {
+    try {
+      var styles = getComputedStyle(element);
+      var selectStyle = styles.getPropertyValue("user-select");
+      return selectStyle == "none";
+    } catch (error) {
+      return false;
+    }
+  }
 
   // Listen selection change every 700 ms. It covers keyboard selection and selection from menu (select all option)
   _win.document.addEventListener(
@@ -38,20 +55,6 @@ export function enableSelectionEndEvent(_window = window) {
     false
   );
 }
-
-function isNoneSelectElement(element) {
-  try {
-    var styles = getComputedStyle(element);
-    var selectStyle = styles.getPropertyValue("user-select");
-    return selectStyle == "none";
-  } catch (error) {
-    return false;
-  }
-}
-
-const triggerSelectionEndWithDelay = debounce(700, () => {
-  triggerSelectionEnd(getSelectionText());
-});
 
 export const triggerSelectionEnd = (text) => {
   var evt = new CustomEvent("selectionEnd", {
