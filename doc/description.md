@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.122
+  - add text detect time option (request by 나정휘 (Jn))
 - 0.1.121
   - Korea locale (contributed by newmind)
 - 0.1.120

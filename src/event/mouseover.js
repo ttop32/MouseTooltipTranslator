@@ -15,10 +15,10 @@ const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 
 export function enableMouseoverTextEvent(
   _window = window,
-  textDetectTime = 700
+  textDetectTime = 0.7
 ) {
   _win = _window;
-  textDetectTime = Number(textDetectTime);
+  textDetectTime = Number(textDetectTime) * 1000;
 
   setInterval(() => {
     triggerMouseoverText(getMouseoverText(clientX, clientY));

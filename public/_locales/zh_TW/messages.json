@@ -131,6 +131,9 @@
 	"Tooltip_Info_Source_Language": {
 		"message": "Tooltip Info Source Language"
 	},
+	"Tooltip_Interval_Time": {
+		"message": "Tooltip Interval Time"
+	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
 	},

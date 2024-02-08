@@ -43,7 +43,6 @@ var selectedText = "";
 var stagedText = null;
 var prevStagedParams = [];
 var prevTooltipText = "";
-var textDetectTime = 300;
 
 //tooltip core======================================================================
 
@@ -72,7 +71,7 @@ var textDetectTime = 300;
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent(window, setting["textDetectTime"]);
+  enableMouseoverTextEvent(window, setting["tooltipIntervalTime"]);
   addEventHandler("mouseoverText", async function (event) {
     // if no selected text
     if (
@@ -89,7 +88,7 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window, setting["textDetectTime"]); //set mouse drag text selection event
+  enableSelectionEndEvent(window, setting["tooltipIntervalTime"]); //set mouse drag text selection event
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (setting["translateWhen"].includes("select")) {
