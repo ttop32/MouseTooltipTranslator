@@ -6,7 +6,7 @@
 Proletarier aller Länder, vereinigt euch!
 ```
   - If not working, check current target language
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)) 
+    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
     - This translator will skip text if source text language and target language are same.
 
 ![Alt Text](/doc/result_0.gif)
