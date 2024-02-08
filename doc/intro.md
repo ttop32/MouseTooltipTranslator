@@ -36,4 +36,5 @@ Proletarier aller Länder, vereinigt euch!
 - If web status is offline, it will not work. 
 - If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
 - If no local file permission given, local pdf cannot be handled. (If not working, darg and drop file on tab)
+  - make sure to give "allow access to file urls" to open file    
 ![result](/doc/10.gif)
