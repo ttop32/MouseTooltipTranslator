@@ -69,7 +69,7 @@ i18List = [
     "Mouseover Text Type Swap Key",
     "Tooltip Info Transliteration",
     "Tooltip Info Source Language",
-
+    "Tooltip Interval Time",
 
     "EXCLUDE                                      ",
     "EXCLUDE",

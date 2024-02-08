@@ -347,6 +347,7 @@ var voiceRateList = getRangeOption(5, 21, 0.1, 1);
 var voiceRepeatList = getRangeOption(1, 11, 1, 0);
 var tooltipBackgroundBlurList = getRangeOption(0, 21, 1, 0);
 var tooltipDistanceList = getRangeOption(0, 41, 1, 0);
+var tooltipIntervalTimeList = getRangeOption(5, 21, 0.1, 1);
 
 var tooltipPositionList = {
   Follow: "follow",
@@ -545,6 +546,10 @@ var advancedTabData = {
   tooltipInfoSourceLanguage: {
     description: browser.i18n.getMessage("Tooltip_Info_Source_Language"),
     optionList: toggleList,
+  },
+  tooltipIntervalTime: {
+    description: browser.i18n.getMessage("Tooltip_Interval_Time"),
+    optionList: tooltipIntervalTimeList,
   },
 };
 

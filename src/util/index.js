@@ -57,7 +57,7 @@ export var defaultData = {
   ignoreCallbackOptionList: ["historyList"],
   popupCount: "0",
   langPriority: { auto: 9999999, null: 9999999 },
-  textDetectTime: "700",
+  tooltipIntervalTime: "0.7",
 };
 
 var rtlLangList = [
