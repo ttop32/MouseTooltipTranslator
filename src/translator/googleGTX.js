@@ -27,8 +27,12 @@ export default class googleGTX extends BaseTranslator {
       .filter((translit) => translit)
       .join(" ")
       ?.trim();
+    //slice top 3 dict
     var dict = res.dict
-      ?.map((sentence) => sentence.pos + ": " + sentence.terms.join(", "))
+      ?.map(
+        (sentence) =>
+          `${sentence.pos}: ${sentence.terms.slice(0, 3).join(", ")}`
+      )
       .join("\n");
     var detectedLang = res.src;
 
