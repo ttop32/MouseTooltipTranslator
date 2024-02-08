@@ -423,7 +423,7 @@ function handleKeydown(e) {
     hideTooltip();
   } else if (e.code == "Escape") {
     requestStopTTS();
-  } else if (e.key == "HangulMode") {
+  } else if (e.key == "HangulMode" || e.key == "Process") {
     return;
   } else if (e.key == "Alt") {
     e.preventDefault(); // prevent alt site unfocus
