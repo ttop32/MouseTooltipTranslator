@@ -151,9 +151,9 @@ async function stageTooltipText(text, actionType, range) {
   //if current word is recent activatedWord
   if (isTooltipOn) {
     var tooltipText = dict || translatedText;
-    var tooltipText = wrapRtlHtml(translatedText, targetLang);
-    tooltipText += concatTooltipInfoText({ transliteration, sourceLang });
-    showTooltip(tooltipText);
+    var tooltipHtmlText = wrapRtlHtml(tooltipText, targetLang);
+    tooltipHtmlText += concatTooltipInfoText({ transliteration, sourceLang });
+    showTooltip(tooltipHtmlText);
     requestRecordTooltipText(
       text,
       sourceLang,
@@ -662,6 +662,7 @@ function applyStyleSetting() {
         "Ubuntu", "Cantarell", "Fira Sans",
         "Droid Sans", "Helvetica Neue", sans-serif  !important;
       border: 1px solid ${setting["tooltipBorderColor"]};
+      white-space: pre-line;
     }
     [data-tippy-root] {
       display: inline-block !important;

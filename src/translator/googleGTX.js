@@ -12,6 +12,7 @@ export default class googleGTX extends BaseTranslator {
         sl: sourceLang,
         tl: targetLang,
         dj: 1,
+        hl: targetLang,
       }).toString() + "&dt=rm&dt=bd&dt=t";
 
     return await ky(`${apiUrl}?${params}`).json();

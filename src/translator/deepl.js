@@ -5,6 +5,7 @@ import ky from "ky";
 
 var deeplLangCode = {
   auto: "auto",
+  ar: "AR",
   bg: "BG",
   cs: "CS",
   da: "DA",

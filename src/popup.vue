@@ -324,13 +324,13 @@ var ocrLangList = {
 var translatorList = {
   google: "google",
   bing: "bing",
-  "papago (Experimental)": "papago",
-  "yandex (Experimental)": "yandex",
   "deepl (Experimental)": "deepl",
+  "yandex (Experimental)": "yandex",
   "baidu (Experimental)": "baidu",
-  // googleGTX: "googleGTX",
-  // googleWeb: "googleWeb",
-  // googleV2: "googleV2",
+  "papago (Experimental)": "papago",
+  "googleGTX (Experimental)": "googleGTX",
+  "googleWeb (Experimental)": "googleWeb",
+  "googleV2 (Experimental)": "googleV2",
   // chatgpt: "chatgpt",
 };
 

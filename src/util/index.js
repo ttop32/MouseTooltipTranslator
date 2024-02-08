@@ -585,8 +585,13 @@ export function getDefaultLang() {
 }
 
 export function parseLocaleLang(localeLang) {
+  var langCovert = {
+    zh: "zh-CN",
+    he: "iw",
+    fil: "tl",
+  };
   var lang = parse(localeLang).language;
-  lang = lang == "zh" ? "zh-CN" : lang; // chinese lang code fix
+  lang = langCovert[lang] || lang;
   lang = localeLang == "zh-TW" ? "zh-TW" : lang;
   return lang;
 }
