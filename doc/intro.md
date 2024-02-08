@@ -5,8 +5,10 @@
 ```console
 Proletarier aller Länder, vereinigt euch!
 ```
-  - If not working, check current target language in the setting (Setting page can be found in browser top right puzzle button). 
-    - The translator will skip text if source text language and target language are same.
+  - If not working, check current target language
+    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)) 
+    - This translator will skip text if source text language and target language are same.
+
 ![Alt Text](/doc/result_0.gif)
 - Hold <kbd>left ctrl</kbd> to listen tts pronunciation when tooltip is shown(Press <kbd>esc</kbd> to stop voice)
 ![result](/doc/20.gif)
@@ -17,12 +19,16 @@ Proletarier aller Länder, vereinigt euch!
 ![result](/doc/21.gif)
 - Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
 ![result](/doc/12.gif)
-- Setting page is given for customizing to taste. 
-![result](/doc/14.gif)
 - Support dual subtitles for youtube video. 
 ![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
+
+# Change Language
+- Change current language in setting page
+  -  Setting page can be found in browser top right puzzle button
+![result](/doc/14.gif)
+
 
 # Exception
 
