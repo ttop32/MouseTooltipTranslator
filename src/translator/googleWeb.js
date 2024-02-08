@@ -23,8 +23,7 @@ export default class googleWeb extends BaseTranslator {
     var dictFirst = dictAll.children(":first").find("[data-dobid='dfn']");
     var translatedText = dictFirst.text();
     // var detectedLang1 = util.detectLangFranc(text);
-    var detectedLang2 = await util.detectLangBrowser(text);
-    var detectedLang = sourceLang != "auto" ? sourceLang : detectedLang2;
+    var detectedLang = await util.detectLangBrowser(text);
 
     return {
       translatedText,

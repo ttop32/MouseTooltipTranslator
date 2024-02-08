@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import * as util from "/src/util";
+// import * as util from "/src/util";
 
 var audio;
 const speech = window.speechSynthesis;
