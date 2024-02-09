@@ -331,6 +331,7 @@ var translatorList = {
   "googleGTX (Experimental)": "googleGTX",
   "googleWeb (Experimental)": "googleWeb",
   "googleV2 (Experimental)": "googleV2",
+  "googleWebImage (Experimental)": "googleWebImage",
   // chatgpt: "chatgpt",
 };
 
