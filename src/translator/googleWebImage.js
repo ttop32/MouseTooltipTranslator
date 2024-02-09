@@ -27,7 +27,7 @@ export default class googleWebImage extends BaseTranslator {
     var imageUrls = urlsMeta.map((urlMeta) => JSON.parse(urlMeta)[0]);
     var detectedLang = await util.detectLangBrowser(text);
     var base64Url = await util.getBase64(imageUrls[0]);
-    console.log(base64Url);
+
     return {
       translatedText: "image",
       detectedLang,
