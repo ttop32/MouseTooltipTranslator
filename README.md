@@ -2,6 +2,7 @@
 
 [![Chrome users](https://img.shields.io/chrome-web-store/users/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc)
 [![Chrome rate](https://img.shields.io/chrome-web-store/rating/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc)
+[![Downloads](https://img.shields.io/github/downloads/ttop32/MouseTooltipTranslator/total)](https://github.com/ttop32/MouseTooltipTranslator/releases/latest) 
 
 Mouseover Translate Any Language At Once - Chrome Extension 
 
