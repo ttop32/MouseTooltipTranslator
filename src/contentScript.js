@@ -102,6 +102,7 @@ function startTextSelectDetector() {
 async function stageTooltipText(text, actionType, range) {
   prevStagedParams = Array.prototype.slice.call(arguments); //record args
   text = util.filterWord(text); //filter out one that is url,no normal char
+  var textNoEmoji = util.filterEmoji(text);
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
 
@@ -125,13 +126,19 @@ async function stageTooltipText(text, actionType, range) {
 
   //stage current processing word
   stagedText = text;
-  var { translatedText, sourceLang, targetLang, transliteration, dict } =
-    await requestTranslateWithReverse(
-      text,
-      setting["translateSource"],
-      setting["translateTarget"],
-      setting["translateReverseTarget"]
-    );
+  var {
+    translatedText,
+    sourceLang,
+    targetLang,
+    transliteration,
+    dict,
+    imageUrl,
+  } = await requestTranslateWithReverse(
+    text,
+    setting["translateSource"],
+    setting["translateTarget"],
+    setting["translateReverseTarget"]
+  );
 
   // if translation is not recent one, do not update
   //if translated text is empty, hide tooltip
@@ -150,8 +157,10 @@ async function stageTooltipText(text, actionType, range) {
   //if current word is recent activatedWord
   if (isTooltipOn) {
     var tooltipText = dict || translatedText;
-    var tooltipHtmlText = wrapRtlHtml(tooltipText, targetLang);
-    tooltipHtmlText += concatTooltipInfoText({ transliteration, sourceLang });
+    var tooltipHtmlText =
+      getHtmlWrapImage(imageUrl) ||
+      wrapRtlHtml(tooltipText, targetLang) +
+        concatTooltipInfoText({ transliteration, sourceLang });
     showTooltip(tooltipHtmlText);
     requestRecordTooltipText(
       text,
@@ -165,8 +174,7 @@ async function stageTooltipText(text, actionType, range) {
 
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    var wordWithoutEmoji = util.filterEmoji(text);
-    requestTTS(wordWithoutEmoji, sourceLang, translatedText, targetLang);
+    requestTTS(textNoEmoji, sourceLang, translatedText, targetLang);
   }
 }
 
@@ -252,6 +260,16 @@ function getHtmlWrapText(...texts) {
     concatText += `<br><span style="font-weight:bold;">${encode(text)}</span>`;
   }
   return concatText;
+}
+
+function getHtmlWrapImage(imageUrl) {
+  if (!imageUrl) {
+    return;
+  }
+  return $("<img/>", {
+    src: imageUrl,
+    class: "mtt-image",
+  }).prop("outerHTML");
 }
 
 function highlightText(range) {
@@ -688,12 +706,17 @@ function applyStyleSetting() {
       display: inline !important;
       border-radius: 3px !important;
     }
+    .mtt-image{
+      width: ${Number(setting["tooltipWidth"]) - 20}px  !important;
+      border-radius: 3px !important;
+    }
     .ocr_text_div{
       position: absolute;
       opacity: 0.7;
       color: transparent !important;
       border: 2px solid CornflowerBlue;
       background: none !important;
+      border-radius: 3px !important;
     }`);
   styleSubtitle
     .html(

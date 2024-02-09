@@ -3,7 +3,9 @@ import { decode } from "he";
 import ky from "ky";
 
 const googleTranslateTKK = "448487.932609646";
-const apiPath = "https://translate.googleapis.com/translate_a/t";
+const apiPath = "https://translate.googleapis.co.cn/translate_a/t";
+
+// https://translate.google.cn
 
 export default class google extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {

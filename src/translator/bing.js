@@ -54,7 +54,6 @@ var bingLangCode = {
   pa: "pa",
   pl: "pl",
   ps: "ps",
-  pt: "pt",
   ro: "ro",
   ru: "ru",
   sk: "sk",
@@ -74,6 +73,8 @@ var bingLangCode = {
 
   iw: "he",
   tl: "fil",
+  pt: "pt", //PortugueseBrazil
+  "pt-PT": "pt-pt", //PortuguesePortugal
   "zh-CN": "zh-Hans",
   "zh-TW": "zh-Hant",
 };
@@ -81,6 +82,9 @@ var bingLangCode = {
 export default class bing extends BaseTranslator {
   static bingBaseUrl = "https://www.bing.com/ttranslatev3";
   static bingTokenUrl = "https://www.bing.com/translator";
+  static bingChinaBaseUrl = "https://cn.bing.com/ttranslatev3";
+  static bingChinaTokenUrl = "https://cn.bing.com/translator";
+
   static langCodeJson = bingLangCode;
   static bingAccessToken;
 
@@ -150,4 +154,9 @@ export default class bing extends BaseTranslator {
       console.log(e);
     }
   }
+}
+
+async function checkChinaFirewall() {
+  var res = await ky.get("https://www.bing.com");
+  return res.status == 200;
 }
