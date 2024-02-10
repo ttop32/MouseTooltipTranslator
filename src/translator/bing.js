@@ -74,7 +74,7 @@ var bingLangCode = {
   iw: "he",
   tl: "fil",
   pt: "pt", //PortugueseBrazil
-  "pt-PT": "pt-pt", //PortuguesePortugal
+  // "pt-PT": "pt-pt", //PortuguesePortugal
   "zh-CN": "zh-Hans",
   "zh-TW": "zh-Hant",
 };

@@ -207,6 +207,6 @@
 		"message": "Chuột Tooltip Translator with PDF TTS"
 	},
 	"appDesc": {
-		"message": "Chuột Tooltip Translator Dịch văn bản Mouseover bằng Google Dịch"
+		"message": "Chuột Tooltip Translator Dịch văn bản Mouseover bằng Google Dịch. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

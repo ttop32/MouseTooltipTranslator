@@ -207,6 +207,6 @@
 		"message": "Hiire tööriistavihje tõlkija : TTS"
 	},
 	"appDesc": {
-		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil"
+		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

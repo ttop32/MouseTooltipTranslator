@@ -207,6 +207,6 @@
 		"message": "Mouse Tooltip Translator For Chrome Edge"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator translate mouseover text using google translate"
+		"message": "Mouse Tooltip Translator translate mouseover text using google translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

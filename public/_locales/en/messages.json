@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Mouse Tooltip Translator :TTS OCR PDF Manga"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator translate mouseover text using google translate"
+		"message": "Mouse Tooltip Translator translate mouseover text using google translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

@@ -207,6 +207,6 @@
 		"message": "Traducător de instrumente de mouse for TTS Translator"
 	},
 	"appDesc": {
-		"message": "Traducător de instrumente de mouse -ul traduce textul mouseover folosind Google Translate"
+		"message": "Traducător de instrumente de mouse -ul traduce textul mouseover folosind Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

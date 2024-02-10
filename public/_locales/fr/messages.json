@@ -207,6 +207,6 @@
 		"message": "Traduction Souris Info-bulle : Learn Language"
 	},
 	"appDesc": {
-		"message": "Traduire le texte pointé par la souris à l'aide de différent moteur de traduction"
+		"message": "Traduire le texte pointé par la souris à l'aide de différent moteur de traduction. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

@@ -207,6 +207,6 @@
 		"message": "مترجم تلميح الأدوات بالفأرة"
 	},
 	"appDesc": {
-		"message": "ترجمة نص تحت مؤشر الفأرة باستخدام محركات ترجمة مختلفة من ضمنها Googleو Bingو Yandexو DeepLو Naver Papagoو"
+		"message": "ترجمة نص تحت مؤشر الفأرة باستخدام محركات ترجمة مختلفة من ضمنها Googleو Bingو Yandexو DeepLو Naver Papagoو. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }
