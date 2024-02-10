@@ -207,6 +207,6 @@
 		"message": "مترجم ابزار ماوس : Hover Translator"
 	},
 	"appDesc": {
-		"message": "TOOLTIP TOOLTIP مترجم ترجمه متن ماوس با استفاده از Google Translate"
+		"message": "TOOLTIP TOOLTIP مترجم ترجمه متن ماوس با استفاده از Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

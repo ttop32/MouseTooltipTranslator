@@ -207,6 +207,6 @@
 		"message": "Kitafsiri cha Kidokezo cha Panya : Translate ChatGPT & Dual sub Youtube"
 	},
 	"appDesc": {
-		"message": "Tafsiri ya Tooltip ya Panya Tafsiri maandishi ya Mouseover kwa kutumia Google Tafsiri"
+		"message": "Tafsiri ya Tooltip ya Panya Tafsiri maandishi ya Mouseover kwa kutumia Google Tafsiri. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

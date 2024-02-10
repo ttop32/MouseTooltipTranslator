@@ -207,6 +207,6 @@
 		"message": "Maus -Tooltip -Übersetzer for pdf ebook"
 	},
 	"appDesc": {
-		"message": "Maus -Tooltip -Übersetzer übersetzen Mausover -Text mit Google Translate"
+		"message": "Maus -Tooltip -Übersetzer übersetzen Mausover -Text mit Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

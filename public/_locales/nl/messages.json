@@ -207,6 +207,6 @@
 		"message": "Muise -gereedschap vertaler: translate chatgpt ebook viewer"
 	},
 	"appDesc": {
-		"message": "Muis Toltip Translator vertaalt mouseover -tekst met behulp van Google Translate"
+		"message": "Muis Toltip Translator vertaalt mouseover -tekst met behulp van Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

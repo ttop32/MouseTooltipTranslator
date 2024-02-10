@@ -207,6 +207,6 @@
 		"message": "鼠标工具提示翻译器"
 	},
 	"appDesc": {
-		"message": "鼠标工具提示转换器使用Google Translate翻译鼠标文本"
+		"message": "鼠标工具提示转换器使用Google Translate翻译鼠标文本. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

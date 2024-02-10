@@ -207,6 +207,6 @@
 		"message": "माउस टूलटिप अनुवादक : PDF Translator"
 	},
 	"appDesc": {
-		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके"
+		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

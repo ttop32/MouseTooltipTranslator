@@ -207,6 +207,6 @@
 		"message": "మౌస్ టూల్టిప్ అనువాదకుడు : Translate manga"
 	},
 	"appDesc": {
-		"message": "మౌస్ టూల్టిప్ అనువాదకుడు గూగుల్ అనువాదం ఉపయోగించి మౌస్‌ఓవర్ వచనాన్ని అనువదించండి"
+		"message": "మౌస్ టూల్టిప్ అనువాదకుడు గూగుల్ అనువాదం ఉపయోగించి మౌస్‌ఓవర్ వచనాన్ని అనువదించండి. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

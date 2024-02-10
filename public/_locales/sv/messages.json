@@ -207,6 +207,6 @@
 		"message": "Musverktygstipsöversättare : Translate Japanese"
 	},
 	"appDesc": {
-		"message": "Musverktygstip Translator Translate Mouseover Text med Google Translate"
+		"message": "Musverktygstip Translator Translate Mouseover Text med Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

@@ -207,6 +207,6 @@
 		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ: Translate Writing"
 	},
 	"appDesc": {
-		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ ಗೂಗಲ್ ಅನುವಾದವನ್ನು ಬಳಸಿಕೊಂಡು ಮೌಸೋವರ್ ಪಠ್ಯವನ್ನು ಅನುವಾದಿಸಿ"
+		"message": "ಮೌಸ್ ಟೂಲ್ಟಿಪ್ ಅನುವಾದಕ ಗೂಗಲ್ ಅನುವಾದವನ್ನು ಬಳಸಿಕೊಂಡು ಮೌಸೋವರ್ ಪಠ್ಯವನ್ನು ಅನುವಾದಿಸಿ. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }

@@ -207,6 +207,6 @@
 		"message": "Egér ToolTip fordító : Subtitle Translator"
 	},
 	"appDesc": {
-		"message": "Egér ToolTip Translator fordítása MouseOver szöveget a Google Translate segítségével"
+		"message": "Egér ToolTip Translator fordítása MouseOver szöveget a Google Translate segítségével. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
 	}
 }
