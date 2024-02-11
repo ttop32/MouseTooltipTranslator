@@ -207,6 +207,6 @@
 		"message": "Преводач на мишка : manga translator"
 	},
 	"appDesc": {
-		"message": "Превода. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Превода. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

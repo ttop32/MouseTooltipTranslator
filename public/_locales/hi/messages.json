@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "माउस टूलटिप अनुवादक : PDF Translator"
+		"message": "माउस टूलटिप अनुवादक : Dual sub Youtube"
 	},
 	"appDesc": {
-		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "माउस टूलटिप ट्रांसलेटर अनुवाद करें माउसओवर पाठ Google अनुवाद का उपयोग करके. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

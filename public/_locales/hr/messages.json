@@ -207,6 +207,6 @@
 		"message": "Translator Alat -a za miša: Papago"
 	},
 	"appDesc": {
-		"message": "Translator Mouse Tooltip Prevodite tekst MouseOver pomoću Google Translatea. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Translator Mouse Tooltip Prevodite tekst MouseOver pomoću Google Translatea. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

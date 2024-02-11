@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "마우스 툴팁 번역기 :TTS OCR PDF Manga"
+		"message": "마우스 툴팁 번역기"
 	},
 	"appDesc": {
-		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

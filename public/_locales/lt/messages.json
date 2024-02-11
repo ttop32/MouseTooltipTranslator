@@ -207,6 +207,6 @@
 		"message": "Pelės patarimų vertėjas: Translate Youtube"
 	},
 	"appDesc": {
-		"message": "Pelės patarimo vertėjas vertėjas versti pelės viršų. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Pelės patarimo vertėjas vertėjas versti pelės viršų. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

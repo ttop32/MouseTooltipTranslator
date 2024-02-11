@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Hiire tööriistavihje tõlkija : TTS"
+		"message": "MTT with google translator"
 	},
 	"appDesc": {
-		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

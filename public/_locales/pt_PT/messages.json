@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Tradutor da dica de ferramenta do mouse using deepl translator"
+		"message": "MTT use deepl translator"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

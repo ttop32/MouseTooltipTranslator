@@ -207,6 +207,6 @@
 		"message": "Traduttore di tooltip del mouse: Image OCR"
 	},
 	"appDesc": {
-		"message": "Traduttore di tooltip del mouse Translate Testo del mouseover usando Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Traduttore di tooltip del mouse Translate Testo del mouseover usando Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

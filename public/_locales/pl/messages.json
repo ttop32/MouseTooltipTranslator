@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Tłumacz myszy With Google Translator"
+		"message": "MTT With Google Translator"
 	},
 	"appDesc": {
-		"message": "Tłumacz myszy tłumacz tłumacza tekst myszy za pomocą tłumacza Google. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Tłumacz myszy tłumacz tłumacza tekst myszy za pomocą tłumacza Google. Support OCR, TTS, manga translator & pdf translator."
 	}
 }
