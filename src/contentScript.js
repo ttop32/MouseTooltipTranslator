@@ -4,7 +4,6 @@
 
 import $ from "jquery";
 import tippy, { sticky, hideAll } from "tippy.js";
-import { encode } from "he";
 import matchUrl from "match-url-wildcard";
 import delay from "delay";
 import browser from "webextension-polyfill";
@@ -105,6 +104,8 @@ async function stageTooltipText(text, actionType, range) {
   var textNoEmoji = util.filterEmoji(text);
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
+  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
+  var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
 
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
@@ -156,12 +157,18 @@ async function stageTooltipText(text, actionType, range) {
   //if tooltip is on or activation key is pressed, show tooltip
   //if current word is recent activatedWord
   if (isTooltipOn) {
-    var tooltipText = dict || translatedText;
-    var tooltipHtmlText =
-      getHtmlWrapImage(imageUrl) ||
-      wrapRtlHtml(tooltipText, targetLang) +
-        concatTooltipInfoText({ transliteration, sourceLang });
-    showTooltip(tooltipHtmlText);
+    var tooltipTransliteration = isTransliterationOn ? transliteration : "";
+    var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
+    var tooltipMainText =
+      wrapMainImage(imageUrl) ||
+      wrapMain(dict, targetLang) ||
+      wrapMain(translatedText, targetLang);
+    var tooltipText =
+      tooltipMainText +
+      wrapInfoText(tooltipTransliteration, "b") +
+      wrapInfoText(tooltipLang, "sup");
+
+    showTooltip(tooltipText);
     requestRecordTooltipText(
       text,
       sourceLang,
@@ -238,33 +245,28 @@ function hideHighlight() {
   $(".mtt-highlight")?.remove();
 }
 
-function wrapRtlHtml(translatedText, targetLang) {
-  var text = `<span dir=${util.isRtl(targetLang)} class="notranslate">${encode(
-    translatedText
-  )}</span>`;
-  return text;
-}
-
-function concatTooltipInfoText({ transliteration, sourceLang }) {
-  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
-  var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
-  var tooltipTransliteration = isTransliterationOn ? transliteration : "";
-  var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
-  return getHtmlWrapText(tooltipTransliteration, tooltipLang);
-}
-
-function getHtmlWrapText(...texts) {
-  texts = texts.filter((text) => text);
-  var concatText = "";
-  for (var text of texts) {
-    concatText += `<br><span style="font-weight:bold;">${encode(text)}</span>`;
+function wrapMain(translatedText, targetLang) {
+  if (!translatedText) {
+    return "";
   }
-  return concatText;
+  return $("<span/>", {
+    dir: util.isRtl(targetLang),
+    text: translatedText,
+  }).prop("outerHTML");
 }
 
-function getHtmlWrapImage(imageUrl) {
+function wrapInfoText(text, type) {
+  if (!text) {
+    return "";
+  }
+  return $(`<${type}/>`, {
+    text: "\n" + text,
+  }).prop("outerHTML");
+}
+
+function wrapMainImage(imageUrl) {
   if (!imageUrl) {
-    return;
+    return "";
   }
   return $("<img/>", {
     src: imageUrl,
@@ -623,6 +625,7 @@ async function getSetting() {
 async function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
+    class: "notranslate",
   }).appendTo(document.body);
   tooltipContainerEle = tooltipContainer.get(0);
 
