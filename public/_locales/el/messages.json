@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Μεταφραστής εργαλείων ποντικιού: Translate Image"
+		"message": "MTT Translate Image"
 	},
 	"appDesc": {
-		"message": "Μεταφραστής εργαλείων ποντικιού Μεταφράστε κείμενο ποντικιού χρησιμοποιώντας το Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Μεταφραστής εργαλείων ποντικιού Μεταφράστε κείμενο ποντικιού χρησιμοποιώντας το Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

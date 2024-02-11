@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Hiiren työkaluvihje kääntäjä with Google Dictionary"
+		"message": "MTT with Google Dictionary"
 	},
 	"appDesc": {
-		"message": "Hiiren työkaluvihje kääntäjä Käännä hiirensiirtoteksti Google Translate -sovelluksella. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Hiiren työkaluvihje kääntäjä Käännä hiirensiirtoteksti Google Translate -sovelluksella. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

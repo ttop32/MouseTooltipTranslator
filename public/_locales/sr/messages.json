@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Моусе Тоолтип Транслатор : Manga OCR Translator"
+		"message": "MTT OCR Translator"
 	},
 	"appDesc": {
-		"message": "Моусе Тоолтип преводилац Преведи текст миша помоћу Гоогле Транслате. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Моусе Тоолтип преводилац Преведи текст миша помоћу Гоогле Транслате. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

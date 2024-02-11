@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "マウスツールチップ翻訳者 :TTS OCR PDF Manga"
+		"message": "マウスツールチップ翻訳者"
 	},
 	"appDesc": {
-		"message": "マウスツールチップ翻訳者は、Google翻訳を使用してマウスオーバーテキストを翻訳します. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "マウスツールチップ翻訳者は、Google翻訳を使用してマウスオーバーテキストを翻訳します. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

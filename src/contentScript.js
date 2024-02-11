@@ -347,16 +347,17 @@ function hasSelection() {
 }
 
 async function makeNonEnglishTypingFinish() {
+  // IME fix
   //refocus input text to prevent prev remain typing
   await delay(10);
   var ele = util.getActiveElement();
   window.getSelection().removeAllRanges();
   ele?.blur();
-  await delay(100);
+  await delay(10);
   ele?.focus();
-  await delay(100);
+  await delay(50);
   document.execCommand("selectAll", false, null);
-  await delay(100);
+  await delay(50);
 }
 
 async function insertText(text) {
@@ -365,8 +366,11 @@ async function insertText(text) {
     return;
   } else if (util.isGoogleDoc()) {
     pasteTextGoogleDoc(text);
-  } else if ($(writingBox).is("[data-gramm='false']")) {
-    //for bard website
+  } else if ($(writingBox).is("[spellcheck='true']")) {
+    //for discord twitch
+    pasteTextInputBox(text);
+  } else if ($(writingBox).is("[data-gramm='false'], textarea")) {
+    //for bard , butterflies.ai
     document.execCommand("insertText", false, text);
   } else {
     pasteTextInputBox(text);

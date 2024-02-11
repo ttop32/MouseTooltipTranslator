@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Prekladateľ myši: Voice Speech Reader"
+		"message": "MTT Voice Speech Reader"
 	},
 	"appDesc": {
-		"message": "Prekladač prekladateľ myši prekladač Mouseover text pomocou prekladu Google. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Prekladač prekladateľ myši prekladač Mouseover text pomocou prekladu Google. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

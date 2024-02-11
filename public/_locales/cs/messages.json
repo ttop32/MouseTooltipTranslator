@@ -207,6 +207,6 @@
 		"message": "Překladator pozemního nástroje myši - Web Page Translate"
 	},
 	"appDesc": {
-		"message": "Překladatel překladatele nástrojů myši překládat text myši pomocí Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Překladatel překladatele nástrojů myši překládat text myši pomocí Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

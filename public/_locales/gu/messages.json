@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "માઉસ ટૂલટિપ અનુવાદક: TTS Voice Speech"
+		"message": "માઉસ ટૂલટિપ અનુવાદક: Voice Speech"
 	},
 	"appDesc": {
-		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "ગૂગલ ટ્રાન્સલેશનનો ઉપયોગ કરીને માઉસ ટૂલટિપ અનુવાદક માઉસઓવર ટેક્સ્ટનું ભાષાંતર કરે છે. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

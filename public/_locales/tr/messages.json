@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Fare araç ipucu çevirmen with Dual Subtitle"
+		"message": "MTT with Dual Subtitle"
 	},
 	"appDesc": {
-		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mus ToolTip Translator : Manga Translator"
+		"message": "MTT TTS translator"
 	},
 	"appDesc": {
-		"message": "Mus ToolTip Translator Translate Mouseover -tekst ved hjelp av Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Mus ToolTip Translator Translate Mouseover -tekst ved hjelp av Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

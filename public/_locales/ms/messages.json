@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Penterjemah Tooltip Mouse: Google Docs Translator"
+		"message": "MTT Google Docs Translator"
 	},
 	"appDesc": {
-		"message": "Penterjemah Tooltip Mouse Terjemahkan Teks Mouseover Menggunakan Google Translate. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Penterjemah Tooltip Mouse Terjemahkan Teks Mouseover Menggunakan Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }

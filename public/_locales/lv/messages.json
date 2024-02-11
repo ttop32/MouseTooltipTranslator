@@ -204,9 +204,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Peles rīku padomu tulkotājs: Translate Manga"
+		"message": "MTT Translate Manga"
 	},
 	"appDesc": {
-		"message": "Peles rīka padomu tulkotājs tulkot peles pārsniegšanas tekstu, izmantojot Google tulkojumu. The translator support Image OCR, PDF, text to speech (TTS) and dictionary. Listen TTS, read OCR Text, works as manga translator & pdf translator, translate writing."
+		"message": "Peles rīka padomu tulkotājs tulkot peles pārsniegšanas tekstu, izmantojot Google tulkojumu. Support OCR, TTS, manga translator & pdf translator."
 	}
 }
