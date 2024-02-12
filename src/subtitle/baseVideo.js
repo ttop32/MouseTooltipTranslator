@@ -69,7 +69,7 @@ export default class BaseVideo {
   static requestSubtitle(subUrl, lang, tlang, videoId) {
     throw new Error("Not implemented");
   }
-  static parseSubtitle(sub) {
+  static parseSubtitle(sub, lang) {
     throw new Error("Not implemented");
   }
   static mergeSubtitles(sub1, sub2) {
@@ -193,19 +193,20 @@ export default class BaseVideo {
         if (this.captionRequestPattern.test(request.url)) {
           //get source lang sub
           var response = await this.requestSubtitleCached(request.url);
-          var sub1 = this.parseSubtitle(response);
-          var lang = this.guessSubtitleLang(request.url);
+          var targetLang = this.setting["translateTarget"];
+          var sourceLang = this.guessSubtitleLang(request.url);
+          var sub1 = this.parseSubtitle(response, sourceLang);
           var responseSub = sub1;
           //get target lang sub, if not same lang
           if (
-            lang != this.setting["translateTarget"] &&
+            sourceLang != targetLang &&
             this.setting["detectSubtitle"] == "dualsub"
           ) {
             var sub2 = await this.requestSubtitleCached(
               request.url,
-              this.setting["translateTarget"]
+              targetLang
             );
-            var sub2 = this.parseSubtitle(sub2);
+            var sub2 = this.parseSubtitle(sub2, targetLang);
             var mergedSub = this.mergeSubtitles(sub1, sub2);
             responseSub = mergedSub;
           }

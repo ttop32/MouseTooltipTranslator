@@ -1,7 +1,8 @@
-import BaseVideo from "./baseVideo";
-
 import $ from "jquery";
 import * as memoizee from "memoizee";
+
+import BaseVideo from "./baseVideo";
+import * as util from "/src/util";
 
 // https://terrillthompson.com/648
 // https://developers.google.com/youtube/iframe_api_reference
@@ -154,7 +155,8 @@ export default class Youtube extends BaseVideo {
   }
 
   // concat sub=====================================
-  static parseSubtitle(subtitle) {
+  static parseSubtitle(subtitle, lang) {
+    var isRtl = util.isRtl(lang);
     var newEvents = [];
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {
@@ -176,6 +178,7 @@ export default class Youtube extends BaseVideo {
         newEvents.push({
           tStartMs: event.tStartMs,
           dDurationMs: event.dDurationMs,
+          // wsWinStyleId: isRtl ? 2 : 1,
           segs: [
             {
               utf8: oneLineSub,
@@ -193,8 +196,29 @@ export default class Youtube extends BaseVideo {
       events: newEvents,
       pens: [{}],
       wireMagic: "pb3",
-      wpWinPositions: [{}],
-      wsWinStyles: [{}],
+      wpWinPositions: [
+        {},
+        {
+          apPoint: 6,
+          ahHorPos: 20,
+          avVerPos: 100,
+          rcRows: 2,
+          ccCols: 40,
+        },
+      ],
+      wsWinStyles: [
+        {},
+        {
+          mhModeHint: 2,
+          juJustifCode: 0, //ltr
+          sdScrollDir: 3,
+        },
+        {
+          mhModeHint: 2,
+          juJustifCode: 1, //rtl
+          sdScrollDir: 3,
+        },
+      ],
     };
   }
 
@@ -212,13 +236,15 @@ export default class Youtube extends BaseVideo {
       });
       sub2.events.sort((a, b) => a.overlap - b.overlap);
       if (sub2.events.length && 0 < sub2.events[0].overlap) {
-        line2 = sub2.events[0].segs[0]["utf8"];
+        line2 = sub2.events[0];
+        line2.segs[0]["utf8"] = "\n" + line2.segs[0]["utf8"];
       }
-      event.segs[0]["utf8"] = `${line1}\n${line2 || "\t"}`;
+      if (line2) {
+        event.segs.push(line2.segs[0]);
+      }
     }
     return sub1;
   }
-
   // metadata getter ===============================
   static isVideoUrl(url) {
     return this.isShorts(url) || this.isEmbed(url) || this.isMainVideoUrl(url);

@@ -34,7 +34,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
-    "@mswjs/interceptors": "^0.25.13",
+    "@mswjs/interceptors": "^0.25.16",
     "async-wait-until": "^2.0.12",
     "bcp-47": "^2.0.0",
     "bootstrap": "^4.5.3",

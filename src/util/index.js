@@ -1,12 +1,18 @@
 import $ from "jquery";
 import isUrl from "is-url";
-import browser from "webextension-polyfill";
 import _ from "lodash";
 import { iso6393To1 } from "iso-639-3";
 import { francAll } from "franc";
 import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { Setting } from "./setting.js";
+
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {
+  console.log(error);
+}
 
 export var defaultData = {
   showTooltipWhen: "always",
@@ -952,6 +958,10 @@ export function addCommandListener(type, handler) {
 // remain ===================
 
 export function isRtl(lang) {
+  return rtlLangList.includes(lang);
+}
+
+export function getRtlDir(lang) {
   return rtlLangList.includes(lang) ? "rtl" : "ltr";
 }
 
