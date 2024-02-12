@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.125
+  - fix youtube subtitle conflict
 - 0.1.124
   - fix butterflies.ai text writing  (request by Enlight432)
 - 0.1.123

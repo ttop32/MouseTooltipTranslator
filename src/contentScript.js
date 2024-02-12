@@ -250,7 +250,7 @@ function wrapMain(translatedText, targetLang) {
     return "";
   }
   return $("<span/>", {
-    dir: util.isRtl(targetLang),
+    dir: util.getRtlDir(targetLang),
     text: translatedText,
   }).prop("outerHTML");
 }
@@ -731,6 +731,11 @@ function applyStyleSetting() {
     #ytp-caption-window-container .ytp-caption-segment {
       cursor: text !important;
       user-select: text !important;
+      font-family: 
+      -apple-system, BlinkMacSystemFont,
+      "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans",
+      "Droid Sans", "Helvetica Neue", sans-serif  !important;
     }
     .caption-visual-line{
       display: flex  !important;
