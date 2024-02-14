@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.127
+  - fix tooltip hide conflict
 - 0.1.126
   - change ui sequence
   - change hold key run to press run(request by Varga Endre)
