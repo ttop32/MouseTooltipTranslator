@@ -24,17 +24,18 @@ export var defaultData = {
   mouseoverTextType: "sentence",
   writingLanguage: "en",
   ocrLang: "jpn_vert",
-  //advanced
   translateReverseTarget: "null",
+
+  //advanced
   keyDownTranslateWriting: "AltRight",
   keyDownOCR: "ShiftLeft",
   detectSubtitle: "dualsub",
   detectPDF: "true",
-  mouseoverHighlightText: "false",
   mouseoverPauseSubtitle: "true",
   keyDownMouseoverTextSwap: "null",
-  tooltipInfoTransliteration: "false",
+  tooltipInfoSourceText: "false",
   tooltipInfoSourceLanguage: "false",
+  tooltipInfoTransliteration: "false",
 
   // graphic
   tooltipFontSize: "14",
@@ -44,18 +45,22 @@ export var defaultData = {
   tooltipPosition: "follow",
   tooltipTextAlign: "center",
   tooltipBackgroundBlur: "4",
+  mouseoverHighlightText: "false",
   tooltipFontColor: "#ffffffff",
   tooltipBackgroundColor: "#000000b8",
   tooltipBorderColor: "#ffffff00",
   mouseoverTextHighlightColor: "#21dc6d40",
+
   // voice
   voiceVolume: "1.0",
   voiceRate: "1.0",
   voiceTarget: "source",
   voiceRepeat: "1",
+
   // exclude
   langExcludeList: [],
   websiteExcludeList: ["*.example.com"],
+
   // remains
   subtitleButtonToggle: "true",
   historyList: [],
@@ -1064,14 +1069,12 @@ function isBacgroundServiceWorker() {
 export function detectLangFranc(text) {
   var detectLangData = francAll(text, { minLength: 0 })?.[0]?.[0];
   var lang = iso6393To1[detectLangData];
-  // console.log(detectLangData);
   return lang;
 }
 
 export async function detectLangBrowser(text) {
   var detectLangData = await browser.i18n.detectLanguage(text);
   var lang = detectLangData?.languages?.[0]?.language;
-  // console.log(detectLangData);
   lang = lang == "zh" ? "zh-CN" : lang;
   return lang;
 }
