@@ -20,8 +20,8 @@ export function enableMouseoverTextEvent(
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
 
-  setInterval(() => {
-    triggerMouseoverText(getMouseoverText(clientX, clientY));
+  setInterval(async () => {
+    triggerMouseoverText(await getMouseoverText(clientX, clientY));
   }, textDetectTime);
 
   window.addEventListener("mousemove", (e) => {
@@ -50,7 +50,7 @@ export const triggerMouseoverText = (mouseoverText) => {
   document.dispatchEvent(evt);
 };
 
-function getMouseoverText(x, y) {
+async function getMouseoverText(x, y) {
   //get range
   var textElement;
   var range =
@@ -63,15 +63,14 @@ function getMouseoverText(x, y) {
     var { textElement, range } = getCaretRange(rect, x, y);
   }
   //get text from range
-  var mouseoverText = getTextFromRange(range);
+  var mouseoverText = await getTextFromRange(range);
   textElement?.remove();
   return mouseoverText;
 }
-
-function getTextFromRange(range) {
+async function getTextFromRange(range) {
   var output = {};
 
-  ["word", "sentence", "container"].forEach((detectType) => {
+  for (const detectType of ["word", "sentence", "container"]) {
     output[detectType] = "";
     if (!range) {
       return;
@@ -79,7 +78,7 @@ function getTextFromRange(range) {
     try {
       var rangeClone = range.cloneRange();
       //expand range
-      expandRange(rangeClone, detectType);
+      await expandRange(rangeClone, detectType);
 
       //check mouse xy overlap the range element
       if (checkXYInElement(rangeClone, clientX, clientY)) {
@@ -89,12 +88,12 @@ function getTextFromRange(range) {
     } catch (error) {
       console.log(error);
     }
-  });
+  }
 
   return output;
 }
 
-function expandRange(range, type) {
+async function expandRange(range, type) {
   try {
     if (type == "container" || !range.expand) {
       range.setStartBefore(range.startContainer);
@@ -102,14 +101,11 @@ function expandRange(range, type) {
       range.setStart(range.startContainer, 0);
     } else {
       range.expand(type); // "word" or "sentence"
+      // await expandRangeWithSeg(range, type);
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
-}
-
-function isAttachedToDom(element) {
-  return _win.document.contains(element);
 }
 
 //browser range===================================================
@@ -343,4 +339,70 @@ function isPointInAnyRect(x, y, rects) {
     }
   }
   return false;
+}
+
+//firefox word break ====================================
+async function expandRangeWithSeg(range, type = "word") {
+  var { x, y } = getCenterXY(range); //mouse in word rect
+  var rangeContainer = range.cloneRange();
+  expandRange(rangeContainer, "container");
+  let textNode =
+    rangeContainer.commonAncestorContainer.parentElement.childNodes[0];
+
+  var text = rangeContainer.toString();
+  var lang = await util.detectLangBrowser(text);
+  var segmenter = new Intl.Segmenter(lang, { granularity: type });
+  var wordsMeta = [...segmenter.segment(text)];
+
+  // var offset = 0;
+  var wordRanges = wordsMeta
+    .map((wordMeta) => {
+      var wordRange = document.createRange();
+      var word = wordMeta.segment;
+      var selectedNode1 = selectNode(textNode, wordMeta.index);
+      var selectedNode2 = selectNode(textNode, wordMeta.index + word.length);
+      wordRange.setStart(selectedNode1.node, selectedNode1.index);
+      wordRange.setEnd(selectedNode2.node, selectedNode2.index);
+      return wordRange;
+    })
+    .filter((range) => checkXYInElement(range, x, y));
+
+  var currentWordNode = wordRanges[0];
+  if (currentWordNode) {
+    range.setStart(currentWordNode.startContainer, currentWordNode.startOffset);
+    range.setEnd(currentWordNode.endContainer, currentWordNode.endOffset);
+  }
+}
+function selectNode(node, offset) {
+  if (node.nodeType == Node.TEXT_NODE) {
+    return { node, index: offset };
+  }
+
+  var prevLen = 0;
+  for (const child of node.childNodes) {
+    var len = getNodeLength(child);
+
+    if (prevLen <= offset && offset <= prevLen + len) {
+      return selectNode(child, offset - prevLen);
+    }
+    prevLen += len;
+  }
+  return { node, index: offset };
+}
+function getNodeLength(ele) {
+  if (ele.nodeType == Node.TEXT_NODE) {
+    return ele.length;
+  }
+  var len = 0;
+  for (const child of ele.childNodes) {
+    len += getNodeLength(child);
+  }
+  return len;
+}
+
+function getCenterXY(ele) {
+  const { left, top, width, height } = ele.getBoundingClientRect();
+  const centerX = left + width / 2;
+  const centerY = top + height / 2;
+  return { x: centerX, y: centerY };
 }

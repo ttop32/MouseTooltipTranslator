@@ -35,6 +35,9 @@
 	"OCR_Language": {
 		"message": "OCR 언어"
 	},
+	"Reverse_Translate_Language": {
+		"message": "Reverse Translate Language"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
 	},
@@ -61,6 +64,9 @@
 	},
 	"Tooltip_Background_Blur": {
 		"message": "툴팁 배경 Blur"
+	},
+	"Mouseover_Highlight_Text": {
+		"message": "Mouseover Highlight Text"
 	},
 	"Tooltip_Font_Color": {
 		"message": "툴팁 폰트 색상"
@@ -101,9 +107,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
-	},
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
 	},
@@ -116,20 +119,20 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
-	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
-	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "Mouseover Text Type Swap Key"
 	},
-	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+	"Tooltip_Info_Source_Text": {
+		"message": "Tooltip Info Source Text"
 	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Tooltip Info Source Language"
+	},
+	"Tooltip_Info_Transliteration": {
+		"message": "Tooltip Info Transliteration"
 	},
 	"Tooltip_Interval_Time": {
 		"message": "Tooltip Interval Time"

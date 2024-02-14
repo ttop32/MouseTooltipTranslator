@@ -429,9 +429,13 @@ var settingListData = {
     description: browser.i18n.getMessage("OCR_Language"),
     optionList: ocrLangList,
   },
+  translateReverseTarget: {
+    description: browser.i18n.getMessage("Reverse_Translate_Language"),
+    optionList: langListWithNone,
+  },
 };
 
-var visualTabData = {
+var graphicTabData = {
   tooltipFontSize: {
     description: browser.i18n.getMessage("Tooltip_Font_Size"),
     optionList: tooltipFontSizeList,
@@ -459,6 +463,10 @@ var visualTabData = {
   tooltipBackgroundBlur: {
     description: browser.i18n.getMessage("Tooltip_Background_Blur"),
     optionList: tooltipBackgroundBlurList,
+  },
+  mouseoverHighlightText: {
+    description: browser.i18n.getMessage("Mouseover_Highlight_Text"),
+    optionList: toggleList,
   },
   tooltipFontColor: {
     description: browser.i18n.getMessage("Tooltip_Font_Color"),
@@ -506,10 +514,6 @@ var voiceTabData = {
 };
 
 var advancedTabData = {
-  translateReverseTarget: {
-    description: browser.i18n.getMessage("Reverse_Translate_Language"),
-    optionList: langListWithNone,
-  },
   keyDownTranslateWriting: {
     description: browser.i18n.getMessage("Translate_Writing_When"),
     optionList: keyList,
@@ -526,10 +530,6 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Detect_PDF"),
     optionList: toggleList,
   },
-  mouseoverHighlightText: {
-    description: browser.i18n.getMessage("Mouseover_Highlight_Text"),
-    optionList: toggleList,
-  },
   mouseoverPauseSubtitle: {
     description: browser.i18n.getMessage("Mouseover_Pause_Subtitle"),
     optionList: toggleList,
@@ -538,14 +538,18 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
     optionList: keyList,
   },
-  tooltipInfoTransliteration: {
-    description:
-      browser.i18n.getMessage("Tooltip_Info_Transliteration") +
-      " (Experimental)",
+  tooltipInfoSourceText: {
+    description: browser.i18n.getMessage("Tooltip_Info_Source_Text"),
     optionList: toggleList,
   },
   tooltipInfoSourceLanguage: {
     description: browser.i18n.getMessage("Tooltip_Info_Source_Language"),
+    optionList: toggleList,
+  },
+  tooltipInfoTransliteration: {
+    description:
+      browser.i18n.getMessage("Tooltip_Info_Transliteration") +
+      " (Experimental)",
     optionList: toggleList,
   },
   tooltipIntervalTime: {
@@ -569,7 +573,7 @@ var excludeTabData = {
 
 var tabItems = {
   MAIN: settingListData,
-  GRAPHIC: visualTabData,
+  GRAPHIC: graphicTabData,
   VOICE: voiceTabData,
   ADVANCED: advancedTabData,
   EXCLUDE: excludeTabData,

@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.126
+  - change ui sequence
+  - change hold key run to press run(request by Varga Endre)
 - 0.1.125
   - fix youtube subtitle conflict
 - 0.1.124

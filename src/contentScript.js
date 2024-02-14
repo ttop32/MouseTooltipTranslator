@@ -39,6 +39,7 @@ const { signal } = controller;
 var isBlobPdf = false;
 
 var selectedText = "";
+var hoveredData = {};
 var stagedText = null;
 var prevStagedParams = [];
 var prevTooltipText = "";
@@ -78,8 +79,9 @@ function startMouseoverDetector() {
       !selectedText &&
       event?.mouseoverText
     ) {
-      var mouseoverText = event.mouseoverText[getMouseoverType()];
-      var mouseoverRange = event.mouseoverText[getMouseoverType() + "_range"];
+      hoveredData = event.mouseoverText;
+      var mouseoverText = hoveredData[getMouseoverType()];
+      var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
       await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
     }
   });
@@ -104,8 +106,9 @@ async function stageTooltipText(text, actionType, range) {
   var textNoEmoji = util.filterEmoji(text);
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
-  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
+  var isShowOriTextOn = setting["tooltipInfoSourceText"] == "true";
   var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
+  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
 
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
@@ -159,12 +162,16 @@ async function stageTooltipText(text, actionType, range) {
   if (isTooltipOn) {
     var tooltipTransliteration = isTransliterationOn ? transliteration : "";
     var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
+    var tooltipOriText = isShowOriTextOn ? stagedText : "";
+
     var tooltipMainText =
       wrapMainImage(imageUrl) ||
       wrapMain(dict, targetLang) ||
       wrapMain(translatedText, targetLang);
+
     var tooltipText =
       tooltipMainText +
+      wrapInfoText(tooltipOriText, "i", sourceLang) +
       wrapInfoText(tooltipTransliteration, "b") +
       wrapInfoText(tooltipLang, "sup");
 
@@ -255,11 +262,12 @@ function wrapMain(translatedText, targetLang) {
   }).prop("outerHTML");
 }
 
-function wrapInfoText(text, type) {
+function wrapInfoText(text, type, dirLang = null) {
   if (!text) {
     return "";
   }
   return $(`<${type}/>`, {
+    dir: util.getRtlDir(dirLang),
     text: "\n" + text,
   }).prop("outerHTML");
 }
@@ -495,6 +503,10 @@ function restartWordProcess() {
   stagedText = null;
   if (selectedText) {
     stageTooltipText(...prevStagedParams);
+  } else {
+    var mouseoverText = hoveredData[getMouseoverType()];
+    var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
+    stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
   }
 }
 
