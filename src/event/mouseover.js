@@ -73,7 +73,7 @@ async function getTextFromRange(range) {
   for (const detectType of ["word", "sentence", "container"]) {
     output[detectType] = "";
     if (!range) {
-      return;
+      continue;
     }
     try {
       var rangeClone = range.cloneRange();
