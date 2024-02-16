@@ -6,210 +6,210 @@
 		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Traductor Emergente con el Mouse"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "Mostrar Ventana Emergente Cuando"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Voz Cuando"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Traducir Cuando"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Traducir Desde"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Traducir En"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Motor de Traducción"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Tipo de Texto al Pasar el Mouse"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Idioma de Escritura"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "Idioma de OCR"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Idioma de Traducción Inversa"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "GRÁFICOS                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "GRÁFICOS"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Tamaño de Fuente de la Ventana Emergente"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Ancho de la Ventana Emergente"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Distancia de la Ventana Emergente"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "Animación de la Ventana Emergente"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Posición de la Ventana Emergente"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Alineación de Texto de la Ventana Emergente"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Desenfoque de Fondo de la Ventana Emergente"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Resaltar Texto al Pasar el Mouse"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Color de la Fuente de la Ventana Emergente"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Color del Fondo de la Ventana Emergente"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Color de los bordes de la Ventana Emergente"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Color de Resaltado de Texto al Pasar el Mouse"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "VOZ                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "VOZ"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Volumen de Voz"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Velocidad de Voz"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Objectivo de Voz"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Repetir Voz"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Voz para "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "AVANZADO                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "AVANZADO"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Traducir Escritura Cuando"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "OCR Cuando"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "Detectar Subtítulo"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "Detectar PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "Pausar Subtítulo al Pasar el Mouse"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Tecla de Cambio de Tipo de Texto al Pasar el Mouse"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "Texto de Fuente de Información de la Ventana Emergente"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "Idioma de Fuente de Información de la Ventana Emergente"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "Transliteración de Información de la Ventana Emergente"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "Tiempo de Intervalo de la Ventana Emergente"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "EXCLUIR                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "EXCLUIR"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Excluir Idioma"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Excluir Sitio Web"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "Acerca de                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Como usar"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "Consulta cómo usar esta extensión"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "Visor de PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "Traducir archivo PDF local"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "Lector de Libros Electrónicos"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "Traducir archivo de libro electrónico local"
 	},
 	"Twitter": {
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "Retwittear publicación de Twitter"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "Página de Reseñas"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "Comentar sobre esta extensión"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "Código Fuente"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "Ver el código fuente en GitHub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "Política de Privacidad"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "Política de privacidad del usuario"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "Revisión                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "Revisar esto"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "El desarrollador ama las críticas"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Título                                      "
 	},
 	"appName": {
-		"message": "Traductor de información sobre herramientas del mouse for Education"
+		"message": "Traductor Emergente con el Mouse para Educación"
 	},
 	"appDesc": {
-		"message": "El traductor de información sobre herramientas de mouse traducir el texto de mouseover usando Google Translate. Support OCR, TTS, manga translator & pdf translator."
+		"message": "El traductor de ventana emergente al pasar mouse utiliza Google Translate. Soporta OCR, TTS, Manga Translator & PDF Translator."
 	}
 }
