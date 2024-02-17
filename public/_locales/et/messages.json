@@ -207,7 +207,7 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "MTT with google translator"
+		"message": "MTT yandex translator"
 	},
 	"appDesc": {
 		"message": "Hiire tööriistapeal tõlkija tõlkida hiireoveri teksti Google'i abil. Support OCR, TTS, manga translator & pdf translator."
