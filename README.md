@@ -84,6 +84,13 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
     </td></tr>
 <tr>
     <td align="center">
+        <a href="https://github.com/di4m0nds">
+            <img src="https://avatars.githubusercontent.com/u/84233833?v=4" width="100;" alt="di4m0nds"/>
+            <br />
+            <sub><b>Silvestri, Javier</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/netanel123123">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanel123123"/>
             <br />
