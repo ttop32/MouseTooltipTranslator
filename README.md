@@ -12,7 +12,7 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 [<img alt="softpedia" height="64px" src="doc/softpedia.png" />](https://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/Mouse-Tooltip-Translator-for-Chrome.shtml)
 
 # Result
-
+ 
 ![Alt Text](doc/result_0.gif)
 ![result](doc/screenshot_3.png)
 ![result](doc/screenshot_5.png)
