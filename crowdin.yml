@@ -1,2 +1,5 @@
 bundles:
   - 4
+files:
+  - source: /public/_locales/en/messages.json
+    translation: /public/_locales/%two_letters_code%/messages.json
