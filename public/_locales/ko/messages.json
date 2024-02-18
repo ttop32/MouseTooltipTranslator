@@ -6,34 +6,34 @@
 		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "마우스 툴팁 번역기"
+		"message": "Mouse Tooltip Translator"
 	},
 	"Show_Tooltip_When": {
-		"message": "툴팁은 언제"
+		"message": "Show Tooltip When"
 	},
 	"Voice_When": {
-		"message": "TTS 는 언제"
+		"message": "Voice When"
 	},
 	"Translate_When": {
-		"message": "번역은 언제"
+		"message": "Translate When"
 	},
 	"Translate_From": {
-		"message": "번역은 어느 언어에서"
+		"message": "Translate From"
 	},
 	"Translate_Into": {
-		"message": "어떤 언어로 번역을"
+		"message": "Translate Into"
 	},
 	"Translator_Engine": {
-		"message": "번역 엔진"
+		"message": "Translator Engine"
 	},
 	"Mouseover_Text_Type": {
-		"message": "마우스오버 텍스트 타입"
+		"message": "Mouseover Text Type"
 	},
 	"Writing_Language": {
-		"message": "쓰기 언어"
+		"message": "Writing Language"
 	},
 	"OCR_Language": {
-		"message": "OCR 언어"
+		"message": "OCR Language"
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
@@ -45,40 +45,40 @@
 		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
-		"message": "툴팁 폰트 크기"
+		"message": "Tooltip Font Size"
 	},
 	"Tooltip_Width": {
-		"message": "툴팁 너비"
+		"message": "Tooltip Width"
 	},
 	"Tooltip_Distance": {
-		"message": "툴팁 거리"
+		"message": "Tooltip Distance"
 	},
 	"Tooltip_Animation": {
-		"message": "툴팁 애니메이션"
+		"message": "Tooltip Animation"
 	},
 	"Tooltip_Position": {
-		"message": "툴팁 위치"
+		"message": "Tooltip Position"
 	},
 	"Tooltip_Text_Align": {
-		"message": "툴팁 텍스트 정렬"
+		"message": "Tooltip Text Align"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "툴팁 배경 Blur"
+		"message": "Tooltip Background Blur"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Mouseover Highlight Text"
 	},
 	"Tooltip_Font_Color": {
-		"message": "툴팁 폰트 색상"
+		"message": "Tooltip Font Color"
 	},
 	"Tooltip_Background_Color": {
-		"message": "툴팁 배경 색상"
+		"message": "Tooltip Background Color"
 	},
 	"Tooltip_Border_Color": {
-		"message": "툴팁 테두리 색상"
+		"message": "Tooltip Border Color"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "마우스오버 텍스트 하이라이트 색상"
+		"message": "Mouseover Text Highlight Color"
 	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "
@@ -87,16 +87,16 @@
 		"message": "VOICE"
 	},
 	"Voice_Volume": {
-		"message": "Voice 볼륨"
+		"message": "Voice Volume"
 	},
 	"Voice_Speed": {
-		"message": "Voice 속도"
+		"message": "Voice Speed"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"
 	},
 	"Voice_Repeat": {
-		"message": "Voice 반복"
+		"message": "Voice Repeat"
 	},
 	"Voice_for_": {
 		"message": "Voice for "
@@ -144,7 +144,7 @@
 		"message": "EXCLUDE"
 	},
 	"Exclude_Language": {
-		"message": "제외할 언어"
+		"message": "Exclude Language"
 	},
 	"Exclude_Website": {
 		"message": "Exclude Website"
@@ -156,19 +156,19 @@
 		"message": "How to use"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "이 확장 프로그램 사용 방법 확인"
+		"message": "Check how to use this extension"
 	},
 	"PDF_Viewer": {
-		"message": "PDF 뷰어"
+		"message": "PDF Viewer"
 	},
 	"Translate_local_PDF_file": {
-		"message": "로컬 PDF 파일 번역"
+		"message": "Translate local PDF file"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook 리더"
+		"message": "Ebook Reader"
 	},
 	"Translate_local_ebook_file": {
-		"message": "로컬 ebook 파일 번역"
+		"message": "Translate local ebook file"
 	},
 	"Twitter": {
 		"message": "Twitter"
@@ -207,9 +207,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "마우스 툴팁 번역기"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "마우스 툴팁 번역기 Google 번역을 사용하여 마우스 오버 텍스트를 번역합니다. Support OCR, TTS, manga translator & pdf translator."
+		"message": "Mouse Tooltip Translator translate mouseover text using google translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }
