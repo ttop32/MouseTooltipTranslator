@@ -6,10 +6,10 @@
 		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Fare İpucu Çevirisi"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "İpucu Ne Zaman Gösterilsin"
 	},
 	"Voice_When": {
 		"message": "Voice When"
@@ -24,19 +24,19 @@
 		"message": "Translate Into"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Çeviri Motoru"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Fare Hareketi Yazı Tipi"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Yazım Dili"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "OCR Dili"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Ters Çeviri Dili"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -45,37 +45,37 @@
 		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "İpucu Yazı Boyutu"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "İpucu Genişliği"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "İpucu Mesafesi"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "İpucu Animasyonu"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "İpucu Konumu"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "İpucu Metin Hizalaması"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "İpucu Arkaplanı Şeffaflığı"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Mouseover Highlight Text"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "İpucu Yazı Rengi"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "İpucu Arkaplanı Rengi"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "İpucu Kenarlığı Rengi"
 	},
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Mouseover Text Highlight Color"
@@ -87,16 +87,16 @@
 		"message": "VOICE"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Ses Seviyesi"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Ses Hızı"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Ses Hedefi"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Ses Tekrarı"
 	},
 	"Voice_for_": {
 		"message": "Voice for "
@@ -114,7 +114,7 @@
 		"message": "OCR When"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "Altyazıyı Algıla"
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
@@ -126,7 +126,7 @@
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "İpucu Kaynak Metni"
 	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Tooltip Info Source Language"
@@ -135,7 +135,7 @@
 		"message": "Tooltip Info Transliteration"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "İpucu Süre Aralığı"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -144,7 +144,7 @@
 		"message": "EXCLUDE"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Dili Hariç Tut"
 	},
 	"Exclude_Website": {
 		"message": "Exclude Website"
