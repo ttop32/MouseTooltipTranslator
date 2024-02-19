@@ -124,7 +124,8 @@ npm run build        // or 'npm run watch' for developing
 
 # Language locale
 - We are looking for any locale contributor. Feel free to make any pull request on bellow path.  
-  - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)  
+  - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
+- [crowdin](https://crowdin.com/project/mousetooltiptranslator) 
 - User can change this extension user interface Language by change browser UI language from   
   - [chrome://settings/languages](chrome://settings/languages)  
  
