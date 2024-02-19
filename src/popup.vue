@@ -333,6 +333,8 @@ var translatorList = {
   "googleV2 (Experimental)": "googleV2",
   "googleWebImage (Experimental)": "googleWebImage",
   // chatgpt: "chatgpt",
+  // "lingva (Experimental)": "lingva",
+  // "libreTranslate (Experimental)": "libreTranslate",
 };
 
 var translateActionList = {
@@ -597,6 +599,13 @@ var reviewReminder = {
   url: util.getReviewUrl(),
 };
 
+var langPriorityOptionList = [
+  "translateSource",
+  "translateTarget",
+  "writingLanguage",
+  "translateReverseTarget",
+];
+
 function getRangeOption(start, end, scale, roundOff) {
   var optionList = {};
   for (let i = start; i < end; i++) {
@@ -605,13 +614,6 @@ function getRangeOption(start, end, scale, roundOff) {
   }
   return optionList;
 }
-
-var langPriorityOptionList = [
-  "translateSource",
-  "translateTarget",
-  "writingLanguage",
-  "translateReverseTarget",
-];
 
 export default {
   name: "app",

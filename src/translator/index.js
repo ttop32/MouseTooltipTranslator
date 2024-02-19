@@ -9,6 +9,8 @@ import googleV2 from "./googleV2.js";
 import googleGTX from "./googleGTX.js";
 import chatgpt from "./chatgpt.js";
 import googleWebImage from "./googleWebImage.js";
+import libreTranslate from "./libretranslate.js";
+import lingva from "./lingva.js";
 
 export default {
   google,
@@ -22,4 +24,6 @@ export default {
   yandex,
   baidu,
   chatgpt,
+  libreTranslate,
+  lingva,
 };
