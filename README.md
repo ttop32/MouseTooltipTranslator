@@ -35,6 +35,95 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
 
 
+
+# Build yourself to install
+
+1. Install node js, <https://nodejs.org/en/> , node 18
+2. open terminal and type below
+
+```console
+git clone https://github.com/ttop32/MouseTooltipTranslator.git
+cd MouseTooltipTranslator
+npm install 
+npm run build        // or 'npm run watch' for developing
+```
+
+3. You will see MouseTooltipTranslator/build path
+4. Open chrome browser and goto chrome://extensions/
+5. Turn on top right corner developer mode
+6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
+
+
+
+# Language locale
+- We are looking for any locale contributor. Feel free to make any pull request on bellow path.  
+  - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)  
+- [crowdin](https://crowdin.com/project/mousetooltiptranslator) 
+- User can change this extension user interface Language by change browser UI language from   
+  - [chrome://settings/languages](chrome://settings/languages)  
+ 
+
+
+| Locale code | Language (region) |
+| ------------- | ------------- |
+| ar  | Arabic |
+| am  | Amharic |
+| bg  | Bulgarian |
+| bn  | Bengali |
+| ca  | Catalan |
+| cs  | Czech |
+| da  | Danish |
+| de  | German |
+| el  | Greek |
+| en  | English |
+| en_AU  | English (Australia) |
+| en_GB  | English (Great Britain) |
+| en_US  | English (USA) |
+| es  | Spanish |
+| es_419  | Spanish (Latin America and Caribbean) |
+| et  | Estonian |
+| fa  | Persian |
+| fi  | Finnish |
+| fil  | Filipino |
+| fr  | French |
+| gu  | Gujarati |
+| he  | Hebrew |
+| hi  | Hindi |
+| hr  | Croatian |
+| hu  | Hungarian |
+| id  | Indonesian |
+| it  | Italian |
+| ja  | Japanese |
+| kn  | Kannada |
+| ko  | Korean |
+| lt  | Lithuanian |
+| lv  | Latvian |
+| ml  | Malayalam |
+| mr  | Marathi |
+| ms  | Malay |
+| nl  | Dutch |
+| no  | Norwegian |
+| pl  | Polish |
+| pt_BR  | Portuguese (Brazil) |
+| pt_PT  | Portuguese (Portugal) |
+| ro  | Romanian |
+| ru  | Russian |
+| sk  | Slovak |
+| sl  | Slovenian |
+| sr  | Serbian |
+| sv  | Swedish |
+| sw  | Swahili |
+| ta  | Tamil |
+| te  | Telugu |
+| th  | Thai |
+| tr  | Turkish |
+| uk  | Ukrainian |
+| vi  | Vietnamese |
+| zh_CN  | Chinese (China) |
+| zh_TW  | Chinese (Taiwan) |
+
+
+
   
 # Contributors
 <!-- readme: contributors -start -->
@@ -101,93 +190,11 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 <!-- readme: contributors -end -->
 
 
+# Contributors Crowdin
 
+<!-- CROWDIN-CONTRIBUTORS-START -->
 
-# Build yourself to install
-
-1. Install node js, <https://nodejs.org/en/> , node 18
-2. open terminal and type below
-
-```console
-git clone https://github.com/ttop32/MouseTooltipTranslator.git
-cd MouseTooltipTranslator
-npm install 
-npm run build        // or 'npm run watch' for developing
-```
-
-3. You will see MouseTooltipTranslator/build path
-4. Open chrome browser and goto chrome://extensions/
-5. Turn on top right corner developer mode
-6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
-
-
-
-# Language locale
-- We are looking for any locale contributor. Feel free to make any pull request on bellow path.  
-  - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)
-- [crowdin](https://crowdin.com/project/mousetooltiptranslator) 
-- User can change this extension user interface Language by change browser UI language from   
-  - [chrome://settings/languages](chrome://settings/languages)  
- 
-
-
-| Locale code | Language (region) |
-| ------------- | ------------- |
-| ar  | Arabic |
-| am  | Amharic |
-| bg  | Bulgarian |
-| bn  | Bengali |
-| ca  | Catalan |
-| cs  | Czech |
-| da  | Danish |
-| de  | German |
-| el  | Greek |
-| en  | English |
-| en_AU  | English (Australia) |
-| en_GB  | English (Great Britain) |
-| en_US  | English (USA) |
-| es  | Spanish |
-| es_419  | Spanish (Latin America and Caribbean) |
-| et  | Estonian |
-| fa  | Persian |
-| fi  | Finnish |
-| fil  | Filipino |
-| fr  | French |
-| gu  | Gujarati |
-| he  | Hebrew |
-| hi  | Hindi |
-| hr  | Croatian |
-| hu  | Hungarian |
-| id  | Indonesian |
-| it  | Italian |
-| ja  | Japanese |
-| kn  | Kannada |
-| ko  | Korean |
-| lt  | Lithuanian |
-| lv  | Latvian |
-| ml  | Malayalam |
-| mr  | Marathi |
-| ms  | Malay |
-| nl  | Dutch |
-| no  | Norwegian |
-| pl  | Polish |
-| pt_BR  | Portuguese (Brazil) |
-| pt_PT  | Portuguese (Portugal) |
-| ro  | Romanian |
-| ru  | Russian |
-| sk  | Slovak |
-| sl  | Slovenian |
-| sr  | Serbian |
-| sv  | Swedish |
-| sw  | Swahili |
-| ta  | Tamil |
-| te  | Telugu |
-| th  | Thai |
-| tr  | Turkish |
-| uk  | Ukrainian |
-| vi  | Vietnamese |
-| zh_CN  | Chinese (China) |
-| zh_TW  | Chinese (Taiwan) |
+<!-- CROWDIN-CONTRIBUTORS-END -->
 
 
 # Privacy policy
