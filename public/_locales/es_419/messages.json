@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "PRINCIPAL                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "PRINCIPAL"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Traductor Emergente con el Mouse"
@@ -93,7 +93,7 @@
 		"message": "Velocidad de Voz"
 	},
 	"Voice_Target": {
-		"message": "Objectivo de Voz"
+		"message": "Objetivo de Voz"
 	},
 	"Voice_Repeat": {
 		"message": "Repetir Voz"
@@ -108,7 +108,7 @@
 		"message": "AVANZADO"
 	},
 	"Translate_Writing_When": {
-		"message": "Traducir Escritura Cuando"
+		"message": "Traducir al Escribir Cuando"
 	},
 	"OCR_When": {
 		"message": "OCR Cuando"
@@ -123,16 +123,16 @@
 		"message": "Pausar Subtítulo al Pasar el Mouse"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Tecla de Cambio de Tipo de Texto al Pasar el Mouse"
+		"message": "Tecla de Intercambio de Tipo de Texto al Pasar el Mouse"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Texto de Fuente de Información de la Ventana Emergente"
+		"message": "Texto de Origen de la Información de la Ventana Emergente"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Idioma de Fuente de Información de la Ventana Emergente"
+		"message": "Idioma de Origen de la Información de la Ventana Emergente"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Transliteración de Información de la Ventana Emergente"
+		"message": "Transliteración de la Información de la Ventana Emergente"
 	},
 	"Tooltip_Interval_Time": {
 		"message": "Tiempo de Intervalo de la Ventana Emergente"
@@ -153,10 +153,10 @@
 		"message": "Acerca de                                      "
 	},
 	"How_to_use": {
-		"message": "Como usar"
+		"message": "Cómo usar"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Consulta cómo usar esta extensión"
+		"message": "Ver cómo usar esta extensión"
 	},
 	"PDF_Viewer": {
 		"message": "Visor de PDF"
@@ -174,10 +174,10 @@
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retwittear publicación de Twitter"
+		"message": "Retweet de publicación de Twitter"
 	},
 	"Review_Page": {
-		"message": "Página de Reseñas"
+		"message": "Página de Reseña"
 	},
 	"Comment_on_this_extension": {
 		"message": "Comentar sobre esta extensión"
@@ -186,7 +186,7 @@
 		"message": "Código Fuente"
 	},
 	"Check_source_code_in_github": {
-		"message": "Ver el código fuente en GitHub"
+		"message": "Ver código fuente en GitHub"
 	},
 	"Privacy_Policy": {
 		"message": "Política de Privacidad"
@@ -207,9 +207,9 @@
 		"message": "Título                                      "
 	},
 	"appName": {
-		"message": "Traductor Emergente con el Mouse para Educación"
+		"message": "Traductor Emergente con el Mouse"
 	},
 	"appDesc": {
-		"message": "El traductor de ventana emergente al pasar mouse utiliza Google Translate. Soporta OCR, TTS, Manga Translator & PDF Translator."
+		"message": "El traductor de ventana emergente al pasar con el mouse utiliza Google Translate. Ofrece soporte para OCR, TTS, Manga Translator & PDF Translator."
 	}
 }
