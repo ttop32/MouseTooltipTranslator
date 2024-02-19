@@ -207,9 +207,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator"
+		"message": "MTT use deepl translator"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator translate mouseover text using google translate. Support OCR, TTS, manga translator & pdf translator."
+		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate. Support OCR, TTS, manga translator & pdf translator."
 	}
 }
