@@ -5,7 +5,6 @@ on:
     paths:
       - README.md
 
-
 jobs:
   contrib-readme-job:
     runs-on: ubuntu-latest
@@ -15,3 +14,29 @@ jobs:
         uses: akhilmhdh/contributors-readme-action@v2.3.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  crowdin-contributors:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate Crowdin Contributors table
+        uses: andrii-bodnar/action-crowdin-contributors@v1.0.1
+        with:
+          contributors_per_line: 5
+          max_contributors: 10000
+          image_size: 100
+          min_words_contributed: 1
+          include_languages: true
+          crowdin_project_link: https://crowdin.com/project/mousetooltiptranslator
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
+      # Commit all changed files back to the repository
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Crowdin Contributors"

@@ -20,7 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.128
-  - spanish locale (contributed by di4m0nds)
+  - Spanish locale (contributed by di4m0nds)
+  - Turkish locale (contributed by Nejdet ACAR)
 - 0.1.127
   - fix tooltip hide conflict
 - 0.1.126
