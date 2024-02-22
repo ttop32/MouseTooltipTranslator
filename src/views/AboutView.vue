@@ -12,7 +12,7 @@
         <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
           <template v-slot:prepend>
             <!-- <v-btn icon="$menu"></v-btn> -->
-            <v-btn dark icon class="mr-4" @click="openMain">
+            <v-btn dark icon class="mr-4" @click="$router.go(-1)">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </template>
@@ -112,9 +112,6 @@ export default {
   methods: {
     openUrl(newURL) {
       window.open(newURL);
-    },
-    openMain() {
-      this.$router.go(-1);
     },
   },
 };
