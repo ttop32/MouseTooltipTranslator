@@ -45,11 +45,13 @@
               variant="tonal"
               closable
               close-label="Close Alert"
-              :title="reviewReminder.name"
+              :title="remainSettingDesc.review_title"
             >
-              {{ reviewReminder.sub_name }}
+              {{ remainSettingDesc.review_subtitle }}
               <template v-slot:append>
-                <v-btn variant="tonal" @click="openUrl(reviewReminder.url)"
+                <v-btn
+                  variant="tonal"
+                  @click="openUrl(remainSettingDesc.review_url)"
                   >Open</v-btn
                 >
               </template>
@@ -65,7 +67,7 @@
             <v-select
               v-if="!option.optionType || option.optionType == 'multipleSelect'"
               v-model="setting[optionName]"
-              :items="option.optionList"
+              :items="wrapTitleValueJson(option.optionList, optionName)"
               :label="option.description"
               :multiple="option.optionType == 'multipleSelect'"
               :chips="option.optionType == 'multipleSelect'"
@@ -78,7 +80,7 @@
             <v-combobox
               v-else-if="option.optionType == 'comboBox'"
               v-model="setting[optionName]"
-              :items="option.optionList"
+              :items="wrapTitleValueJson(option.optionList, optionName)"
               item-text="text"
               item-value="val"
               :label="option.description"
@@ -529,12 +531,9 @@ var tabs = {
 var remainSettingDesc = {
   appName: browser.i18n.getMessage("Mouse_Tooltip_Translator"),
   Voice_for_: browser.i18n.getMessage("Voice_for_"),
-};
-
-var reviewReminder = {
-  name: browser.i18n.getMessage("Review_this"),
-  sub_name: browser.i18n.getMessage("Developer_love_criticism"),
-  url: util.getReviewUrl(),
+  review_title: browser.i18n.getMessage("Review_this"),
+  review_subtitle: browser.i18n.getMessage("Developer_love_criticism"),
+  review_url: util.getReviewUrl(),
 };
 
 var langPriorityOptionList = [
@@ -549,8 +548,8 @@ export default {
   data() {
     return {
       currentTab: "MAIN",
-      tabs: tabs,
-      tabItems: {},
+      tabs,
+      tabItems,
       remainSettingDesc,
       options: {
         mask: "!#XXXXXXXX",
@@ -570,20 +569,14 @@ export default {
           icon: "mdi-cursor-default-click",
         },
       ],
-      reviewReminder,
     };
   },
   async mounted() {
     this.setting = await util.loadSetting();
-    this.loadTabOptionList();
     await this.addTtsVoiceTabOption();
     this.setting["popupCount"]++;
     this.saveSetting();
-
-    console.log(this.setting);
-    console.log(this.tabItems);
   },
-
   computed: {
     settingWrapper() {
       return Object.assign({}, this.setting);
@@ -615,27 +608,17 @@ export default {
           value: val2,
         });
       }
+      //sort priority option
       textValList = this.sortLangOption(textValList, optionName);
       return textValList;
-    },
-    loadTabOptionList() {
-      this.tabItems = tabItems;
-      for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
-        for (const [key1, val1] of Object.entries(tabVal)) {
-          this.tabItems[tabKey][key1]["optionList"] = this.wrapTitleValueJson(
-            this.tabItems[tabKey][key1]["optionList"],
-            key1
-          );
-        }
-      }
     },
     sortLangOption(textValList, optionName) {
       if (!langPriorityOptionList.includes(optionName)) {
         return textValList;
       }
       textValList.sort((i1, i2) => {
-        var i1Priority = this.setting["langPriority"][i1.value] || 0;
-        var i2Priority = this.setting["langPriority"][i2.value] || 0;
+        var i1Priority = this.setting?.["langPriority"]?.[i1.value] || 0;
+        var i2Priority = this.setting?.["langPriority"]?.[i2.value] || 0;
         return i2Priority - i1Priority;
       });
       return textValList;
@@ -664,7 +647,7 @@ export default {
         voiceTabOption["ttsVoice_" + key] = {
           description:
             this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
-          optionList: this.wrapTitleValueJson(voiceOptionList),
+          optionList: voiceOptionList,
         };
       }
 
