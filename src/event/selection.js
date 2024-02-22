@@ -2,7 +2,7 @@
  * Selection related functions
  */
 import $ from "jquery";
-import { debounce } from "throttle-debounce";
+import { debounce, throttle } from "lodash";
 import * as util from "/src/util";
 
 var _win;
@@ -13,9 +13,9 @@ export function enableSelectionEndEvent(
 ) {
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
-  const triggerSelectionEndWithDelay = debounce(textDetectTime, () => {
+  const triggerSelectionEndWithDelay = debounce(() => {
     triggerSelectionEnd(getSelectionText());
-  });
+  }, textDetectTime);
 
   function isNoneSelectElement(element) {
     try {

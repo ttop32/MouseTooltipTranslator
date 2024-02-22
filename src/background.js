@@ -14,6 +14,7 @@ var recentTranslated = "";
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var stopTtsTimestamp = 0;
+var recentRecord = {};
 
 (async function backgroundInit() {
   try {
@@ -23,6 +24,7 @@ var stopTtsTimestamp = 0;
 
     await getSetting(); //  load setting
     addCopyRequestListener(); // listen copy context menu and shortcut key
+    addSaveTranslationKeyListener(); // listen save translation
     addTabSwitchEventListener(); // listen tab switch for kill tts
     addPdfFileTabListener(); //listen drag and drop pdf
     addSearchBarListener(); // listen url search bar for translate omnibox
@@ -123,24 +125,38 @@ function recordHistory({
   targetLang,
   actionType,
 }) {
-  if (setting["historyRecordActions"].includes(actionType)) {
-    //append history to front
-    setting["historyList"].unshift({
-      sourceText,
-      sourceLang,
-      targetText,
-      targetLang,
-      actionType,
-      date: JSON.stringify(new Date()),
-      translator: setting["translatorVendor"],
-    });
+  recentRecord = {
+    sourceText,
+    sourceLang,
+    targetText,
+    targetLang,
+    actionType,
+    date: JSON.stringify(new Date()),
+    translator: setting["translatorVendor"],
+  };
+  insertHistory();
+}
 
+function insertHistory(actionType) {
+  if (
+    setting["historyRecordActions"].includes(recentRecord.actionType) ||
+    actionType
+  ) {
+    var record = actionType
+      ? util.concatJson(recentRecord, { actionType })
+      : recentRecord;
+    //append history to front
+    setting["historyList"].unshift(record);
     //remove when too many list
     if (setting["historyList"].length > 10000) {
       setting["historyList"].pop();
     }
     setting.save();
   }
+}
+
+function addSaveTranslationKeyListener() {
+  util.addCommandListener("save-translation", () => insertHistory("shortcut"));
 }
 
 // ================= Copy
@@ -182,43 +198,43 @@ function requestCopyOnTab(text) {
 
 // ================= contents script reinjection after upgrade or install
 async function injectContentScriptForAllTab() {
-  browser.runtime.onInstalled.addListener(async (details) => {
-    // skip if development mode
-    if (util.checkInDevMode()) {
-      return;
-    }
+  // browser.runtime.onInstalled.addListener(async (details) => {
+  // skip if development mode
+  if (util.checkInDevMode()) {
+    return;
+  }
 
-    // if extension is upgrade or new install, refresh all tab
-    for (const cs of browser.runtime.getManifest().content_scripts) {
-      for (const tab of await browser.tabs.query({ url: cs.matches })) {
-        if (
-          /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com|https:\/\/chromewebstore\.google\.com|chrome-extension:\/\/).*/.test(
-            tab.url
-          )
-        ) {
-          continue;
-        }
+  // if extension is upgrade or new install, refresh all tab
+  for (const cs of browser.runtime.getManifest().content_scripts) {
+    for (const tab of await browser.tabs.query({ url: cs.matches })) {
+      if (
+        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com|https:\/\/chromewebstore\.google\.com|chrome-extension:\/\/).*/.test(
+          tab.url
+        )
+      ) {
+        continue;
+      }
 
-        try {
-          //load css and js on opened tab
-          if (cs.css) {
-            browser.scripting.insertCSS({
-              target: { tabId: tab.id },
-              files: cs.css,
-            });
-          }
-          if (cs.js) {
-            browser.scripting.executeScript({
-              target: { tabId: tab.id },
-              files: cs.js,
-            });
-          }
-        } catch (error) {
-          console.log(error);
+      try {
+        //load css and js on opened tab
+        if (cs.css) {
+          browser.scripting.insertCSS({
+            target: { tabId: tab.id },
+            files: cs.css,
+          });
         }
+        if (cs.js) {
+          browser.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: cs.js,
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
-  });
+  }
+  // });
 }
 
 function addUninstallUrl(url) {

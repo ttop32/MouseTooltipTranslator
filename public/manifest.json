@@ -35,6 +35,12 @@
         "default": "Ctrl+Shift+1"
       },
       "description": "Copy Translated Text"
+    },
+    "save-translation": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2"
+      },
+      "description": "Save Translation"
     }
   },
   "omnibox": { "keyword" : "/" },

@@ -1,5 +1,6 @@
 import delay from "delay";
 import $ from "jquery";
+import ky from "ky";
 
 import * as util from "/src/util";
 
@@ -19,6 +20,7 @@ async function initPdf() {
   addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
   await delay(1000); //wait pdf load // run again if text rendered not called
   addSpaceBetweenPdfText();
+  // initButton();
 }
 
 //if current url is local file and no file permission
@@ -139,4 +141,56 @@ function addCustomKeystroke() {
         break;
     }
   });
+}
+
+function initButton() {
+  var dd = `
+  <button id="viewReader" class="toolbarButton" title="Reader Mode options" aria-expanded="false" aria-controls="readerToolbar" tabindex="29">
+    <span>Reader Mode</span>
+  </button>
+  `;
+
+  var button = $("<button />", {
+    id: "toolbarAddon",
+    class: "toolbarButton",
+    title: "Reader Mode options1",
+    on: {
+      click: function () {
+        // alert("ssss");
+
+        DownloadFromUrl(location.href, "pdf");
+      },
+    },
+  });
+
+  $("#toolbarViewerRight").prepend(button);
+
+  PDFViewerApplication.pdfDocument.getData;
+  // this._ensureDownloadComplete();
+  // const data = await this.pdfDocument.getData();
+  // const blob = new Blob([data], {
+  //   type: "application/pdf"
+  // });
+  // await this.downloadManager.download(blob, url, filename, options);
+}
+
+async function DownloadFromUrl(url, mime, fileName) {
+  fileName = "Mouse_Tooltip_Translator_History.pdf";
+
+  var data = await PDFViewerApplication.pdfDocument.getData();
+  var blob = new Blob([data], {
+    type: "application/pdf",
+  });
+  var file = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = file;
+  link.download = fileName;
+  link.click();
+
+  // await this.downloadManager.download(blob, url, fileName, options);
+
+  // var url = window.location.href;
+  // var blob = await fetch(url).then((r) => r.blob());
+  // var url = URL.createObjectURL(blob);
 }

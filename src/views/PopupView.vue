@@ -1,202 +1,135 @@
 <template>
-  <v-app id="app">
-    <v-fade-transition hide-on-leave>
-      <!-- main page ====================================== -->
-      <div v-if="currentPage == 'main'" tile flat>
-        <v-toolbar color="blue" dark dense>
-          <v-toolbar-title>
-            <div>{{ remainSettingDesc["appName"] }}</div>
-          </v-toolbar-title>
-          <v-btn icon @click="currentPage = 'history'">
-            <v-icon>mdi-history</v-icon>
-          </v-btn>
-          <v-app-bar-nav-icon
-            @click="currentPage = 'about'"
-          ></v-app-bar-nav-icon>
+  <popupWindow>
+    <!-- main page ====================================== -->
+    <div tile flat>
+      <v-toolbar color="blue" dark dense>
+        <v-toolbar-title>
+          <div>{{ remainSettingDesc["appName"] }}</div>
+        </v-toolbar-title>
+        <v-btn icon @click="$router.push('/history')">
+          <v-icon>mdi-history</v-icon>
+        </v-btn>
+        <v-app-bar-nav-icon
+          @click="$router.push('/about')"
+        ></v-app-bar-nav-icon>
 
-          <!-- tab header -->
-          <template v-slot:extension>
-            <v-tabs
-              v-model="currentTab"
-              center-active
-              show-arrows
-              slider-color="red"
-            >
-              <v-tab v-for="(tabName, tabId) in tabs" :key="tabId">
-                {{ tabName }}
-              </v-tab>
-            </v-tabs>
-          </template>
-        </v-toolbar>
-
-        <!-- main page contents -->
-        <v-window v-model="currentTab">
-          <v-window-item
-            v-for="(tabName, tabId) in tabs"
-            :key="tabId"
-            :value="tabId"
-            class="scrollList"
+        <!-- tab header -->
+        <template v-slot:extension>
+          <v-tabs
+            v-model="currentTab"
+            center-active
+            show-arrows
+            slider-color="red"
           >
-            <!-- review request alert box -->
-            <div v-if="tabId == 'MAIN'">
-              <v-alert
-                v-if="2 < setting['popupCount'] && setting['popupCount'] < 6"
-                type="success"
-                border="start"
-                variant="tonal"
-                closable
-                close-label="Close Alert"
-                :title="reviewReminder.name"
-              >
-                {{ reviewReminder.sub_name }}
-                <template v-slot:append>
-                  <v-btn variant="tonal" @click="openUrl(reviewReminder.url)"
-                    >Open</v-btn
-                  >
-                </template>
-              </v-alert>
-            </div>
+            <v-tab v-for="(tabName, tabId) in tabs" :key="tabId">
+              {{ tabName }}
+            </v-tab>
+          </v-tabs>
+        </template>
+      </v-toolbar>
 
-            <v-list-item
-              v-for="(option, optionName) in tabItems[tabId]"
-              :key="optionName"
-              flat
+      <!-- main page contents -->
+      <v-window v-model="currentTab">
+        <v-window-item
+          v-for="(tabName, tabId) in tabs"
+          :key="tabId"
+          :value="tabId"
+          class="scrollList"
+        >
+          <!-- review request alert box -->
+          <div v-if="tabId == 'MAIN'">
+            <v-alert
+              v-if="2 < setting['popupCount'] && setting['popupCount'] < 6"
+              type="success"
+              border="start"
+              variant="tonal"
+              closable
+              close-label="Close Alert"
+              :title="reviewReminder.name"
             >
-              <!-- single select (default null) and multiple select option -->
-              <v-select
-                v-if="
-                  !option.optionType || option.optionType == 'multipleSelect'
-                "
-                v-model="setting[optionName]"
-                :items="option.optionList"
-                :label="option.description"
-                :multiple="option.optionType == 'multipleSelect'"
-                :chips="option.optionType == 'multipleSelect'"
-                :closable-chips="option.optionType == 'multipleSelect'"
-                variant="underlined"
-              >
-              </v-select>
+              {{ reviewReminder.sub_name }}
+              <template v-slot:append>
+                <v-btn variant="tonal" @click="openUrl(reviewReminder.url)"
+                  >Open</v-btn
+                >
+              </template>
+            </v-alert>
+          </div>
 
-              <!-- combo box option -->
-              <v-combobox
-                v-else-if="option.optionType == 'comboBox'"
-                v-model="setting[optionName]"
-                :items="option.optionList"
-                item-text="text"
-                item-value="val"
-                :label="option.description"
-                tabName
-                chips
-                multiple
-                closable-chips
-                variant="underlined"
-              >
-              </v-combobox>
-
-              <!-- color picker option -->
-              <v-text-field
-                v-else-if="option.optionType == 'colorPicker'"
-                v-model="setting[optionName]"
-                :label="option.description"
-                variant="underlined"
-                v-maska:[options]
-              >
-                <template v-slot:append>
-                  <v-menu v-model="option.menu" :close-on-content-click="false">
-                    <template v-slot:activator="{ props }">
-                      <div
-                        :style="swatchStyle(option, optionName)"
-                        v-bind="props"
-                        class="ma-1"
-                      />
-                    </template>
-                    <v-card>
-                      <v-color-picker
-                        v-model="setting[optionName]"
-                      ></v-color-picker>
-                    </v-card>
-                  </v-menu>
-                </template>
-              </v-text-field>
-            </v-list-item>
-
-            <!-- </v-list> -->
-            <!-- </v-card> -->
-          </v-window-item>
-        </v-window>
-
-        <!-- tab body------------------- -->
-      </div>
-
-      <!-- about page ====================================== -->
-      <div v-else-if="currentPage == 'about'">
-        <AboutPage></AboutPage>
-      </div>
-
-      <!-- history page ====================================== -->
-      <div v-else-if="currentPage == 'history'">
-        <v-toolbar color="blue" dark dense>
-          <v-btn icon @click="currentPage = 'main'">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-toolbar-title>History</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon @click="removeAllHistory">
-            <v-icon>mdi-trash-can</v-icon>
-          </v-btn>
-          <v-btn icon @click="downloadCSV">
-            <v-icon>mdi-download</v-icon>
-          </v-btn>
-        </v-toolbar>
-
-        <v-list class="scrollList">
-          <v-card-text>
-            <span class="subheading">Record Text When</span>
-            <v-chip-group
-              multiple
-              active-class="primary--text"
-              v-model="setting['historyRecordActions']"
-              @change="changeSetting"
-            >
-              <v-chip
-                v-for="action in historyRecordActionChipList"
-                :value="action.name"
-                filter
-                :key="action.name"
-              >
-                {{ action.name }}
-              </v-chip>
-            </v-chip-group>
-          </v-card-text>
-          <v-divider class="mx-4"></v-divider>
-
-          <!-- name="list" tag="div" -->
           <v-list-item
-            v-for="(history, index) in setting['historyList']"
-            :key="history"
-            :title="history.sourceText"
-            :subtitle="history.targetText"
+            v-for="(option, optionName) in tabItems[tabId]"
+            :key="optionName"
+            flat
           >
-            <template v-slot:append>
-              <v-icon
-                color="grey lighten-1"
-                @click.prevent="removeHistory(index)"
-                @mousedown.stop
-                @touchstart.native.stop
-                >mdi-close</v-icon
-              >
-            </template>
+            <!-- single select (default null) and multiple select option -->
+            <v-select
+              v-if="!option.optionType || option.optionType == 'multipleSelect'"
+              v-model="setting[optionName]"
+              :items="option.optionList"
+              :label="option.description"
+              :multiple="option.optionType == 'multipleSelect'"
+              :chips="option.optionType == 'multipleSelect'"
+              :closable-chips="option.optionType == 'multipleSelect'"
+              variant="underlined"
+            >
+            </v-select>
+
+            <!-- combo box option -->
+            <v-combobox
+              v-else-if="option.optionType == 'comboBox'"
+              v-model="setting[optionName]"
+              :items="option.optionList"
+              item-text="text"
+              item-value="val"
+              :label="option.description"
+              tabName
+              chips
+              multiple
+              closable-chips
+              variant="underlined"
+            >
+            </v-combobox>
+
+            <!-- color picker option -->
+            <v-text-field
+              v-else-if="option.optionType == 'colorPicker'"
+              v-model="setting[optionName]"
+              :label="option.description"
+              variant="underlined"
+              v-maska:[options]
+            >
+              <template v-slot:append>
+                <v-menu v-model="option.menu" :close-on-content-click="false">
+                  <template v-slot:activator="{ props }">
+                    <div
+                      :style="swatchStyle(option, optionName)"
+                      v-bind="props"
+                      class="ma-1"
+                    />
+                  </template>
+                  <v-card>
+                    <v-color-picker
+                      v-model="setting[optionName]"
+                    ></v-color-picker>
+                  </v-card>
+                </v-menu>
+              </template>
+            </v-text-field>
           </v-list-item>
-        </v-list>
-      </div>
-    </v-fade-transition>
-  </v-app>
+
+          <!-- </v-list> -->
+          <!-- </v-card> -->
+        </v-window-item>
+      </v-window>
+
+      <!-- tab body------------------- -->
+    </div>
+  </popupWindow>
 </template>
 <script>
 import browser from "webextension-polyfill";
 import { isProxy, toRaw } from "vue";
-import AboutPage from "./components/about.vue";
-import { cloneDeep } from "lodash";
+import _ from "lodash";
 
 import * as util from "/src/util";
 
@@ -335,6 +268,11 @@ var translatorList = {
   // chatgpt: "chatgpt",
   // "lingva (Experimental)": "lingva",
   // "libreTranslate (Experimental)": "libreTranslate",
+  // "duckduckgo (Experimental)": "duckduckgo",
+  // "myMemory (Experimental)": "myMemory",
+  // "watson (Experimental)": "watson",
+  // "pixabay (Experimental)": "pixabay",
+  // "unsplash (Experimental)": "unsplash",
 };
 
 var translateActionList = {
@@ -343,14 +281,14 @@ var translateActionList = {
   "Mouseover & Select": "mouseoverselect",
 };
 
-var tooltipFontSizeList = getRangeOption(5, 41, 1, 0); //font size 5 to 25
-var tooltipWidth = getRangeOption(1, 11, 100, 0);
-var voiceVolumeList = getRangeOption(0, 11, 0.1, 1);
-var voiceRateList = getRangeOption(5, 21, 0.1, 1);
-var voiceRepeatList = getRangeOption(1, 11, 1, 0);
-var tooltipBackgroundBlurList = getRangeOption(0, 21, 1, 0);
-var tooltipDistanceList = getRangeOption(0, 41, 1, 0);
-var tooltipIntervalTimeList = getRangeOption(5, 21, 0.1, 1);
+var tooltipFontSizeList = util.getRangeOption(6, 41, 2, 0);
+var tooltipWidth = util.getRangeOption(100, 1001, 100, 0);
+var voiceVolumeList = util.getRangeOption(0, 1.1, 0.1, 1);
+var voiceRateList = util.getRangeOption(0.5, 2.1, 0.1, 1);
+var voiceRepeatList = util.getRangeOption(1, 11);
+var tooltipBackgroundBlurList = util.getRangeOption(0, 21);
+var tooltipDistanceList = util.getRangeOption(0, 41);
+var tooltipIntervalTimeList = util.getRangeOption(0.5, 2.1, 0.1, 1);
 
 var tooltipPositionList = {
   Follow: "follow",
@@ -370,7 +308,7 @@ var detectTypeList = {
   Container: "container",
 };
 
-var keyListWithAlways = cloneDeep(keyList); //copy lang and add auto
+var keyListWithAlways = _.cloneDeep(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
 
 var voiceTargetList = {
@@ -606,25 +544,14 @@ var langPriorityOptionList = [
   "translateReverseTarget",
 ];
 
-function getRangeOption(start, end, scale, roundOff) {
-  var optionList = {};
-  for (let i = start; i < end; i++) {
-    var num = String((i * scale).toFixed(roundOff));
-    optionList[num] = num;
-  }
-  return optionList;
-}
-
 export default {
-  name: "app",
-  components: { AboutPage },
+  name: "PopupView",
   data() {
     return {
       currentTab: "MAIN",
       tabs: tabs,
       tabItems: {},
-      remainSettingDesc: remainSettingDesc,
-      height: window.innerHeight,
+      remainSettingDesc,
       options: {
         mask: "!#XXXXXXXX",
         tokens: {
@@ -652,7 +579,9 @@ export default {
     await this.addTtsVoiceTabOption();
     this.setting["popupCount"]++;
     this.saveSetting();
-    this.applyRtl(util.getDefaultLang());
+
+    console.log(this.setting);
+    console.log(this.tabItems);
   },
 
   computed: {
@@ -671,45 +600,11 @@ export default {
   },
 
   methods: {
-    applyRtl(locale) {
-      if (util.isRtl(locale) == "rtl") {
-        this.$vuetify.locale.current = locale;
-      }
-    },
     saveSetting() {
       toRaw(this.setting).save();
     },
     openUrl(newURL) {
       window.open(newURL);
-    },
-    removeAllHistory() {
-      this.setting["historyList"] = [];
-      this.saveSetting();
-    },
-    removeHistory(index) {
-      this.setting["historyList"].splice(index, 1);
-      this.saveSetting();
-    },
-    downloadCSV() {
-      var headerKey = Object.keys(this.setting["historyList"]?.[0]).map(
-        (key) => `${key}`
-      );
-
-      var csvContent = this.setting["historyList"].map((history) => {
-        var line = "";
-        for (var key of headerKey) {
-          line +=
-            (history?.[key]?.toString().replace(/[,'"]/g, " ") || "") + ",";
-        }
-        return line;
-      });
-
-      csvContent = [headerKey.join(",")].concat(csvContent).join("\n");
-      var url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.href = url;
-      link.download = "Mouse_Tooltip_Translator_History.csv";
-      link.click();
     },
     wrapTitleValueJson(inputList, optionName) {
       // convert {key:item}  as {title:key, value:item}
@@ -757,7 +652,6 @@ export default {
         }
       }
     },
-
     async addTtsVoiceTabOption() {
       var voiceTabOption = {};
       var availableVoiceList = await util.getAllVoiceList();
@@ -796,8 +690,4 @@ export default {
   },
 };
 </script>
-<style>
-.v-input .v-label {
-  font-size: 16px !important;
-}
-</style>
+<style></style>

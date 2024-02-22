@@ -6,19 +6,20 @@
 
 // load vue and component
 import { createApp } from "vue";
-import App from "./popup.vue";
-// Vuetify css
-import "typeface-roboto/index.css"; //font for vuetify
-import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
-import "vuetify/dist/vuetify.min.css"; //vuetify css
+import App from "/src/App.vue";
+import router from "/src/router";
+import PopupWindow from "/src/components/popupWindow.vue";
 
-// import { aliases, mdi } from "vuetify/iconsets/mdi";
+//pinia
+import { createPinia } from "pinia";
 
 // vuetify main
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
+
 // input mask
 import { vMaska } from "maska";
 
@@ -32,4 +33,10 @@ const vuetify = createVuetify({
   },
 });
 
-createApp(App).directive("maska", vMaska).use(vuetify).mount("#app");
+createApp(App)
+  .directive("maska", vMaska)
+  .use(vuetify)
+  .use(createPinia())
+  .use(router)
+  .component("popupWindow", PopupWindow)
+  .mount("#app");

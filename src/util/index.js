@@ -1084,3 +1084,11 @@ export function getCurrentUrl() {
     ? document.referrer
     : document.location.href;
 }
+
+export function getRangeOption(start, end, incNum = 1, roundOff = 0) {
+  return _.keyBy(
+    _.range(start, end, incNum)
+      .map((num) => num.toFixed(roundOff))
+      .map((num) => String(num))
+  );
+}
