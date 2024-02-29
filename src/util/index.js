@@ -7,6 +7,12 @@ import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import { Setting } from "./setting.js";
 
+import {
+  rtlLangList,
+  bingTtsVoiceList,
+  googleTranslateTtsLangList,
+} from "/src/util/lang.js";
+
 var browser;
 try {
   browser = require("webextension-polyfill");
@@ -69,34 +75,19 @@ export var defaultData = {
   popupCount: "0",
   langPriority: { auto: 9999999, null: 9999999 },
   tooltipIntervalTime: "0.7",
-};
 
-var rtlLangList = [
-  "ar", ///Arabic
-  "az", ///Azerbaijani
-  "bm", ///Bambara
-  "dv", ///Dhivehi
-  "doi", ///Dogri
-  "ha", ///Hausa
-  "iw", ///Hebrew
-  "kk", ///Kazakh
-  "ku", ///Kurdish
-  "ckb", ///Kurdish Sorani
-  "ky", ///Kyrgyz
-  "ml", ///Malayalam
-  "ps", ///Pashto
-  "fa", ///Persian
-  "sd", ///Sindhi
-  "so", ///Somali
-  "su", ///Sundanese
-  "tg", ///Tajik
-  "tk", ///Turkmen
-  "ur", ///Urdu
-  "ug", ///Uyghur
-  "uz", ///Uzbek
-  "yi", ///Yiddish
-  "yo", ///Yoruba
-]; //right to left language system list
+  cardListen: [],
+  cardTagSelected: [],
+  deckStatus: {},
+  deck: [],
+  stagedDeckStatus: 0,
+  cardNewStartLen: 0,
+  cardReviewStartLen: 0,
+  cardLearningStartLen: 0,
+  cardNewFinLen: 0,
+  cardReviewFinLen: 0,
+  cardAllFinLen: 0,
+};
 
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
@@ -105,476 +96,8 @@ var reviewUrlJson = {
     "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
 };
 
-export var langList = {
-  Afrikaans: "af",
-  Albanian: "sq",
-  Amharic: "am",
-  Arabic: "ar",
-  Armenian: "hy",
-  Assamese: "as",
-  Aymara: "ay",
-  Azerbaijani: "az",
-  Bambara: "bm",
-  Basque: "eu",
-  Belarusian: "be",
-  Bengali: "bn",
-  Bhojpuri: "bho",
-  Bosnian: "bs",
-  Bulgarian: "bg",
-  Catalan: "ca",
-  Cebuano: "ceb",
-  ChineseSimplified: "zh-CN",
-  ChineseTraditional: "zh-TW",
-  Corsican: "co",
-  Croatian: "hr",
-  Czech: "cs",
-  Danish: "da",
-  Dhivehi: "dv",
-  Dogri: "doi",
-  Dutch: "nl",
-  English: "en",
-  Esperanto: "eo",
-  Estonian: "et",
-  Ewe: "ee",
-  Filipino: "tl",
-  Finnish: "fi",
-  French: "fr",
-  Frisian: "fy",
-  Galician: "gl",
-  Georgian: "ka",
-  German: "de",
-  Greek: "el",
-  Guarani: "gn",
-  Gujarati: "gu",
-  HaitianCreole: "ht",
-  Hausa: "ha",
-  Hawaiian: "haw",
-  Hebrew: "iw",
-  Hindi: "hi",
-  Hmong: "hmn",
-  Hungarian: "hu",
-  Icelandic: "is",
-  Igbo: "ig",
-  Ilocano: "ilo",
-  Indonesian: "id",
-  Irish: "ga",
-  Italian: "it",
-  Japanese: "ja",
-  Javanese: "jw",
-  Kannada: "kn",
-  Kazakh: "kk",
-  Khmer: "km",
-  Kinyarwanda: "rw",
-  Konkani: "gom",
-  Korean: "ko",
-  Krio: "kri",
-  Kurdish: "ku",
-  KurdishSorani: "ckb",
-  Kyrgyz: "ky",
-  Lao: "lo",
-  Latin: "la",
-  Latvian: "lv",
-  Lingala: "ln",
-  Lithuanian: "lt",
-  Luganda: "lg",
-  Luxembourgish: "lb",
-  Macedonian: "mk",
-  Maithili: "mai",
-  Malagasy: "mg",
-  Malay: "ms",
-  Malayalam: "ml",
-  Maltese: "mt",
-  Maori: "mi",
-  Marathi: "mr",
-  // Meiteilon: "mni-Mtei",
-  Mizo: "lus",
-  Mongolian: "mn",
-  Myanmar: "my",
-  Nepali: "ne",
-  Norwegian: "no",
-  Nyanja: "ny",
-  Odia: "or",
-  Oromo: "om",
-  Pashto: "ps",
-  Persian: "fa",
-  Polish: "pl",
-  Portuguese: "pt",
-  Punjabi: "pa",
-  Quechua: "qu",
-  Romanian: "ro",
-  Russian: "ru",
-  Samoan: "sm",
-  Sanskrit: "sa",
-  ScotsGaelic: "gd",
-  Sepedi: "nso",
-  Serbian: "sr",
-  Sesotho: "st",
-  Shona: "sn",
-  Sindhi: "sd",
-  Sinhala: "si",
-  Slovak: "sk",
-  Slovenian: "sl",
-  Somali: "so",
-  Spanish: "es",
-  Sundanese: "su",
-  Swahili: "sw",
-  Swedish: "sv",
-  Tajik: "tg",
-  Tamil: "ta",
-  Tatar: "tt",
-  Telugu: "te",
-  Thai: "th",
-  Tigrinya: "ti",
-  Tsonga: "ts",
-  Turkish: "tr",
-  Turkmen: "tk",
-  Twi: "ak",
-  Ukrainian: "uk",
-  Urdu: "ur",
-  Uyghur: "ug",
-  Uzbek: "uz",
-  Vietnamese: "vi",
-  Welsh: "cy",
-  Xhosa: "xh",
-  Yiddish: "yi",
-  Yoruba: "yo",
-  Zulu: "zu",
-};
-
-export var langListOpposite = _.invert(langList);
-
 export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
-
-var bingTtsVoiceList = {
-  af: ["af-ZA-AdriNeural", "af-ZA-WillemNeural"],
-  sq: ["sq-AL-AnilaNeural", "sq-AL-IlirNeural"],
-  am: ["am-ET-AmehaNeural", "am-ET-MekdesNeural"],
-  ar: [
-    "ar-DZ-AminaNeural",
-    "ar-DZ-IsmaelNeural",
-    "ar-BH-AliNeural",
-    "ar-BH-LailaNeural",
-    "ar-EG-SalmaNeural",
-    "ar-EG-ShakirNeural",
-    "ar-IQ-BasselNeural",
-    "ar-IQ-RanaNeural",
-    "ar-JO-SanaNeural",
-    "ar-JO-TaimNeural",
-    "ar-KW-FahedNeural",
-    "ar-KW-NouraNeural",
-    "ar-LB-LaylaNeural",
-    "ar-LB-RamiNeural",
-    "ar-LY-ImanNeural",
-    "ar-LY-OmarNeural",
-    "ar-MA-JamalNeural",
-    "ar-MA-MounaNeural",
-    "ar-OM-AbdullahNeural",
-    "ar-OM-AyshaNeural",
-    "ar-QA-AmalNeural",
-    "ar-QA-MoazNeural",
-    "ar-SA-HamedNeural",
-    "ar-SA-ZariyahNeural",
-    "ar-SY-AmanyNeural",
-    "ar-SY-LaithNeural",
-    "ar-TN-HediNeural",
-    "ar-TN-ReemNeural",
-    "ar-AE-FatimaNeural",
-    "ar-AE-HamdanNeural",
-    "ar-YE-MaryamNeural",
-    "ar-YE-SalehNeural",
-  ],
-  az: ["az-AZ-BabekNeural", "az-AZ-BanuNeural"],
-  bn: [
-    "bn-BD-NabanitaNeural",
-    "bn-BD-PradeepNeural",
-    "bn-IN-BashkarNeural",
-    "bn-IN-TanishaaNeural",
-  ],
-  bs: ["bs-BA-GoranNeural", "bs-BA-VesnaNeural"],
-  bg: ["bg-BG-BorislavNeural", "bg-BG-KalinaNeural"],
-  my: ["my-MM-NilarNeural", "my-MM-ThihaNeural"],
-  ca: ["ca-ES-EnricNeural", "ca-ES-JoanaNeural"],
-  "zh-HK": [
-    "zh-HK-HiuGaaiNeural",
-    "zh-HK-HiuMaanNeural",
-    "zh-HK-WanLungNeural",
-  ],
-  "zh-CN": [
-    "zh-CN-XiaoxiaoNeural",
-    "zh-CN-XiaoyiNeural",
-    "zh-CN-YunjianNeural",
-    "zh-CN-YunxiNeural",
-    "zh-CN-YunxiaNeural",
-    "zh-CN-YunyangNeural",
-  ],
-  "zh-CN-liaoning": ["zh-CN-liaoning-XiaobeiNeural"],
-  "zh-TW": [
-    "zh-TW-HsiaoChenNeural",
-    "zh-TW-YunJheNeural",
-    "zh-TW-HsiaoYuNeural",
-  ],
-  "zh-CN-shaanxi": ["zh-CN-shaanxi-XiaoniNeural"],
-  hr: ["hr-HR-GabrijelaNeural", "hr-HR-SreckoNeural"],
-  cs: ["cs-CZ-AntoninNeural", "cs-CZ-VlastaNeural"],
-  da: ["da-DK-ChristelNeural", "da-DK-JeppeNeural"],
-  nl: [
-    "nl-BE-ArnaudNeural",
-    "nl-BE-DenaNeural",
-    "nl-NL-ColetteNeural",
-    "nl-NL-FennaNeural",
-    "nl-NL-MaartenNeural",
-  ],
-  en: [
-    "en-AU-NatashaNeural",
-    "en-AU-WilliamNeural",
-    "en-CA-ClaraNeural",
-    "en-CA-LiamNeural",
-    "en-HK-SamNeural",
-    "en-HK-YanNeural",
-    "en-IN-NeerjaNeural",
-    "en-IN-NeerjaNeural",
-    "en-IN-PrabhatNeural",
-    "en-IE-ConnorNeural",
-    "en-IE-EmilyNeural",
-    "en-KE-AsiliaNeural",
-    "en-KE-ChilembaNeural",
-    "en-NZ-MitchellNeural",
-    "en-NZ-MollyNeural",
-    "en-NG-AbeoNeural",
-    "en-NG-EzinneNeural",
-    "en-PH-JamesNeural",
-    "en-PH-RosaNeural",
-    "en-SG-LunaNeural",
-    "en-SG-WayneNeural",
-    "en-ZA-LeahNeural",
-    "en-ZA-LukeNeural",
-    "en-TZ-ElimuNeural",
-    "en-TZ-ImaniNeural",
-    "en-GB-LibbyNeural",
-    "en-GB-MaisieNeural",
-    "en-GB-RyanNeural",
-    "en-GB-SoniaNeural",
-    "en-GB-ThomasNeural",
-    "en-US-AriaNeural",
-    "en-US-AnaNeural",
-    "en-US-ChristopherNeural",
-    "en-US-EricNeural",
-    "en-US-GuyNeural",
-    "en-US-JennyNeural",
-    "en-US-MichelleNeural",
-    "en-US-RogerNeural",
-    "en-US-SteffanNeural",
-  ],
-  et: ["et-EE-AnuNeural", "et-EE-KertNeural"],
-  tl: ["fil-PH-AngeloNeural", "fil-PH-BlessicaNeural"],
-  fi: ["fi-FI-HarriNeural", "fi-FI-NooraNeural"],
-  fr: [
-    "fr-BE-CharlineNeural",
-    "fr-BE-GerardNeural",
-    "fr-CA-AntoineNeural",
-    "fr-CA-JeanNeural",
-    "fr-CA-SylvieNeural",
-    "fr-FR-DeniseNeural",
-    "fr-FR-EloiseNeural",
-    "fr-FR-HenriNeural",
-    "fr-CH-ArianeNeural",
-    "fr-CH-FabriceNeural",
-  ],
-  gl: ["gl-ES-RoiNeural", "gl-ES-SabelaNeural"],
-  ka: ["ka-GE-EkaNeural", "ka-GE-GiorgiNeural"],
-  de: [
-    "de-AT-IngridNeural",
-    "de-AT-JonasNeural",
-    "de-DE-AmalaNeural",
-    "de-DE-ConradNeural",
-    "de-DE-KatjaNeural",
-    "de-DE-KillianNeural",
-    "de-CH-JanNeural",
-    "de-CH-LeniNeural",
-  ],
-  el: ["el-GR-AthinaNeural", "el-GR-NestorasNeural"],
-  gu: ["gu-IN-DhwaniNeural", "gu-IN-NiranjanNeural"],
-  iw: ["he-IL-AvriNeural", "he-IL-HilaNeural"],
-  hi: ["hi-IN-MadhurNeural", "hi-IN-SwaraNeural"],
-  hu: ["hu-HU-NoemiNeural", "hu-HU-TamasNeural"],
-  is: ["is-IS-GudrunNeural", "is-IS-GunnarNeural"],
-  id: ["id-ID-ArdiNeural", "id-ID-GadisNeural"],
-  ga: ["ga-IE-ColmNeural", "ga-IE-OrlaNeural"],
-  it: ["it-IT-DiegoNeural", "it-IT-ElsaNeural", "it-IT-IsabellaNeural"],
-  ja: ["ja-JP-KeitaNeural", "ja-JP-NanamiNeural"],
-  jv: ["jv-ID-DimasNeural", "jv-ID-SitiNeural"],
-  kn: ["kn-IN-GaganNeural", "kn-IN-SapnaNeural"],
-  kk: ["kk-KZ-AigulNeural", "kk-KZ-DauletNeural"],
-  km: ["km-KH-PisethNeural", "km-KH-SreymomNeural"],
-  ko: ["ko-KR-InJoonNeural", "ko-KR-SunHiNeural"],
-  lo: ["lo-LA-ChanthavongNeural", "lo-LA-KeomanyNeural"],
-  lv: ["lv-LV-EveritaNeural", "lv-LV-NilsNeural"],
-  lt: ["lt-LT-LeonasNeural", "lt-LT-OnaNeural"],
-  mk: ["mk-MK-AleksandarNeural", "mk-MK-MarijaNeural"],
-  ms: ["ms-MY-OsmanNeural", "ms-MY-YasminNeural"],
-  ml: ["ml-IN-MidhunNeural", "ml-IN-SobhanaNeural"],
-  mt: ["mt-MT-GraceNeural", "mt-MT-JosephNeural"],
-  mr: ["mr-IN-AarohiNeural", "mr-IN-ManoharNeural"],
-  mn: ["mn-MN-BataaNeural", "mn-MN-YesuiNeural"],
-  ne: ["ne-NP-HemkalaNeural", "ne-NP-SagarNeural"],
-  nb: ["nb-NO-FinnNeural", "nb-NO-PernilleNeural"],
-  ps: ["ps-AF-GulNawazNeural", "ps-AF-LatifaNeural"],
-  fa: ["fa-IR-DilaraNeural", "fa-IR-FaridNeural"],
-  pl: ["pl-PL-MarekNeural", "pl-PL-ZofiaNeural"],
-  pt: [
-    "pt-BR-AntonioNeural",
-    "pt-BR-FranciscaNeural",
-    "pt-PT-DuarteNeural",
-    "pt-PT-RaquelNeural",
-  ],
-  ro: ["ro-RO-AlinaNeural", "ro-RO-EmilNeural"],
-  ru: ["ru-RU-DmitryNeural", "ru-RU-SvetlanaNeural"],
-  sr: ["sr-RS-NicholasNeural", "sr-RS-SophieNeural"],
-  si: ["si-LK-SameeraNeural", "si-LK-ThiliniNeural"],
-  sk: ["sk-SK-LukasNeural", "sk-SK-ViktoriaNeural"],
-  sl: ["sl-SI-PetraNeural", "sl-SI-RokNeural"],
-  so: ["so-SO-MuuseNeural", "so-SO-UbaxNeural"],
-  es: [
-    "es-AR-ElenaNeural",
-    "es-AR-TomasNeural",
-    "es-BO-MarceloNeural",
-    "es-BO-SofiaNeural",
-    "es-CL-CatalinaNeural",
-    "es-CL-LorenzoNeural",
-    "es-CO-GonzaloNeural",
-    "es-CO-SalomeNeural",
-    "es-CR-JuanNeural",
-    "es-CR-MariaNeural",
-    "es-CU-BelkysNeural",
-    "es-CU-ManuelNeural",
-    "es-DO-EmilioNeural",
-    "es-DO-RamonaNeural",
-    "es-EC-AndreaNeural",
-    "es-EC-LuisNeural",
-    "es-SV-LorenaNeural",
-    "es-SV-RodrigoNeural",
-    "es-GQ-JavierNeural",
-    "es-GQ-TeresaNeural",
-    "es-GT-AndresNeural",
-    "es-GT-MartaNeural",
-    "es-HN-CarlosNeural",
-    "es-HN-KarlaNeural",
-    "es-MX-DaliaNeural",
-    "es-MX-JorgeNeural",
-    "es-NI-FedericoNeural",
-    "es-NI-YolandaNeural",
-    "es-PA-MargaritaNeural",
-    "es-PA-RobertoNeural",
-    "es-PY-MarioNeural",
-    "es-PY-TaniaNeural",
-    "es-PE-AlexNeural",
-    "es-PE-CamilaNeural",
-    "es-PR-KarinaNeural",
-    "es-PR-VictorNeural",
-    "es-ES-AlvaroNeural",
-    "es-ES-ElviraNeural",
-    "es-US-AlonsoNeural",
-    "es-US-PalomaNeural",
-    "es-UY-MateoNeural",
-    "es-UY-ValentinaNeural",
-    "es-VE-PaolaNeural",
-    "es-VE-SebastianNeural",
-  ],
-  su: ["su-ID-JajangNeural", "su-ID-TutiNeural"],
-  sw: [
-    "sw-KE-RafikiNeural",
-    "sw-KE-ZuriNeural",
-    "sw-TZ-DaudiNeural",
-    "sw-TZ-RehemaNeural",
-  ],
-  sv: ["sv-SE-MattiasNeural", "sv-SE-SofieNeural"],
-  ta: [
-    "ta-IN-PallaviNeural",
-    "ta-IN-ValluvarNeural",
-    "ta-MY-KaniNeural",
-    "ta-MY-SuryaNeural",
-    "ta-SG-AnbuNeural",
-    "ta-SG-VenbaNeural",
-    "ta-LK-KumarNeural",
-    "ta-LK-SaranyaNeural",
-  ],
-  te: ["te-IN-MohanNeural", "te-IN-ShrutiNeural"],
-  th: ["th-TH-NiwatNeural", "th-TH-PremwadeeNeural"],
-  tr: ["tr-TR-AhmetNeural", "tr-TR-EmelNeural"],
-  uk: ["uk-UA-OstapNeural", "uk-UA-PolinaNeural"],
-  ur: [
-    "ur-IN-GulNeural",
-    "ur-IN-SalmanNeural",
-    "ur-PK-AsadNeural",
-    "ur-PK-UzmaNeural",
-  ],
-  uz: ["uz-UZ-MadinaNeural", "uz-UZ-SardorNeural"],
-  vi: ["vi-VN-HoaiMyNeural", "vi-VN-NamMinhNeural"],
-  cy: ["cy-GB-AledNeural", "cy-GB-NiaNeural"],
-  zu: ["zu-ZA-ThandoNeural", "zu-ZA-ThembaNeural"],
-};
-
-var googleTranslateTtsLangList = [
-  "af",
-  "sq",
-  "ar",
-  "bn",
-  "bs",
-  "bg",
-  "ca",
-  "zh-CN",
-  "zh-TW",
-  "hr",
-  "cs",
-  "da",
-  "nl",
-  "en",
-  "et",
-  "tl",
-  "fi",
-  "fr",
-  "de",
-  "el",
-  "gu",
-  "iw",
-  "hi",
-  "hu",
-  "is",
-  "id",
-  "it",
-  "ja",
-  "jw",
-  "kn",
-  "km",
-  "ko",
-  "la",
-  "lv",
-  "ms",
-  "ml",
-  "mr",
-  "my",
-  "ne",
-  "no",
-  "pl",
-  "pt",
-  "ro",
-  "ru",
-  "sr",
-  "si",
-  "sk",
-  "es",
-  "su",
-  "sw",
-  "sv",
-  "ta",
-  "te",
-  "th",
-  "tr",
-  "uk",
-  "ur",
-  "vi",
-];
 
 //setting util======================================
 
@@ -765,12 +288,8 @@ export function getJsonFromList(list) {
 }
 
 export function filterWord(word) {
-  if (!word) {
-    return "";
-  }
   // filter one that only include num,space and special char(include currency sign) as combination
-  word = word.replace(/\s+/g, " "); //replace whitespace as single space
-  word = word.trim(); // remove whitespaces from begin and end of word
+  word = trimAllSpace(word);
   // word=word.slice(0,1000);
   if (
     word.length > 1000 || //filter out text that has over 1000length
@@ -784,7 +303,17 @@ export function filterWord(word) {
   return word;
 }
 
+export function trimAllSpace(word) {
+  if (!word) {
+    return "";
+  }
+  word = word.replace(/\s+/g, " "); //replace whitespace as single space
+  word = word.trim(); // remove whitespaces from begin and end of word
+  return word;
+}
+
 export function filterEmoji(word) {
+  word = trimAllSpace(word);
   return word.replace(
     /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
     ""
@@ -1092,3 +621,154 @@ export function getRangeOption(start, end, incNum = 1, roundOff = 0) {
       .map((num) => String(num))
   );
 }
+export function getRecordNoDate(record) {
+  return _.pick(record, [
+    "sourceText",
+    "sourceLang",
+    "targetText",
+    "targetLang",
+    "actionType",
+  ]);
+}
+
+export function getRecordID(record) {
+  return JSON.stringify(getRecordNoDate(record));
+}
+
+export function getDateNow() {
+  return new Date().toJSON();
+}
+export function getDateNowNoTime() {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  return date.toJSON();
+}
+export function addDay(date, day) {
+  date = new Date(date);
+  date.setDate(date.getDate() + day);
+  return date.toJSON();
+}
+export function getNextDay(day) {
+  return addDay(getDateNowNoTime(), day);
+}
+export function isDueDate(date) {
+  if (!date) {
+    return true;
+  }
+  return new Date(date) <= new Date(getDateNowNoTime());
+}
+
+export function getDateOrder(date1, date2) {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  return date1 - date2 || isNaN(date1) - isNaN(date2);
+}
+
+export function isLoadedFromIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
+export function isLocalFileUrl(url) {
+  return /^file:\/\//.test(url);
+}
+
+//send to background.js for background processing  ===========================================================================
+
+export async function requestTranslate(
+  word,
+  sourceLang,
+  targetLang,
+  reverseLang
+) {
+  return await sendMessage({
+    type: "translate",
+    data: {
+      text: word,
+      sourceLang,
+      targetLang,
+      reverseLang,
+    },
+  });
+}
+
+export async function requestTTS(
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang
+) {
+  return await sendMessage({
+    type: "tts",
+    data: {
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+    },
+  });
+}
+
+export async function requestImage(text) {
+  return await sendMessage({
+    type: "translate",
+    data: {
+      text,
+      sourceLang: "auto",
+      targetLang: "",
+      engine: "googleWebImage",
+    },
+  });
+}
+
+export async function requestTTSSingle(sourceText, sourceLang) {
+  return await sendMessage({
+    type: "tts",
+    data: {
+      sourceText,
+      sourceLang,
+      voiceTarget: "source",
+      voiceRepeat: "1",
+    },
+  });
+}
+
+export async function requestStopTTS() {
+  return await sendMessage({
+    type: "stopTTS",
+  });
+}
+
+//send history to background.js
+export async function requestRecordTooltipText(
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  dict,
+  actionType
+) {
+  return await sendMessage({
+    type: "recordTooltipText",
+    data: {
+      sourceText,
+      sourceLang,
+      targetText,
+      targetLang,
+      dict,
+      actionType,
+    },
+  });
+}
+
+export async function requestBase64(url) {
+  return await sendMessage({
+    type: "requestBase64",
+    url,
+  });
+}
+
+//
