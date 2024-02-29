@@ -13,7 +13,7 @@ export default class pixabay extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     return {
-      translatedText: "",
+      targetText: "",
       detectedLang: "",
       transliteration: "",
     };

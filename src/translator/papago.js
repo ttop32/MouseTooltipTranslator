@@ -67,7 +67,7 @@ export default class papago extends BaseTranslator {
 
   static async wrapResponse(res, text, sourceLang, targetLang) {
     return {
-      translatedText: res["translatedText"],
+      targetText: res["translatedText"],
       detectedLang: res["srcLangType"],
       transliteration: "",
     };

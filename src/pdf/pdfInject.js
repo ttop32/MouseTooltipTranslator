@@ -13,6 +13,7 @@ import * as util from "/src/util";
 initPdf();
 
 async function initPdf() {
+  // checkIframe();
   checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
   checkPdfError();
   addCustomKeystroke();
@@ -26,8 +27,7 @@ async function initPdf() {
 //if current url is local file and no file permission
 //alert user need permmsion
 async function checkCurrentUrlIsLocalFileUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const url = urlParams.get("file");
+  const url = getFileParam();
 
   if (/^file:\/\//.test(url)) {
     //check current url is file url
@@ -44,6 +44,11 @@ async function checkCurrentUrlIsLocalFileUrl() {
       util.openSettingPage();
     }
   }
+}
+function getFileParam() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const fileParam = urlParams.get("file");
+  return fileParam;
 }
 
 function addCallbackForPdfTextLoad(callback) {
@@ -66,7 +71,6 @@ function checkPdfError() {
   document.addEventListener("webviewerloaded", function () {
     PDFViewerApplication.initializedPromise.then(function () {
       PDFViewerApplication.eventBus.on("documenterror", function (event) {
-        console.log(event);
         util.postFrame({ type: "pdfErrorLoadDocument" });
       });
     });
@@ -141,6 +145,49 @@ function addCustomKeystroke() {
         break;
     }
   });
+}
+
+//working on ssrf ====================================================================
+
+function checkIframe() {
+  var isIframe = util.inIframe();
+  var url = getFileParam();
+
+  if (util.isLocalFileUrl(url) && util.isLoadedFromIframe()) {
+  }
+
+  //if local file only with .pdf
+  if (/^file:\/\/(.*?)\.pdf$/.test(url.toLowerCase())) {
+    // ban
+  }
+
+  // host and file same
+
+  // no same host
+
+  // check iframe
+  //dynamic url
+  //check file end with pdf
+}
+
+function changeUrlParam() {
+  var baseUrl = window.location.origin + window.location.pathname;
+  var fileParam = window.location.search.slice(6); //slice "?page="
+
+  //url is decoded, redirect with encoded url to read correctly in pdf viewer
+  if (decodeURIComponent(fileParam) == fileParam) {
+    redirect(baseUrl + "?file=" + encodeURIComponent(fileParam));
+  }
+
+  //change to decoded url for ease of url copy
+  changeUrlWithoutRedirect(decodeURIComponent(fileParam));
+}
+
+function redirect(url) {
+  window.location.replace(url);
+}
+function changeUrlWithoutRedirect(fileParam) {
+  history.replaceState("", "", "/pdfjs/web/viewer.html?file=" + fileParam);
 }
 
 function initButton() {

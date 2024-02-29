@@ -17,7 +17,7 @@ export default class libreTranslate extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     return {
-      translatedText: res["translatedText"],
+      targetText: res["translatedText"],
       detectedLang: res["detectedLanguage"]["language"],
       transliteration: "",
     };

@@ -43,9 +43,6 @@ function addMessageListener() {
   ) {
     (async () => {
       if (request.type === "translate") {
-        var translatedResult = await translate(request.data);
-        sendResponse(translatedResult);
-      } else if (request.type === "translateWithReverse") {
         var translatedResult = await translateWithReverse(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
@@ -69,11 +66,11 @@ function addMessageListener() {
 
 //translate function====================================================
 
-async function translate({ text, sourceLang, targetLang }) {
-  var engine = setting["translatorVendor"];
+async function translate({ text, sourceLang, targetLang, engine }) {
+  var engine = engine || setting["translatorVendor"];
   return (
     (await getTranslateCached(text, sourceLang, targetLang, engine)) || {
-      translatedText: `${engine} is broken`,
+      targetText: `${engine} is broken`,
       transliteration: "",
       sourceLang: "",
       targetLang: setting["translateTarget"],
@@ -93,20 +90,23 @@ async function translateWithReverse({
   sourceLang,
   targetLang,
   reverseLang,
+  engine,
 }) {
-  var response = await translate({ text, sourceLang, targetLang });
+  var response = await translate({ text, sourceLang, targetLang, engine });
   //if to,from lang are same and reverse translate on
   if (
     !response.isBroken &&
     targetLang == response.sourceLang &&
     // text == response.translatedText &&
+    reverseLang != null &&
     reverseLang != "null" &&
-    targetLang != reverseLang
+    reverseLang != targetLang
   ) {
     response = await translate({
       text,
       sourceLang: response.sourceLang,
       targetLang: reverseLang,
+      engine,
     });
   }
   return response;
@@ -123,6 +123,7 @@ function recordHistory({
   sourceLang,
   targetText,
   targetLang,
+  dict,
   actionType,
 }) {
   recentRecord = {
@@ -130,8 +131,9 @@ function recordHistory({
     sourceLang,
     targetText,
     targetLang,
+    dict,
     actionType,
-    date: JSON.stringify(new Date()),
+    date: util.getDateNow(),
     translator: setting["translatorVendor"],
   };
   insertHistory();
@@ -142,11 +144,25 @@ function insertHistory(actionType) {
     setting["historyRecordActions"].includes(recentRecord.actionType) ||
     actionType
   ) {
-    var record = actionType
+    var newRecord = actionType
       ? util.concatJson(recentRecord, { actionType })
       : recentRecord;
-    //append history to front
-    setting["historyList"].unshift(record);
+    var prevRecord = setting["historyList"][0];
+
+    //skip if same prev
+    if (util.getRecordID(newRecord) == util.getRecordID(prevRecord)) {
+      return;
+    }
+    //skip duplicate select
+    if (
+      newRecord.actionType == "select" &&
+      newRecord.sourceText.includes(setting["historyList"]?.[0]?.sourceText)
+    ) {
+      setting["historyList"].shift();
+    }
+
+    // save
+    setting["historyList"].unshift(newRecord);
     //remove when too many list
     if (setting["historyList"].length > 10000) {
       setting["historyList"].pop();
@@ -156,7 +172,9 @@ function insertHistory(actionType) {
 }
 
 function addSaveTranslationKeyListener() {
-  util.addCommandListener("save-translation", () => insertHistory("shortcut"));
+  util.addCommandListener("save-translation", () =>
+    insertHistory("shortcutkey")
+  );
 }
 
 // ================= Copy
@@ -198,43 +216,43 @@ function requestCopyOnTab(text) {
 
 // ================= contents script reinjection after upgrade or install
 async function injectContentScriptForAllTab() {
-  // browser.runtime.onInstalled.addListener(async (details) => {
-  // skip if development mode
-  if (util.checkInDevMode()) {
-    return;
-  }
+  browser.runtime.onInstalled.addListener(async (details) => {
+    // skip if development mode
+    if (util.checkInDevMode()) {
+      return;
+    }
 
-  // if extension is upgrade or new install, refresh all tab
-  for (const cs of browser.runtime.getManifest().content_scripts) {
-    for (const tab of await browser.tabs.query({ url: cs.matches })) {
-      if (
-        /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com|https:\/\/chromewebstore\.google\.com|chrome-extension:\/\/).*/.test(
-          tab.url
-        )
-      ) {
-        continue;
-      }
+    // if extension is upgrade or new install, refresh all tab
+    for (const cs of browser.runtime.getManifest().content_scripts) {
+      for (const tab of await browser.tabs.query({ url: cs.matches })) {
+        if (
+          /^(chrome:\/\/|edge:\/\/|file:\/\/|https:\/\/chrome\.google\.com|https:\/\/chromewebstore\.google\.com|chrome-extension:\/\/).*/.test(
+            tab.url
+          )
+        ) {
+          continue;
+        }
 
-      try {
-        //load css and js on opened tab
-        if (cs.css) {
-          browser.scripting.insertCSS({
-            target: { tabId: tab.id },
-            files: cs.css,
-          });
+        try {
+          //load css and js on opened tab
+          if (cs.css) {
+            browser.scripting.insertCSS({
+              target: { tabId: tab.id },
+              files: cs.css,
+            });
+          }
+          if (cs.js) {
+            browser.scripting.executeScript({
+              target: { tabId: tab.id },
+              files: cs.js,
+            });
+          }
+        } catch (error) {
+          console.log(error);
         }
-        if (cs.js) {
-          browser.scripting.executeScript({
-            target: { tabId: tab.id },
-            files: cs.js,
-          });
-        }
-      } catch (error) {
-        console.log(error);
       }
     }
-  }
-  // });
+  });
 }
 
 function addUninstallUrl(url) {
@@ -256,14 +274,17 @@ async function playTtsQueue({
   sourceLang,
   targetText,
   targetLang,
+  voiceTarget,
+  voiceRepeat,
 }) {
-  // browser.tts.stop(); //remove prev voice
-  var ttsTarget = setting["voiceTarget"];
-  var ttsRepeat = Number(setting["voiceRepeat"]);
+  var sourceText = util.filterEmoji(sourceText);
+  var targetText = util.filterEmoji(targetText);
+  var ttsTarget = voiceTarget || setting["voiceTarget"];
+  var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
+  ttsRepeat = Number(ttsRepeat);
   stopTts();
-  await delay(10);
+  await delay(50);
   var startTimeStamp = Date.now();
-
   for (var i = 0; i < ttsRepeat; i++) {
     if (ttsTarget == "source") {
       await playTts(sourceText, sourceLang, startTimeStamp);
@@ -338,7 +359,6 @@ function checkIsLocalPdfUrl(url) {
 }
 
 //search bar================================================
-
 function addSearchBarListener() {
   browser.omnibox.setDefaultSuggestion({
     description: "search with translator",
@@ -351,9 +371,7 @@ function addSearchBarListener() {
       targetLang: setting["writingLanguage"],
       reverseLang: setting["translateTarget"],
     });
-    var text = translatedResult.isBroken
-      ? text
-      : translatedResult.translatedText;
+    var text = translatedResult.isBroken ? text : translatedResult.targetText;
     //search with default search engine on current tab
     browser.search.query({ text });
   });

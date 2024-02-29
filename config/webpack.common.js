@@ -108,6 +108,20 @@ const common = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
+    require("unplugin-vue-components/webpack").default({}),
+    require("unplugin-auto-import/webpack").default({
+      include: [
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+      ],
+      // global imports to register
+      imports: [
+        // presets
+        "vue",
+        "vue-router",
+      ],
+    }),
+    require("unplugin-vue-router/webpack")({}),
   ],
 };
 

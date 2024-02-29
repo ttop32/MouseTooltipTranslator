@@ -117,7 +117,7 @@ export default class yandex extends BaseTranslator {
   static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res.code == "200") {
       return {
-        translatedText: res["text"][0],
+        targetText: res["text"][0],
         detectedLang: res["lang"].split("-")[0],
         transliteration: "",
       };

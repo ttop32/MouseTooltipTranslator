@@ -118,8 +118,8 @@ export default class bing extends BaseTranslator {
       }
 
       var detectedLang = res[0]["detectedLanguage"]["language"];
-      var translatedText = res[0]["translations"][0]["text"];
-      return { translatedText, detectedLang, transliteration };
+      var targetText = res[0]["translations"][0]["text"];
+      return { targetText, detectedLang, transliteration };
     }
   }
 
