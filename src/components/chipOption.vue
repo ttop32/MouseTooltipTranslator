@@ -10,6 +10,7 @@
       :value="chipName"
       :key="chipName"
       filter
+      @click="handleClick"
     >
       {{ chipName }}
     </v-chip>
@@ -22,8 +23,14 @@ import { useSettingStore } from "/src/stores/setting.js";
 export default {
   name: "ChipOption",
   props: ["settingName", "chipData"],
+  emits: ["click"],
   computed: {
     ...mapState(useSettingStore, ["setting"]),
+  },
+  methods: {
+    handleClick() {
+      this.$emit("click");
+    },
   },
 };
 </script>

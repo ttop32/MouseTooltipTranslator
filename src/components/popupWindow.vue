@@ -19,7 +19,6 @@ export default {
     // this.settingStore = useSettingStore();
     // await     this.settingStore.loadSetting();
     // this.settingStore.$subscribe((mutation, state) => {
-    //   console.log("poup9999999999999999999999999999999999999999999999999999");
     //   this.settingStore.saveSetting();
     // });
   },

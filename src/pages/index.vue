@@ -428,11 +428,11 @@ var langPriorityOptionList = [
 ];
 
 var toolbarIcons = {
-  // card: {
-  //   title: "card",
-  //   icon: "mdi-card-multiple",
-  //   path: "/deck",
-  // },
+  card: {
+    title: "card",
+    icon: "mdi-card-multiple",
+    path: "/deck",
+  },
   history: {
     title: "history",
     icon: "mdi-history",
