@@ -79,14 +79,7 @@ export var defaultData = {
   cardListen: [],
   cardTagSelected: [],
   deckStatus: {},
-  deck: [],
-  stagedDeckStatus: 0,
-  cardNewStartLen: 0,
-  cardReviewStartLen: 0,
-  cardLearningStartLen: 0,
-  cardNewFinLen: 0,
-  cardReviewFinLen: 0,
-  cardAllFinLen: 0,
+  cardLen: {},
 };
 
 var reviewUrlJson = {

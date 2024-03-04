@@ -1,8 +1,14 @@
 <template>
   <popupWindow>
-    <BackHeader title="Flashcard">
-      <v-btn icon @click="resetFlashcard" title="reset progress">
-        <v-icon>mdi-recycle-variant</v-icon>
+    <BackHeader :title="toolbarTitle">
+      <v-btn
+        v-for="buttonData in toolbarButtons"
+        :key="buttonData.name"
+        :title="buttonData.title"
+        icon
+        @click="buttonData.func"
+      >
+        <v-icon>{{ buttonData.icon }}</v-icon>
       </v-btn>
     </BackHeader>
     <div class="scroll-container">
@@ -14,13 +20,19 @@
           variant="flat"
           block
           @click="playGame"
-          >Play Flashcard</v-btn
+          >{{ playButtonTitle }}</v-btn
         >
       </v-col>
 
       <div class="subheading text-center">
-        <span class="text-green">3</span> / <span class="text-orange">3</span> /
-        <span class="text-blue">3</span>
+        <span v-for="(cardLen, key, index) in playProgressList" :key="key">
+          <span :class="progressProperties[key].color"
+            >{{ cardLen }} {{ progressProperties[key].text }}</span
+          >
+          <span v-if="index != Object.keys(playProgressList).length - 1">
+            /
+          </span>
+        </span>
       </div>
 
       <v-divider class="mx-4"></v-divider>
@@ -30,6 +42,7 @@
         <ChipOption
           settingName="cardTagSelected"
           :chipData="filterTagOptions"
+          @click="handleTagChanged"
         ></ChipOption>
       </v-card-text>
     </div>
@@ -42,61 +55,25 @@ import { useAlertStore } from "/src/stores/alert.js";
 import { useSettingStore } from "/src/stores/setting.js";
 import { langListOpposite } from "/src/util/lang.js";
 import * as util from "/src/util";
-
-// popup
-// finished popup
-// no data popup
-
-// reset progress
-
-//progress
-//staged new card
-//learning card
-//review card
-//all possible undo card
-//review card total
-
-// back
-// start again
-
-// other
-// bing dictionary
-// record prev page open
-
-// tag
-// filter site
-// filter word sentence
-// only dictionary
-
-// show tag
-// get 20 and review
-
-// table view
-// add tag all
-// remove tag all
-// table tag
-// source text target text edit
-// import  csv export
-
-// day add Math.round
-
-//  reset time 4 am
-
-// load
-// filter
-// check deleted from history
-
-// additional factor, not study for a while
-//hard  (prevInterval + afterday /4) * 1.2
-//good (prevInterval + afterday /2) * ease
-//easy  (prevInterval + afterday ) * ease
-
-// todo this.reLearnMinInterval
+import Deck from "../../flashcard/deck";
 
 export default {
   name: "FlashCardMenu",
   data() {
     return {
+      toolbarTitle: "Flashcard",
+      playButtonTitle: "Play Flashcard",
+      toolbarButtons: {
+        resetProgress: {
+          name: "reset progress",
+          title: "reset progress",
+          icon: "mdi-recycle-variant",
+          func: this.resetFlashcard,
+        },
+      },
+
+      cardLenList: [],
+
       filterTagOptions: [],
       cardPlayPath: "/deck/card",
       tagOptionTitle: "Select tag to play (Create card using history)",
@@ -105,33 +82,60 @@ export default {
           title: "No History Data",
           description:
             "Flashcard makes card based on history data. Try to turn on history record.",
+          checkFunc: this.checkNoHistory,
         },
         noTagSelected: {
           title: "No Tag Selected",
           description: "Check Tags to Play.",
+          checkFunc: this.checkNoTag,
         },
         noActionTagSelected: {
           title: "No Action Tag Selected",
           description: "Check Tags to Play.",
+          checkFunc: this.checkNoActionTag,
         },
         noLangTagSelected: {
           title: "No Language Tag Selected",
           description: "Check Tags to Play.",
+          checkFunc: this.checkNoLangTag,
         },
         todayDayPlayDone: {
           title: "Today play is completed",
           description: "Try on next day",
+          checkFunc: this.checkTodayFlashcardFinish,
         },
         noMoreCardToLearn: {
-          title: "No more card to learn",
+          title: "No more card to learn today",
           description: "Add more history data to play with",
+          checkFunc: this.checkNoMoreCard,
         },
       },
+
+      playProgressList: {},
+      progressProperties: {
+        newCardLen: {
+          text: "New",
+          color: "text-green",
+        },
+        reviewCardLen: {
+          text: "Review",
+          color: "text-orange",
+        },
+        learningCardLen: {
+          text: "Learning",
+          color: "text-blue",
+        },
+      },
+
+      progressKey: ["New", "Review", "Learning", "Fin"],
     };
   },
   async mounted() {
     await this.waitSettingLoad();
-    this.filterTagOptions = this.getAllFilterTag(this.setting["historyList"]);
+    this.deck = new Deck();
+    await this.deck.loadDeck();
+    this.filterTagOptions = this.deck.getAllFilterTag();
+    this.updateProgress();
   },
 
   computed: {
@@ -145,22 +149,14 @@ export default {
       }
     },
     checkPlayable() {
-      if (this.checkNoHistory()) {
-        this.showPopupData(this.popupAlertData.noHistoryData);
-      } else if (this.checkNoTag()) {
-        this.showPopupData(this.popupAlertData.noTagSelected);
-      } else if (this.checkNoActionTag()) {
-        this.showPopupData(this.popupAlertData.noActionTagSelected);
-      } else if (this.checkNoLangTag()) {
-        this.showPopupData(this.popupAlertData.noLangTagSelected);
-      } else if (this.checkTodayFlashcardFinish()) {
-        this.showPopup(this.popupAlertData.todayDayPlayDone);
-      } else if (this.checkNoMoreCard()) {
-        this.showPopup(this.popupAlertData.noMoreCardToLearn);
-      } else {
-        return true;
+      for (var key in this.popupAlertData) {
+        if (this.popupAlertData[key].checkFunc()) {
+          this.showPopupData(this.popupAlertData[key]);
+          return false;
+        }
       }
-      return false;
+
+      return true;
     },
     checkNoHistory() {
       return this.setting["historyList"].length == 0;
@@ -177,33 +173,21 @@ export default {
       return !this.setting["cardTagSelected"].some((i) => langListOpposite[i]);
     },
     checkTodayFlashcardFinish() {
-      return _.isEqual(this.setting["deckMeta"], {
-        date: util.getDateNow(),
-        tags: this.setting["cardTagSelected"],
-        isFin: true,
-      });
+      return this.deck.checkTodayPlayFinish();
     },
     checkNoMoreCard() {
-      // no new card
-      //no learning progress
-      //no due review
-      return false;
+      return this.deck.checkNoMoreCardToPlay();
     },
-    checkPlayProgress() {},
-
-    getAllFilterTag(deck) {
-      var actions = deck.map((c) => c.actionType);
-      var sourceLangs = deck.map((c) => c.sourceLang);
-      return _.uniq(_.concat(actions, sourceLangs));
+    updateProgress() {
+      this.playProgressList = this.deck.countRemainCard();
     },
     resetFlashcard() {
-      this.setting["cardTagSelected"] = [];
-      this.setting["historyList"].forEach((card) => {
-        card.scheduledDate = util.getDate();
-        card.type = "newCard";
-        card.isStaged = false;
-        card.step = 0;
-      });
+      this.updateProgress();
+      this.deck.resetFlashcard();
+    },
+    async handleTagChanged() {
+      await this.deck.loadDeck();
+      this.updateProgress();
     },
   },
 };
