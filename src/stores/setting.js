@@ -17,10 +17,7 @@ export const useSettingStore = defineStore("setting", {
       this.isLoaded = true;
     },
     saveSetting() {
-      console.log("saveSetting2222222222222222222222");
-      console.log(this.setting);
       toRaw(this.setting).save();
-      console.log("saveSetting");
     },
     async waitSettingLoad() {
       await util.waitUntilForever(() => this.isLoaded);

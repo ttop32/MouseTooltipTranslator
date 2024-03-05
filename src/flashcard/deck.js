@@ -269,20 +269,15 @@ export default class Deck {
   }
 
   getNextInterval(card, difficulty) {
-    var difficultyName = this.difficultyNameList[difficulty];
-    var nextIntervalList = this.getAllInterval(card);
-    var nextInterval = nextIntervalList[difficultyName];
-    nextInterval.scheduledDate = nextInterval.isStaged
-      ? util.getDateNowNoTime()
-      : util.getNextDay(Math.round(nextInterval.interval));
-
-    return nextInterval;
+    var intervalData = this.getAllInterval(card);
+    return intervalData[this.difficultyNameList[difficulty]];
   }
   getAllInterval(card) {
+    var intervalData = {};
     if (card.type == "reviewCard") {
-      return this.getLongInterval(card.ease, card.interval);
+      intervalData = this.getLongInterval(card.ease, card.interval);
     } else if (["newCard", "newLearningCard"].includes(card.type)) {
-      return this.getShortInterval(
+      intervalData = this.getShortInterval(
         card,
         this.newLearningSteps,
         this.graduateIntervalList,
@@ -290,13 +285,27 @@ export default class Deck {
       );
     } else if (card.type == "reLearningCard") {
       var { good, easy } = this.getLongInterval(card.ease, card.prevInterval);
-      return this.getShortInterval(
+      intervalData = this.getShortInterval(
         card,
         this.reLearningSteps,
         [good, easy],
         card.ease
       );
     }
+
+    for (var key in intervalData) {
+      intervalData[key].scheduledDate = intervalData[key].isStaged
+        ? util.getDateNowNoTime()
+        : util.getNextDay(Math.round(intervalData[key].interval));
+
+      // intervalData[key].scheduledDate = intervalData[key].interval.includes("m")
+      //   ? util.getDateNowNoTime()
+      //   : util.getNextDay(Math.round(parseInt(intervalData[key].interval)));
+      // interval 1m
+      // interval 1d
+    }
+
+    return intervalData;
   }
   getLongInterval(ease, interval) {
     return {
