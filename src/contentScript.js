@@ -739,7 +739,7 @@ async function detectPDF() {
   ) {
     addPdfListener();
     openPdfIframe(window.location.href);
-    // var url = "file:///D:/test.pdf";
+    // var url = "file:///D:/dummy.pd";
     // openPdfIframe(url);
     // redirectToPDFViewer();
   }
