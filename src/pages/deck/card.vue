@@ -109,7 +109,6 @@
         <v-btn
           v-else
           :rounded="0"
-          :key="key"
           size="x-large"
           class="text-white"
           variant="flat"
@@ -135,6 +134,7 @@ import _ from "lodash";
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
 import { useAlertStore } from "/src/stores/alert.js";
+import delay from "delay";
 
 export default {
   name: "DeckCard",
@@ -234,6 +234,7 @@ export default {
     await this.deck.loadDeck();
     this.updateProgress();
     await this.loadNextCard();
+    this.preLoadImage();
   },
   async unmounted() {
     document.removeEventListener("keydown", this.onKeydown);
@@ -354,6 +355,12 @@ export default {
     },
     getRtlDir(lang) {
       return util.getRtlDir(lang);
+    },
+    async preLoadImage() {
+      for (var card of this.deck.getStagedCards()) {
+        await delay(700);
+        await util.requestImage(card.sourceText);
+      }
     },
   },
 };
