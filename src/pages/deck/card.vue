@@ -1,6 +1,6 @@
 <template>
   <popupWindow>
-    <v-card tile>
+    <v-card tile :rounded="0">
       <v-img
         :src="currentImageUrl"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -63,30 +63,68 @@
       }"
     ></v-card-title>
 
-    <v-bottom-navigation bg-color="blue">
-      <v-btn
-        v-if="isTargetShow"
-        v-for="(buttonData, index) of difficultyButtons"
-        :key="buttonData.name"
-        :title="'key: ' + buttonData.difficulty"
-        :color="buttonData.color"
-        :value="buttonData.name"
-        @click="handleDifficulty(buttonData.difficulty)"
-      >
-        <v-icon>{{ buttonData.icon }}</v-icon>
-        <span> {{ buttonData.name }} </span>
-      </v-btn>
+    <v-spacer vertical></v-spacer>
 
-      <v-btn
-        v-else
-        @click="showTarget"
-        title="key: space"
-        :value="nextButton.name"
-      >
-        <v-icon>{{ nextButton.icon }}</v-icon>
-        <span> {{ nextButton.name }} </span>
-      </v-btn>
-    </v-bottom-navigation>
+    <v-bottom-sheet>
+      <v-divider class="mx-4"></v-divider>
+      <div class="subheading text-center">
+        <span v-for="(cardLen, key, index) in playProgressList" :key="key">
+          <span :class="progressProperties[key].color"
+            >{{ cardLen }} {{ progressProperties[key].text }}</span
+          >
+          <span v-if="index != Object.keys(playProgressList).length - 1">
+            /
+          </span>
+        </span>
+      </div>
+
+      <v-row no-gutters>
+        <v-col
+          v-if="isTargetShow"
+          v-for="(buttonData, key, index) in difficultyButtons"
+          cols="3"
+        >
+          <v-btn
+            :rounded="0"
+            :key="key"
+            size="x-large"
+            class="text-white"
+            variant="flat"
+            block
+            :title="'key: ' + buttonData.difficulty"
+            :color="buttonData.color"
+            :value="buttonData.name"
+            @click="handleDifficulty(buttonData.difficulty)"
+            :height="70"
+          >
+            <v-row>
+              {{ nextInterval[key]?.interval }}
+            </v-row>
+            <v-row>
+              <span> {{ buttonData.name }} </span>
+            </v-row>
+          </v-btn>
+        </v-col>
+
+        <v-btn
+          v-else
+          :rounded="0"
+          :key="key"
+          size="x-large"
+          class="text-white"
+          variant="flat"
+          block
+          title="key: space"
+          :color="nextButton.color"
+          :value="nextButton.name"
+          @click="showTarget"
+          :height="70"
+        >
+          <v-row>SHOW </v-row>
+          <v-row> ANSWER </v-row>
+        </v-btn>
+      </v-row>
+    </v-bottom-sheet>
   </popupWindow>
 </template>
 <script>
@@ -131,7 +169,7 @@ export default {
       nextButton: {
         name: "show",
         icon: "mdi-comment-check",
-        color: "cyan",
+        color: "blue",
         key: "Space",
       },
       playButtonData: [
@@ -167,6 +205,24 @@ export default {
       },
       progressMain: 0,
       progressSub: 0,
+
+      nextInterval: {},
+      intervalTimeList: [],
+      playProgressList: [],
+      progressProperties: {
+        newCardLen: {
+          text: "New",
+          color: "text-green",
+        },
+        reviewCardLen: {
+          text: "Review",
+          color: "text-orange",
+        },
+        learningCardLen: {
+          text: "Learning",
+          color: "text-blue",
+        },
+      },
     };
   },
 
@@ -190,7 +246,7 @@ export default {
   },
   watch: {
     async isTargetShow(newValue, oldValue) {
-      this.loadImage(newValue?.sourceText);
+      this.loadImage(this.currentCard?.sourceText);
       util.requestStopTTS();
       if (!newValue && this.setting["cardListen"].includes("source")) {
         this.playSource();
@@ -224,8 +280,18 @@ export default {
       }
 
       this.currentCard = this.deck.loadNextCard(this?.currentCard?.uuid);
+      this.updateProgressCount();
+      this.updateIntervalTime();
       this.isTargetShow = false;
     },
+
+    updateProgressCount() {
+      this.playProgressList = this.deck.countRemainCard();
+    },
+    updateIntervalTime() {
+      this.nextInterval = this.deck.getAllInterval(this.currentCard);
+    },
+
     handleDifficulty(difficulty) {
       if (
         ![1, 2, 3, 4].includes(Number(difficulty)) ||
