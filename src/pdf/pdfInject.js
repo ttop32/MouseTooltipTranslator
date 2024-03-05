@@ -13,8 +13,8 @@ import * as util from "/src/util";
 initPdf();
 
 async function initPdf() {
-  // checkIframe();
-  checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
+  checkLocalFileUrl(); // warn no permission if file url
+  checkLocalFileType();
   checkPdfError();
   addCustomKeystroke();
   //make line break for spaced text
@@ -26,7 +26,7 @@ async function initPdf() {
 
 //if current url is local file and no file permission
 //alert user need permmsion
-async function checkCurrentUrlIsLocalFileUrl() {
+async function checkLocalFileUrl() {
   const url = getFileParam();
 
   if (/^file:\/\//.test(url)) {
@@ -147,28 +147,28 @@ function addCustomKeystroke() {
   });
 }
 
-//working on ssrf ====================================================================
+//working on ====================================================================
 
-function checkIframe() {
-  var isIframe = util.inIframe();
+function checkLocalFileType() {
   var url = getFileParam();
-
-  if (util.isLocalFileUrl(url) && util.isLoadedFromIframe()) {
+  if (isFileUrl(url) && !isPdfFileName(url)) {
+    redirect("/pdfjs/web/viewer.html?file=");
   }
-
-  //if local file only with .pdf
-  if (/^file:\/\/(.*?)\.pdf$/.test(url.toLowerCase())) {
-    // ban
-  }
-
-  // host and file same
-
-  // no same host
-
-  // check iframe
-  //dynamic url
-  //check file end with pdf
 }
+
+function isFileUrl(url) {
+  return /^file:\/\/(.*?)/.test(url.toLowerCase());
+}
+function isPdfFileName(url) {
+  return /(.*?)\.pdf$/.test(url.toLowerCase());
+}
+
+// var isIframe = util.inIframe();
+// host and file same
+// no same host
+// check iframe
+//dynamic url
+//check file end with pdf
 
 function changeUrlParam() {
   var baseUrl = window.location.origin + window.location.pathname;
@@ -176,11 +176,11 @@ function changeUrlParam() {
 
   //url is decoded, redirect with encoded url to read correctly in pdf viewer
   if (decodeURIComponent(fileParam) == fileParam) {
-    redirect(baseUrl + "?file=" + encodeURIComponent(fileParam));
+    redirect(baseUrl);
   }
 
   //change to decoded url for ease of url copy
-  changeUrlWithoutRedirect(decodeURIComponent(fileParam));
+  // changeUrlWithoutRedirect(decodeURIComponent(fileParam));
 }
 
 function redirect(url) {
