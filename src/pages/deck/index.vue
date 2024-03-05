@@ -181,9 +181,9 @@ export default {
     updateProgress() {
       this.playProgressList = this.deck.countRemainCard();
     },
-    resetFlashcard() {
-      this.updateProgress();
+    async resetFlashcard() {
       this.deck.resetFlashcard();
+      this.$router.go(0);
     },
     async handleTagChanged() {
       await this.deck.loadDeck();

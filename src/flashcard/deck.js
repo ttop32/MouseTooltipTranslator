@@ -64,9 +64,9 @@ export default class Deck {
   easeMin = 1.3;
   easeModifier = [-0.2, -0.15, 0, 0.15];
   easeMultiplier = [0.8, 1.2, 1.0, 1.3];
-  newLearningSteps = [1, 10];
-  reLearningSteps = [10];
-  graduateIntervalList = [1, 4];
+  newLearningSteps = ["1m", "10m"];
+  reLearningSteps = ["10m"];
+  graduateIntervalList = ["1d", "4d"];
   minInterval = 1;
   learningCategory = {
     newCard: "newLearningCard",
@@ -235,7 +235,7 @@ export default class Deck {
   loadNextCard(prevUuid) {
     // shuffle
     // and sort
-    var card = this.getStagedCards().sort((c1, c2) => {
+    var card = this.shuffleList(this.getStagedCards()).sort((c1, c2) => {
       var isPrevCard = c1.uuid == prevUuid ? 1 : c2.uuid == prevUuid ? -1 : 0;
 
       var scheduleDateDiff = util.getDateOrder(
@@ -244,7 +244,7 @@ export default class Deck {
       );
       var cardTypeDiff =
         this.cardTypePriority[c1.type] - this.cardTypePriority[c2.type];
-      var cardIntervalDiff = c1.interval - c2.interval;
+      var cardIntervalDiff = this.getIntervalDiff(c1.interval, c2.interval);
       var isLearningCard =
         c1.type.includes("Learning") || c2.type.includes("Learning");
       var cardStepDiff = c1.step - c2.step;
@@ -294,15 +294,15 @@ export default class Deck {
     }
 
     for (var key in intervalData) {
-      intervalData[key].scheduledDate = intervalData[key].isStaged
-        ? util.getDateNowNoTime()
-        : util.getNextDay(Math.round(intervalData[key].interval));
-
-      // intervalData[key].scheduledDate = intervalData[key].interval.includes("m")
-      //   ? util.getDateNowNoTime()
-      //   : util.getNextDay(Math.round(parseInt(intervalData[key].interval)));
-      // interval 1m
-      // interval 1d
+      if (intervalData[key].interval.includes("m")) {
+        intervalData[key].scheduledDate = util.getDateNowNoTime();
+        intervalData[key].isStaged = true;
+      } else {
+        intervalData[key].scheduledDate = util.getNextDay(
+          parseInt(intervalData[key].interval)
+        );
+        intervalData[key].isStaged = false;
+      }
     }
 
     return intervalData;
@@ -312,30 +312,23 @@ export default class Deck {
       again: {
         interval: this.reLearningSteps[0],
         ease: Math.max(ease + this.easeModifier[0], this.easeMin),
-        isStaged: true,
         type: "reLearningCard",
-        prevInterval: Math.max(
-          this.minInterval,
-          interval * this.easeMultiplier[0]
-        ),
+        prevInterval: this.mulInterval(interval, this.easeMultiplier[0]),
         step: 0,
       },
       hard: {
-        interval: interval * this.easeMultiplier[1],
+        interval: this.mulInterval(interval, this.easeMultiplier[1]),
         ease: Math.max(ease + this.easeModifier[1], this.easeMin),
-        isStaged: false,
         type: "reviewCard",
       },
       good: {
-        interval: interval * ease * this.easeMultiplier[2],
+        interval: this.mulInterval(interval, ease * this.easeMultiplier[2]),
         ease: Math.max(ease + this.easeModifier[2], this.easeMin),
-        isStaged: false,
         type: "reviewCard",
       },
       easy: {
-        interval: interval * ease * this.easeMultiplier[3],
+        interval: this.mulInterval(interval, ease * this.easeMultiplier[3]),
         ease: Math.max(ease + this.easeModifier[3], this.easeMin),
-        isStaged: false,
         type: "reviewCard",
       },
     };
@@ -347,43 +340,72 @@ export default class Deck {
       again: {
         interval: steps[prevStepLevel],
         step: prevStepLevel,
-        isStaged: true,
         type: this.learningCategory[card.type],
       },
       hard: {
         interval: steps[card.step],
         step: card.step,
-        isStaged: true,
         type: this.learningCategory[card.type],
       },
       good: {
         interval: steps[card.step + 1],
         step: card.step + 1,
-        isStaged: true,
         type: this.learningCategory[card.type],
       },
       easy: {
         interval: gradDays[1],
         step: 0,
-        isStaged: false,
         type: "reviewCard",
         ease,
       },
     };
-    if (1 < steps.length && card.step == 0) {
-      base.hard.interval = (steps[0] * steps[1]) / 2;
+    if (card.step == 0) {
+      base.hard.interval =
+        steps.length == 1
+          ? this.mulInterval(steps[card.step], 1.5)
+          : this.avgInterval(steps[0], steps[1]);
     }
     if (steps.length - 1 == card.step) {
-      base.hard.interval = steps[card.step] * 1.5;
       base.good = {
         interval: gradDays[0],
         step: 0,
-        isStaged: false,
         type: "reviewCard",
         ease,
       };
     }
     return base;
+  }
+
+  avgInterval(interval1, interval2) {
+    var unit = interval1.replace(/[0-9]/g, "");
+    var interval1Int = parseInt(interval1);
+    var interval2Int = parseInt(interval2);
+
+    if (interval1[interval1.length - 1] == interval1[interval1.length - 1]) {
+      return Math.round((interval1Int + interval2Int) / 2) + unit;
+    } else {
+      return interval1;
+    }
+  }
+
+  mulInterval(interval, multiplier) {
+    var unit = interval.replace(/[0-9]/g, "");
+    var num = Math.round(parseInt(interval) * multiplier);
+    num = Math.max(this.minInterval, num);
+    return num + unit;
+  }
+
+  getIntervalDiff(interval1, interval2) {
+    var interval1Int = parseInt(interval1);
+    var interval2Int = parseInt(interval2);
+
+    if (interval1[interval1.length - 1] == interval1[interval1.length - 1]) {
+      return interval1Int - interval2Int;
+    } else if (interval1.includes("m")) {
+      return -1;
+    } else {
+      return 1;
+    }
   }
 
   getAllProgress() {
@@ -419,12 +441,7 @@ export default class Deck {
   resetFlashcard() {
     this.setting["cardTagSelected"] = [];
     this.setting["deckStatus"] = {};
-    this.setting["historyList"].forEach((card) => {
-      card.scheduledDate = util.getDate();
-      card.type = "newCard";
-      card.isStaged = false;
-      card.step = 0;
-    });
+    this.setting["historyList"].map((card) => this.initCard(card));
     this.save();
   }
 
