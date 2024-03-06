@@ -11,7 +11,7 @@
     "build-zip": "npm run delete && npm run build && npm run zip"
   },
   "devDependencies": {
-    "@mdi/font": "^5.9.55",
+    "@mdi/font": "^7.4.47",
     "@mdi/js": "^5.9.55",
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.3",
@@ -24,6 +24,9 @@
     "sass": "^1.32.7",
     "sass-loader": "^11.0.1",
     "size-plugin": "^2.0.2",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "unplugin-vue-router": "^0.8.3",
     "url-loader": "^4.1.1",
     "vue-loader": "^17.2.2",
     "vue-style-loader": "^4.1.3",

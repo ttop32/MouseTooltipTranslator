@@ -53,12 +53,12 @@ export default class baidu extends BaseTranslator {
   }
 
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    var translatedText = res["data"][0]["result"]
+    var targetText = res["data"][0]["result"]
       .map((text) => text?.[1])
       .filter((text) => text)
       .join(" ");
     return {
-      translatedText,
+      targetText,
       detectedLang: res["from"],
       transliteration: "",
     };

@@ -48,7 +48,7 @@ export default class chatgpt extends BaseTranslator {
     const dataChunks = res.split("data:");
     const responseObjectText = dataChunks[dataChunks.length - 2].trim();
     const responseObject = JSON.parse(responseObjectText);
-    var translatedText = responseObject.message.content.parts.join(" ");
+    var targetText = responseObject.message.content.parts.join(" ");
     var conversation_id = responseObject.conversation_id;
     await deleteConversation(conversation_id);
 
@@ -56,7 +56,7 @@ export default class chatgpt extends BaseTranslator {
     console.log(conversation_id);
 
     return {
-      translatedText,
+      targetText,
       detectedLang: "",
       transliteration: "",
     };

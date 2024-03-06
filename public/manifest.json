@@ -22,7 +22,8 @@
 
   "web_accessible_resources": [{
     "resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js"],
-    "matches": ["<all_urls>"]
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
   }],
   "sandbox": {
     "pages": [
@@ -66,6 +67,7 @@
     "default_popup": "popup.html"
   },
   "options_ui": {
+    "open_in_tab": true,
     "page": "popup.html"
   }
 }

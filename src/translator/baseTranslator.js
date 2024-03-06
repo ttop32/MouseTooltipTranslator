@@ -10,10 +10,10 @@ export default class BaseTranslator {
       targetLang = this.encodeLangCode(targetLang);
       var response = await this.requestTranslate(text, sourceLang, targetLang);
 
-      var { translatedText, detectedLang, transliteration, dict, imageUrl } =
+      var { targetText, detectedLang, transliteration, dict, imageUrl } =
         await this.wrapResponse(response, text, sourceLang, targetLang);
       return {
-        translatedText,
+        targetText,
         transliteration,
         dict,
         imageUrl,

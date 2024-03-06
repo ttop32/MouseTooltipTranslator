@@ -22,6 +22,9 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.128
   - Spanish locale (contributed by di4m0nds)
   - Turkish locale (contributed by Nejdet ACAR)
+  - China locale (contributed by SFGFDSD)
+  - add flashcard
+  - swap google translate default engine
 - 0.1.127
   - fix tooltip hide conflict
 - 0.1.126

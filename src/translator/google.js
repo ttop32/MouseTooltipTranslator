@@ -18,7 +18,7 @@ export default class google extends BaseTranslator {
     return await ky(`${apiUrl}?${params}`).json();
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    var translatedText = res.sentences
+    var targetText = res.sentences
       ?.map((sentence) => sentence.trans)
       .filter((trans) => trans)
       .join(" ");
@@ -37,7 +37,7 @@ export default class google extends BaseTranslator {
     var detectedLang = res.src;
 
     return {
-      translatedText,
+      targetText,
       detectedLang,
       transliteration,
       dict,

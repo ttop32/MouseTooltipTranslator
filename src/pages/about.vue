@@ -1,29 +1,23 @@
 <template>
   <popupWindow>
-    <!-- about page ====================================== -->
     <div>
-      <!-- about page img====================================== -->
+      <!-- about top nav bar====================================== -->
       <v-img
         height="200"
         src="/floating-maple-leaf.jpg"
-        cover
         class="text-white"
+        cover
       >
         <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
           <template v-slot:prepend>
-            <!-- <v-btn icon="$menu"></v-btn> -->
-            <v-btn dark icon class="mr-4" @click="openMain">
+            <v-btn dark icon class="mr-4" @click="$router.go(-1)">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
           </template>
         </v-toolbar>
-        <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
         <v-spacer></v-spacer>
-        <v-card-title class="white--text">
-          <div class="text-h4 pl-12 pt-12">
-            Mouse Tooltip<br />
-            Translator
-          </div>
+        <v-card-title class="text-white text-wrap">
+          <div class="text-h4 pl-12 pt-12">Mouse Tooltip Translator</div>
         </v-card-title>
       </v-img>
 
@@ -32,9 +26,9 @@
         <v-list-item
           v-for="(aboutPageItem, key) in aboutPageList"
           :key="key"
-          @click="openUrl(aboutPageItem.url)"
           :title="aboutPageItem.name"
           :subtitle="aboutPageItem.sub_name"
+          @click="openUrl(aboutPageItem.url)"
         >
           <template v-slot:prepend>
             <v-avatar :color="aboutPageItem.color">
@@ -112,9 +106,6 @@ export default {
   methods: {
     openUrl(newURL) {
       window.open(newURL);
-    },
-    openMain() {
-      this.$router.go(-1);
     },
   },
 };

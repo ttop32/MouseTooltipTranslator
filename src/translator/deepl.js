@@ -61,7 +61,7 @@ export default class deepl extends BaseTranslator {
   static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res.result) {
       return {
-        translatedText: res.result.texts[0].text,
+        targetText: res.result.texts[0].text,
         detectedLang: res.result.lang,
         transliteration: "",
       };

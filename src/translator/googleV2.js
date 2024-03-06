@@ -46,13 +46,13 @@ export default class googleV2 extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     var json = JSON.parse(JSON.parse(/\[.*\]/.exec(res))[0][2]);
-    var translatedText = json[1][0][0][5]
+    var targetText = json[1][0][0][5]
       .map((text) => text?.[0])
       .filter((text) => text)
       .join(" ");
 
     return {
-      translatedText,
+      targetText,
       detectedLang: json[0][2],
       transliteration: json[1][0][0][1],
     };
