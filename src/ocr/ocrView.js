@@ -164,16 +164,9 @@ async function postMessage(data, frame) {
 async function getBase64Image(url) {
   var base64Url = await util.getBase64(url); //load from tab
   if (!base64Url) {
-    var { base64Url } = await requestBase64(url); //load from background
+    var { base64Url } = await util.requestBase64(url); //load from background
   }
   return base64Url;
-}
-
-async function requestBase64(url) {
-  return await util.sendMessage({
-    type: "requestBase64",
-    url,
-  });
 }
 
 // show ocr result ==============================

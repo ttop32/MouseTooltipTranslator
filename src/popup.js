@@ -8,7 +8,7 @@
 import { createApp } from "vue";
 import App from "/src/App.vue";
 import router from "/src/router";
-import PopupWindow from "/src/components/popupWindow.vue";
+// import PopupWindow from "/src/components/popupWindow.vue";
 
 //pinia
 import { createPinia } from "pinia";
@@ -18,8 +18,9 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import "typeface-roboto/index.css"; //font for vuetify
 import "@mdi/font/css/materialdesignicons.css"; // Ensure you are using css-loader
-
+import "vuetify/dist/vuetify.min.css"; //vuetify css
 // input mask
 import { vMaska } from "maska";
 
@@ -38,5 +39,5 @@ createApp(App)
   .use(vuetify)
   .use(createPinia())
   .use(router)
-  .component("popupWindow", PopupWindow)
+  // .component("popupWindow", PopupWindow)
   .mount("#app");

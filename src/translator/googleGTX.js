@@ -30,15 +30,15 @@ export default class googleGTX extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     if (res && res[0] && res[0][0]) {
-      var translatedText = sourceLang == "auto" ? res[0][0] : res[0];
+      var targetText = sourceLang == "auto" ? res[0][0] : res[0];
       var detectedLang = sourceLang == "auto" ? res[0][1] : sourceLang;
       //clear html tag and decode html entity
-      var textDecoded = decode(translatedText);
+      var textDecoded = decode(targetText);
       var textWithoutITag = textDecoded.replace(/(<i>).+?(<\/i>)/gi, " ");
       var textWithoutBTag = textWithoutITag.replace(/<\/?b[^>]*>/g, " ");
       var textWithTrim = textWithoutBTag.replace(/\s\s+/g, " ").trim();
       return {
-        translatedText: textWithTrim,
+        targetText: textWithTrim,
         detectedLang,
         transliteration: "",
       };

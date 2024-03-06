@@ -13,7 +13,8 @@ import * as util from "/src/util";
 initPdf();
 
 async function initPdf() {
-  checkCurrentUrlIsLocalFileUrl(); // warn no permission if file url
+  checkLocalFileUrl(); // warn no permission if file url
+  checkLocalFileType();
   checkPdfError();
   addCustomKeystroke();
   //make line break for spaced text
@@ -25,9 +26,8 @@ async function initPdf() {
 
 //if current url is local file and no file permission
 //alert user need permmsion
-async function checkCurrentUrlIsLocalFileUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const url = urlParams.get("file");
+async function checkLocalFileUrl() {
+  const url = getFileParam();
 
   if (/^file:\/\//.test(url)) {
     //check current url is file url
@@ -44,6 +44,11 @@ async function checkCurrentUrlIsLocalFileUrl() {
       util.openSettingPage();
     }
   }
+}
+function getFileParam() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const fileParam = urlParams.get("file");
+  return fileParam;
 }
 
 function addCallbackForPdfTextLoad(callback) {
@@ -66,7 +71,6 @@ function checkPdfError() {
   document.addEventListener("webviewerloaded", function () {
     PDFViewerApplication.initializedPromise.then(function () {
       PDFViewerApplication.eventBus.on("documenterror", function (event) {
-        console.log(event);
         util.postFrame({ type: "pdfErrorLoadDocument" });
       });
     });
@@ -141,6 +145,49 @@ function addCustomKeystroke() {
         break;
     }
   });
+}
+
+//working on ====================================================================
+
+function checkLocalFileType() {
+  var url = getFileParam();
+  if (isFileUrl(url) && !isPdfFileName(url)) {
+    redirect("/pdfjs/web/viewer.html?file=");
+  }
+}
+
+function isFileUrl(url) {
+  return /^file:\/\/(.*?)/.test(url.toLowerCase());
+}
+function isPdfFileName(url) {
+  return /(.*?)\.pdf$/.test(url.toLowerCase());
+}
+
+// var isIframe = util.inIframe();
+// host and file same
+// no same host
+// check iframe
+//dynamic url
+//check file end with pdf
+
+function changeUrlParam() {
+  var baseUrl = window.location.origin + window.location.pathname;
+  var fileParam = window.location.search.slice(6); //slice "?page="
+
+  //url is decoded, redirect with encoded url to read correctly in pdf viewer
+  if (decodeURIComponent(fileParam) == fileParam) {
+    redirect(baseUrl);
+  }
+
+  //change to decoded url for ease of url copy
+  // changeUrlWithoutRedirect(decodeURIComponent(fileParam));
+}
+
+function redirect(url) {
+  window.location.replace(url);
+}
+function changeUrlWithoutRedirect(fileParam) {
+  history.replaceState("", "", "/pdfjs/web/viewer.html?file=" + fileParam);
 }
 
 function initButton() {

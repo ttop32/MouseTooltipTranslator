@@ -29,7 +29,7 @@ export default class googleWebImage extends BaseTranslator {
     var base64Url = await util.getBase64(imageUrls[0]);
 
     return {
-      translatedText: "image",
+      targetText: "image",
       detectedLang,
       transliteration: "",
       imageUrl: base64Url,

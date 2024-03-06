@@ -12,7 +12,7 @@ export default class lingva extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     return {
-      translatedText: res["translation"],
+      targetText: res["translation"],
       detectedLang: res["info"]["translation"],
       transliteration: res["info"]["pronunciation"]["query"],
     };

@@ -16,6 +16,7 @@ import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
 import video from "./subtitle/subtitle.js";
+import { langListOpposite } from "/src/util/lang.js";
 
 //init environment var======================================================================\
 var setting;
@@ -36,9 +37,10 @@ var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
 const controller = new AbortController();
 const { signal } = controller;
-var isBlobPdf = false;
+var isBlobPdfOpened = false;
 
 var selectedText = "";
+var prevSelected = "";
 var hoveredData = {};
 var stagedText = null;
 var prevStagedParams = [];
@@ -93,6 +95,7 @@ function startTextSelectDetector() {
   addEventHandler("selectionEnd", async function (event) {
     // if translate on selection is enabled
     if (setting["translateWhen"].includes("select")) {
+      prevSelected = selectedText;
       selectedText = event?.selectedText;
       await stageTooltipText(selectedText, "select");
     }
@@ -103,12 +106,8 @@ function startTextSelectDetector() {
 async function stageTooltipText(text, actionType, range) {
   prevStagedParams = Array.prototype.slice.call(arguments); //record args
   text = util.filterWord(text); //filter out one that is url,no normal char
-  var textNoEmoji = util.filterEmoji(text);
-  var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var isTtsOn = keyDownList[setting["TTSWhen"]];
-  var isShowOriTextOn = setting["tooltipInfoSourceText"] == "true";
-  var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
-  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
+  var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
 
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
@@ -117,7 +116,8 @@ async function stageTooltipText(text, actionType, range) {
     !checkWindowFocus() ||
     checkMouseTargetIsTooltip() ||
     stagedText == text ||
-    !util.isExtensionOnline()
+    !util.isExtensionOnline() ||
+    (selectedText == prevSelected && !text && actionType == "select") //prevent select flicker
   ) {
     return;
   } else if (!text) {
@@ -130,26 +130,20 @@ async function stageTooltipText(text, actionType, range) {
 
   //stage current processing word
   stagedText = text;
-  var {
-    translatedText,
-    sourceLang,
-    targetLang,
-    transliteration,
-    dict,
-    imageUrl,
-  } = await requestTranslateWithReverse(
+  var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
     setting["translateTarget"],
     setting["translateReverseTarget"]
   );
+  var { targetText, sourceLang, targetLang } = translatedData;
 
   // if translation is not recent one, do not update
   //if translated text is empty, hide tooltip
   if (stagedText != text) {
     return;
   } else if (
-    !translatedText ||
+    !targetText ||
     sourceLang == targetLang ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
@@ -158,37 +152,12 @@ async function stageTooltipText(text, actionType, range) {
   }
 
   //if tooltip is on or activation key is pressed, show tooltip
-  //if current word is recent activatedWord
   if (isTooltipOn) {
-    var tooltipTransliteration = isTransliterationOn ? transliteration : "";
-    var tooltipLang = isShowLangOn ? util.langListOpposite[sourceLang] : "";
-    var tooltipOriText = isShowOriTextOn ? stagedText : "";
-
-    var tooltipMainText =
-      wrapMainImage(imageUrl) ||
-      wrapMain(dict, targetLang) ||
-      wrapMain(translatedText, targetLang);
-
-    var tooltipText =
-      tooltipMainText +
-      wrapInfoText(tooltipOriText, "i", sourceLang) +
-      wrapInfoText(tooltipTransliteration, "b") +
-      wrapInfoText(tooltipLang, "sup");
-
-    showTooltip(tooltipText);
-    requestRecordTooltipText(
-      text,
-      sourceLang,
-      translatedText,
-      targetLang,
-      actionType
-    );
-    highlightText(range);
+    handleTooltip(text, translatedData, actionType, range);
   }
-
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    requestTTS(textNoEmoji, sourceLang, translatedText, targetLang);
+    util.requestTTS(text, sourceLang, targetText, targetLang);
   }
 }
 
@@ -223,16 +192,17 @@ function checkMouseTargetIsTooltip() {
 }
 
 function showTooltip(text) {
-  var resetPrevTooltip = prevTooltipText != text;
+  if (prevTooltipText != text) {
+    hideTooltip(true);
+  }
   prevTooltipText = text;
   checkTooltipContainer();
-  hideTooltip(resetPrevTooltip); //reset tooltip arrow
   tooltip?.setContent(text);
   tooltip?.show();
 }
 
-function hideTooltip(resetPrevTooltip = false) {
-  if (resetPrevTooltip) {
+function hideTooltip(resetAll = false) {
+  if (resetAll) {
     hideAll({ duration: 0 }); //hide all tippy
   }
   tooltip?.hide();
@@ -252,14 +222,68 @@ function hideHighlight() {
   $(".mtt-highlight")?.remove();
 }
 
-function wrapMain(translatedText, targetLang) {
-  if (!translatedText) {
+function handleTooltip(text, translatedData, actionType, range) {
+  var { targetText, sourceLang, targetLang, transliteration, dict, imageUrl } =
+    translatedData;
+  var isShowOriTextOn = setting["tooltipInfoSourceText"] == "true";
+  var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
+  var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
+  var tooltipTransliteration = isTransliterationOn ? transliteration : "";
+  var tooltipLang = isShowLangOn ? langListOpposite[sourceLang] : "";
+  var tooltipOriText = isShowOriTextOn ? text : "";
+
+  var tooltipMainText =
+    wrapMainImage(imageUrl) ||
+    wrapDict(dict, targetLang) ||
+    wrapMain(targetText, targetLang);
+  var tooltipSubText =
+    wrapInfoText(tooltipOriText, "i", sourceLang) +
+    wrapInfoText(tooltipTransliteration, "b") +
+    wrapInfoText(tooltipLang, "sup");
+  var tooltipText = tooltipMainText + tooltipSubText;
+
+  showTooltip(tooltipText);
+
+  util.requestRecordTooltipText(
+    text,
+    sourceLang,
+    targetText,
+    targetLang,
+    dict,
+    actionType
+  );
+  highlightText(range);
+}
+
+function wrapMain(targetText, targetLang) {
+  if (!targetText) {
     return "";
   }
   return $("<span/>", {
     dir: util.getRtlDir(targetLang),
-    text: translatedText,
+    text: targetText,
   }).prop("outerHTML");
+}
+
+function wrapDict(dict, targetLang) {
+  if (!dict) {
+    return "";
+  }
+  var htmlText = wrapMain(dict, targetLang);
+  // wrap first text as bold
+  dict
+    .split("\n")
+    .map((line) => line.split(":")[0])
+    .map(
+      (text) =>
+        (htmlText = htmlText.replace(
+          text,
+          $("<b/>", {
+            text,
+          }).prop("outerHTML")
+        ))
+    );
+  return htmlText;
 }
 
 function wrapInfoText(text, type, dirLang = null) {
@@ -327,7 +351,7 @@ async function translateWriting() {
     return;
   }
   // translate
-  var { translatedText, isBroken } = await requestTranslateWithReverse(
+  var { targetText, isBroken } = await util.requestTranslate(
     writingText,
     "auto",
     setting["writingLanguage"],
@@ -337,7 +361,7 @@ async function translateWriting() {
   if (isBroken) {
     return;
   }
-  insertText(translatedText);
+  insertText(targetText);
 }
 
 async function getWritingText() {
@@ -453,7 +477,7 @@ function handleKeydown(e) {
     mouseMoved = false;
     hideTooltip();
   } else if (e.code == "Escape") {
-    requestStopTTS();
+    util.requestStopTTS();
   } else if (e.key == "HangulMode" || e.key == "Process") {
     return;
   } else if (e.key == "Alt") {
@@ -554,74 +578,6 @@ function waitJquery() {
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
   return matchUrl(url, setting["websiteExcludeList"]);
-}
-
-//send to background.js for background processing  ===========================================================================
-
-async function requestTranslate(word, sourceLang, targetLang) {
-  return await util.sendMessage({
-    type: "translate",
-    data: {
-      text: word,
-      sourceLang,
-      targetLang,
-    },
-  });
-}
-
-async function requestTranslateWithReverse(
-  word,
-  sourceLang,
-  targetLang,
-  reverseLang
-) {
-  return await util.sendMessage({
-    type: "translateWithReverse",
-    data: {
-      text: word,
-      sourceLang,
-      targetLang,
-      reverseLang,
-    },
-  });
-}
-
-async function requestTTS(sourceText, sourceLang, targetText, targetLang) {
-  return await util.sendMessage({
-    type: "tts",
-    data: {
-      sourceText,
-      sourceLang,
-      targetText,
-      targetLang,
-    },
-  });
-}
-
-async function requestStopTTS() {
-  return await util.sendMessage({
-    type: "stopTTS",
-  });
-}
-
-//send history to background.js
-async function requestRecordTooltipText(
-  sourceText,
-  sourceLang,
-  targetText,
-  targetLang,
-  actionType
-) {
-  return await util.sendMessage({
-    type: "recordTooltipText",
-    data: {
-      sourceText,
-      sourceLang,
-      targetText,
-      targetLang,
-      actionType,
-    },
-  });
 }
 
 // setting handling & container style===============================================================
@@ -783,7 +739,18 @@ async function detectPDF() {
   ) {
     addPdfListener();
     openPdfIframe(window.location.href);
+    // var url = "file:///D:/dummy.pd";
+    // openPdfIframe(url);
+    // redirectToPDFViewer();
   }
+}
+
+function redirectToPDFViewer() {
+  window.location.replace(
+    util.getUrlExt(
+      `/pdfjs/web/viewer.html?file=${encodeURIComponent(window.location.href)}`
+    )
+  );
 }
 function addPdfListener() {
   //if pdf not working message come, try open using blob url
@@ -791,11 +758,11 @@ function addPdfListener() {
 }
 
 async function openPdfIframeBlob() {
-  if (isBlobPdf) {
+  if (isBlobPdfOpened) {
     return;
   }
-  isBlobPdf = true;
   // wrap url for bypass referrer check, sciencedirect
+  isBlobPdfOpened = true;
   var url = window.location.href;
   var blob = await fetch(url).then((r) => r.blob());
   var url = URL.createObjectURL(blob);

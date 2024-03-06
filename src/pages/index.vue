@@ -1,60 +1,48 @@
 <template>
   <popupWindow>
-    <!-- main page ====================================== -->
-    <div tile flat>
-      <v-toolbar color="blue" dark dense>
-        <v-toolbar-title>
-          <div>{{ remainSettingDesc["appName"] }}</div>
-        </v-toolbar-title>
-        <v-btn icon @click="$router.push('/history')">
-          <v-icon>mdi-history</v-icon>
-        </v-btn>
-        <v-app-bar-nav-icon
-          @click="$router.push('/about')"
-        ></v-app-bar-nav-icon>
+    <!-- top nav bar -->
+    <v-toolbar color="blue" dark dense>
+      <v-toolbar-title Class="text-subtitle-1 mx-4 font-weight-bold">
+        <div>{{ remainSettingDesc["appName"] }}</div>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
 
-        <!-- tab header -->
-        <template v-slot:extension>
-          <v-tabs
-            v-model="currentTab"
-            center-active
-            show-arrows
-            slider-color="red"
-          >
-            <v-tab v-for="(tabName, tabId) in tabs" :key="tabId">
-              {{ tabName }}
-            </v-tab>
-          </v-tabs>
-        </template>
-      </v-toolbar>
+      <v-btn
+        v-for="(iconData, iconId) in toolbarIcons"
+        :key="iconId"
+        :title="iconData.title"
+        icon
+        @click="$router.push(iconData.path)"
+      >
+        <v-icon>{{ iconData.icon }}</v-icon>
+      </v-btn>
 
-      <!-- main page contents -->
-      <v-window v-model="currentTab">
+      <template v-slot:extension>
+        <v-tabs
+          v-model="currentTab"
+          center-active
+          show-arrows
+          slider-color="red"
+        >
+          <v-tab v-for="(tabName, tabId) in tabs" :key="tabId">
+            {{ tabName }}
+          </v-tab>
+        </v-tabs>
+      </template>
+    </v-toolbar>
+
+    <!-- main page contents -->
+    <v-lazy>
+      <v-window v-model="currentTab" class="scroll-container">
         <v-window-item
           v-for="(tabName, tabId) in tabs"
           :key="tabId"
           :value="tabId"
           class="scrollList"
         >
-          <!-- review request alert box -->
-          <div v-if="tabId == 'MAIN'">
-            <v-alert
-              v-if="2 < setting['popupCount'] && setting['popupCount'] < 6"
-              type="success"
-              border="start"
-              variant="tonal"
-              closable
-              close-label="Close Alert"
-              :title="reviewReminder.name"
-            >
-              {{ reviewReminder.sub_name }}
-              <template v-slot:append>
-                <v-btn variant="tonal" @click="openUrl(reviewReminder.url)"
-                  >Open</v-btn
-                >
-              </template>
-            </v-alert>
-          </div>
+          <!-- comment request banner -->
+          <CommentBanner v-if="tabId == 'MAIN' && checkCommentSchedule()">
+          </CommentBanner>
 
           <v-list-item
             v-for="(option, optionName) in tabItems[tabId]"
@@ -65,7 +53,7 @@
             <v-select
               v-if="!option.optionType || option.optionType == 'multipleSelect'"
               v-model="setting[optionName]"
-              :items="option.optionList"
+              :items="wrapTitleValueJson(option.optionList, optionName)"
               :label="option.description"
               :multiple="option.optionType == 'multipleSelect'"
               :chips="option.optionType == 'multipleSelect'"
@@ -78,10 +66,10 @@
             <v-combobox
               v-else-if="option.optionType == 'comboBox'"
               v-model="setting[optionName]"
-              :items="option.optionList"
+              :items="wrapTitleValueJson(option.optionList, optionName)"
+              :label="option.description"
               item-text="text"
               item-value="val"
-              :label="option.description"
               tabName
               chips
               multiple
@@ -116,14 +104,9 @@
               </template>
             </v-text-field>
           </v-list-item>
-
-          <!-- </v-list> -->
-          <!-- </v-card> -->
         </v-window-item>
       </v-window>
-
-      <!-- tab body------------------- -->
-    </div>
+    </v-lazy>
   </popupWindow>
 </template>
 <script>
@@ -131,12 +114,14 @@ import browser from "webextension-polyfill";
 import { isProxy, toRaw } from "vue";
 import _ from "lodash";
 
-import * as util from "/src/util";
+import { mapState } from "pinia";
+import { useSettingStore } from "/src/stores/setting.js";
 
-var langList = util.langList;
+import * as util from "/src/util";
+import { langList, langListOpposite, ocrLangList } from "/src/util/lang.js";
+
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = util.concatJson({ None: "null" }, langList); //copy lang and add none
-var langListOpposite = util.langListOpposite;
 
 var toggleList = {
   On: "true",
@@ -156,102 +141,6 @@ var keyList = {
   "Click Left": "ClickLeft",
   "Click Middle": "ClickMiddle",
   "Click Right": "ClickRight",
-};
-
-var ocrLangList = {
-  Afrikaans: "afr",
-  Albanian: "sqi",
-  Amharic: "amh",
-  Arabic: "ara",
-  Armenian: "hye",
-  Azerbaijani: "aze",
-  Basque: "eus",
-  Belarusian: "bel",
-  Bengali: "ben",
-  Bosnian: "bos",
-  Bulgarian: "bul",
-  Burmese: "mya",
-  Catalan: "cat",
-  Cebuano: "ceb",
-  "Chinese Simplified": "chi_sim",
-  "Chinese Simplified (vertical)": "chi_sim_vert",
-  "Chinese Traditional": "chi_tra",
-  "Chinese Traditional (vertical)": "chi_tra_vert",
-  Corsican: "cos",
-  Croatian: "hrv",
-  Czech: "ces",
-  Danish: "dan",
-  Dutch: "nld",
-  English: "eng",
-  Esperanto: "epo",
-  Estonian: "est",
-  Filipino: "fil",
-  Finnish: "fin",
-  French: "fra",
-  Frisian: "fry",
-  Galician: "glg",
-  Georgian: "kat",
-  German: "deu",
-  Greek: "ell",
-  Gujarati: "guj",
-  Haitian: "hat",
-  Hebrew: "heb",
-  Hindi: "hin",
-  Hungarian: "hun",
-  Icelandic: "isl",
-  Indonesian: "ind",
-  Irish: "gle",
-  Italian: "ita",
-  Japanese: "jpn",
-  "Japanese (vertical)": "jpn_vert",
-  Javanese: "jav",
-  Kannada: "kan",
-  Kazakh: "kaz",
-  Khmer: "khm",
-  Korean: "kor",
-  "Korean (vertical)": "kor_vert",
-  Kurdish: "kmr",
-  Lao: "lao",
-  Latin: "lat",
-  Latvian: "lav",
-  Lithuanian: "lit",
-  Luxembourgish: "ltz",
-  Macedonian: "mkd",
-  Malay: "msa",
-  Malayalam: "mal",
-  Maltese: "mlt",
-  Maori: "mri",
-  Marathi: "mar",
-  Mongolian: "mon",
-  Nepali: "nep",
-  Norwegian: "nor",
-  Persian: "fas",
-  Polish: "pol",
-  Portuguese: "por",
-  Romanian: "ron",
-  Russian: "rus",
-  "Scottish Gaelic": "gla",
-  Serbian: "srp",
-  Sindhi: "snd",
-  Sinhala: "sin",
-  Slovak: "slk",
-  Slovenian: "slv",
-  Spanish: "spa",
-  Sundanese: "sun",
-  Swahili: "swa",
-  Swedish: "swe",
-  Tajik: "tgk",
-  Tamil: "tam",
-  Telugu: "tel",
-  Thai: "tha",
-  Turkish: "tur",
-  Ukrainian: "ukr",
-  Urdu: "urd",
-  Uzbek: "uzb",
-  Vietnamese: "vie",
-  Welsh: "cym",
-  Yiddish: "yid",
-  Yoruba: "yor",
 };
 
 var translatorList = {
@@ -531,12 +420,6 @@ var remainSettingDesc = {
   Voice_for_: browser.i18n.getMessage("Voice_for_"),
 };
 
-var reviewReminder = {
-  name: browser.i18n.getMessage("Review_this"),
-  sub_name: browser.i18n.getMessage("Developer_love_criticism"),
-  url: util.getReviewUrl(),
-};
-
 var langPriorityOptionList = [
   "translateSource",
   "translateTarget",
@@ -544,13 +427,31 @@ var langPriorityOptionList = [
   "translateReverseTarget",
 ];
 
+var toolbarIcons = {
+  card: {
+    title: "card",
+    icon: "mdi-card-multiple",
+    path: "/deck",
+  },
+  history: {
+    title: "history",
+    icon: "mdi-history",
+    path: "/history",
+  },
+  about: {
+    title: "about",
+    icon: "mdi-menu",
+    path: "/about",
+  },
+};
+
 export default {
   name: "PopupView",
   data() {
     return {
       currentTab: "MAIN",
-      tabs: tabs,
-      tabItems: {},
+      tabs,
+      tabItems,
       remainSettingDesc,
       options: {
         mask: "!#XXXXXXXX",
@@ -558,33 +459,17 @@ export default {
           X: { pattern: /[0-9a-fA-F]/ },
         },
       },
-      setting: {},
       currentPage: "main",
-      historyRecordActionChipList: [
-        {
-          name: "select",
-          icon: "mdi-cursor-text",
-        },
-        {
-          name: "mouseover",
-          icon: "mdi-cursor-default-click",
-        },
-      ],
-      reviewReminder,
+      toolbarIcons,
     };
   },
   async mounted() {
-    this.setting = await util.loadSetting();
-    this.loadTabOptionList();
     await this.addTtsVoiceTabOption();
-    this.setting["popupCount"]++;
-    this.saveSetting();
-
-    console.log(this.setting);
-    console.log(this.tabItems);
+    await this.waitSettingLoad();
+    this.handlePopupCount();
   },
-
   computed: {
+    ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
     settingWrapper() {
       return Object.assign({}, this.setting);
     },
@@ -593,19 +478,13 @@ export default {
     settingWrapper: {
       deep: true,
       handler(newSetting, oldSetting) {
+        // use wrapper to detect new old comparable
         this.checkSettingLangPriority(newSetting, oldSetting);
-        this.saveSetting();
       },
     },
   },
 
   methods: {
-    saveSetting() {
-      toRaw(this.setting).save();
-    },
-    openUrl(newURL) {
-      window.open(newURL);
-    },
     wrapTitleValueJson(inputList, optionName) {
       // convert {key:item}  as {title:key, value:item}
       var textValList = [];
@@ -615,27 +494,17 @@ export default {
           value: val2,
         });
       }
+      //sort priority option
       textValList = this.sortLangOption(textValList, optionName);
       return textValList;
-    },
-    loadTabOptionList() {
-      this.tabItems = tabItems;
-      for (const [tabKey, tabVal] of Object.entries(this.tabItems)) {
-        for (const [key1, val1] of Object.entries(tabVal)) {
-          this.tabItems[tabKey][key1]["optionList"] = this.wrapTitleValueJson(
-            this.tabItems[tabKey][key1]["optionList"],
-            key1
-          );
-        }
-      }
     },
     sortLangOption(textValList, optionName) {
       if (!langPriorityOptionList.includes(optionName)) {
         return textValList;
       }
       textValList.sort((i1, i2) => {
-        var i1Priority = this.setting["langPriority"][i1.value] || 0;
-        var i2Priority = this.setting["langPriority"][i2.value] || 0;
+        var i1Priority = this.setting?.["langPriority"]?.[i1.value] || 0;
+        var i2Priority = this.setting?.["langPriority"]?.[i2.value] || 0;
         return i2Priority - i1Priority;
       });
       return textValList;
@@ -664,7 +533,7 @@ export default {
         voiceTabOption["ttsVoice_" + key] = {
           description:
             this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
-          optionList: this.wrapTitleValueJson(voiceOptionList),
+          optionList: voiceOptionList,
         };
       }
 
@@ -687,7 +556,19 @@ export default {
         transition: "border-radius 200ms ease-in-out",
       };
     },
+    handlePopupCount() {
+      if (10 < this.setting["popupCount"]) {
+        this.setting["popupCount"] += 1;
+      }
+    },
+    checkCommentSchedule() {
+      return 1 < this.setting["popupCount"] && this.setting["popupCount"] < 5;
+    },
   },
 };
 </script>
-<style></style>
+<style scoped>
+.scroll-container {
+  height: calc(100vh - 112px);
+}
+</style>
