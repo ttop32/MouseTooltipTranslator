@@ -9,13 +9,6 @@ import googleV2 from "./googleV2.js";
 import googleGTX from "./googleGTX.js";
 import chatgpt from "./chatgpt.js";
 import googleWebImage from "./googleWebImage.js";
-import libreTranslate from "./libretranslate.js";
-import lingva from "./lingva.js";
-import duckduckgo from "./duckduckgo.js";
-import myMemory from "./mymemory.js";
-import watson from "./watson.js";
-import pixabay from "./pixabay.js";
-import unsplash from "./unsplash.js";
 
 export default {
   google,
@@ -29,11 +22,4 @@ export default {
   yandex,
   baidu,
   chatgpt,
-  libreTranslate,
-  lingva,
-  duckduckgo,
-  myMemory,
-  watson,
-  pixabay,
-  unsplash,
 };
