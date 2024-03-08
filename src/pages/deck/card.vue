@@ -26,8 +26,8 @@
 
       <v-card-actions>
         <ChipOption
-          settingName="cardListen"
-          :chipData="cardListenOptions"
+          settingName="cardPlayMeta"
+          :chipData="cardPlayMetaOptions"
         ></ChipOption>
 
         <v-spacer></v-spacer>
@@ -187,7 +187,7 @@ export default {
         },
       ],
 
-      cardListenOptions: ["source", "target"],
+      cardPlayMetaOptions: ["source", "target", "image"],
       currentImageUrl: "",
       isTargetShow: null,
       sourceText: "",
@@ -247,11 +247,12 @@ export default {
   },
   watch: {
     async isTargetShow(newValue, oldValue) {
-      this.loadImage(this.currentCard?.sourceText);
       util.requestStopTTS();
-      if (!newValue && this.setting["cardListen"].includes("source")) {
+      await delay(50);
+      this.loadImage(this.currentCard?.sourceText);
+      if (!newValue && this.setting["cardPlayMeta"].includes("source")) {
         this.playSource();
-      } else if (newValue && this.setting["cardListen"].includes("target")) {
+      } else if (newValue && this.setting["cardPlayMeta"].includes("target")) {
         this.playTarget();
       }
     },
@@ -335,9 +336,11 @@ export default {
       this.isTargetShow = true;
     },
     async loadImage(text) {
-      if (!text) {
+      if (!text || !this.setting["cardPlayMeta"].includes("image")) {
+        this.currentImageUrl = "";
         return;
       }
+
       var { imageUrl } = await util.requestImage(text);
       this.currentImageUrl = imageUrl;
     },
