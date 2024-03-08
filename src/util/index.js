@@ -76,7 +76,7 @@ export var defaultData = {
   langPriority: { auto: 9999999, null: 9999999 },
   tooltipIntervalTime: "0.7",
 
-  cardListen: [],
+  cardPlayMeta: ["image"],
   cardTagSelected: [],
   deckStatus: {},
   cardLen: {},
@@ -632,15 +632,20 @@ export function getDateNow() {
   return new Date().toJSON();
 }
 export function getDateNowNoTime() {
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
-  return date.toJSON();
+  var date = new Date(new Date().toDateString());
+  return date.toString();
 }
 export function addDay(date, day) {
   date = new Date(date);
   date.setDate(date.getDate() + day);
-  return date.toJSON();
+  return date.toString();
 }
+export function adhour(date, hour) {
+  date = new Date(date);
+  date.setHours(date.getHours() + hour);
+  return date.toString();
+}
+
 export function getNextDay(day) {
   return addDay(getDateNowNoTime(), day);
 }
