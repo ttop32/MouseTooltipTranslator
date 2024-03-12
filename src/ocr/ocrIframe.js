@@ -99,8 +99,14 @@ function useTesseract(image, lang, rectangles, mode) {
     }
   });
 }
+
+function getModeId(lang, mode) {
+  var modeFront = mode.split("_")[0];
+  return lang + "_" + modeFront;
+}
+
 async function getScheduler(lang, mode) {
-  var id = lang + "_" + mode;
+  var id = getModeId(lang, mode);
 
   if (schedulerList[id]) {
     return schedulerList[id];

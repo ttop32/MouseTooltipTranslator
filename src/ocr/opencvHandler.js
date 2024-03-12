@@ -103,9 +103,14 @@ function detectText(canvasIn, mode) {
   var paddingSize = 10;
   let contours = new cv.MatVector();
   let hierarchy = new cv.Mat();
-  var ksize = new cv.Size(10, 10);
-  var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
 
+  if (mode.includes("large")) {
+    var ksize = new cv.Size(50, 50);
+    var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
+  } else {
+    var ksize = new cv.Size(13, 13);
+    var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+  }
   // var ksize = new cv.Size(20, 20);
   // var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
   // cv.erode(dst, dst, delement);
@@ -132,7 +137,7 @@ function detectText(canvasIn, mode) {
     let area = cv.contourArea(cnt);
     let angle = Math.abs(cv.minAreaRect(cnt).angle);
     let isRightAngle = [0, 90, 180, 270, 360].some(
-      (x) => Math.abs(x - angle) <= 15.0
+      (x) => Math.abs(x - angle) <= 20.0
     );
     let rect = cv.boundingRect(cnt);
     var left = parseInt(Math.max(rect.x - paddingSize, 0));

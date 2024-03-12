@@ -370,7 +370,7 @@ export default {
 </script>
 <style>
 .enableBlur > * {
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
 }
 .textBlur {
   filter: blur(5px);
