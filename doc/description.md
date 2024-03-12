@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.130
+  - hide mouseover text error (contributed by gignac-cha)
 - 0.1.129
   - fix korea ocr manga lang size
 - 0.1.128

@@ -104,7 +104,7 @@ async function expandRange(range, type) {
       // await expandRangeWithSeg(range, type);
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
