@@ -45,6 +45,7 @@ export async function checkImage(img, setting, keyDownList) {
   await Promise.all([
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox"),
+    processOcr(img.src, lang, base64Url, img, "GREEN", "bbox_large"),
   ]);
 
   makeNormalMouseStyle(img);
