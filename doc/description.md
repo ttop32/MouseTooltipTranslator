@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.131
+  - fix tts voice overlap(request by Nebras)
 - 0.1.130
   - fix review notify
   - hide mouseover text error (contributed by gignac-cha)
