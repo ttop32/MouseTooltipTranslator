@@ -8,6 +8,7 @@ const speech = window.speechSynthesis;
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
     if (request.type === "playAudioOffscreen") {
+      stopAudio();
       await playAudio(request.data);
       sendResponse({});
     } else if (request.type === "playSpeechTTSOffscreen") {
@@ -55,9 +56,9 @@ async function playSpeechTTS({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
 }
 
 function stopAudio() {
-  speech?.cancel();
   if (audio) {
     audio.pause();
     audio.currentTime = 0;
   }
+  speech?.cancel();
 }
