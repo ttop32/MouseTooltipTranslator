@@ -8,7 +8,6 @@ import delay from "delay";
 import translator from "./translator/index.js";
 import tts from "./tts/index.js";
 import * as util from "/src/util";
-import { debounce } from "lodash";
 
 var setting;
 var recentTranslated = "";
@@ -270,39 +269,37 @@ function addInstallUrl(url) {
 
 // tts=============================================================================
 
-const playTtsQueue = debounce(
-  async ({
-    sourceText,
-    sourceLang,
-    targetText,
-    targetLang,
-    voiceTarget,
-    voiceRepeat,
-  }) => {
-    var sourceText = util.filterEmoji(sourceText);
-    var targetText = util.filterEmoji(targetText);
-    var ttsTarget = voiceTarget || setting["voiceTarget"];
-    var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
-    ttsRepeat = Number(ttsRepeat);
-    stopTts();
-    await delay(50);
-    var startTimeStamp = Date.now();
-    for (var i = 0; i < ttsRepeat; i++) {
-      if (ttsTarget == "source") {
-        await playTts(sourceText, sourceLang, startTimeStamp);
-      } else if (ttsTarget == "target") {
-        await playTts(targetText, targetLang, startTimeStamp);
-      } else if (ttsTarget == "sourcetarget") {
-        await playTts(sourceText, sourceLang, startTimeStamp);
-        await playTts(targetText, targetLang, startTimeStamp);
-      } else if (ttsTarget == "targetsource") {
-        await playTts(targetText, targetLang, startTimeStamp);
-        await playTts(sourceText, sourceLang, startTimeStamp);
-      }
+async function playTtsQueue({
+  sourceText,
+  sourceLang,
+  targetText,
+  targetLang,
+  voiceTarget,
+  voiceRepeat,
+}) {
+  var sourceText = util.filterEmoji(sourceText);
+  var targetText = util.filterEmoji(targetText);
+  var ttsTarget = voiceTarget || setting["voiceTarget"];
+  var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
+  ttsRepeat = Number(ttsRepeat);
+  stopTts();
+  await delay(10);
+
+  var startTimeStamp = Date.now();
+  for (var i = 0; i < ttsRepeat; i++) {
+    if (ttsTarget == "source") {
+      await playTts(sourceText, sourceLang, startTimeStamp);
+    } else if (ttsTarget == "target") {
+      await playTts(targetText, targetLang, startTimeStamp);
+    } else if (ttsTarget == "sourcetarget") {
+      await playTts(sourceText, sourceLang, startTimeStamp);
+      await playTts(targetText, targetLang, startTimeStamp);
+    } else if (ttsTarget == "targetsource") {
+      await playTts(targetText, targetLang, startTimeStamp);
+      await playTts(sourceText, sourceLang, startTimeStamp);
     }
-  },
-  100
-);
+  }
+}
 
 function stopTts() {
   stopTtsTimestamp = Date.now();
