@@ -41,8 +41,7 @@
           class="scrollList"
         >
           <!-- comment request banner -->
-          <CommentBanner v-if="tabId == 'MAIN' && checkCommentSchedule()">
-          </CommentBanner>
+          <CommentBanner v-if="tabId == 'MAIN'"> </CommentBanner>
 
           <v-list-item
             v-for="(option, optionName) in tabItems[tabId]"
@@ -466,7 +465,6 @@ export default {
   async mounted() {
     await this.addTtsVoiceTabOption();
     await this.waitSettingLoad();
-    this.handlePopupCount();
   },
   computed: {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
@@ -555,14 +553,6 @@ export default {
         borderRadius: menu ? "50%" : "4px",
         transition: "border-radius 200ms ease-in-out",
       };
-    },
-    handlePopupCount() {
-      if (10 < this.setting["popupCount"]) {
-        this.setting["popupCount"] += 1;
-      }
-    },
-    checkCommentSchedule() {
-      return 1 < this.setting["popupCount"] && this.setting["popupCount"] < 5;
     },
   },
 };
