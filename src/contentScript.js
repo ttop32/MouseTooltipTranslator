@@ -513,8 +513,8 @@ async function stopTTSbyCombKey(key) {
     return;
   }
   // stop tts if combination key ex crtl+c
-  for (var i in [1, 2, 3]) {
-    await delay(250);
+  for (let i = 0; i < 10; i++) {
+    await delay(200);
     util.requestStopTTS();
   }
 }
