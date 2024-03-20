@@ -108,7 +108,7 @@ function detectText(canvasIn, mode) {
     var ksize = new cv.Size(50, 50);
     var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
   } else {
-    var ksize = new cv.Size(13, 13);
+    var ksize = new cv.Size(12, 12);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
   }
   // var ksize = new cv.Size(20, 20);

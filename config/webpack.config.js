@@ -21,10 +21,6 @@ module.exports = (env, argv) => {
       alias: {
         vue$: "vue/dist/vue.esm-bundler.js",
       },
-      fallback: {
-        crypto: require.resolve("crypto-browserify"),
-        stream: require.resolve("stream-browserify"),
-      },
     },
     plugins: [
       argv.mode == "development"

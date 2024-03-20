@@ -1,13 +1,9 @@
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
 import { debounce } from "throttle-debounce";
 import $ from "jquery";
+import memoize from "memoizee";
+import browser from "webextension-polyfill";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
-import * as memoizee from "memoizee";
-
-var browser;
-try {
-  browser = require("webextension-polyfill");
-} catch (error) {}
 
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
@@ -229,7 +225,7 @@ export default class BaseVideo {
     this.killIntercept
   );
 
-  static requestSubtitleCached = memoizee(async function (
+  static requestSubtitleCached = memoize(async function (
     subUrl,
     lang,
     tlang,
@@ -273,6 +269,9 @@ export default class BaseVideo {
   //inject script for handle local function===============================
 
   static async initInjectScript(setting) {
+    if (this.checkIsInjectedScript()) {
+      return;
+    }
     await this.injectScript();
     this.resetInjectScript(setting);
   }

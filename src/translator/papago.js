@@ -2,7 +2,7 @@
 import BaseTranslator from "./baseTranslator";
 import ky from "ky";
 import { v4 as uuidv4 } from "uuid";
-import Crypto from "crypto";
+import CryptoJS from "crypto-js";
 
 var papagoLangCode = {
   ar: "ar",
@@ -84,9 +84,10 @@ export default class papago extends BaseTranslator {
     var uuid = uuidv4();
     var time = Date.now();
     this.version = this.version ? this.version : await this.getVersion();
-    var hash = Crypto.createHmac("md5", this.version)
-      .update(`${uuid}\n${url}\n${time}`)
-      .digest("base64");
+    const key = CryptoJS.enc.Utf8.parse(this.version);
+    const plain = CryptoJS.enc.Utf8.parse(`${uuid}\n${url}\n${time}`);
+    var hash = CryptoJS.enc.Base64.stringify(CryptoJS.HmacMD5(plain, key));
+
     return {
       uuid,
       time,

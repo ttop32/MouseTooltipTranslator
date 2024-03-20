@@ -43,6 +43,7 @@
     "bootstrap": "^4.5.3",
     "cheerio": "^1.0.0-rc.12",
     "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.2.0",
     "delay": "^6.0.0",
     "franc": "^6.2.0",
     "he": "^1.2.0",
