@@ -1,11 +1,15 @@
 import $ from "jquery";
 import isUrl from "is-url";
 import _ from "lodash";
-import browser from "webextension-polyfill";
 import { iso6393To1 } from "iso-639-3";
 import { francAll } from "franc";
 import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
+
 import { Setting } from "./setting.js";
 
 import {

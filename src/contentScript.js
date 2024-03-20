@@ -15,7 +15,7 @@ import {
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
-import subtitle from "/src/subtitle";
+import subtitle from "/src/subtitle/subtitle.js";
 import { langListOpposite } from "/src/util/lang.js";
 
 //init environment var======================================================================\
