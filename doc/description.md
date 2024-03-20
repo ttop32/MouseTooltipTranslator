@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.133
+  - fix youtube subtitle conflict
 - 0.1.132
   - fix copy key conflict with tts voice(request by ldrahnik)
 - 0.1.131
