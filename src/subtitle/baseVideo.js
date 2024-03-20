@@ -2,8 +2,11 @@ import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
 import { debounce } from "throttle-debounce";
 import $ from "jquery";
 import memoize from "memoizee";
-import browser from "webextension-polyfill";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
 
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
@@ -231,7 +234,7 @@ export default class BaseVideo {
     tlang,
     videoId
   ) {
-    return await this.requestSubtitle(subUrl, lang, tlang, videoId);
+    return await this.requestSubtitle(...arguments);
   });
 
   //util =======================

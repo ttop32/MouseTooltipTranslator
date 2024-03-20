@@ -1,6 +1,5 @@
 import $ from "jquery";
 import memoize from "memoizee";
-
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
 

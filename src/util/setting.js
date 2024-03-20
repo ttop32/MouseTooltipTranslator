@@ -1,4 +1,8 @@
-import browser from "webextension-polyfill";
+// import browser from "webextension-polyfill";
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
 
 // load setting from chrome storage
 // automatic setting update class===============================
