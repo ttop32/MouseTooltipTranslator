@@ -114,12 +114,7 @@ const common = {
         /\.vue$/,
         /\.vue\?vue/, // .vue
       ],
-      // global imports to register
-      imports: [
-        // presets
-        "vue",
-        "vue-router",
-      ],
+      imports: ["vue", "vue-router"],
     }),
     require("unplugin-vue-router/webpack")({}),
   ],

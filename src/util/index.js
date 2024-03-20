@@ -1,6 +1,7 @@
 import $ from "jquery";
 import isUrl from "is-url";
 import _ from "lodash";
+import browser from "webextension-polyfill";
 import { iso6393To1 } from "iso-639-3";
 import { francAll } from "franc";
 import { parse } from "bcp-47";
@@ -12,13 +13,6 @@ import {
   bingTtsVoiceList,
   googleTranslateTtsLangList,
 } from "/src/util/lang.js";
-
-var browser;
-try {
-  browser = require("webextension-polyfill");
-} catch (error) {
-  console.log(error);
-}
 
 export var defaultData = {
   showTooltipWhen: "always",
@@ -768,5 +762,3 @@ export async function requestBase64(url) {
     url,
   });
 }
-
-//

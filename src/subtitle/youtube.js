@@ -1,5 +1,5 @@
 import $ from "jquery";
-import * as memoizee from "memoizee";
+import memoize from "memoizee";
 
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
@@ -291,7 +291,7 @@ export default class Youtube extends BaseVideo {
     };
   }
 
-  static getYoutubeMetaDataCached = memoizee(this.getYoutubeMetaData);
+  static getYoutubeMetaDataCached = memoize(this.getYoutubeMetaData);
 
   static async getYoutubeMetaData(videoId) {
     // use global variable

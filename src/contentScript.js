@@ -15,7 +15,7 @@ import {
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as ocrView from "/src/ocr/ocrView.js";
-import video from "./subtitle/subtitle.js";
+import subtitle from "/src/subtitle";
 import { langListOpposite } from "/src/util/lang.js";
 
 //init environment var======================================================================\
@@ -500,11 +500,26 @@ function handleMouseKeyUp(e) {
 
 function holdKeydownList(key) {
   // skip text key
-  if (key && !keyDownList[key] && !/Key|Digit|Numpad/.test(key)) {
+  if (key && !keyDownList[key] && !isCharKey(key)) {
     keyDownList[key] = true;
     restartWordProcess();
     translateWriting();
   }
+  stopTTSbyCombKey(key);
+}
+
+async function stopTTSbyCombKey(key) {
+  if (!isCharKey(key) || !keyDownList[setting["TTSWhen"]]) {
+    return;
+  }
+  // stop tts if combination key ex crtl+c
+  for (var i in [1, 2, 3]) {
+    await delay(250);
+    util.requestStopTTS();
+  }
+}
+function isCharKey(key) {
+  return /Key|Digit|Numpad/.test(key);
 }
 
 function releaseKeydownList(key) {
@@ -823,8 +838,8 @@ function injectGoogleDocAnnotation() {
 
 // youtube================================
 async function checkVideo() {
-  video["Youtube"].handleVideo(setting);
-  video["YoutubeNoCookie"].handleVideo(setting);
+  subtitle["Youtube"].handleVideo(setting);
+  subtitle["YoutubeNoCookie"].handleVideo(setting);
 }
 
 //destruction ===================================
