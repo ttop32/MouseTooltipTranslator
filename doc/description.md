@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.134
   - English AU locale (contributed by CreeperYeeter2)
+  - fix RTL UI
 - 0.1.133
   - fix youtube subtitle conflict
 - 0.1.132
