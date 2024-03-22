@@ -26,11 +26,17 @@ import { vMaska } from "maska";
 
 import * as util from "/src/util";
 
+var lang = util.getDefaultLang();
+var messages = {};
+messages[lang] = { open: "Open", close: "Close" };
+
 const vuetify = createVuetify({
   components,
   directives,
   locale: {
-    locale: util.getDefaultLang(),
+    locale: lang,
+    fallback: "en",
+    messages,
   },
   theme: {
     options: {
