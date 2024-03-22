@@ -11,7 +11,7 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 [<img alt="microsoft store" height="64px" src="doc/microsoft.png" />](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
 [<img alt="softpedia" height="64px" src="doc/softpedia.png" />](https://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/Mouse-Tooltip-Translator-for-Chrome.shtml)
 
-# Result 
+# Result  
  
 ![Alt Text](doc/result_0.gif)
 ![result](doc/screenshot_3.png)
@@ -217,6 +217,14 @@ npm run build        // or 'npm run watch' for developing
       <br />
       <sub><b>63 words</b></sub>
       <br /><sub><b><code title="Turkish">tr</code></b></sub>
+    </td>
+    <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/CreeperYeeter2"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16245208/medium/8a0163ae0953c336a9a02f1562f292c5_default.png" />
+        <br />
+        <sub><b>CreeperYeeter2</b></sub></a>
+      <br />
+      <sub><b>13 words</b></sub>
+      <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
     </td>
   </tr>
 </table><a href="https://crowdin.com/project/mousetooltiptranslator" target="_blank">Translate in Crowdin 🚀</a>
