@@ -24,9 +24,14 @@ import "vuetify/dist/vuetify.min.css"; //vuetify css
 // input mask
 import { vMaska } from "maska";
 
+import * as util from "/src/util";
+
 const vuetify = createVuetify({
   components,
   directives,
+  locale: {
+    locale: util.getDefaultLang(),
+  },
   theme: {
     options: {
       customProperties: true,
