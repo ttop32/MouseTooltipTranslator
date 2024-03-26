@@ -49,7 +49,7 @@ function addMessageListener() {
         playTtsQueue(request.data);
         sendResponse({});
       } else if (request.type === "stopTTS") {
-        stopTts();
+        stopTts(request.data.timestamp);
         sendResponse({});
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
@@ -276,47 +276,41 @@ async function playTtsQueue({
   targetLang,
   voiceTarget,
   voiceRepeat,
+  timestamp,
 }) {
-  var sourceText = util.filterEmoji(sourceText);
-  var targetText = util.filterEmoji(targetText);
   var ttsTarget = voiceTarget || setting["voiceTarget"];
   var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
   ttsRepeat = Number(ttsRepeat);
-  stopTts();
-  await delay(10);
 
-  var startTimeStamp = Date.now();
   for (var i = 0; i < ttsRepeat; i++) {
     if (ttsTarget == "source") {
-      await playTts(sourceText, sourceLang, startTimeStamp);
+      await playTts(sourceText, sourceLang, timestamp);
     } else if (ttsTarget == "target") {
-      await playTts(targetText, targetLang, startTimeStamp);
+      await playTts(targetText, targetLang, timestamp);
     } else if (ttsTarget == "sourcetarget") {
-      await playTts(sourceText, sourceLang, startTimeStamp);
-      await playTts(targetText, targetLang, startTimeStamp);
+      await playTts(sourceText, sourceLang, timestamp);
+      await playTts(targetText, targetLang, timestamp);
     } else if (ttsTarget == "targetsource") {
-      await playTts(targetText, targetLang, startTimeStamp);
-      await playTts(sourceText, sourceLang, startTimeStamp);
+      await playTts(targetText, targetLang, timestamp);
+      await playTts(sourceText, sourceLang, timestamp);
     }
   }
 }
 
-function stopTts() {
-  stopTtsTimestamp = Date.now();
-  tts["BrowserTTS"].stopTTS();
+function stopTts(timestamp = Date.now()) {
+  for (const key in tts) {
+    tts[key].stopTTS(timestamp);
+  }
 }
 
-async function playTts(text, lang, startTimeStamp) {
-  if (startTimeStamp < stopTtsTimestamp) {
-    return;
-  }
+async function playTts(text, lang, timestamp) {
   var volume = setting["voiceVolume"];
   var rate = setting["voiceRate"];
   var voiceFullName = setting?.["ttsVoice_" + lang];
   var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
   var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;
   var engine = isExternalTts ? voiceFullName.split("_")[0] : "BrowserTTS";
-  await tts[engine].playTTS(text, voice, lang, rate, volume);
+  await tts[engine].playTTS(text, voice, lang, rate, volume, timestamp);
 }
 
 //detect tab swtich ===================================
