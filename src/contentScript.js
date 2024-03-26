@@ -108,7 +108,7 @@ async function stageTooltipText(text, actionType, range) {
   text = util.filterWord(text); //filter out one that is url,no normal char
   var isTtsOn = keyDownList[setting["TTSWhen"]];
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
-
+  var timestamp = Number(Date.now());
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
   // if tooltip is off, hide tooltip
@@ -157,7 +157,7 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    util.requestTTS(text, sourceLang, targetText, targetLang);
+    util.requestTTS(text, sourceLang, targetText, targetLang, timestamp);
   }
 }
 
@@ -499,7 +499,6 @@ function handleMouseKeyUp(e) {
 }
 
 function holdKeydownList(key) {
-  // skip text key
   if (key && !keyDownList[key] && !isCharKey(key)) {
     keyDownList[key] = true;
     restartWordProcess();
@@ -513,13 +512,18 @@ async function stopTTSbyCombKey(key) {
     return;
   }
   // stop tts if combination key ex crtl+c
-  for (let i = 0; i < 10; i++) {
-    await delay(200);
-    util.requestStopTTS();
-  }
+  util.requestStopTTS(Date.now() + 500);
 }
+
 function isCharKey(key) {
   return /Key|Digit|Numpad/.test(key);
+}
+function isStageKey(key) {
+  return [
+    setting["TTSWhen"],
+    setting["showTooltipWhen"],
+    setting["keyDownMouseoverTextSwap"],
+  ].includes(key);
 }
 
 function releaseKeydownList(key) {

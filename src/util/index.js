@@ -310,6 +310,9 @@ export function filterEmoji(word) {
     ""
   );
 }
+export function filterHtmlTag(word) {
+  return word.replace(/([<>])/g, "");
+}
 
 export function truncate(str, n) {
   return str.length > n ? str.slice(0, n - 1) + "..." : str;
@@ -695,7 +698,8 @@ export async function requestTTS(
   sourceText,
   sourceLang,
   targetText,
-  targetLang
+  targetLang,
+  timestamp = Date.now()
 ) {
   return await sendMessage({
     type: "tts",
@@ -704,6 +708,7 @@ export async function requestTTS(
       sourceLang,
       targetText,
       targetLang,
+      timestamp,
     },
   });
 }
@@ -720,7 +725,11 @@ export async function requestImage(text) {
   });
 }
 
-export async function requestTTSSingle(sourceText, sourceLang) {
+export async function requestTTSSingle(
+  sourceText,
+  sourceLang,
+  timestamp = Date.now()
+) {
   return await sendMessage({
     type: "tts",
     data: {
@@ -728,13 +737,17 @@ export async function requestTTSSingle(sourceText, sourceLang) {
       sourceLang,
       voiceTarget: "source",
       voiceRepeat: "1",
+      timestamp,
     },
   });
 }
 
-export async function requestStopTTS() {
+export async function requestStopTTS(timestamp) {
   return await sendMessage({
     type: "stopTTS",
+    data: {
+      timestamp,
+    },
   });
 }
 

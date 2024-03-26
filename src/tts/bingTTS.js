@@ -7,10 +7,10 @@ import * as util from "/src/util";
 let bingTtsUrl = "https://www.bing.com/tfettts";
 
 export default class BingTTS extends BaseTTS {
-  static async playTTSEngine(text, voice, lang, rate, volume) {
+  static async playTTSEngine(text, voice, lang, rate, volume, timestamp) {
     var ttsBlob = await this.requestBingTtsBlob(text, voice, rate, volume);
     var base64Url = await util.getBase64Url(ttsBlob);
-    await this.playSound(base64Url, 1, volume);
+    await this.playAudioOffscreen(base64Url, 1, volume, timestamp);
   }
 
   static async requestBingTtsBlob(

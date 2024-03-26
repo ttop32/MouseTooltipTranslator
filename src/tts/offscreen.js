@@ -3,19 +3,19 @@ import browser from "webextension-polyfill";
 
 var audio;
 const speech = window.speechSynthesis;
+var stopTtsTimestamp = 0;
 
 // Listen for messages from the extension
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
     if (request.type === "playAudioOffscreen") {
-      stopAudio();
       await playAudio(request.data);
       sendResponse({});
     } else if (request.type === "playSpeechTTSOffscreen") {
       await playSpeechTTS(request.data);
       sendResponse({});
     } else if (request.type === "stopTTSOffscreen") {
-      stopAudio();
+      await stopAudio(request.data);
       sendResponse({});
     }
   })();
@@ -23,13 +23,25 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function playAudio({ source, rate = 1.0, volume = 1.0 }) {
-  return new Promise((resolve, reject) => {
-    audio = new Audio(source);
-    audio.volume = volume;
-    audio.playbackRate = rate;
-    audio.onended = () => resolve();
-    audio.onloadeddata = () => audio.play();
+function playAudio({ source, rate = 1.0, volume = 1.0, timestamp }) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      audio = new Audio(source);
+      audio.volume = volume;
+      audio.playbackRate = rate;
+      audio.onended = () => resolve();
+      audio.onloadeddata = () => {
+        if (Number(timestamp) < stopTtsTimestamp) {
+          stopAudioHTML();
+          resolve();
+          return;
+        }
+        audio.play();
+      };
+    } catch (error) {
+      console.log(error);
+      resolve();
+    }
   });
 }
 
@@ -55,10 +67,25 @@ async function playSpeechTTS({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
   });
 }
 
-function stopAudio() {
-  if (audio) {
+async function stopAudio({ timestamp }) {
+  if (Number(timestamp) < stopTtsTimestamp) {
+    return;
+  }
+  stopTtsTimestamp = Number(timestamp);
+  stopAudioSpeech();
+  await stopAudioHTML();
+}
+function stopAudioSpeech() {
+  speech?.cancel();
+}
+function stopAudioHTML() {
+  return new Promise((resolve, reject) => {
+    if (!audio) {
+      resolve();
+      return;
+    }
     audio.pause();
     audio.currentTime = 0;
-  }
-  speech?.cancel();
+    resolve();
+  });
 }
