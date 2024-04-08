@@ -451,6 +451,7 @@ function loadEventListener() {
   addEventHandler("keyup", handleKeyup);
   addEventHandler("mousedown", handleMouseKeyDown);
   addEventHandler("mouseup", handleMouseKeyUp);
+  addEventHandler("mouseup", disableEdgeMiniMenu, false);
 
   //detect tab switching to reset env
   addEventHandler("blur", resetTooltipStatus);
@@ -499,7 +500,7 @@ function handleMouseKeyUp(e) {
 }
 
 function holdKeydownList(key) {
-  if (key && !keyDownList[key] && !isCharKey(key)) {
+  if (key && !keyDownList[key] && !util.isCharKey(key)) {
     keyDownList[key] = true;
     restartWordProcess();
     translateWriting();
@@ -507,23 +508,18 @@ function holdKeydownList(key) {
   stopTTSbyCombKey(key);
 }
 
-async function stopTTSbyCombKey(key) {
-  if (!isCharKey(key) || !keyDownList[setting["TTSWhen"]]) {
-    return;
+function disableEdgeMiniMenu(e) {
+  //prevent mouse tooltip overlap with edge mini menu
+  if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
+    e.preventDefault();
   }
-  // stop tts if combination key ex crtl+c
-  util.requestStopTTS(Date.now() + 500);
 }
 
-function isCharKey(key) {
-  return /Key|Digit|Numpad/.test(key);
-}
-function isStageKey(key) {
-  return [
-    setting["TTSWhen"],
-    setting["showTooltipWhen"],
-    setting["keyDownMouseoverTextSwap"],
-  ].includes(key);
+async function stopTTSbyCombKey(key) {
+  // stop tts if char key like crtl +c
+  if (util.isCharKey(key)) {
+    util.requestStopTTS(Date.now() + 500);
+  }
 }
 
 function releaseKeydownList(key) {
@@ -859,10 +855,10 @@ function destructor() {
   controller.abort(); //clear all event Listener by controller signal
 }
 
-function addEventHandler(eventName, callbackFunc) {
+function addEventHandler(eventName, callbackFunc, capture = true) {
   //record event for later event signal kill
   return window.addEventListener(eventName, callbackFunc, {
-    capture: true,
+    capture: capture,
     signal,
   });
 }
