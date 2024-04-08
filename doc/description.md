@@ -22,6 +22,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.134
   - English AU locale (contributed by CreeperYeeter2)
   - fix RTL UI
+  - fix edge select conflict
 - 0.1.133
   - fix youtube subtitle conflict
 - 0.1.132

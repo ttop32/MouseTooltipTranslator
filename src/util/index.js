@@ -675,6 +675,14 @@ export function isLocalFileUrl(url) {
   return /^file:\/\//.test(url);
 }
 
+export function isCharKey(key) {
+  return /Key|Digit|Numpad/.test(key);
+}
+
+export function isEdge() {
+  return /Edg\//.test(window.navigator.userAgent);
+}
+
 //send to background.js for background processing  ===========================================================================
 
 export async function requestTranslate(
