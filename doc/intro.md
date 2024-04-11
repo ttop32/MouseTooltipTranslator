@@ -23,7 +23,8 @@ Proletarier aller Länder, vereinigt euch!
 ![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
-
+- Customize shortcut key
+  - From chrome://extensions/shortcuts 
 # Change Language
 - Change current language in setting page
   -  Setting page can be found in browser top right puzzle button
@@ -35,6 +36,8 @@ Proletarier aller Länder, vereinigt euch!
 - If source text language and translate language are same, it will skip. 
 - If web status is offline, it will not work. 
 - If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-- If no local file permission given, local pdf cannot be handled. (If not working, darg and drop file on tab)
-  - make sure to give "allow access to file urls" to open file    
+- If no local file permission given, local pdf cannot be handled.
+  - If not working, darg and drop file on tab
+  - It will give no permission warning and it redirect to permission page
+  - In the redirecetd page, make sure to check "allow access to file urls" for accessing file    
 ![result](/doc/10.gif)
