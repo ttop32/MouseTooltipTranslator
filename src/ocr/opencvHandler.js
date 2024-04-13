@@ -30,7 +30,8 @@ async function segmentBox(request, isResize = true) {
     base64 = canvas1.toDataURL();
 
     // get bbox from image
-    bboxList = detectText(canvas1, mode);
+    bboxList = bboxList.concat(detectText(canvas1, ""));
+    bboxList = bboxList.concat(detectText(canvas1, "large"));
   } catch (err) {
     console.log(err);
     type = "segmentFail";
@@ -108,7 +109,7 @@ function detectText(canvasIn, mode) {
     var ksize = new cv.Size(50, 50);
     var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
   } else {
-    var ksize = new cv.Size(12, 12);
+    var ksize = new cv.Size(10, 10);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
   }
   // var ksize = new cv.Size(20, 20);
