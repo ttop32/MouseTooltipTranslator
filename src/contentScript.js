@@ -46,6 +46,9 @@ var stagedText = null;
 var prevStagedParams = [];
 var prevTooltipText = "";
 
+var tooltipRemoveTimeoutId = "";
+var tooltipRemoveTime = 3000;
+
 //tooltip core======================================================================
 
 (async function initMouseTooltipTranslator() {
@@ -191,12 +194,14 @@ function checkMouseTargetIsTooltip() {
   }
 }
 
+//tooltip show hide logic=========================================================
 function showTooltip(text) {
   if (prevTooltipText != text) {
     hideTooltip(true);
   }
   prevTooltipText = text;
-  checkTooltipContainer();
+  cancelRemoveTooltipContainer();
+  checkTooltipContainerInit();
   tooltip?.setContent(text);
   tooltip?.show();
 }
@@ -207,12 +212,31 @@ function hideTooltip(resetAll = false) {
   }
   tooltip?.hide();
   hideHighlight();
+  removeTooltipContainer();
 }
 
+function removeTooltipContainer() {
+  cancelRemoveTooltipContainer();
+  tooltipRemoveTimeoutId = setTimeout(() => {
+    $("#mttContainer").remove();
+  }, tooltipRemoveTime);
+}
+
+function cancelRemoveTooltipContainer() {
+  clearTimeout(tooltipRemoveTimeoutId);
+}
+
+function checkTooltipContainerInit() {
+  checkTooltipContainer();
+  checkStyleContainer();
+}
 function checkTooltipContainer() {
   if (!$("#mttContainer").get(0)) {
     tooltipContainer.appendTo(document.body);
   }
+}
+
+function checkStyleContainer() {
   if (!$("#mttstyle").get(0)) {
     style.appendTo("head");
   }
@@ -609,7 +633,7 @@ async function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
     class: "notranslate",
-  }).appendTo(document.body);
+  });
   tooltipContainerEle = tooltipContainer.get(0);
 
   style = $("<style/>", {
