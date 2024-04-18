@@ -30,8 +30,7 @@ async function segmentBox(request, isResize = true) {
     base64 = canvas1.toDataURL();
 
     // get bbox from image
-    bboxList = bboxList.concat(detectText(canvas1, ""));
-    bboxList = bboxList.concat(detectText(canvas1, "large"));
+    bboxList = bboxList.concat(detectText(canvas1, mode));
   } catch (err) {
     console.log(err);
     type = "segmentFail";
@@ -108,9 +107,56 @@ function detectText(canvasIn, mode) {
   if (mode.includes("large")) {
     var ksize = new cv.Size(50, 50);
     var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
-  } else {
-    var ksize = new cv.Size(10, 10);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+  } else if (mode.includes("small")) {
+    var ksize = new cv.Size(12, 12);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+    paddingSize = 5;
+  } else {
+    //get only contour bounded image to extract manga bubble only
+
+    var ksize = new cv.Size(15, 15);
+    // var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
+    var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+    cv.GaussianBlur(dst, dst, new cv.Size(5, 5), 0, 0, cv.BORDER_DEFAULT);
+    cv.Canny(dst, dst, 30, 150, 3, false);
+    cv.findContours(
+      dst,
+      contours,
+      hierarchy,
+      cv.RETR_EXTERNAL,
+      cv.CHAIN_APPROX_SIMPLE
+    );
+
+    // # Create a mask from the contours, 1for bounded, 2for non bounded
+    let mask1 = new cv.Mat(h, w, cv.CV_8U, new cv.Scalar(0));
+    cv.drawContours(mask1, contours, -1, new cv.Scalar(255), -1);
+    let mask2 = new cv.Mat(h, w, cv.CV_8U, new cv.Scalar(0, 0, 0));
+    cv.drawContours(mask2, contours, -1, new cv.Scalar(255), 5);
+    cv.bitwise_not(mask2, mask2);
+
+    // # Bitwise-AND bounded mask with the non bounded mask to remove edges
+    let area_bounded_contour_mask = new cv.Mat();
+    cv.bitwise_and(mask1, mask1, area_bounded_contour_mask, mask2);
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+    cv.bitwise_and(dst, dst, dst, area_bounded_contour_mask);
+
+    let area_bounded_contour_mask_inv = new cv.Mat();
+    cv.bitwise_not(area_bounded_contour_mask, area_bounded_contour_mask_inv);
+
+    let y = new cv.Mat();
+    cv.add(area_bounded_contour_mask_inv, dst, y);
+    src = y;
+    dst = y;
+    // showImage(y);
+
+    paddingSize = 3;
+
+    // blurred = cv2.GaussianBlur(gray, (5,5), 0)
+    // edges = cv2.Canny(blurred, 50, 200,apertureSize=7,L2gradient=True)
   }
   // var ksize = new cv.Size(20, 20);
   // var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
@@ -118,7 +164,6 @@ function detectText(canvasIn, mode) {
   // cv.dilate(dst, dst, delement);
   // cv.medianBlur(dst, dst, 5);
 
-  cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
   cv.threshold(dst, dst, 0, 255, cv.THRESH_OTSU | cv.THRESH_BINARY);
   cv.Sobel(dst, dst, cv.CV_8U, 1, 0, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3,
   cv.Sobel(dst, dst, cv.CV_8U, 0, 1, 1, 1, 0, cv.BORDER_DEFAULT); //x1,y0,ksize3, remove straight line
@@ -150,7 +195,7 @@ function detectText(canvasIn, mode) {
 
     // if not sharp, small size, wrong angle, too side pos
     if (
-      rectCoverRatio < 0.2 ||
+      rectCoverRatio < 0.15 ||
       cnt.rows < 100 ||
       area < 150 ||
       !isRightAngle ||

@@ -199,6 +199,10 @@ var detectTypeList = {
 var keyListWithAlways = _.cloneDeep(keyList); //copy lang and add auto
 keyListWithAlways["Always"] = "always";
 
+var keyListWithAlwaysSelect = _.cloneDeep(keyList); //copy lang and add auto
+keyListWithAlwaysSelect["Select"] = "select";
+keyListWithAlwaysSelect["Always"] = "always";
+
 var voiceTargetList = {
   "Source Text": "source",
   "Translated Text": "target",
@@ -227,7 +231,7 @@ var settingListData = {
   },
   TTSWhen: {
     description: browser.i18n.getMessage("Voice_When"),
-    optionList: keyListWithAlways,
+    optionList: keyListWithAlwaysSelect,
   },
   translateWhen: {
     description: browser.i18n.getMessage("Translate_When"),

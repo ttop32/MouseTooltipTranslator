@@ -43,7 +43,6 @@ var selectedText = "";
 var prevSelected = "";
 var hoveredData = {};
 var stagedText = null;
-var prevStagedParams = [];
 var prevTooltipText = "";
 
 var tooltipRemoveTimeoutId = "";
@@ -77,39 +76,45 @@ var tooltipRemoveTime = 3000;
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
   enableMouseoverTextEvent(window, setting["tooltipIntervalTime"]);
-  addEventHandler("mouseoverText", async function (event) {
-    // if no selected text
-    if (
-      setting["translateWhen"].includes("mouseover") &&
-      !selectedText &&
-      event?.mouseoverText
-    ) {
-      hoveredData = event.mouseoverText;
-      var mouseoverText = hoveredData[getMouseoverType()];
-      var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
-      await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
-    }
-  });
+  addEventHandler("mouseoverText", stageTooltipTextHover);
 }
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
   enableSelectionEndEvent(window, setting["tooltipIntervalTime"]); //set mouse drag text selection event
-  addEventHandler("selectionEnd", async function (event) {
-    // if translate on selection is enabled
-    if (setting["translateWhen"].includes("select")) {
-      prevSelected = selectedText;
-      selectedText = event?.selectedText;
-      await stageTooltipText(selectedText, "select");
-    }
-  });
+  addEventHandler("selectionEnd", stageTooltipTextSelect);
+}
+
+async function stageTooltipTextHover(event, useEvent = true) {
+  // if no selected text
+  if (
+    setting["translateWhen"].includes("mouseover") &&
+    !selectedText &&
+    event?.mouseoverText
+  ) {
+    hoveredData = useEvent ? event.mouseoverText : hoveredData;
+    var mouseoverText = hoveredData[getMouseoverType()];
+    var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
+    await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
+  }
+}
+
+async function stageTooltipTextSelect(event, useEvent = true) {
+  // if translate on selection is enabled
+  if (setting["translateWhen"].includes("select")) {
+    prevSelected = selectedText;
+    selectedText = useEvent ? event?.selectedText : selectedText;
+    await stageTooltipText(selectedText, "select");
+  }
 }
 
 //process detected word
 async function stageTooltipText(text, actionType, range) {
-  prevStagedParams = Array.prototype.slice.call(arguments); //record args
   text = util.filterWord(text); //filter out one that is url,no normal char
-  var isTtsOn = keyDownList[setting["TTSWhen"]];
+  var isTtsOn =
+    keyDownList[setting["TTSWhen"]] ||
+    (setting["TTSWhen"] == "select" && actionType == "select");
+
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var timestamp = Number(Date.now());
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
@@ -526,6 +531,7 @@ function handleMouseKeyUp(e) {
 function holdKeydownList(key) {
   if (key && !keyDownList[key] && !util.isCharKey(key)) {
     keyDownList[key] = true;
+
     restartWordProcess();
     translateWriting();
   }
@@ -560,16 +566,15 @@ function resetTooltipStatus() {
   ocrView.removeAllOcrEnv();
 }
 
-function restartWordProcess() {
-  //trigger mouseover text by reset activate word
-  //restart selected text
+async function restartWordProcess() {
+  //rerun staged text
   stagedText = null;
+  await delay(10); //wait for select changed by click
+  var selectedText = getSelectionText();
   if (selectedText) {
-    stageTooltipText(...prevStagedParams);
+    stageTooltipTextSelect("", false);
   } else {
-    var mouseoverText = hoveredData[getMouseoverType()];
-    var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
-    stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
+    stageTooltipTextHover("", false);
   }
 }
 
@@ -726,7 +731,7 @@ function applyStyleSetting() {
     }
     .ocr_text_div{
       position: absolute;
-      opacity: 0.7;
+      opacity: 0.5;
       color: transparent !important;
       border: 2px solid CornflowerBlue;
       background: none !important;
