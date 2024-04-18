@@ -260,11 +260,11 @@ function handleTooltip(text, translatedData, actionType, range) {
   var tooltipTransliteration = isTransliterationOn ? transliteration : "";
   var tooltipLang = isShowLangOn ? langListOpposite[sourceLang] : "";
   var tooltipOriText = isShowOriTextOn ? text : "";
+  var isDictOn = setting["tooltipWordDictionary"] == "true";
+  var dictData = isDictOn ? wrapDict(dict, targetLang) : "";
 
   var tooltipMainText =
-    wrapMainImage(imageUrl) ||
-    wrapDict(dict, targetLang) ||
-    wrapMain(targetText, targetLang);
+    wrapMainImage(imageUrl) || dictData || wrapMain(targetText, targetLang);
   var tooltipSubText =
     wrapInfoText(tooltipOriText, "i", sourceLang) +
     wrapInfoText(tooltipTransliteration, "b") +
