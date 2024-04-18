@@ -40,6 +40,7 @@ export var defaultData = {
   tooltipInfoSourceText: "false",
   tooltipInfoSourceLanguage: "false",
   tooltipInfoTransliteration: "false",
+  tooltipWordDictionary: "true",
 
   // graphic
   tooltipFontSize: "14",

@@ -388,6 +388,10 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Tooltip_Interval_Time"),
     optionList: tooltipIntervalTimeList,
   },
+  tooltipWordDictionary: {
+    description: browser.i18n.getMessage("Tooltip_Word_Dictionary"),
+    optionList: toggleList,
+  },
 };
 
 var excludeTabData = {

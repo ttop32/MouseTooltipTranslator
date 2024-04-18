@@ -137,6 +137,9 @@
 	"Tooltip_Interval_Time": {
 		"message": "İpucu Süre Aralığı"
 	},
+	"Tooltip_Word_Dictionary": {
+		"message": "Tooltip Word Dictionary"
+	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
 	},

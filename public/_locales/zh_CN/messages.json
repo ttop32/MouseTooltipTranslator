@@ -1,215 +1,218 @@
 {
-    "MAIN______________________________________": {
-        "message": "主要                                      "
-    },
-    "MAIN": {
-        "message": "主要"
-    },
-    "Mouse_Tooltip_Translator": {
-        "message": "鼠标工具提示翻译器"
-    },
-    "Show_Tooltip_When": {
-        "message": "何时显示工具提示"
-    },
-    "Voice_When": {
-        "message": "何时语音"
-    },
-    "Translate_When": {
-        "message": "何时翻译"
-    },
-    "Translate_From": {
-        "message": "翻译自"
-    },
-    "Translate_Into": {
-        "message": "翻译成"
-    },
-    "Translator_Engine": {
-        "message": "翻译引擎"
-    },
-    "Mouseover_Text_Type": {
-        "message": "鼠标悬停文本类型"
-    },
-    "Writing_Language": {
-        "message": "写作语言"
-    },
-    "OCR_Language": {
-        "message": "OCR 语言"
-    },
-    "Reverse_Translate_Language": {
-        "message": "逆向翻译语言"
-    },
-    "GRAPHIC______________________________________": {
-        "message": "图形                                      "
-    },
-    "GRAPHIC": {
-        "message": "图形"
-    },
-    "Tooltip_Font_Size": {
-        "message": "工具提示字体大小"
-    },
-    "Tooltip_Width": {
-        "message": "工具提示宽度"
-    },
-    "Tooltip_Distance": {
-        "message": "工具提示距离"
-    },
-    "Tooltip_Animation": {
-        "message": "工具提示动画"
-    },
-    "Tooltip_Position": {
-        "message": "工具提示位置"
-    },
-    "Tooltip_Text_Align": {
-        "message": "工具提示文本对齐"
-    },
-    "Tooltip_Background_Blur": {
-        "message": "工具提示背景模糊"
-    },
-    "Mouseover_Highlight_Text": {
-        "message": "鼠标悬停高亮文本"
-    },
-    "Tooltip_Font_Color": {
-        "message": "工具提示字体颜色"
-    },
-    "Tooltip_Background_Color": {
-        "message": "工具提示背景颜色"
-    },
-    "Tooltip_Border_Color": {
-        "message": "工具提示边框颜色"
-    },
-    "Mouseover_Text_Highlight_Color": {
-        "message": "鼠标悬停文本高亮颜色"
-    },
-    "VOICE______________________________________": {
-        "message": "语音                                      "
-    },
-    "VOICE": {
-        "message": "语音"
-    },
-    "Voice_Volume": {
-        "message": "语音音量"
-    },
-    "Voice_Speed": {
-        "message": "语音速度"
-    },
-    "Voice_Target": {
-        "message": "语音目标"
-    },
-    "Voice_Repeat": {
-        "message": "语音重复"
-    },
-    "Voice_for_": {
-        "message": "语音用于 "
-    },
-    "ADVANCED______________________________________": {
-        "message": "高级                                      "
-    },
-    "ADVANCED": {
-        "message": "高级"
-    },
-    "Translate_Writing_When": {
-        "message": "何时翻译书写"
-    },
-    "OCR_When": {
-        "message": "何时进行OCR"
-    },
-    "Detect_Subtitle": {
-        "message": "检测字幕"
-    },
-    "Detect_PDF": {
-        "message": "检测PDF"
-    },
-    "Mouseover_Pause_Subtitle": {
-        "message": "鼠标悬停暂停字幕"
-    },
-    "Mouseover_Text_Type_Swap_Key": {
-        "message": "鼠标悬停文本类型切换键"
-    },
-    "Tooltip_Info_Source_Text": {
-        "message": "工具提示信息源文本"
-    },
-    "Tooltip_Info_Source_Language": {
-        "message": "工具提示信息源语言"
-    },
-    "Tooltip_Info_Transliteration": {
-        "message": "工具提示信息音译"
-    },
-    "Tooltip_Interval_Time": {
-        "message": "工具提示间隔时间"
-    },
-    "EXCLUDE______________________________________": {
-        "message": "排除                                      "
-    },
-    "EXCLUDE": {
-        "message": "排除"
-    },
-    "Exclude_Language": {
-        "message": "排除语言"
-    },
-    "Exclude_Website": {
-        "message": "排除网站"
-    },
-    "About______________________________________": {
-        "message": "关于                                      "
-    },
-    "How_to_use": {
-        "message": "如何使用"
-    },
-    "Check_how_to_use_this_extension": {
-        "message": "查看如何使用此扩展"
-    },
-    "PDF_Viewer": {
-        "message": "PDF 阅读器"
-    },
-    "Translate_local_PDF_file": {
-        "message": "翻译本地 PDF 文件"
-    },
-    "Ebook_Reader": {
-        "message": "电子书阅读器"
-    },
-    "Translate_local_ebook_file": {
-        "message": "翻译本地电子书文件"
-    },
-    "Twitter": {
-        "message": "Twitter"
-    },
-    "Retweet_twitter_post": {
-        "message": "转发推特帖子"
-    },
-    "Review_Page": {
-        "message": "评论页面"
-    },
-    "Comment_on_this_extension": {
-        "message": "评论此扩展"
-    },
-    "Source_code": {
-        "message": "源代码"
-    },
-    "Check_source_code_in_github": {
-        "message": "在 GitHub 上查看源代码"
-    },
-    "Privacy_Policy": {
-        "message": "隐私政策"
-    },
-    "User_privacy_policy": {
-        "message": "用户隐私政策"
-    },
-    "Review______________________________________": {
-        "message": "评论                                      "
-    },
-    "Review_this": {
-        "message": "评论此"
-    },
-    "Developer_love_criticism": {
-        "message": "开发者欢迎批评"
-    },
-    "Title______________________________________": {
-        "message": "标题                                      "
-    },
-    "appName": {
-        "message": "鼠标工具提示翻译器"
-    },
-    "appDesc": {
-        "message": "鼠标工具提示转换器使用 Google Translate 翻译鼠标文本。支持 OCR、TTS、漫画翻译和 PDF 翻译。"
-    }
+	"MAIN______________________________________": {
+		"message": "主要                                      "
+	},
+	"MAIN": {
+		"message": "主要"
+	},
+	"Mouse_Tooltip_Translator": {
+		"message": "鼠标工具提示翻译器"
+	},
+	"Show_Tooltip_When": {
+		"message": "何时显示工具提示"
+	},
+	"Voice_When": {
+		"message": "何时语音"
+	},
+	"Translate_When": {
+		"message": "何时翻译"
+	},
+	"Translate_From": {
+		"message": "翻译自"
+	},
+	"Translate_Into": {
+		"message": "翻译成"
+	},
+	"Translator_Engine": {
+		"message": "翻译引擎"
+	},
+	"Mouseover_Text_Type": {
+		"message": "鼠标悬停文本类型"
+	},
+	"Writing_Language": {
+		"message": "写作语言"
+	},
+	"OCR_Language": {
+		"message": "OCR 语言"
+	},
+	"Reverse_Translate_Language": {
+		"message": "逆向翻译语言"
+	},
+	"GRAPHIC______________________________________": {
+		"message": "图形                                      "
+	},
+	"GRAPHIC": {
+		"message": "图形"
+	},
+	"Tooltip_Font_Size": {
+		"message": "工具提示字体大小"
+	},
+	"Tooltip_Width": {
+		"message": "工具提示宽度"
+	},
+	"Tooltip_Distance": {
+		"message": "工具提示距离"
+	},
+	"Tooltip_Animation": {
+		"message": "工具提示动画"
+	},
+	"Tooltip_Position": {
+		"message": "工具提示位置"
+	},
+	"Tooltip_Text_Align": {
+		"message": "工具提示文本对齐"
+	},
+	"Tooltip_Background_Blur": {
+		"message": "工具提示背景模糊"
+	},
+	"Mouseover_Highlight_Text": {
+		"message": "鼠标悬停高亮文本"
+	},
+	"Tooltip_Font_Color": {
+		"message": "工具提示字体颜色"
+	},
+	"Tooltip_Background_Color": {
+		"message": "工具提示背景颜色"
+	},
+	"Tooltip_Border_Color": {
+		"message": "工具提示边框颜色"
+	},
+	"Mouseover_Text_Highlight_Color": {
+		"message": "鼠标悬停文本高亮颜色"
+	},
+	"VOICE______________________________________": {
+		"message": "语音                                      "
+	},
+	"VOICE": {
+		"message": "语音"
+	},
+	"Voice_Volume": {
+		"message": "语音音量"
+	},
+	"Voice_Speed": {
+		"message": "语音速度"
+	},
+	"Voice_Target": {
+		"message": "语音目标"
+	},
+	"Voice_Repeat": {
+		"message": "语音重复"
+	},
+	"Voice_for_": {
+		"message": "语音用于 "
+	},
+	"ADVANCED______________________________________": {
+		"message": "高级                                      "
+	},
+	"ADVANCED": {
+		"message": "高级"
+	},
+	"Translate_Writing_When": {
+		"message": "何时翻译书写"
+	},
+	"OCR_When": {
+		"message": "何时进行OCR"
+	},
+	"Detect_Subtitle": {
+		"message": "检测字幕"
+	},
+	"Detect_PDF": {
+		"message": "检测PDF"
+	},
+	"Mouseover_Pause_Subtitle": {
+		"message": "鼠标悬停暂停字幕"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "鼠标悬停文本类型切换键"
+	},
+	"Tooltip_Info_Source_Text": {
+		"message": "工具提示信息源文本"
+	},
+	"Tooltip_Info_Source_Language": {
+		"message": "工具提示信息源语言"
+	},
+	"Tooltip_Info_Transliteration": {
+		"message": "工具提示信息音译"
+	},
+	"Tooltip_Interval_Time": {
+		"message": "工具提示间隔时间"
+	},
+	"Tooltip_Word_Dictionary": {
+		"message": "Tooltip Word Dictionary"
+	},
+	"EXCLUDE______________________________________": {
+		"message": "排除                                      "
+	},
+	"EXCLUDE": {
+		"message": "排除"
+	},
+	"Exclude_Language": {
+		"message": "排除语言"
+	},
+	"Exclude_Website": {
+		"message": "排除网站"
+	},
+	"About______________________________________": {
+		"message": "关于                                      "
+	},
+	"How_to_use": {
+		"message": "如何使用"
+	},
+	"Check_how_to_use_this_extension": {
+		"message": "查看如何使用此扩展"
+	},
+	"PDF_Viewer": {
+		"message": "PDF 阅读器"
+	},
+	"Translate_local_PDF_file": {
+		"message": "翻译本地 PDF 文件"
+	},
+	"Ebook_Reader": {
+		"message": "电子书阅读器"
+	},
+	"Translate_local_ebook_file": {
+		"message": "翻译本地电子书文件"
+	},
+	"Twitter": {
+		"message": "Twitter"
+	},
+	"Retweet_twitter_post": {
+		"message": "转发推特帖子"
+	},
+	"Review_Page": {
+		"message": "评论页面"
+	},
+	"Comment_on_this_extension": {
+		"message": "评论此扩展"
+	},
+	"Source_code": {
+		"message": "源代码"
+	},
+	"Check_source_code_in_github": {
+		"message": "在 GitHub 上查看源代码"
+	},
+	"Privacy_Policy": {
+		"message": "隐私政策"
+	},
+	"User_privacy_policy": {
+		"message": "用户隐私政策"
+	},
+	"Review______________________________________": {
+		"message": "评论                                      "
+	},
+	"Review_this": {
+		"message": "评论此"
+	},
+	"Developer_love_criticism": {
+		"message": "开发者欢迎批评"
+	},
+	"Title______________________________________": {
+		"message": "标题                                      "
+	},
+	"appName": {
+		"message": "鼠标工具提示翻译器"
+	},
+	"appDesc": {
+		"message": "鼠标工具提示转换器使用 Google Translate 翻译鼠标文本。支持 OCR、TTS、漫画翻译和 PDF 翻译。"
+	}
 }
