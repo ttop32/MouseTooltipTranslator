@@ -23,7 +23,7 @@ Proletarier aller Länder, vereinigt euch!
 ![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
-- Activate speech recognition translator with <kbd>right ctrl</kbd>
+- Activate speech recognition translator with holding <kbd>right ctrl</kbd>
   - Default speech recognition language is english
 - Customize shortcut key
   - From chrome://extensions/shortcuts
