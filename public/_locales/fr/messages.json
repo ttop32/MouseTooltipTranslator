@@ -140,6 +140,12 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "Tooltip Word Dictionary"
 	},
+	"Speech_Recognition_When": {
+		"message": "Speech Recognition When"
+	},
+	"Speech_Recognition_Language": {
+		"message": "Speech Recognition Language"
+	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLURE                                      "
 	},

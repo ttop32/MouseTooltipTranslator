@@ -117,7 +117,12 @@ import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
 
 import * as util from "/src/util";
-import { langList, langListOpposite, ocrLangList } from "/src/util/lang.js";
+import {
+  langList,
+  langListOpposite,
+  ocrLangList,
+  listenLangList,
+} from "/src/util/lang.js";
 
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = util.concatJson({ None: "null" }, langList); //copy lang and add none
@@ -391,6 +396,14 @@ var advancedTabData = {
   tooltipWordDictionary: {
     description: browser.i18n.getMessage("Tooltip_Word_Dictionary"),
     optionList: toggleList,
+  },
+  keySpeechRecognition: {
+    description: browser.i18n.getMessage("Speech_Recognition_When"),
+    optionList: keyList,
+  },
+  speechRecognitionLanguage: {
+    description: browser.i18n.getMessage("Speech_Recognition_Language"),
+    optionList: listenLangList,
   },
 };
 

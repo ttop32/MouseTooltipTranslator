@@ -72,6 +72,8 @@ i18List = [
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",
     "Tooltip Word Dictionary",
+    "Speech Recognition When",
+    "Speech Recognition Language",
 
     "EXCLUDE                                      ",
     "EXCLUDE",
