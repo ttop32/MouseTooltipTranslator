@@ -42,6 +42,7 @@ export var defaultData = {
   tooltipInfoTransliteration: "false",
   tooltipWordDictionary: "true",
   keySpeechRecognition: "ControlRight",
+  speechRecognitionLanguage: "en-US",
 
   // graphic
   tooltipFontSize: "14",

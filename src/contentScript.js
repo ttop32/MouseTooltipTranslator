@@ -47,6 +47,9 @@ var prevTooltipText = "";
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
+var listenEngine;
+var listenText = "";
+var listening = false;
 
 //tooltip core======================================================================
 
@@ -62,6 +65,7 @@ var tooltipRemoveTime = 3000;
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
+    initSpeechRecognition(); // init speech listen engine
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addBackgroundListener(); // get background listener for copy request
@@ -92,6 +96,7 @@ function stageTooltipTextHover(event, useEvent = true) {
   if (
     setting["translateWhen"].includes("mouseover") &&
     !selectedText &&
+    !listenText &&
     hoveredData
   ) {
     var mouseoverType = getMouseoverType();
@@ -103,7 +108,7 @@ function stageTooltipTextHover(event, useEvent = true) {
 
 function stageTooltipTextSelect(event, useEvent = true) {
   // if translate on selection is enabled
-  if (setting["translateWhen"].includes("select")) {
+  if (setting["translateWhen"].includes("select") && !listenText) {
     prevSelected = selectedText;
     selectedText = useEvent ? event?.selectedText : selectedText;
     stageTooltipText(selectedText, "select");
@@ -522,6 +527,7 @@ function handleKeydown(e) {
 
 function handleKeyup(e) {
   releaseKeydownList(e.code);
+  stopSpeechRecognitionByKey(e.code);
 }
 
 function handleMouseKeyDown(e) {
@@ -537,6 +543,7 @@ function holdKeydownList(key) {
 
     restartWordProcess();
     translateWriting();
+    startSpeechRecognitionByKey(key);
   }
   stopTTSbyCombKey(key);
 }
@@ -635,6 +642,7 @@ async function getSetting() {
     resetTooltipStatus();
     applyStyleSetting();
     checkVideo();
+    initSpeechRecognitionLang();
   });
 }
 
@@ -900,4 +908,75 @@ function removePrevElement() {
   $("#mttstyle").remove();
   $("#mttstyleSubtitle").remove();
   tooltip?.destroy();
+}
+
+// speech recognition ====================================================
+function initSpeechRecognition() {
+  // future plan, migration to background service worker
+  listenEngine = new webkitSpeechRecognition();
+  listenEngine.continuous = true;
+  listenEngine.interimResults = true;
+  initSpeechRecognitionLang();
+  var ignore_onend;
+
+  listenEngine.onstart = function () {
+    listening = true;
+  };
+  listenEngine.onerror = function (event) {
+    ignore_onend = true;
+  };
+  listenEngine.onend = function () {
+    listening = false;
+  };
+
+  listenEngine.onresult = function (event) {
+    var interimTranscript = "";
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        listenText = event.results[i][0].transcript;
+        stageTooltipText(listenText, "listen");
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    // console.log("-------------------------------");
+    // console.log(listenText);
+    // console.log(interimTranscript);
+  };
+}
+
+function initSpeechRecognitionLang() {
+  if (!listenEngine) {
+    initSpeechRecognition();
+  }
+  stopSpeechRecognition();
+  listenEngine.lang = setting["speechRecognitionLanguage"];
+}
+
+function stopSpeechRecognitionByKey(key) {
+  if (key == setting["keySpeechRecognition"]) {
+    stopSpeechRecognition();
+  }
+}
+
+function stopSpeechRecognition() {
+  if (!listening) {
+    return;
+  }
+  // console.log("stop listen");
+  listenEngine.stop();
+  listenText = "";
+}
+
+function startSpeechRecognitionByKey(key) {
+  if (key == setting["keySpeechRecognition"]) {
+    startSpeechRecognition();
+  }
+}
+function startSpeechRecognition() {
+  if (listening) {
+    return;
+  }
+  // console.log("start listen");
+  listenEngine.start();
 }
