@@ -19,7 +19,7 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.135
+- 0.1.136
   - Fix Japanese furigana recognition (request by cspotcode)
 - 0.1.135
   - Add tts run when only select (request by IsemicolonI)
