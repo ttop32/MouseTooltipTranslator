@@ -23,8 +23,10 @@ Proletarier aller Länder, vereinigt euch!
 ![result](/doc/16.gif)
 - Process OCR when hold <kbd>left shift</kbd> + <kbd>mouse over</kbd> on image (ex manga)
 ![result](/doc/15.gif)
+- Activate speech recognition translator with <kbd>right ctrl</kbd>
+  - Default speech recognition is english
 - Customize shortcut key
-  - From chrome://extensions/shortcuts 
+  - From chrome://extensions/shortcuts
 # Change Language
 - Change current language in setting page
   -  Setting page can be found in browser top right puzzle button
