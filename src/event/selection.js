@@ -65,41 +65,30 @@ export const triggerSelectionEnd = (text) => {
   document.dispatchEvent(evt);
 };
 
-export function getSelectionText(isHtml = false) {
+export function getSelectionText() {
   if (util.isGoogleDoc()) {
     return getGoogleDocSelection();
-  } else if (isHtml == true) {
-    return getWindowSelectionHTML();
-  } else {
-    return getWindowSelection();
   }
+  return getWindowSelection();
 }
 
-function getWindowSelection() {
-  let text = "";
-  if (_win.getSelection) {
-    text = _win.getSelection()?.toString();
-  } else if (
-    _win.document.selection &&
-    _win.document.selection.type !== "Control"
-  ) {
-    text = _win.document.selection.createRange().text;
-  }
-  return text;
+export function getWindowSelection() {
+  var html = getWindowSelectionHtml();
+  var selectText = util.extractTextFromHtml(html);
+
+  // if no html format text , get as string
+  return selectText || _win.getSelection().toString();
 }
 
-export function getWindowSelectionHTML() {
-  var sel = window.getSelection();
-  var html = "";
+function getWindowSelectionHtml() {
+  var sel = _win.getSelection();
+  var container = document.createElement("div");
   if (sel.rangeCount) {
-    var container = document.createElement("div");
     for (var i = 0, len = sel.rangeCount; i < len; ++i) {
       container.appendChild(sel.getRangeAt(i).cloneContents());
     }
-    html = container.innerHTML;
   }
-  // if no html format text , get as string
-  return html.toString() ? html : window.getSelection().toString();
+  return container;
 }
 
 //google doc select ==========================

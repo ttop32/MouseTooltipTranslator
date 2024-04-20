@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.135
+  - Fix Japanese furigana recognition (request by cspotcode)
+- 0.1.135
   - Add tts run when only select (request by IsemicolonI)
   - Add word dictionary off option (request by dod storm)
 - 0.1.134

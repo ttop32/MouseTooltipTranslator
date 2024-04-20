@@ -82,7 +82,7 @@ async function getTextFromRange(range) {
 
       //check mouse xy overlap the range element
       if (checkXYInElement(rangeClone, clientX, clientY)) {
-        output[detectType] = rangeClone.toString();
+        output[detectType] = extractTextFromRange(rangeClone);
         output[detectType + "_range"] = rangeClone;
       }
     } catch (error) {
@@ -91,6 +91,11 @@ async function getTextFromRange(range) {
   }
 
   return output;
+}
+
+function extractTextFromRange(range) {
+  var rangeHtml = range.cloneContents();
+  return util.extractTextFromHtml(rangeHtml);
 }
 
 async function expandRange(range, type) {

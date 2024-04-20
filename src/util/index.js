@@ -41,6 +41,7 @@ export var defaultData = {
   tooltipInfoSourceLanguage: "false",
   tooltipInfoTransliteration: "false",
   tooltipWordDictionary: "true",
+  keySpeechRecognition: "ControlRight",
 
   // graphic
   tooltipFontSize: "14",
@@ -682,6 +683,15 @@ export function isCharKey(key) {
 
 export function isEdge() {
   return /Edg\//.test(window.navigator.userAgent);
+}
+
+export function extractTextFromHtml(html) {
+  filterJapanFurigana(html);
+  return html.textContent;
+}
+
+export function filterJapanFurigana(html) {
+  html.querySelectorAll("ruby>rt").forEach((e) => e.remove());
 }
 
 //send to background.js for background processing  ===========================================================================
