@@ -85,26 +85,28 @@ function startTextSelectDetector() {
   addEventHandler("selectionEnd", stageTooltipTextSelect);
 }
 
-async function stageTooltipTextHover(event, useEvent = true) {
+function stageTooltipTextHover(event, useEvent = true) {
+  hoveredData = useEvent ? event?.mouseoverText : hoveredData;
+  // if mouseover detect setting is on and
   // if no selected text
   if (
     setting["translateWhen"].includes("mouseover") &&
     !selectedText &&
-    event?.mouseoverText
+    hoveredData
   ) {
-    hoveredData = useEvent ? event.mouseoverText : hoveredData;
-    var mouseoverText = hoveredData[getMouseoverType()];
-    var mouseoverRange = hoveredData[getMouseoverType() + "_range"];
-    await stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
+    var mouseoverType = getMouseoverType();
+    var mouseoverText = hoveredData[mouseoverType];
+    var mouseoverRange = hoveredData[mouseoverType + "_range"];
+    stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
   }
 }
 
-async function stageTooltipTextSelect(event, useEvent = true) {
+function stageTooltipTextSelect(event, useEvent = true) {
   // if translate on selection is enabled
   if (setting["translateWhen"].includes("select")) {
     prevSelected = selectedText;
     selectedText = useEvent ? event?.selectedText : selectedText;
-    await stageTooltipText(selectedText, "select");
+    stageTooltipText(selectedText, "select");
   }
 }
 
@@ -186,8 +188,9 @@ function getMouseoverType() {
 function checkMouseTargetIsSpecialWebBlock() {
   // if mouse targeted web element contain particular class name, return true
   //mousetooltip ocr block
+  var classList = mouseTarget?.classList;
   return ["ocr_text_div", "textFitted"].some((className) =>
-    mouseTarget?.classList?.contains(className)
+    classList?.contains(className)
   );
 }
 
@@ -552,7 +555,8 @@ async function stopTTSbyCombKey(key) {
   }
 }
 
-function releaseKeydownList(key) {
+async function releaseKeydownList(key) {
+  await delay(20);
   keyDownList[key] = false;
 }
 
@@ -568,9 +572,9 @@ function resetTooltipStatus() {
 
 async function restartWordProcess() {
   //rerun staged text
-  stagedText = null;
   await delay(10); //wait for select changed by click
   var selectedText = getSelectionText();
+  stagedText = null;
   if (selectedText) {
     stageTooltipTextSelect("", false);
   } else {
@@ -830,7 +834,7 @@ function openPdfIframe(url) {
 }
 
 //check google docs=========================================================
-async function checkGoogleDocs() {
+function checkGoogleDocs() {
   if (!util.isGoogleDoc()) {
     return;
   }
@@ -866,7 +870,7 @@ function injectGoogleDocAnnotation() {
 }
 
 // youtube================================
-async function checkVideo() {
+function checkVideo() {
   subtitle["Youtube"].handleVideo(setting);
   subtitle["YoutubeNoCookie"].handleVideo(setting);
 }
