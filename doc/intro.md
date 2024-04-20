@@ -25,6 +25,7 @@ Proletarier aller Länder, vereinigt euch!
 ![result](/doc/15.gif)
 - Activate speech recognition translator with holding <kbd>right ctrl</kbd>
   - Default speech recognition language is english
+  - If speech recognition language and target language are same, it will skip
 - Customize shortcut key
   - From chrome://extensions/shortcuts
 # Change Language
