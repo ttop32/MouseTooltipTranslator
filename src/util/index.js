@@ -799,3 +799,61 @@ export async function requestBase64(url) {
     url,
   });
 }
+
+export async function requestCreateOffscreen() {
+  return await sendMessage({
+    type: "createOffscreen",
+  });
+}
+
+export async function requestStartSpeechRecognitionOffscreen(lang) {
+  await requestCreateOffscreen();
+  return await sendMessage({
+    type: "startSpeechRecognition",
+    data: {
+      lang,
+    },
+  });
+}
+
+export async function requestStopSpeechRecognitionOffscreen() {
+  await requestCreateOffscreen();
+  return await sendMessage({
+    type: "stopSpeechRecognition",
+  });
+}
+
+export async function requestPlayTtsOffscreen(source, rate, volume, timestamp) {
+  return await sendMessage({
+    type: "playAudioOffscreen",
+    data: {
+      source,
+      rate,
+      volume,
+      timestamp,
+    },
+  });
+}
+
+export async function requestStopTtsOffscreen(timestamp) {
+  return await sendMessage({ type: "stopTTSOffscreen", data: { timestamp } });
+}
+
+//offscreen =======================
+// Create the offscreen document
+export async function createOffscreen() {
+  try {
+    await browser?.offscreen?.createDocument({
+      url: "offscreen.html",
+      reasons: ["WORKERS"],
+      justification: "TTS & Speech",
+    });
+  } catch (error) {
+    if (!error.message.startsWith("Only a single offscreen")) throw error;
+  }
+}
+export async function removeOffscreen() {
+  return new Promise((resolve, reject) => {
+    browser.offscreen.closeDocument(() => resolve());
+  });
+}

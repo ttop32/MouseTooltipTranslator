@@ -35,39 +35,12 @@ export default class BaseTTS {
   }
 
   static async playAudioOffscreen(source, rate, volume, timestamp) {
-    await this.createOffscreen();
-    await util.sendMessage({
-      type: "playAudioOffscreen",
-      data: {
-        source,
-        rate,
-        volume,
-        timestamp,
-      },
-    });
+    await util.createOffscreen();
+    await util.requestPlayTtsOffscreen(source, rate, volume, timestamp);
   }
 
   static async stopTtsOffscreen(timestamp) {
-    await this.createOffscreen();
-    await util.sendMessage({ type: "stopTTSOffscreen", data: { timestamp } });
-  }
-
-  // Create the offscreen document
-  static async createOffscreen() {
-    try {
-      await browser?.offscreen?.createDocument({
-        url: "offscreen.html",
-        reasons: ["AUDIO_PLAYBACK"],
-        justification: "play tts", // details for using the API
-      });
-    } catch (error) {
-      if (!error.message.startsWith("Only a single offscreen")) throw error;
-    }
-  }
-
-  static async removeOffscreen() {
-    return new Promise((resolve, reject) => {
-      browser.offscreen.closeDocument(() => resolve());
-    });
+    await util.createOffscreen();
+    await util.requestStopTtsOffscreen(timestamp);
   }
 }

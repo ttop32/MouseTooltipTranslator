@@ -917,13 +917,12 @@ function initSpeechRecognition() {
   listenEngine.continuous = true;
   listenEngine.interimResults = true;
   initSpeechRecognitionLang();
-  var ignore_onend;
 
   listenEngine.onstart = function () {
     listening = true;
   };
   listenEngine.onerror = function (event) {
-    ignore_onend = true;
+    console.log(event);
   };
   listenEngine.onend = function () {
     listening = false;

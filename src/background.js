@@ -58,6 +58,9 @@ function addMessageListener() {
       } else if (request.type === "requestBase64") {
         var base64Url = await util.getBase64(request.url);
         sendResponse({ base64Url });
+      } else if (request.type === "createOffscreen") {
+        await util.createOffscreen();
+        sendResponse({});
       }
     })();
     return true;
