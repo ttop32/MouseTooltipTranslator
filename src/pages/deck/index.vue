@@ -165,7 +165,7 @@ export default {
       return this.setting["cardTagSelected"].length == 0;
     },
     checkNoActionTag() {
-      return !["mouseover", "select", "shortcutkey"].some((i) =>
+      return !["mouseover", "select", "shortcutkey", "listen"].some((i) =>
         this.setting["cardTagSelected"].includes(i)
       );
     },
