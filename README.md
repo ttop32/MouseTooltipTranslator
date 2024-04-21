@@ -263,6 +263,8 @@ npm run build        // or 'npm run watch' for developing
 - [doq](https://github.com/shivaprsd/doq)
 - [foliate-js](https://github.com/johnfactotum/foliate-js)
 - [google-translate-api](https://github.com/vitalets/google-translate-api)
+- [crx-live-translate](https://github.com/botbahlul/crx-live-translate/tree/main)
+- [voice-driven-web-apps-introduction](https://developer.chrome.com/blog/voice-driven-web-apps-introduction-to-the-web-speech-api)
 - [review by MagmaChipmunk](https://twitter.com/MagmaChipmunk/status/1348144312605806594)
 - [review by doitreview](https://doitreview.tistory.com/68?category=915950)
 - [review by parbat0305](https://parbat0305.tistory.com/527)
