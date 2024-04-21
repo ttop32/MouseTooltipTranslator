@@ -55,6 +55,7 @@ async function getMouseoverText(x, y) {
   var textElement;
   var range =
     caretRangeFromPoint(x, y, _win.document) ||
+    caretRangeFromPointOnDocument(x, y) ||
     caretRangeFromPointOnShadowDom(x, y);
 
   //get google doc select
@@ -155,7 +156,9 @@ export function caretRangeFromPointOnShadowDom(x, y) {
 }
 
 function getRangeFromTextNodes(x, y, textNodes) {
-  // text node that position in x y
+  //filter no text
+  var textNodes = textNodes.filter((textNode) => textNode.textContent.trim());
+  // filter no pos overlap
   var textNodes = textNodes.filter((textNode) =>
     checkXYInElement(getTextRange(textNode), x, y)
   );
@@ -182,7 +185,7 @@ export function getAllTextNodes(el) {
 function textNodesUnder(el) {
   return walkNodeTree(el, NodeFilter.SHOW_TEXT, {
     inspect: (textNode) =>
-      !PARENT_TAGS_TO_EXCLUDE.includes(textNode.parentElement?.nodeName),
+      !PARENT_TAGS_TO_EXCLUDE.includes(textNode?.parentElement?.nodeName),
   });
 }
 

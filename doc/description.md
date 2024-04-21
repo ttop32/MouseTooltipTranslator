@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.137
+  - Fix reddit site conflict
 - 0.1.136
   - Fix Japanese furigana recognition (request by cspotcode)
   - Add speech recognition translator

@@ -8,14 +8,18 @@ var stopTtsTimestamp = 0;
 // Listen for messages from the extension
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   (async () => {
-    if (request.type === "playAudioOffscreen") {
+    if (request.type == "playAudioOffscreen") {
       await playAudio(request.data);
       sendResponse({});
-    } else if (request.type === "playSpeechTTSOffscreen") {
+    } else if (request.type == "playSpeechTTSOffscreen") {
       await playSpeechTTS(request.data);
       sendResponse({});
-    } else if (request.type === "stopTTSOffscreen") {
+    } else if (request.type == "stopTTSOffscreen") {
       await stopAudio(request.data);
+      sendResponse({});
+    } else if (request.type == "startSpeechRecognition") {
+      sendResponse({});
+    } else if (request.type == "stopSpeechRecognition") {
       sendResponse({});
     }
   })();
