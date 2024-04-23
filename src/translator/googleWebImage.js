@@ -16,17 +16,11 @@ export default class googleWebImage extends BaseTranslator {
     }).text();
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    var AFScript = res.match(/AF_initDataCallback\(([^<]+)\);/g)[1];
-    var AFScript1 = AFScript.match(/AF_initDataCallback\(([^<]+)\);/)[1];
-    var urlDataText = AFScript1.match(
-      /\"b-GRID_STATE0\"(.*)sideChannel:\s?{}}/
-    )[0];
-    var urlsMeta = urlDataText.match(
-      /\[\"(https\:\/\/encrypted-tbn0\.gstatic\.com\/images\?.*?)\",\d+,\d+\]/g
-    );
-    var imageUrls = urlsMeta.map((urlMeta) => JSON.parse(urlMeta)[0]);
+    var urlJSONData = res.match(/google.ldi=(\{[^{]+\});/)[1];
+    var urlJSON = JSON.parse(urlJSONData);
+    var imageUrl = urlJSON[Object.keys(urlJSON)[0]];
     var detectedLang = await util.detectLangBrowser(text);
-    var base64Url = await util.getBase64(imageUrls[0]);
+    var base64Url = await util.getBase64(imageUrl);
 
     return {
       targetText: "image",
@@ -36,3 +30,10 @@ export default class googleWebImage extends BaseTranslator {
     };
   }
 }
+
+// var res = "";
+// async function getImageSite() {
+//   const response = await fetch("https://www.google.com/search?q=apple&udm=2");
+//   res = await response.text();
+// }
+// getImageSite();

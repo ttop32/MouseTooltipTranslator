@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.138
   - Fix mouseover detect performance issue (request by eSKej)
+  - Fix google image load
 - 0.1.137
   - Fix reddit site conflict
 - 0.1.136
