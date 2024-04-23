@@ -55,7 +55,7 @@ async function getMouseoverText(x, y) {
   var textElement;
   var range =
     caretRangeFromPoint(x, y, _win.document) ||
-    caretRangeFromPointOnDocument(x, y) ||
+    caretRangeFromPointOnPointedElement(x, y) ||
     caretRangeFromPointOnShadowDom(x, y);
 
   //get google doc select
@@ -140,15 +140,28 @@ export function caretRangeFromPointOnDocument(x, y) {
   return getRangeFromTextNodes(x, y, textNodes);
 }
 
+export function caretRangeFromPointOnPointedElement(x, y) {
+  var pointedElements = document.elementsFromPoint(x, y);
+
+  pointedElements = pointedElements.filter(
+    (ele) => ele.offsetHeight < 1000 && ele.offsetWidth < 1000
+  );
+  if (pointedElements.length == 0) {
+    return;
+  }
+  var textNodes = textNodesUnder(pointedElements[pointedElements.length - 1]);
+
+  return getRangeFromTextNodes(x, y, textNodes);
+}
+
 export function caretRangeFromPointOnShadowDom(x, y) {
   // get all text from shadows
   var shadows = util.getAllShadows();
 
   //filter shadow dom by parent position overlap
-  shadows = shadows.filter((shadow) => checkXYInElement(shadow?.host, x, y));
-
   //get all text node
   var textNodes = shadows
+    .filter((shadow) => checkXYInElement(shadow?.host, x, y))
     .map((shadow) => Array.from(textNodesUnder(shadow)))
     .flat();
 
@@ -157,13 +170,11 @@ export function caretRangeFromPointOnShadowDom(x, y) {
 
 function getRangeFromTextNodes(x, y, textNodes) {
   //filter no text
-  var textNodes = textNodes.filter((textNode) => textNode.textContent.trim());
   // filter no pos overlap
-  var textNodes = textNodes.filter((textNode) =>
-    checkXYInElement(getTextRange(textNode), x, y)
-  );
   // convert text node to char range
   var ranges = textNodes
+    .filter((textNode) => textNode.data.trim())
+    .filter((textNode) => checkXYInElement(getTextRange(textNode), x, y))
     .map((textNode) => Array.from(getCharRanges(textNode)))
     .flat();
   // get char range in x y
