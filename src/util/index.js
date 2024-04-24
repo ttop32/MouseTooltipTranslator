@@ -857,3 +857,7 @@ export async function removeOffscreen() {
     browser.offscreen.closeDocument(() => resolve());
   });
 }
+
+export function openUrlAsPanel(url) {
+  browser.windows.create({ url, type: "panel" });
+}

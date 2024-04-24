@@ -65,7 +65,6 @@ var listening = false;
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
-    initSpeechRecognition(); // init speech listen engine
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addBackgroundListener(); // get background listener for copy request
@@ -913,7 +912,12 @@ function removePrevElement() {
 // speech recognition ====================================================
 function initSpeechRecognition() {
   // future plan, migration to background service worker
-  listenEngine = new webkitSpeechRecognition();
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    return;
+  }
+  listenEngine = new SpeechRecognition();
   listenEngine.continuous = true;
   listenEngine.interimResults = true;
   initSpeechRecognitionLang();
@@ -949,7 +953,13 @@ function initSpeechRecognitionLang() {
     initSpeechRecognition();
   }
   stopSpeechRecognition();
-  listenEngine.lang = setting["speechRecognitionLanguage"];
+  setSpeechRecognitionLang(setting["speechRecognitionLanguage"]);
+}
+function setSpeechRecognitionLang(lang) {
+  if (!listenEngine) {
+    return;
+  }
+  listenEngine.lang = lang;
 }
 
 function stopSpeechRecognitionByKey(key) {
@@ -963,7 +973,7 @@ function stopSpeechRecognition() {
     return;
   }
   // console.log("stop listen");
-  listenEngine.stop();
+  listenEngine?.stop();
   listenText = "";
 }
 
@@ -973,9 +983,12 @@ function startSpeechRecognitionByKey(key) {
   }
 }
 function startSpeechRecognition() {
-  if (listening) {
+  if (!listenEngine) {
+    initSpeechRecognition();
+  }
+  if (listening || !listenEngine) {
     return;
   }
   // console.log("start listen");
-  listenEngine.start();
+  listenEngine?.start();
 }
