@@ -921,9 +921,6 @@ export function initSpeechRecognition(recognitionCallbackFn, finCallbackFn) {
 
 export function setSpeechRecognitionLang(lang) {
   if (!listenEngine) {
-    util.loadSpeechRecognition();
-  }
-  if (!listenEngine) {
     return;
   }
   stopSpeechRecognition();
@@ -939,9 +936,6 @@ export function stopSpeechRecognition() {
 }
 
 export function startSpeechRecognition() {
-  if (!listenEngine) {
-    loadSpeechRecognition();
-  }
   if (listening || !listenEngine) {
     return;
   }
