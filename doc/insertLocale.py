@@ -95,6 +95,8 @@ i18List = [
     "Check source code in github",
     "Privacy Policy",
     "User privacy policy",
+    "Voice Panel",
+    "Translate Voice",
 
     "Review                                      ",
     "Review this",

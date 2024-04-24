@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.139
   - Remove speech recognition from opera (request by Fırat Akbıyık)
+  - add speech recognition panel
 - 0.1.138
   - Fix mouseover detect performance issue (request by eSKej)
   - Fix google image load

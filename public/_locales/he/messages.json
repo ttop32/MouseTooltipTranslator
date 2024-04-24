@@ -203,6 +203,12 @@
 	"User_privacy_policy": {
 		"message": "מדיניות פרטיות למשתמש"
 	},
+	"Voice_Panel": {
+		"message": "Voice Panel"
+	},
+	"Translate_Voice": {
+		"message": "Translate Voice"
+	},
 	"Review______________________________________": {
 		"message": "Review                                      "
 	},

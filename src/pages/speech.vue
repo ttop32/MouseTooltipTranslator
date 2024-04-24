@@ -1,32 +1,22 @@
 <template>
-  <popupWindow>
-    <div class="mobile-popup-overlay">
-      hello world
-      <div class="scroller">
-        <div class="scroller-content" id="scrollerContent">
-          <div class="item">Item 1</div>
-          <div class="item">Item 2</div>
-          <div class="item">Item 3</div>
-          <div class="item">Item 4</div>
-          <div class="item">Item 5</div>
-          <div class="item">Item 6</div>
-          <div class="item">Item 7</div>
-          <div class="item">Item 8</div>
-          <div class="item">Item 9</div>
-          <div class="item">Item 10</div>
+  <div class="scroller" :style="getFontStyle()">
+    <div class="scroller-content" id="scrollerContent">
+      <div
+        v-for="translatedData in translatedDataList"
+        :key="translatedData.sourceText"
+        class="my-3"
+      >
+        <div>
+          <div :dir="translatedData.mainDir">
+            {{ translatedData.mainText }}
+          </div>
+          <div :dir="translatedData.subDir">
+            {{ translatedData.subText }}
+          </div>
         </div>
       </div>
     </div>
-
-    <div
-      v-for="translatedData in translatedDataList"
-      :key="translatedData.sourceText"
-      :style="getFontStyle()"
-    >
-      {{ translatedData.sourceText }}
-      {{ translatedData.targetText }}
-    </div>
-  </popupWindow>
+  </div>
 </template>
 <script>
 import * as util from "/src/util";
@@ -34,7 +24,6 @@ import * as util from "/src/util";
 import _ from "lodash";
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
-import { permissions } from "webextension-polyfill";
 
 export default {
   name: "SpeechView",
@@ -43,25 +32,64 @@ export default {
       fontSize: 14,
       fontColor: "#ffffffff",
       PanelBackgroundColor: "#000000b8",
-      translatedDataList: [{ sourceText: "nan", targetText: "veb" }],
+      translatedDataList: [],
+
+      mainTextDir: "ltr",
+      subTextDir: "ltr",
     };
   },
   async mounted() {
-    await this.waitSettingLoad();
+    await this.loadSetting();
+
+    util.initSpeechRecognition(this.handleSpeechText, this.handleFinish);
+    util.setSpeechRecognitionLang(this.setting["speechRecognitionLanguage"]);
+    util.startSpeechRecognition();
   },
 
   computed: {
-    ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
+    ...mapState(useSettingStore, ["setting", "loadSetting"]),
   },
 
   methods: {
-    openUrl(url) {
-      window.open(url);
+    async handleSpeechText(text, isFinal) {
+      if (isFinal) {
+        var { targetText, sourceLang, targetLang } = await this.translate(text);
+
+        var mainDir = util.getRtlDir(sourceLang);
+        var subDir = util.getRtlDir(targetLang);
+
+        this.makeTextFinal(text, targetText, mainDir, subDir);
+      } else {
+        this.addNewTextOnLast(text);
+      }
     },
-    startRecognition() {
-      // start all day
-      // do not stop
-      // audio permissions
+    handleFinish() {
+      console.log("fin");
+    },
+    addNewTextOnLast(text) {
+      if (
+        this.translatedDataList.length == 0 ||
+        this.translatedDataList[this.translatedDataList.length - 1].isFinal
+      ) {
+        this.translatedDataList.push({});
+      }
+      var dir = util.getRtlDir(this.setting["speechRecognitionLanguage"]);
+
+      this.translatedDataList[this.translatedDataList.length - 1] = {
+        mainText: text,
+        subText: "...",
+        mainDir: dir,
+        subDir: dir,
+      };
+    },
+    makeTextFinal(mainText, subText, mainDir, subDir) {
+      this.translatedDataList[this.translatedDataList.length - 1] = {
+        mainText,
+        subText,
+        mainDir,
+        subDir,
+        isFinal: true,
+      };
     },
     getFontStyle() {
       var fontSize = this.setting["tooltipFontSize"];
@@ -74,48 +102,26 @@ export default {
       `;
     },
 
-    async handleTranslate() {
-      this.translate();
-    },
     async translate(text) {
-      var { targetText, sourceLang, targetLang } = await util.requestTranslate(
+      return await util.requestTranslate(
         text,
-        setting["translateSource"],
-        setting["translateTarget"],
-        setting["translateReverseTarget"]
+        this.setting["translateSource"],
+        this.setting["translateTarget"],
+        this.setting["translateReverseTarget"]
       );
-      return { targetText, sourceLang, targetLang };
     },
   },
 };
 </script>
 <style>
-.mobile-popup-overlay {
-  top: 0;
-  left: 0;
-  position: fixed;
-  background-color: red;
-  opacity: 0.9;
-  height: 100vh;
-  width: 100vw;
-  overflow: visible;
-  z-index: 100;
-}
-
-#appWindow {
-  margin: auto;
-  height: 100vh;
-  width: 100vw;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+html,
+body {
+  overflow: hidden;
 }
 
 .scroller {
   overflow: auto;
-  height: 100px;
+  height: 100vh;
   display: flex;
   flex-direction: column-reverse;
   overflow-anchor: auto !important; /*  See https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor */
@@ -126,5 +132,8 @@ export default {
   transform: translateZ(
     0
   ); /* fixes a bug in Safari iOS where the scroller doesn't update */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 </style>

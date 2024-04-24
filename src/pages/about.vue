@@ -72,11 +72,11 @@ export default {
           icon: "mdi-book-open-blank-variant",
           color: "orange",
         },
-        speechPanel: {
-          name: browser.i18n.getMessage("Speech_Panel") + "tt",
-          sub_name: browser.i18n.getMessage("Translate_Speech"),
+        voicePanel: {
+          name: browser.i18n.getMessage("Voice_Panel"),
+          sub_name: browser.i18n.getMessage("Translate_Voice"),
           url: "/popup.html#/speech",
-          icon: "mdi-text-to-speech",
+          icon: "mdi-microphone-message",
           color: "cyan",
           isPanelOpen: true,
         },

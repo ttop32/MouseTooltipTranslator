@@ -47,9 +47,8 @@ var prevTooltipText = "";
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
-var listenEngine;
+
 var listenText = "";
-var listening = false;
 
 //tooltip core======================================================================
 
@@ -69,6 +68,7 @@ var listening = false;
     applyStyleSetting(); //add tooltip style
     addBackgroundListener(); // get background listener for copy request
     loadEventListener(); //load event listener to detect mouse move
+    loadSpeechRecognition();
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
   } catch (error) {
@@ -574,6 +574,8 @@ function resetTooltipStatus() {
   stagedText = null;
   hideTooltip();
   ocrView.removeAllOcrEnv();
+  listenText = "";
+  util.stopSpeechRecognition();
 }
 
 async function restartWordProcess() {
@@ -910,85 +912,32 @@ function removePrevElement() {
 }
 
 // speech recognition ====================================================
-function initSpeechRecognition() {
-  // future plan, migration to background service worker
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    return;
-  }
-  listenEngine = new SpeechRecognition();
-  listenEngine.continuous = true;
-  listenEngine.interimResults = true;
-  initSpeechRecognitionLang();
 
-  listenEngine.onstart = function () {
-    listening = true;
-  };
-  listenEngine.onerror = function (event) {
-    console.log(event);
-  };
-  listenEngine.onend = function () {
-    listening = false;
-  };
-
-  listenEngine.onresult = function (event) {
-    var interimTranscript = "";
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        listenText = event.results[i][0].transcript;
+function loadSpeechRecognition() {
+  util.initSpeechRecognition(
+    (speechText, isFinal) => {
+      if (isFinal) {
+        listenText = speechText;
         stageTooltipText(listenText, "listen");
-      } else {
-        interimTranscript += event.results[i][0].transcript;
       }
+    },
+    () => {
+      listenText = "";
     }
-    // console.log("-------------------------------");
-    // console.log(listenText);
-    // console.log(interimTranscript);
-  };
+  );
+  initSpeechRecognitionLang();
 }
 
 function initSpeechRecognitionLang() {
-  if (!listenEngine) {
-    initSpeechRecognition();
-  }
-  stopSpeechRecognition();
-  setSpeechRecognitionLang(setting["speechRecognitionLanguage"]);
+  util.setSpeechRecognitionLang(setting["speechRecognitionLanguage"]);
 }
-function setSpeechRecognitionLang(lang) {
-  if (!listenEngine) {
-    return;
-  }
-  listenEngine.lang = lang;
-}
-
 function stopSpeechRecognitionByKey(key) {
   if (key == setting["keySpeechRecognition"]) {
-    stopSpeechRecognition();
+    util.stopSpeechRecognition();
   }
 }
-
-function stopSpeechRecognition() {
-  if (!listening) {
-    return;
-  }
-  // console.log("stop listen");
-  listenEngine?.stop();
-  listenText = "";
-}
-
 function startSpeechRecognitionByKey(key) {
   if (key == setting["keySpeechRecognition"]) {
-    startSpeechRecognition();
+    util.startSpeechRecognition();
   }
-}
-function startSpeechRecognition() {
-  if (!listenEngine) {
-    initSpeechRecognition();
-  }
-  if (listening || !listenEngine) {
-    return;
-  }
-  // console.log("start listen");
-  listenEngine?.start();
 }
