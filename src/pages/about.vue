@@ -28,7 +28,7 @@
           :key="key"
           :title="aboutPageItem.name"
           :subtitle="aboutPageItem.sub_name"
-          @click="openUrl(aboutPageItem.url)"
+          @click="openUrl(aboutPageItem.url, aboutPageItem.isPanelOpen)"
         >
           <template v-slot:prepend>
             <v-avatar :color="aboutPageItem.color">
@@ -72,12 +72,13 @@ export default {
           icon: "mdi-book-open-blank-variant",
           color: "orange",
         },
-        twitter: {
-          name: browser.i18n.getMessage("Twitter"),
-          sub_name: browser.i18n.getMessage("Retweet_twitter_post"),
-          url: "https://twitter.com/MouseTooltip",
-          icon: "mdi-twitter",
+        speechPanel: {
+          name: browser.i18n.getMessage("Speech_Panel") + "tt",
+          sub_name: browser.i18n.getMessage("Translate_Speech"),
+          url: "/popup.html#/speech",
+          icon: "mdi-text-to-speech",
           color: "cyan",
+          isPanelOpen: true,
         },
         reviewPage: {
           name: browser.i18n.getMessage("Review_Page"),
@@ -104,8 +105,12 @@ export default {
     };
   },
   methods: {
-    openUrl(newURL) {
-      window.open(newURL);
+    openUrl(url, isPanelOpen = false) {
+      if (!isPanelOpen) {
+        window.open(url);
+      } else {
+        util.openUrlAsPanel(url);
+      }
     },
   },
 };
