@@ -72,8 +72,22 @@ i18List = [
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",
     "Tooltip Word Dictionary",
-    "Speech Recognition When",
+
+    "SPEECH",
     "Speech Recognition Language",
+    "Speech Recognition When",
+    "Voice Panel Text Target",
+    "Voice Panel Padding",
+    "Voice Panel Text Align",
+    "Voice Panel Source Font Size",
+    "Voice Panel Target Font Size",
+    "Voice Panel Source Font Color",
+    "Voice Panel Target Font Color",
+    "Voice Panel Source Border Color",
+    "Voice Panel Target Border Color",
+    "Voice Panel Background Color",
+
+
 
     "EXCLUDE                                      ",
     "EXCLUDE",

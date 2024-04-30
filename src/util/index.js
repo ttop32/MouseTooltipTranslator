@@ -9,6 +9,7 @@ var browser;
 try {
   browser = require("webextension-polyfill");
 } catch (error) {}
+import delay from "delay";
 
 import { Setting } from "./setting.js";
 
@@ -30,22 +31,14 @@ export var defaultData = {
   ocrLang: "jpn_vert",
   translateReverseTarget: "null",
 
-  //advanced
-  keyDownTranslateWriting: "AltRight",
-  keyDownOCR: "ShiftLeft",
-  detectSubtitle: "dualsub",
-  detectPDF: "true",
-  mouseoverPauseSubtitle: "true",
-  keyDownMouseoverTextSwap: "null",
-  tooltipInfoSourceText: "false",
-  tooltipInfoSourceLanguage: "false",
-  tooltipInfoTransliteration: "false",
-  tooltipWordDictionary: "true",
-  keySpeechRecognition: "ControlRight",
-  speechRecognitionLanguage: "en-US",
+  // voice
+  voiceVolume: "1.0",
+  voiceRate: "1.0",
+  voiceTarget: "source",
+  voiceRepeat: "1",
 
   // graphic
-  tooltipFontSize: "14",
+  tooltipFontSize: "18",
   tooltipWidth: "200",
   tooltipDistance: "20",
   tooltipAnimation: "fade",
@@ -58,11 +51,31 @@ export var defaultData = {
   tooltipBorderColor: "#ffffff00",
   mouseoverTextHighlightColor: "#21dc6d40",
 
-  // voice
-  voiceVolume: "1.0",
-  voiceRate: "1.0",
-  voiceTarget: "source",
-  voiceRepeat: "1",
+  // speech
+  speechRecognitionLanguage: "en-US",
+  keySpeechRecognition: "ControlRight",
+  voicePanelTextTarget: "sourcetarget",
+  voicePanelPadding: "20",
+  voicePanelTextAlign: "center",
+  voicePanelSourceFontSize: "18",
+  voicePanelTargetFontSize: "18",
+  voicePanelSourceFontColor: "#ffffffff",
+  voicePanelTargetFontColor: "#ffffffff",
+  voicePanelSourceBorderColor: "#000000b8",
+  voicePanelTargetBorderColor: "#000000b8",
+  voicePanelBackgroundColor: "#002918",
+
+  //advanced
+  keyDownTranslateWriting: "AltRight",
+  keyDownOCR: "ShiftLeft",
+  detectSubtitle: "dualsub",
+  detectPDF: "true",
+  mouseoverPauseSubtitle: "true",
+  keyDownMouseoverTextSwap: "null",
+  tooltipInfoSourceText: "false",
+  tooltipInfoSourceLanguage: "false",
+  tooltipInfoTransliteration: "false",
+  tooltipWordDictionary: "true",
 
   // exclude
   langExcludeList: [],
@@ -574,11 +587,6 @@ export function isExtensionOnline() {
   return browser.runtime?.id;
 }
 
-export function openSettingPage() {
-  browser.tabs.create({
-    url: "chrome://extensions/?id=" + browser.runtime?.id,
-  });
-}
 export function getUrlExt(path) {
   return browser.runtime.getURL(path);
 }
@@ -842,7 +850,7 @@ export async function requestStopTtsOffscreen(timestamp) {
   return await sendMessage({ type: "stopTTSOffscreen", data: { timestamp } });
 }
 
-//offscreen =======================
+//open side window =======================
 // Create the offscreen document
 export async function createOffscreen() {
   try {
@@ -861,12 +869,16 @@ export async function removeOffscreen() {
   });
 }
 
-export function openUrlAsPanel(url) {
+export async function openUrlAsPanel(url) {
+  url = getUrlExt(url);
+  await removePreviousTab(url);
+  openPanel(url);
+}
+function openPanel(url) {
   var width = Math.round(screen.width * 0.5);
   var height = Math.round(screen.height * 0.15);
   var left = Math.round(screen.width / 2 - width / 2);
   var top = Math.round(screen.height / 2 - height / 2);
-
   browser.windows.create({
     url,
     type: "panel",
@@ -877,7 +889,31 @@ export function openUrlAsPanel(url) {
   });
 }
 
-// speech recognition
+export async function removePreviousTab(url) {
+  var urlParsed = new URL(url);
+  var urlWithoutParam = urlParsed.origin + urlParsed.pathname;
+  var tabs = await browser.tabs.query({ url: urlWithoutParam });
+
+  for (const tab of tabs) {
+    if (url == tab.url) {
+      await browser.tabs.remove(tab.id);
+    }
+  }
+}
+
+export function openSettingPage() {
+  openPage(`chrome://extensions/?id=${browser.runtime?.id}`);
+}
+
+export function openAudioPermissionPage() {
+  openPage(`chrome://settings/content/microphone`);
+}
+
+export function openPage(url) {
+  browser.tabs.create({ url });
+}
+
+// speech recognition================================
 
 export function initSpeechRecognition(recognitionCallbackFn, finCallbackFn) {
   // future plan, migration to background service worker
@@ -923,7 +959,6 @@ export function setSpeechRecognitionLang(lang) {
   if (!listenEngine) {
     return;
   }
-  stopSpeechRecognition();
   listenEngine.lang = lang;
 }
 
