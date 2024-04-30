@@ -27,6 +27,7 @@ Proletarier aller Länder, vereinigt euch!
   - Default speech recognition language is english
   - If speech recognition language and target language are same, it will skip
   - Audio permission is required
+  - Only works on chrome and edge
 - Customize shortcut key
   - From chrome://extensions/shortcuts
 # Change Language
