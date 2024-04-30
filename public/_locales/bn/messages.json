@@ -140,11 +140,44 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "Tooltip Word Dictionary"
 	},
-	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+	"SPEECH": {
+		"message": "SPEECH"
 	},
 	"Speech_Recognition_Language": {
 		"message": "Speech Recognition Language"
+	},
+	"Speech_Recognition_When": {
+		"message": "Speech Recognition When"
+	},
+	"Voice_Panel_Text_Target": {
+		"message": "Voice Panel Text Target"
+	},
+	"Voice_Panel_Padding": {
+		"message": "Voice Panel Padding"
+	},
+	"Voice_Panel_Text_Align": {
+		"message": "Voice Panel Text Align"
+	},
+	"Voice_Panel_Source_Font_Size": {
+		"message": "Voice Panel Source Font Size"
+	},
+	"Voice_Panel_Target_Font_Size": {
+		"message": "Voice Panel Target Font Size"
+	},
+	"Voice_Panel_Source_Font_Color": {
+		"message": "Voice Panel Source Font Color"
+	},
+	"Voice_Panel_Target_Font_Color": {
+		"message": "Voice Panel Target Font Color"
+	},
+	"Voice_Panel_Source_Border_Color": {
+		"message": "Voice Panel Source Border Color"
+	},
+	"Voice_Panel_Target_Border_Color": {
+		"message": "Voice Panel Target Border Color"
+	},
+	"Voice_Panel_Background_Color": {
+		"message": "Voice Panel Background Color"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "

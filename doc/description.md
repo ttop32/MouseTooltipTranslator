@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.140
+  - Add speech panel graphic option
 - 0.1.139
   - Remove speech recognition from opera (request by Fırat Akbıyık)
   - add speech recognition panel

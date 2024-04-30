@@ -138,6 +138,9 @@ async function stageTooltipText(text, actionType, range) {
     stagedText = text;
     hideTooltip();
     return;
+  } else if (!isTooltipOn && !isTtsOn) {
+    hideTooltip();
+    return;
   } else if (!isTooltipOn) {
     hideTooltip();
   }

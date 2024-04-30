@@ -180,7 +180,7 @@ var voiceVolumeList = util.getRangeOption(0, 1.1, 0.1, 1);
 var voiceRateList = util.getRangeOption(0.5, 2.1, 0.1, 1);
 var voiceRepeatList = util.getRangeOption(1, 11);
 var tooltipBackgroundBlurList = util.getRangeOption(0, 21);
-var tooltipDistanceList = util.getRangeOption(0, 41);
+var distanceList = util.getRangeOption(0, 41);
 var tooltipIntervalTimeList = util.getRangeOption(0.5, 2.1, 0.1, 1);
 
 var tooltipPositionList = {
@@ -222,11 +222,17 @@ var subtitleTypeList = {
   None: "null",
 };
 
-var tooltipTextAlignList = {
+var textAlignList = {
   Center: "center",
   Left: "left",
   Right: "right",
   Justify: "justify",
+};
+
+var speechTextTargetList = {
+  Source: "source",
+  Translated: "target",
+  "Source & Translated": "sourcetarget",
 };
 
 var settingListData = {
@@ -283,7 +289,7 @@ var graphicTabData = {
   },
   tooltipDistance: {
     description: browser.i18n.getMessage("Tooltip_Distance"),
-    optionList: tooltipDistanceList,
+    optionList: distanceList,
   },
   tooltipAnimation: {
     description: browser.i18n.getMessage("Tooltip_Animation"),
@@ -295,7 +301,7 @@ var graphicTabData = {
   },
   tooltipTextAlign: {
     description: browser.i18n.getMessage("Tooltip_Text_Align"),
-    optionList: tooltipTextAlignList,
+    optionList: textAlignList,
   },
   tooltipBackgroundBlur: {
     description: browser.i18n.getMessage("Tooltip_Background_Blur"),
@@ -350,6 +356,67 @@ var voiceTabData = {
   },
 };
 
+var speechTabData = {
+  speechRecognitionLanguage: {
+    description: browser.i18n.getMessage("Speech_Recognition_Language"),
+    optionList: listenLangList,
+  },
+  keySpeechRecognition: {
+    description: browser.i18n.getMessage("Speech_Recognition_When"),
+    optionList: keyList,
+  },
+  voicePanelTextTarget: {
+    description: browser.i18n.getMessage("Voice_Panel_Text_Target"),
+    optionList: speechTextTargetList,
+  },
+  voicePanelPadding: {
+    description: browser.i18n.getMessage("Voice_Panel_Padding"),
+    optionList: distanceList,
+  },
+  voicePanelTextAlign: {
+    description: browser.i18n.getMessage("Voice_Panel_Text_Align"),
+    optionList: textAlignList,
+  },
+  voicePanelSourceFontSize: {
+    description: browser.i18n.getMessage("Voice_Panel_Source_Font_Size"),
+    optionList: tooltipFontSizeList,
+  },
+  voicePanelTargetFontSize: {
+    description: browser.i18n.getMessage("Voice_Panel_Target_Font_Size"),
+    optionList: tooltipFontSizeList,
+  },
+  voicePanelSourceFontColor: {
+    description: browser.i18n.getMessage("Voice_Panel_Source_Font_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
+  voicePanelTargetFontColor: {
+    description: browser.i18n.getMessage("Voice_Panel_Target_Font_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
+  voicePanelSourceBorderColor: {
+    description: browser.i18n.getMessage("Voice_Panel_Source_Border_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
+  voicePanelTargetBorderColor: {
+    description: browser.i18n.getMessage("Voice_Panel_Target_Border_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
+  voicePanelBackgroundColor: {
+    description: browser.i18n.getMessage("Voice_Panel_Background_Color"),
+    optionType: "colorPicker",
+    menu: false,
+    optionList: {},
+  },
+};
+
 var advancedTabData = {
   keyDownTranslateWriting: {
     description: browser.i18n.getMessage("Translate_Writing_When"),
@@ -397,14 +464,6 @@ var advancedTabData = {
     description: browser.i18n.getMessage("Tooltip_Word_Dictionary"),
     optionList: toggleList,
   },
-  keySpeechRecognition: {
-    description: browser.i18n.getMessage("Speech_Recognition_When"),
-    optionList: keyList,
-  },
-  speechRecognitionLanguage: {
-    description: browser.i18n.getMessage("Speech_Recognition_Language"),
-    optionList: listenLangList,
-  },
 };
 
 var excludeTabData = {
@@ -424,6 +483,7 @@ var tabItems = {
   MAIN: settingListData,
   GRAPHIC: graphicTabData,
   VOICE: voiceTabData,
+  SPEECH: speechTabData,
   ADVANCED: advancedTabData,
   EXCLUDE: excludeTabData,
 };
@@ -431,6 +491,7 @@ var tabs = {
   MAIN: browser.i18n.getMessage("MAIN"),
   GRAPHIC: browser.i18n.getMessage("GRAPHIC"),
   VOICE: browser.i18n.getMessage("VOICE"),
+  SPEECH: browser.i18n.getMessage("SPEECH"),
   ADVANCED: browser.i18n.getMessage("ADVANCED"),
   EXCLUDE: browser.i18n.getMessage("EXCLUDE"),
 };
