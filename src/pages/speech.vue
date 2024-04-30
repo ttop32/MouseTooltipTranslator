@@ -2,7 +2,7 @@
   <div class="scroller" :style="speechAllTextStyle">
     <div class="scroller-content" id="scrollerContent">
       <div
-        v-for="translatedData in translatedDataList"
+        v-for="translatedData in speechTextList"
         :key="translatedData.sourceText"
         :style="speechBlockStyle"
       >
@@ -33,7 +33,7 @@ export default {
   name: "SpeechView",
   data() {
     return {
-      translatedDataList: [],
+      speechTextList: [],
       setting: {},
 
       isSourceTextShow: true,
@@ -42,6 +42,8 @@ export default {
       speechBlockStyle: "",
       speechSourceTextStyle: "",
       speechTargetTextStyle: "",
+
+      translateTimeDelay: 1400,
     };
   },
   async mounted() {
@@ -111,7 +113,6 @@ export default {
     async checkMicrophone() {
       try {
         var stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        console.log(stream);
       } catch (error) {
         this.handleMicrophoneError(error);
       }
@@ -138,53 +139,61 @@ Check any microphone is correctly connected`);
     initSpeechLang() {
       util.setSpeechRecognitionLang(this.setting["speechRecognitionLanguage"]);
     },
-    async handleSpeechText(text, isFinal) {
-      if (isFinal) {
-        var { targetText, sourceLang, targetLang } = await this.translate(text);
-
-        var mainDir = util.getRtlDir(sourceLang);
-        var subDir = util.getRtlDir(targetLang);
-
-        this.makeTextFinal(text, targetText, mainDir, subDir);
-      } else {
-        this.addNewTextOnLast(text);
-      }
-    },
     handleFinish() {
+      // restart if fin
       util.startSpeechRecognition();
     },
-    addNewTextOnLast(text) {
-      if (
-        this.translatedDataList.length == 0 ||
-        this.translatedDataList[this.translatedDataList.length - 1].isFinal
-      ) {
-        this.translatedDataList.push({});
-      }
-      var dir = util.getRtlDir(this.setting["speechRecognitionLanguage"]);
-
-      this.translatedDataList[this.translatedDataList.length - 1] = {
-        mainText: text,
-        subText: "...",
-        mainDir: dir,
-        subDir: dir,
-      };
+    async handleSpeechText(text, isFinal) {
+      var timestamp = Date.now();
+      var currentIndex = this.addNewTextBox();
+      this.setSourceText(text, currentIndex, isFinal);
+      this.updateSubText(text, currentIndex, timestamp, isFinal);
     },
-    makeTextFinal(mainText, subText, mainDir, subDir) {
-      this.translatedDataList[this.translatedDataList.length - 1] = {
-        mainText,
-        subText,
-        mainDir,
-        subDir,
-        isFinal: true,
-      };
+    async updateSubText(text, index, timestamp, isFinal) {
+      var currentSpeechItem = this.speechTextList[index];
+      var currentTimePassed = Date.now() - currentSpeechItem["timestamp"];
+      if (this.translateTimeDelay >= currentTimePassed && !isFinal) {
+        return;
+      }
+
+      var { targetText } = await this.translate(text);
+
+      if (timestamp < currentSpeechItem["timestamp"]) {
+        return;
+      }
+
+      this.speechTextList[index]["timestamp"] = timestamp;
+      this.speechTextList[index]["subText"] = targetText;
+    },
+
+    addNewTextBox() {
+      var mainDir = util.getRtlDir(this.setting["speechRecognitionLanguage"]);
+      var subDir = util.getRtlDir(this.setting["translateTarget"]);
+      if (
+        this.speechTextList.length == 0 ||
+        this.speechTextList[this.speechTextList.length - 1].isFinal
+      ) {
+        this.speechTextList.push({
+          mainText: "",
+          subText: "...",
+          mainDir,
+          subDir,
+          isFinal: false,
+          timestamp: 0,
+        });
+      }
+      return this.speechTextList.length - 1;
+    },
+    setSourceText(text, index, isFinal = false) {
+      this.speechTextList[index]["mainText"] = text;
+      this.speechTextList[index]["isFinal"] = isFinal;
     },
 
     async translate(text) {
       return await util.requestTranslate(
         text,
         this.setting["translateSource"],
-        this.setting["translateTarget"],
-        this.setting["translateReverseTarget"]
+        this.setting["translateTarget"]
       );
     },
   },
