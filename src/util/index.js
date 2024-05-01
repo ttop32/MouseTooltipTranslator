@@ -856,11 +856,14 @@ export async function createOffscreen() {
   try {
     await browser?.offscreen?.createDocument({
       url: "offscreen.html",
-      reasons: ["WORKERS"],
+      reasons: ["USER_MEDIA"],
       justification: "TTS & Speech",
     });
   } catch (error) {
-    if (!error.message.startsWith("Only a single offscreen")) throw error;
+    if (error.message.startsWith("Only a single offscreen")) {
+    } else {
+      console.log(error);
+    }
   }
 }
 export async function removeOffscreen() {
