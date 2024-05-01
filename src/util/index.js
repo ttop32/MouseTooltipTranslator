@@ -54,6 +54,7 @@ export var defaultData = {
   // speech
   speechRecognitionLanguage: "en-US",
   keySpeechRecognition: "ControlRight",
+  voicePanelTranslateLanguage: "default",
   voicePanelTextTarget: "sourcetarget",
   voicePanelPadding: "20",
   voicePanelTextAlign: "center",

@@ -149,6 +149,9 @@
 	"Speech_Recognition_When": {
 		"message": "Speech Recognition When"
 	},
+	"Voice_Panel_Translate_Language": {
+		"message": "Voice Panel Translate Language"
+	},
 	"Voice_Panel_Text_Target": {
 		"message": "Voice Panel Text Target"
 	},

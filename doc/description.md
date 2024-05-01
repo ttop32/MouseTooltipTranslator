@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.142
+  - Fix css conflict on koreatimes (request by prvDevs)
 - 0.1.141
   - Fix tts conflict with low browser version (request by Курс Курсович)
 - 0.1.140
