@@ -190,10 +190,15 @@ Check any microphone is correctly connected`);
     },
 
     async translate(text) {
+      var targetLang =
+        this.setting["voicePanelTranslateLanguage"] == "default"
+          ? this.setting["translateTarget"]
+          : this.setting["voicePanelTranslateLanguage"];
+
       return await util.requestTranslate(
         text,
         this.setting["translateSource"],
-        this.setting["translateTarget"]
+        targetLang
       );
     },
   },

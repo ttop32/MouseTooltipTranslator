@@ -76,6 +76,7 @@ i18List = [
     "SPEECH",
     "Speech Recognition Language",
     "Speech Recognition When",
+    "Voice Panel Translate Language",
     "Voice Panel Text Target",
     "Voice Panel Padding",
     "Voice Panel Text Align",

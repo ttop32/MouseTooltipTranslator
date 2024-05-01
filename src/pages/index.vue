@@ -126,6 +126,7 @@ import {
 
 var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = util.concatJson({ None: "null" }, langList); //copy lang and add none
+var langListWithDefault = util.concatJson({ Default: "default" }, langList); //copy lang
 
 var toggleList = {
   On: "true",
@@ -364,6 +365,10 @@ var speechTabData = {
   keySpeechRecognition: {
     description: browser.i18n.getMessage("Speech_Recognition_When"),
     optionList: keyList,
+  },
+  voicePanelTranslateLanguage: {
+    description: browser.i18n.getMessage("Voice_Panel_Translate_Language"),
+    optionList: langListWithDefault,
   },
   voicePanelTextTarget: {
     description: browser.i18n.getMessage("Voice_Panel_Text_Target"),

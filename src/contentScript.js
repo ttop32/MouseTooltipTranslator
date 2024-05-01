@@ -700,21 +700,23 @@ function applyStyleSetting() {
       visibility: visible  !important;
       white-space: pre-line;
     }
-    .tippy-box[data-theme~="custom"] {
+    .tippy-box[data-theme~="custom"], .tippy-content *{
       font-size: ${setting["tooltipFontSize"]}px  !important;
-      max-width: ${setting["tooltipWidth"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
-      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
-      background-color: ${setting["tooltipBackgroundColor"]} !important;
-      color: ${setting["tooltipFontColor"]} !important;
       overflow-wrap: break-word !important;
+      color: ${setting["tooltipFontColor"]} !important;
       font-family: 
         -apple-system, BlinkMacSystemFont,
         "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans",
         "Droid Sans", "Helvetica Neue", sans-serif  !important;
-      border: 1px solid ${setting["tooltipBorderColor"]};
       white-space: pre-line;
+    }
+    .tippy-box[data-theme~="custom"]{
+      max-width: ${setting["tooltipWidth"]}px  !important;
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
+      background-color: ${setting["tooltipBackgroundColor"]} !important;
+      border: 1px solid ${setting["tooltipBorderColor"]}; 
     }
     [data-tippy-root] {
       display: inline-block !important;
