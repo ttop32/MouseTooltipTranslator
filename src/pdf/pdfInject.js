@@ -1,6 +1,5 @@
 import delay from "delay";
 import $ from "jquery";
-import ky from "ky";
 
 import * as util from "/src/util";
 
@@ -135,7 +134,9 @@ function addCustomKeystroke() {
     if (util.getFocusedWritingBox()) {
       return;
     }
-
+    if (evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) {
+      return;
+    }
     switch (evt.code) {
       case "KeyT":
         document.getElementById("editorFreeText")?.click();
