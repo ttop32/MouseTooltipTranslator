@@ -8,6 +8,7 @@ import * as util from "/src/util";
 
 var clientX = 0;
 var clientY = 0;
+var lastRunMouseover = new Date();
 var _win;
 var _isIframe = false;
 var styleElement;
@@ -18,13 +19,8 @@ export function enableMouseoverTextEvent(
   textDetectTime = 0.7
 ) {
   _win = _window;
-  textDetectTime = Number(textDetectTime) * 1000;
 
-  setInterval(async () => {
-    triggerMouseoverText(await getMouseoverText(clientX, clientY));
-  }, textDetectTime);
-
-  window.addEventListener("mousemove", (e) => {
+  window.addEventListener("mousemove", async (e) => {
     //if is ebook viewer event, take ebook window
     if (e.ebookWindow) {
       _win = e.ebookWindow;
@@ -38,6 +34,11 @@ export function enableMouseoverTextEvent(
     //else record mouse xy
     clientX = e.clientX;
     clientY = e.clientY;
+
+    if (new Date() - lastRunMouseover > textDetectTime) {
+      lastRunMouseover = new Date();
+      triggerMouseoverText(await getMouseoverText(clientX, clientY));
+    }
   });
 }
 
@@ -66,6 +67,7 @@ async function getMouseoverText(x, y) {
   //get text from range
   var mouseoverText = await getTextFromRange(range);
   textElement?.remove();
+
   return mouseoverText;
 }
 async function getTextFromRange(range) {
