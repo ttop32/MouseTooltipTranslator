@@ -5,6 +5,7 @@
 // 4. range to text
 
 import * as util from "/src/util";
+import {debounce} from "lodash";
 
 var clientX = 0;
 var clientY = 0;
@@ -21,6 +22,9 @@ export function enableMouseoverTextEvent(
 ) {
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
+  const triggerMouseoverTextWithDelay = debounce(async() => {
+    triggerMouseoverText(await getMouseoverText(clientX, clientY));
+  }, textDetectTime);
 
   window.addEventListener("mousemove", async (e) => {
     //if is ebook viewer event, take ebook window
@@ -37,20 +41,7 @@ export function enableMouseoverTextEvent(
     clientX = e.clientX;
     clientY = e.clientY;
 
-    if (hasQueuedMouseover == false) {
-      if (new Date() - lastRunMouseover > textDetectTime) {
-        lastRunMouseover = new Date();
-        triggerMouseoverText(await getMouseoverText(clientX, clientY));
-      }
-      else {
-        hasQueuedMouseover = true;
-        setTimeout(async() => {
-          hasQueuedMouseover = false;
-          lastRunMouseover = new Date();
-          triggerMouseoverText(await getMouseoverText(clientX, clientY));
-        }, textDetectTime);
-      }
-    }
+    triggerMouseoverTextWithDelay();
   });
 }
 
@@ -98,6 +89,7 @@ async function getTextFromRange(range) {
       //check mouse xy overlap the range element
       if (checkXYInElement(rangeClone, clientX, clientY)) {
         output[detectType] = extractTextFromRange(rangeClone);
+if (detectType == "sentence") { console.log(output[detectType])};
         output[detectType + "_range"] = rangeClone;
       }
     } catch (error) {
