@@ -16,7 +16,7 @@ const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 
 export function enableMouseoverTextEvent(
   _window = window,
-  textDetectTime = 0.7
+  textDetectTime = 0.1
 ) {
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
