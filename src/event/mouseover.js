@@ -9,8 +9,6 @@ import {debounce} from "lodash";
 
 var clientX = 0;
 var clientY = 0;
-var lastRunMouseover = new Date();
-var hasQueuedMouseover = false;
 var _win;
 var _isIframe = false;
 var styleElement;
@@ -89,7 +87,6 @@ async function getTextFromRange(range) {
       //check mouse xy overlap the range element
       if (checkXYInElement(rangeClone, clientX, clientY)) {
         output[detectType] = extractTextFromRange(rangeClone);
-if (detectType == "sentence") { console.log(output[detectType])};
         output[detectType + "_range"] = rangeClone;
       }
     } catch (error) {
