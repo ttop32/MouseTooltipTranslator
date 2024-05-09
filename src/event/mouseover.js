@@ -9,6 +9,7 @@ import * as util from "/src/util";
 var clientX = 0;
 var clientY = 0;
 var lastRunMouseover = new Date();
+var hasQueuedMouseover = false;
 var _win;
 var _isIframe = false;
 var styleElement;
@@ -19,6 +20,7 @@ export function enableMouseoverTextEvent(
   textDetectTime = 0.7
 ) {
   _win = _window;
+  textDetectTime = Number(textDetectTime) * 1000;
 
   window.addEventListener("mousemove", async (e) => {
     //if is ebook viewer event, take ebook window
@@ -35,9 +37,19 @@ export function enableMouseoverTextEvent(
     clientX = e.clientX;
     clientY = e.clientY;
 
-    if (new Date() - lastRunMouseover > textDetectTime) {
-      lastRunMouseover = new Date();
-      triggerMouseoverText(await getMouseoverText(clientX, clientY));
+    if (hasQueuedMouseover == false) {
+      if (new Date() - lastRunMouseover > textDetectTime) {
+        lastRunMouseover = new Date();
+        triggerMouseoverText(await getMouseoverText(clientX, clientY));
+      }
+      else {
+        hasQueuedMouseover = true;
+        setTimeout(async() => {
+          hasQueuedMouseover = false;
+          lastRunMouseover = new Date();
+          triggerMouseoverText(await getMouseoverText(clientX, clientY));
+        }, textDetectTime);
+      }
     }
   });
 }
