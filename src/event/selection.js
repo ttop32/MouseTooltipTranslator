@@ -2,7 +2,7 @@
  * Selection related functions
  */
 import $ from "jquery";
-import { debounce, throttle } from "lodash";
+import { debounce } from "lodash";
 import * as util from "/src/util";
 
 var _win;
