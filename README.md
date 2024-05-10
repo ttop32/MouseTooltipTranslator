@@ -152,6 +152,13 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/tofuthefirst">
+            <img src="https://avatars.githubusercontent.com/u/68274755?v=4" width="100;" alt="tofuthefirst"/>
+            <br />
+            <sub><b>Tofuthefirst</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/Blueberryy">
             <img src="https://avatars.githubusercontent.com/u/36592509?v=4" width="100;" alt="Blueberryy"/>
             <br />
@@ -164,15 +171,15 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Hoang Van Nhat</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/newmind">
             <img src="https://avatars.githubusercontent.com/u/379460?v=4" width="100;" alt="newmind"/>
             <br />
             <sub><b>JG</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/SFGFDSD">
             <img src="https://avatars.githubusercontent.com/u/162313212?v=4" width="100;" alt="SFGFDSD"/>
