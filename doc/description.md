@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.143
+  - Performance enhance on mouseover (contributed by skfh82)
+  - Fix pdf key conflict (contributed by tofuthefirst)
+  - Redesign Intro page (contributed by neoOpus)
 - 0.1.142
   - Fix css conflict on koreatimes (request by prvDevs)
 - 0.1.141
