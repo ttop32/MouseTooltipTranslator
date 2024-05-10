@@ -2,14 +2,14 @@
  * Selection related functions
  */
 import $ from "jquery";
-import { debounce, throttle } from "lodash";
+import { debounce } from "lodash";
 import * as util from "/src/util";
 
 var _win;
 var prevNoneSelect = false;
 export function enableSelectionEndEvent(
   _window = window,
-  textDetectTime = 0.7
+  textDetectTime = 0.1
 ) {
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
