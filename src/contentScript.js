@@ -691,6 +691,7 @@ function applyStyleSetting() {
       left: 0 !important;
       top: 0 !important;
       width: 1000px !important;
+      margin: 0px !important;
       margin-left: -500px !important;
       position: fixed !important;
       z-index: 100000200 !important;

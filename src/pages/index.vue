@@ -182,7 +182,7 @@ var voiceRateList = util.getRangeOption(0.5, 2.1, 0.1, 1);
 var voiceRepeatList = util.getRangeOption(1, 11);
 var tooltipBackgroundBlurList = util.getRangeOption(0, 21);
 var distanceList = util.getRangeOption(0, 41);
-var tooltipIntervalTimeList = util.getRangeOption(0.1, 2.1, 0.1, 1);
+var tooltipIntervalTimeList = util.getRangeOption(0.5, 2.1, 0.1, 1);
 
 var tooltipPositionList = {
   Follow: "follow",
