@@ -29,7 +29,6 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 - Process OCR when hold left shift and mouse over on image (ex manga)
 - Translate with Speech recognition
 
-
 # How to use
 - [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
 
