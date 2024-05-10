@@ -9,7 +9,7 @@ var _win;
 var prevNoneSelect = false;
 export function enableSelectionEndEvent(
   _window = window,
-  textDetectTime = 0.1
+  textDetectTime = 0.7
 ) {
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
