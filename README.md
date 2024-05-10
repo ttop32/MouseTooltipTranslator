@@ -3,7 +3,7 @@
 [![Chrome users](https://img.shields.io/chrome-web-store/users/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc)
 [![Chrome rate](https://img.shields.io/chrome-web-store/rating/hmigninkgibhdckiaphhmbgcghochdjc?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc)
 
-Mouseover Translate Any Language At Once - Chrome Extension 
+Mouseover Translate Any Language At Once - Chrome Extension  
 
 Download from [chrome web store](https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc) and [Edge Extension store](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
   
@@ -27,6 +27,8 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 - Support pdf to display translated tooltip using PDF.js
 - Support dual subtitles for youtube video
 - Process OCR when hold left shift and mouse over on image (ex manga)
+- Translate with Speech recognition
+
 
 # How to use
 - [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
