@@ -41,6 +41,9 @@ export function enableMouseoverTextEvent(
 
     triggerMouseoverTextWithDelay();
   });
+  window.addEventListener("scroll", (e) => {
+    triggerMouseoverTextWithDelay();
+  });
 }
 
 export const triggerMouseoverText = (mouseoverText) => {
