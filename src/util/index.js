@@ -89,7 +89,7 @@ export var defaultData = {
   ignoreCallbackOptionList: ["historyList"],
   popupCount: "0",
   langPriority: { auto: 9999999, null: 9999999 },
-  tooltipEventInterval: "0.2",
+  tooltipEventInterval: "0.3",
 
   cardPlayMeta: ["image"],
   cardTagSelected: [],
