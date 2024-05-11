@@ -461,7 +461,7 @@ var advancedTabData = {
       " (Experimental)",
     optionList: toggleList,
   },
-  tooltipIntervalTime: {
+  tooltipEventInterval: {
     description: browser.i18n.getMessage("Tooltip_Interval_Time"),
     optionList: tooltipIntervalTimeList,
   },

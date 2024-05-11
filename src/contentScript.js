@@ -78,13 +78,13 @@ var listenText = "";
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent(window, setting["tooltipIntervalTime"]);
+  enableMouseoverTextEvent(window, setting["tooltipEventInterval"]);
   addEventHandler("mouseoverText", stageTooltipTextHover);
 }
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window, setting["tooltipIntervalTime"]); //set mouse drag text selection event
+  enableSelectionEndEvent(window, setting["tooltipEventInterval"]); //set mouse drag text selection event
   addEventHandler("selectionEnd", stageTooltipTextSelect);
 }
 
