@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.144
+  - Fix ebook mouseover conflict
 - 0.1.143
   - Performance enhance on mouseover (contributed by skfh82)
   - Fix pdf key conflict (contributed by tofuthefirst)
