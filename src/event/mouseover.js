@@ -25,25 +25,33 @@ export function enableMouseoverTextEvent(
   }, textDetectTime);
 
   window.addEventListener("mousemove", async (e) => {
-    //if is ebook viewer event, take ebook window
-    if (e.ebookWindow) {
-      _win = e.ebookWindow;
-      _isIframe = true;
-      clientX = e.iframeX;
-      clientY = e.iframeY;
-    }
-    if (_isIframe == true) {
-      return;
-    }
-    //else record mouse xy
-    clientX = e.clientX;
-    clientY = e.clientY;
-
+    updateMouseoverXY(e);
     triggerMouseoverTextWithDelay();
   });
   window.addEventListener("scroll", (e) => {
     triggerMouseoverTextWithDelay();
   });
+}
+
+function updateMouseoverXY(e) {
+  updateEbookWindowPos(e);
+  updateWindowPos(e);
+}
+
+function updateEbookWindowPos(e) {
+  if (e.ebookWindow) {
+    _win = e.ebookWindow;
+    _isIframe = true;
+    clientX = e.iframeX;
+    clientY = e.iframeY;
+  }
+}
+function updateWindowPos(e) {
+  if (e.ebookWindow) {
+    return;
+  }
+  clientX = e.clientX;
+  clientY = e.clientY;
 }
 
 export const triggerMouseoverText = (mouseoverText) => {
@@ -72,6 +80,7 @@ async function getMouseoverText(x, y) {
   var mouseoverText = await getTextFromRange(range);
   textElement?.remove();
 
+  console.log(mouseoverText);
   return mouseoverText;
 }
 async function getTextFromRange(range) {
