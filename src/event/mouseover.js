@@ -47,7 +47,7 @@ function updateEbookWindowPos(e) {
   }
 }
 function updateWindowPos(e) {
-  if (e.ebookWindow) {
+  if (_isIframe) {
     return;
   }
   clientX = e.clientX;
