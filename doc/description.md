@@ -19,7 +19,7 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.144
+- 0.1.145
   - Fix log exposer  (request by KomodoLegend18 )
 - 0.1.144
   - Fix ebook mouseover conflict
