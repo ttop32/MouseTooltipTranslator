@@ -80,7 +80,6 @@ async function getMouseoverText(x, y) {
   var mouseoverText = await getTextFromRange(range);
   textElement?.remove();
 
-  console.log(mouseoverText);
   return mouseoverText;
 }
 async function getTextFromRange(range) {
