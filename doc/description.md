@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.144
+  - Fix log exposer  (request by KomodoLegend18 )
+- 0.1.144
   - Fix ebook mouseover conflict
 - 0.1.143
   - Performance enhance on mouseover (contributed by skfh82)
