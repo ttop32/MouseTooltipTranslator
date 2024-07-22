@@ -138,13 +138,13 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "คำอธิบายพจนานุกรมสั้นๆ เมื่อชี้เมาส์"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "การพูด"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "ภาษาสำหรับการจดจำเสียงพูด"
 	},
 	"Speech_Recognition_When": {
 		"message": "Speech Recognition When"
