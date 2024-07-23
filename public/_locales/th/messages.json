@@ -1,249 +1,249 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "หลัก                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "หน้าหลัก"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "น้องเมาส์นักแปลภาษา"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "แสดงข้อความ"
 	},
 	"Voice_When": {
 		"message": "Voice When"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "แปลเมื่อ"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "แปลจาก"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "แปลเป็น"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "นักแปล"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "ประเภทข้อความ"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "แปลภาษาพิมพ์"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "แปลภาษา OCR"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "ย้อนกลับแปลภาษา"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "กราฟิก                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "กราฟิก"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "ขนาดตัวอักษร Tooltip"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "ความกว้างของ Tooltip"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "ระยะห่างจากเมาส์"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "แอนิเมชั่น Tooltip"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "ตำแหน่ง Tooltip"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "จัดแนวข้อความ"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "พื้นหลังเบลอ Tooltip"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "เน้นข้อความที่แปล"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "สีตัวอักษร Tooltip"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "สีพื้นหลัง Tooltip"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "สีขอบ Tooltip"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "สีเน้นข้อความ"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "เสียง                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "เสียง"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "ระดับเสียง"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "ความเร็วเสียง"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "อ่านออกเสียงที่"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "เล่นเสียงซ้ำ"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "สำหรับเสียง "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "ขั้นสูง                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "ขั้นสูง"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "แปลการพิมพ์เมื่อ"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "OCR เมื่อใด"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "ตรวจจับคำบรรยาย"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "ตรวจจับ PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "หยุดคำบรรยายชั่วคราว Mouseover"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "คีย์สลับประเภทข้อความ Mouseover"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "ข้อความแหล่งที่มาข้อมูล Tooltip"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "ภาษาแหล่งที่มา Tooltip"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "การทับศัพท์ Tooltip"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "ช่วงเวลา Tooltip"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "คำอธิบายพจนานุกรมสั้นๆ เมื่อชี้เมาส์"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "การพูด"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "ภาษาสำหรับการจดจำเสียงพูด"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "ภาษาการรู้จำเสียงพูด"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "แผงเสียงแปลภาษา"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "เป้าหมายข้อความแผงเสียง"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "การขยายแผงเสียง"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "จัดตำแหน่งข้อความแผงเสียง"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "ขนาดแบบอักษรแหล่งที่มาของแผงเสียง"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "ขนาดตัวอักษรเป้าหมายของแผงเสียง"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "สีแบบอักษรแหล่งที่มาของแผงเสียง"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "สีแบบอักษรเป้าหมายของแผงเสียง"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "สีเส้นขอบแหล่งที่มาของแผงเสียง"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "สีเส้นขอบเป้าหมายของแผงเสียง"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "สีพื้นหลังของแผงเสียง"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "ยกเว้น                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "ยกเว้น"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "ยกเว้นภาษา"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "ยกเว้นเว็บไซต์"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "เกี่ยวกับ                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "วิธีใช้"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "ดูวิธีการใช้ส่วนขยายนี้"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "ตรวจสอบ PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "แปลภาษา PDF ในเครื่อง"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "E-book reader"
 	},
 	"Translate_local_ebook_file": {
 		"message": "Translate local ebook file"
 	},
 	"Twitter": {
-		"message": "Twitter"
+		"message": "ทวิตเตอร์"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "รีทวีตโพสต์บนทวิตเตอร์"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "หน้ารีวิว"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "แสดงความคิดเห็นเกี่ยวกับส่วนขยายนี้"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "ซอร์สโค้ด"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "ตรวจสอบซอร์สโค้ดใน GitHub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "นโยบายความเป็นส่วนตัว"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "นโยบายความเป็นส่วนตัวของผู้ใช้"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "แผงเสียง"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "แปลเสียง"
 	},
 	"Review______________________________________": {
 		"message": "Review                                      "
@@ -258,9 +258,9 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "เครื่องแปลคำแนะนำเครื่องมือเมาส์ with Text to speech"
+		"message": "น้องเมาส์นักแปลภาษา Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Translator แปลข้อความ MouseOver โดยใช้ Google Translate. Support OCR, TTS, manga translator & pdf translator."
+		"message": "น้องเมาส์นักแปลภาษา Mouse Tooltip Translator แปลข้อความ Mouse Over โดยใช้ Google Translate รองรับ OCR, TTS, โปรแกรมแปลมังงะ และโปรแกรมแปล PDF"
 	}
 }
