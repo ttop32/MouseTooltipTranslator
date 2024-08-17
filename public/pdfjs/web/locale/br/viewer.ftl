@@ -48,6 +48,7 @@ pdfjs-download-button =
 # Used in Firefox for Android as a label for the download button (“download” is a verb).
 # Length of the translation matters since we are in a mobile context, with limited screen estate.
 pdfjs-download-button-label = Pellgargañ
+pdfjs-bookmark-button-label = Pajenn a-vremañ
 
 ##  Secondary toolbar and context menu
 
@@ -207,6 +208,7 @@ pdfjs-find-next-button =
 pdfjs-find-next-button-label = War-lerc'h
 pdfjs-find-highlight-checkbox = Usskediñ pep tra
 pdfjs-find-match-case-checkbox-label = Teurel evezh ouzh ar pennlizherennoù
+pdfjs-find-match-diacritics-checkbox-label = Doujañ d’an tiredoù
 pdfjs-find-entire-word-checkbox-label = Gerioù a-bezh
 pdfjs-find-reached-top = Tizhet eo bet derou ar bajenn, kenderc'hel diouzh an diaz
 pdfjs-find-reached-bottom = Tizhet eo bet dibenn ar bajenn, kenderc'hel diouzh ar c'hrec'h
@@ -267,6 +269,9 @@ pdfjs-editor-free-text-button-label = Testenn
 pdfjs-editor-ink-button =
     .title = Tresañ
 pdfjs-editor-ink-button-label = Tresañ
+pdfjs-editor-stamp-button =
+    .title = Ouzhpennañ pe aozañ skeudennoù
+pdfjs-editor-stamp-button-label = Ouzhpennañ pe aozañ skeudennoù
 
 ## Remove button for the various kind of editor.
 
@@ -277,9 +282,21 @@ pdfjs-editor-ink-button-label = Tresañ
 pdfjs-editor-free-text-color-input = Liv
 pdfjs-editor-free-text-size-input = Ment
 pdfjs-editor-ink-color-input = Liv
+pdfjs-editor-ink-thickness-input = Tevder
+pdfjs-editor-ink-opacity-input = Boullder
+pdfjs-editor-stamp-add-image-button =
+    .title = Ouzhpennañ ur skeudenn
+pdfjs-editor-stamp-add-image-button-label = Ouzhpennañ ur skeudenn
+pdfjs-free-text =
+    .aria-label = Aozer testennoù
+pdfjs-ink =
+    .aria-label = Aozer tresoù
+pdfjs-ink-canvas =
+    .aria-label = Skeudenn bet krouet gant an implijer·ez
 
 ## Alt-text dialog
 
+pdfjs-editor-alt-text-add-description-label = Ouzhpennañ un deskrivadur
 pdfjs-editor-alt-text-cancel-button = Nullañ
 pdfjs-editor-alt-text-save-button = Enrollañ
 
@@ -288,4 +305,8 @@ pdfjs-editor-alt-text-save-button = Enrollañ
 
 
 ## Color picker
+
+
+## Show all highlights
+## This is a toggle button to show/hide all the highlights.
 

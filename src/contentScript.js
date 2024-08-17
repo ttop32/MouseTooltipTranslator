@@ -14,6 +14,8 @@ import {
 } from "/src/event/selection";
 import { enableMouseoverTextEvent } from "/src/event/mouseover";
 import * as util from "/src/util";
+import * as dom_util from "/src/util/dom";
+
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
 import { langListOpposite } from "/src/util/lang.js";
@@ -380,7 +382,7 @@ async function translateWriting() {
   // if is google doc do not check writing box
   if (
     !keyDownList[setting["keyDownTranslateWriting"]] ||
-    (!util.getFocusedWritingBox() && !util.isGoogleDoc())
+    (!dom_util.getFocusedWritingBox() && !util.isGoogleDoc())
   ) {
     return;
   }
@@ -434,7 +436,7 @@ async function makeNonEnglishTypingFinish() {
 }
 
 async function insertText(text) {
-  var writingBox = util.getFocusedWritingBox();
+  var writingBox = dom_util.getFocusedWritingBox();
   if (!text) {
     return;
   } else if (util.isGoogleDoc()) {
