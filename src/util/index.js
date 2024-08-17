@@ -1,4 +1,4 @@
-import $ from "jquery";
+
 import isUrl from "is-url";
 import _ from "lodash";
 import { iso6393To1 } from "iso-639-3";
@@ -576,13 +576,6 @@ export function getActiveElement(root = document) {
   }
 }
 
-export function getFocusedWritingBox() {
-  //check doucment input box focused
-  var writingBox = $(getActiveElement());
-  if (writingBox.is(writingField)) {
-    return writingBox.get(0);
-  }
-}
 
 export function isExtensionOnline() {
   return browser.runtime?.id;

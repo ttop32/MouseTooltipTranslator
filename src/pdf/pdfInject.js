@@ -2,6 +2,7 @@ import delay from "delay";
 import $ from "jquery";
 
 import * as util from "/src/util";
+import * as dom_util from "/src/util/dom";
 
 // <link rel="stylesheet" href="../../tippy.css" />
 // <script src="../../contentScript.js"></script>
@@ -131,7 +132,7 @@ async function addSpaceBetweenPdfText() {
 function addCustomKeystroke() {
   document.addEventListener("keydown", function onPress(evt) {
     //skip if text input running
-    if (util.getFocusedWritingBox()) {
+    if (dom_util.getFocusedWritingBox()) {
       return;
     }
     if (evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) {
