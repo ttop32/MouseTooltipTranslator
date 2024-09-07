@@ -407,7 +407,7 @@ async function translateWriting() {
 
 async function getWritingText() {
   // get current selected text,
-  if (hasSelection()) {
+  if (hasSelection() && getSelectionText()?.length>1) {
     return getSelectionText();
   }
   // if no select, select all to get all
@@ -443,23 +443,32 @@ async function insertText(text) {
     pasteTextGoogleDoc(text);
   } else if ($(writingBox).is("[spellcheck='true']")) {
     //for discord twitch
-    pasteTextInputBox(text);
-  } else if ($(writingBox).is("[data-gramm='false'], textarea")) {
-    //for bard , butterflies.ai
-    document.execCommand("insertText", false, text);
+    await pasteTextInputBox(text);
+    await pasteTextExecCommand(text);
   } else {
-    pasteTextInputBox(text);
-    await delay(10);
-    if (hasSelection()) {
-      document.execCommand("insertText", false, text);
-    }
-  }
+    //for bard , butterflies.ai
+    await pasteTextExecCommand(text);
+    await pasteTextInputBox(text);
+  } 
 }
 
-function pasteTextInputBox(text) {
+async function pasteTextExecCommand(text){
+  if (!hasSelection()) {
+    return;
+  }
+  document.execCommand("insertText", false, text);
+  await delay(300);
+}
+
+async function pasteTextInputBox(text) {
+  if (!hasSelection()) {
+    return;
+  }
   var ele = util.getActiveElement();
   pasteText(ele, text);
+  await delay(300);
 }
+
 function pasteTextGoogleDoc(text) {
   // https://github.com/matthewsot/docs-plus
   var el = document.getElementsByClassName("docs-texteventtarget-iframe")?.[0];
