@@ -1,27 +1,27 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "메인                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "메인"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "마우스 툴팁 번역기"
 	},
 	"Show_Tooltip_When": {
-		"message": "툴팁은 언제"
+		"message": "툴팁 표시:"
 	},
 	"Voice_When": {
-		"message": "TTS 는 언제"
+		"message": "음성 표시:"
 	},
 	"Translate_When": {
-		"message": "번역은 언제"
+		"message": "번역 표시:"
 	},
 	"Translate_From": {
-		"message": "번역은 어느 언어에서"
+		"message": "다음에서 번역:"
 	},
 	"Translate_Into": {
-		"message": "어떤 언어로 번역을"
+		"message": "다음으로 번역:"
 	},
 	"Translator_Engine": {
 		"message": "번역 엔진"
@@ -138,49 +138,49 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "툴팁 단어 사전"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "음성 알림"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "음성 인지 언어"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "음성 인지 시기"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "음성 패널 번역 언어"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "음성 패널 도착어 텍스트"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "음성 패널 여백"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "음성 패널 텍스트 정렬"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "음성 패널 출발어 글꼴 크기"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "음성 패널 도착어 글꼴 크기"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "음성 패널 출발어 글꼴 크기"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "음성 패널 도착어 글꼴색"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "음성 패널 출발어 가장자리 색"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "음성 패널 도착어 가장자리 색"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "음성 패널 출발어 배경색"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -240,10 +240,10 @@
 		"message": "User privacy policy"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "음성 패널"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "음성 번역"
 	},
 	"Review______________________________________": {
 		"message": "Review                                      "
@@ -255,13 +255,13 @@
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "커피                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy coffee"
+		"message": "커피 후원하기"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on my efforts"
+		"message": "노력을 지원해 주세요"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "
