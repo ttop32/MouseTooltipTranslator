@@ -90,10 +90,10 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/tofuthefirst">
-            <img src="https://avatars.githubusercontent.com/u/68274755?v=4" width="100;" alt="tofuthefirst"/>
+        <a href="https://github.com/lg28literconvectionmicrowaveoven">
+            <img src="https://avatars.githubusercontent.com/u/68274755?v=4" width="100;" alt="lg28literconvectionmicrowaveoven"/>
             <br />
-            <sub><b>Tofuthefirst</b></sub>
+            <sub><b>Lg28literconvectionmicrowaveoven</b></sub>
         </a>
     </td>
     <td align="center">
