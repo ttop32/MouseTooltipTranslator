@@ -26,9 +26,9 @@ export default {
   // props: ["title"],
   data() {
     return {
-      title: browser.i18n.getMessage("Review_this"),
-      subtitle: browser.i18n.getMessage("Developer_love_criticism"),
-      url: util.getReviewUrl(),
+      title: browser.i18n.getMessage("Buy_coffee"),
+      subtitle: browser.i18n.getMessage("Cheer_on_my_efforts"),
+      url: "https://buymeacoffee.com/ttop324",
     };
   },
   async mounted() {
@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
     isNewVisit() {
-      var count = Number(this.setting?.["popupCount"]);
+      var count = Number(this.setting?.["coffeeCount"]);
       return 1 < count && count < 7;
     },
   },
@@ -52,9 +52,9 @@ export default {
       this.$emit("click");
     },
     increasePopupCount(inc = 1) {
-      var count = Number(this.setting["popupCount"]);
+      var count = Number(this.setting["coffeeCount"]);
       if (count < 10) {
-        this.setting["popupCount"] = count + inc;
+        this.setting["coffeeCount"] = count + inc;
       }
     },
     finishPopupCount() {

@@ -101,6 +101,13 @@ export default {
           icon: "mdi-shield-account",
           color: "error",
         },
+        buyMeCoffee: {
+          name: browser.i18n.getMessage("Buy_coffee"),
+          sub_name: browser.i18n.getMessage("Cheer_on_my_efforts"),
+          url: "https://buymeacoffee.com/ttop324",
+          icon: "mdi-coffee-to-go",
+          color: "brown",
+        },        
       },
     };
   },
