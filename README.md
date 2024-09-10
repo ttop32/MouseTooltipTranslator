@@ -34,8 +34,6 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 # Change Log
 - [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
 
-
-
 # Build yourself to install
 
 1. Install node js, <https://nodejs.org/en/> , node 18
@@ -52,8 +50,6 @@ npm run build        // or 'npm run watch' for developing
 4. Open chrome browser and goto chrome://extensions/
 5. Turn on top right corner developer mode
 6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
-
-
 
 # Language locale
 - We are looking for any locale contributor. Feel free to make any pull request on bellow path.  
