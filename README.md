@@ -227,6 +227,14 @@ npm run build        // or 'npm run watch' for developing
       <br /><sub><b><code title="Thai">th</code></b></sub>
     </td>
     <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/Mirnyang"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/14153733/medium/9a2fe282298d66026016c71086cc6d6e.png" />
+        <br />
+        <sub><b>미르냥 (Mirnyang)</b></sub></a>
+      <br />
+      <sub><b>83 words</b></sub>
+      <br /><sub><b><code title="Korean">ko</code></b></sub>
+    </td>
+    <td align="center" valign="top">
       <a href="https://crowdin.com/profile/nejdetacar"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/12677379/medium/a652b6c7e95226407d84e96ea1a2e86f.jpg" />
         <br />
         <sub><b>Nejdet ACAR (nejdetacar)</b></sub></a>
@@ -242,6 +250,8 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>13 words</b></sub>
       <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/TTT01"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16469337/medium/6ff0dcfb321853011aba8cfc4abcdc82.png" />
         <br />
