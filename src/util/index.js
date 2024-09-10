@@ -88,6 +88,7 @@ export var defaultData = {
   historyRecordActions: [],
   ignoreCallbackOptionList: ["historyList"],
   popupCount: "0",
+  coffeeCount: "0",  
   langPriority: { auto: 9999999, null: 9999999 },
   tooltipEventInterval: "0.3",
 

@@ -117,6 +117,11 @@ i18List = [
     "Review this",
     "Developer love criticism",
 
+    "Coffee                                      ",
+    "Buy coffee",
+    "Cheer on my efforts",
+
+
 
     "Title                                      ",
 
