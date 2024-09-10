@@ -84,13 +84,13 @@
 		"message": "VOICE                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "VOZ"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Volume de Voz"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Velocidade de Voz"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"
@@ -105,19 +105,19 @@
 		"message": "ADVANCED                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "AVANÇADO"
 	},
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "OCR Quando"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "Detectar Legenda"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "Detectar PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
@@ -141,10 +141,10 @@
 		"message": "Tooltip Word Dictionary"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "DISCURSO"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "Reconhecimento de Fala do Discurso"
 	},
 	"Speech_Recognition_When": {
 		"message": "Speech Recognition When"
@@ -153,19 +153,19 @@
 		"message": "Voice Panel Translate Language"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "\nAlvo de Texto do Painel de Voz"
 	},
 	"Voice_Panel_Padding": {
 		"message": "Voice Panel Padding"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "Alinhamento de Texto do Painel de Voz"
 	},
 	"Voice_Panel_Source_Font_Size": {
 		"message": "Voice Panel Source Font Size"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "Tamanho da Fonte Alvo do Painel de Voz"
 	},
 	"Voice_Panel_Source_Font_Color": {
 		"message": "Voice Panel Source Font Color"
@@ -183,34 +183,34 @@
 		"message": "Voice Panel Background Color"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "EXCLUIR                                   "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "EXCLUIR"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Excluir Idioma"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Excluir Website"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "Sobre                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Como usar"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "Cheque como usar essa extensão"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "Visualizador de PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "Traduza arquivo PDF local"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "Leitor de Ebook"
 	},
 	"Translate_local_ebook_file": {
 		"message": "Translate local ebook file"
@@ -219,7 +219,7 @@
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "Retweet a postagem do twitter"
 	},
 	"Review_Page": {
 		"message": "Review Page"
@@ -228,10 +228,10 @@
 		"message": "Comment on this extension"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "Código fonte"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "Cheque o código fonte no github"
 	},
 	"Privacy_Policy": {
 		"message": "Privacy Policy"
@@ -240,25 +240,25 @@
 		"message": "User privacy policy"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "Painel de Voz"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "Traduzir Voz"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "Revisão                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "Revise isso"
 	},
 	"Developer_love_criticism": {
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "Café"
 	},
 	"Buy_coffee": {
-		"message": "Buy coffee"
+		"message": "Comprar café"
 	},
 	"Cheer_on_my_efforts": {
 		"message": "Cheer on my efforts"
