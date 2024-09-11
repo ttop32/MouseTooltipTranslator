@@ -1,87 +1,87 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "Principal                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "Principal"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": ""
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "Mostrar Dica Quando"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Voz Quando"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Traduzir Quando"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Traduzir De"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Traduzir Para"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Mecanismo de Tradução"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Tipo de Texto ao Passar o Mouse"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Idioma de Escrita"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "Idioma de OCR"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Idioma de Tradução Reversa"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "GRÁFICO                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "GRÁFICO"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Tamanho da Fonte da Dica"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Largura da Dica"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Distância da Dica"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "Animação da Dica"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Posição da Dica"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Alinhamento do Texto da Dica"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Desfoque do Fundo da Dica"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Destaque do Texto ao Passar o Mouse"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Cor da Fonte da Dica"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Cor do Fundo da Dica"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Cor da Borda da Dica"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Cor do Texto Destacado ao Passar o Mouse"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "VOZ                                      "
 	},
 	"VOICE": {
 		"message": "VOZ"
@@ -93,22 +93,22 @@
 		"message": "Velocidade de Voz"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Voz alvo"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Repetir Voz"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Voz para "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "AVANÇADO                                      "
 	},
 	"ADVANCED": {
 		"message": "AVANÇADO"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Traduzir Escrita Quando"
 	},
 	"OCR_When": {
 		"message": "OCR Quando"
@@ -120,25 +120,25 @@
 		"message": "Detectar PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "Legenda de Pausa ao Passar o Mouse"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Tipo de Texto ao Trocar de Chave ao Passar o Mouse"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "Texto de Origem da Fonte de Dica"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "Idioma de Origem da Dica"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "Transliteração da Informação da Dica"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "Intervalo de Tempo da Dica"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Dica de Dicionário de Palavras"
+		"message": ""
 	},
 	"SPEECH": {
 		"message": "DISCURSO"
@@ -147,40 +147,40 @@
 		"message": "Reconhecimento de Fala do Discurso"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Reconhecimento de fala quando"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "Idioma de tradução do painel de voz"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "\nAlvo de Texto do Painel de Voz"
+		"message": "Texto destino do painel de voz"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "Preenchimento do painel de voz"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Alinhamento de Texto do Painel de Voz"
+		"message": "Alinhamento de texto do painel de voz"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "Tamanho da fonte de origem do painel de voz"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Tamanho da Fonte Alvo do Painel de Voz"
+		"message": "Tamanho da fonte destino do painel de voz"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Cor da fonte de origem do painel de voz"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Cor da fonte do destino do painel de voz"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Cor da fonte da borda do painel de voz"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Cor da fonte da borda do destino do painel de voz"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Cor do fundo do painel de voz"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUIR                                   "
@@ -192,7 +192,7 @@
 		"message": "Excluir Idioma"
 	},
 	"Exclude_Website": {
-		"message": "Excluir Website"
+		"message": ""
 	},
 	"About______________________________________": {
 		"message": "Sobre                                      "
@@ -210,34 +210,34 @@
 		"message": "Traduza arquivo PDF local"
 	},
 	"Ebook_Reader": {
-		"message": "Leitor de Ebook"
+		"message": "Leitor de ebook"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "Traduzir arquivo local de ebook"
 	},
 	"Twitter": {
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet a postagem do twitter"
+		"message": "Respostar a postagem do Twitter"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "Revisão da Página"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "Comentar nessa extensão"
 	},
 	"Source_code": {
-		"message": "Código fonte"
+		"message": "Código-fonte"
 	},
 	"Check_source_code_in_github": {
-		"message": "Cheque o código fonte no github"
+		"message": "Checar o código fonte no github"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "Política de Privacidade"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "Política de Privacidade do usuário"
 	},
 	"Voice_Panel": {
 		"message": "Painel de Voz"
@@ -252,7 +252,7 @@
 		"message": "Revise isso"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": ""
 	},
 	"Coffee______________________________________": {
 		"message": "Café"
@@ -261,15 +261,15 @@
 		"message": "Comprar café"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on my efforts"
+		"message": "Elogio aos meus esforços"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Título                                      "
 	},
 	"appName": {
-		"message": "Tradutor da dica de ferramenta do mouse"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
-		"message": "Mouse Tooltip Tradutor Traduzir Texto do MouseOver usando o Google Translate. Support OCR, TTS, manga translator & pdf translator."
+		"message": "Tradução de Texto usando google tradutor do Mouse Tooltip Translator. Suporte ao OCR, TTS, tradutor de manga & tradutor de PDF."
 	}
 }
