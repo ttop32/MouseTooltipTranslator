@@ -189,7 +189,7 @@ def getI18IdList():
 def addI18Description(jsonDict,):
     idList = getI18IdList()
     for (i18, i18Id) in zip(i18List, idList):
-        if i18Id not in jsonDict:
+        if i18Id not in jsonDict or not jsonDict[i18Id]["message"]:
             jsonDict[i18Id] = {"message": i18}
 
 
