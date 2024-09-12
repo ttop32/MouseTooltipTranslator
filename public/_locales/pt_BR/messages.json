@@ -6,7 +6,7 @@
 		"message": "Principal"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": ""
 	},
 	"Show_Tooltip_When": {
 		"message": "Mostrar Dica Quando"
@@ -138,7 +138,7 @@
 		"message": "Intervalo de Tempo da Dica"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": ""
 	},
 	"SPEECH": {
 		"message": "DISCURSO"
@@ -192,7 +192,7 @@
 		"message": "Excluir Idioma"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": ""
 	},
 	"About______________________________________": {
 		"message": "Sobre                                      "
@@ -252,16 +252,16 @@
 		"message": "Revise isso"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": ""
 	},
 	"Coffee______________________________________": {
 		"message": "Café"
 	},
 	"Buy_coffee": {
-		"message": "Comprar café"
+		"message": "Buy dev coffee"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Elogio aos meus esforços"
+		"message": "Cheer on dev efforts"
 	},
 	"Title______________________________________": {
 		"message": "Título                                      "
