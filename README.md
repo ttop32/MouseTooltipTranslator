@@ -31,9 +31,6 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 # How to use
 - [How to use](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use)
 
-# Change Log
-- [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
-
 # Build yourself to install
 
 1. Install node js, <https://nodejs.org/en/> , node 18
@@ -205,7 +202,12 @@ npm run build        // or 'npm run watch' for developing
   </tr>
 </table><a href="https://crowdin.com/project/mousetooltiptranslator" target="_blank">Translate in Crowdin 🚀</a>
 <!-- CROWDIN-CONTRIBUTORS-END -->
+  
 - We are looking for any localization contributor. Feel free to make contribution on crowdin.  
+
+
+# Change Log
+- [Change Log](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log)
 
 # Privacy policy
 - [Privacy policy](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md)
