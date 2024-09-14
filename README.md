@@ -51,14 +51,7 @@ npm run build        // or 'npm run watch' for developing
 5. Turn on top right corner developer mode
 6. Open the folder (MouseTooltipTranslator/build) as unpacked extension folder
 
-# Language locale
-- We are looking for any locale contributor. Feel free to make any pull request on bellow path.  
-  - [Locale](https://github.com/ttop32/MouseTooltipTranslator/tree/main/public/_locales)  
-- [crowdin](https://crowdin.com/project/mousetooltiptranslator) 
-- User can change this extension user interface Language by change browser UI language from   
-  - [chrome://settings/languages](chrome://settings/languages)  
- 
-  
+
 # Contributors
 <!-- readme: contributors -start -->
 <table>
@@ -212,7 +205,7 @@ npm run build        // or 'npm run watch' for developing
   </tr>
 </table><a href="https://crowdin.com/project/mousetooltiptranslator" target="_blank">Translate in Crowdin 🚀</a>
 <!-- CROWDIN-CONTRIBUTORS-END -->
-
+- We are looking for any localization contributor. Feel free to make contribution on crowdin.  
 
 # Privacy policy
 - [Privacy policy](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md)
