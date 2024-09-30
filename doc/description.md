@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.149
+  - Fix pdf ui space conflict
 - 0.1.148
   - Korean locale (contributed by 미르냥 (Mirnyang))
   - Brazilian locale (contributed by helimoreira and Eduardo_91)
