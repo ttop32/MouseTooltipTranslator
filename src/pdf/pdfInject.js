@@ -13,6 +13,7 @@ import * as dom_util from "/src/util/dom";
 initPdf();
 
 async function initPdf() {
+  await dom_util.waitJquery(); //wait jquery load
   checkLocalFileUrl(); // warn no permission if file url
   checkLocalFileType();
   checkPdfError();
