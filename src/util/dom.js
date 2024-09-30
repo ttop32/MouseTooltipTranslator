@@ -10,3 +10,14 @@ export function getFocusedWritingBox() {
         return writingBox.get(0);
     }
 }
+
+
+
+export function waitJquery() {
+    return new Promise(async (resolve, reject) => {
+      $(() => {
+        resolve();
+      });
+    });
+  }
+  

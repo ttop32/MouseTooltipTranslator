@@ -62,7 +62,7 @@ var listenText = "";
     if (checkExcludeUrl()) {
       return;
     }
-    await waitJquery(); //wait jquery load
+    await dom_util.waitJquery(); //wait jquery load
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
@@ -637,14 +637,6 @@ function addBackgroundListener() {
   });
 }
 
-function waitJquery() {
-  return new Promise(async (resolve, reject) => {
-    $(() => {
-      resolve();
-    });
-  });
-}
-
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
   return matchUrl(url, setting["websiteExcludeList"]);
@@ -855,6 +847,7 @@ function openPdfIframe(url) {
       border: "none",
       height: "100vh",
       width: "100vw",
+      overflow: "hidden"
     },
   }).appendTo("body");
 }
