@@ -6,7 +6,7 @@
 		"message": "MAIN"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "Переводчик контекста мышью"
 	},
 	"Show_Tooltip_When": {
 		"message": "Show Tooltip When"
@@ -147,10 +147,10 @@
 		"message": "Speech Recognition Language"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Распознавание речи когда"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "Reverse Translate Language"
 	},
 	"Voice_Panel_Text_Target": {
 		"message": "Voice Panel Text Target"
