@@ -9,7 +9,7 @@
 		"message": "Переводчик контекста мышью"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "Показать подсказку когда"
 	},
 	"Voice_When": {
 		"message": "Voice When"
@@ -33,7 +33,7 @@
 		"message": "Writing Language"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "Язык OCR"
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
@@ -81,7 +81,7 @@
 		"message": "Mouseover Text Highlight Color"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "ГОЛОВА                                      "
 	},
 	"VOICE": {
 		"message": "VOICE"
@@ -114,10 +114,10 @@
 		"message": "OCR When"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "Определять субтитры"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "Определить PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
@@ -153,7 +153,7 @@
 		"message": "Reverse Translate Language"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "Цель текста в голосовой панели"
 	},
 	"Voice_Panel_Padding": {
 		"message": "Voice Panel Padding"
