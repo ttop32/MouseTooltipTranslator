@@ -20,16 +20,18 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.149
+  - Russian localization (contributed by )
+- 0.1.149
   - Fix pdf ui space conflict
 - 0.1.148
-  - Korean locale (contributed by 미르냥 (Mirnyang))
-  - Brazilian locale (contributed by helimoreira and Eduardo_91)
+  - Korean localization (contributed by 미르냥 (Mirnyang))
+  - Brazilian localization (contributed by helimoreira and Eduardo_91)
 - 0.1.147
   - Fix writing (request by Enlight432 )
   - add buy me coffee page
 - 0.1.146
   - Fix youtube subtitle jquery conflict  (request by anh5983 )
-  - Thai locale (contributed by s-upakit)
+  - Thai localization (contributed by s-upakit)
 - 0.1.145
   - Fix log exposer  (request by KomodoLegend18 )
 - 0.1.144
@@ -61,7 +63,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.134
   - Fix tooltip container conflict
 - 0.1.134
-  - English AU locale (contributed by CreeperYeeter2)
+  - English AU localization (contributed by CreeperYeeter2)
   - fix RTL UI
   - fix edge select conflict
 - 0.1.133
@@ -76,9 +78,9 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.129
   - fix korea ocr manga lang size
 - 0.1.128
-  - Spanish locale (contributed by di4m0nds)
-  - Turkish locale (contributed by Nejdet ACAR)
-  - China locale (contributed by SFGFDSD)
+  - Spanish localization (contributed by di4m0nds)
+  - Turkish localization (contributed by Nejdet ACAR)
+  - China localization (contributed by SFGFDSD)
   - add flashcard
   - swap google translate default engine
 - 0.1.127
@@ -95,7 +97,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.122
   - add text detect time option (request by 나정휘 (Jn))
 - 0.1.121
-  - Korea locale (contributed by newmind)
+  - Korea localization (contributed by newmind)
 - 0.1.120
   - fix bard text writing  (request by Enlight432)
 - 0.1.119
@@ -175,16 +177,16 @@ English, Russian, Japanese, Chinese and so on
   - add voice repeat
 - 0.1.87
   - fix shadow dom performance issue
-  - Arabic locale (contributed by neoOpus)
-  - indonesian locale (contributed by ardasatata)
+  - Arabic localization (contributed by neoOpus)
+  - indonesian localization (contributed by ardasatata)
 - 0.1.86
   - support ebook using foliate-js
-  - french locale (contributed by neoOpus)
+  - french localization (contributed by neoOpus)
 - 0.1.85
   - fix text editor conflict (request by ultrabave) 
 - 0.1.84
   - fix gmail writing translator conflict
-  - hebrew locale (contributed by netanel123123)
+  - hebrew localization (contributed by netanel123123)
   - detect youtube player caption on/off (request by 웃으며살아요)
   - add esc key to stop tts (request by 나야브)
   - use vue3
