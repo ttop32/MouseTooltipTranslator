@@ -118,8 +118,8 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/netanel123123">
-            <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanel123123"/>
+        <a href="https://github.com/netanelavi">
+            <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanelavi"/>
             <br />
             <sub><b>Null</b></sub>
         </a>
