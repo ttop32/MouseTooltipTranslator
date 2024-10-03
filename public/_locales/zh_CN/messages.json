@@ -138,49 +138,49 @@
 		"message": "工具提示间隔时间"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "工具提示词典"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "语音"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "语音识别语言"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "何时进行语音识别"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "语音面板翻译语言"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "语音面板文本目标"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "语音面板填充"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "语音面板文本对齐"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "语音面板源字体大小"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "语音面板目标字体大小"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "语音面板源字体颜色"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "语音面板目标字体颜色"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "语音面板源边框颜色"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "语音面板目标边框颜色"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "语音面板背景颜色"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "排除                                      "
@@ -240,10 +240,10 @@
 		"message": "用户隐私政策"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "语音面板"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "翻译语音"
 	},
 	"Review______________________________________": {
 		"message": "评论                                      "
@@ -255,21 +255,21 @@
 		"message": "开发者欢迎批评"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "咖啡                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy dev coffee"
+		"message": "为开发者买咖啡"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "为开发者的努力加油"
 	},
 	"Title______________________________________": {
 		"message": "标题                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "鼠标工具提示翻译器 - PDF 和 YouTube 双字幕"
 	},
 	"appDesc": {
-		"message": "鼠标工具提示转换器使用 Google Translate 翻译鼠标文本。支持 OCR、TTS、漫画翻译和 PDF 翻译。"
+		"message": "鼠标工具提示转换器使用谷歌翻译翻译鼠标悬停文本。支持 OCR、TTS、漫画翻译和 PDF 翻译。"
 	}
 }
