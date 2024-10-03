@@ -1,275 +1,275 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "主要                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "主要"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "滑鼠工具提示翻譯器"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "何時顯示工具提示"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "何時語音"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "何時翻譯"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "翻譯自"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "翻譯成"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "翻譯引擎"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "滑鼠懸停文本類型"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "寫作語言"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "OCR 語言"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "逆向翻譯語言"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "圖形                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "圖形"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "工具提示字體大小"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "工具提示寬度"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "工具提示距離"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "工具提示動畫"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "工具提示位置"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "工具提示文本對齊"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "工具提示背景模糊"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "滑鼠懸停高亮文本"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "工具提示字體顏色"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "工具提示背景顏色"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "工具提示邊框顏色"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "滑鼠懸停文本高亮顏色"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "語音                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "語音"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "語音音量"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "語音速度"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "語音目標"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "語音重複"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "語音用於 "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "進階                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "進階"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "何時翻譯書寫"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "何時進行OCR"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "檢測字幕"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "檢測PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "滑鼠懸停暫停字幕"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "滑鼠懸停文本類型切換鍵"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "工具提示信息來源文本"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "工具提示信息來源語言"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "工具提示信息音譯"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "工具提示間隔時間"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "工具提示詞典"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "語音識別"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "語音識別語言"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "何時進行語音識別"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "語音面板翻譯語言"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "語音面板文本目標"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "語音面板填充"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "語音面板文本對齊"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "語音面板來源字體大小"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "語音面板目標字體大小"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "語音面板來源字體顏色"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "語音面板目標字體顏色"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "語音面板來源邊框顏色"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "語音面板目標邊框顏色"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "語音面板背景顏色"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "排除                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "排除"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "排除語言"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "排除網站"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "關於                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "如何使用"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "查看如何使用此擴展"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "PDF 閱讀器"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "翻譯本地 PDF 文件"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "電子書閱讀器"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "翻譯本地電子書文件"
 	},
 	"Twitter": {
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "轉發 Twitter 帖子"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "評論頁面"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "評論此擴展"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "源代碼"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "在 GitHub 上查看源代碼"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "隱私政策"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "用戶隱私政策"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "語音面板"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "翻譯語音"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "評論                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "評論此"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "開發者歡迎批評"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "咖啡                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy dev coffee"
+		"message": "為開發者買咖啡"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "為開發者的努力加油"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "標題                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "滑鼠工具提示翻譯器 - PDF 和 YouTube 雙字幕"
 	},
 	"appDesc": {
-		"message": "鼠標工具提示轉換器使用Google Translate翻譯鼠標文本. Support OCR, TTS, manga translator & pdf translator."
+		"message": "滑鼠工具提示轉換器使用谷歌翻譯翻譯滑鼠懸停文本。支持 OCR、TTS、漫畫翻譯和 PDF 翻譯。"
 	}
 }
