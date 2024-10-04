@@ -14,7 +14,7 @@ import time
 translator = Translator()
 
 
-appName = "Mouse Tooltip Translator"
+appName = "Mouse Tooltip Translator - PDF & Youtube dual subs"
 appDesc = "Mouse Tooltip Translator translate mouseover text using google translate"
 
 localeList = ['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_AU', 'en_GB', 'en_US', 'es', 'es_419', 'et', 'fa', 'fi', 'fil', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it',
@@ -172,8 +172,7 @@ def translate(text, lang):
 
 
 def addBasicDescription(jsonDict, locale):
-    if "appName" not in jsonDict:
-        jsonDict["appName"] = {"message": translate(appName, locale)}
+    jsonDict["appName"] = {"message": appName}
 
     if "appDesc" not in jsonDict:
         jsonDict["appDesc"] = {"message": translate(appDesc, locale)}
