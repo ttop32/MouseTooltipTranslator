@@ -2,9 +2,12 @@
   <popupWindow>
     <!-- top nav bar -->
     <v-toolbar color="blue" dark dense>
-      <v-toolbar-title Class="text-subtitle-1 ml-3 font-weight-bold">
-        <div>Mouse Tooltip Translator</div>
-      </v-toolbar-title>
+      <v-col cols="7">
+        <v-toolbar-title Class="text-subtitle-1 ml-3 font-weight-bold">
+        <div>{{ remainSettingDesc["appName"] }}</div>
+        </v-toolbar-title>
+      </v-col>
+
       <v-spacer></v-spacer>
 
       <v-btn
