@@ -19,8 +19,12 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.149
-  - Russian localization (contributed by )
+- 0.1.152
+  - fix web_accessible_resources pdf conflict
+- 0.1.151
+  - add chinese ( contributed by SFGFDSD )
+- 0.1.150
+  - Russian localization (contributed by ID Hunter (ASAP) )
 - 0.1.149
   - Fix pdf ui space conflict
 - 0.1.148
