@@ -376,44 +376,84 @@ function isPointInAnyRect(x, y, rects) {
 
 //firefox word break ====================================
 async function expandRangeWithSeg(range, type = "word") {
-  var { x, y } = getCenterXY(range); //mouse in word rect
-  var rangeContainer = range.cloneRange();
-  expandRange(rangeContainer, "container");
-  let textNode =
-    rangeContainer.commonAncestorContainer.parentElement.childNodes[0];
+  const { x, y } = getCenterXY(range);
+  var rangeContainer = getContainerRange(range);
+  const textNode = rangeContainer.commonAncestorContainer;
+  // var text = textNode.innerText;
+  var text = getNodeText(textNode);
+  var wordSegInfo = await getWordSegmentInfo(text, type);
+  const wordRanges = createWordRanges(wordSegInfo, textNode);
+  const currentWordNode = wordRanges.find((range) =>
+    isPointInRange(range, x, y)
+  );
+  if (!currentWordNode) {
+    return;
+  }
+  setRangeToCurrentWordNode(range, currentWordNode);
+}
 
-  var text = rangeContainer.toString();
-  var lang = await util.detectLangBrowser(text);
-  var segmenter = new Intl.Segmenter(lang, { granularity: type });
-  var wordsMeta = [...segmenter.segment(text)];
+function isPointInRange(range, x, y) {
+  const rects = range.getClientRects();
 
-  // var offset = 0;
-  var wordRanges = wordsMeta
-    .map((wordMeta) => {
-      var wordRange = document.createRange();
-      var word = wordMeta.segment;
-      var selectedNode1 = selectNode(textNode, wordMeta.index);
-      var selectedNode2 = selectNode(textNode, wordMeta.index + word.length);
+  for (const rect of rects) {
+    if (
+      x >= rect.left &&
+      x <= rect.right &&
+      y >= rect.top &&
+      y <= rect.bottom
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function getWordSegmentInfo(text, type) {
+  const segmenter = new Intl.Segmenter("en-US", { granularity: type });
+  const wordsMeta = [...segmenter.segment(text)];
+  return wordsMeta;
+}
+
+function getContainerRange(range) {
+  const containerRange = range.cloneRange();
+  expandRange(containerRange, "container");
+  return containerRange;
+}
+
+function createWordRanges(wordSegInfo, textNode) {
+  return wordSegInfo.map((wordMeta) => {
+    const wordRange = document.createRange();
+    var index = wordMeta.index;
+    var word = wordMeta.segment;
+    var wordLen = word.length;
+
+    try {
+      const selectedNode1 = selectNode(textNode, index);
+      const selectedNode2 = selectNode(textNode, index + wordLen);
+
       wordRange.setStart(selectedNode1.node, selectedNode1.index);
       wordRange.setEnd(selectedNode2.node, selectedNode2.index);
-      return wordRange;
-    })
-    .filter((range) => checkXYInElement(range, x, y));
-
-  var currentWordNode = wordRanges[0];
-  if (currentWordNode) {
-    range.setStart(currentWordNode.startContainer, currentWordNode.startOffset);
-    range.setEnd(currentWordNode.endContainer, currentWordNode.endOffset);
-  }
+    } catch (error) {
+      console.log(error);
+    }
+    return wordRange;
+  });
 }
+
+function setRangeToCurrentWordNode(range, currentWordNode) {
+  range.setStart(currentWordNode.startContainer, currentWordNode.startOffset);
+  range.setEnd(currentWordNode.endContainer, currentWordNode.endOffset);
+}
+
 function selectNode(node, offset) {
-  if (node.nodeType == Node.TEXT_NODE) {
+  if (node.nodeType === Node.TEXT_NODE) {
     return { node, index: offset };
   }
 
-  var prevLen = 0;
+  let prevLen = 0;
   for (const child of node.childNodes) {
-    var len = getNodeLength(child);
+    const len = getNodeLength(child);
 
     if (prevLen <= offset && offset <= prevLen + len) {
       return selectNode(child, offset - prevLen);
@@ -422,15 +462,25 @@ function selectNode(node, offset) {
   }
   return { node, index: offset };
 }
+
 function getNodeLength(ele) {
-  if (ele.nodeType == Node.TEXT_NODE) {
-    return ele.length;
+  if (ele.nodeType === Node.TEXT_NODE) {
+    return ele?.textContent?.length || 0;
   }
-  var len = 0;
-  for (const child of ele.childNodes) {
-    len += getNodeLength(child);
+  return Array.from(ele.childNodes).reduce(
+    (len, child) => len + getNodeLength(child),
+    0
+  );
+}
+
+function getNodeText(ele) {
+  if (ele.nodeType === Node.TEXT_NODE) {
+    return ele.textContent || "";
   }
-  return len;
+  return Array.from(ele.childNodes).reduce(
+    (text, child) => text + getNodeText(child),
+    ""
+  );
 }
 
 function getCenterXY(ele) {
