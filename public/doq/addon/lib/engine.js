@@ -35,11 +35,12 @@ function addColorScheme(scheme) {
   DOQ.colorSchemes.push(scheme);
 }
 
-/* Wrap canvas drawing */
-function wrapCanvas() {
-  const checks = style => checkFlags() && checkStyle(style);
+/* Wrap canvas drawing and rendering */
+function wrapCanvas(disableGPU = false) {
   const ctxp = CanvasRenderingContext2D.prototype;
   ctxp.origFillRect = ctxp.fillRect;
+  ctxp.origDrawImage = ctxp.drawImage;
+  const checks = style => checkFlags() && checkStyle(style);
 
   ["fill", "stroke"].forEach(f => {
     ["", "Rect"].forEach(e => {
@@ -48,9 +49,22 @@ function wrapCanvas() {
     wrapSet(ctxp, f + "Style", getCanvasStyle, checks);
   });
   ctxp.fillText = wrapAPI(ctxp.fillText, updateTextStyle, checks, "fillStyle");
-
-  ctxp.origDrawImage = ctxp.drawImage;
   ctxp.drawImage = wrapAPI(ctxp.drawImage, setCanvasCompOp, checkFlags);
+  wrapContext(disableGPU);
+}
+
+/* Wrap canvas context to disable GPU accelerated rendering;
+ * can speed up getImageData() operations in some browsers */
+function wrapContext(disable) {
+  if (!disable) {
+    return;
+  }
+  const cvsp = HTMLCanvasElement.prototype;
+  const origGetContext = cvsp.getContext;
+  cvsp.getContext = function(type, attrs) {
+    attrs = Object.assign(attrs ?? {}, { willReadFrequently: true });
+    return origGetContext.call(this, type, attrs);
+  };
 }
 
 /* Method and setter wrapper closures */
@@ -97,7 +111,7 @@ function checkStyle(style) {
   return typeof(style) === "string";        /* is not gradient/pattern */
 }
 
-
+/* Get style from cache, calculate if not present */
 function getCanvasStyle(style, bg) {
   style = new Color(style);
   const key = style.hex + (bg?.hex || "");

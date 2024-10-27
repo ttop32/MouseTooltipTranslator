@@ -1,19 +1,24 @@
 
-import { DOQ } from "./config.js";
+import { DOQ, filterRegEx } from "./config.js";
 import { updateReaderColors } from "./reader.js";
-import { readOptions, readPreferences, updatePreference } from "./prefs.js";
+import { readPreferences, updatePreference } from "./prefs.js";
 
 function updateReaderState(e) {
-  const options = readOptions();
+  const { config, options } = DOQ;
   const prefs = readPreferences();
-  Object.assign(DOQ.flags, prefs.flags);
 
-  const { config } = DOQ;
+  Object.assign(DOQ.flags, prefs.flags);
   config.imageToggle.checked = prefs.flags.imagesOn;
   config.shapeToggle.checked = prefs.flags.shapesOn;
   config.schemeSelector.selectedIndex = prefs.scheme;
 
-  if (!e || options.dynamicTheme) {
+  const { dynamicTheme, filterCSS } = options;
+  if (filterRegEx.test(filterCSS) && CSS.supports("filter", filterCSS)) {
+    config.docStyle.setProperty("--filter-css", filterCSS);
+  } else if (filterCSS !== "") {
+    console.warn(`doq: unsupported filter property: "${filterCSS}"`);
+  }
+  if (!e || dynamicTheme) {
     updateColorScheme(e);
   }
 }
@@ -50,8 +55,8 @@ function refreshTonePicker(picker, scheme) {
   scheme.tones.slice(0, 3).forEach(tone => {
     picker.appendChild(cloneWidget(toneWgt, null, null, i++, tone));
   });
-  picker.appendChild(cloneWidget(toneWgt, "invertTone", "Invert", i));
-  picker.lastElementChild.classList.add("invert");
+  picker.appendChild(cloneWidget(toneWgt, "filterTone", "Filter", i));
+  picker.lastElementChild.classList.add("filter");
 }
 
 function cloneWidget(template, id, title, value, tone) {

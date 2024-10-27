@@ -1,10 +1,20 @@
 
 import { DOQ } from "../lib/engine.js";
+
 Object.assign(DOQ, {
   config: {},
   preferences: {},
-  options: { autoReader: true, dynamicTheme: true }
+  options: {
+    autoReader: true,
+    dynamicTheme: true,
+    softwareRender: false,
+    filterCSS: ""
+  }
 });
+
+/* CSS filter syntax: BOL [<filter-function>(<args>)<spaces-or-eol>]+ EOL */
+const filterRegEx =
+  /^((brightness|contrast|grayscale|hue-rotate|invert|saturate|sepia)\([^\)]+\)(\s+|$))+$/;
 
 function getDefaultPrefs() {
   return {
@@ -22,7 +32,7 @@ function initConfig() {
   /* Legacy PDF.js support */
   const pdfjsVer = pdfjsLib.version.split(".").map(Number);
   if (pdfjsVer[0] < 3) {
-    if (pdfjsVer[0] < 2 || pdfjsVer[1] < 7) {
+    if (pdfjsVer[0] < 2 || pdfjsVer[1] < 10) {
       console.warn("doq: unsupported PDF.js version " + pdfjsLib.version);
     }
     config.viewReader.classList.add("pdfjsLegacy");
@@ -47,4 +57,4 @@ function getAddonConfig() {
   };
 }
 
-export { DOQ, initConfig, getDefaultPrefs };
+export { DOQ, initConfig, getDefaultPrefs, filterRegEx };

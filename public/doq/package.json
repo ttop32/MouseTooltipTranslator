@@ -1,0 +1,22 @@
+{
+  "name": "doq",
+  "description": "The missing reader mode/color schemes tool for PDFs.",
+  "homepage": "https://github.com/shivaprsd/doq",
+  "keywords": [ "pdf", "pdf.js", "reader mode", "color schemes" ],
+  "license": "MIT",
+  "author": "Shiva Prasad <shivapv@pm.me>",
+  "contributors": [],
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shivaprsd/doq.git"
+  },
+  "type": "module",
+  "target": "@mozilla/pdf.js",
+  "main": "lib/doq.js",
+  "version": "2.4",
+  "pdfjs_version": {
+    "minimum": "2.10.377",
+    "target": "4.1.392"
+  }
+}

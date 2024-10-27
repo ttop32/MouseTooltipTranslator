@@ -4,6 +4,7 @@ import { addColorScheme } from "./lib/engine.js";
 import { monitorAnnotationParams, handleInput } from "./lib/annots.js";
 
 import { DOQ, initConfig } from "./app/config.js";
+import { migratePrefs } from "./app/prefs.js";
 import { updateReaderState, updateColorScheme } from "./app/theme.js";
 import { initReader, updateReaderColors, toggleFlags } from "./app/reader.js";
 import updateToolbarPos, * as Toolbar from "./app/toolbar.js";
@@ -50,8 +51,9 @@ function installUI(html) {
 
 function load(colorSchemes) {
   colorSchemes.forEach(addColorScheme);
-  initReader()
+  initReader();
   initConfig();
+  migratePrefs();       /* TEMPORARY */
   updateReaderState();
   updateToolbarPos();
   bindEvents();
