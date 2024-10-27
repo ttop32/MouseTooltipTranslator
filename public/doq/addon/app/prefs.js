@@ -35,6 +35,21 @@ function getSysTheme() {
   return light ? "light" : "dark";
 }
 
+/* TEMPORARY: keep user prefs while adding Chromium theme */
+function migratePrefs() {
+  if (localStorage.getItem("doq.migrated-chromium-theme")) {
+    return;
+  }
+  for (const theme of ["light", "dark"]) {
+    const store = JSON.parse(localStorage.getItem(`doq.preferences.${theme}`));
+    if (store?.scheme !== undefined) {
+      ++store.scheme;
+      localStorage.setItem(`doq.preferences.${theme}`, JSON.stringify(store));
+    }
+  }
+  localStorage.setItem("doq.migrated-chromium-theme", "true");
+}
+
 function readOptions() {
   const store = JSON.parse(localStorage.getItem("doq.options"));
   const { options } = DOQ;
@@ -47,4 +62,4 @@ function readOptions() {
   return options;
 }
 
-export { readOptions, readPreferences, updatePreference };
+export { readOptions, readPreferences, updatePreference, migratePrefs };

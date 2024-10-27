@@ -1,5 +1,29 @@
 [
   {
+    "name": "Chrome",
+    "tones": [
+      {
+        "name": "Yellow",
+        "background": "#FEEFC3",
+        "foreground": "#1F1F1F",
+        "accents": ["#174EA6", "#681DA8"]
+      },
+      {
+        "name": "Blue",
+        "background": "#D2E3FC",
+        "foreground": "#1F1F1F",
+        "accents": ["#174EA6", "#681DA8"]
+      },
+      {
+        "name": "Dark",
+        "background": "#202124",
+        "foreground": "#E3E3E3",
+        "accents": ["#8AB4F8", "#D7AEFB"]
+      }
+    ]
+  },
+
+  {
     "name": "Firefox",
     "tones": [
       {

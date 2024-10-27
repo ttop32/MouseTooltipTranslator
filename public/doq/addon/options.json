@@ -1,0 +1,30 @@
+{
+    "type": "schema",
+    "properties": {
+        "autoReader": {
+            "title": "Auto reader mode",
+            "description": "Whether to automatically apply the last-used reader theme at launch.",
+            "type": "boolean",
+            "default": true
+        },
+        "dyanamicTheme": {
+            "title": "Dynamic theme",
+            "description": "Whether to save separate last-used preferences for OS light/dark themes.",
+            "type": "boolean",
+            "default": true
+        },
+        "softwareRender": {
+            "title": "Force software rendering",
+            "description": "Whether to disable GPU acceleration of the canvas and force CPU rendering.",
+            "type": "boolean",
+            "default": false
+        },
+        "filterCSS": {
+            "title": "Filter mode CSS",
+            "description": "CSS property value to use for the Filter mode. Accepted filters: 'brightness', 'contrast', 'grayscale', 'hue-rotate', 'invert', 'saturate', and 'sepia'.",
+            "type": "string",
+            "pattern": "^((brightness|contrast|grayscale|hue-rotate|invert|saturate|sepia)\\([^\\)]+\\)(\\s+|$))+$",
+            "default": "invert(86%) hue-rotate(180deg)"
+        }
+    }
+}

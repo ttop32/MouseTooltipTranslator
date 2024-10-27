@@ -5,7 +5,7 @@ async function init(themes) {
   if (DOQ.initialized)
     return;
 
-  if (typeof themes === "undefined") {
+  if (themes === undefined) {
     themes = await loadThemes("colors.json");
   } else if (!Array.isArray(themes)) {
     throw new Error("doq: argument 'themes' must be an array");

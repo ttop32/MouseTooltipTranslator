@@ -1,6 +1,7 @@
 /* Viewer customizations */
 :root {
   --reader-bg: #F8F1E3;
+  --filter-css: invert(86%) hue-rotate(180deg);
 }
 .reader .pdfViewer .page, .reader .thumbnailImage {
   background-color: var(--reader-bg) !important;
@@ -12,8 +13,8 @@
 .reader.dark .canvasWrapper > .highlight {
   --blend-mode: overlay;
 }
-.invert :is(.page, .thumbnailImage), .colorSwatch.invert {
-  filter: invert(86%);
+.filter :is(.page, .thumbnailImage), .colorSwatch.filter {
+  filter: var(--filter-css);
 }
 
 /* Widgets */
