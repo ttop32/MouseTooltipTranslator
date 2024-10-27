@@ -803,35 +803,20 @@ async function detectPDF() {
     setting["detectPDF"] == "true" &&
     document?.body?.children?.[0]?.type == "application/pdf"
   ) {
-    addPdfListener();
+    util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
     openPdfIframe(window.location.href);
-    // var url = "file:///D:/dummy.pd";
-    // openPdfIframe(url);
-    // redirectToPDFViewer();
   }
 }
 
-function redirectToPDFViewer() {
-  window.location.replace(
-    util.getUrlExt(
-      `/pdfjs/web/viewer.html?file=${encodeURIComponent(window.location.href)}`
-    )
-  );
-}
-function addPdfListener() {
-  //if pdf not working message come, try open using blob url
-  util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
+async function getBlobUrl(url) {
+  var blob = await fetch(url).then((r) => r.blob());
+  var url = URL.createObjectURL(blob);
+  return url;
 }
 
 async function openPdfIframeBlob() {
-  if (isBlobPdfOpened) {
-    return;
-  }
-  // wrap url for bypass referrer check, sciencedirect
-  isBlobPdfOpened = true;
   var url = window.location.href;
-  var blob = await fetch(url).then((r) => r.blob());
-  var url = URL.createObjectURL(blob);
+  var url=  await getBlobUrl(url);
   openPdfIframe(url);
 }
 

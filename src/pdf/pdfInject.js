@@ -13,10 +13,10 @@ import * as dom_util from "/src/util/dom";
 initPdf();
 
 async function initPdf() {
+  checkPdfError();
   await dom_util.waitJquery(); //wait jquery load
   checkLocalFileUrl(); // warn no permission if file url
   checkLocalFileType();
-  checkPdfError();
   addCustomKeystroke();
   //make line break for spaced text
   addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
