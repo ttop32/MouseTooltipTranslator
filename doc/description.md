@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.154
+  - fix pdf dark mode
+- 0.1.153
+  - fix sciencedirect pdf conflict
 - 0.1.152
   - fix web_accessible_resources pdf conflict
 - 0.1.151
