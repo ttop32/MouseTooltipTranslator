@@ -2,18 +2,19 @@
  * Interface for storing and processing sRGB colors in CIELAB
  * Adapted from => https://github.com/LeaVerou/color.js
  */
-export class Color {
+export default class Color {
   constructor(...args) {
     if (Array.isArray(args[0])) {
       const [coords, space] = args;
+
       if (space === "lab") {
         this._lab = coords;
       } else {
         this._rgb = coords;
       }
-    }
-    else if (typeof args[0] === "string") {
+    } else if (typeof args[0] === "string") {
       const str = args[0];
+
       if (str[0] === "#" && str.length === 7) {
         this._hex = str;
         this._rgb = Color.parseHex(str);
@@ -22,8 +23,7 @@ export class Color {
       } else if (str.startsWith("rgba(")) {
         [this._rgb, this._alpha] = Color.parseRGBA(str);
       } else {
-        console.error(`Unsupported color format: "${str}"`);
-        return null;
+        throw new Error(`Unsupported color format: "${str}"`);
       }
     } else {
       this._rgb = [0, 0, 0];
@@ -34,21 +34,26 @@ export class Color {
     this._hex = this._hex || this.toHex();
     return this._hex;
   }
+
   get rgb() {
     this._rgb = this._rgb || sRGB.fromLab(this._lab);
     return this._rgb;
   }
+
   get lab() {
     this._lab = this._lab || sRGB.toLab(this._rgb);
     return this._lab;
   }
+
   get lightness() {
     return this.lab[0];
   }
+
   get chroma() {
     const [L, a, b] = this.lab;
     return Math.sqrt(a ** 2 + b ** 2);
   }
+
   get alpha() {
     return this._alpha ?? 1;
   }
@@ -61,6 +66,7 @@ export class Color {
       return a + (color.lab[i] - c) ** 2;
     }, 0));
   }
+
   range(color) {
     function interpolate(start, end, p) {
       if (isNaN(start)) {
@@ -82,10 +88,12 @@ export class Color {
 
   toHex(alpha = 1) {
     let hex = this.rgb.map(Color.compToHex).join("");
-    if (alpha !== 1)
+    if (alpha !== 1) {
       hex += Color.compToHex(alpha);
+    }
     return "#" + hex;
   }
+
   static parseHex(str) {
     let rgba = [];
     str.replace(/[a-f0-9]{2}/gi, component => {
@@ -93,9 +101,11 @@ export class Color {
     });
     return rgba.slice(0, 3);
   }
+
   static parseRGB(str) {
     return Color.parseRGBA(str.replace("rgb", "rgba"))[0];
   }
+
   static parseRGBA(str) {
     const rgba = str.slice(5, -1).split(",");
     return [
@@ -103,6 +113,7 @@ export class Color {
       parseFloat(rgba.pop())                          /* alpha */
     ];
   }
+
   static compToHex(c) {
     c = Math.round(Math.min(Math.max(c * 255, 0), 255));
     return c.toString(16).padStart(2, "0");
@@ -154,6 +165,7 @@ const Matrices = {
     }
     const p = B[0].length;
     const B_cols = B[0].map((_, i) => B.map(x => x[i]));  /* transpose B */
+
     let product = A.map(row => B_cols.map(col => {
       if (!Array.isArray(row)) {
         return col.reduce((a, c) => a + c * row, 0);
@@ -187,6 +199,7 @@ const sRGB = {
   toLab(RGB) {
     return this.XYZtoLab(this.toXYZ(this.toLinear(RGB)));
   },
+
   toLinear(RGB) {  /* sRGB values [0 - 1] */
     return RGB.map(function (val) {
       const sign = val < 0? -1 : 1;
@@ -197,13 +210,16 @@ const sRGB = {
       return sign * (Math.pow((abs + 0.055) / 1.055, 2.4));
     });
   },
+
   toXYZ(linRGB) {
     return Matrices.multiply(this.toXYZ_M, linRGB);
   },
+
   XYZtoLab(XYZ) {
     const white = this.whites.D50;
     const {κ, ε} = this.CIE_fracs;
     const xyz = XYZ.map((value, i) => value / white[i]);
+
     const f = xyz.map(value => {
       return value > ε ? Math.cbrt(value) : (κ * value + 16)/116;
     });
@@ -217,10 +233,12 @@ const sRGB = {
   fromLab(Lab) {
     return this.toGamma(this.fromXYZ(this.LabToXYZ(Lab)));
   },
+
   LabToXYZ(Lab) {
     const white = this.whites.D50;
     const {κ, ε3} = this.CIE_fracs;
     let f = [];
+
     f[1] = (Lab[0] + 16)/116;
     f[0] = Lab[1]/500 + f[1];
     f[2] = f[1] - Lab[2]/200;
@@ -232,9 +250,11 @@ const sRGB = {
     ];
     return xyz.map((value, i) => value * white[i]);
   },
+
   fromXYZ(XYZ) {
     return Matrices.multiply(this.fromXYZ_M, XYZ);
   },
+
   toGamma(RGB) {   /* linear-light sRGB values [0 - 1] */
     return RGB.map(function (val) {
       const sign = val < 0? -1 : 1;

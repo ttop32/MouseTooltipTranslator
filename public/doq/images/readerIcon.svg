@@ -1,4 +1,7 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="context-fill" fill-opacity="context-fill-opacity"><path d="M4 1a2 2 0 0 0-2 2l0 10a2 2 0 0 0 2 2l8 0a2 2 0 0 0 2-2l0-10a2 2 0 0 0-2-2L4 1zm8.75 12.15-.6.6-8.3 0-.6-.6 0-10.3.6-.6 8.3 0 .6.6 0 10.3z"/><path d="m10.125 5.25-4.25 0a.625.625 0 0 1 0-1.25l4.25 0a.625.625 0 0 1 0 1.25z"/><path d="m10.125 8.25-4.25 0a.625.625 0 0 1 0-1.25l4.25 0a.625.625 0 0 1 0 1.25z"/><path d="m8.125 11.25-2.25 0a.625.625 0 0 1 0-1.25l2.25 0a.625.625 0 0 1 0 1.25z"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="Dark">
+    <path d="M12.741,20.917a9.389,9.389,0,0,1-1.395-.105,9.141,9.141,0,0,1-1.465-17.7,1.177,1.177,0,0,1,1.21.281,1.273,1.273,0,0,1,.325,1.293,8.112,8.112,0,0,0-.353,2.68,8.266,8.266,0,0,0,4.366,6.857,7.628,7.628,0,0,0,3.711.993,1.242,1.242,0,0,1,.994,1.963h0A9.148,9.148,0,0,1,12.741,20.917ZM10.261,4.05a.211.211,0,0,0-.065.011,8.137,8.137,0,1,0,9.131,12.526h0a.224.224,0,0,0,.013-.235.232.232,0,0,0-.206-.136A8.619,8.619,0,0,1,14.946,15.1a9.274,9.274,0,0,1-4.883-7.7,9.123,9.123,0,0,1,.4-3.008.286.286,0,0,0-.069-.285A.184.184,0,0,0,10.261,4.05Z"/>
+  </g>
+</svg>

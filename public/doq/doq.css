@@ -9,6 +9,9 @@
   --free-text-color: #000000;
   color: var(--free-text-color) !important;
 }
+.reader.dark .canvasWrapper > .highlight {
+  --blend-mode: overlay;
+}
 .invert :is(.page, .thumbnailImage), .colorSwatch.invert {
   filter: invert(86%);
 }
@@ -55,7 +58,7 @@
 
 /* Toolbar layout */
 #readerToolbar {
-  right: 189px;
+  right: 194px;
   font-size: 0;
   background-color: var(--toolbar-bg-color);
   -webkit-user-select: none;
