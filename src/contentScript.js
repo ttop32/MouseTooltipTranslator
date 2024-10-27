@@ -496,6 +496,7 @@ function loadEventListener() {
   addEventHandler("mousemove", handleMousemove);
   addEventHandler("touchstart", handleTouchstart);
 
+  addEventHandler("scroll", hideHighlight);
   //detect activation hold key pressed
   addEventHandler("keydown", handleKeydown);
   addEventHandler("keyup", handleKeyup);
