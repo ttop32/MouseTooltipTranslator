@@ -722,6 +722,7 @@ function applyStyleSetting() {
       backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       border: 1px solid ${setting["tooltipBorderColor"]}; 
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
     [data-tippy-root] {
       display: inline-block !important;
@@ -778,11 +779,19 @@ function applyStyleSetting() {
     }
     .captions-text .caption-visual-line:first-of-type:after {
       content: '⣿⣿';
-      background-color: #000000b8;
+      border-radius: 3px !important;
+      color: white !important;
+      background: transparent !important;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
       display: inline-block;
       vertical-align: top;
       opacity:0;
       transition: opacity 0.7s ease-in-out;
+    }
+    .ytp-caption-segment{
+      color: white !important;
+      text-shadow: 1px 1px 2px black !important;
+      background:transparent  !important;
     }
     .captions-text:hover .caption-visual-line:first-of-type:after {
       opacity:1;

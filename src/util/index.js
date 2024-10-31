@@ -44,10 +44,10 @@ export var defaultData = {
   tooltipAnimation: "fade",
   tooltipPosition: "follow",
   tooltipTextAlign: "center",
-  tooltipBackgroundBlur: "4",
+  tooltipBackgroundBlur: "6",
   mouseoverHighlightText: "false",
   tooltipFontColor: "#ffffffff",
-  tooltipBackgroundColor: "#000000b8",
+  tooltipBackgroundColor: "#00000080",
   tooltipBorderColor: "#ffffff00",
   mouseoverTextHighlightColor: "#21dc6d40",
 

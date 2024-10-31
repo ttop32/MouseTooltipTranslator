@@ -86,19 +86,14 @@ async function getTextFromRange(range) {
   var output = {};
 
   for (const detectType of ["word", "sentence", "container"]) {
-    output[detectType] = "";
-    if (!range) {
-      continue;
-    }
     try {
-      var rangeClone = range.cloneRange();
-      //expand range
-      await expandRange(rangeClone, detectType);
+      var wordRange= expandRange(range, detectType);
 
-      //check mouse xy overlap the range element
-      if (checkXYInElement(rangeClone, clientX, clientY)) {
-        output[detectType] = extractTextFromRange(rangeClone);
-        output[detectType + "_range"] = rangeClone;
+      if (checkXYInElement(wordRange, clientX, clientY)) {
+        output[detectType] = extractTextFromRange(wordRange);
+        output[detectType + "_range"] = wordRange;
+      }else{
+        output[detectType] = "";
       }
     } catch (error) {
       console.log(error);
@@ -112,17 +107,53 @@ function extractTextFromRange(range) {
   var rangeHtml = range.cloneContents();
   return util.extractTextFromHtml(rangeHtml);
 }
-
-async function expandRange(range, type) {
-  try {
-    if (type == "container" || !range.expand) {
-      range.setStartBefore(range.startContainer);
-      range.setEndAfter(range.startContainer);
-      range.setStart(range.startContainer, 0);
-    } else {
-      range.expand(type); // "word" or "sentence"
-      // await expandRangeWithSeg(range, type);
+function getNextWordRange(range) {
+  var next=nextRange(range)
+  while(true){
+    var nextExpand=expandRange(next, detectType);
+    var nextText=        extractTextFromRange(nextExpand);
+    if(nextText!=text){
+      console.log(nextText);
+      break;
     }
+    var next=  nextRange(next)
+  }
+}
+
+function nextRange(range){
+  var rangeClone = range.cloneRange();
+  if (rangeClone.endOffset + 1 > rangeClone.endContainer.length) {
+    let nextNode = rangeClone.endContainer.nextSibling;
+    while (nextNode && nextNode.nodeType !== Node.TEXT_NODE) {
+      nextNode = nextNode.nextSibling;
+    }
+    if (nextNode) {
+      rangeClone.setEnd(nextNode, Math.min(1, nextNode.length));
+    }
+  } else {
+    rangeClone.setEnd(rangeClone.endContainer, rangeClone.endOffset + 1);
+
+  }
+  rangeClone.collapse(false);
+  return rangeClone;
+
+}
+
+function expandRange(range, type) {
+  try {
+    if (!range) {
+      return
+    }
+    var rangeClone = range.cloneRange();
+    if (type == "container" || !rangeClone.expand) {
+      rangeClone.setStartBefore(rangeClone.startContainer);
+      rangeClone.setEndAfter(rangeClone.startContainer);
+      rangeClone.setStart(rangeClone.startContainer, 0);
+    } else {
+      rangeClone.expand(type); // "word" or "sentence"
+      // rangeClone= expandRangeWithSeg(rangeClone, type);
+    }
+    return rangeClone;
   } catch (error) {
     // console.log(error);
   }
@@ -261,6 +292,9 @@ export function getCharRanges(textNode) {
 
 export function checkXYInElement(ele, x, y) {
   try {
+    if(!ele){
+      return false;
+    }
     var rect = ele.getBoundingClientRect(); //mouse in word rect
     if (rect.left > x || rect.right < x || rect.top > y || rect.bottom < y) {
       return false;
@@ -374,22 +408,20 @@ function isPointInAnyRect(x, y, rects) {
   return false;
 }
 
+
 //firefox word break ====================================
-async function expandRangeWithSeg(range, type = "word") {
+function expandRangeWithSeg(range, type = "word") {
   const { x, y } = getCenterXY(range);
-  var rangeContainer = getContainerRange(range);
+  var rangeContainer = expandRange(range, "container");
   const textNode = rangeContainer.commonAncestorContainer;
-  // var text = textNode.innerText;
-  var text = getNodeText(textNode);
-  var wordSegInfo = await getWordSegmentInfo(text, type);
+  // var text1 = textNode.innerText;
+  var text2 = getNodeText(textNode);
+  var wordSegInfo =  getWordSegmentInfo(text2, type);
   const wordRanges = createWordRanges(wordSegInfo, textNode);
   const currentWordNode = wordRanges.find((range) =>
     isPointInRange(range, x, y)
   );
-  if (!currentWordNode) {
-    return;
-  }
-  setRangeToCurrentWordNode(range, currentWordNode);
+  return currentWordNode   
 }
 
 function isPointInRange(range, x, y) {
@@ -409,16 +441,10 @@ function isPointInRange(range, x, y) {
   return false;
 }
 
-async function getWordSegmentInfo(text, type) {
+function getWordSegmentInfo(text, type) {
   const segmenter = new Intl.Segmenter("en-US", { granularity: type });
   const wordsMeta = [...segmenter.segment(text)];
   return wordsMeta;
-}
-
-function getContainerRange(range) {
-  const containerRange = range.cloneRange();
-  expandRange(containerRange, "container");
-  return containerRange;
 }
 
 function createWordRanges(wordSegInfo, textNode) {
@@ -439,11 +465,6 @@ function createWordRanges(wordSegInfo, textNode) {
     }
     return wordRange;
   });
-}
-
-function setRangeToCurrentWordNode(range, currentWordNode) {
-  range.setStart(currentWordNode.startContainer, currentWordNode.startOffset);
-  range.setEnd(currentWordNode.endContainer, currentWordNode.endOffset);
 }
 
 function selectNode(node, offset) {
