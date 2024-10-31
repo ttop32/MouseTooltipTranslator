@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.156
+  - change youtube sub style
+  - change default tooltip style
 - 0.1.155
   - update doq library
 - 0.1.154

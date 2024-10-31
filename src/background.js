@@ -46,7 +46,7 @@ function addMessageListener() {
         var translatedResult = await translateWithReverse(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
-        playTtsQueue(request.data);
+        await playTtsQueue(request.data);
         sendResponse({});
       } else if (request.type === "stopTTS") {
         stopTts(request.data.timestamp);
