@@ -9,34 +9,34 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "Hiện chú thích khi"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Nói chỉ khi"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Dịch chỉ khi"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Dịch từ"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Dịch sang"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Phương thức Dịch"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Văn bản khi di chuột qua"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Ngôn ngữ viết"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "Ngôn ngữ OCR"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Ngôn ngữ dịch ngược"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -45,40 +45,40 @@
 		"message": "GRAPHIC"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Kích thước phông chữ"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Chiều rộng công cụ"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Khoản cách công cụ"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "Hoạt ảnh công cụ"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Vị trí công cụ"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Căn chỉnh công cụ"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Làm mờ nền công cụ"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Di chuột làm nổi bật văn bản"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Màu phông chữ công cụ"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Màu nền công cụ"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Màu đường viền công cụ"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Màu của văn bản nổi bật"
 	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "
@@ -87,19 +87,19 @@
 		"message": "VOICE"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Âm lượng thoại"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Tốc độ giọng nói"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Mục tiêu giọng nói"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Lặp lại thoại"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Giọng nói cho "
 	},
 	"ADVANCED______________________________________": {
 		"message": "ADVANCED                                      "
@@ -108,79 +108,79 @@
 		"message": "ADVANCED"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Dịch viết khi"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "OCR Khi"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "Nhận diện phụ đề"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "Nhận diện PDF"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "Chuột di vào phụ đề sẽ Tạm Dừng"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Phím hoán đổi văn bản khi di chuột qua"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "Thông tin nguồn văn bản"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "Thông tin nguồn về ngôn ngữ"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "Thông tin về dịch thuật"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "Thời gian của công cụ"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Từ điển giải thích của công cụ"
 	},
 	"SPEECH": {
 		"message": "SPEECH"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "Ngôn ngữ nhận dạng giọng nói"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Nhận dạng giọng nói khi"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "Bảng ngôn ngữ cần dịch bằng giọng nói"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "Bảng mục tiêu giọng nói văn bản"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "Bảng đệm của giọng nói"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "Bảng căn chỉnh của giọng nói"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "Kích thước phông chữ Nguồn của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "Kích thước phông chữ Mục Tiêu của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Màu NGUỒN của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Màu MỤC TIÊU của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Viền NGUỒN của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Viền MỤC TIÊU của bản điều khiển giọng nói"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Bảng màu nền của giọng nói"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -198,7 +198,7 @@
 		"message": "About                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Cách sử dụng"
 	},
 	"Check_how_to_use_this_extension": {
 		"message": "Check how to use this extension"
@@ -252,24 +252,24 @@
 		"message": "Review this"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "Người phát triển rất thích những để lại lời bình luận của bạn"
 	},
 	"Coffee______________________________________": {
 		"message": "Coffee                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy dev coffee"
+		"message": "Ổn hộ người phát triển ly cà phê"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "Cổ vũ cho người phát triển"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Tiêu đề                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dualsubs"
+		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
 	},
 	"appDesc": {
-		"message": "Chuột Tooltip Translator Dịch văn bản Mouseover bằng Google Dịch. Support OCR, TTS, manga translator & pdf translator."
+		"message": "Mouse Tooltip Translator: Dịch văn bản khi di chuột qua bằng cách sử dụng Google Dịch. Hỗ trợ OCR, TTS, manga & pdf."
 	}
 }
