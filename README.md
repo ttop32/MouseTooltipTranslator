@@ -166,6 +166,16 @@ npm run build        // or 'npm run watch' for developing
       <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
     </td>
     <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/Nhoxpipicool"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16601123/medium/298514f9ef43c60ebd9f2343ccf0b43a.png" />
+        <br />
+        <sub><b>Duong.Kayce (Nhoxpipicool)</b></sub></a>
+      <br />
+      <sub><b>192 words</b></sub>
+      <br /><sub><b><code title="Vietnamese">vi</code></b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
       <a href="https://crowdin.com/profile/Mirnyang"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/14153733/medium/9a2fe282298d66026016c71086cc6d6e.png" />
         <br />
         <sub><b>미르냥 (Mirnyang)</b></sub></a>
@@ -173,8 +183,6 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>83 words</b></sub>
       <br /><sub><b><code title="Korean">ko</code></b></sub>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/helimoreira"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16569873/medium/2a7d04568e352021ae7b1eba23f28074_default.png" />
         <br />
@@ -207,6 +215,8 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>13 words</b></sub>
       <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/TTT01"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16469337/medium/6ff0dcfb321853011aba8cfc4abcdc82.png" />
         <br />
