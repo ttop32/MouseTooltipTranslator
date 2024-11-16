@@ -63,7 +63,7 @@ export const triggerMouseoverText = (mouseoverText) => {
   document.dispatchEvent(evt);
 };
 
-async function getMouseoverText(x, y) {
+export async function getMouseoverText(x, y) {
   //get range
   var textElement;
   var range =
@@ -87,12 +87,12 @@ async function getTextFromRange(range) {
 
   for (const detectType of ["word", "sentence", "container"]) {
     try {
-      var wordRange= expandRange(range, detectType);
+      var wordRange = expandRange(range, detectType);
 
       if (checkXYInElement(wordRange, clientX, clientY)) {
-        output[detectType] = extractTextFromRange(wordRange);
+        output[detectType] = util.extractTextFromRange(wordRange);
         output[detectType + "_range"] = wordRange;
-      }else{
+      } else {
         output[detectType] = "";
       }
     } catch (error) {
@@ -103,46 +103,10 @@ async function getTextFromRange(range) {
   return output;
 }
 
-function extractTextFromRange(range) {
-  var rangeHtml = range.cloneContents();
-  return util.extractTextFromHtml(rangeHtml);
-}
-function getNextWordRange(range) {
-  var next=nextRange(range)
-  while(true){
-    var nextExpand=expandRange(next, detectType);
-    var nextText=        extractTextFromRange(nextExpand);
-    if(nextText!=text){
-      console.log(nextText);
-      break;
-    }
-    var next=  nextRange(next)
-  }
-}
-
-function nextRange(range){
-  var rangeClone = range.cloneRange();
-  if (rangeClone.endOffset + 1 > rangeClone.endContainer.length) {
-    let nextNode = rangeClone.endContainer.nextSibling;
-    while (nextNode && nextNode.nodeType !== Node.TEXT_NODE) {
-      nextNode = nextNode.nextSibling;
-    }
-    if (nextNode) {
-      rangeClone.setEnd(nextNode, Math.min(1, nextNode.length));
-    }
-  } else {
-    rangeClone.setEnd(rangeClone.endContainer, rangeClone.endOffset + 1);
-
-  }
-  rangeClone.collapse(false);
-  return rangeClone;
-
-}
-
 function expandRange(range, type) {
   try {
     if (!range) {
-      return
+      return;
     }
     var rangeClone = range.cloneRange();
     if (type == "container" || !rangeClone.expand) {
@@ -158,6 +122,7 @@ function expandRange(range, type) {
     // console.log(error);
   }
 }
+
 
 //browser range===================================================
 
@@ -292,7 +257,7 @@ export function getCharRanges(textNode) {
 
 export function checkXYInElement(ele, x, y) {
   try {
-    if(!ele){
+    if (!ele) {
       return false;
     }
     var rect = ele.getBoundingClientRect(); //mouse in word rect
@@ -408,7 +373,6 @@ function isPointInAnyRect(x, y, rects) {
   return false;
 }
 
-
 //firefox word break ====================================
 function expandRangeWithSeg(range, type = "word") {
   const { x, y } = getCenterXY(range);
@@ -416,12 +380,12 @@ function expandRangeWithSeg(range, type = "word") {
   const textNode = rangeContainer.commonAncestorContainer;
   // var text1 = textNode.innerText;
   var text2 = getNodeText(textNode);
-  var wordSegInfo =  getWordSegmentInfo(text2, type);
+  var wordSegInfo = getWordSegmentInfo(text2, type);
   const wordRanges = createWordRanges(wordSegInfo, textNode);
   const currentWordNode = wordRanges.find((range) =>
     isPointInRange(range, x, y)
   );
-  return currentWordNode   
+  return currentWordNode;
 }
 
 function isPointInRange(range, x, y) {
@@ -510,3 +474,73 @@ function getCenterXY(ele) {
   const centerY = top + height / 2;
   return { x: centerX, y: centerY };
 }
+
+// get next range ===========================
+
+export function getNextExpand(range, detectType) {
+  var text = util.extractTextFromRange(range);
+  var next = range;
+  var nextText = text;
+  while (text === nextText && next) {
+    next = getNext(next);
+    next = expandRange(next, detectType);
+    nextText = util.extractTextFromRange(next);
+  }
+  return next;
+}
+
+function getNext(range) {
+  const endContainer = range.endContainer;
+  const endOffset = range.endOffset;
+  var rangeClone = range.cloneRange();
+  var { node, index } = getNextOffset1(endContainer, endOffset + 1);
+  rangeClone.setStart(node, index);
+  rangeClone.setEnd(node, index);
+  return rangeClone;
+}
+
+function getNextOffset1(ele, offset) {
+  if (!ele) {
+    return;
+  }
+  var { node, index } = selectNode(ele, offset + 1);
+  if (!node.length || index >= node.length) {
+    var nextElement = getNextEle(ele);
+    return getNextOffset1(nextElement, 0);
+  }
+
+  return { node, index };
+}
+
+function getNextEle(ele) {
+  if (ele === document.body || ele instanceof ShadowRoot) {
+    return;
+  }
+  return ele.nextElementSibling || getNextEle(ele.parentElement);
+}
+
+// var ele=document.querySelector("#L1")
+// var range=document.createRange();
+// range.setStart(ele,0);
+// var {node,index}=selectNode(ele,2)
+// range.setEnd(node,index);
+// var text=range.toString();
+// console.log(ele)
+// console.log(text)
+// console.log(range)
+// var text=range.toString();
+// console.log(text)
+
+// var range1=expandRange(range,"word");
+// var text=range1.toString();
+// console.log(text)
+
+// var detectType="sentence";
+
+// // do 10 times
+// for (let i = 0; i < 20; i++) {
+//   var range2=getNextExpand(range1, detectType)
+//   var text=range2.toString();
+//   console.log(i,text)
+//   range1=range2;
+// }

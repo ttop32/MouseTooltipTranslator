@@ -12,13 +12,18 @@ import {
   enableSelectionEndEvent,
   getSelectionText,
 } from "/src/event/selection";
-import { enableMouseoverTextEvent } from "/src/event/mouseover";
+import {
+  enableMouseoverTextEvent,
+  getNextExpand,
+  getMouseoverText,
+} from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as dom_util from "/src/util/dom";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
 import { langListOpposite } from "/src/util/lang.js";
+import * as speech from "/src/speech";
 
 //init environment var======================================================================\
 var setting;
@@ -46,6 +51,8 @@ var prevSelected = "";
 var hoveredData = {};
 var stagedText = null;
 var prevTooltipText = "";
+var isAutoReaderRunning = false;
+var stopAutoReader = false;
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
@@ -96,29 +103,32 @@ function stageTooltipTextHover(event, useEvent = true) {
   // if no selected text
   if (
     setting["translateWhen"].includes("mouseover") &&
-    !selectedText &&
-    !listenText &&
-    hoveredData
+    hoveredData &&
+    !isOtherServiceActive()
   ) {
-    var mouseoverType = getMouseoverType();
-    var mouseoverText = hoveredData[mouseoverType];
-    var mouseoverRange = hoveredData[mouseoverType + "_range"];
+    var { mouseoverText, mouseoverRange } = extractMouseoverText(hoveredData);
     stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
   }
 }
 
 function stageTooltipTextSelect(event, useEvent = true) {
   // if translate on selection is enabled
-  if (setting["translateWhen"].includes("select") && !listenText) {
+  if (
+    setting["translateWhen"].includes("select") &&
+    !isOtherServiceActive(true)
+  ) {
     prevSelected = selectedText;
     selectedText = useEvent ? event?.selectedText : selectedText;
     stageTooltipText(selectedText, "select");
   }
 }
 
+function isOtherServiceActive(excludeSelect = false) {
+  return listenText || isAutoReaderRunning || (!excludeSelect && selectedText);
+}
+
 //process detected word
 async function stageTooltipText(text, actionType, range) {
-  text = util.filterWord(text); //filter out one that is url,no normal char
   var isTtsOn =
     keyDownList[setting["TTSWhen"]] ||
     (setting["TTSWhen"] == "select" && actionType == "select");
@@ -178,6 +188,13 @@ async function stageTooltipText(text, actionType, range) {
   if (isTtsOn) {
     util.requestTTS(text, sourceLang, targetText, targetLang, timestamp);
   }
+}
+
+function extractMouseoverText(hoveredData) {
+  var mouseoverType = getMouseoverType();
+  var mouseoverText = hoveredData[mouseoverType];
+  var mouseoverRange = hoveredData[mouseoverType + "_range"];
+  return { mouseoverText, mouseoverRange };
 }
 
 function getMouseoverType() {
@@ -259,7 +276,10 @@ function checkStyleContainer() {
   }
 }
 
-function hideHighlight() {
+function hideHighlight(checkSkipCase) {
+  if (checkSkipCase && isAutoReaderRunning) {
+    return;
+  }
   $(".mtt-highlight")?.remove();
 }
 
@@ -347,8 +367,8 @@ function wrapMainImage(imageUrl) {
   }).prop("outerHTML");
 }
 
-function highlightText(range) {
-  if (!range || setting["mouseoverHighlightText"] == "false") {
+function highlightText(range, force = false) {
+  if (!force && (!range || setting["mouseoverHighlightText"] == "false")) {
     return;
   }
   hideHighlight();
@@ -380,10 +400,7 @@ function highlightText(range) {
 async function translateWriting() {
   //check current focus is write box and hot key pressed
   // if is google doc do not check writing box
-  if (
-    !keyDownList[setting["keyDownTranslateWriting"]] ||
-    (!dom_util.getFocusedWritingBox() && !util.isGoogleDoc())
-  ) {
+  if (!dom_util.getFocusedWritingBox() && !util.isGoogleDoc()) {
     return;
   }
   // get writing text
@@ -407,7 +424,7 @@ async function translateWriting() {
 
 async function getWritingText() {
   // get current selected text,
-  if (hasSelection() && getSelectionText()?.length>1) {
+  if (hasSelection() && getSelectionText()?.length > 1) {
     return getSelectionText();
   }
   // if no select, select all to get all
@@ -449,10 +466,10 @@ async function insertText(text) {
     //for bard , butterflies.ai
     await pasteTextExecCommand(text);
     await pasteTextInputBox(text);
-  } 
+  }
 }
 
-async function pasteTextExecCommand(text){
+async function pasteTextExecCommand(text) {
   if (!hasSelection()) {
     return;
   }
@@ -496,7 +513,7 @@ function loadEventListener() {
   addEventHandler("mousemove", handleMousemove);
   addEventHandler("touchstart", handleTouchstart);
 
-  addEventHandler("scroll", hideHighlight);
+  addEventHandler("scroll", () => hideHighlight(true));
   //detect activation hold key pressed
   addEventHandler("keydown", handleKeydown);
   addEventHandler("keyup", handleKeyup);
@@ -530,6 +547,7 @@ function handleKeydown(e) {
     hideTooltip();
   } else if (e.code == "Escape") {
     util.requestStopTTS();
+    stopAutoReader = true;
   } else if (e.key == "HangulMode" || e.key == "Process") {
     return;
   } else if (e.key == "Alt") {
@@ -541,7 +559,6 @@ function handleKeydown(e) {
 
 function handleKeyup(e) {
   releaseKeydownList(e.code);
-  stopSpeechRecognitionByKey(e.code);
 }
 
 function handleMouseKeyDown(e) {
@@ -556,10 +573,59 @@ function holdKeydownList(key) {
     keyDownList[key] = true;
 
     restartWordProcess();
-    translateWriting();
-    startSpeechRecognitionByKey(key);
+    if (keyDownList[setting["keyDownTranslateWriting"]]) {
+      translateWriting();
+    }
+    if (keyDownList[setting["keySpeechRecognition"]]) {
+      speech.startSpeechRecognition();
+    }
+    if (keyDownList[setting["keyDownAutoReader"]]) {
+      initAutoReader();
+    }
   }
-  stopTTSbyCombKey(key);
+  if (util.isCharKey(key)) {
+    util.requestStopTTS(Date.now() + 500);
+    stopAutoReader = true;
+  }
+}
+
+async function initAutoReader() {
+  if (!keyDownList[setting["keyDownAutoReader"]]) {
+    return;
+  }
+  var hoveredData = await getMouseoverText(clientX, clientY);
+  var { mouseoverRange } = extractMouseoverText(hoveredData);
+  stopAutoReader = false;
+  runAutoReader(mouseoverRange);
+}
+
+async function runAutoReader(stagedRange) {
+  if (!stagedRange || stopAutoReader) {
+    isAutoReaderRunning = false;
+    return;
+  }
+  isAutoReaderRunning = true;
+  var text = util.extractTextFromRange(stagedRange);
+  
+  var translatedData = await util.requestTranslate(
+    text,
+    setting["translateSource"],
+    setting["translateTarget"],
+    setting["translateReverseTarget"]
+  );
+  var { targetText, sourceLang, targetLang } = translatedData;
+  var timestamp = Number(Date.now());
+  var rect = stagedRange.getBoundingClientRect();
+
+  $("body,html").animate(
+    { scrollTop: window.scrollY + rect.top - window.innerHeight / 2 },
+    400
+  );
+  showTooltip(targetText);
+  highlightText(stagedRange, true);
+  await util.requestTTS(text, sourceLang, targetText, targetLang, timestamp);
+  stagedRange = getNextExpand(stagedRange, setting["mouseoverTextType"]);
+  runAutoReader(stagedRange);
 }
 
 function disableEdgeMiniMenu(e) {
@@ -569,16 +635,12 @@ function disableEdgeMiniMenu(e) {
   }
 }
 
-async function stopTTSbyCombKey(key) {
-  // stop tts if char key like crtl +c
-  if (util.isCharKey(key)) {
-    util.requestStopTTS(Date.now() + 500);
-  }
-}
-
 async function releaseKeydownList(key) {
   await delay(20);
   keyDownList[key] = false;
+  if (key == setting["keySpeechRecognition"]) {
+    speech.stopSpeechRecognition();
+  }
 }
 
 function resetTooltipStatus() {
@@ -590,7 +652,7 @@ function resetTooltipStatus() {
   hideTooltip();
   ocrView.removeAllOcrEnv();
   listenText = "";
-  util.stopSpeechRecognition();
+  speech.stopSpeechRecognition();
 }
 
 async function restartWordProcess() {
@@ -650,7 +712,7 @@ async function getSetting() {
     resetTooltipStatus();
     applyStyleSetting();
     checkVideo();
-    initSpeechRecognitionLang();
+    speech.initSpeechRecognitionLang(setting);
   });
 }
 
@@ -826,7 +888,7 @@ async function getBlobUrl(url) {
 
 async function openPdfIframeBlob() {
   var url = window.location.href;
-  var url=  await getBlobUrl(url);
+  var url = await getBlobUrl(url);
   openPdfIframe(url);
 }
 
@@ -842,7 +904,7 @@ function openPdfIframe(url) {
       border: "none",
       height: "100vh",
       width: "100vw",
-      overflow: "hidden"
+      overflow: "hidden",
     },
   }).appendTo("body");
 }
@@ -919,7 +981,7 @@ function removePrevElement() {
 // speech recognition ====================================================
 
 function loadSpeechRecognition() {
-  util.initSpeechRecognition(
+  speech.initSpeechRecognition(
     (speechText, isFinal) => {
       if (isFinal) {
         listenText = speechText;
@@ -930,19 +992,6 @@ function loadSpeechRecognition() {
       listenText = "";
     }
   );
-  initSpeechRecognitionLang();
+  speech.initSpeechRecognitionLang(setting);
 }
 
-function initSpeechRecognitionLang() {
-  util.setSpeechRecognitionLang(setting["speechRecognitionLanguage"]);
-}
-function stopSpeechRecognitionByKey(key) {
-  if (key == setting["keySpeechRecognition"]) {
-    util.stopSpeechRecognition();
-  }
-}
-function startSpeechRecognitionByKey(key) {
-  if (key == setting["keySpeechRecognition"]) {
-    util.startSpeechRecognition();
-  }
-}

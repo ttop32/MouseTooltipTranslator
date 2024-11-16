@@ -149,6 +149,7 @@ var keyList = {
   "Click Left": "ClickLeft",
   "Click Middle": "ClickMiddle",
   "Click Right": "ClickRight",
+  "F2": "F2",
 };
 
 var translatorList = {
@@ -426,6 +427,10 @@ var speechTabData = {
 };
 
 var advancedTabData = {
+  keyDownAutoReader: {
+    description: browser.i18n.getMessage("Auto_Reader_When"),
+    optionList: keyListWithAlways,
+  },
   keyDownTranslateWriting: {
     description: browser.i18n.getMessage("Translate_Writing_When"),
     optionList: keyList,

@@ -61,6 +61,7 @@ i18List = [
 
     "ADVANCED                                      ",
     "ADVANCED",
+    "Auto_Reader_When",
     "Translate Writing When",
     "OCR When",
     "Detect Subtitle",

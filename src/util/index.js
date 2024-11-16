@@ -9,94 +9,15 @@ var browser;
 try {
   browser = require("webextension-polyfill");
 } catch (error) {}
-import delay from "delay";
 
 import { Setting } from "./setting.js";
+import {defaultData} from "./setting_default.js"
 
 import {
   rtlLangList,
   bingTtsVoiceList,
   googleTranslateTtsLangList,
 } from "/src/util/lang.js";
-
-export var defaultData = {
-  showTooltipWhen: "always",
-  TTSWhen: "ControlLeft",
-  translateWhen: "mouseoverselect",
-  translateSource: "auto",
-  //translateTarget: getDefaultLang(),
-  translatorVendor: "google",
-  mouseoverTextType: "sentence",
-  writingLanguage: "en",
-  ocrLang: "jpn_vert",
-  translateReverseTarget: "null",
-
-  // voice
-  voiceVolume: "1.0",
-  voiceRate: "1.0",
-  voiceTarget: "source",
-  voiceRepeat: "1",
-
-  // graphic
-  tooltipFontSize: "18",
-  tooltipWidth: "200",
-  tooltipDistance: "20",
-  tooltipAnimation: "fade",
-  tooltipPosition: "follow",
-  tooltipTextAlign: "center",
-  tooltipBackgroundBlur: "6",
-  mouseoverHighlightText: "false",
-  tooltipFontColor: "#ffffffff",
-  tooltipBackgroundColor: "#00000080",
-  tooltipBorderColor: "#ffffff00",
-  mouseoverTextHighlightColor: "#21dc6d40",
-
-  // speech
-  speechRecognitionLanguage: "en-US",
-  keySpeechRecognition: "ControlRight",
-  voicePanelTranslateLanguage: "default",
-  voicePanelTextTarget: "sourcetarget",
-  voicePanelPadding: "20",
-  voicePanelTextAlign: "center",
-  voicePanelSourceFontSize: "18",
-  voicePanelTargetFontSize: "18",
-  voicePanelSourceFontColor: "#ffffffff",
-  voicePanelTargetFontColor: "#ffffffff",
-  voicePanelSourceBorderColor: "#000000b8",
-  voicePanelTargetBorderColor: "#000000b8",
-  voicePanelBackgroundColor: "#002918",
-
-  //advanced
-  keyDownTranslateWriting: "AltRight",
-  keyDownOCR: "ShiftLeft",
-  detectSubtitle: "dualsub",
-  detectPDF: "true",
-  mouseoverPauseSubtitle: "true",
-  keyDownMouseoverTextSwap: "null",
-  tooltipInfoSourceText: "false",
-  tooltipInfoSourceLanguage: "false",
-  tooltipInfoTransliteration: "false",
-  tooltipWordDictionary: "true",
-
-  // exclude
-  langExcludeList: [],
-  websiteExcludeList: ["*.example.com"],
-
-  // remains
-  subtitleButtonToggle: "true",
-  historyList: [],
-  historyRecordActions: [],
-  ignoreCallbackOptionList: ["historyList"],
-  popupCount: "0",
-  coffeeCount: "0",  
-  langPriority: { auto: 9999999, null: 9999999 },
-  tooltipEventInterval: "0.3",
-
-  cardPlayMeta: ["image"],
-  cardTagSelected: [],
-  deckStatus: {},
-  cardLen: {},
-};
 
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
@@ -108,8 +29,6 @@ var reviewUrlJson = {
 export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
 
-var listenEngine;
-var listening = false;
 
 //setting util======================================
 
@@ -694,7 +613,14 @@ export function isEdge() {
 
 export function extractTextFromHtml(html) {
   filterJapanFurigana(html);
-  return html.textContent;
+  var text=html.textContent;
+  text = filterWord(text); //filter out one that is url,no normal char
+  return text
+}
+
+export function extractTextFromRange(range) {
+  var rangeHtml = range.cloneContents();
+  return extractTextFromHtml(rangeHtml);
 }
 
 export function filterJapanFurigana(html) {
@@ -909,69 +835,4 @@ export function openAudioPermissionPage() {
 
 export function openPage(url) {
   browser.tabs.create({ url });
-}
-
-// speech recognition================================
-
-export function initSpeechRecognition(recognitionCallbackFn, finCallbackFn) {
-  // future plan, migration to background service worker
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    return;
-  }
-  listenEngine = new SpeechRecognition();
-  listenEngine.continuous = true;
-  listenEngine.interimResults = true;
-  listenEngine.onstart = function () {
-    listening = true;
-  };
-  listenEngine.onerror = function (event) {
-    console.log(event);
-  };
-  listenEngine.onend = function () {
-    listening = false;
-    finCallbackFn();
-  };
-
-  listenEngine.onresult = function (event) {
-    var isFinal = false;
-    var interimTranscript = "";
-    var finalTranscript = "";
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        finalTranscript = event.results[i][0].transcript;
-        isFinal = true;
-      } else {
-        interimTranscript += event.results[i][0].transcript;
-      }
-    }
-    recognitionCallbackFn(finalTranscript || interimTranscript, isFinal);
-    // console.log("-------------------------------");
-    // console.log(finalTranscript);
-    // console.log(interimTranscript);
-  };
-}
-
-export function setSpeechRecognitionLang(lang) {
-  if (!listenEngine) {
-    return;
-  }
-  listenEngine.lang = lang;
-}
-
-export function stopSpeechRecognition() {
-  if (!listening) {
-    return;
-  }
-  // console.log("stop listen");
-  listenEngine?.stop();
-}
-
-export function startSpeechRecognition() {
-  if (listening || !listenEngine) {
-    return;
-  }
-  // console.log("start listen");
-  listenEngine?.start();
 }
