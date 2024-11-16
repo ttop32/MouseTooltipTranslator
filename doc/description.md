@@ -19,7 +19,7 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.156
+- 0.1.157
   - Vietnamese localization (contributed by Duong.Kayce )
   - add auto reader on F2 key
 - 0.1.156
