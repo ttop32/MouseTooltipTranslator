@@ -36,13 +36,14 @@ Proletarier aller Länder, vereinigt euch!
 
 ![result](/doc/15.gif)
 
+- Run auto reader by press <kbd>F2</kbd> key (default)
+  - it will read text all the way with tts
+  - To stop the auto reader press <kbd>Esc</kbd> 
 - Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key (default).
   - Default speech recognition language is English.
   - If the speech recognition language and target language are the same, it skips.
   - Audio permission is required
   - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-- Run auto reader by press <kbd>F2</kbd> key (default)
-  - it will read text all the way with tts
 - Customize shortcut key
   - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
 # Change Language
