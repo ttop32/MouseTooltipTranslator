@@ -5,7 +5,7 @@
 ```console
 Proletarier aller Länder, vereinigt euch!
 ```
-  - If the translation isn't working, verify that the correct target language is selected.
+  - If the translation isn't working, check current target language
     - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
     - This translator will omit text if the source and target languages are identical.
 
@@ -41,6 +41,8 @@ Proletarier aller Länder, vereinigt euch!
   - If the speech recognition language and target language are the same, it skips.
   - Audio permission is required
   - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
+- Run auto reader by press <kbd>F2</kbd> key (default)
+  - it will read text all the way with tts
 - Customize shortcut key
   - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
 # Change Language
@@ -57,7 +59,7 @@ Proletarier aller Länder, vereinigt euch!
 - If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
 - If no local file permission given, local pdf cannot be handled.
   - If the file doesn't open, try dragging and dropping it onto the tab.
-  - It will not display a permission warning and instead redirect to the permission page.
+  - It will display a permission warning and redirect to the permission page.
   - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-    
+  - Reopen PDF to affect right away
 ![result](/doc/10.gif)

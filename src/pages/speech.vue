@@ -28,6 +28,7 @@
 import * as util from "/src/util";
 
 import _ from "lodash";
+import * as speech from "/src/speech";
 
 export default {
   name: "SpeechView",
@@ -49,17 +50,17 @@ export default {
   async mounted() {
     this.setting = await util.loadSetting(() => {
       this.initSpeechConfig();
-      util.stopSpeechRecognition();
+      speech.stopSpeechRecognition();
     });
     this.checkMicrophone();
     this.loadSpeechEngine();
     this.initSpeechConfig();
-    util.startSpeechRecognition();
+    speech.startSpeechRecognition();
   },
 
   methods: {
     loadSpeechEngine() {
-      util.initSpeechRecognition(this.handleSpeechText, this.handleFinish);
+      speech.initSpeechRecognition(this.handleSpeechText, this.handleFinish);
     },
 
     initSpeechConfig() {
@@ -137,11 +138,11 @@ Check any microphone is correctly connected`);
     },
 
     initSpeechLang() {
-      util.setSpeechRecognitionLang(this.setting["speechRecognitionLanguage"]);
+      speech.setSpeechRecognitionLang(this.setting["speechRecognitionLanguage"]);
     },
     handleFinish() {
       // restart if fin
-      util.startSpeechRecognition();
+      speech.startSpeechRecognition();
     },
     async handleSpeechText(text, isFinal) {
       var timestamp = Date.now();

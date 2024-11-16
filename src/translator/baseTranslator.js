@@ -1,4 +1,3 @@
-import { isEmpty, invert } from "lodash";
 
 export default class BaseTranslator {
   static langCodeJson = {};
@@ -29,12 +28,21 @@ export default class BaseTranslator {
     return this.langCodeJson[lang] ? this.langCodeJson[lang] : lang;
   }
   static decodeLangCode(lang) {
-    if (isEmpty(this.langCodeJsonSwapped)) {
-      this.langCodeJsonSwapped = invert(this.langCodeJson);
+    if (this.isEmpty(this.langCodeJsonSwapped)) {
+      this.langCodeJsonSwapped = this.invertJson(this.langCodeJson);
     }
     return this.langCodeJsonSwapped[lang]
       ? this.langCodeJsonSwapped[lang]
       : lang;
+  }
+  static invertJson(jsonData){
+    return Object.fromEntries(Object.entries(jsonData).map(([key, value]) => [value, key]));
+  }
+  static isEmpty(obj) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
   }
 
   static async requestTranslate(text, sourceLang, targetLang) {
