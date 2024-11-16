@@ -107,37 +107,6 @@ function extractTextFromRange(range) {
   var rangeHtml = range.cloneContents();
   return util.extractTextFromHtml(rangeHtml);
 }
-function getNextWordRange(range) {
-  var next=nextRange(range)
-  while(true){
-    var nextExpand=expandRange(next, detectType);
-    var nextText=        extractTextFromRange(nextExpand);
-    if(nextText!=text){
-      console.log(nextText);
-      break;
-    }
-    var next=  nextRange(next)
-  }
-}
-
-function nextRange(range){
-  var rangeClone = range.cloneRange();
-  if (rangeClone.endOffset + 1 > rangeClone.endContainer.length) {
-    let nextNode = rangeClone.endContainer.nextSibling;
-    while (nextNode && nextNode.nodeType !== Node.TEXT_NODE) {
-      nextNode = nextNode.nextSibling;
-    }
-    if (nextNode) {
-      rangeClone.setEnd(nextNode, Math.min(1, nextNode.length));
-    }
-  } else {
-    rangeClone.setEnd(rangeClone.endContainer, rangeClone.endOffset + 1);
-
-  }
-  rangeClone.collapse(false);
-  return rangeClone;
-
-}
 
 function expandRange(range, type) {
   try {
@@ -510,3 +479,79 @@ function getCenterXY(ele) {
   const centerY = top + height / 2;
   return { x: centerX, y: centerY };
 }
+
+
+// get next range ===========================
+
+export function getNextExpand(range, detectType) {
+  var text = extractTextFromRange(range);
+  var next = range;
+  var nextText = text;
+  while (text === nextText && next) {
+    console.log("diff", text, nextText);
+    next = getNext(next);
+    next = expandRange(next, detectType);
+    nextText = extractTextFromRange(next);
+  }
+  return next;
+}
+
+
+function getNext(range) {
+  const endContainer = range.endContainer;
+  const endOffset = range.endOffset;
+  var {node, index,isLast }=  getNextOffset1(endContainer, endOffset+1);  
+  var rangeClone = range.cloneRange();
+  rangeClone.setStart(endContainer, endOffset);
+  rangeClone.setEnd(node, index);
+  return rangeClone;
+}
+
+
+
+function getNextOffset1(ele,offset) {
+  if (!ele) {
+    return;
+  }
+  var {node, index,isLast }=  selectNode(ele, offset+1);  
+  if (isLast || index>=node.length) {
+    var nextElement = getNextEle(ele);
+    return getNextOffset1(nextElement,0);
+  }
+
+  return {node, index,isLast}
+}
+
+function getNextEle(ele){
+  if (ele === document.body || ele instanceof ShadowRoot) {
+    return ;
+  }
+  return ele.nextElementSibling || getNextEle(ele.parentElement)  
+}
+
+
+// var ele=document.querySelector("#L1")
+// var range=document.createRange();
+// range.setStart(ele,0);
+// var {node,index}=selectNode(ele,2)
+// range.setEnd(node,index);
+// var text=range.toString();
+// console.log(ele)
+// console.log(text)
+// console.log(range)
+// var text=range.toString();
+// console.log(text)
+
+// var range1=expandRange(range,"word");
+// var text=range1.toString();
+// console.log(text)
+
+// var detectType="sentence";
+
+// // do 10 times
+// for (let i = 0; i < 20; i++) {
+//   var range2=getNextExpand(range1, detectType)
+//   var text=range2.toString();
+//   console.log(i,text)
+//   range1=range2;
+// }
