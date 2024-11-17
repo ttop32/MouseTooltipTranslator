@@ -104,8 +104,8 @@ const common = {
           from: "**/*",
           context: "public",
           filter: (resourcePath) => {
-            const excludeList = [".pdf",".map"];
-            return !excludeList.some(ext => resourcePath.endsWith(ext));
+            const excludeList = ["compressed.tracemonkey-pldi-09.pdf",".md",".map"];
+            return !excludeList.some((excludeItem) => resourcePath.includes(excludeItem));
           },
         },
       ],
