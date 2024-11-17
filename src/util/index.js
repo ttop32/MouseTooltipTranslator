@@ -1,7 +1,7 @@
 
 import _ from "lodash";
-import { iso6393To1 } from "iso-639-3";
-import { francAll } from "franc";
+// import { iso6393To1 } from "iso-639-3";
+// import { francAll } from "franc";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import TextUtil from "/src/util/text_util.js";
 
@@ -9,10 +9,6 @@ var browser;
 try {
   browser = require("webextension-polyfill");
 } catch (error) {}
-
-import {
-  rtlLangList,
-} from "/src/util/lang.js";
 
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
@@ -189,14 +185,6 @@ export function addCommandListener(type, handler) {
 
 // remain ===================
 
-export function isRtl(lang) {
-  return rtlLangList.includes(lang);
-}
-
-export function getRtlDir(lang) {
-  return rtlLangList.includes(lang) ? "rtl" : "ltr";
-}
-
 export function checkInDevMode() {
   try {
     if (process.env.NODE_ENV == "development") {
@@ -281,11 +269,11 @@ function isBacgroundServiceWorker() {
   }
 }
 
-export function detectLangFranc(text) {
-  var detectLangData = francAll(text, { minLength: 0 })?.[0]?.[0];
-  var lang = iso6393To1[detectLangData];
-  return lang;
-}
+// export function detectLangFranc(text) {
+//   var detectLangData = francAll(text, { minLength: 0 })?.[0]?.[0];
+//   var lang = iso6393To1[detectLangData];
+//   return lang;
+// }
 
 export async function detectLangBrowser(text) {
   var detectLangData = await browser.i18n.detectLanguage(text);
@@ -599,4 +587,20 @@ export function openAudioPermissionPage() {
 
 export function openPage(url) {
   browser.tabs.create({ url });
+}
+
+
+
+
+// range util====================================================================================
+
+function getAllShadows(el = document.body) {
+  // https://stackoverflow.com/questions/38701803/how-to-get-element-in-user-agent-shadow-root-with-javascript
+  // recurse on childShadows
+  const childShadows = Array.from(el.querySelectorAll("*"))
+    .map((el) => el.shadowRoot)
+    .filter(Boolean);
+  const childResults = childShadows.map((child) => getAllShadows(child));
+  const result = Array.from(childShadows);
+  return result.concat(childResults).flat();
 }

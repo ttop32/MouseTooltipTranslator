@@ -30,6 +30,7 @@ import * as util from "/src/util";
 import _ from "lodash";
 import * as speech from "/src/speech";
 import SettingUtil from "/src/util/setting_util.js";
+import { getRtlDir } from "/src/util/lang.js";
 
 export default {
   name: "SpeechView",
@@ -169,8 +170,8 @@ Check any microphone is correctly connected`);
     },
 
     addNewTextBox() {
-      var mainDir = util.getRtlDir(this.setting["speechRecognitionLanguage"]);
-      var subDir = util.getRtlDir(this.setting["translateTarget"]);
+      var mainDir = getRtlDir(this.setting["speechRecognitionLanguage"]);
+      var subDir = getRtlDir(this.setting["translateTarget"]);
       if (
         this.speechTextList.length == 0 ||
         this.speechTextList[this.speechTextList.length - 1].isFinal

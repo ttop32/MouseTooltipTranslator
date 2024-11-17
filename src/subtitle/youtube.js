@@ -2,6 +2,7 @@ import $ from "jquery";
 import memoize from "memoizee";
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
+// import { isRtl, } from "/src/util/lang.js";
 
 // https://terrillthompson.com/648
 // https://developers.google.com/youtube/iframe_api_reference
@@ -155,7 +156,7 @@ export default class Youtube extends BaseVideo {
 
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
-    var isRtl = util.isRtl(lang);
+    // var isRtl = util.isRtl(lang);
     var newEvents = [];
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {

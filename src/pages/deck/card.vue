@@ -129,6 +129,7 @@
 <script>
 import * as util from "/src/util";
 import Deck from "/src/flashcard/deck.js";
+import { getRtlDir } from "/src/util/lang.js";
 
 import _ from "lodash";
 import { mapState } from "pinia";
@@ -357,7 +358,7 @@ export default {
       );
     },
     getRtlDir(lang) {
-      return util.getRtlDir(lang);
+      return getRtlDir(lang);
     },
     async preLoadImage() {
       for (var card of this.deck.getStagedCards()) {
