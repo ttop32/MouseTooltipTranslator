@@ -2,7 +2,6 @@
 import _ from "lodash";
 import { iso6393To1 } from "iso-639-3";
 import { francAll } from "franc";
-import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import TextUtil from "/src/util/text_util.js";
 
@@ -11,13 +10,8 @@ try {
   browser = require("webextension-polyfill");
 } catch (error) {}
 
-import { Setting } from "./setting.js";
-import {defaultData} from "./setting_default.js"
-
 import {
   rtlLangList,
-  bingTtsVoiceList,
-  googleTranslateTtsLangList,
 } from "/src/util/lang.js";
 
 var reviewUrlJson = {
@@ -31,157 +25,7 @@ export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
 
 
-//setting util======================================
-
-export async function loadSetting(settingUpdateCallbackFn) {
-  var settingDefault = await getDefaultDataAll();
-  return await Setting.loadSetting(settingDefault, settingUpdateCallbackFn);
-}
-
-export async function getDefaultDataAll() {
-  var defaultList = {};
-  defaultList = TextUtil.concatJson(defaultList, defaultData);
-  defaultList["translateTarget"] = getDefaultLang();
-  defaultList = TextUtil.concatJson(defaultList, await getDefaultVoice());
-  return defaultList;
-}
-
-export function getDefaultLang() {
-  return parseLocaleLang(navigator.language);
-}
-
-export function parseLocaleLang(localeLang) {
-  var langCovert = {
-    zh: "zh-CN",
-    he: "iw",
-    fil: "tl",
-  };
-  var lang = parse(localeLang).language;
-  lang = langCovert[lang] || lang;
-  lang = localeLang == "zh-TW" ? "zh-TW" : lang;
-  return lang;
-}
-
-export async function getDefaultVoice() {
-  var defaultVoice = {};
-  var voiceList = await getAllVoiceList();
-  for (var key in voiceList) {
-    defaultVoice["ttsVoice_" + key] = voiceList[key][0];
-  }
-  return defaultVoice;
-}
-
-export async function getAllVoiceList() {
-  var browserVoices = await getBrowserTtsVoiceList();
-  var bingVoices = getBingTtsVoiceList();
-  var googleTranslateVoices = getgoogleTranslateTtsVoiceList();
-  var voiceList = concatVoice(browserVoices, bingVoices);
-  var voiceList = concatVoice(voiceList, googleTranslateVoices);
-  voiceList = TextUtil.sortJsonByKey(voiceList);
-  return voiceList;
-}
-
-export function getBrowserTtsVoiceList() {
-  return new Promise(async (resolve) => {
-    var voiceList = {};
-    try {
-      // get voice list
-      //get one that include remote, lang, voiceName
-      //sort remote first;
-      var voices = await browser.tts.getVoices();
-      let filtered = voices
-        .filter((e) => {
-          return e.remote != null && e.lang != null && e.voiceName != null;
-        })
-        .sort((x, y) => {
-          return y.remote - x.remote;
-        });
-      //find matched lang voice and speak
-      for (var item of filtered) {
-        var lang = parseLocaleLang(item.lang);
-        voiceList[lang] = voiceList[lang] || [];
-        voiceList[lang].push(item.voiceName);
-      }
-      resolve(voiceList);
-    } catch (err) {
-      resolve(voiceList);
-    }
-  });
-}
-
-export function getBingTtsVoiceList() {
-  var bingTaggedVoiceList = {};
-  for (var key in bingTtsVoiceList) {
-    var voiceList = [...bingTtsVoiceList[key]];
-    voiceList = voiceList.map((voiceName) => "BingTTS_" + voiceName);
-    bingTaggedVoiceList[key] = voiceList;
-  }
-  return bingTaggedVoiceList;
-}
-
-export function getgoogleTranslateTtsVoiceList() {
-  var voiceList = {};
-  for (var lang of googleTranslateTtsLangList) {
-    voiceList[lang] = ["GoogleTranslateTTS_" + lang];
-  }
-  return voiceList;
-}
-
-function concatVoice(voiceList1, voiceList2) {
-  var voiceNewList = {};
-  for (var key in voiceList1) {
-    voiceNewList[key] = voiceList1[key];
-  }
-  for (var key in voiceList2) {
-    if (key in voiceNewList) {
-      voiceNewList[key] = voiceNewList[key].concat(voiceList2[key]);
-    } else {
-      voiceNewList[key] = voiceList2[key];
-    }
-  }
-  return voiceNewList;
-}
-
-
-export async function getSpeechTTSVoiceList() {
-  if (isBacgroundServiceWorker()) {
-    return {};
-  }
-  // get voice list
-  //get one that include remote, lang, voiceName
-  //sort remote first;
-  var voiceList = {};
-  var voices = await getSpeechVoices();
-  let filtered = voices
-    .filter((i) => i.lang && i.name)
-    .sort((x, y) => {
-      return y.localService - x.localService;
-    });
-  //find matched lang voice and speak
-  for (var item of filtered) {
-    var lang = parseLocaleLang(item.lang);
-    voiceList[lang] = voiceList[lang] || [];
-    voiceList[lang].push(item.name);
-  }
-  return voiceList;
-}
-
-export async function getSpeechVoices() {
-  return new Promise(function (resolve, reject) {
-    let voices = window.speechSynthesis.getVoices();
-    if (voices.length !== 0) {
-      resolve(voices);
-    } else {
-      window.speechSynthesis.addEventListener("voiceschanged", function () {
-        voices = window.speechSynthesis.getVoices();
-        resolve(voices);
-      });
-    }
-  });
-}
-
-
-
+  
 //rect===============================
 
 export function filterOverlappedRect(rects) {

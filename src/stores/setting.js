@@ -3,6 +3,7 @@ import { isProxy, toRaw, ref, watch, reactive } from "vue";
 
 // import { useUserStore } from "./user";
 import * as util from "/src/util";
+import SettingUtil from "/src/util/setting_util.js";
 
 export const useSettingStore = defineStore("setting", {
   state: () => {
@@ -13,7 +14,7 @@ export const useSettingStore = defineStore("setting", {
   },
   actions: {
     async loadSetting() {
-      this.setting = await util.loadSetting();
+      this.setting = await SettingUtil.loadSetting();
       this.isLoaded = true;
     },
     saveSetting() {
@@ -27,12 +28,12 @@ export const useSettingStore = defineStore("setting", {
 
 // export const useSettingStore = defineStore("setting", async () => {
 //   // state
-//   var setting = reactive(await util.loadSetting());
+//   var setting = reactive(await SettingUtil.loadSetting());
 //   var isLoaded = ref(false);
 
 //   // action
 //   var loadSetting = async () => {
-//     // setting = await util.loadSetting();
+//     // setting = await SettingUtil.loadSetting();
 //     isLoaded = true;
 //   };
 

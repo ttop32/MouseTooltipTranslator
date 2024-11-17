@@ -116,6 +116,7 @@ import browser from "webextension-polyfill";
 import { isProxy, toRaw } from "vue";
 import _ from "lodash";
 import TextUtil from "/src/util/text_util.js";
+import SettingUtil from "/src/util/setting_util.js";
 
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
@@ -617,7 +618,7 @@ export default {
     },
     async addTtsVoiceTabOption() {
       var voiceTabOption = {};
-      var availableVoiceList = await util.getAllVoiceList();
+      var availableVoiceList = await SettingUtil.getAllVoiceList();
 
       for (var key in langListOpposite) {
         if (!(key in availableVoiceList)) {
