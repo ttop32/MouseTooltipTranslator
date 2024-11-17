@@ -712,3 +712,13 @@ export var listenLangList = {
   Ukrainian: "uk-UA",
   Zulu: "zu-ZA",
 };
+
+
+
+export function isRtl(lang) {
+  return rtlLangList.includes(lang);
+}
+
+export function getRtlDir(lang) {
+  return rtlLangList.includes(lang) ? "rtl" : "ltr";
+}

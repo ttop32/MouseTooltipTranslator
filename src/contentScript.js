@@ -9,6 +9,7 @@ import delay from "delay";
 import browser from "webextension-polyfill";
 import TextUtil from "/src/util/text_util.js";
 import SettingUtil from "/src/util/setting_util.js";
+import { getRtlDir } from "/src/util/lang.js";
 
 import {
   enableSelectionEndEvent,
@@ -323,7 +324,7 @@ function wrapMain(targetText, targetLang) {
     return "";
   }
   return $("<span/>", {
-    dir: util.getRtlDir(targetLang),
+    dir: getRtlDir(targetLang),
     text: targetText,
   }).prop("outerHTML");
 }
@@ -354,7 +355,7 @@ function wrapInfoText(text, type, dirLang = null) {
     return "";
   }
   return $(`<${type}/>`, {
-    dir: util.getRtlDir(dirLang),
+    dir: getRtlDir(dirLang),
     text: "\n" + text,
   }).prop("outerHTML");
 }
