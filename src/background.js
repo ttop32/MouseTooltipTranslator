@@ -3,7 +3,7 @@
 //listen context menu, uninstall, first install, extension update
 
 import browser from "webextension-polyfill";
-import delay from "delay";
+import TextUtil from "/src/util/text_util.js";
 
 import translator from "./translator/index.js";
 import tts from "./tts/index.js";
@@ -142,13 +142,14 @@ function recordHistory({
   insertHistory();
 }
 
+
 function insertHistory(actionType) {
   if (
     setting["historyRecordActions"].includes(recentRecord.actionType) ||
     actionType
   ) {
     var newRecord = actionType
-      ? util.concatJson(recentRecord, { actionType })
+      ? TextUtil.concatJson(recentRecord, { actionType })
       : recentRecord;
     var prevRecord = setting["historyList"][0];
 
@@ -193,7 +194,7 @@ async function updateCopyContext({ targetText }) {
   //create new menu
   browser.contextMenus.create({
     id: "copy",
-    title: "Copy : " + util.truncate(targetText, 20),
+    title: "Copy : " + TextUtil.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });

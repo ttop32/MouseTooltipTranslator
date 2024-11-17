@@ -1,10 +1,11 @@
 
-import isUrl from "is-url";
 import _ from "lodash";
 import { iso6393To1 } from "iso-639-3";
 import { francAll } from "franc";
 import { parse } from "bcp-47";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
+import TextUtil from "/src/util/text_util.js";
+
 var browser;
 try {
   browser = require("webextension-polyfill");
@@ -39,9 +40,9 @@ export async function loadSetting(settingUpdateCallbackFn) {
 
 export async function getDefaultDataAll() {
   var defaultList = {};
-  defaultList = concatJson(defaultList, defaultData);
+  defaultList = TextUtil.concatJson(defaultList, defaultData);
   defaultList["translateTarget"] = getDefaultLang();
-  defaultList = concatJson(defaultList, await getDefaultVoice());
+  defaultList = TextUtil.concatJson(defaultList, await getDefaultVoice());
   return defaultList;
 }
 
@@ -76,7 +77,7 @@ export async function getAllVoiceList() {
   var googleTranslateVoices = getgoogleTranslateTtsVoiceList();
   var voiceList = concatVoice(browserVoices, bingVoices);
   var voiceList = concatVoice(voiceList, googleTranslateVoices);
-  voiceList = sortJsonByKey(voiceList);
+  voiceList = TextUtil.sortJsonByKey(voiceList);
   return voiceList;
 }
 
@@ -107,6 +108,40 @@ export function getBrowserTtsVoiceList() {
     }
   });
 }
+
+export function getBingTtsVoiceList() {
+  var bingTaggedVoiceList = {};
+  for (var key in bingTtsVoiceList) {
+    var voiceList = [...bingTtsVoiceList[key]];
+    voiceList = voiceList.map((voiceName) => "BingTTS_" + voiceName);
+    bingTaggedVoiceList[key] = voiceList;
+  }
+  return bingTaggedVoiceList;
+}
+
+export function getgoogleTranslateTtsVoiceList() {
+  var voiceList = {};
+  for (var lang of googleTranslateTtsLangList) {
+    voiceList[lang] = ["GoogleTranslateTTS_" + lang];
+  }
+  return voiceList;
+}
+
+function concatVoice(voiceList1, voiceList2) {
+  var voiceNewList = {};
+  for (var key in voiceList1) {
+    voiceNewList[key] = voiceList1[key];
+  }
+  for (var key in voiceList2) {
+    if (key in voiceNewList) {
+      voiceNewList[key] = voiceNewList[key].concat(voiceList2[key]);
+    } else {
+      voiceNewList[key] = voiceList2[key];
+    }
+  }
+  return voiceNewList;
+}
+
 
 export async function getSpeechTTSVoiceList() {
   if (isBacgroundServiceWorker()) {
@@ -145,122 +180,7 @@ export async function getSpeechVoices() {
   });
 }
 
-export function getBingTtsVoiceList() {
-  var bingTaggedVoiceList = {};
-  for (var key in bingTtsVoiceList) {
-    var voiceList = [...bingTtsVoiceList[key]];
-    voiceList = voiceList.map((voiceName) => "BingTTS_" + voiceName);
-    bingTaggedVoiceList[key] = voiceList;
-  }
-  return bingTaggedVoiceList;
-}
 
-export function getgoogleTranslateTtsVoiceList() {
-  var voiceList = {};
-  for (var lang of googleTranslateTtsLangList) {
-    voiceList[lang] = ["GoogleTranslateTTS_" + lang];
-  }
-  return voiceList;
-}
-
-function concatVoice(voiceList1, voiceList2) {
-  var voiceNewList = {};
-  for (var key in voiceList1) {
-    voiceNewList[key] = voiceList1[key];
-  }
-  for (var key in voiceList2) {
-    if (key in voiceNewList) {
-      voiceNewList[key] = voiceNewList[key].concat(voiceList2[key]);
-    } else {
-      voiceNewList[key] = voiceList2[key];
-    }
-  }
-  return voiceNewList;
-}
-
-// range util====================================================================================
-
-export function getAllShadows(el = document.body) {
-  // https://stackoverflow.com/questions/38701803/how-to-get-element-in-user-agent-shadow-root-with-javascript
-  // recurse on childShadows
-  const childShadows = Array.from(el.querySelectorAll("*"))
-    .map((el) => el.shadowRoot)
-    .filter(Boolean);
-  const childResults = childShadows.map((child) => getAllShadows(child));
-  const result = Array.from(childShadows);
-  return result.concat(childResults).flat();
-}
-
-// text util==================================
-
-export function concatJson(x, y) {
-  return Object.assign(x, y);
-}
-
-export function copyJson(json) {
-  return JSON.parse(JSON.stringify(json));
-}
-
-export function sortJsonByKey(json) {
-  return Object.keys(json)
-    .sort()
-    .reduce((obj, key) => {
-      obj[key] = json[key];
-      return obj;
-    }, {});
-}
-
-export function getJsonFromList(list) {
-  var json = {};
-  for (const [key, val] of Object.entries(list)) {
-    json[val] = val;
-  }
-  return json;
-}
-
-export function filterWord(word) {
-  // filter one that only include num,space and special char(include currency sign) as combination
-  word = trimAllSpace(word);
-  // word=word.slice(0,1000);
-  if (
-    word.length > 1000 || //filter out text that has over 1000length
-    isUrl(word) || //if it is url
-    !/[^\s\d»«…~`!@#$%^&*()‑_+\-=\[\]{};、':"\\|,.<>\/?\$\xA2-\xA5\u058F\u060B\u09F2\u09F3\u09FB\u0AF1\u0BF9\u0E3F\u17DB\u20A0-\u20BD\uA838\uFDFC\uFE69\uFF04\uFFE0\uFFE1\uFFE5\uFFE6\p{Extended_Pictographic}]/gu.test(
-      word
-    )
-  ) {
-    word = "";
-  }
-  return word;
-}
-
-export function trimAllSpace(word) {
-  if (!word) {
-    return "";
-  }
-  word = word.replace(/\s+/g, " "); //replace whitespace as single space
-  word = word.trim(); // remove whitespaces from begin and end of word
-  return word;
-}
-
-export function filterEmoji(word) {
-  word = trimAllSpace(word);
-  return word.replace(
-    /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
-    ""
-  );
-}
-export function filterHtmlTag(word) {
-  return word.replace(/([<>])/g, "");
-}
-
-export function truncate(str, n) {
-  return str.length > n ? str.slice(0, n - 1) + "..." : str;
-}
-
-export function copyTextToClipboard(text) {
-  navigator.clipboard.writeText(text);
-}
 
 //rect===============================
 
@@ -614,7 +534,7 @@ export function isEdge() {
 export function extractTextFromHtml(html) {
   filterJapanFurigana(html);
   var text=html.textContent;
-  text = filterWord(text); //filter out one that is url,no normal char
+  text = TextUtil.filterWord(text); //filter out one that is url,no normal char
   return text
 }
 

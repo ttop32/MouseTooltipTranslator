@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
 
 import * as util from "/src/util";
+import TextUtil from "/src/util/text_util.js";
 
 export default class BaseTTS {
   static stopTtsTimestamp = 0;
@@ -13,8 +14,8 @@ export default class BaseTTS {
     if (Number(timestamp) < this.stopTtsTimestamp) {
       return;
     }
-    text = util.filterEmoji(text);
-    text = util.filterHtmlTag(text);
+    text = TextUtil.filterEmoji(text);
+    text = TextUtil.filterHtmlTag(text);
     volume = Number(volume);
     rate = Number(rate);
     await this.playTTSEngine(text, voice, lang, rate, volume, timestamp);

@@ -7,6 +7,7 @@ var browser;
 try {
   browser = require("webextension-polyfill");
 } catch (error) {}
+import TextUtil from "/src/util/text_util.js";
 
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
@@ -260,10 +261,7 @@ export default class BaseVideo {
     //get params
     let params = new URL(url).searchParams;
     var paramsJson = Object.fromEntries(params);
-    return this.concatJson(pathJson, paramsJson);
-  }
-  static concatJson(x, y) {
-    return Object.assign(x, y);
+    return TextUtil.concatJson(pathJson, paramsJson);
   }
   static filterSpecialText(word) {
     return word.replace(/[^a-zA-Z ]/g, "");

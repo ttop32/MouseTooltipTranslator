@@ -55,9 +55,9 @@
 </template>
 <script>
 import _ from "lodash";
-import * as util from "/src/util";
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
+import TextUtil from "/src/util/text_util.js";
 
 export default {
   name: "HistoryView",
@@ -116,7 +116,7 @@ export default {
         headerKey.forEach(
           (key) =>
             (line +=
-              util.trimAllSpace(history[key]).replace(/[,#'"]/g, " ") + ",")
+            TextUtil.trimAllSpace(history[key]).replace(/[,#'"]/g, " ") + ",")
         );
         return line;
       });
