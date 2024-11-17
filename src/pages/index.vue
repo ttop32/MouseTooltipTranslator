@@ -121,13 +121,13 @@ import SettingUtil from "/src/util/setting_util.js";
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
 
-import * as util from "/src/util";
 import {
   langList,
   langListOpposite,
   ocrLangList,
   listenLangList,
 } from "/src/util/lang.js";
+import _util from "/src/util/lodash_util.js";
 
 var langListWithAuto = TextUtil.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = TextUtil.concatJson({ None: "null" }, langList); //copy lang and add none
@@ -181,14 +181,16 @@ var translateActionList = {
   "Mouseover & Select": "mouseoverselect",
 };
 
-var tooltipFontSizeList = util.getRangeOption(6, 41, 2, 0);
-var tooltipWidth = util.getRangeOption(100, 1001, 100, 0);
-var voiceVolumeList = util.getRangeOption(0, 1.1, 0.1, 1);
-var voiceRateList = util.getRangeOption(0.5, 2.1, 0.1, 1);
-var voiceRepeatList = util.getRangeOption(1, 11);
-var tooltipBackgroundBlurList = util.getRangeOption(0, 21);
-var distanceList = util.getRangeOption(0, 41);
-var tooltipIntervalTimeList = util.getRangeOption(0.1, 2.1, 0.1, 1);
+
+
+var tooltipFontSizeList = _util.getRangeOption(6, 41, 2, 0);
+var tooltipWidth = _util.getRangeOption(100, 1001, 100, 0);
+var voiceVolumeList = _util.getRangeOption(0, 1.1, 0.1, 1);
+var voiceRateList = _util.getRangeOption(0.5, 2.1, 0.1, 1);
+var voiceRepeatList = _util.getRangeOption(1, 11);
+var tooltipBackgroundBlurList = _util.getRangeOption(0, 21);
+var distanceList = _util.getRangeOption(0, 41);
+var tooltipIntervalTimeList = _util.getRangeOption(0.1, 2.1, 0.1, 1);
 
 var tooltipPositionList = {
   Follow: "follow",

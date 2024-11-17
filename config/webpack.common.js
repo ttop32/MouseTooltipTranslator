@@ -23,6 +23,11 @@ const common = {
     errors: true,
     builtAt: true,
   },
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm-bundler.js",
+    },
+  },
   module: {
     rules: [
       {
@@ -99,7 +104,8 @@ const common = {
           from: "**/*",
           context: "public",
           filter: (resourcePath) => {
-            return !resourcePath.includes(".map");
+            const excludeList = [".pdf",".map"];
+            return !excludeList.some(ext => resourcePath.endsWith(ext));
           },
         },
       ],
