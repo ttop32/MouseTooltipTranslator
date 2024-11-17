@@ -29,6 +29,7 @@ import * as util from "/src/util";
 
 import _ from "lodash";
 import * as speech from "/src/speech";
+import SettingUtil from "/src/util/setting_util.js";
 
 export default {
   name: "SpeechView",
@@ -48,7 +49,7 @@ export default {
     };
   },
   async mounted() {
-    this.setting = await util.loadSetting(() => {
+    this.setting = await SettingUtil.loadSetting(() => {
       this.initSpeechConfig();
       speech.stopSpeechRecognition();
     });

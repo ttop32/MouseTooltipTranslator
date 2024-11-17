@@ -8,6 +8,7 @@ import TextUtil from "/src/util/text_util.js";
 import translator from "./translator/index.js";
 import tts from "./tts/index.js";
 import * as util from "/src/util";
+import SettingUtil from "/src/util/setting_util.js";
 
 var setting;
 var recentTranslated = "";
@@ -118,7 +119,7 @@ async function translateWithReverse({
 //setting ============================================================
 
 async function getSetting() {
-  setting = await util.loadSetting();
+  setting = await SettingUtil.loadSetting();
 }
 
 function recordHistory({

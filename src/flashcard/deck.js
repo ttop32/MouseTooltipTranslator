@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import * as util from "/src/util";
+import SettingUtil from "/src/util/setting_util.js";
 
 import { toRaw } from "vue";
 
@@ -77,7 +78,7 @@ export default class Deck {
   constructor() {}
 
   async loadDeck() {
-    this.setting = await util.loadSetting();
+    this.setting = await SettingUtil.loadSetting();
     await this.initCardLen();
     await this.unloadPrevLoadCard();
     await this.loadNewCard();

@@ -1,5 +1,6 @@
 import browser from "webextension-polyfill";
 // import * as util from "/src/util";
+import SettingUtil from "/src/util/setting_util.js";
 
 var audio;
 const speech = window.speechSynthesis;
@@ -51,7 +52,7 @@ function playAudio({ source, rate = 1.0, volume = 1.0, timestamp }) {
 
 async function playSpeechTTS({ text, voice, lang, rate = 1.0, volume = 1.0 }) {
   return new Promise(async (resolve, reject) => {
-    var voices = await util.getSpeechVoices();
+    var voices = await SettingUtil.getSpeechVoices();
     let voiceSelected = voices.filter((voiceData) => {
       return voiceData.name == voice;
     })[0];

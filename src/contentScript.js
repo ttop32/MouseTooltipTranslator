@@ -8,6 +8,7 @@ import matchUrl from "match-url-wildcard";
 import delay from "delay";
 import browser from "webextension-polyfill";
 import TextUtil from "/src/util/text_util.js";
+import SettingUtil from "/src/util/setting_util.js";
 
 import {
   enableSelectionEndEvent,
@@ -709,7 +710,7 @@ function checkExcludeUrl() {
 // setting handling & container style===============================================================
 
 async function getSetting() {
-  setting = await util.loadSetting(function settingCallbackFn() {
+  setting = await SettingUtil.loadSetting(function settingCallbackFn() {
     resetTooltipStatus();
     applyStyleSetting();
     checkVideo();
