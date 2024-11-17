@@ -111,7 +111,7 @@ export default class SettingUtil {
   }
 
   static async getSpeechTTSVoiceList() {
-    if (isBacgroundServiceWorker()) {
+    if (this.isBacgroundServiceWorker()) {
       return {};
     }
     const voiceList = {};
@@ -139,5 +139,13 @@ export default class SettingUtil {
         });
       }
     });
+  }
+
+  static isBacgroundServiceWorker() {
+    try {
+      return !document;
+    } catch (error) {
+      return true;
+    }
   }
 }

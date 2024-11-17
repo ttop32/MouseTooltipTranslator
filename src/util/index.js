@@ -1,5 +1,4 @@
 
-import _ from "lodash";
 // import { iso6393To1 } from "iso-639-3";
 // import { francAll } from "franc";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
@@ -261,14 +260,6 @@ export async function hasFilePermission() {
   return await browser.extension.isAllowedFileSchemeAccess();
 }
 
-function isBacgroundServiceWorker() {
-  try {
-    return !document;
-  } catch (error) {
-    return true;
-  }
-}
-
 // export function detectLangFranc(text) {
 //   var detectLangData = francAll(text, { minLength: 0 })?.[0]?.[0];
 //   var lang = iso6393To1[detectLangData];
@@ -286,27 +277,6 @@ export function getCurrentUrl() {
   return window.location != window.parent.location
     ? document.referrer
     : document.location.href;
-}
-
-export function getRangeOption(start, end, incNum = 1, roundOff = 0) {
-  return _.keyBy(
-    _.range(start, end, incNum)
-      .map((num) => num.toFixed(roundOff))
-      .map((num) => String(num))
-  );
-}
-export function getRecordNoDate(record) {
-  return _.pick(record, [
-    "sourceText",
-    "sourceLang",
-    "targetText",
-    "targetLang",
-    "actionType",
-  ]);
-}
-
-export function getRecordID(record) {
-  return JSON.stringify(getRecordNoDate(record));
 }
 
 export function getDateNow() {

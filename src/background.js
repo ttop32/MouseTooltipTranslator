@@ -9,6 +9,7 @@ import translator from "./translator/index.js";
 import tts from "./tts/index.js";
 import * as util from "/src/util";
 import SettingUtil from "/src/util/setting_util.js";
+import _util from "/src/util/lodash_util.js";
 
 var setting;
 var recentTranslated = "";
@@ -155,7 +156,7 @@ function insertHistory(actionType) {
     var prevRecord = setting["historyList"][0];
 
     //skip if same prev
-    if (util.getRecordID(newRecord) == util.getRecordID(prevRecord)) {
+    if (_util.getRecordID(newRecord) == _util.getRecordID(prevRecord)) {
       return;
     }
     //skip duplicate select
