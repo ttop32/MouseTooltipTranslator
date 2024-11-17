@@ -4,6 +4,7 @@ import textfit from "textfit";
 import delay from "delay";
 
 import * as util from "/src/util";
+import TextUtil from "/src/util/text_util.js";
 
 const windowPostMessageProxy = new WindowPostMessageProxy({
   suppressWarnings: true,
@@ -187,7 +188,7 @@ function getTextBoxList(ocrData) {
     for (var block of data.blocks) {
       // for (var paragraph of block.paragraphs) {
       var text = filterOcrText(block["text"]);
-      text = util.filterWord(text); //filter out one that is url,over 1000length,no normal char
+      text = TextUtil.filterWord(text); //filter out one that is url,over 1000length,no normal char
 
       // console.log(text);
       //if string contains only whitespace, skip

@@ -115,6 +115,7 @@
 import browser from "webextension-polyfill";
 import { isProxy, toRaw } from "vue";
 import _ from "lodash";
+import TextUtil from "/src/util/text_util.js";
 
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
@@ -127,9 +128,9 @@ import {
   listenLangList,
 } from "/src/util/lang.js";
 
-var langListWithAuto = util.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
-var langListWithNone = util.concatJson({ None: "null" }, langList); //copy lang and add none
-var langListWithDefault = util.concatJson({ Default: "default" }, langList); //copy lang
+var langListWithAuto = TextUtil.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
+var langListWithNone = TextUtil.concatJson({ None: "null" }, langList); //copy lang and add none
+var langListWithDefault = TextUtil.concatJson({ Default: "default" }, langList); //copy lang
 
 var toggleList = {
   On: "true",
@@ -622,7 +623,7 @@ export default {
         if (!(key in availableVoiceList)) {
           continue;
         }
-        var voiceOptionList = util.getJsonFromList(availableVoiceList[key]);
+        var voiceOptionList = TextUtil.getJsonFromList(availableVoiceList[key]);
         voiceTabOption["ttsVoice_" + key] = {
           description:
             this.remainSettingDesc["Voice_for_"] + langListOpposite[key],

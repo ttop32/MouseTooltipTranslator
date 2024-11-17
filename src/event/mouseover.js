@@ -166,7 +166,7 @@ export function caretRangeFromPointOnPointedElement(x, y) {
 
 export function caretRangeFromPointOnShadowDom(x, y) {
   // get all text from shadows
-  var shadows = util.getAllShadows();
+  var shadows = getAllShadows();
 
   //filter shadow dom by parent position overlap
   //get all text node
@@ -544,3 +544,18 @@ function getNextEle(ele) {
 //   console.log(i,text)
 //   range1=range2;
 // }
+
+
+
+// range util====================================================================================
+
+function getAllShadows(el = document.body) {
+  // https://stackoverflow.com/questions/38701803/how-to-get-element-in-user-agent-shadow-root-with-javascript
+  // recurse on childShadows
+  const childShadows = Array.from(el.querySelectorAll("*"))
+    .map((el) => el.shadowRoot)
+    .filter(Boolean);
+  const childResults = childShadows.map((child) => getAllShadows(child));
+  const result = Array.from(childShadows);
+  return result.concat(childResults).flat();
+}

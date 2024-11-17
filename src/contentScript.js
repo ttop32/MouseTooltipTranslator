@@ -7,6 +7,7 @@ import tippy, { sticky, hideAll } from "tippy.js";
 import matchUrl from "match-url-wildcard";
 import delay from "delay";
 import browser from "webextension-polyfill";
+import TextUtil from "/src/util/text_util.js";
 
 import {
   enableSelectionEndEvent,
@@ -696,7 +697,7 @@ function checkWindowFocus() {
 function addBackgroundListener() {
   //handle copy
   util.addMessageListener("CopyRequest", (message) => {
-    util.copyTextToClipboard(message.text);
+    TextUtil.copyTextToClipboard(message.text);
   });
 }
 
