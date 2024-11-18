@@ -7,18 +7,18 @@ const PATHS = require("./paths");
 var glob = require("glob");
 var path = require("path");
 const ExtReloader = require("webpack-ext-reloader");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = (env, argv) => {
   console.log(argv.mode);
   return merge(common, {
     mode: argv.mode || "production",
     entry: glob.sync("./src/**/*.js").reduce(function (obj, el) {
-      
       obj[path.parse(el).name] = el;
       return obj;
     }, {}),
     optimization: {
-      minimize: true,
+      minimize: argv.mode === "production",
       minimizer: [
         new TerserPlugin({
           terserOptions: {
@@ -27,6 +27,7 @@ module.exports = (env, argv) => {
             },
           },
         }),
+        new CssMinimizerPlugin(),
       ],
     },
     plugins: [

@@ -55,7 +55,7 @@ var hoveredData = {};
 var stagedText = null;
 var prevTooltipText = "";
 var isAutoReaderRunning = false;
-var stopAutoReader = false;
+var isStopAutoReaderOn = false;
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
@@ -550,7 +550,7 @@ function handleKeydown(e) {
     hideTooltip();
   } else if (e.code == "Escape") {
     util.requestStopTTS();
-    stopAutoReader = true;
+    isStopAutoReaderOn = true;
   } else if (e.key == "HangulMode" || e.key == "Process") {
     return;
   } else if (e.key == "Alt") {
@@ -588,7 +588,7 @@ function holdKeydownList(key) {
   }
   if (util.isCharKey(key)) {
     util.requestStopTTS(Date.now() + 500);
-    stopAutoReader = true;
+    isStopAutoReaderOn = true;
   }
 }
 
@@ -596,20 +596,20 @@ async function initAutoReader() {
   if (!keyDownList[setting["keyDownAutoReader"]]) {
     return;
   }
+  await killAutoReader();
   var hoveredData = await getMouseoverText(clientX, clientY);
   var { mouseoverRange } = extractMouseoverText(hoveredData);
-  stopAutoReader = false;
   runAutoReader(mouseoverRange);
 }
-
 async function runAutoReader(stagedRange) {
-  if (!stagedRange || stopAutoReader) {
+  if (!stagedRange || isStopAutoReaderOn) {
+    resetAutoReader();
     isAutoReaderRunning = false;
     return;
   }
   isAutoReaderRunning = true;
   var text = util.extractTextFromRange(stagedRange);
-  
+
   var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
@@ -631,6 +631,18 @@ async function runAutoReader(stagedRange) {
   runAutoReader(stagedRange);
 }
 
+async function resetAutoReader() {
+  util.requestStopTTS();
+  hideTooltip();
+  isStopAutoReaderOn = false;
+}
+
+async function killAutoReader() {
+  isStopAutoReaderOn = true;
+  util.requestStopTTS();
+  await util.waitUntilForever(() => !isAutoReaderRunning);
+  isStopAutoReaderOn = false;
+}
 function disableEdgeMiniMenu(e) {
   //prevent mouse tooltip overlap with edge mini menu
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
@@ -997,4 +1009,3 @@ function loadSpeechRecognition() {
   );
   speech.initSpeechRecognitionLang(setting);
 }
-
