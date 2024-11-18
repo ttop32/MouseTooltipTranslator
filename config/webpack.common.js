@@ -4,7 +4,6 @@ const SizePlugin = require("size-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const PATHS = require("./paths");
 const ComponentsPlugin = require("unplugin-vue-components/webpack").default;
 const AutoImportPlugin = require("unplugin-auto-import/webpack").default;
@@ -106,12 +105,6 @@ const common = {
     }),
     VueRouterPlugin({}),
   ],
-  optimization: {
-    minimizer: [
-      `...`,
-      new CssMinimizerPlugin(),
-    ],
-  },
 };
 
 module.exports = common;

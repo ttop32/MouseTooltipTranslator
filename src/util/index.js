@@ -564,7 +564,7 @@ export function openPage(url) {
 
 // range util====================================================================================
 
-function getAllShadows(el = document.body) {
+export function getAllShadows(el = document.body) {
   // https://stackoverflow.com/questions/38701803/how-to-get-element-in-user-agent-shadow-root-with-javascript
   // recurse on childShadows
   const childShadows = Array.from(el.querySelectorAll("*"))

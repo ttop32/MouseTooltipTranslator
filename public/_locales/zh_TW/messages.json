@@ -108,7 +108,7 @@
 		"message": "進階"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto_Reader_When"
+		"message": "Auto Reader When"
 	},
 	"Translate_Writing_When": {
 		"message": "何時翻譯書寫"
@@ -270,7 +270,7 @@
 		"message": "標題                                      "
 	},
 	"appName": {
-		"message": "滑鼠工具提示翻譯器 - PDF 和 YouTube 雙字幕"
+		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
 	},
 	"appDesc": {
 		"message": "滑鼠工具提示轉換器使用谷歌翻譯翻譯滑鼠懸停文本。支持 OCR、TTS、漫畫翻譯和 PDF 翻譯。"
