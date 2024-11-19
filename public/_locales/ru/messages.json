@@ -60,7 +60,7 @@
 		"message": "Позиция поля переводчика"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Выравнивание текста в поле переводчика"
+		"message": "Тип выравнивания текста в поле переводчика"
 	},
 	"Tooltip_Background_Blur": {
 		"message": "Размытие фона поля переводчика"
@@ -93,7 +93,7 @@
 		"message": "Скорость голоса"
 	},
 	"Voice_Target": {
-		"message": "Цель воспроизведения"
+		"message": "Цель при воспроизведении текста"
 	},
 	"Voice_Repeat": {
 		"message": "Повторение воспроизведения"
@@ -108,19 +108,19 @@
 		"message": "РАСШИРЕННЫЕ"
 	},
 	"Auto_Reader_When": {
-		"message": "Автоматическое чтение при нажатии"
+		"message": "Автоматическое чтение текста при нажатии"
 	},
 	"Translate_Writing_When": {
-		"message": "Перевод при нажатии"
+		"message": "Перевод текста при нажатии"
 	},
 	"OCR_When": {
 		"message": "Распознавание текста при нажатии"
 	},
 	"Detect_Subtitle": {
-		"message": "Определять наличие субтитров"
+		"message": "Определить тип субтитров"
 	},
 	"Detect_PDF": {
-		"message": "Определять PDF-файлы"
+		"message": "Определять наличие PDF-файла"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Пауза субтитров при наведении курсора"
@@ -129,19 +129,19 @@
 		"message": "Смена типа текста при наведении курсора при нажатии"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "Исходный текст в поле переводчика"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "Информация об исходном тексте в поле переводчика"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "Транслитерация исходного текста в поле переводчика"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "Время интервала до появления поля переводчика"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Пользовательский словарь в поле переводчика"
 	},
 	"SPEECH": {
 		"message": "РЕЧЬ"
@@ -150,16 +150,16 @@
 		"message": "Язык распознавания речи"
 	},
 	"Speech_Recognition_When": {
-		"message": "Распознавание речи когда"
+		"message": "Распознавание речи при нажатии"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Язык обратного перевода в голосовой панели"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Цель текста в голосовой панели"
+		"message": "Цель при наборе текста в голосовой панели"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Размер отступа голосовой панели"
+		"message": "Размер отступа в голосовой панели"
 	},
 	"Voice_Panel_Text_Align": {
 		"message": "Тип выравнивания текста в голосовой панели"
@@ -183,7 +183,7 @@
 		"message": "Цвет рамки переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Цвет фона голосовой панели"
+		"message": "Цвет фона в голосовой панели"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ИСКЛЮЧЕНИЯ                                      "
@@ -198,7 +198,7 @@
 		"message": "Исключить указанный веб-сайт"
 	},
 	"About______________________________________": {
-		"message": "О программе                                      "
+		"message": "Информация о программе                                      "
 	},
 	"How_to_use": {
 		"message": "Инструкция"
@@ -207,16 +207,16 @@
 		"message": "Изучить инструкцию по использованию расширения"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "Просмотр PDF-файла"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Перевести локальный PDF-файл"
+		"message": "Программа для просмотра и перевода локального PDF-файла"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "Просмотр Ebook-файла"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Перевести локальный Ebook-файл"
+		"message": "Программа для просмотра и перевода локального Ebook-файла"
 	},
 	"Twitter": {
 		"message": "X"
@@ -228,7 +228,7 @@
 		"message": "Отзывы"
 	},
 	"Comment_on_this_extension": {
-		"message": "Оценить работу данного расширения"
+		"message": "Прокомментировать работу данного расширения"
 	},
 	"Source_code": {
 		"message": "Исходный код"
@@ -246,22 +246,22 @@
 		"message": "Голосовая панель"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "Голосовой перевод"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "Оценить                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "Оценить работу данного расширения"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "Разработчик любит конструктивную критику"
 	},
 	"Coffee______________________________________": {
 		"message": "Поддержать разработчика                                      "
 	},
 	"Buy_coffee": {
-		"message": "Поддержать разработчика"
+		"message": "Купить разработчику чашку кофе"
 	},
 	"Cheer_on_my_efforts": {
 		"message": "Поддержите усилия разработчика"
@@ -273,6 +273,6 @@
 		"message": "Переводчик контекста с всплывающей подсказкой - PDF-файлы и двойные субтитры для YouTube"
 	},
 	"appDesc": {
-		"message": "Переводчик контекста с всплывающей подсказкой использует службу \"Google Переводчик\". Также имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
+		"message": "Переводчик контекста с всплывающей подсказкой использует службу \"Google Переводчик\". Также в наличии имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
 	}
 }
