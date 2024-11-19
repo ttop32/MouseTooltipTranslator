@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "ГЛАВНЫЕ НАСТРОЙКИ                                      "
+		"message": "ГЛАВНОЕ                                      "
 	},
 	"MAIN": {
-		"message": "ГЛАВНЫЕ НАСТРОЙКИ"
+		"message": "ГЛАВНОЕ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -144,7 +144,7 @@
 		"message": "Tooltip Word Dictionary"
 	},
 	"SPEECH": {
-		"message": "СИНТЕЗ РЕЧИ"
+		"message": "НАСТРОЙКА РЕЧИ"
 	},
 	"Speech_Recognition_Language": {
 		"message": "Язык распознавания речи"
@@ -171,64 +171,64 @@
 		"message": "Размер шрифта переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Цвет шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Цвет шрифта переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Цвет рамки исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Цвет рамки переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Цвет фона голосовой панели"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "ИСКЛЮЧЕНИЯ                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "ИСКЛЮЧЕНИЯ"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Исключить язык"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Исключить указанный веб-сайт"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "О программе                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Инструкция"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "Изучить инструкцию по использованию расширения"
 	},
 	"PDF_Viewer": {
 		"message": "PDF Viewer"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "Перевести локальный PDF-файл"
 	},
 	"Ebook_Reader": {
 		"message": "Ebook Reader"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "Перевести локальный Ebook-файл"
 	},
 	"Twitter": {
-		"message": "Twitter"
+		"message": "X"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "Поделиться в X"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "Отзывы"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "Оценить работу данного расширения"
 	},
 	"Source_code": {
 		"message": "Исходный код"
