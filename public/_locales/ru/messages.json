@@ -1,6 +1,6 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "ГЛАВНОЕ                                      "
 	},
 	"MAIN": {
 		"message": "MAIN"
@@ -108,7 +108,7 @@
 		"message": "ADVANCED"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Автоматическое чтение при нажатии"
 	},
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
@@ -144,10 +144,10 @@
 		"message": "Tooltip Word Dictionary"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "СИНТЕЗ РЕЧИ"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "Язык распознавания речи"
 	},
 	"Speech_Recognition_When": {
 		"message": "Распознавание речи когда"
