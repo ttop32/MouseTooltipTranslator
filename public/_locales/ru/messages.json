@@ -231,7 +231,7 @@
 		"message": "Comment on this extension"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "Исходный код"
 	},
 	"Check_source_code_in_github": {
 		"message": "Проверьте исходный код на GitHub"
@@ -240,7 +240,7 @@
 		"message": "Политика конфиденциальности"
 	},
 	"User_privacy_policy": {
-		"message": "Политика конфиденциальности пользователя"
+		"message": "Пользовательская политика конфиденциальности"
 	},
 	"Voice_Panel": {
 		"message": "Голосовая панель"
