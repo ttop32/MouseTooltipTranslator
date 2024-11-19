@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "ГЛАВНОЕ                                      "
+		"message": "ГЛАВНАЯ                                      "
 	},
 	"MAIN": {
-		"message": "ГЛАВНОЕ"
+		"message": "ГЛАВНАЯ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -12,10 +12,10 @@
 		"message": "Показать подсказку когда"
 	},
 	"Voice_When": {
-		"message": "Озвучивать текст при нажатии"
+		"message": "Озвучивание текста при нажатии"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Переводить при"
 	},
 	"Translate_From": {
 		"message": "Переводить с"
@@ -24,67 +24,67 @@
 		"message": "Переводить на"
 	},
 	"Translator_Engine": {
-		"message": "Выбор системы перевода"
+		"message": "Система перевода"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Тип текста при наведении курсора"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Язык написания текста"
 	},
 	"OCR_Language": {
 		"message": "Язык распознавания текста"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Язык обратного перевода"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "ГРАФИЧЕСКИЕ НАСТРОЙКИ                                      "
+		"message": "ГРАФИКА                                      "
 	},
 	"GRAPHIC": {
-		"message": "ГРАФИЧЕСКИЕ НАСТРОЙКИ"
+		"message": "ГРАФИКА"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Размер шрифта в поле переводчика"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Ширина поля переводчика"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Расстояние до поля переводчика"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "Анимация появления поля переводчика"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Позиция поля переводчика"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Выравнивание текста в поле переводчика"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Размытие фона поля переводчика"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Подсветка текста при наведении курсора"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Цвет шрифта в поле переводчика"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Цвет фона поля переводчика"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Цвет рамки поля переводчика"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Цвет подсветки текста при наведении курсора"
 	},
 	"VOICE______________________________________": {
-		"message": "ГОЛОСОВЫЕ                                      "
+		"message": "ГОЛОС                                      "
 	},
 	"VOICE": {
-		"message": "ГОЛОСОВЫЕ"
+		"message": "ГОЛОС"
 	},
 	"Voice_Volume": {
 		"message": "Громкость голоса"
@@ -93,25 +93,25 @@
 		"message": "Скорость голоса"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Цель воспроизведения"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Повторение воспроизведения"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Голосовой синтезатор для "
 	},
 	"ADVANCED______________________________________": {
-		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ                                      "
+		"message": "РАСШИРЕННЫЕ                                      "
 	},
 	"ADVANCED": {
-		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ"
+		"message": "РАСШИРЕННЫЕ"
 	},
 	"Auto_Reader_When": {
 		"message": "Автоматическое чтение при нажатии"
 	},
 	"Translate_Writing_When": {
-		"message": "Переводить при нажатии"
+		"message": "Перевод при нажатии"
 	},
 	"OCR_When": {
 		"message": "Распознавание текста при нажатии"
@@ -123,10 +123,10 @@
 		"message": "Определять PDF-файлы"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "Пауза субтитров при наведении курсора"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Смена типа текста при наведении курсора при нажатии"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Tooltip Info Source Text"
@@ -144,7 +144,7 @@
 		"message": "Tooltip Word Dictionary"
 	},
 	"SPEECH": {
-		"message": "НАСТРОЙКА РЕЧИ"
+		"message": "РЕЧЬ"
 	},
 	"Speech_Recognition_Language": {
 		"message": "Язык распознавания речи"
@@ -270,9 +270,9 @@
 		"message": "Название                                      "
 	},
 	"appName": {
-		"message": "Переводчик с подсказками при наведении мыши - PDF-файлы и двойные субтитры для YouTube"
+		"message": "Переводчик контекста с всплывающей подсказкой - PDF-файлы и двойные субтитры для YouTube"
 	},
 	"appDesc": {
-		"message": "Переводчик с подсказками при наведении мыши использует службу \"Google Переводчик\". Имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
+		"message": "Переводчик контекста с всплывающей подсказкой использует службу \"Google Переводчик\". Также имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
 	}
 }
