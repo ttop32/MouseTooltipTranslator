@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "ГЛАВНОЕ                                      "
+		"message": "ГЛАВНЫЕ НАСТРОЙКИ                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "ГЛАВНЫЕ НАСТРОЙКИ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -12,19 +12,19 @@
 		"message": "Показать подсказку когда"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Озвучивать текст при нажатии"
 	},
 	"Translate_When": {
 		"message": "Translate When"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Переводить с"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Переводить на"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Выбор системы перевода"
 	},
 	"Mouseover_Text_Type": {
 		"message": "Mouseover Text Type"
@@ -33,16 +33,16 @@
 		"message": "Writing Language"
 	},
 	"OCR_Language": {
-		"message": "Язык OCR"
+		"message": "Язык распознавания текста"
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "ГРАФИЧЕСКИЕ НАСТРОЙКИ                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "ГРАФИЧЕСКИЕ НАСТРОЙКИ"
 	},
 	"Tooltip_Font_Size": {
 		"message": "Tooltip Font Size"
@@ -81,16 +81,16 @@
 		"message": "Mouseover Text Highlight Color"
 	},
 	"VOICE______________________________________": {
-		"message": "ГОЛОВА                                      "
+		"message": "ГОЛОСОВЫЕ                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "ГОЛОСОВЫЕ"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Громкость голоса"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Скорость голоса"
 	},
 	"Voice_Target": {
 		"message": "Voice Target"
@@ -102,25 +102,25 @@
 		"message": "Voice for "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ"
 	},
 	"Auto_Reader_When": {
 		"message": "Автоматическое чтение при нажатии"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Переводить при нажатии"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "Распознавание текста при нажатии"
 	},
 	"Detect_Subtitle": {
-		"message": "Определять субтитры"
+		"message": "Определять наличие субтитров"
 	},
 	"Detect_PDF": {
-		"message": "Определить PDF"
+		"message": "Определять PDF-файлы"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
@@ -159,16 +159,16 @@
 		"message": "Цель текста в голосовой панели"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "Размер отступа голосовой панели"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "Тип выравнивания текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "Размер шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "Размер шрифта переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Color": {
 		"message": "Voice Panel Source Font Color"
@@ -183,7 +183,7 @@
 		"message": "Voice Panel Target Border Color"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Цвет фона голосовой панели"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -234,16 +234,16 @@
 		"message": "Source code"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "Проверьте исходный код на GitHub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "Политика конфиденциальности"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "Политика конфиденциальности пользователя"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "Голосовая панель"
 	},
 	"Translate_Voice": {
 		"message": "Translate Voice"
@@ -258,21 +258,21 @@
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "Поддержать разработчика                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy dev coffee"
+		"message": "Поддержать разработчика"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "Поддержите усилия разработчика"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Название                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "Переводчик с подсказками при наведении мыши - PDF-файлы и двойные субтитры для YouTube"
 	},
 	"appDesc": {
-		"message": "Переводчик для подсказки для мыши переводчик перевод текста MouseOver с помощью Google Translate. Support OCR, TTS, manga translat"
+		"message": "Переводчик с подсказками при наведении мыши использует службу \"Google Переводчик\". Имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
 	}
 }
