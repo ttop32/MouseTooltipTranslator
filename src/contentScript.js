@@ -47,7 +47,6 @@ var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
 const controller = new AbortController();
 const { signal } = controller;
-var isBlobPdfOpened = false;
 
 var selectedText = "";
 var prevSelected = "";
@@ -59,6 +58,7 @@ var isStopAutoReaderOn = false;
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
+var autoReaderScrollTime = 400;
 
 var listenText = "";
 
@@ -78,7 +78,7 @@ var listenText = "";
     checkGoogleDocs(); // check google doc
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
-    addBackgroundListener(); // get background listener for copy request
+    addMsgListener(); // get background listener for copy request
     loadEventListener(); //load event listener to detect mouse move
     loadSpeechRecognition();
     startMouseoverDetector(); // start current mouseover text detector
@@ -189,7 +189,8 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    util.requestTTS(text, sourceLang, targetText, targetLang, timestamp);
+    await util.requestKillAutoReaderTabs(true);
+    util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
   }
 }
 
@@ -550,7 +551,7 @@ function handleKeydown(e) {
     hideTooltip();
   } else if (e.code == "Escape") {
     util.requestStopTTS();
-    isStopAutoReaderOn = true;
+    util.requestKillAutoReaderTabs(true);
   } else if (e.key == "HangulMode" || e.key == "Process") {
     return;
   } else if (e.key == "Alt") {
@@ -583,33 +584,36 @@ function holdKeydownList(key) {
       speech.startSpeechRecognition();
     }
     if (keyDownList[setting["keyDownAutoReader"]]) {
-      initAutoReader();
+      startAutoReader();
     }
   }
   if (util.isCharKey(key)) {
     util.requestStopTTS(Date.now() + 500);
-    isStopAutoReaderOn = true;
   }
 }
 
-async function initAutoReader() {
+async function startAutoReader() {
   if (!keyDownList[setting["keyDownAutoReader"]]) {
     return;
   }
+  util.clearSelection();
+  util.requestKillAutoReaderTabs();
   await killAutoReader();
   var hoveredData = await getMouseoverText(clientX, clientY);
   var { mouseoverRange } = extractMouseoverText(hoveredData);
-  runAutoReader(mouseoverRange);
+  processAutoReader(mouseoverRange);
 }
-async function runAutoReader(stagedRange) {
+
+async function processAutoReader(stagedRange) {
   if (!stagedRange || isStopAutoReaderOn) {
-    resetAutoReader();
+    hideTooltip();
+    isStopAutoReaderOn = false;
     isAutoReaderRunning = false;
     return;
   }
   isAutoReaderRunning = true;
-  var text = util.extractTextFromRange(stagedRange);
 
+  var text = util.extractTextFromRange(stagedRange);
   var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
@@ -617,32 +621,48 @@ async function runAutoReader(stagedRange) {
     setting["translateReverseTarget"]
   );
   var { targetText, sourceLang, targetLang } = translatedData;
-  var timestamp = Number(Date.now());
-  var rect = stagedRange.getBoundingClientRect();
 
-  $("body,html").animate(
-    { scrollTop: window.scrollY + rect.top - window.innerHeight / 2 },
-    400
-  );
+  scrollAutoReader(stagedRange);
+  setTimeout(() => {
+    highlightText(stagedRange, true);
+  }, autoReaderScrollTime);
   showTooltip(targetText);
-  highlightText(stagedRange, true);
-  await util.requestTTS(text, sourceLang, targetText, targetLang, timestamp);
+  await util.requestTTS(
+    text,
+    sourceLang,
+    targetText,
+    targetLang,
+    Date.now(),
+    true
+  );
   stagedRange = getNextExpand(stagedRange, setting["mouseoverTextType"]);
-  runAutoReader(stagedRange);
+  processAutoReader(stagedRange);
 }
 
-async function resetAutoReader() {
-  util.requestStopTTS();
-  hideTooltip();
-  isStopAutoReaderOn = false;
+function scrollAutoReader(range) {
+  var rect = range.getBoundingClientRect();
+  const scrollContainer = util.isPDFViewer()
+    ? $("#viewerContainer")
+    : $("body,html");
+  const scrollTopValue = util.isPDFViewer()
+    ? $("#viewerContainer").scrollTop() +
+      rect.top -
+      $("#viewerContainer").height() / 2
+    : window.scrollY + rect.top - window.innerHeight / 2;
+
+  scrollContainer.animate({ scrollTop: scrollTopValue }, autoReaderScrollTime);
 }
 
 async function killAutoReader() {
+  if (!isAutoReaderRunning || isStopAutoReaderOn) {
+    return;
+  }
   isStopAutoReaderOn = true;
-  util.requestStopTTS();
+  util.requestStopTTS(Date.now(), true);
   await util.waitUntilForever(() => !isAutoReaderRunning);
   isStopAutoReaderOn = false;
 }
+
 function disableEdgeMiniMenu(e) {
   //prevent mouse tooltip overlap with edge mini menu
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
@@ -708,11 +728,12 @@ function checkWindowFocus() {
   return mouseMoved && document.visibilityState == "visible";
 }
 
-function addBackgroundListener() {
+function addMsgListener() {
   //handle copy
   util.addMessageListener("CopyRequest", (message) => {
     TextUtil.copyTextToClipboard(message.text);
   });
+  util.addMessageListener("killAutoReaderTabs", killAutoReader);
 }
 
 function checkExcludeUrl() {
@@ -885,25 +906,17 @@ function applyStyleSetting() {
 }
 
 // url check and element env===============================================================
+
 async function detectPDF() {
-  if (
-    setting["detectPDF"] == "true" &&
-    document?.body?.children?.[0]?.type == "application/pdf"
-  ) {
+  if (setting["detectPDF"] == "true" && util.isPDF()) {
     util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
     openPdfIframe(window.location.href);
   }
 }
 
-async function getBlobUrl(url) {
-  var blob = await fetch(url).then((r) => r.blob());
-  var url = URL.createObjectURL(blob);
-  return url;
-}
-
 async function openPdfIframeBlob() {
   var url = window.location.href;
-  var url = await getBlobUrl(url);
+  var url = await util.getBlobUrl(url);
   openPdfIframe(url);
 }
 
@@ -911,9 +924,8 @@ function openPdfIframe(url) {
   $("embed").remove();
 
   $("<embed/>", {
-    src: browser.runtime.getURL(
-      `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
-    ),
+    id: "mttPdfIframe",
+    src: util.getPDFUrl(url),
     css: {
       display: "block",
       border: "none",

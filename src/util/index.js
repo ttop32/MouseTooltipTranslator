@@ -157,6 +157,17 @@ export async function sendMessageToCurrentTab(message) {
   browser.tabs.sendMessage(tabs?.[0]?.id, message);
 }
 
+export async function sendMessageToAllContentScripts(message, filterTabId,includeCaller) {
+  var tabs = await browser.tabs.query({});
+  await Promise.all(
+    tabs
+      .filter(tab => includeCaller || tab.id != filterTabId)
+      .map(tab => browser.tabs.sendMessage(tab.id, message))
+  );
+}
+
+
+
 export function addMessageListener(type, handler) {
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type == type) {
@@ -216,10 +227,31 @@ export function isEbookReader() {
   );
 }
 
+export async function getBlobUrl(url) {
+  var blob = await fetch(url).then((r) => r.blob());
+  var url = URL.createObjectURL(blob);
+  return url;
+}
+
+export function isPDF() {
+  return document?.body?.children?.[0]?.type == "application/pdf";
+}
+
+
 export function getEbookIframe() {
   var shadows = getAllShadows();
   var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
   return iframe;
+}
+
+export function getPDFUrl(url){
+  return browser.runtime.getURL(
+    `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
+  )
+}
+
+export function isPDFViewer() {
+  return document.location.href.includes("pdfjs/web/viewer.html");
 }
 
 export function isGoogleDoc() {
@@ -349,6 +381,12 @@ export function filterJapanFurigana(html) {
   html.querySelectorAll("ruby>rt").forEach((e) => e.remove());
 }
 
+export function clearSelection()
+{
+ if (window.getSelection) {window.getSelection().removeAllRanges();}
+ else if (document.selection) {document.selection.empty();}
+}
+
 //send to background.js for background processing  ===========================================================================
 
 export async function requestTranslate(
@@ -373,7 +411,8 @@ export async function requestTTS(
   sourceLang,
   targetText,
   targetLang,
-  timestamp = Date.now()
+  timestamp = Date.now(),
+  noInterrupt
 ) {
   return await sendMessage({
     type: "tts",
@@ -383,6 +422,7 @@ export async function requestTTS(
       targetText,
       targetLang,
       timestamp,
+      noInterrupt
     },
   });
 }
@@ -416,11 +456,12 @@ export async function requestTTSSingle(
   });
 }
 
-export async function requestStopTTS(timestamp) {
+export async function requestStopTTS(timestamp,force) {
   return await sendMessage({
     type: "stopTTS",
     data: {
       timestamp,
+      force
     },
   });
 }
@@ -478,6 +519,7 @@ export async function requestStopSpeechRecognitionOffscreen() {
 }
 
 export async function requestPlayTtsOffscreen(source, rate, volume, timestamp) {
+  await createOffscreen();
   return await sendMessage({
     type: "playAudioOffscreen",
     data: {
@@ -490,8 +532,21 @@ export async function requestPlayTtsOffscreen(source, rate, volume, timestamp) {
 }
 
 export async function requestStopTtsOffscreen(timestamp) {
+  await createOffscreen();
   return await sendMessage({ type: "stopTTSOffscreen", data: { timestamp } });
 }
+
+export async function requestMdfTtsOffscreen(text, voice, lang, rate, volume, timestamp) {
+  await createOffscreen();
+  return await sendMessage({ type: "playMDNTTSOffscreen", data: { text, voice, lang, rate, volume, timestamp } });
+}
+
+export async function requestKillAutoReaderTabs(includeCaller) {
+  return await sendMessage({ type: "killAutoReaderTabs", data: {includeCaller} });
+}
+
+
+
 
 //open side window =======================
 // Create the offscreen document
@@ -509,6 +564,7 @@ export async function createOffscreen() {
     }
   }
 }
+
 export async function removeOffscreen() {
   return new Promise((resolve, reject) => {
     browser.offscreen.closeDocument(() => resolve());

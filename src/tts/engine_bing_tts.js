@@ -1,12 +1,12 @@
 import ky from "ky";
 import bing from "/src/translator/bing";
-import BaseTTS from "./baseTTS";
+import EngineTTS from "./engine_base.js";
 
 import * as util from "/src/util";
 
 let bingTtsUrl = "https://www.bing.com/tfettts";
 
-export default class BingTTS extends BaseTTS {
+export default class BingTTS extends EngineTTS {
   static async playTTSEngine(text, voice, lang, rate, volume, timestamp) {
     var ttsBlob = await this.requestBingTtsBlob(text, voice, rate, volume);
     var base64Url = await util.getBase64Url(ttsBlob);
@@ -26,6 +26,9 @@ export default class BingTTS extends BaseTTS {
     voiceSplit = voiceSplit.slice(0, -1);
     var locale = voiceSplit.join("-");
     var rate100 = rate * 100 - 100;
+    var volume=volume*100;
+    console.log(volume);
+    
 
     return await ky
       .post(bingTtsUrl, {
@@ -36,7 +39,7 @@ export default class BingTTS extends BaseTTS {
           isVertical: "1",
         },
         body: new URLSearchParams({
-          ssml: `<speak version='1.0' xml:lang='${locale}'><voice name='${voice}'><prosody rate='${rate100}%'>${text}</prosody></voice></speak>`,
+          ssml: `<speak version='1.0' xml:lang='${locale}'><voice name='${voice}'><prosody rate='${rate100}%' volume='${volume}%'>${text}</prosody></voice></speak>`,
           token,
           key,
         }),

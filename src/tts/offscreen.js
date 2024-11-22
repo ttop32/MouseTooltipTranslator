@@ -35,7 +35,7 @@ function playAudio({ source, rate = 1.0, volume = 1.0, timestamp }) {
       audio.volume = volume;
       audio.playbackRate = rate;
       audio.onended = () => resolve();
-      audio.onpause=()=>resolve();
+      audio.onpause = () => resolve();
       audio.onloadeddata = () => {
         if (Number(timestamp) < stopTtsTimestamp) {
           stopAudioHTML();

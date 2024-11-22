@@ -1,8 +1,7 @@
 import browser from "webextension-polyfill";
+import EngineTTS from "./engine_base.js";
 
-import BaseTTS from "./baseTTS";
-
-export default class BrowserTTS extends BaseTTS {
+export default class BrowserTTS extends EngineTTS {
   static async playTTSEngine(text, voice, lang, rate, volume) {
     return new Promise((resolve, reject) => {
       browser?.tts?.speak(text, {
