@@ -138,7 +138,7 @@ npm run build        // or 'npm run watch' for developing
         <br />
         <sub><b>daniel k (ttop32)</b></sub></a>
       <br />
-      <sub><b>9970 words</b></sub>
+      <sub><b>9991 words</b></sub>
       <br /><sub><b><code title="Amharic">am</code></b>, <b><code title="Arabic">ar</code></b>, <b><code title="Bengali">bn</code></b>, <b><code title="Bulgarian">bg</code></b>, <b><code title="Catalan">ca</code></b>, <b><code title="Chinese Simplified">zh-CN</code></b>, <b><code title="Chinese Traditional">zh-TW</code></b>, <b><code title="Croatian">hr</code></b>, <b><code title="Czech">cs</code></b>, <b><code title="Danish">da</code></b>, <b><code title="Dutch">nl</code></b>, <b><code title="English, Australia">en-AU</code></b>, <b><code title="English, United Kingdom">en-GB</code></b>, <b><code title="English, United States">en-US</code></b>, <b><code title="Estonian">et</code></b>, <b><code title="Filipino">fil</code></b>, <b><code title="Finnish">fi</code></b>, <b><code title="French">fr</code></b>, <b><code title="German">de</code></b>, <b><code title="Greek">el</code></b>, <b><code title="Gujarati">gu-IN</code></b>, <b><code title="Hebrew">he</code></b>, <b><code title="Hindi">hi</code></b>, <b><code title="Hungarian">hu</code></b>, <b><code title="Indonesian">id</code></b>, <b><code title="Italian">it</code></b>, <b><code title="Japanese">ja</code></b>, <b><code title="Kannada">kn</code></b>, <b><code title="Korean">ko</code></b>, <b><code title="Latvian">lv</code></b>, <b><code title="Lithuanian">lt</code></b>, <b><code title="Malay">ms</code></b>, <b><code title="Malayalam">ml-IN</code></b>, <b><code title="Marathi">mr</code></b>, <b><code title="Norwegian">no</code></b>, <b><code title="Persian">fa</code></b>, <b><code title="Polish">pl</code></b>, <b><code title="Portuguese">pt-PT</code></b>, <b><code title="Portuguese, Brazilian">pt-BR</code></b>, <b><code title="Romanian">ro</code></b>, <b><code title="Russian">ru</code></b>, <b><code title="Serbian (Cyrillic)">sr</code></b>, <b><code title="Slovak">sk</code></b>, <b><code title="Slovenian">sl</code></b>, <b><code title="Spanish">es-ES</code></b>, <b><code title="Spanish, Latin America">es-419</code></b>, <b><code title="Swahili">sw</code></b>, <b><code title="Swedish">sv-SE</code></b>, <b><code title="Tamil">ta</code></b>, <b><code title="Telugu">te</code></b>, <b><code title="Thai">th</code></b>, <b><code title="Turkish">tr</code></b>, <b><code title="Ukrainian">uk</code></b>, <b><code title="Vietnamese">vi</code></b></sub>
     </td>
     <td align="center" valign="top">
@@ -148,6 +148,14 @@ npm run build        // or 'npm run watch' for developing
       <br />
       <sub><b>352 words</b></sub>
       <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b>, <b><code title="Chinese Traditional">zh-TW</code></b></sub>
+    </td>
+    <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/D0n-A"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/12506553/medium/0032f5cf0e380ee7e0353696cd336ece.jpg" />
+        <br />
+        <sub><b>D0n-A</b></sub></a>
+      <br />
+      <sub><b>343 words</b></sub>
+      <br /><sub><b><code title="English, United States">en-US</code></b>, <b><code title="Russian">ru</code></b></sub>
     </td>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/s-upakit"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16487315/medium/e5ed28f1a1e2968c46d5a917a75a7852_default.png" />
@@ -165,6 +173,8 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>207 words</b></sub>
       <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/Nhoxpipicool"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16601123/medium/298514f9ef43c60ebd9f2343ccf0b43a.png" />
         <br />
@@ -173,8 +183,6 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>192 words</b></sub>
       <br /><sub><b><code title="Vietnamese">vi</code></b></sub>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/Mirnyang"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/14153733/medium/9a2fe282298d66026016c71086cc6d6e.png" />
         <br />
@@ -207,6 +215,8 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>27 words</b></sub>
       <br /><sub><b><code title="Russian">ru</code></b></sub>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/CreeperYeeter2"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16245208/medium/8a0163ae0953c336a9a02f1562f292c5_default.png" />
         <br />
@@ -215,8 +225,6 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>13 words</b></sub>
       <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/TTT01"><img alt="logo" style="width: 100px" src="https://crowdin-static.downloads.crowdin.com/avatar/16469337/medium/6ff0dcfb321853011aba8cfc4abcdc82.png" />
         <br />
