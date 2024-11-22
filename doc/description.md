@@ -19,6 +19,11 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.158
+  - support auto reader on pdf
+  - change auto reader stop priority
+  - refactor tts code
+  - Russian localization (contributed by D0n-A) 
 - 0.1.157
   - Vietnamese localization (contributed by Duong.Kayce )
   - add auto reader on F2 key

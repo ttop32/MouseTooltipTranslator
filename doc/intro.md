@@ -56,6 +56,8 @@ Proletarier aller Länder, vereinigt euch!
 # Exception
 
 - If source text language and translate language are same, it will skip. 
+- If page is not focused, key input is not detected. 
+Make click to focus page before input keyboard.
 - The application will not function if the web status is offline. 
 - If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
 - If no local file permission given, local pdf cannot be handled.

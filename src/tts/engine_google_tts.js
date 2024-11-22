@@ -1,6 +1,6 @@
-import BaseTTS from "./baseTTS";
+import EngineTTS from "./engine_base.js";
 
-export default class GoogleTranslateTTS extends BaseTTS {
+export default class GoogleTranslateTTS extends EngineTTS {
   static async playTTSEngine(text, voice, lang, rate, volume, timestamp) {
     var textList = this.splitText(text, lang);
     for (const sentence of textList) {

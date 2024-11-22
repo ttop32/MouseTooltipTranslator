@@ -6,7 +6,8 @@ import browser from "webextension-polyfill";
 import TextUtil from "/src/util/text_util.js";
 
 import translator from "./translator/index.js";
-import tts from "./tts/index.js";
+import TTS from "/src/tts";
+
 import * as util from "/src/util";
 import SettingUtil from "/src/util/setting_util.js";
 import _util from "/src/util/lodash_util.js";
@@ -15,7 +16,6 @@ var setting;
 var recentTranslated = "";
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
-var stopTtsTimestamp = 0;
 var recentRecord = {};
 
 (async function backgroundInit() {
@@ -48,10 +48,11 @@ function addMessageListener() {
         var translatedResult = await translateWithReverse(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
-        await playTtsQueue(request.data);
+        request.data.setting=setting
+        await TTS.playTtsQueue(request.data);
         sendResponse({});
       } else if (request.type === "stopTTS") {
-        stopTts(request.data.timestamp);
+        TTS.stopTTS(request?.data?.timestamp,request?.data?.force);
         sendResponse({});
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
@@ -62,6 +63,9 @@ function addMessageListener() {
         sendResponse({ base64Url });
       } else if (request.type === "createOffscreen") {
         await util.createOffscreen();
+        sendResponse({});
+      }else if (request.type === "killAutoReaderTabs") {
+        await util.sendMessageToAllContentScripts(request,sender.tab.id,request?.data?.includeCaller)
         sendResponse({});
       }
     })();
@@ -273,51 +277,6 @@ function addInstallUrl(url) {
   });
 }
 
-// tts=============================================================================
-
-async function playTtsQueue({
-  sourceText,
-  sourceLang,
-  targetText,
-  targetLang,
-  voiceTarget,
-  voiceRepeat,
-  timestamp,
-}) {
-  var ttsTarget = voiceTarget || setting["voiceTarget"];
-  var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
-  ttsRepeat = Number(ttsRepeat);
-
-  for (var i = 0; i < ttsRepeat; i++) {
-    if (ttsTarget == "source") {
-      await playTts(sourceText, sourceLang, timestamp);
-    } else if (ttsTarget == "target") {
-      await playTts(targetText, targetLang, timestamp);
-    } else if (ttsTarget == "sourcetarget") {
-      await playTts(sourceText, sourceLang, timestamp);
-      await playTts(targetText, targetLang, timestamp);
-    } else if (ttsTarget == "targetsource") {
-      await playTts(targetText, targetLang, timestamp);
-      await playTts(sourceText, sourceLang, timestamp);
-    }
-  }
-}
-
-function stopTts(timestamp = Date.now()) {
-  for (const key in tts) {
-    tts[key].stopTTS(timestamp);
-  }
-}
-
-async function playTts(text, lang, timestamp) {
-  var volume = setting["voiceVolume"];
-  var rate = setting["voiceRate"];
-  var voiceFullName = setting?.["ttsVoice_" + lang];
-  var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
-  var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;
-  var engine = isExternalTts ? voiceFullName.split("_")[0] : "BrowserTTS";
-  await tts[engine].playTTS(text, voice, lang, rate, volume, timestamp);
-}
 
 //detect tab swtich ===================================
 function addTabSwitchEventListener() {
@@ -327,7 +286,7 @@ function addTabSwitchEventListener() {
 }
 
 function handleTabSwitch() {
-  stopTts();
+  TTS.stopTTS();
   removeContextAll();
 }
 
@@ -348,10 +307,8 @@ async function openPDFViewer(url, tabId) {
     return;
   }
   browser.tabs.update(tabId, {
-    url: browser.runtime.getURL(
-      `/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`
-    ),
-  });
+    url: util.getPDFUrl(url)
+  })
 }
 
 //url is end with .pdf, start with file://
