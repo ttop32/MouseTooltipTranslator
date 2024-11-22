@@ -18,7 +18,7 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
 ![result](doc/screenshot_6.png) 
 
 # Features
-
+ 
 - Hover or select (highlight) on text to translate  
 - Use left ctrl to Listen pronunciation with google TTS (text to speech)
 - Use right alt to translate writing text in input box (or highlighted text)
