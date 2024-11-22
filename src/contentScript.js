@@ -189,7 +189,8 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    await util.requestKillAutoReaderTabs(true);
+    util.requestKillAutoReaderTabs(true);
+    await delay(50);
     util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
   }
 }
