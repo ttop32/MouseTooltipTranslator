@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "ГЛАВНАЯ                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "ГЛАВНАЯ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -12,267 +12,267 @@
 		"message": "Показать подсказку когда"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Озвучивание текста при нажатии"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Переводить при"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Переводить с"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Переводить на"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "Система перевода"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "Тип текста при наведении курсора"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "Язык написания текста"
 	},
 	"OCR_Language": {
-		"message": "Язык OCR"
+		"message": "Язык распознавания текста"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Язык обратного перевода"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "ГРАФИКА                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "ГРАФИКА"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "Размер шрифта в поле переводчика"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "Ширина поля переводчика"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "Расстояние до поля переводчика"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "Анимация появления поля переводчика"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "Позиция поля переводчика"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "Тип выравнивания текста в поле переводчика"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "Размытие фона поля переводчика"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Подсветка текста при наведении курсора"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Цвет шрифта в поле переводчика"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Цвет фона поля переводчика"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Цвет рамки поля переводчика"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Цвет подсветки текста при наведении курсора"
 	},
 	"VOICE______________________________________": {
-		"message": "ГОЛОВА                                      "
+		"message": "ГОЛОС                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "ГОЛОС"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "Громкость голоса"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "Скорость голоса"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "Цель при воспроизведении текста"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "Повторение воспроизведения"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Голосовой синтезатор для "
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "РАСШИРЕННЫЕ                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "РАСШИРЕННЫЕ"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Автоматическое чтение текста при нажатии"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Перевод текста при нажатии"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "Распознавание текста при нажатии"
 	},
 	"Detect_Subtitle": {
-		"message": "Определять субтитры"
+		"message": "Определить тип субтитров"
 	},
 	"Detect_PDF": {
-		"message": "Определить PDF"
+		"message": "Определять наличие PDF-файла"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "Пауза субтитров при наведении курсора"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Смена типа текста при наведении курсора при нажатии"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "Исходный текст в поле переводчика"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "Информация об исходном тексте в поле переводчика"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "Транслитерация исходного текста в поле переводчика"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "Время интервала до появления поля переводчика"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Пользовательский словарь в поле переводчика"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "РЕЧЬ"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "Язык распознавания речи"
 	},
 	"Speech_Recognition_When": {
-		"message": "Распознавание речи когда"
+		"message": "Распознавание речи при нажатии"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "Язык обратного перевода в голосовой панели"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Цель текста в голосовой панели"
+		"message": "Цель при наборе текста в голосовой панели"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "Размер отступа в голосовой панели"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "Тип выравнивания текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "Размер шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "Размер шрифта переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Цвет шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Цвет шрифта переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Цвет рамки исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Цвет рамки переводимого текста в голосовой панели"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Цвет фона в голосовой панели"
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "ИСКЛЮЧЕНИЯ                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "ИСКЛЮЧЕНИЯ"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "Исключить язык"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Исключить указанный веб-сайт"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "Информация о программе                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "Инструкция"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "Изучить инструкцию по использованию расширения"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "Просмотр PDF-файла"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "Программа для просмотра и перевода локального PDF-файла"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "Просмотр Ebook-файла"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "Программа для просмотра и перевода локального Ebook-файла"
 	},
 	"Twitter": {
-		"message": "Twitter"
+		"message": "X"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "Поделиться в X"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "Отзывы"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "Прокомментировать работу данного расширения"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "Исходный код"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "Проверьте исходный код на GitHub"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "Политика конфиденциальности"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "Пользовательская политика конфиденциальности"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "Голосовая панель"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "Голосовой перевод"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "Оценить                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "Оценить работу данного расширения"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "Разработчик любит конструктивную критику"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "Поддержать разработчика                                      "
 	},
 	"Buy_coffee": {
-		"message": "Buy dev coffee"
+		"message": "Купить разработчику чашку кофе"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "Поддержите усилия разработчика"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "Название                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "Переводчик контекста с всплывающей подсказкой - PDF-файлы и двойные субтитры для YouTube"
 	},
 	"appDesc": {
-		"message": "Переводчик для подсказки для мыши переводчик перевод текста MouseOver с помощью Google Translate. Support OCR, TTS, manga translat"
+		"message": "Переводчик контекста с всплывающей подсказкой использует службу \"Google Переводчик\". Также в наличии имеется поддержка OCR, TTS, перевода PDF-файлов и манги."
 	}
 }
