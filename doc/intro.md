@@ -17,6 +17,8 @@ Proletarier aller Länder, vereinigt euch!
 
 - Press the <kbd>right-alt</kbd> key (default) key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
   - If the translation isn't working, ensure that your current target language matches your writing language.
+  - If <kbd>right-alt</kbd> is uses as hangul swap,
+  use other key to work with. 
 
 ![result](/doc/11.gif)
 
