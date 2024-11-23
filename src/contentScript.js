@@ -528,6 +528,7 @@ function loadEventListener() {
 
   //detect tab switching to reset env
   addEventHandler("blur", resetTooltipStatus);
+  addEventHandler("beforeunload", killAutoReader);
 }
 
 function handleMousemove(e) {
