@@ -43,13 +43,17 @@ export default class TTS {
     if (Number(timestamp) < this.stopTtsTimestamp) {
       return;
     }
+    text = TextUtil.filterSpeechText(text);
+    if (!text) {
+      return;
+    }
     var volume = Number(setting["voiceVolume"]);
     var rate = Number(setting["voiceRate"]);
     var voiceFullName = setting?.["ttsVoice_" + lang];
     var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
     var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;
     var engine = isExternalTts ? voiceFullName.split("_")[0] : "BrowserTTS";
-    text = TextUtil.filterSpeechText(text);
+    
     await tts_engine[engine].playTTSEngine(
       text,
       voice,
