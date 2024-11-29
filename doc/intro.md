@@ -41,6 +41,9 @@ Proletarier aller Länder, vereinigt euch!
 - Run auto reader by press <kbd>F2</kbd> key (default)
   - It start read mouse over text all the way with tts
   - To stop the auto reader press <kbd>Esc</kbd> 
+
+![result](/doc/30.gif)
+
 - Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key (default).
   - Default speech recognition language is English.
   - If the speech recognition language and target language are the same, it skips.
