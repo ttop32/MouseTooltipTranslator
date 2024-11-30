@@ -27,6 +27,13 @@ export default class google extends BaseTranslator {
       .filter((translit) => translit)
       .join(" ")
       ?.trim();
+    if (targetText) {
+      targetText = targetText.replace(/\n /g, "\n");
+    }
+    if (transliteration) {
+      transliteration = transliteration.replace(/\n /g, "\n");
+    }
+
     //slice top 3 dict
     var dict = res.dict
       ?.map(
