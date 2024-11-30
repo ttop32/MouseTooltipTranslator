@@ -19,6 +19,11 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.159
+  - version up pdf js
+  - fix tts empty text
+  - 
+
 - 0.1.158
   - support auto reader on pdf
   - change auto reader stop priority
