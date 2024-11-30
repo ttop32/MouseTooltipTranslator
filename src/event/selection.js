@@ -75,9 +75,8 @@ export function getSelectionText() {
 export function getWindowSelection() {
   var html = getWindowSelectionHtml();
   var selectText = util.extractTextFromHtml(html);
-
-  // if no html format text , get as string
-  return selectText || _win.getSelection().toString();
+  var winText=_win?.getSelection()?.toString()
+  return winText || selectText ;
 }
 
 function getWindowSelectionHtml() {
