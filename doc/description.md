@@ -22,8 +22,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.159
   - version up pdf js
   - fix tts empty text
-  - 
-
+  - fix writing text space (requested by Varga Endre)
 - 0.1.158
   - support auto reader on pdf
   - change auto reader stop priority
@@ -508,7 +507,7 @@ English, Russian, Japanese, Chinese and so on
   - Fix key hold error (issue on tab switching)
 - 0.1.0
   - First release of Mouse tooltip translator
-
+*
 # Intro  
 
 Mouse tooltip translator is a google chrome extension that provide convenient translate experience. This translator extension minimize generally required step to translate word. Normally, copying and pasting are used to obtain translated sentence from google translate site. This extension uses text hovering to translate text. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension replaces general translate process which open new tab for using google translate to getting translated sentence. This replace translating way makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
