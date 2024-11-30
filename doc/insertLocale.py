@@ -173,14 +173,14 @@ def translate(text, lang):
 
 
 def addBasicDescription(jsonDict, locale):
-    jsonDict["appName"] = {"message": appName}
+    # jsonDict["appName"] = {"message": appName}
 
-    if "appDesc" not in jsonDict:
-        jsonDict["appDesc"] = {"message": translate(appDesc, locale)}
+    # if "appDesc" not in jsonDict:
+    #     jsonDict["appDesc"] = {"message": translate(appDesc, locale)}
 
-    if "appDesc" in jsonDict:
-        jsonDict["appDesc"] = {"message": jsonDict["appDesc"]["message"][:130]}
-
+    # if "appDesc" in jsonDict:
+    #     jsonDict["appDesc"] = {"message": jsonDict["appDesc"]["message"][:130]}
+    pass
 
 def getI18IdList():
     return [getI18Id(i18) for i18 in i18List]
