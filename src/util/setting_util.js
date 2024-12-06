@@ -7,6 +7,10 @@ import {
   googleTranslateTtsLangList,
 } from "/src/util/lang.js";
 import TextUtil from "/src/util/text_util.js";
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
 
 // import SettingUtil from "/src/util/setting_util.js";
 
@@ -75,7 +79,7 @@ export default class SettingUtil {
           voiceList[lang].push(item.voiceName);
         }
       } catch (err) {
-        // Handle error if needed
+        console.log(err);
       }
       resolve(voiceList);
     });
