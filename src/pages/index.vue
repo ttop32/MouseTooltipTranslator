@@ -433,7 +433,7 @@ var speechTabData = {
 var advancedTabData = {
   keyDownAutoReader: {
     description: browser.i18n.getMessage("Auto_Reader_When"),
-    optionList: keyList,
+    optionList: keyListWithAlways,
   },
   keyDownTranslateWriting: {
     description: browser.i18n.getMessage("Translate_Writing_When"),
