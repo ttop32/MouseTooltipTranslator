@@ -591,6 +591,7 @@ function holdKeydownList(key) {
   }
   if (util.isCharKey(key)) {
     util.requestStopTTS(Date.now() + 500);
+    killAutoReader(); 
   }
 }
 
@@ -598,12 +599,15 @@ async function startAutoReader() {
   if (!keyDownList[setting["keyDownAutoReader"]]) {
     return;
   }
-  util.clearSelection();
-  util.requestKillAutoReaderTabs();
-  await killAutoReader();
+  await initAutoReader();
   var hoveredData = await getMouseoverText(clientX, clientY);
   var { mouseoverRange } = extractMouseoverText(hoveredData);
   processAutoReader(mouseoverRange);
+}
+
+async function initAutoReader() {
+  util.clearSelection();
+  await killAutoReader(true);
 }
 
 async function processAutoReader(stagedRange) {
@@ -655,10 +659,14 @@ function scrollAutoReader(range) {
   scrollContainer.animate({ scrollTop: scrollTopValue }, autoReaderScrollTime);
 }
 
-async function killAutoReader() {
+async function killAutoReader(request=false) {
+  if (request) {
+    util.requestKillAutoReaderTabs();
+  }
   if (!isAutoReaderRunning || isStopAutoReaderOn) {
     return;
   }
+  util.clearSelection();
   isStopAutoReaderOn = true;
   util.requestStopTTS(Date.now(), true);
   await util.waitUntilForever(() => !isAutoReaderRunning);
