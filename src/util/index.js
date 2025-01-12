@@ -358,7 +358,7 @@ export function isLocalFileUrl(url) {
 }
 
 export function isCharKey(key) {
-  return /Key|Digit|Numpad|Space/.test(key);
+  return /Key|Digit|Numpad/.test(key);
 }
 
 export function isEdge() {

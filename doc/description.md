@@ -19,8 +19,6 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.163
-  - fix auto reader space stop (requested by Neon Velvet) 
 - 0.1.162
   - fix browser tts
 - 0.1.161
