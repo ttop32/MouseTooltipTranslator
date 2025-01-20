@@ -13,19 +13,14 @@
     "content_security_policy": {
         "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'"
     },
-    "permissions": ["storage", "tts", "tabs", "scripting", "contextMenus", "offscreen", "search"],
+    "permissions": ["storage", "tabs", "scripting", "contextMenus", "offscreen", "search"],
     "host_permissions": [
         "<all_urls>"
     ],
 
 
 
-    "web_accessible_resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js"],
-    "sandbox": {
-        "pages": [
-        "opencvHandler.html"
-        ]
-    },
+    "web_accessible_resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js", "offscreen.js"],
     "commands": {
         "copy-translated-text": {
         "suggested_key": {
@@ -54,9 +49,9 @@
         }
     ],
     "background": {
-        "scripts": ["background.js","offscreen.js"]
+        "scripts": ["background.js"]
     },
-    "action": {
+    "browser_action": {
         "default_title": "Mouse Tooltip Translator",
         "default_popup": "popup.html"
     },

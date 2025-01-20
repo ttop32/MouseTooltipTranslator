@@ -3,11 +3,19 @@
 // import { francAll } from "franc";
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 import TextUtil from "/src/util/text_util.js";
+import { WindowPostMessageProxy } from "window-post-message-proxy";
 
 var browser;
 try {
   browser = require("webextension-polyfill");
 } catch (error) {}
+
+var windowPostMessageProxy;
+try {
+  windowPostMessageProxy = new WindowPostMessageProxy({
+    suppressWarnings: true,
+  });
+}catch (error) {}
 
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
@@ -18,8 +26,6 @@ var reviewUrlJson = {
 
 export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
-
-
   
 //rect===============================
 
@@ -502,8 +508,7 @@ export async function requestCreateOffscreen() {
 }
 
 export async function requestStartSpeechRecognitionOffscreen(lang) {
-  await requestCreateOffscreen();
-  return await sendMessage({
+  return await sendMessageOffscreen({
     type: "startSpeechRecognition",
     data: {
       lang,
@@ -512,15 +517,13 @@ export async function requestStartSpeechRecognitionOffscreen(lang) {
 }
 
 export async function requestStopSpeechRecognitionOffscreen() {
-  await requestCreateOffscreen();
-  return await sendMessage({
+  return await sendMessageOffscreen({
     type: "stopSpeechRecognition",
   });
 }
 
 export async function requestPlayTtsOffscreen(source, rate, volume, timestamp) {
-  await createOffscreen();
-  return await sendMessage({
+  return await sendMessageOffscreen({
     type: "playAudioOffscreen",
     data: {
       source,
@@ -532,13 +535,11 @@ export async function requestPlayTtsOffscreen(source, rate, volume, timestamp) {
 }
 
 export async function requestStopTtsOffscreen(timestamp) {
-  await createOffscreen();
-  return await sendMessage({ type: "stopTTSOffscreen", data: { timestamp } });
+  return await sendMessageOffscreen({ type: "stopTTSOffscreen", data: { timestamp } });
 }
 
 export async function requestMdfTtsOffscreen(text, voice, lang, rate, volume, timestamp) {
-  await createOffscreen();
-  return await sendMessage({ type: "playMDNTTSOffscreen", data: { text, voice, lang, rate, volume, timestamp } });
+  return await sendMessageOffscreen({ type: "playMDNTTSOffscreen", data: { text, voice, lang, rate, volume, timestamp } });
 }
 
 export async function requestKillAutoReaderTabs(includeCaller) {
@@ -546,11 +547,50 @@ export async function requestKillAutoReaderTabs(includeCaller) {
 }
 
 
+async function sendMessageOffscreen(message) {
+  await createOffscreen();
+  if (checkFirefox()) {
+    return await postMessage(message, getOffscreenIframe());
+  }
+  return await sendMessage(message);
+}
+
+
+// iframe util=================================================================================================
+
+function checkFirefox() {
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
+
+function getOffscreenIframe() {
+  return document.querySelector('iframe[src="offscreen.html"]');
+}
+
+async function postMessage(data, frame) {
+  return await windowPostMessageProxy.postMessage(frame.contentWindow, data);
+}
+
+
+function handleFirefoxOffscreen() {
+  if (checkFirefox()) {
+    if (!getOffscreenIframe()) {
+      let iframe = document.createElement('iframe');
+      iframe.src = "offscreen.html";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+  }
+}
+
 
 
 //open side window =======================
 // Create the offscreen document
 export async function createOffscreen() {
+  if (typeof browser === "undefined" || !browser.offscreen) {
+    handleFirefoxOffscreen();
+    return;
+  }
   try {
     await browser?.offscreen?.createDocument({
       url: "offscreen.html",
@@ -558,8 +598,7 @@ export async function createOffscreen() {
       justification: "TTS & Speech",
     });
   } catch (error) {
-    if (error.message.startsWith("Only a single offscreen")) {
-    } else {
+    if (!error.message.startsWith("Only a single offscreen")) {
       console.log(error);
     }
   }
