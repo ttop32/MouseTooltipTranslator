@@ -67,7 +67,7 @@ export default class SettingUtil {
     return new Promise(async (resolve) => {
       const voiceList = {};
       try {
-        const voices = await browser.tts.getVoices();
+        const voices = await browser?.tts?.getVoices();
         const filtered = voices
           .filter(
             (e) => e.remote != null && e.lang != null && e.voiceName != null

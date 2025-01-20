@@ -6,27 +6,30 @@ var audio;
 const speech = window.speechSynthesis;
 var stopTtsTimestamp = 0;
 
-// Listen for messages from the extension
-browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  (async () => {
-    if (request.type == "playAudioOffscreen") {
-      await playAudio(request.data);
-      sendResponse({});
-    } else if (request.type == "playSpeechTTSOffscreen") {
-      await playSpeechTTS(request.data);
-      sendResponse({});
-    } else if (request.type == "stopTTSOffscreen") {
-      await stopAudio(request.data);
-      sendResponse({});
-    } else if (request.type == "startSpeechRecognition") {
-      sendResponse({});
-    } else if (request.type == "stopSpeechRecognition") {
-      sendResponse({});
-    }
-  })();
+(function initListener() {
+  if (isFirefox()) {
+    initOffscreenListener();
+  }else{
+    initBrowserListener();
+  }  
+})()
 
-  return true;
-});
+async function handleMessage(request, sender, sendResponse) {
+  if (request.type == "playAudioOffscreen") {
+    await playAudio(request.data);
+    sendResponse({windowPostMessageProxy: request?.windowPostMessageProxy});   
+  } else if (request.type == "playSpeechTTSOffscreen") {
+    await playSpeechTTS(request.data);
+    sendResponse({windowPostMessageProxy: request?.windowPostMessageProxy});   
+  } else if (request.type == "stopTTSOffscreen") {
+    await stopAudio(request.data);
+    sendResponse({windowPostMessageProxy: request?.windowPostMessageProxy});   
+  } else if (request.type == "startSpeechRecognition") {
+    sendResponse({windowPostMessageProxy: request?.windowPostMessageProxy});   
+  } else if (request.type == "stopSpeechRecognition") {
+    sendResponse({windowPostMessageProxy: request?.windowPostMessageProxy});   
+  }
+}
 
 function playAudio({ source, rate = 1.0, volume = 1.0, timestamp }) {
   return new Promise(async (resolve, reject) => {
@@ -94,4 +97,33 @@ function stopAudioHTML() {
     audio.currentTime = 0;
     resolve();
   });
+}
+
+
+// firefox
+
+function initBrowserListener() {
+  browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    handleMessage(request, sender, sendResponse);    
+    return true;
+  });
+}
+function initOffscreenListener(){
+  window.addEventListener(
+    "message",
+    async function ({ data }) {
+      handleMessage(data, null, postMessage);        
+    },
+    false
+  );
+  
+}
+
+function isFirefox() {
+  return typeof InstallTrigger !== "undefined";
+}
+
+
+function postMessage(data) {
+  window.parent.postMessage(data, "*");
 }
