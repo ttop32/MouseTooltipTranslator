@@ -8,7 +8,9 @@
     "build": "webpack --mode=production --config config/webpack.config.js",
     "delete": "del-cli --force ./build",
     "zip": "npm-build-zip",
-    "build-zip": "npm run delete && npm run build && npm run zip"
+    "build-zip": "npm run delete && npm run build && npm run zip",
+    "build-firefox": "webpack --mode=production --config config/webpack.firefox.config.js",
+    "build-firefox-zip": "npm run delete && npm run build-firefox && npm run zip"    
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
