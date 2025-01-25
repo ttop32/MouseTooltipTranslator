@@ -9,8 +9,9 @@
     "delete": "del-cli --force ./build",
     "zip": "npm-build-zip",
     "build-zip": "npm run delete && npm run build && npm run zip",
-    "build-firefox": "webpack --mode=production --config config/webpack.firefox.config.js",
-    "build-firefox-zip": "npm run delete && npm run build-firefox && npm run zip"    
+    "build-firefox": "webpack --mode=production --config config/webpack.firefox.config.js && web-ext build --source-dir=build --artifacts-dir=web-ext-artifacts --overwrite-dest",
+    "build-firefox-zip": "npm run delete && npm run build-firefox && npm run zip",
+    "firefox": "web-ext run --source-dir=build --firefox=firefox"
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
@@ -34,6 +35,7 @@
     "vue-loader": "^17.2.2",
     "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^0.1.0",
+    "web-ext": "^8.3.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^5.0.1",
     "webpack-ext-reloader": "^1.1.12",
