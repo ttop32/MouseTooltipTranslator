@@ -11,7 +11,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = (env, argv) => {
   console.log(argv.mode);
-  return merge(common, {
+  return merge({
     mode: argv.mode || "production",
     entry: glob.sync("./src/**/*.js").reduce(function (obj, el) {
       obj[path.parse(el).name] = el;
@@ -43,5 +43,5 @@ module.exports = (env, argv) => {
         : false,
     ].filter(Boolean),
     devtool: argv.mode == "development" ? "source-map" : false,
-  });
+  },common);
 };
