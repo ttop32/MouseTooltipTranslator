@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.165
+  - change locale  
+  - fix firefox tts
+  - add firefox build command
 - 0.1.164
   - fix infinite auto reader loop
 - 0.1.163
