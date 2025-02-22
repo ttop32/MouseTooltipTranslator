@@ -892,7 +892,8 @@ function applyStyleSetting() {
     .ytp-caption-segment{
       color: white !important;
       text-shadow: 1px 1px 2px black !important;
-      background:transparent  !important;
+      backdrop-filter: blur(3px) !important;
+      background: rgba(8, 8, 8, 0.1)  !important;
     }
     .captions-text:hover .caption-visual-line:first-of-type:after {
       opacity:1;
