@@ -3,7 +3,7 @@
 		"message": "MAIN                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "ANA PANEL"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Fare İpucu Çevirisi"
@@ -108,7 +108,7 @@
 		"message": "ADVANCED"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Otomatik Okuyucu Ne Zaman"
 	},
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
@@ -141,49 +141,49 @@
 		"message": "İpucu Süre Aralığı"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Tooltip Kelime Sözlüğü"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "Konuşma"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "Konuşma Tanıma Dili"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Konuşma Tanıma Ne Zaman"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "Ses Paneli Dil Çevirme"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "Ses Paneli Metin Hedefi"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "Ses Paneli Dolgusu"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "Ses Paneli Metin Hizalama"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "Ses Paneli Kaynak Yazı Tipi Boyutu"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "Ses Paneli Hedef Yazı Tipi Boyutu"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Ses Paneli Kaynak Yazı Tipi Rengi"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Ses Paneli Hedef Yazı Tipi Rengi"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Ses Paneli Kaynak Kenarlık Rengi"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Ses Paneli Hedef Kenarlık Rengi"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Ses Paneli Arka Plan Rengi"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -243,10 +243,10 @@
 		"message": "User privacy policy"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "Ses Paneli"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "Ses Çevir"
 	},
 	"Review______________________________________": {
 		"message": "Review                                      "
@@ -258,19 +258,19 @@
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "Kahve                                      "
 	},
 	"Buy_coffee": {
-		"message": "Devs need coffee!"
+		"message": "Geliştiricilerin kahveye ihtiyacı var!"
 	},
 	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+		"message": "Geliştirme çabalarını destekleyin"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "Mouse Tooltip Translator - PDF ve Youtube ikili alt yazıları"
 	},
 	"appDesc": {
 		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir. Support OCR, TTS, manga translator & pdf translator"
