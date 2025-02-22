@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.166
+  - change youtube sub background (requested by Rui Lan) 
+  - add locale for Turkish (contributed by ODK)
+  - add locale for Russian (contributed by negrityan)
 - 0.1.165
   - change locale  
   - fix firefox tts
