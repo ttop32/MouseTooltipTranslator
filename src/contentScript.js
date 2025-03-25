@@ -790,6 +790,8 @@ function applyStyleSetting() {
     appendTo: isSticky ? tooltipContainerEle : document.body,
     animation: setting["tooltipAnimation"],
   });
+  
+  var rtlDirection=getRtlDir(setting["translateTarget"]);
 
   style.html(`
     #mttContainer {
@@ -877,6 +879,7 @@ function applyStyleSetting() {
     .caption-visual-line{
       display: flex  !important;
       align-items: stretch  !important;
+      direction: ${rtlDirection}
     }
     .captions-text .caption-visual-line:first-of-type:after {
       content: '⣿⣿';
@@ -978,8 +981,9 @@ function injectGoogleDocAnnotation() {
 
 // youtube================================
 function checkVideo() {
-  subtitle["Youtube"].handleVideo(setting);
-  subtitle["YoutubeNoCookie"].handleVideo(setting);
+  for (var key in subtitle) {
+    subtitle[key].handleVideo(setting);
+  }
 }
 
 //destruction ===================================
