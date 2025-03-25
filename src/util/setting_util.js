@@ -68,11 +68,15 @@ export default class SettingUtil {
       const voiceList = {};
       try {
         const voices = await browser?.tts?.getVoices();
-        const filtered = voices
-          .filter(
+        const filtered = voices?.filter(
             (e) => e.remote != null && e.lang != null && e.voiceName != null
           )
           .sort((x, y) => y.remote - x.remote);
+        if (!filtered) {
+          console.log("No browser tts voice");
+          resolve(voiceList);
+          return;
+        }
         for (const item of filtered) {
           const lang = this.parseLocaleLang(item.lang);
           voiceList[lang] = voiceList[lang] || [];
