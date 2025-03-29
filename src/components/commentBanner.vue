@@ -28,7 +28,7 @@ export default {
     return {
       title: browser.i18n.getMessage("Buy_coffee"),
       subtitle: browser.i18n.getMessage("Cheer_on_my_efforts"),
-      url: "https://buymeacoffee.com/ttop324",
+      url: "https://ko-fi.com/ttop324",
     };
   },
   async mounted() {

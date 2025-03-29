@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.168
+  - change support url
 - 0.1.167
   - fix rtl order for youtube (requested by shlomova)
   - got yellow agron warning by google on "translator" word. avoid that word from intro description
