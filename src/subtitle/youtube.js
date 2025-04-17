@@ -156,7 +156,6 @@ export default class Youtube extends BaseVideo {
 
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
-    // var isRtl = util.isRtl(lang);
     var newEvents = [];
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {
@@ -164,12 +163,14 @@ export default class Youtube extends BaseVideo {
       }
       var oneLineSub = event.segs
         .reduce((acc, cur) => (acc += cur.utf8), "")
+      var oneLineSubTrim = oneLineSub
         .replace(/\s+/g, " ")
         .trim();
 
       // if prev sub time overlapped current sub, concat
       if (
         newEvents.length == 0 ||
+        oneLineSub=="\n" ||
         // 5000 < newEvents[newEvents.length - 1].dDurationMs ||
         newEvents[newEvents.length - 1].tStartMs +
           newEvents[newEvents.length - 1].dDurationMs <=
@@ -181,14 +182,29 @@ export default class Youtube extends BaseVideo {
           // wsWinStyleId: isRtl ? 2 : 1,
           segs: [
             {
-              utf8: oneLineSub,
+              utf8: oneLineSubTrim,
             },
           ],
         });
+
+        // if prev sub time overlapped current sub(\n case), cut the prev sub
+        if (newEvents.length > 2 &&
+          newEvents[newEvents.length - 2].tStartMs +
+          newEvents[newEvents.length - 2].dDurationMs >
+          event.tStartMs
+        ) {
+          newEvents[newEvents.length - 2].dDurationMs =
+            event.tStartMs - newEvents[newEvents.length - 2].tStartMs-1;
+        }
       } else {
-        newEvents[newEvents.length - 1].segs[0].utf8 += oneLineSub
-          ? ` ${oneLineSub}`
+        newEvents[newEvents.length - 1].segs[0].utf8 += oneLineSubTrim
+          ? ` ${oneLineSubTrim}`
           : "";
+
+        // increase duration upto current sub
+        newEvents[newEvents.length - 1].dDurationMs =
+          event.tStartMs - newEvents[newEvents.length - 1].tStartMs +
+          event.dDurationMs;
       }
     }
 
