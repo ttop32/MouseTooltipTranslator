@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.169
+  - change youtube sub slice logic
 - 0.1.168
   - change support url
 - 0.1.167
