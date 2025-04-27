@@ -108,7 +108,7 @@
 		"message": "AVANÇADO"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Leitor Automático Quando"
 	},
 	"Translate_Writing_When": {
 		"message": "Traduzir Escrita Quando"
@@ -270,7 +270,7 @@
 		"message": "Título                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Youtube dual subs"
+		"message": "Mouse Tooltip Translator - PDF & YouTube com legendas bilíngues"
 	},
 	"appDesc": {
 		"message": "Tradução de Texto usando google tradutor do Mouse Tooltip Translator. Suporte ao OCR, TTS, tradutor de manga & tradutor de PDF."
