@@ -110,7 +110,7 @@ function expandRange(range, type, useSegmentation, x, y) {
       range = getContainerRange(range);
     } else if (!range.expand || useSegmentation) {
       // for firefox, use segmentation to extract word
-      range = expandRangeWithSeg(range, type);
+      range = expandRangeWithSeg(range, type, x, y);
     } else {
       // for chrome, use range expand
       range = getExpandRange(range, type);
