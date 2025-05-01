@@ -73,6 +73,7 @@ i18List = [
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",
     "Tooltip Word Dictionary",
+    "Voice Translated Speed",
 
     "SPEECH",
     "Speech Recognition Language",

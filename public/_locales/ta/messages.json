@@ -143,6 +143,9 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "Tooltip Word Dictionary"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "SPEECH"
 	},
