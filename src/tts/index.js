@@ -25,20 +25,20 @@ export default class TTS {
 
     for (var i = 0; i < Number(ttsRepeat); i++) {
       if (ttsTarget == "source") {
-        await this.playTts(sourceText, sourceLang, timestamp, setting);
+        await this.playTts(sourceText, sourceLang, timestamp, setting, true);
       } else if (ttsTarget == "target") {
         await this.playTts(targetText, targetLang, timestamp, setting);
       } else if (ttsTarget == "sourcetarget") {
-        await this.playTts(sourceText, sourceLang, timestamp, setting);
+        await this.playTts(sourceText, sourceLang, timestamp, setting, true);
         await this.playTts(targetText, targetLang, timestamp, setting);
       } else if (ttsTarget == "targetsource") {
         await this.playTts(targetText, targetLang, timestamp, setting);
-        await this.playTts(sourceText, sourceLang, timestamp, setting);
+        await this.playTts(sourceText, sourceLang, timestamp, setting, true);
       }
     }
   }
 
-  static async playTts(text, lang, timestamp, setting) {
+  static async playTts(text, lang, timestamp, setting, isSourceLang = false) {
     await this.stopTTS(timestamp);
     if (Number(timestamp) < this.stopTtsTimestamp) {
       return;
@@ -49,6 +49,7 @@ export default class TTS {
     }
     var volume = Number(setting["voiceVolume"]);
     var rate = Number(setting["voiceRate"]);
+    rate=!isSourceLang&&setting["voiceTranslatedRate"]!="default"? Number(setting["voiceTranslatedRate"]):rate
     var voiceFullName = setting?.["ttsVoice_" + lang];
     var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
     var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;

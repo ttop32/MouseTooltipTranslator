@@ -125,6 +125,14 @@ var speechTextTargetList = {
   "Source & Translated": "sourcetarget",
 };
 
+
+var defaultDict={
+  "Default": "default",
+}
+
+var voiceRateListWithDefault = TextUtil.concatJson(defaultDict, voiceRateList);
+
+
 export var settingDict = {
   // main
   showTooltipWhen: {
@@ -445,6 +453,12 @@ export var settingDict = {
     default: "true",
     description: browser.i18n.getMessage("Tooltip_Word_Dictionary"),
     optionList: toggleList,
+    settingTab: "advanced",
+  },
+  voiceTranslatedRate: {
+    default: "default",
+    description: browser.i18n.getMessage("Voice_Translated_Speed"),
+    optionList: voiceRateListWithDefault,
     settingTab: "advanced",
   },
 

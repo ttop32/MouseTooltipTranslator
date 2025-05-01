@@ -143,6 +143,9 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "НАСТРОЙКА РЕЧИ"
 	},

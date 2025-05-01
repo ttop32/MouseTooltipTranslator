@@ -143,6 +143,9 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "툴팁 단어 사전"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "음성 알림"
 	},

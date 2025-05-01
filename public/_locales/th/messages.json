@@ -143,6 +143,9 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "คำอธิบายพจนานุกรมสั้นๆ เมื่อชี้เมาส์"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "การพูด"
 	},
