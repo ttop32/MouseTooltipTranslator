@@ -82,13 +82,13 @@ export async function getMouseoverText(x, y) {
 
   return mouseoverText;
 }
-async function getTextFromRange(range) {
+
+async function getTextFromRange(range, useSegmentation = false) {
   var output = {};
 
   for (const detectType of ["word", "sentence", "container"]) {
     try {
-      var wordRange = expandRange(range, detectType);
-
+      var wordRange = expandRange(range, detectType, useSegmentation);
       if (checkXYInElement(wordRange, clientX, clientY)) {
         output[detectType] = util.extractTextFromRange(wordRange);
         output[detectType + "_range"] = wordRange;
@@ -99,23 +99,30 @@ async function getTextFromRange(range) {
       console.log(error);
     }
   }
+  
+  // if fail detect using expand range use seg range
+  if (!isFirefox()&& !output["word"]&& !output["sentence"] && output["container"] && !useSegmentation) {
+    return await getTextFromRange(range, true);
+  }
 
   return output;
 }
 
-function expandRange(range, type) {
+function expandRange(range, type, useSegmentation) {
   try {
     if (!range) {
       return;
     }
     var rangeClone = range.cloneRange();
-    if (type == "container" || !rangeClone.expand) {
+    if (type == "container" ) {
       rangeClone.setStartBefore(rangeClone.startContainer);
       rangeClone.setEndAfter(rangeClone.startContainer);
       rangeClone.setStart(rangeClone.startContainer, 0);
+    } else if (!rangeClone.expand || useSegmentation) {
+      // for firefox
+      rangeClone= expandRangeWithSeg(rangeClone, type);
     } else {
       rangeClone.expand(type); // "word" or "sentence"
-      // rangeClone= expandRangeWithSeg(rangeClone, type);
     }
     return rangeClone;
   } catch (error) {
@@ -129,7 +136,6 @@ function expandRange(range, type) {
 export function caretRangeFromPoint(x, y, _document = document) {
   var range;
   if (!_document?.caretRangeFromPoint) {
-    //firefox support
     var caretPos = _document.caretPositionFromPoint(x, y);
     range = document.createRange();
     range.setStart(caretPos.offsetNode, caretPos.offset);
@@ -545,3 +551,6 @@ function getNextEle(ele) {
 //   range1=range2;
 // }
 
+function isFirefox() {
+  return typeof InstallTrigger !== "undefined";
+}
