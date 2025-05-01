@@ -68,25 +68,30 @@ export async function getMouseoverText(x, y) {
   if (util.isGoogleDoc()) {
     return await getGoogleDocText(x, y);
   }
-  
+
   //get range
   var range = getPointedRange(x, y);
 
   //get text from range
-  var mouseoverText = await getTextFromRange(range);
+  var mouseoverText = await getTextFromRange(range, x, y);
   // if fail detect using expand range use seg range
-  if (!isFirefox()&& !mouseoverText["word"]&& !mouseoverText["sentence"] && mouseoverText["container"]) {
-    return await getTextFromRange(range, true);
+  if (
+    !isFirefox() &&
+    !mouseoverText["word"] &&
+    !mouseoverText["sentence"] &&
+    mouseoverText["container"]
+  ) {
+    return await getTextFromRange(range, x, y, true);
   }
 
   return mouseoverText;
 }
 
-async function getTextFromRange(range, useSegmentation = false) {
+async function getTextFromRange(range, x, y, useSegmentation = false) {
   var output = {};
   for (const detectType of ["word", "sentence", "container"]) {
     output[detectType] = "";
-    var wordRange = expandRange(range, detectType, useSegmentation);
+    var wordRange = expandRange(range, detectType, useSegmentation, x, y);
     if (checkXYInElement(wordRange, clientX, clientY)) {
       output[detectType] = util.extractTextFromRange(wordRange);
       output[detectType + "_range"] = wordRange;
@@ -95,24 +100,24 @@ async function getTextFromRange(range, useSegmentation = false) {
   return output;
 }
 
-function expandRange(range, type, useSegmentation) {
+function expandRange(range, type, useSegmentation, x, y) {
   try {
     if (!range) {
       return;
     }
-    if (type == "container" ) {
+    if (type == "container") {
       // get whole text paragraph
       range = getContainerRange(range);
     } else if (!range.expand || useSegmentation) {
       // for firefox, use segmentation to extract word
-      range= expandRangeWithSeg(range, type);
+      range = expandRangeWithSeg(range, type);
     } else {
       // for chrome, use range expand
-      range = getExpandRange(range, type);  
+      range = getExpandRange(range, type);
     }
     return range;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -130,13 +135,14 @@ function getExpandRange(rangeOri, type) {
   return range;
 }
 
-
 //browser get pointed range ===================================================
 
-function getPointedRange(x,y){
-  return caretRangeFromPoint(x, y, _win.document) ||
+function getPointedRange(x, y) {
+  return (
+    caretRangeFromPoint(x, y, _win.document) ||
     caretRangeFromPointOnPointedElement(x, y) ||
-    caretRangeFromPointOnShadowDom(x, y);
+    caretRangeFromPointOnShadowDom(x, y)
+  );
 }
 
 export function caretRangeFromPoint(x, y, _document = document) {
@@ -283,17 +289,17 @@ export function checkXYInElement(ele, x, y) {
 }
 
 //firefox word break ====================================
-function expandRangeWithSeg(rangeOri, type = "word") {
+function expandRangeWithSeg(rangeOri, type = "word", x, y) {
   var range = rangeOri.cloneRange();
-  const { x, y } = getCenterXY(range);
   var rangeContainer = expandRange(range, "container");
   const textNode = rangeContainer.commonAncestorContainer;
-  // var text1 = textNode.innerText;
-  var wholeText = getNodeText(textNode);
+  var wholeText = textNode.innerText;
+  // var wholeText2 = getNodeText(textNode);
   var wordSliceInfo = getWordSegmentInfo(wholeText, type);
+  // get all word range by segment
   const wordSliceRanges = createWordRanges(wordSliceInfo, textNode);
   // get pointed pos range
-  const currentWordNode = wordSliceRanges.find((range) =>
+  var currentWordNode = wordSliceRanges.find((range) =>
     isPointInRange(range, x, y)
   );
   return currentWordNode;
@@ -301,7 +307,6 @@ function expandRangeWithSeg(rangeOri, type = "word") {
 
 function isPointInRange(range, x, y) {
   const rects = range.getClientRects();
-
   for (const rect of rects) {
     if (
       x >= rect.left &&
@@ -312,7 +317,6 @@ function isPointInRange(range, x, y) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -323,23 +327,44 @@ function getWordSegmentInfo(text, type) {
 }
 
 function createWordRanges(wordSegInfo, textNode) {
-  return wordSegInfo.map((wordMeta) => {
-    const wordRange = document.createRange();
-    var index = wordMeta.index;
-    var word = wordMeta.segment;
-    var wordLen = word.length;
+  var newLineCount = 0;
+  return wordSegInfo
+    .map((wordMeta) => {
+      var word = wordMeta.segment;
+      var index = wordMeta.index;
+      if (word.includes("\n")) {
+        var newLine = (word.match(/\n/g) || []).length; // count new line
+        word = word.replace(/\n/g, "");
+        newLineCount += newLine;
+        index -= newLineCount; // Adjust index only once
+      } else {
+        var newLine = 0;
+        index -= newLineCount; // Adjust index only once
+      }
+      return {
+        ...wordMeta,
+        segment: word,
+        index: index, // Use the updated index
+        newLine: newLine,
+      };
+    })
+    .filter((wordMeta) => wordMeta.segment.length > 0)
+    .map((wordMeta) => {
+      try {
+        var wordRange = document.createRange();
+        var index = wordMeta.index + wordMeta.newLine;
+        var word = wordMeta.segment;
+        var wordLen = word.length;
+        const selectedNode1 = selectNode(textNode, index);
+        const selectedNode2 = selectNode(textNode, index + wordLen);
 
-    try {
-      const selectedNode1 = selectNode(textNode, index);
-      const selectedNode2 = selectNode(textNode, index + wordLen);
-
-      wordRange.setStart(selectedNode1.node, selectedNode1.index);
-      wordRange.setEnd(selectedNode2.node, selectedNode2.index);
-    } catch (error) {
-      console.log(error);
-    }
-    return wordRange;
-  });
+        wordRange.setStart(selectedNode1.node, selectedNode1.index);
+        wordRange.setEnd(selectedNode2.node, selectedNode2.index);
+      } catch (error) {
+        console.log(error);
+      }
+      return wordRange;
+    });
 }
 
 function selectNode(node, offset) {
@@ -434,13 +459,10 @@ function isFirefox() {
   return typeof InstallTrigger !== "undefined";
 }
 
-
-
 //google doc hover =========================================================
 // https://github.com/Amaimersion/google-docs-utils/issues/10
 
-
-async function getGoogleDocText(x,y){
+async function getGoogleDocText(x, y) {
   var textElement;
   var rect = getGoogleDocRect(x, y);
   var { textElement, range } = getGoogleDocCaretRange(rect, x, y);
