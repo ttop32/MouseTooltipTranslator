@@ -11,12 +11,12 @@ var defaultSettingList = {};
 export class Setting {
   constructor() {}
 
-  static async loadSetting(defaultList = {}, callbackFn) {
+  static async loadSetting({ defaultList = {}, callbackFn } = {}) {
     defaultSettingList = defaultList;
     updateCallbackFn = callbackFn;
-    const o = new Setting();
-    await o.initialize();
-    return o;
+    const setting = new Setting();
+    await setting.initialize();
+    return setting;
   }
 
   async initialize() {
