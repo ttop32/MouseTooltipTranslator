@@ -21,6 +21,8 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.170
   - add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
+  - add voice speed vary by translated (requested by guo1970)
+  - add fix text detect on proton email list page (requested by AstudilloMarillo)
 - 0.1.169
   - change youtube sub slice logic
 - 0.1.168
