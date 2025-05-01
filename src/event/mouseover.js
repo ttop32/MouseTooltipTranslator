@@ -64,22 +64,19 @@ export const triggerMouseoverText = (mouseoverText) => {
 };
 
 export async function getMouseoverText(x, y) {
+  //get google doc select
+  if (util.isGoogleDoc()) {
+    return await getGoogleDocText(x, y);
+  }
+  
   //get range
-  var textElement;
   var range =
     caretRangeFromPoint(x, y, _win.document) ||
     caretRangeFromPointOnPointedElement(x, y) ||
     caretRangeFromPointOnShadowDom(x, y);
 
-  //get google doc select
-  if (util.isGoogleDoc()) {
-    var rect = getRect(x, y);
-    var { textElement, range } = getCaretRange(rect, x, y);
-  }
   //get text from range
   var mouseoverText = await getTextFromRange(range);
-  textElement?.remove();
-
   return mouseoverText;
 }
 
@@ -279,7 +276,17 @@ export function checkXYInElement(ele, x, y) {
 //google doc hover =========================================================
 // https://github.com/Amaimersion/google-docs-utils/issues/10
 
-function getRect(x, y) {
+
+async function getGoogleDocText(x,y){
+  var textElement;
+  var rect = getGoogleDocRect(x, y);
+  var { textElement, range } = getGoogleDocCaretRange(rect, x, y);
+  var mouseoverText = await getTextFromRange(range);
+  textElement?.remove();
+  return mouseoverText;
+}
+
+function getGoogleDocRect(x, y) {
   if (!styleElement) {
     styleElement = document.createElement("style");
     styleElement.id = "enable-pointer-events-on-rect";
@@ -302,7 +309,7 @@ function getRect(x, y) {
   return rect;
 }
 
-function getCaretRange(rect, x, y) {
+function getGoogleDocCaretRange(rect, x, y) {
   const text = rect?.getAttribute("aria-label");
   const textNode = document.createTextNode(text);
   const textElement = createTextOverlay(rect, text, textNode);
