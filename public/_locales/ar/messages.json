@@ -108,7 +108,7 @@
 		"message": "ADVANCED"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "قارئ تلقائي عندما"
 	},
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
@@ -141,52 +141,52 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "قاموس كلمات الأدوات"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "سرعة الترجمة الصوتية"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "الكلام"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "لغة التعرف على الكلام"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "التعرف على الكلام عندما"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "لوحة الصوت لترجمة اللغة"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "هدف نص لوحة الصوت"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "حشو لوحة الصوت"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "محاذاة نص لوحة الصوت"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "حجم خط مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "حجم الخط المستهدف للوحة الصوت"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "لون خط مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "لون الخط المستهدف للوحة الصوت"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "لون حدود مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "لون حدود مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "لون خلفية لوحة الصوت"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "استبعاد                                      "
@@ -246,10 +246,10 @@
 		"message": "سياسة خصوصية المستخدم"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "لوحة الصوت"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "ترجمة الصوت"
 	},
 	"Review______________________________________": {
 		"message": "Review                                      "
@@ -261,10 +261,10 @@
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "قهوة                                      "
 	},
 	"Buy_coffee": {
-		"message": "Devs need coffee!"
+		"message": "المطورين بحاجة إلى قهوة!"
 	},
 	"Cheer_on_my_efforts": {
 		"message": "Cheer on dev efforts"
