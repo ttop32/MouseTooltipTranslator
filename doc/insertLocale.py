@@ -120,14 +120,11 @@ i18List = [
     "Developer love criticism",
 
     "Coffee                                      ",
-    "Buy coffee",
-    "Cheer on my efforts",
-
+    "Support the translator devs",
+    "Feed a coffee to devs",
 
 
     "Title                                      ",
-
-
 ]
 
 

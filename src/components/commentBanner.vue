@@ -26,8 +26,8 @@ export default {
   // props: ["title"],
   data() {
     return {
-      title: browser.i18n.getMessage("Buy_coffee"),
-      subtitle: browser.i18n.getMessage("Cheer_on_my_efforts"),
+      title: browser.i18n.getMessage("Support_the_translator_devs"),
+      subtitle: browser.i18n.getMessage("Feed_a_coffee_to_devs"),
       url: "https://buymeacoffee.com/ttop324",
     };
   },
