@@ -273,7 +273,7 @@
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF ve Youtube ikili alt yazıları"
+		"message": "Mouse Tooltip Translator"
 	},
 	"appDesc": {
 		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir. Support OCR, TTS, manga translator & pdf translator"
