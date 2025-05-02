@@ -48,11 +48,11 @@ function addMessageListener() {
         var translatedResult = await translateWithReverse(request.data);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
-        request.data.setting=setting
+        request.data.setting = setting;
         await TTS.playTtsQueue(request.data);
         sendResponse({});
       } else if (request.type === "stopTTS") {
-        TTS.stopTTS(request?.data?.timestamp,request?.data?.force);
+        TTS.stopTTS(request?.data?.timestamp, request?.data?.force);
         sendResponse({});
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
@@ -64,8 +64,12 @@ function addMessageListener() {
       } else if (request.type === "createOffscreen") {
         await util.createOffscreen();
         sendResponse({});
-      }else if (request.type === "killAutoReaderTabs") {
-        await util.sendMessageToAllContentScripts(request,sender.tab.id,request?.data?.includeCaller)
+      } else if (request.type === "killAutoReaderTabs") {
+        await util.sendMessageToAllContentScripts(
+          request,
+          sender.tab.id,
+          request?.data?.includeCaller
+        );
         sendResponse({});
       }
     })();
@@ -147,7 +151,6 @@ function recordHistory({
   };
   insertHistory();
 }
-
 
 function insertHistory(actionType) {
   if (
@@ -277,7 +280,6 @@ function addInstallUrl(url) {
   });
 }
 
-
 //detect tab swtich ===================================
 function addTabSwitchEventListener() {
   browser.tabs.onActivated.addListener(handleTabSwitch);
@@ -307,8 +309,8 @@ async function openPDFViewer(url, tabId) {
     return;
   }
   browser.tabs.update(tabId, {
-    url: util.getPDFUrl(url)
-  })
+    url: util.getPDFUrl(url),
+  });
 }
 
 //url is end with .pdf, start with file://
