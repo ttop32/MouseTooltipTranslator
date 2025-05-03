@@ -10,9 +10,10 @@
     "zip": "npm-build-zip",
     "zip-firefox": "npm-build-zip --name=firefox",
     "build-zip": "npm run delete && npm run build && npm run zip",
-    "build-firefox": "webpack --mode=production --config config/webpack.firefox.config.js && web-ext build --source-dir=build --artifacts-dir=web-ext-artifacts --overwrite-dest",
+    "build-firefox": "webpack --mode=production --config config/webpack.firefox.config.js",
+    "build-firefox-web-ext": "web-ext build --source-dir=build --artifacts-dir=web-ext-artifacts --overwrite-dest",
     "build-firefox-zip": "npm run delete && npm run build-firefox && npm run zip-firefox",
-    "firefox": "web-ext run --source-dir=build --firefox=firefox"
+    "watch-firefox": "web-ext run --source-dir=build --firefox=firefox"
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",

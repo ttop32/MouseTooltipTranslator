@@ -1,4 +1,4 @@
-name: Publish Extension Chrome
+name: Publish Extension Firefox
 
 on:
   workflow_dispatch:
@@ -23,12 +23,12 @@ jobs:
           fileName: "*.zip"
 
       - name: Get Release File Name
-        run: echo "RELEASE_FILE=$(ls | grep *.zip)" >> $GITHUB_ENV
+        run: echo "RELEASE_FILE=$(ls | grep *firefox.zip)" >> $GITHUB_ENV
       - name: Test
         run: echo ${{env.RELEASE_FILE}}
 
       - name: Publish to store
         uses: PlasmoHQ/bpp@v3.8.0
         with:
-          keys: ${{ secrets.CHROME_BPP_KEYS }}
-          chrome-file: "${{env.RELEASE_FILE}}"
+          keys: ${{ secrets.FIREFOX_BPP_KEYS }}
+          firefox-file: "${{env.RELEASE_FILE}}"
