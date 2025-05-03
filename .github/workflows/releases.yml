@@ -20,6 +20,9 @@ jobs:
         run: cat <<< $(jq '.version="${{github.ref_name}}"' package.json ) > package.json
       - name: Write manifest version json
         run: cat <<< $(jq '.version="${{github.ref_name}}"' public/manifest.json ) > public/manifest.json
+      - name: Write firefox manifest version json
+        run: cat <<< $(jq '.version="${{github.ref_name}}"' public/manifest.firefox.json) > public/manifest.firefox.json
+
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -27,6 +30,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build-zip
+      - run: npm run build-firefox-zip
 
       - uses: ncipollo/release-action@v1
         with:
