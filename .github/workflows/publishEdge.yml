@@ -23,7 +23,7 @@ jobs:
           fileName: "*.zip"
 
       - name: Get Release File Name
-        run: echo "RELEASE_FILE=$(ls | grep *.zip)" >> $GITHUB_ENV
+        run: echo "RELEASE_FILE=$(ls | grep *.zip | grep -v 'firefox')" >> $GITHUB_ENV
       - name: Test
         run: echo ${{env.RELEASE_FILE}}
 
