@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"Show_Tooltip_When": {
-		"message": "متى يظهر تلميح الأداة"
-	},
-	"Voice_When": {
-		"message": "متى يقرأ النص صوتيا"
-	},
 	"Translate_When": {
 		"message": "متى يترجم"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "عكس لغة الترجمة"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "متى يظهر تلميح الأداة"
+	},
+	"Voice_When": {
+		"message": "متى يقرأ النص صوتيا"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
+	},
+	"Auto_Reader_When": {
+		"message": "قارئ تلقائي عندما"
+	},
+	"OCR_When": {
+		"message": "متى يقع التعرف الضوئي على الحروف OCR"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Mouseover Text Type Swap Key"
+	},
+	"Speech_Recognition_When": {
+		"message": "التعرف على الكلام عندما"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Auto_Reader_When": {
-		"message": "قارئ تلقائي عندما"
-	},
-	"Translate_Writing_When": {
-		"message": "Translate Writing When"
-	},
-	"OCR_When": {
-		"message": "متى يقع التعرف الضوئي على الحروف OCR"
-	},
 	"Detect_Subtitle": {
 		"message": "Detect Subtitle"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Tooltip Info Source Text"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "لغة التعرف على الكلام"
-	},
-	"Speech_Recognition_When": {
-		"message": "التعرف على الكلام عندما"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "لوحة الصوت لترجمة اللغة"

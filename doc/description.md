@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.171
+  - add keyboard tab
 - 0.1.170
   - add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
   - add voice speed vary by translated (requested by guo1970)

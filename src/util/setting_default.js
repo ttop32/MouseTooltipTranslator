@@ -135,18 +135,7 @@ var voiceRateListWithDefault = TextUtil.concatJson(defaultDict, voiceRateList);
 
 export var settingDict = {
   // main
-  showTooltipWhen: {
-    default: "always",
-    description: browser.i18n.getMessage("Show_Tooltip_When"),
-    optionList: keyListWithAlways,
-    settingTab: "main",
-  },
-  TTSWhen: {
-    default: "ControlLeft",
-    description: browser.i18n.getMessage("Voice_When"),
-    optionList: keyListWithAlwaysSelect,
-    settingTab: "main",
-  },
+
   translateWhen: {
     default: "mouseoverselect",
     description: browser.i18n.getMessage("Translate_When"),
@@ -188,6 +177,50 @@ export var settingDict = {
     description: browser.i18n.getMessage("Reverse_Translate_Language"),
     optionList: langListWithNone,
     settingTab: "main",
+  },
+
+  // keyboard
+  showTooltipWhen: {
+    default: "always",
+    description: browser.i18n.getMessage("Show_Tooltip_When"),
+    optionList: keyListWithAlways,
+    settingTab: "keyboard",
+  },
+  TTSWhen: {
+    default: "ControlLeft",
+    description: browser.i18n.getMessage("Voice_When"),
+    optionList: keyListWithAlwaysSelect,
+    settingTab: "keyboard",
+  },
+  keyDownTranslateWriting: {
+    default: "AltRight",
+    description: browser.i18n.getMessage("Translate_Writing_When"),
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
+  keyDownAutoReader: {
+    default: "F2",
+    description: browser.i18n.getMessage("Auto_Reader_When"),
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
+  keyDownOCR: {
+    default: "ShiftLeft",
+    description: browser.i18n.getMessage("OCR_When"),
+    optionList: keyListWithAlways,
+    settingTab: "keyboard",
+  },
+  keyDownMouseoverTextSwap: {
+    default: "null",
+    description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
+  keySpeechRecognition: {
+    default: "ControlRight",
+    description: browser.i18n.getMessage("Speech_Recognition_When"),
+    optionList: keyList,
+    settingTab: "keyboard",
   },
 
   // voice
@@ -305,12 +338,7 @@ export var settingDict = {
     optionList: listenLangList,
     settingTab: "speech",
   },
-  keySpeechRecognition: {
-    default: "ControlRight",
-    description: browser.i18n.getMessage("Speech_Recognition_When"),
-    optionList: keyList,
-    settingTab: "speech",
-  },
+  
   voicePanelTranslateLanguage: {
     default: "default",
     description: browser.i18n.getMessage("Voice_Panel_Translate_Language"),
@@ -389,24 +417,7 @@ export var settingDict = {
   },
 
   // advanced
-  keyDownTranslateWriting: {
-    default: "AltRight",
-    description: browser.i18n.getMessage("Translate_Writing_When"),
-    optionList: keyList,
-    settingTab: "advanced",
-  },
-  keyDownOCR: {
-    default: "ShiftLeft",
-    description: browser.i18n.getMessage("OCR_When"),
-    optionList: keyListWithAlways,
-    settingTab: "advanced",
-  },
-  keyDownAutoReader: {
-    default: "F2",
-    description: browser.i18n.getMessage("Auto_Reader_When"),
-    optionList: keyList,
-    settingTab: "advanced",
-  },
+
   detectSubtitle: {
     default: "dualsub",
     description: browser.i18n.getMessage("Detect_Subtitle"),
@@ -423,12 +434,6 @@ export var settingDict = {
     default: "true",
     description: browser.i18n.getMessage("Mouseover_Pause_Subtitle"),
     optionList: toggleList,
-    settingTab: "advanced",
-  },
-  keyDownMouseoverTextSwap: {
-    default: "null",
-    description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
-    optionList: keyList,
     settingTab: "advanced",
   },
   tooltipInfoSourceText: {

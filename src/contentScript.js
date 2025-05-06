@@ -790,8 +790,7 @@ function applyStyleSetting() {
     appendTo: isSticky ? tooltipContainerEle : document.body,
     animation: setting["tooltipAnimation"],
   });
-  
-  var rtlDirection=getRtlDir(setting["translateTarget"]);
+  var rtlDirection = getRtlDir(setting["translateTarget"]);
 
   style.html(`
     #mttContainer {
@@ -801,7 +800,7 @@ function applyStyleSetting() {
       margin: 0px !important;
       margin-left: -500px !important;
       position: fixed !important;
-      z-index: 100000200 !important;
+      z-index: 2147483647 !important; /* Maximum z-index to overcome overlays */
       background: none !important;
       pointer-events: none !important;
       display: inline-block !important;
@@ -847,7 +846,7 @@ function applyStyleSetting() {
     .mtt-highlight{
       background-color: ${setting["mouseoverTextHighlightColor"]}  !important;
       position: absolute !important;   
-      z-index: 100000100 !important;
+      z-index: 2147483646 !important; /* Slightly lower than tooltip */
       pointer-events: none !important;
       display: inline !important;
       border-radius: 3px !important;
