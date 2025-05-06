@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Fare İpucu Çevirisi"
 	},
-	"Show_Tooltip_When": {
-		"message": "İpucu Ne Zaman Gösterilsin"
-	},
-	"Voice_When": {
-		"message": "Voice When"
-	},
 	"Translate_When": {
 		"message": "Translate When"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Ters Çeviri Dili"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "İpucu Ne Zaman Gösterilsin"
+	},
+	"Voice_When": {
+		"message": "Voice When"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
+	},
+	"Auto_Reader_When": {
+		"message": "Otomatik Okuyucu Ne Zaman"
+	},
+	"OCR_When": {
+		"message": "OCR When"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Mouseover Text Type Swap Key"
+	},
+	"Speech_Recognition_When": {
+		"message": "Konuşma Tanıma Ne Zaman"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Auto_Reader_When": {
-		"message": "Otomatik Okuyucu Ne Zaman"
-	},
-	"Translate_Writing_When": {
-		"message": "Translate Writing When"
-	},
-	"OCR_When": {
-		"message": "OCR When"
-	},
 	"Detect_Subtitle": {
 		"message": "Altyazıyı Algıla"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "İpucu Kaynak Metni"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "Konuşma Tanıma Dili"
-	},
-	"Speech_Recognition_When": {
-		"message": "Konuşma Tanıma Ne Zaman"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Ses Paneli Dil Çevirme"
