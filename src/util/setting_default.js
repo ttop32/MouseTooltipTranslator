@@ -148,6 +148,12 @@ export var settingDict = {
     optionList: langListWithAuto,
     settingTab: "main",
   },
+  translateTarget: {
+    default: "en",
+    description: browser.i18n.getMessage("Translate_Into"),
+    optionList: langList,
+    settingTab: "main",
+  },
   translatorVendor: {
     default: "google",
     description: browser.i18n.getMessage("Translator_Engine"),
