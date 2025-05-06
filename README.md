@@ -11,7 +11,7 @@ Download from [chrome web store](https://chromewebstore.google.com/detail/hmigni
   
 [<img alt="chrome web store" height="64px" src="doc/google.png" />](https://chrome.google.com/webstore/detail/mouse-tooltip-translator/hmigninkgibhdckiaphhmbgcghochdjc)
 [<img alt="microsoft store" height="64px" src="doc/microsoft.png" />](https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl)
-[<img alt="microsoft store" height="64px" src="doc/firefix_addon.jpg" />](https://addons.mozilla.org/en-US/firefox/addon/mouse-tooltip-translator)
+[<img alt="microsoft store" height="64px" src="doc/firefox_addons.jpg" />](https://addons.mozilla.org/en-US/firefox/addon/mouse-tooltip-translator)
 [<img alt="softpedia" height="64px" src="doc/softpedia.png" />](https://www.softpedia.com/get/Internet/Internet-Applications-Addons/Chrome-Extensions/Mouse-Tooltip-Translator-for-Chrome.shtml)
 
 # Result  
