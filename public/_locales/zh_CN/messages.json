@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "鼠标工具提示翻译器"
 	},
-	"Show_Tooltip_When": {
-		"message": "何时显示工具提示"
-	},
-	"Voice_When": {
-		"message": "何时语音"
-	},
 	"Translate_When": {
 		"message": "何时翻译"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "逆向翻译语言"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "何时显示工具提示"
+	},
+	"Voice_When": {
+		"message": "何时语音"
+	},
+	"Translate_Writing_When": {
+		"message": "何时翻译书写"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "何时进行OCR"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "鼠标悬停文本类型切换键"
+	},
+	"Speech_Recognition_When": {
+		"message": "何时进行语音识别"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "图形                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "高级"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "何时翻译书写"
-	},
-	"OCR_When": {
-		"message": "何时进行OCR"
-	},
 	"Detect_Subtitle": {
 		"message": "检测字幕"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "鼠标悬停暂停字幕"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "鼠标悬停文本类型切换键"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "工具提示信息源文本"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "语音识别语言"
-	},
-	"Speech_Recognition_When": {
-		"message": "何时进行语音识别"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "语音面板翻译语言"
