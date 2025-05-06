@@ -21,9 +21,13 @@ jobs:
         with:
           latest: true
           fileName: "*.zip"
-
+      - name: Download Source Code
+        run: |
+          curl -L -o source-code.zip $(curl -s https://api.github.com/repos/ttop32/MouseTooltipTranslator/releases/latest | jq -r '.zipball_url')
+          unzip source-code.zip -d source-code
+          
       - name: Get Release File Name
-        run: echo "RELEASE_FILE=$(ls | grep *firefox.zip)" >> $GITHUB_ENV
+        run: echo "RELEASE_FILE=$(ls | grep *.firefox.zip)" >> $GITHUB_ENV
       - name: Test
         run: echo ${{env.RELEASE_FILE}}
 
