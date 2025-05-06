@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Traductor Emergente con el Mouse"
 	},
-	"Show_Tooltip_When": {
-		"message": "Mostrar Ventana Emergente Cuando"
-	},
-	"Voice_When": {
-		"message": "Voz Cuando"
-	},
 	"Translate_When": {
 		"message": "Traducir Cuando"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Idioma de Traducción Inversa"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "Mostrar Ventana Emergente Cuando"
+	},
+	"Voice_When": {
+		"message": "Voz Cuando"
+	},
+	"Translate_Writing_When": {
+		"message": "Traducir Escritura Cuando"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "OCR Cuando"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Tecla de Cambio de Tipo de Texto al Pasar el Mouse"
+	},
+	"Speech_Recognition_When": {
+		"message": "Speech Recognition When"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRÁFICOS                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "AVANZADO"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "Traducir Escritura Cuando"
-	},
-	"OCR_When": {
-		"message": "OCR Cuando"
-	},
 	"Detect_Subtitle": {
 		"message": "Detectar Subtítulo"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Pausar Subtítulo al Pasar el Mouse"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Tecla de Cambio de Tipo de Texto al Pasar el Mouse"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Texto de Fuente de Información de la Ventana Emergente"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "Speech Recognition Language"
-	},
-	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Voice Panel Translate Language"
