@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
 	},
-	"Show_Tooltip_When": {
-		"message": "Показать подсказку когда"
-	},
-	"Voice_When": {
-		"message": "Озвучивать текст при нажатии"
-	},
 	"Translate_When": {
 		"message": "Переводить при"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Язык обратного перевода"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "Показать подсказку когда"
+	},
+	"Voice_When": {
+		"message": "Озвучивать текст при нажатии"
+	},
+	"Translate_Writing_When": {
+		"message": "Перевод при нажатии"
+	},
+	"Auto_Reader_When": {
+		"message": "Автоматическое чтение при нажатии"
+	},
+	"OCR_When": {
+		"message": "Распознавание текста при нажатии"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Смена типа текста при наведении курсора при нажатии"
+	},
+	"Speech_Recognition_When": {
+		"message": "Распознавание речи при нажатии"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИЧЕСКИЕ НАСТРОЙКИ                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ"
 	},
-	"Auto_Reader_When": {
-		"message": "Автоматическое чтение при нажатии"
-	},
-	"Translate_Writing_When": {
-		"message": "Перевод при нажатии"
-	},
-	"OCR_When": {
-		"message": "Распознавание текста при нажатии"
-	},
 	"Detect_Subtitle": {
 		"message": "Определять наличие субтитров"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Пауза субтитров при наведении курсора"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Смена типа текста при наведении курсора при нажатии"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Исходный текст в поле переводчика"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "Язык распознавания речи"
-	},
-	"Speech_Recognition_When": {
-		"message": "Распознавание речи при нажатии"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Язык обратного перевода в голосовой панели"
