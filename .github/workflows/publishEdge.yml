@@ -28,7 +28,7 @@ jobs:
         run: echo ${{ env.RELEASE_FILE }}
 
       - name: Publish to store
-        uses: PlasmoHQ/bpp-action@v3.8.0
+        uses: PlasmoHQ/bpp@v3.8.0
         with:
           keys: ${{ secrets.EDGE_BPP_KEYS }}
           edge-file: "${{env.RELEASE_FILE}}"
