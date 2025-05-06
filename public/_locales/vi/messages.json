@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"Show_Tooltip_When": {
-		"message": "Hiện chú thích khi"
-	},
-	"Voice_When": {
-		"message": "Nói chỉ khi"
-	},
 	"Translate_When": {
 		"message": "Dịch chỉ khi"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Ngôn ngữ dịch ngược"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "Hiện chú thích khi"
+	},
+	"Voice_When": {
+		"message": "Nói chỉ khi"
+	},
+	"Translate_Writing_When": {
+		"message": "Dịch viết khi"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "OCR Khi"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Phím hoán đổi văn bản khi di chuột qua"
+	},
+	"Speech_Recognition_When": {
+		"message": "Nhận dạng giọng nói khi"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "Dịch viết khi"
-	},
-	"OCR_When": {
-		"message": "OCR Khi"
-	},
 	"Detect_Subtitle": {
 		"message": "Nhận diện phụ đề"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Chuột di vào phụ đề sẽ Tạm Dừng"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Phím hoán đổi văn bản khi di chuột qua"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Thông tin nguồn văn bản"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "Ngôn ngữ nhận dạng giọng nói"
-	},
-	"Speech_Recognition_When": {
-		"message": "Nhận dạng giọng nói khi"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Bảng ngôn ngữ cần dịch bằng giọng nói"
