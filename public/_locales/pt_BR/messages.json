@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"Show_Tooltip_When": {
-		"message": "Mostrar Dica Quando"
-	},
-	"Voice_When": {
-		"message": "Voz Quando"
-	},
 	"Translate_When": {
 		"message": "Traduzir Quando"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Idioma de Tradução Reversa"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "Mostrar Dica Quando"
+	},
+	"Voice_When": {
+		"message": "Voz Quando"
+	},
+	"Translate_Writing_When": {
+		"message": "Traduzir Escrita Quando"
+	},
+	"Auto_Reader_When": {
+		"message": "Leitor Automático Quando"
+	},
+	"OCR_When": {
+		"message": "OCR Quando"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Tipo de Texto ao Trocar de Chave ao Passar o Mouse"
+	},
+	"Speech_Recognition_When": {
+		"message": "Reconhecimento de fala quando"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRÁFICO                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "AVANÇADO"
 	},
-	"Auto_Reader_When": {
-		"message": "Leitor Automático Quando"
-	},
-	"Translate_Writing_When": {
-		"message": "Traduzir Escrita Quando"
-	},
-	"OCR_When": {
-		"message": "OCR Quando"
-	},
 	"Detect_Subtitle": {
 		"message": "Detectar Legenda"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Legenda de Pausa ao Passar o Mouse"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Tipo de Texto ao Trocar de Chave ao Passar o Mouse"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Texto de Origem da Fonte de Dica"
@@ -151,9 +160,6 @@
 	},
 	"Speech_Recognition_Language": {
 		"message": "Reconhecimento de Fala do Discurso"
-	},
-	"Speech_Recognition_When": {
-		"message": "Reconhecimento de fala quando"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Idioma de tradução do painel de voz"
