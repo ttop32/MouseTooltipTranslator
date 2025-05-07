@@ -32,22 +32,6 @@ export default class Netflix extends BaseVideo {
     this.callMethodFromInject("activateCaption", url);
   }
   static async activateCaption(url) {
-    
-        //        request track
-        // parse
-        // lang video id current
-        // video audio and get lang
-        // video lang to request audio
-        // 
-        // 
-        // no tittle or only one title
-        // current lang and off
-        // target lang and off
-        // current lang and source lang
-        // current lang and target lang 
-
-
-    console.log("before inject=======================inject")    
     // skip if user caption off, is shorts skip
     if (
       this.setting["subtitleButtonToggle"] == "false" ||
@@ -56,7 +40,6 @@ export default class Netflix extends BaseVideo {
       return;
     }
     await this.waitPlayerReady(); //wait player load
-    console.log("before22 inject=======================inject")
     // get video lang
     var lang= await this.guessVideoLang();
     console.log("lang",lang)
@@ -128,9 +111,8 @@ export default class Netflix extends BaseVideo {
             responseSub = mergedSub;
             console.log("merged@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             console.log(mergedSub)
-          }
-          
-          var xmlRes=this.encodeMergedSubtitles(responseSub.xmlDoc, responseSub.subtitles);
+          }          
+          var xmlRes=this.encodeMergedSubtitles(responseSub);
 
 
           request.respondWith(
@@ -187,27 +169,18 @@ export default class Netflix extends BaseVideo {
     const xmlDoc = parser.parseFromString(sub, "text/xml");
     const subtitles = xmlDoc.getElementsByTagName("p");
     var lang = xmlDoc.documentElement.getAttribute("xml:lang");
-    
-    
-
-    const parsedSubtitles = [];
     const concatSubtitles = [];
     for (let i = 0; i < subtitles.length; i++) {
       const subtitle = subtitles[i];
       const start = parseInt(subtitle.getAttribute("begin").replace("t", ""));
       const end = parseInt(subtitle.getAttribute("end").replace("t", ""));
       const text = subtitle.textContent;
-      parsedSubtitles.push({ start, end, text, lang });
-    }
 
-    for (let i = 0; i < parsedSubtitles.length; i++) {
-      const current = parsedSubtitles[i];
       var prev = concatSubtitles?.[concatSubtitles.length - 1];
-      
-      if (prev && prev.start === current.start && prev.end === current.end) {
-        prev.text += " " + current.text;
-      }else{
-        concatSubtitles.push(current);
+      if (prev && prev.start === start && prev.end === end) {
+        prev.text += " " + text;
+      } else {
+        concatSubtitles.push({ start, end, text });
       }
     }
     
@@ -224,13 +197,6 @@ export default class Netflix extends BaseVideo {
       subtitles: concatSubtitles,
     }
     this.sub[lang] = parsedSubMeta
-
-    
-    console.log("------------------------------------")
-    console.log(lang)
-    console.log(sub)
-    console.log(parsedSubtitles);
-    console.log(parsedSubMeta)
     return parsedSubMeta
   }
 
@@ -238,6 +204,7 @@ export default class Netflix extends BaseVideo {
     var mergedSub=[]
     var sub1=sub1Meta.subtitles;
     var sub2=sub2Meta.subtitles;
+    var mergedSubMeta={...sub1Meta}
 
     // fix mismatch length between sub1 sub2
     for (let [i, sub1Line] of sub1.entries()) {
@@ -250,10 +217,10 @@ export default class Netflix extends BaseVideo {
           line.end - sub1Line.start
         );
       });
-      mergedSub.push(line1)
-
       sub2.sort((a, b) => a.overlap - b.overlap);
-      
+
+      // if sub2 has no overlap, use sub1
+      mergedSub.push(line1)
       if (sub2.length && 0 < sub2[0].overlap) {
         line2 = sub2[0];
         let line1Copy = { ...line1 }
@@ -262,15 +229,14 @@ export default class Netflix extends BaseVideo {
       }
     }
     
-    return {
-      xmlDoc: sub1Meta.xmlDoc,
-      lang: sub1Meta.lang,
-      subtitles: mergedSub,
-    } 
+    mergedSubMeta.subtitles = mergedSub;
+    return mergedSubMeta;
   }
 
 
-  static encodeMergedSubtitles(xmlDoc, mergedSubtitles) {
+  static encodeMergedSubtitles(subMeta) {
+    var xmlDoc= subMeta.xmlDoc
+    var  subtitles =  subMeta.subtitles
     const body = xmlDoc.getElementsByTagName("body")[0];
     let div = body.getElementsByTagName("div")[0];
     if (!div) {
@@ -279,9 +245,9 @@ export default class Netflix extends BaseVideo {
     }
 
     
-    mergedSubtitles.forEach(sub => {
+    subtitles.forEach(sub => {
       const p = xmlDoc.createElement("p");
-      p.setAttribute("xml:id", `subtitle${mergedSubtitles.indexOf(sub) + 1}`);
+      p.setAttribute("xml:id", `subtitle${subtitles.indexOf(sub) + 1}`);
       p.setAttribute("begin", `${sub.start}t`);
       p.setAttribute("end", `${sub.end}t`);
       p.setAttribute("region", "region0");
@@ -302,3 +268,16 @@ export default class Netflix extends BaseVideo {
     return subtitles;
   }    
 }
+//        request track
+// parse
+// lang video id current
+// video audio and get lang
+// video lang to request audio
+// 
+// 
+// no tittle or only one title
+// current lang and off
+// target lang and off
+// current lang and source lang
+// current lang and target lang 
+
