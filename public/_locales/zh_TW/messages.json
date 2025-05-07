@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "滑鼠工具提示翻譯器"
 	},
-	"Show_Tooltip_When": {
-		"message": "何時顯示工具提示"
-	},
-	"Voice_When": {
-		"message": "何時語音"
-	},
 	"Translate_When": {
 		"message": "何時翻譯"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "逆向翻譯語言"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "何時顯示工具提示"
+	},
+	"Voice_When": {
+		"message": "何時語音"
+	},
+	"Translate_Writing_When": {
+		"message": "何時翻譯書寫"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "何時進行OCR"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "滑鼠懸停文本類型切換鍵"
+	},
+	"Speech_Recognition_When": {
+		"message": "何時進行語音識別"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "圖形                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "進階"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "何時翻譯書寫"
-	},
-	"OCR_When": {
-		"message": "何時進行OCR"
-	},
 	"Detect_Subtitle": {
 		"message": "檢測字幕"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "滑鼠懸停暫停字幕"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "滑鼠懸停文本類型切換鍵"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "工具提示信息來源文本"
@@ -143,14 +152,14 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "工具提示詞典"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "語音識別"
 	},
 	"Speech_Recognition_Language": {
 		"message": "語音識別語言"
-	},
-	"Speech_Recognition_When": {
-		"message": "何時進行語音識別"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "語音面板翻譯語言"
@@ -260,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "咖啡                                      "
 	},
-	"Buy_coffee": {
-		"message": "為開發者買咖啡"
+	"Support_the_translator_devs": {
+		"message": "Support the translator devs"
 	},
-	"Cheer_on_my_efforts": {
-		"message": "為開發者的努力加油"
+	"Feed_a_coffee_to_devs": {
+		"message": "Feed a coffee to devs"
 	},
 	"Title______________________________________": {
 		"message": "標題                                      "

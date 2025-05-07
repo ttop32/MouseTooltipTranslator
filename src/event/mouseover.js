@@ -64,72 +64,90 @@ export const triggerMouseoverText = (mouseoverText) => {
 };
 
 export async function getMouseoverText(x, y) {
-  //get range
-  var textElement;
-  var range =
-    caretRangeFromPoint(x, y, _win.document) ||
-    caretRangeFromPointOnPointedElement(x, y) ||
-    caretRangeFromPointOnShadowDom(x, y);
-
   //get google doc select
   if (util.isGoogleDoc()) {
-    var rect = getRect(x, y);
-    var { textElement, range } = getCaretRange(rect, x, y);
+    return await getGoogleDocText(x, y);
   }
+
+  //get range
+  var range = getPointedRange(x, y);
+
   //get text from range
-  var mouseoverText = await getTextFromRange(range);
-  textElement?.remove();
+  var mouseoverText = await getTextFromRange(range, x, y);
+  // if fail detect using expand range use seg range
+  if (
+    !isFirefox() &&
+    !mouseoverText["word"] &&
+    !mouseoverText["sentence"] &&
+    mouseoverText["container"]
+  ) {
+    return await getTextFromRange(range, x, y, true);
+  }
 
   return mouseoverText;
 }
-async function getTextFromRange(range) {
+
+async function getTextFromRange(range, x, y, useSegmentation = false) {
   var output = {};
-
   for (const detectType of ["word", "sentence", "container"]) {
-    try {
-      var wordRange = expandRange(range, detectType);
-
-      if (checkXYInElement(wordRange, clientX, clientY)) {
-        output[detectType] = util.extractTextFromRange(wordRange);
-        output[detectType + "_range"] = wordRange;
-      } else {
-        output[detectType] = "";
-      }
-    } catch (error) {
-      console.log(error);
+    output[detectType] = "";
+    var wordRange = expandRange(range, detectType, useSegmentation, x, y);
+    if (checkXYInElement(wordRange, clientX, clientY)) {
+      output[detectType] = util.extractTextFromRange(wordRange);
+      output[detectType + "_range"] = wordRange;
     }
   }
-
   return output;
 }
 
-function expandRange(range, type) {
+function expandRange(range, type, useSegmentation, x, y) {
   try {
     if (!range) {
       return;
     }
-    var rangeClone = range.cloneRange();
-    if (type == "container" || !rangeClone.expand) {
-      rangeClone.setStartBefore(rangeClone.startContainer);
-      rangeClone.setEndAfter(rangeClone.startContainer);
-      rangeClone.setStart(rangeClone.startContainer, 0);
+    if (type == "container") {
+      // get whole text paragraph
+      range = getContainerRange(range);
+    } else if (!range.expand || useSegmentation) {
+      // for firefox, use segmentation to extract word
+      range = expandRangeWithSeg(range, type, x, y);
     } else {
-      rangeClone.expand(type); // "word" or "sentence"
-      // rangeClone= expandRangeWithSeg(rangeClone, type);
+      // for chrome, use range expand
+      range = getExpandRange(range, type);
     }
-    return rangeClone;
+    return range;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
+function getContainerRange(rangeOri) {
+  var range = rangeOri.cloneRange();
+  range.setStartBefore(range.startContainer);
+  range.setEndAfter(range.startContainer);
+  range.setStart(range.startContainer, 0);
+  return range;
+}
 
-//browser range===================================================
+function getExpandRange(rangeOri, type) {
+  var range = rangeOri.cloneRange();
+  range.expand(type); // "word" or "sentence"
+  return range;
+}
+
+//browser get pointed range ===================================================
+
+function getPointedRange(x, y) {
+  return (
+    caretRangeFromPoint(x, y, _win.document) ||
+    caretRangeFromPointOnPointedElement(x, y) ||
+    caretRangeFromPointOnShadowDom(x, y)
+  );
+}
 
 export function caretRangeFromPoint(x, y, _document = document) {
   var range;
   if (!_document?.caretRangeFromPoint) {
-    //firefox support
     var caretPos = _document.caretPositionFromPoint(x, y);
     range = document.createRange();
     range.setStart(caretPos.offsetNode, caretPos.offset);
@@ -270,119 +288,18 @@ export function checkXYInElement(ele, x, y) {
   }
 }
 
-//google doc hover =========================================================
-// https://github.com/Amaimersion/google-docs-utils/issues/10
-
-function getRect(x, y) {
-  if (!styleElement) {
-    styleElement = document.createElement("style");
-    styleElement.id = "enable-pointer-events-on-rect";
-    styleElement.textContent = [
-      `.kix-canvas-tile-content{pointer-events:none!important;}`,
-      `#kix-current-user-cursor-caret{pointer-events:none!important;}`,
-      `.kix-canvas-tile-content svg>g>rect{pointer-events:all!important; stroke-width:7px !important;}`,
-    ].join("\n");
-
-    const parent = document.head || document.documentElement;
-    if (parent !== null) {
-      parent.appendChild(styleElement);
-    }
-  }
-
-  styleElement.disabled = false;
-  const rect = document.elementFromPoint(x, y);
-  styleElement.disabled = true;
-
-  return rect;
-}
-
-function getCaretRange(rect, x, y) {
-  const text = rect?.getAttribute("aria-label");
-  const textNode = document.createTextNode(text);
-  const textElement = createTextOverlay(rect, text, textNode);
-
-  if (!text || !textElement || !textNode) return {};
-
-  let range = document.createRange();
-  let start = 0;
-  let end = textNode.nodeValue.length;
-  while (end - start > 1) {
-    const mid = Math.floor((start + end) / 2);
-    range.setStart(textNode, mid);
-    range.setEnd(textNode, end);
-    const rects = range.getClientRects();
-    if (isPointInAnyRect(x, y, rects)) {
-      start = mid;
-    } else {
-      if (x > range.getClientRects()[0].right) {
-        start = end;
-      } else {
-        end = mid;
-      }
-    }
-  }
-
-  return { textElement, range };
-}
-
-function createTextOverlay(rect, text, textNode) {
-  if (!rect || rect.tagName !== "rect") return {};
-
-  const textElement = document.createElementNS(
-    "http://www.w3.org/2000/svg",
-    "text"
-  );
-  const transform = rect.getAttribute("transform") || "";
-  const font = rect.getAttribute("data-font-css") || "";
-
-  textElement.setAttribute("x", rect.getAttribute("x"));
-  textElement.setAttribute("y", rect.getAttribute("y"));
-  textElement.appendChild(textNode);
-  textElement.style.setProperty("all", "initial", "important");
-  textElement.style.setProperty("transform", transform, "important");
-  textElement.style.setProperty("font", font, "important");
-  textElement.style.setProperty("text-anchor", "start", "important");
-
-  rect.parentNode.appendChild(textElement);
-
-  const elementRect = rect.getBoundingClientRect();
-  const textRect = textElement.getBoundingClientRect();
-  const yOffset =
-    (elementRect.top - textRect.top + (elementRect.bottom - textRect.bottom)) *
-    0.5;
-  textElement.style.setProperty(
-    "transform",
-    `translate(0px,${yOffset}px) ${transform}`,
-    "important"
-  );
-
-  return textElement;
-}
-
-function isPointInAnyRect(x, y, rects) {
-  for (const rect of rects) {
-    if (
-      x >= Math.floor(rect.left) &&
-      x <= Math.floor(rect.right) &&
-      y >= Math.floor(rect.top) &&
-      y <= Math.floor(rect.bottom)
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
 //firefox word break ====================================
-function expandRangeWithSeg(range, type = "word") {
-  const { x, y } = getCenterXY(range);
+function expandRangeWithSeg(rangeOri, type = "word", x, y) {
+  var range = rangeOri.cloneRange();
   var rangeContainer = expandRange(range, "container");
   const textNode = rangeContainer.commonAncestorContainer;
-  // var text1 = textNode.innerText;
-  var text2 = getNodeText(textNode);
-  var wordSegInfo = getWordSegmentInfo(text2, type);
-  const wordRanges = createWordRanges(wordSegInfo, textNode);
-  const currentWordNode = wordRanges.find((range) =>
+  var wholeText = textNode.innerText;
+  // var wholeText2 = getNodeText(textNode);
+  var wordSliceInfo = getWordSegmentInfo(wholeText, type);
+  // get all word range by segment
+  const wordSliceRanges = createWordRanges(wordSliceInfo, textNode);
+  // get pointed pos range
+  var currentWordNode = wordSliceRanges.find((range) =>
     isPointInRange(range, x, y)
   );
   return currentWordNode;
@@ -390,7 +307,6 @@ function expandRangeWithSeg(range, type = "word") {
 
 function isPointInRange(range, x, y) {
   const rects = range.getClientRects();
-
   for (const rect of rects) {
     if (
       x >= rect.left &&
@@ -401,7 +317,6 @@ function isPointInRange(range, x, y) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -412,23 +327,44 @@ function getWordSegmentInfo(text, type) {
 }
 
 function createWordRanges(wordSegInfo, textNode) {
-  return wordSegInfo.map((wordMeta) => {
-    const wordRange = document.createRange();
-    var index = wordMeta.index;
-    var word = wordMeta.segment;
-    var wordLen = word.length;
+  var newLineCount = 0;
+  return wordSegInfo
+    .map((wordMeta) => {
+      var word = wordMeta.segment;
+      var index = wordMeta.index;
+      if (word.includes("\n")) {
+        var newLine = (word.match(/\n/g) || []).length; // count new line
+        word = word.replace(/\n/g, "");
+        newLineCount += newLine;
+        index -= newLineCount; // Adjust index only once
+      } else {
+        var newLine = 0;
+        index -= newLineCount; // Adjust index only once
+      }
+      return {
+        ...wordMeta,
+        segment: word,
+        index: index, // Use the updated index
+        newLine: newLine,
+      };
+    })
+    .filter((wordMeta) => wordMeta.segment.length > 0)
+    .map((wordMeta) => {
+      try {
+        var wordRange = document.createRange();
+        var index = wordMeta.index + wordMeta.newLine;
+        var word = wordMeta.segment;
+        var wordLen = word.length;
+        const selectedNode1 = selectNode(textNode, index);
+        const selectedNode2 = selectNode(textNode, index + wordLen);
 
-    try {
-      const selectedNode1 = selectNode(textNode, index);
-      const selectedNode2 = selectNode(textNode, index + wordLen);
-
-      wordRange.setStart(selectedNode1.node, selectedNode1.index);
-      wordRange.setEnd(selectedNode2.node, selectedNode2.index);
-    } catch (error) {
-      console.log(error);
-    }
-    return wordRange;
-  });
+        wordRange.setStart(selectedNode1.node, selectedNode1.index);
+        wordRange.setEnd(selectedNode2.node, selectedNode2.index);
+      } catch (error) {
+        console.log(error);
+      }
+      return wordRange;
+    });
 }
 
 function selectNode(node, offset) {
@@ -519,29 +455,118 @@ function getNextEle(ele) {
   return ele.nextElementSibling || getNextEle(ele.parentElement);
 }
 
-// var ele=document.querySelector("#L1")
-// var range=document.createRange();
-// range.setStart(ele,0);
-// var {node,index}=selectNode(ele,2)
-// range.setEnd(node,index);
-// var text=range.toString();
-// console.log(ele)
-// console.log(text)
-// console.log(range)
-// var text=range.toString();
-// console.log(text)
+function isFirefox() {
+  return typeof InstallTrigger !== "undefined";
+}
 
-// var range1=expandRange(range,"word");
-// var text=range1.toString();
-// console.log(text)
+//google doc hover =========================================================
+// https://github.com/Amaimersion/google-docs-utils/issues/10
 
-// var detectType="sentence";
+async function getGoogleDocText(x, y) {
+  var textElement;
+  var rect = getGoogleDocRect(x, y);
+  var { textElement, range } = getGoogleDocCaretRange(rect, x, y);
+  var mouseoverText = await getTextFromRange(range);
+  textElement?.remove();
+  return mouseoverText;
+}
 
-// // do 10 times
-// for (let i = 0; i < 20; i++) {
-//   var range2=getNextExpand(range1, detectType)
-//   var text=range2.toString();
-//   console.log(i,text)
-//   range1=range2;
-// }
+function getGoogleDocRect(x, y) {
+  if (!styleElement) {
+    styleElement = document.createElement("style");
+    styleElement.id = "enable-pointer-events-on-rect";
+    styleElement.textContent = [
+      `.kix-canvas-tile-content{pointer-events:none!important;}`,
+      `#kix-current-user-cursor-caret{pointer-events:none!important;}`,
+      `.kix-canvas-tile-content svg>g>rect{pointer-events:all!important; stroke-width:7px !important;}`,
+    ].join("\n");
 
+    const parent = document.head || document.documentElement;
+    if (parent !== null) {
+      parent.appendChild(styleElement);
+    }
+  }
+
+  styleElement.disabled = false;
+  const rect = document.elementFromPoint(x, y);
+  styleElement.disabled = true;
+
+  return rect;
+}
+
+function getGoogleDocCaretRange(rect, x, y) {
+  const text = rect?.getAttribute("aria-label");
+  const textNode = document.createTextNode(text);
+  const textElement = createTextOverlay(rect, text, textNode);
+
+  if (!text || !textElement || !textNode) return {};
+
+  let range = document.createRange();
+  let start = 0;
+  let end = textNode.nodeValue.length;
+  while (end - start > 1) {
+    const mid = Math.floor((start + end) / 2);
+    range.setStart(textNode, mid);
+    range.setEnd(textNode, end);
+    const rects = range.getClientRects();
+    if (isPointInAnyRect(x, y, rects)) {
+      start = mid;
+    } else {
+      if (x > range.getClientRects()[0].right) {
+        start = end;
+      } else {
+        end = mid;
+      }
+    }
+  }
+
+  return { textElement, range };
+}
+
+function createTextOverlay(rect, text, textNode) {
+  if (!rect || rect.tagName !== "rect") return {};
+
+  const textElement = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
+  const transform = rect.getAttribute("transform") || "";
+  const font = rect.getAttribute("data-font-css") || "";
+
+  textElement.setAttribute("x", rect.getAttribute("x"));
+  textElement.setAttribute("y", rect.getAttribute("y"));
+  textElement.appendChild(textNode);
+  textElement.style.setProperty("all", "initial", "important");
+  textElement.style.setProperty("transform", transform, "important");
+  textElement.style.setProperty("font", font, "important");
+  textElement.style.setProperty("text-anchor", "start", "important");
+
+  rect.parentNode.appendChild(textElement);
+
+  const elementRect = rect.getBoundingClientRect();
+  const textRect = textElement.getBoundingClientRect();
+  const yOffset =
+    (elementRect.top - textRect.top + (elementRect.bottom - textRect.bottom)) *
+    0.5;
+  textElement.style.setProperty(
+    "transform",
+    `translate(0px,${yOffset}px) ${transform}`,
+    "important"
+  );
+
+  return textElement;
+}
+
+function isPointInAnyRect(x, y, rects) {
+  for (const rect of rects) {
+    if (
+      x >= Math.floor(rect.left) &&
+      x <= Math.floor(rect.right) &&
+      y >= Math.floor(rect.top) &&
+      y <= Math.floor(rect.bottom)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}

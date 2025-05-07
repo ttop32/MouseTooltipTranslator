@@ -25,8 +25,6 @@ i18List = [
     "MAIN                                      ",
     "MAIN",
     "Mouse Tooltip Translator",
-    "Show Tooltip When",
-    "Voice When",
     "Translate When",
     "Translate From",
     "Translate Into",
@@ -35,6 +33,16 @@ i18List = [
     "Writing Language",
     "OCR Language",
     "Reverse Translate Language",
+
+    "KEYBOARD                                      ",
+    "KEYBOARD",
+    "Show Tooltip When",
+    "Voice When",
+    "Translate Writing When",
+    "Auto Reader When",
+    "OCR When",
+    "Mouseover Text Type Swap Key",
+    "Speech Recognition When",
 
     "GRAPHIC                                      ",
     "GRAPHIC",
@@ -61,22 +69,18 @@ i18List = [
 
     "ADVANCED                                      ",
     "ADVANCED",
-    "Auto Reader When",
-    "Translate Writing When",
-    "OCR When",
     "Detect Subtitle",
     "Detect PDF",
     "Mouseover Pause Subtitle",
-    "Mouseover Text Type Swap Key",
     "Tooltip Info Source Text",
     "Tooltip Info Source Language",
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",
     "Tooltip Word Dictionary",
+    "Voice Translated Speed",
 
     "SPEECH",
     "Speech Recognition Language",
-    "Speech Recognition When",
     "Voice Panel Translate Language",
     "Voice Panel Text Target",
     "Voice Panel Padding",
@@ -119,14 +123,11 @@ i18List = [
     "Developer love criticism",
 
     "Coffee                                      ",
-    "Buy coffee",
-    "Cheer on my efforts",
-
+    "Support the translator devs",
+    "Feed a coffee to devs",
 
 
     "Title                                      ",
-
-
 ]
 
 

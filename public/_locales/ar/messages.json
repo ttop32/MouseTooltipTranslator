@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"Show_Tooltip_When": {
-		"message": "متى يظهر تلميح الأداة"
-	},
-	"Voice_When": {
-		"message": "متى يقرأ النص صوتيا"
-	},
 	"Translate_When": {
 		"message": "متى يترجم"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "عكس لغة الترجمة"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "متى يظهر تلميح الأداة"
+	},
+	"Voice_When": {
+		"message": "متى يقرأ النص صوتيا"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
+	},
+	"Auto_Reader_When": {
+		"message": "قارئ تلقائي عندما"
+	},
+	"OCR_When": {
+		"message": "متى يقع التعرف الضوئي على الحروف OCR"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Mouseover Text Type Swap Key"
+	},
+	"Speech_Recognition_When": {
+		"message": "التعرف على الكلام عندما"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "Translate Writing When"
-	},
-	"OCR_When": {
-		"message": "متى يقع التعرف الضوئي على الحروف OCR"
-	},
 	"Detect_Subtitle": {
 		"message": "Detect Subtitle"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Tooltip Info Source Text"
@@ -141,49 +150,49 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "قاموس كلمات الأدوات"
+	},
+	"Voice_Translated_Speed": {
+		"message": "سرعة الترجمة الصوتية"
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "الكلام"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
-	},
-	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "لغة التعرف على الكلام"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "لوحة الصوت لترجمة اللغة"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "هدف نص لوحة الصوت"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "حشو لوحة الصوت"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "محاذاة نص لوحة الصوت"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "حجم خط مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "حجم الخط المستهدف للوحة الصوت"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "لون خط مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "لون الخط المستهدف للوحة الصوت"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "لون حدود مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "لون حدود مصدر لوحة الصوت"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "لون خلفية لوحة الصوت"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "استبعاد                                      "
@@ -243,10 +252,10 @@
 		"message": "سياسة خصوصية المستخدم"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "لوحة الصوت"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "ترجمة الصوت"
 	},
 	"Review______________________________________": {
 		"message": "Review                                      "
@@ -258,19 +267,19 @@
 		"message": "Developer love criticism"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "قهوة                                      "
 	},
-	"Buy_coffee": {
-		"message": "Devs need coffee!"
+	"Support_the_translator_devs": {
+		"message": "Support the translator devs"
 	},
-	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+	"Feed_a_coffee_to_devs": {
+		"message": "Feed a coffee to devs"
 	},
 	"Title______________________________________": {
 		"message": "عنوان                                      "
 	},
 	"appName": {
-		"message": "مترجم تلميحات الفأرة - ترجمات مزدوجة لـ PDF و Youtube"
+		"message": "مترجم تلميحات الفأرة "
 	},
 	"appDesc": {
 		"message": "ترجمة نص تحت مؤشر الفأرة باستخدام محركات ترجمة مختلفة من ضمنها Googleو Bingو Yandexو DeepLو Naver Papago"

@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "마우스 툴팁 번역기"
 	},
-	"Show_Tooltip_When": {
-		"message": "툴팁 표시:"
-	},
-	"Voice_When": {
-		"message": "음성 표시:"
-	},
 	"Translate_When": {
 		"message": "번역 표시:"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "Reverse Translate Language"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "툴팁 표시:"
+	},
+	"Voice_When": {
+		"message": "음성 표시:"
+	},
+	"Translate_Writing_When": {
+		"message": "Translate Writing When"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "OCR When"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "Mouseover Text Type Swap Key"
+	},
+	"Speech_Recognition_When": {
+		"message": "음성 인지 시기"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ADVANCED"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "Translate Writing When"
-	},
-	"OCR_When": {
-		"message": "OCR When"
-	},
 	"Detect_Subtitle": {
 		"message": "Detect Subtitle"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Tooltip Info Source Text"
@@ -143,14 +152,14 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "툴팁 단어 사전"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "음성 알림"
 	},
 	"Speech_Recognition_Language": {
 		"message": "음성 인지 언어"
-	},
-	"Speech_Recognition_When": {
-		"message": "음성 인지 시기"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "음성 패널 번역 언어"
@@ -260,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "커피                                      "
 	},
-	"Buy_coffee": {
-		"message": "커피 후원하기"
+	"Support_the_translator_devs": {
+		"message": "Support the translator devs"
 	},
-	"Cheer_on_my_efforts": {
-		"message": "노력을 지원해 주세요"
+	"Feed_a_coffee_to_devs": {
+		"message": "Feed a coffee to devs"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "

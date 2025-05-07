@@ -8,12 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "น้องเมาส์นักแปลภาษา"
 	},
-	"Show_Tooltip_When": {
-		"message": "แสดงข้อความ"
-	},
-	"Voice_When": {
-		"message": "Voice When"
-	},
 	"Translate_When": {
 		"message": "แปลเมื่อ"
 	},
@@ -37,6 +31,33 @@
 	},
 	"Reverse_Translate_Language": {
 		"message": "ย้อนกลับแปลภาษา"
+	},
+	"KEYBOARD______________________________________": {
+		"message": "KEYBOARD                                      "
+	},
+	"KEYBOARD": {
+		"message": "KEYBOARD"
+	},
+	"Show_Tooltip_When": {
+		"message": "แสดงข้อความ"
+	},
+	"Voice_When": {
+		"message": "Voice When"
+	},
+	"Translate_Writing_When": {
+		"message": "แปลการพิมพ์เมื่อ"
+	},
+	"Auto_Reader_When": {
+		"message": "Auto Reader When"
+	},
+	"OCR_When": {
+		"message": "OCR เมื่อใด"
+	},
+	"Mouseover_Text_Type_Swap_Key": {
+		"message": "คีย์สลับประเภทข้อความ Mouseover"
+	},
+	"Speech_Recognition_When": {
+		"message": "ภาษาการรู้จำเสียงพูด"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "กราฟิก                                      "
@@ -107,15 +128,6 @@
 	"ADVANCED": {
 		"message": "ขั้นสูง"
 	},
-	"Auto_Reader_When": {
-		"message": "Auto Reader When"
-	},
-	"Translate_Writing_When": {
-		"message": "แปลการพิมพ์เมื่อ"
-	},
-	"OCR_When": {
-		"message": "OCR เมื่อใด"
-	},
 	"Detect_Subtitle": {
 		"message": "ตรวจจับคำบรรยาย"
 	},
@@ -124,9 +136,6 @@
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "หยุดคำบรรยายชั่วคราว Mouseover"
-	},
-	"Mouseover_Text_Type_Swap_Key": {
-		"message": "คีย์สลับประเภทข้อความ Mouseover"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "ข้อความแหล่งที่มาข้อมูล Tooltip"
@@ -143,14 +152,14 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "คำอธิบายพจนานุกรมสั้นๆ เมื่อชี้เมาส์"
 	},
+	"Voice_Translated_Speed": {
+		"message": "Voice Translated Speed"
+	},
 	"SPEECH": {
 		"message": "การพูด"
 	},
 	"Speech_Recognition_Language": {
 		"message": "ภาษาสำหรับการจดจำเสียงพูด"
-	},
-	"Speech_Recognition_When": {
-		"message": "ภาษาการรู้จำเสียงพูด"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "แผงเสียงแปลภาษา"
@@ -260,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "Coffee                                      "
 	},
-	"Buy_coffee": {
-		"message": "Devs need coffee!"
+	"Support_the_translator_devs": {
+		"message": "Support the translator devs"
 	},
-	"Cheer_on_my_efforts": {
-		"message": "Cheer on dev efforts"
+	"Feed_a_coffee_to_devs": {
+		"message": "Feed a coffee to devs"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "
