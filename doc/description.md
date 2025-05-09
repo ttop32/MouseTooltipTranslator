@@ -23,6 +23,7 @@ English, Russian, Japanese, Chinese and so on
   - fix lang into setting missing
 - 0.1.171
   - add keyboard tab
+  - add firefox
 - 0.1.170
   - add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
   - add voice speed vary by translated (requested by guo1970)
