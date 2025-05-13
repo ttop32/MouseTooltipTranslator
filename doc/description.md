@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.173
+  - reduce auto reader delay (requested by Анатолий)
 - 0.1.172
   - fix lang into setting missing
 - 0.1.171
