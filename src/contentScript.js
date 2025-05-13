@@ -189,10 +189,16 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    util.requestKillAutoReaderTabs(true);
-    await delay(50);
-    util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
+    handleTTS(text, sourceLang, targetText, targetLang, timestamp);
   }
+}
+
+async function handleTTS(text, sourceLang, targetText, targetLang) {
+  //kill auto reader if tts is on
+  util.requestKillAutoReaderTabs(true);
+  await delay(50);
+  //tts
+  util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
 }
 
 function extractMouseoverText(hoveredData) {
