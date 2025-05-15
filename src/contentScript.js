@@ -193,7 +193,7 @@ async function stageTooltipText(text, actionType, range) {
   }
 }
 
-async function handleTTS(text, sourceLang, targetText, targetLang) {
+async function handleTTS(text, sourceLang, targetText, targetLang, timestamp) {
   //kill auto reader if tts is on
   util.requestKillAutoReaderTabs(true);
   await delay(50);

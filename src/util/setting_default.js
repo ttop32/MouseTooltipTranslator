@@ -1,8 +1,6 @@
-import browser from "webextension-polyfill";
 import TextUtil from "/src/util/text_util.js";
 import {
   langList,
-  langListOpposite,
   ocrLangList,
   listenLangList,
 } from "/src/util/lang.js";
@@ -132,55 +130,54 @@ var defaultDict={
 
 var voiceRateListWithDefault = TextUtil.concatJson(defaultDict, voiceRateList);
 
-
 export var settingDict = {
   // main
 
   translateWhen: {
     default: "mouseoverselect",
-    description: browser.i18n.getMessage("Translate_When"),
+    i18nKey: "Translate_When",
     optionList: translateActionList,
     settingTab: "main",
   },
   translateSource: {
     default: "auto",
-    description: browser.i18n.getMessage("Translate_From"),
+    i18nKey: "Translate_From",
     optionList: langListWithAuto,
     settingTab: "main",
   },
   translateTarget: {
     default: "en",
-    description: browser.i18n.getMessage("Translate_Into"),
+    i18nKey: "Translate_Into",
     optionList: langList,
     settingTab: "main",
   },
   translatorVendor: {
     default: "google",
-    description: browser.i18n.getMessage("Translator_Engine"),
+    i18nKey: "Translator_Engine",
     optionList: translatorList,
     settingTab: "main",
   },
   mouseoverTextType: {
     default: "sentence",
-    description: browser.i18n.getMessage("Mouseover_Text_Type"),
+    i18nKey: "Mouseover_Text_Type",
     optionList: detectTypeList,
     settingTab: "main",
   },
   writingLanguage: {
     default: "en",
-    description: browser.i18n.getMessage("Writing_Language"),
+    i18nKey: "Writing_Language",
     optionList: langList,
     settingTab: "main",
   },
   ocrLang: {
     default: "jpn_vert",
-    description: browser.i18n.getMessage("OCR_Language"),
+    i18nKey: "OCR_Language",
     optionList: ocrLangList,
     settingTab: "main",
   },
   translateReverseTarget: {
     default: "null",
-    description: browser.i18n.getMessage("Reverse_Translate_Language"),
+    i18nKey: "Reverse_Translate_Language",
     optionList: langListWithNone,
     settingTab: "main",
   },
@@ -188,43 +185,43 @@ export var settingDict = {
   // keyboard
   showTooltipWhen: {
     default: "always",
-    description: browser.i18n.getMessage("Show_Tooltip_When"),
+    i18nKey: "Show_Tooltip_When",
     optionList: keyListWithAlways,
     settingTab: "keyboard",
   },
   TTSWhen: {
     default: "ControlLeft",
-    description: browser.i18n.getMessage("Voice_When"),
+    i18nKey: "Voice_When",
     optionList: keyListWithAlwaysSelect,
     settingTab: "keyboard",
   },
   keyDownTranslateWriting: {
     default: "AltRight",
-    description: browser.i18n.getMessage("Translate_Writing_When"),
+    i18nKey: "Translate_Writing_When",
     optionList: keyList,
     settingTab: "keyboard",
   },
   keyDownAutoReader: {
     default: "F2",
-    description: browser.i18n.getMessage("Auto_Reader_When"),
+    i18nKey: "Auto_Reader_When",
     optionList: keyList,
     settingTab: "keyboard",
   },
   keyDownOCR: {
     default: "ShiftLeft",
-    description: browser.i18n.getMessage("OCR_When"),
+    i18nKey: "OCR_When",
     optionList: keyListWithAlways,
     settingTab: "keyboard",
   },
   keyDownMouseoverTextSwap: {
     default: "null",
-    description: browser.i18n.getMessage("Mouseover_Text_Type_Swap_Key"),
+    i18nKey: "Mouseover_Text_Type_Swap_Key",
     optionList: keyList,
     settingTab: "keyboard",
   },
   keySpeechRecognition: {
     default: "ControlRight",
-    description: browser.i18n.getMessage("Speech_Recognition_When"),
+    i18nKey: "Speech_Recognition_When",
     optionList: keyList,
     settingTab: "keyboard",
   },
@@ -232,25 +229,25 @@ export var settingDict = {
   // voice
   voiceVolume: {
     default: "1.0",
-    description: browser.i18n.getMessage("Voice_Volume"),
+    i18nKey: "Voice_Volume",
     optionList: voiceVolumeList,
     settingTab: "voice",
   },
   voiceRate: {
     default: "1.0",
-    description: browser.i18n.getMessage("Voice_Speed"),
+    i18nKey: "Voice_Speed",
     optionList: voiceRateList,
     settingTab: "voice",
   },
   voiceTarget: {
     default: "source",
-    description: browser.i18n.getMessage("Voice_Target"),
+    i18nKey: "Voice_Target",
     optionList: voiceTargetList,
     settingTab: "voice",
   },
   voiceRepeat: {
     default: "1",
-    description: browser.i18n.getMessage("Voice_Repeat"),
+    i18nKey: "Voice_Repeat",
     optionList: voiceRepeatList,
     settingTab: "voice",
   },
@@ -258,55 +255,55 @@ export var settingDict = {
   // graphic
   tooltipFontSize: {
     default: "18",
-    description: browser.i18n.getMessage("Tooltip_Font_Size"),
+    i18nKey: "Tooltip_Font_Size",
     optionList: tooltipFontSizeList,
     settingTab: "graphic",
   },
   tooltipWidth: {
     default: "200",
-    description: browser.i18n.getMessage("Tooltip_Width"),
+    i18nKey: "Tooltip_Width",
     optionList: tooltipWidth,
     settingTab: "graphic",
   },
   tooltipDistance: {
     default: "20",
-    description: browser.i18n.getMessage("Tooltip_Distance"),
+    i18nKey: "Tooltip_Distance",
     optionList: distanceList,
     settingTab: "graphic",
   },
   tooltipAnimation: {
     default: "fade",
-    description: browser.i18n.getMessage("Tooltip_Animation"),
+    i18nKey: "Tooltip_Animation",
     optionList: tooltipAnimationList,
     settingTab: "graphic",
   },
   tooltipPosition: {
     default: "follow",
-    description: browser.i18n.getMessage("Tooltip_Position"),
+    i18nKey: "Tooltip_Position",
     optionList: tooltipPositionList,
     settingTab: "graphic",
   },
   tooltipTextAlign: {
     default: "center",
-    description: browser.i18n.getMessage("Tooltip_Text_Align"),
+    i18nKey: "Tooltip_Text_Align",
     optionList: textAlignList,
     settingTab: "graphic",
   },
   tooltipBackgroundBlur: {
     default: "6",
-    description: browser.i18n.getMessage("Tooltip_Background_Blur"),
+    i18nKey: "Tooltip_Background_Blur",
     optionList: tooltipBackgroundBlurList,
     settingTab: "graphic",
   },
   mouseoverHighlightText: {
     default: "false",
-    description: browser.i18n.getMessage("Mouseover_Highlight_Text"),
+    i18nKey: "Mouseover_Highlight_Text",
     optionList: toggleList,
     settingTab: "graphic",
   },
   tooltipFontColor: {
     default: "#ffffffff",
-    description: browser.i18n.getMessage("Tooltip_Font_Color"),
+    i18nKey: "Tooltip_Font_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -314,7 +311,7 @@ export var settingDict = {
   },
   tooltipBackgroundColor: {
     default: "#00000080",
-    description: browser.i18n.getMessage("Tooltip_Background_Color"),
+    i18nKey: "Tooltip_Background_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -322,7 +319,7 @@ export var settingDict = {
   },
   tooltipBorderColor: {
     default: "#ffffff00",
-    description: browser.i18n.getMessage("Tooltip_Border_Color"),
+    i18nKey: "Tooltip_Border_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -330,7 +327,7 @@ export var settingDict = {
   },
   mouseoverTextHighlightColor: {
     default: "#21dc6d40",
-    description: browser.i18n.getMessage("Mouseover_Text_Highlight_Color"),
+    i18nKey: "Mouseover_Text_Highlight_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -340,50 +337,50 @@ export var settingDict = {
   // speech
   speechRecognitionLanguage: {
     default: "en-US",
-    description: browser.i18n.getMessage("Speech_Recognition_Language"),
+    i18nKey: "Speech_Recognition_Language",
     optionList: listenLangList,
     settingTab: "speech",
   },
   
   voicePanelTranslateLanguage: {
     default: "default",
-    description: browser.i18n.getMessage("Voice_Panel_Translate_Language"),
+    i18nKey: "Voice_Panel_Translate_Language",
     optionList: langListWithDefault,
     settingTab: "speech",
   },
   voicePanelTextTarget: {
     default: "sourcetarget",
-    description: browser.i18n.getMessage("Voice_Panel_Text_Target"),
+    i18nKey: "Voice_Panel_Text_Target",
     optionList: speechTextTargetList,
     settingTab: "speech",
   },
   voicePanelPadding: {
     default: "20",
-    description: browser.i18n.getMessage("Voice_Panel_Padding"),
+    i18nKey: "Voice_Panel_Padding",
     optionList: distanceList,
     settingTab: "speech",
   },
   voicePanelTextAlign: {
     default: "center",
-    description: browser.i18n.getMessage("Voice_Panel_Text_Align"),
+    i18nKey: "Voice_Panel_Text_Align",
     optionList: textAlignList,
     settingTab: "speech",
   },
   voicePanelSourceFontSize: {
     default: "18",
-    description: browser.i18n.getMessage("Voice_Panel_Source_Font_Size"),
+    i18nKey: "Voice_Panel_Source_Font_Size",
     optionList: tooltipFontSizeList,
     settingTab: "speech",
   },
   voicePanelTargetFontSize: {
     default: "18",
-    description: browser.i18n.getMessage("Voice_Panel_Target_Font_Size"),
+    i18nKey: "Voice_Panel_Target_Font_Size",
     optionList: tooltipFontSizeList,
     settingTab: "speech",
   },
   voicePanelSourceFontColor: {
     default: "#ffffffff",
-    description: browser.i18n.getMessage("Voice_Panel_Source_Font_Color"),
+    i18nKey: "Voice_Panel_Source_Font_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -391,7 +388,7 @@ export var settingDict = {
   },
   voicePanelTargetFontColor: {
     default: "#ffffffff",
-    description: browser.i18n.getMessage("Voice_Panel_Target_Font_Color"),
+    i18nKey: "Voice_Panel_Target_Font_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -399,7 +396,7 @@ export var settingDict = {
   },
   voicePanelSourceBorderColor: {
     default: "#000000b8",
-    description: browser.i18n.getMessage("Voice_Panel_Source_Border_Color"),
+    i18nKey: "Voice_Panel_Source_Border_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -407,7 +404,7 @@ export var settingDict = {
   },
   voicePanelTargetBorderColor: {
     default: "#000000b8",
-    description: browser.i18n.getMessage("Voice_Panel_Target_Border_Color"),
+    i18nKey: "Voice_Panel_Target_Border_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -415,7 +412,7 @@ export var settingDict = {
   },
   voicePanelBackgroundColor: {
     default: "#002918",
-    description: browser.i18n.getMessage("Voice_Panel_Background_Color"),
+    i18nKey: "Voice_Panel_Background_Color",
     optionList: {},
     optionType: "colorPicker",
     menu: false,
@@ -426,49 +423,49 @@ export var settingDict = {
 
   detectSubtitle: {
     default: "dualsub",
-    description: browser.i18n.getMessage("Detect_Subtitle"),
+    i18nKey: "Detect_Subtitle",
     optionList: subtitleTypeList,
     settingTab: "advanced",
   },
   detectPDF: {
     default: "true",
-    description: browser.i18n.getMessage("Detect_PDF"),
+    i18nKey: "Detect_PDF",
     optionList: toggleList,
     settingTab: "advanced",
   },
   mouseoverPauseSubtitle: {
     default: "true",
-    description: browser.i18n.getMessage("Mouseover_Pause_Subtitle"),
+    i18nKey: "Mouseover_Pause_Subtitle",
     optionList: toggleList,
     settingTab: "advanced",
   },
   tooltipInfoSourceText: {
     default: "false",
-    description: browser.i18n.getMessage("Tooltip_Info_Source_Text"),
+    i18nKey: "Tooltip_Info_Source_Text",
     optionList: toggleList,
     settingTab: "advanced",
   },
   tooltipInfoSourceLanguage: {
     default: "false",
-    description: browser.i18n.getMessage("Tooltip_Info_Source_Language"),
+    i18nKey: "Tooltip_Info_Source_Language",
     optionList: toggleList,
     settingTab: "advanced",
   },
   tooltipInfoTransliteration: {
     default: "false",
-    description: browser.i18n.getMessage("Tooltip_Info_Transliteration"),
+    i18nKey: "Tooltip_Info_Transliteration",
     optionList: toggleList,
     settingTab: "advanced",
   },
   tooltipWordDictionary: {
     default: "true",
-    description: browser.i18n.getMessage("Tooltip_Word_Dictionary"),
+    i18nKey: "Tooltip_Word_Dictionary",
     optionList: toggleList,
     settingTab: "advanced",
   },
   voiceTranslatedRate: {
     default: "default",
-    description: browser.i18n.getMessage("Voice_Translated_Speed"),
+    i18nKey: "Voice_Translated_Speed",
     optionList: voiceRateListWithDefault,
     settingTab: "advanced",
   },
@@ -476,14 +473,14 @@ export var settingDict = {
   // exclude
   langExcludeList: {
     default: [],
-    description: browser.i18n.getMessage("Exclude_Language"),
+    i18nKey: "Exclude_Language",
     optionList: langList,
     optionType: "multipleSelect",
     settingTab: "exclude",
   },
   websiteExcludeList: {
     default: ["*.example.com"],
-    description: browser.i18n.getMessage("Exclude_Website"),
+    i18nKey: "Exclude_Website",
     optionList: "",
     optionType: "comboBox",
     settingTab: "exclude",
@@ -492,73 +489,73 @@ export var settingDict = {
   // remains
   subtitleButtonToggle: {
     default: "true",
-    description: browser.i18n.getMessage("Subtitle_Button_Toggle"),
+    i18nKey: "Subtitle_Button_Toggle",
     optionList: toggleList,
     settingTab: "remains",
   },
   historyList: {
     default: [],
-    description: browser.i18n.getMessage("History_List"),
+    i18nKey: "History_List",
     optionList: [],
     settingTab: "remains",
   },
   historyRecordActions: {
     default: [],
-    description: browser.i18n.getMessage("History_Record_Actions"),
+    i18nKey: "History_Record_Actions",
     optionList: [],
     settingTab: "remains",
   },
   ignoreCallbackOptionList: {
     default: ["historyList"],
-    description: browser.i18n.getMessage("Ignore_Callback_Option_List"),
+    i18nKey: "Ignore_Callback_Option_List",
     optionList: [],
     settingTab: "remains",
   },
   popupCount: {
     default: "0",
-    description: browser.i18n.getMessage("Popup_Count"),
+    i18nKey: "Popup_Count",
     optionList: [],
     settingTab: "remains",
   },
   coffeeCount: {
     default: "0",
-    description: browser.i18n.getMessage("Coffee_Count"),
+    i18nKey: "Coffee_Count",
     optionList: [],
     settingTab: "remains",
   },
   langPriority: {
     default: { auto: 9999999, null: 9999999 },
-    description: browser.i18n.getMessage("Language_Priority"),
+    i18nKey: "Language_Priority",
     optionList: [],
     settingTab: "remains",
   },
   tooltipEventInterval: {
     default: "0.3",
-    description: browser.i18n.getMessage("Tooltip_Interval_Time"),
+    i18nKey: "Tooltip_Interval_Time",
     optionList: tooltipIntervalTimeList,
     settingTab: "remains",
   },
   cardPlayMeta: {
     default: ["image"],
-    description: browser.i18n.getMessage("Card_Play_Meta"),
+    i18nKey: "Card_Play_Meta",
     optionList: [],
     settingTab: "remains",
   },
   cardTagSelected: {
     default: [],
-    description: browser.i18n.getMessage("Card_Tag_Selected"),
+    i18nKey: "Card_Tag_Selected",
     optionList: [],
     settingTab: "remains",
   },
   deckStatus: {
     default: {},
-    description: browser.i18n.getMessage("Deck_Status"),
+    i18nKey: "Deck_Status",
     optionList: [],
     settingTab: "remains",
   },
   cardLen: {
     default: {},
-    description: browser.i18n.getMessage("Card_Length"),
+    i18nKey: "Card_Length",
     optionList: [],
     settingTab: "remains",
   },
