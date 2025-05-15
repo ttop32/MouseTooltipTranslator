@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.173
   - reduce auto reader delay
+  - fix tts conflict with setting (requested by coco11331134)
 - 0.1.172
   - fix lang into setting missing
 - 0.1.171
