@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.174
+  - support netflix dual sub
 - 0.1.173
   - reduce auto reader delay
   - fix tts conflict with setting (requested by coco11331134)
