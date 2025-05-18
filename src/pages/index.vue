@@ -129,6 +129,8 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
   const tab = value.settingTab.toUpperCase();
   if (tab === "REMAINS") return acc;
   if (!acc[tab]) acc[tab] = {};
+
+  value.description = browser.i18n.getMessage(value.i18nKey);
   acc[tab][key] = value;
   return acc;
 }, {});

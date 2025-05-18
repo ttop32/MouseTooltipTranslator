@@ -11,18 +11,18 @@ Proletarier aller Länder, vereinigt euch!
 
 ![Alt Text](/doc/result_0.gif)
 
-- Hold the <kbd>left-ctrl</kbd> key (default) key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
 
 ![result](/doc/20.gif)
 
-- Press the <kbd>right-alt</kbd> key (default) key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
   - If the translation isn't working, ensure that your current target language matches your writing language.
   - If <kbd>right-alt</kbd> is uses as hangul swap,
   use other key to work with. 
 
 ![result](/doc/11.gif)
 
-- Translate url search box text by <kbd>/</kbd>+<kbd>space</kbd> before typing.
+- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
 
 ![result](/doc/21.gif)
 
@@ -34,17 +34,17 @@ Proletarier aller Länder, vereinigt euch!
 
 ![result](/doc/16.gif)
 
-- Process OCR when holding <kbd>left-shift</kbd> key (default) + mouse over on an image (e.g., manga)
+- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
 
 ![result](/doc/15.gif)
 
-- Run auto reader by press <kbd>F2</kbd> key (default)
+- Run auto reader by press <kbd>F2</kbd> key
   - It start read mouse over text all the way with tts
   - To stop the auto reader press <kbd>Esc</kbd> 
 
 ![result](/doc/30.gif)
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key (default).
+- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
   - Default speech recognition language is English.
   - If the speech recognition language and target language are the same, it skips.
   - Audio permission is required

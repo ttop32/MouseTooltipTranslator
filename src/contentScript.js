@@ -189,10 +189,16 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    util.requestKillAutoReaderTabs(true);
-    await delay(50);
-    util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
+    handleTTS(text, sourceLang, targetText, targetLang, timestamp);
   }
+}
+
+async function handleTTS(text, sourceLang, targetText, targetLang, timestamp) {
+  //kill auto reader if tts is on
+  util.requestKillAutoReaderTabs(true);
+  await delay(50);
+  //tts
+  util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
 }
 
 function extractMouseoverText(hoveredData) {
@@ -630,6 +636,8 @@ async function processAutoReader(stagedRange) {
     highlightText(stagedRange, true);
   }, autoReaderScrollTime);
   showTooltip(targetText);
+  var nextStagedRange = getNextExpand(stagedRange, setting["mouseoverTextType"]);
+  preloadNextTranslation(nextStagedRange);
   await util.requestTTS(
     text,
     sourceLang,
@@ -638,8 +646,22 @@ async function processAutoReader(stagedRange) {
     Date.now(),
     true
   );
-  stagedRange = getNextExpand(stagedRange, setting["mouseoverTextType"]);
-  processAutoReader(stagedRange);
+
+  processAutoReader(nextStagedRange);
+}
+
+async function preloadNextTranslation(stagedRange) {
+  if (!stagedRange) {
+    return;
+  }
+  await delay(700);
+  var text = util.extractTextFromRange(stagedRange);
+  util.requestTranslate(
+    text,
+    setting["translateSource"],
+    setting["translateTarget"],
+    setting["translateReverseTarget"]
+  );
 }
 
 function scrollAutoReader(range) {
