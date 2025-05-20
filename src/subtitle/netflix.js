@@ -36,10 +36,12 @@ export default class Netflix extends BaseVideo {
     await this.interceptCaption(); // start caption intercept
     await this.waitUntilForever(() => this.getVideoId());
 
+    console.log("guesslang"+lang)
     if (this.checkPlayerCaptionOff()) {
       console.log("caption is off");
     } else {
       var videoId = this.getVideoId();
+      console.log("videoId" + videoId);
       this.requestTrack(lang, videoId); //turn on caption on specified lang
     }
   }
@@ -54,16 +56,22 @@ export default class Netflix extends BaseVideo {
   static setPlayerCaption(lang) {
     this.getPlayer().setTimedTextTrack(lang);
   }
-  static setPlayerCaptionOff() {
-    var offTrack = this.getPlayer()
+
+  static getOffTrack() {
+    var trackList = this.getPlayer()
       .getTimedTextTrackList()
-      .find((track) => track.trackId.includes("NONE"));
-    this.getPlayer().setTimedTextTrack(offTrack);
+    var offTrack = trackList.find((track) => track.trackId.includes("NONE")) ||
+      trackList.find((track) => track.trackId.includes("1;1;0;")) ||
+      trackList?.[0];
+    return offTrack;
+  }
+  static setPlayerCaptionOff() {
+    this.getPlayer().setTimedTextTrack(this.getOffTrack());
   }
   static checkPlayerCaptionOff() {
-    const textTrackList = this.getPlayer().getTimedTextTrackList();
     var currentTrack = this.getPlayer().getTextTrack();
-    return !currentTrack || currentTrack.trackId === textTrackList[0]?.trackId;
+    var offTrack = this.getOffTrack();    
+    return !currentTrack || currentTrack.trackId === offTrack?.trackId;
   }
 
   static getPlayer() {
@@ -79,6 +87,9 @@ export default class Netflix extends BaseVideo {
     return String(this.getPlayer().getMovieId());
   }
   static async guessVideoLang() {
+    if (this.setting["detectSubtitle"] == "targetsinglesub") {
+      return this.setting["translateTarget"];
+    }
     return this.getPlayer()?.getAudioTrack()?.bcp47;
   }
   static async guessSubtitleLang(url, subtitle) {
@@ -102,7 +113,8 @@ export default class Netflix extends BaseVideo {
           var sub1 = this.parseSubtitle(xml, videoId);
           var responseSub = sub1;
 
-          if (sub1.lang != targetLang) {
+          if (sub1.lang != targetLang &&
+            this.setting["detectSubtitle"] == "dualsub") {
             var sub2 = await this.requestSubtitleWithReset(targetLang);
             var mergedSub = this.mergeSubtitles(sub1, sub2);
             responseSub = mergedSub;
@@ -134,10 +146,13 @@ export default class Netflix extends BaseVideo {
     }
     var player = this.getPlayer();
     var subList = player.getTimedTextTrackList();
+    var offTrack = this.getOffTrack();
+
     const selectedTimedTextTrack = subList
       .sort((a, b) => (a.trackType === "ASSISTIVE" ? -1 : 1))
       .filter((textTrack) => textTrack.isImageBased=== false)
-      .find((textTrack) => textTrack.bcp47 === lang);
+      .filter((textTrack) => textTrack.trackId !== offTrack?.trackId)
+      .find((textTrack) => textTrack.bcp47 === lang || textTrack.bcp47.includes(lang));    
 
     if (!selectedTimedTextTrack) {
       return null;
