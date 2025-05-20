@@ -39,7 +39,6 @@ export default class Netflix extends BaseVideo {
     if (this.checkPlayerCaptionOff()) {
       console.log("caption is off");
     } else {
-      console.log(this.getPlayer().getTextTrack())
       var videoId = this.getVideoId();
       this.requestTrack(lang, videoId); //turn on caption on specified lang
     }
@@ -156,6 +155,8 @@ export default class Netflix extends BaseVideo {
   }
 
   static parseSubtitle(sub, videoId) {
+    var styles ={}
+    var regions = {}
     const concatSubtitles = [];
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(sub, "text/xml");
@@ -177,6 +178,15 @@ export default class Netflix extends BaseVideo {
       });
     }
 
+    const styling = xmlDoc.getElementsByTagName("styling")[0];
+    if (styling) {
+      var styles = Array.from(styling.getElementsByTagName("style"));
+      styles.forEach((style) => {
+      const newId = `${style.getAttribute("xml:id")}_${lang}`;
+      style.setAttribute("xml:id", newId);
+      });
+    }
+
     // parse subtitles
     for (let i = 0; i < subtitles.length; i++) {
       const subtitle = subtitles[i];
@@ -184,11 +194,12 @@ export default class Netflix extends BaseVideo {
       const end = parseInt(subtitle.getAttribute("end").replace("t", ""));
       const text = subtitle.textContent;
       const region = subtitle.getAttribute("region") + "_" + lang;
+      const style = subtitle.getElementsByTagName("span")[0]?.getAttribute("style")+"_" + lang;
       var prev = concatSubtitles?.[concatSubtitles.length - 1];
       if (prev && prev.start === start && prev.end === end) {
         prev.text += " " + text;
       } else {
-        concatSubtitles.push({ start, end, text, region });
+        concatSubtitles.push({ start, end, text, region, style });
       }
     }
 
@@ -197,6 +208,7 @@ export default class Netflix extends BaseVideo {
       lang,
       subtitles: concatSubtitles,
       regions,
+      styles,
     };
     if (!this.sub[videoId]) {
       this.sub[videoId] = {};
@@ -215,6 +227,12 @@ export default class Netflix extends BaseVideo {
 
     sub2Meta?.regions?.forEach((region) => {
       layout?.appendChild(region);
+    });
+
+    // Merge styles from sub2 into sub1
+    const styling = sub1Meta?.xmlDoc?.getElementsByTagName("styling")?.[0];
+    sub2Meta?.styles?.forEach((style) => {
+      styling?.appendChild(style);
     });
 
     // fix mismatch length between sub1 sub2
@@ -260,6 +278,7 @@ export default class Netflix extends BaseVideo {
       p.setAttribute("begin", `${sub.start}t`);
       p.setAttribute("end", `${sub.end}t`);
       p.setAttribute("region", sub.region);
+      p.setAttribute("style", sub.style);
 
       const span = xmlDoc.createElement("span");
       span.setAttribute("style", "style0");
