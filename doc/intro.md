@@ -12,7 +12,7 @@ Proletarier aller Länder, vereinigt euch!
 ![Alt Text](/doc/result_0.gif)
 
 - Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-- Try double press <kbd>left-ctrl</kbd> to listen translated result text
+  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
 ![result](/doc/20.gif)
 
 - Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
@@ -41,7 +41,7 @@ Proletarier aller Länder, vereinigt euch!
 - Run auto reader by press <kbd>F2</kbd> key
   - It start read mouse over text all the way with tts
   - To stop the auto reader press <kbd>Esc</kbd> 
-- Try double press <kbd>left-ctrl</kbd> to listen translated result text auto reader
+  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
 
 ![result](/doc/30.gif)
 
