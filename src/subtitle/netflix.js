@@ -1,5 +1,5 @@
 import BaseVideo from "./baseVideo";
-import $ from "jquery";
+
 
 // https://github.com/mikesteele/dual-captions/blob/b0ab92e4670100a27b76b2796995ad1be89f1672/site_integrations/netflix/index.js
 // https://stackoverflow.com/questions/42105028/netflix-video-player-in-chrome-how-to-seek
@@ -15,6 +15,11 @@ export default class Netflix extends BaseVideo {
   static captionWindowSelector = "";
   static captionBoxSelector = "";
   static sub = {};
+  static subtitleLangDict = {
+    "zh-CN": "zh-Hans",
+    "zh-TW": "zh-Hant",
+  };
+  
 
   static #injectScriptConstructor = (() => {
     this.listenMessageFrameFromInject();
@@ -31,17 +36,16 @@ export default class Netflix extends BaseVideo {
     }
     await this.waitPlayerReady(); //wait player load
     // get video lang
-    var lang = await this.guessVideoLang();
+
     this.killInterceptDebounce(); // end caption intercept
     await this.interceptCaption(); // start caption intercept
-    await this.waitUntilForever(() => this.getVideoId());
-
-    console.log("guesslang"+lang)
+    await this.wait(3000); //wait for 3s
+    await this.waitUntil(() => this.getVideoId());
+    var lang = await this.getPreferredSourceLang();
     if (this.checkPlayerCaptionOff()) {
       console.log("caption is off");
     } else {
       var videoId = this.getVideoId();
-      console.log("videoId" + videoId);
       this.requestTrack(lang, videoId); //turn on caption on specified lang
     }
   }
@@ -49,19 +53,19 @@ export default class Netflix extends BaseVideo {
     return url.includes(`${this.baseUrl}/watch`);
   }
   static async waitPlayerReady() {
-    await this.waitUntilForever(() => this.getPlayer());
+    await this.waitUntil(() => this.getPlayer());
     var player = this.getPlayer();
-    await this.waitUntilForever(() => player.getAudioTrack());
+    await this.waitUntil(() => player.getAudioTrack());
   }
   static setPlayerCaption(lang) {
     this.getPlayer().setTimedTextTrack(lang);
   }
 
   static getOffTrack() {
-    var trackList = this.getPlayer()
-      .getTimedTextTrackList()
-    var offTrack = trackList.find((track) => track.trackId.includes("NONE")) ||
-      trackList.find((track) => track.trackId.includes("1;1;0;")) ||
+    var trackList = this.getPlayer()?.getTimedTextTrackList();
+    var offTrack =
+      trackList?.find((track) => track.trackId.includes("NONE")) ||
+      trackList?.find((track) => track.trackId.includes("1;1;0;")) ||
       trackList?.[0];
     return offTrack;
   }
@@ -70,30 +74,31 @@ export default class Netflix extends BaseVideo {
   }
   static checkPlayerCaptionOff() {
     var currentTrack = this.getPlayer().getTextTrack();
-    var offTrack = this.getOffTrack();    
+    var offTrack = this.getOffTrack();
     return !currentTrack || currentTrack.trackId === offTrack?.trackId;
   }
 
   static getPlayer() {
     var videoPlayer =
       window?.netflix?.appContext?.state?.playerApp?.getAPI().videoPlayer;
-    var playerSessionId = videoPlayer
-      ?.getAllPlayerSessionIds()
-      .find((s) => s.includes("watch"));
-    var player = videoPlayer?.getVideoPlayerBySessionId(playerSessionId);
+    var playerSessionIds = videoPlayer?.getAllPlayerSessionIds();
+
+    var selectedPlayerSessionId =
+      playerSessionIds?.find((s) => s.includes("watch")) ||
+      playerSessionIds?.find((s) => s.includes("preview")) ||
+      playerSessionIds?.[0];
+
+    var player = videoPlayer?.getVideoPlayerBySessionId(
+      selectedPlayerSessionId
+    );
     return player;
   }
   static getVideoId() {
-    return String(this.getPlayer().getMovieId());
+    return String(this.getPlayer()?.getMovieId());
   }
-  static async guessVideoLang() {
-    if (this.setting["detectSubtitle"] == "targetsinglesub") {
-      return this.setting["translateTarget"];
-    }
-    return this.getPlayer()?.getAudioTrack()?.bcp47;
-  }
-  static async guessSubtitleLang(url, subtitle) {
-    return this.getPlayer()?.getTimedTextTrack()?.bcp47;
+  static extractVideoId(url) {
+    const match = url.match(/\/watch\/(\d+)/);
+    return match ? match[1] : null;
   }
 
   static async interceptCaption() {
@@ -107,14 +112,17 @@ export default class Netflix extends BaseVideo {
         if (this.captionRequestPattern.test(request.url)) {
           //get source lang sub
           var response = await this.requestSubtitle(request.url);
-          var targetLang = this.setting["translateTarget"];
+          var sourceLang = this.getCurrentSubtitleLang();
+          var targetLang = this.getPreferredTargetLang();
           var videoId = this.getVideoId();
           var xml = await response.text();
           var sub1 = this.parseSubtitle(xml, videoId);
           var responseSub = sub1;
 
-          if (sub1.lang != targetLang &&
-            this.setting["detectSubtitle"] == "dualsub") {
+          if (
+            sourceLang != targetLang &&
+            this.setting["detectSubtitle"] == "dualsub"
+          ) {
             var sub2 = await this.requestSubtitleWithReset(targetLang);
             var mergedSub = this.mergeSubtitles(sub1, sub2);
             responseSub = mergedSub;
@@ -128,57 +136,78 @@ export default class Netflix extends BaseVideo {
     });
   }
 
+
+  
+  static async guessSubtitleLang(url, subtitle) {
+    return this.getPlayer()?.getTimedTextTrack()?.bcp47;
+  }
+  static async guessVideoLang() {
+    return this.getPlayer()?.getAudioTrack()?.bcp47;  
+  }
+  static getCurrentSubtitle(){
+    return this.getPlayer()?.getTimedTextTrack() 
+  }
+  static getCurrentSubtitleLang() {
+    return this.getCurrentSubtitle()?.bcp47;
+  }
+  static getTrackList(){
+    return this.getPlayer()?.getTimedTextTrackList() || [];
+  }
+
+
   static async requestSubtitle(subUrl, lang, tlang, videoId) {
     var res = await fetch(subUrl);
     return res;
   }
+  static async setTextTrack(sub) {
+    if (!sub) {
+      return;
+    }
+    this.getPlayer()?.setTextTrack(sub);
+  }
+
   static async requestSubtitleWithReset(lang, videoId) {
-    var player = this.getPlayer();
-    var prevSub = player.getTimedTextTrack();
+    var prevSub = this.getCurrentSubtitle();
     var sub = await this.requestTrack(lang, videoId);
-    player.setTextTrack(prevSub);
+    this.setTextTrack(prevSub);
     return sub;
   }
+
   static async requestTrack(lang, videoId) {
     var videoId = videoId || this.getVideoId();
+    console.log(videoId)
     if (this.sub?.[videoId]?.[lang]) {
       return this.sub?.[videoId]?.[lang];
     }
-    var player = this.getPlayer();
-    var subList = player.getTimedTextTrackList();
+    var subList = this.getTrackList();
     var offTrack = this.getOffTrack();
-
     const selectedTimedTextTrack = subList
-      .sort((a, b) => (a.trackType === "ASSISTIVE" ? -1 : 1))
-      .filter((textTrack) => textTrack.isImageBased=== false)
-      .filter((textTrack) => textTrack.trackId !== offTrack?.trackId)
-      .find((textTrack) => textTrack.bcp47 === lang || textTrack.bcp47.includes(lang));    
-
+      ?.sort((a, b) => (a.trackType === "ASSISTIVE" ? -1 : 1))
+      ?.filter((textTrack) => textTrack.isImageBased === false)
+      ?.filter((textTrack) => textTrack.trackId !== offTrack?.trackId)
+      ?.find(
+        (textTrack) =>
+          textTrack.bcp47 === lang || textTrack.bcp47.includes(lang)
+      );
     if (!selectedTimedTextTrack) {
       return null;
     }
-
-    player.setTextTrack(selectedTimedTextTrack);
-    await this.waitUntilForever(() => {
+    this.setTextTrack(selectedTimedTextTrack);
+    await this.waitUntil(() => {
       return this.sub?.[videoId]?.[lang];
-    });
+    }, 2500);
     return this.sub?.[videoId]?.[lang];
   }
-  static extractVideoId(url) {
-    const match = url.match(/\/watch\/(\d+)/);
-    return match ? match[1] : null;
-  }
-
   static parseSubtitle(sub, videoId) {
-    var styles ={}
-    var regions = {}
+    var styles = {};
+    var regions = {};
     const concatSubtitles = [];
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(sub, "text/xml");
     const subtitles = Array.from(xmlDoc.getElementsByTagName("p")).map((p) =>
       p.cloneNode(true)
     );
-    var lang = xmlDoc.documentElement.getAttribute("xml:lang");
+    var lang = this.getCurrentSubtitleLang();
     // remove div tag
     const div = xmlDoc.querySelector("div");
     div?.parentNode?.removeChild(div);
@@ -197,8 +226,8 @@ export default class Netflix extends BaseVideo {
     if (styling) {
       var styles = Array.from(styling.getElementsByTagName("style"));
       styles.forEach((style) => {
-      const newId = `${style.getAttribute("xml:id")}_${lang}`;
-      style.setAttribute("xml:id", newId);
+        const newId = `${style.getAttribute("xml:id")}_${lang}`;
+        style.setAttribute("xml:id", newId);
       });
     }
 
@@ -209,7 +238,10 @@ export default class Netflix extends BaseVideo {
       const end = parseInt(subtitle.getAttribute("end").replace("t", ""));
       const text = subtitle.textContent;
       const region = subtitle.getAttribute("region") + "_" + lang;
-      const style = subtitle.getElementsByTagName("span")[0]?.getAttribute("style")+"_" + lang;
+      const style =
+        subtitle.getElementsByTagName("span")[0]?.getAttribute("style") +
+        "_" +
+        lang;
       var prev = concatSubtitles?.[concatSubtitles.length - 1];
       if (prev && prev.start === start && prev.end === end) {
         prev.text += " " + text;
@@ -233,6 +265,14 @@ export default class Netflix extends BaseVideo {
   }
 
   static mergeSubtitles(sub1Meta, sub2Meta) {
+    if (!sub1Meta || !sub2Meta) {
+      return null;
+    } else if (!sub1Meta) {
+      return sub2Meta;
+    } else if (!sub2Meta) {
+      return sub1Meta;
+    }
+
     var mergedSub = [];
     var sub1 = sub1Meta.subtitles;
     var sub2 = sub2Meta.subtitles;

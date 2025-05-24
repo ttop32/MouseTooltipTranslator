@@ -28,6 +28,7 @@ export default class BaseVideo {
   static interceptor = new XMLHttpRequestInterceptor();
   static setting = {};
   static useManualIntercept = false;
+  static subtitleLangDict = {};
 
   static async handleVideo(setting) {
     if (!this.isVideoSite() || setting["detectSubtitle"] == "null") {
@@ -79,6 +80,23 @@ export default class BaseVideo {
     throw new Error("Not implemented");
   }
 
+  static async getPreferredSourceLang(videoId){
+    if (this.setting["detectSubtitle"] == "targetsinglesub") {
+      return this.getTargetLangMeta();
+    }
+    return await this.guessVideoLang(videoId);
+  }
+  static async getTargetLangMeta() {
+    return this.getSettingTargetLang();    
+  }
+  static getPreferredTargetLang(){
+    return this.getSettingTargetLang()
+  }
+  static getSettingTargetLang() {
+    var lang = this.setting["translateTarget"];
+    return this.subtitleLangDict[lang] || lang;
+  }
+
   // player control by extension================================
   static play() {
     //play only when paused by extension
@@ -123,7 +141,7 @@ export default class BaseVideo {
     if (!this.captionContainerSelector) {
       return;
     }
-    await this.waitUntilForever(() => $(this.captionContainerSelector).get(0));
+    await this.waitUntil(() => $(this.captionContainerSelector).get(0));
 
     //inject action for hover play stop
     const observer = new MutationObserver((mutations) => {
@@ -196,7 +214,7 @@ export default class BaseVideo {
         if (this.captionRequestPattern.test(request.url)) {
           //get source lang sub
           var response = await this.requestSubtitleCached(request.url);
-          var targetLang = this.setting["translateTarget"];
+          var targetLang = this.getPreferredTargetLang();
           var sourceLang = this.guessSubtitleLang(request.url);
           var sub1 = this.parseSubtitle(response, sourceLang);
           var responseSub = sub1;
@@ -243,13 +261,18 @@ export default class BaseVideo {
 
   //util =======================
   static async waitPlayer() {
-    await this.waitUntilForever(() => this.getPlayer());
+    await this.waitUntil(() => this.getPlayer());
   }
   static async waitPlayerReady() {
-    await this.waitUntilForever(() => this.checkPlayerReady());
+    await this.waitUntil(() => this.checkPlayerReady());
+  }
+  static async wait(time) {
+    await new Promise((resolve) => setTimeout(resolve, time));
   }
 
-  static async waitUntilForever(fn) {
+
+  static async waitUntil(fn,time) {
+    var time = time || WAIT_FOREVER;
     await waitUntil(fn, {
       timeout: WAIT_FOREVER,
     });
