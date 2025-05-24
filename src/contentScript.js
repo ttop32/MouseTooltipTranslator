@@ -42,6 +42,8 @@ var mouseTarget = null;
 var mouseMoved = false;
 var mouseMovedCount = 0;
 var keyDownList = { always: true }; //use key down for enable translation partially
+var keyDownDoublePress = {};
+var keyDownPressTime = {};
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
@@ -135,7 +137,7 @@ async function stageTooltipText(text, actionType, range) {
   var isTtsOn =
     keyDownList[setting["TTSWhen"]] ||
     (setting["TTSWhen"] == "select" && actionType == "select");
-
+  var isTtsSwap = keyDownDoublePress[setting["TTSWhen"]];
   var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
   var timestamp = Number(Date.now());
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
@@ -189,16 +191,70 @@ async function stageTooltipText(text, actionType, range) {
   }
   //if use_tts is on or activation key is pressed, do tts
   if (isTtsOn) {
-    handleTTS(text, sourceLang, targetText, targetLang, timestamp);
+    handleTTS(
+      text,
+      sourceLang,
+      targetText,
+      targetLang,
+      timestamp,
+      false,
+      isTtsSwap
+    );
   }
 }
 
-async function handleTTS(text, sourceLang, targetText, targetLang, timestamp) {
+async function handleTTS(
+  text,
+  sourceLang,
+  targetText,
+  targetLang,
+  timestamp,
+  noInterrupt,
+  isTtsSwap
+) {
   //kill auto reader if tts is on
   util.requestKillAutoReaderTabs(true);
   await delay(50);
   //tts
-  util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
+  callTTS(
+    text,
+    sourceLang,
+    targetText,
+    targetLang,
+    timestamp,
+    noInterrupt,
+    isTtsSwap
+  );
+}
+
+async function callTTS(
+  text,
+  sourceLang,
+  targetText,
+  targetLang,
+  timestamp,
+  noInterrupt,
+  isTtsSwap
+) {
+  if (isTtsSwap) {
+    await util.requestTTS(
+      targetText,
+      targetLang,
+      text,
+      sourceLang,
+      timestamp + 100,
+      noInterrupt
+    );
+    return;
+  }
+  await util.requestTTS(
+    text,
+    sourceLang,
+    targetText,
+    targetLang,
+    timestamp + 100,
+    noInterrupt
+  );
 }
 
 function checkMouseTargetIsTooltip() {
@@ -551,9 +607,29 @@ function handleMouseKeyUp(e) {
 }
 
 function holdKeydownList(key) {
+  //record keydown
+  var detectKeyDown = false;
   if (key && !keyDownList[key] && !util.isCharKey(key)) {
     keyDownList[key] = true;
+    detectKeyDown = true;
+  }
 
+  // check double press
+  if (keyDownList[key]) {
+    const now = Date.now();
+    if (now - keyDownPressTime[key] < 1000) {
+      keyDownDoublePress[key] = true;
+      console.log("doublepress " + key);
+    } else {
+      keyDownDoublePress[key] = false;
+    }
+    keyDownPressTime[key] = Date.now();
+  } else {
+    keyDownList[key] = { lastPressed: Date.now() };
+  }
+
+  // run keydown process
+  if (detectKeyDown) {
     restartWordProcess();
     if (keyDownList[setting["keyDownTranslateWriting"]]) {
       translateWriting();
@@ -565,6 +641,7 @@ function holdKeydownList(key) {
       startAutoReader();
     }
   }
+
   if (util.isCharKey(key)) {
     util.requestStopTTS(Date.now() + 500);
     killAutoReader();
@@ -575,15 +652,17 @@ async function startAutoReader() {
   if (!keyDownList[setting["keyDownAutoReader"]]) {
     return;
   }
+  var isTtsSwap = keyDownDoublePress[setting["keyDownAutoReader"]];
+  console.log(isTtsSwap);
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
   var hoveredData = await getMouseoverText(clientX, clientY);
-  var { mouseoverText, mouseoverRange } = hoveredData; 
-  processAutoReader(mouseoverRange);
+  var { mouseoverText, mouseoverRange } = hoveredData;
+  processAutoReader(mouseoverRange, isTtsSwap);
 }
 
-async function processAutoReader(stagedRange) {
+async function processAutoReader(stagedRange, isTtsSwap) {
   if (!stagedRange || isStopAutoReaderOn) {
     hideTooltip();
     isStopAutoReaderOn = false;
@@ -606,18 +685,22 @@ async function processAutoReader(stagedRange) {
     highlightText(stagedRange, true);
   }, autoReaderScrollTime);
   showTooltip(targetText);
-  var nextStagedRange = getNextExpand(stagedRange, setting["mouseoverTextType"]);
+  var nextStagedRange = getNextExpand(
+    stagedRange,
+    setting["mouseoverTextType"]
+  );
   preloadNextTranslation(nextStagedRange);
-  await util.requestTTS(
+  await callTTS(
     text,
     sourceLang,
     targetText,
     targetLang,
     Date.now(),
-    true
+    true,
+    isTtsSwap
   );
 
-  processAutoReader(nextStagedRange);
+  processAutoReader(nextStagedRange, isTtsSwap);
 }
 
 async function preloadNextTranslation(stagedRange) {

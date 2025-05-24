@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.176
+  - fix proton mail mouseover detect
+  - add double press key function to listen tts for translated result
+  - add double press key function for translated result text auto reader
 - 0.1.175
   - fix netflix lang detect
   - fix mouseover performance (requested by 한원민 (꿀호떡))
