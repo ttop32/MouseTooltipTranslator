@@ -111,7 +111,7 @@ export async function getMouseoverText(x, y) {
     (mouseoverType === "word" || mouseoverType === "sentence") &&
     !mouseoverText["mouseoverText"]
   ) {
-    return await getTextFromRange(range, x, y, true);
+    return await getTextFromRange(range, x, y, true, mouseoverType);
   }
 
   return mouseoverText;
