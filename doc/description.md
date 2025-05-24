@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.175
+  - fix netflix lang detect
+  - fix mouseover performance (requested by 한원민 (꿀호떡))
 - 0.1.174
   - support netflix dual sub (requested by IkiamJ)
 - 0.1.173

@@ -213,12 +213,6 @@ export var settingDict = {
     optionList: keyListWithAlways,
     settingTab: "keyboard",
   },
-  keyDownMouseoverTextSwap: {
-    default: "null",
-    i18nKey: "Mouseover_Text_Type_Swap_Key",
-    optionList: keyList,
-    settingTab: "keyboard",
-  },
   keySpeechRecognition: {
     default: "ControlRight",
     i18nKey: "Speech_Recognition_When",

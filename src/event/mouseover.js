@@ -4,6 +4,7 @@
 // 3. expand range for char -> string
 // 4. range to text
 
+import { detect } from "tesseract.js";
 import * as util from "/src/util";
 import { debounce } from "lodash";
 
@@ -13,11 +14,14 @@ var _win;
 var _isIframe = false;
 var styleElement;
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
+var setting = {};
+var mouseTarget = null;
 
-export function enableMouseoverTextEvent(
-  _window = window,
-  textDetectTime = 0.7
-) {
+export function enableMouseoverTextEvent(_window = window, settingPointer) {
+  var textDetectTime = setting?.["tooltipEventInterval"] || 0.7;
+
+  setting = settingPointer;
+
   _win = _window;
   textDetectTime = Number(textDetectTime) * 1000;
   const triggerMouseoverTextWithDelay = debounce(async () => {
@@ -33,6 +37,29 @@ export function enableMouseoverTextEvent(
   });
 }
 
+function getMouseoverType() {
+  //if swap key pressed, swap detect type
+  //if mouse target is special web block, handle as block
+  var detectType = setting["mouseoverTextType"];
+  // detectType = keyDownList[setting["keyDownMouseoverTextSwap"]]
+  //   ? detectType == "word"
+  //     ? "sentence"
+  //     : "word"
+  //   : detectType;
+
+  detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
+  return detectType;
+}
+
+function checkMouseTargetIsSpecialWebBlock() {
+  // if mouse targeted web element contain particular class name, return true
+  //mousetooltip ocr block
+  var classList = mouseTarget?.classList;
+  return ["ocr_text_div", "textFitted"].some((className) =>
+    classList?.contains(className)
+  );
+}
+
 function updateMouseoverXY(e) {
   updateEbookWindowPos(e);
   updateWindowPos(e);
@@ -44,6 +71,7 @@ function updateEbookWindowPos(e) {
     _isIframe = true;
     clientX = e.iframeX;
     clientY = e.iframeY;
+    mouseTarget = e.target;
   }
 }
 function updateWindowPos(e) {
@@ -52,6 +80,7 @@ function updateWindowPos(e) {
   }
   clientX = e.clientX;
   clientY = e.clientY;
+  mouseTarget = e.target;
 }
 
 export const triggerMouseoverText = (mouseoverText) => {
@@ -64,22 +93,23 @@ export const triggerMouseoverText = (mouseoverText) => {
 };
 
 export async function getMouseoverText(x, y) {
+  var mouseoverType = getMouseoverType();
+
   //get google doc select
   if (util.isGoogleDoc()) {
-    return await getGoogleDocText(x, y);
+    return await getGoogleDocText(x, y, mouseoverType);
   }
 
   //get range
   var range = getPointedRange(x, y);
 
   //get text from range
-  var mouseoverText = await getTextFromRange(range, x, y);
+  var mouseoverText = await getTextFromRange(range, x, y, false, mouseoverType);
   // if fail detect using expand range use seg range
   if (
     !isFirefox() &&
-    !mouseoverText["word"] &&
-    !mouseoverText["sentence"] &&
-    mouseoverText["container"]
+    (mouseoverType === "word" || mouseoverType === "sentence") &&
+    !mouseoverText["mouseoverText"]
   ) {
     return await getTextFromRange(range, x, y, true);
   }
@@ -87,16 +117,20 @@ export async function getMouseoverText(x, y) {
   return mouseoverText;
 }
 
-async function getTextFromRange(range, x, y, useSegmentation = false) {
-  var output = {};
-  for (const detectType of ["word", "sentence", "container"]) {
-    output[detectType] = "";
-    var wordRange = expandRange(range, detectType, useSegmentation, x, y);
-    if (checkXYInElement(wordRange, clientX, clientY)) {
-      output[detectType] = util.extractTextFromRange(wordRange);
-      output[detectType + "_range"] = wordRange;
-    }
+async function getTextFromRange(
+  range,
+  x,
+  y,
+  useSegmentation = false,
+  mouseoverType
+) {
+  var output = { mouseoverText: "", mouseoverRange: range };
+  var wordRange = expandRange(range, mouseoverType, useSegmentation, x, y);
+  if (checkXYInElement(wordRange, clientX, clientY)) {
+    output["mouseoverText"] = util.extractTextFromRange(wordRange);
+    output["mouseoverRange"] = wordRange;
   }
+  console.log(output);
   return output;
 }
 
@@ -108,7 +142,7 @@ function expandRange(range, type, useSegmentation, x, y) {
     if (type == "container") {
       // get whole text paragraph
       range = getContainerRange(range);
-    } else if (!range.expand || useSegmentation) {
+    } else if (isFirefox() || useSegmentation) {
       // for firefox, use segmentation to extract word
       range = expandRangeWithSeg(range, type, x, y);
     } else {
@@ -297,11 +331,7 @@ function expandRangeWithSeg(rangeOri, type = "word", x, y) {
   // var wholeText2 = getNodeText(textNode);
   var wordSliceInfo = getWordSegmentInfo(wholeText, type);
   // get all word range by segment
-  const wordSliceRanges = createWordRanges(wordSliceInfo, textNode);
-  // get pointed pos range
-  var currentWordNode = wordSliceRanges.find((range) =>
-    isPointInRange(range, x, y)
-  );
+  const currentWordNode = findWordRange(wordSliceInfo, textNode, x, y);
   return currentWordNode;
 }
 
@@ -326,9 +356,9 @@ function getWordSegmentInfo(text, type) {
   return wordsMeta;
 }
 
-function createWordRanges(wordSegInfo, textNode) {
+function findWordRange(wordSegInfo, textNode, x, y) {
   var newLineCount = 0;
-  return wordSegInfo
+  var wordSegInfoExtract = wordSegInfo
     .map((wordMeta) => {
       var word = wordMeta.segment;
       var index = wordMeta.index;
@@ -348,23 +378,28 @@ function createWordRanges(wordSegInfo, textNode) {
         newLine: newLine,
       };
     })
-    .filter((wordMeta) => wordMeta.segment.length > 0)
-    .map((wordMeta) => {
-      try {
-        var wordRange = document.createRange();
-        var index = wordMeta.index + wordMeta.newLine;
-        var word = wordMeta.segment;
-        var wordLen = word.length;
-        const selectedNode1 = selectNode(textNode, index);
-        const selectedNode2 = selectNode(textNode, index + wordLen);
+    .filter((wordMeta) => wordMeta.segment.trim().length > 0);
 
-        wordRange.setStart(selectedNode1.node, selectedNode1.index);
-        wordRange.setEnd(selectedNode2.node, selectedNode2.index);
-      } catch (error) {
-        console.log(error);
+  for (const wordMeta of wordSegInfoExtract) {
+    try {
+      var wordRange = document.createRange();
+      var index = wordMeta.index + wordMeta.newLine;
+      var word = wordMeta.segment;
+      var wordLen = word.length;
+      const selectedNode1 = selectNode(textNode, index);
+      const selectedNode2 = selectNode(textNode, index + wordLen);
+
+      wordRange.setStart(selectedNode1.node, selectedNode1.index);
+      wordRange.setEnd(selectedNode2.node, selectedNode2.index);
+
+      if (isPointInRange(wordRange, x, y)) {
+        return wordRange;
       }
-      return wordRange;
-    });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return null;
 }
 
 function selectNode(node, offset) {
@@ -456,17 +491,18 @@ function getNextEle(ele) {
 }
 
 function isFirefox() {
-  return typeof InstallTrigger !== "undefined";
+  return !document.createRange().expand;
+  // return true;
 }
 
 //google doc hover =========================================================
 // https://github.com/Amaimersion/google-docs-utils/issues/10
 
-async function getGoogleDocText(x, y) {
+async function getGoogleDocText(x, y, mouseoverType) {
   var textElement;
   var rect = getGoogleDocRect(x, y);
   var { textElement, range } = getGoogleDocCaretRange(rect, x, y);
-  var mouseoverText = await getTextFromRange(range);
+  var mouseoverText = await getTextFromRange(range, x, y, false, mouseoverType);
   textElement?.remove();
   return mouseoverText;
 }

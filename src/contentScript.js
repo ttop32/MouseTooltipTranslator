@@ -90,7 +90,7 @@ var listenText = "";
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent(window, setting["tooltipEventInterval"]);
+  enableMouseoverTextEvent(window, setting);
   addEventHandler("mouseoverText", stageTooltipTextHover);
 }
 
@@ -109,7 +109,7 @@ function stageTooltipTextHover(event, useEvent = true) {
     hoveredData &&
     !isOtherServiceActive()
   ) {
-    var { mouseoverText, mouseoverRange } = extractMouseoverText(hoveredData);
+    var { mouseoverText, mouseoverRange } = hoveredData;
     stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
   }
 }
@@ -199,36 +199,6 @@ async function handleTTS(text, sourceLang, targetText, targetLang, timestamp) {
   await delay(50);
   //tts
   util.requestTTS(text, sourceLang, targetText, targetLang, timestamp + 100);
-}
-
-function extractMouseoverText(hoveredData) {
-  var mouseoverType = getMouseoverType();
-  var mouseoverText = hoveredData[mouseoverType];
-  var mouseoverRange = hoveredData[mouseoverType + "_range"];
-  return { mouseoverText, mouseoverRange };
-}
-
-function getMouseoverType() {
-  //if swap key pressed, swap detect type
-  //if mouse target is special web block, handle as block
-  var detectType = setting["mouseoverTextType"];
-  detectType = keyDownList[setting["keyDownMouseoverTextSwap"]]
-    ? detectType == "word"
-      ? "sentence"
-      : "word"
-    : detectType;
-
-  detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
-  return detectType;
-}
-
-function checkMouseTargetIsSpecialWebBlock() {
-  // if mouse targeted web element contain particular class name, return true
-  //mousetooltip ocr block
-  var classList = mouseTarget?.classList;
-  return ["ocr_text_div", "textFitted"].some((className) =>
-    classList?.contains(className)
-  );
 }
 
 function checkMouseTargetIsTooltip() {
@@ -609,7 +579,7 @@ async function startAutoReader() {
   util.requestKillAutoReaderTabs();
   await killAutoReader();
   var hoveredData = await getMouseoverText(clientX, clientY);
-  var { mouseoverRange } = extractMouseoverText(hoveredData);
+  var { mouseoverText, mouseoverRange } = hoveredData; 
   processAutoReader(mouseoverRange);
 }
 
