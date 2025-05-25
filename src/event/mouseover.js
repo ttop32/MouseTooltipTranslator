@@ -574,8 +574,8 @@ function getNextEle(ele) {
 }
 
 function isFirefox() {
-  // return !document.createRange().expand;
-  return true;
+  return !document.createRange().expand;
+  // return true;
 }
 
 //google doc hover =========================================================
