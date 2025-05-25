@@ -133,7 +133,6 @@ async function getTextFromRange(
     output["mouseoverText"] = util.extractTextFromRange(wordRange);
     output["mouseoverRange"] = wordRange;
   }
-  console.log(output);
   return output;
 }
 

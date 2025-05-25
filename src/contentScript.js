@@ -619,7 +619,6 @@ function holdKeydownList(key) {
     const now = Date.now();
     if (now - keyDownPressTime[key] < 1000) {
       keyDownDoublePress[key] = true;
-      console.log("doublepress " + key);
     } else {
       keyDownDoublePress[key] = false;
     }
@@ -653,7 +652,6 @@ async function startAutoReader() {
     return;
   }
   var isTtsSwap = keyDownDoublePress[setting["keyDownAutoReader"]];
-  console.log(isTtsSwap);
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
