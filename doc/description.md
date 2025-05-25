@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.178
+  - fix firefox text detect conflict
 - 0.1.177
   - fix mouseover performance on chrome
   - fix firefox mouseover text slice logic

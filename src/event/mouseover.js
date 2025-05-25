@@ -132,7 +132,7 @@ function getTextFromRange(
     output["mouseoverText"] = util.extractTextFromRange(wordRange);
     output["mouseoverRange"] = wordRange;
   }
-  console.log(output["mouseoverText"])
+  // console.log(output["mouseoverText"])
   return output;
 }
 
@@ -149,10 +149,10 @@ function expandRange(range, type, useSegmentation, x, y) {
       
       
         
-  console.time("expandRangeWithSeg");
+  // console.time("expandRangeWithSeg");
   range = expandRangeWithSeg(range, type, x, y);
 
-  console.timeEnd("expandRangeWithSeg");
+  // console.timeEnd("expandRangeWithSeg");
 
     } else {
       // for chrome, use range expand
@@ -344,7 +344,7 @@ function expandRangeWithSeg(rangeOri, type = "word", x, y) {
 
     
 
-  console.time("expandRangeWithSeginit");
+  // console.time("expandRangeWithSeginit");
   var range = rangeOri.cloneRange();
   var rangeContainer = expandRange(range, "container");
   const textNode = rangeContainer.commonAncestorContainer;
@@ -358,37 +358,37 @@ function expandRangeWithSeg(rangeOri, type = "word", x, y) {
 
 
 
-  console.log('==========================================================');
-  var wholeText = textNode.innerText;
-  var wordSliceInfo = getWordSegmentInfo(wholeText, type);
+  // console.log('==========================================================');
+  // var wholeText = textNode.innerText;
+  // var wordSliceInfo = getWordSegmentInfo(wholeText, type);
 
-  console.log("wholeText:", wholeText);
-  var textLength = wholeText.length;
-  var newLineCount = (wholeText.match(/\n/g) || []).length;
+  // console.log("wholeText:", wholeText);
+  // var textLength = wholeText.length;
+  // var newLineCount = (wholeText.match(/\n/g) || []).length;
 
-  console.log("Text Length:", textLength);
-  console.log("New Line Count:", newLineCount);
+  // console.log("Text Length:", textLength);
+  // console.log("New Line Count:", newLineCount);
 
-  console.log("wordSliceInfo:", wordSliceInfo);
+  // console.log("wordSliceInfo:", wordSliceInfo);
   
-  console.log('==========================================================2');
+  // console.log('==========================================================2');
   var wholeText = getNodeText(textNode);
 
   var wordSliceInfo = getWordSegmentInfo(wholeText, type);
-  console.log("wholeText:", wholeText);
-  var textLength = wholeText.length;
-  var newLineCount = (wholeText.match(/\n/g) || []).length;
+  // console.log("wholeText:", wholeText);
+  // var textLength = wholeText.length;
+  // var newLineCount = (wholeText.match(/\n/g) || []).length;
 
-  console.log("Text Length:", textLength);
-  console.log("New Line Count:", newLineCount);
-  console.log("wordSliceInfo:", wordSliceInfo);
+  // console.log("Text Length:", textLength);
+  // console.log("New Line Count:", newLineCount);
+  // console.log("wordSliceInfo:", wordSliceInfo);
   
   
   // get all word range by segment
-  console.time("findWordRange");
+  // console.time("findWordRange");
   const currentWordNode = findWordRange(wordSliceInfo, textNode, x, y);
-  console.timeEnd("findWordRange");
-  console.log("Current Word Node:", currentWordNode);
+  // console.timeEnd("findWordRange");
+  // console.log("Current Word Node:", currentWordNode);
   return currentWordNode;
 }
 
@@ -416,15 +416,15 @@ function getWordSegmentInfo(text, type) {
 function findWordRange(wordSegInfo, textNode, x, y) {
   var newLineCount = 0;
   
-  console.log(wordSegInfo)
-  console.log(textNode)
+  // console.log(wordSegInfo)
+  // console.log(textNode)
 
   // console.time("wordSegInfoExtract");
   var wordSegInfoExtract = wordSegInfo
     .map((wordMeta) => {
       var word = wordMeta.segment;
       var index = wordMeta.index;
-      // var newLine=0
+      var newLine=0
       // if (word.includes("\n")) {
       //   var newLine = (word.match(/\n/g) || []).length; // count new line
       //   word = word.replace(/\n/g, "");
