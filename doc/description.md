@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.177
   - fix mouseover performance on chrome
+  - fix firefox mouseover text slice logic
 - 0.1.176
   - fix proton mail mouseover detect
   - add double press key function to listen tts for translated result
