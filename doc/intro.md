@@ -9,7 +9,7 @@ Proletarier aller Länder, vereinigt euch!
     - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
     - This translator will omit text if the source and target languages are identical.
 
-![Alt Text](/doc/result_0.gif)
+![Alt Text](/doc/reagre.gif)
 
 - Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
   - Try double press <kbd>left-ctrl</kbd> to listen translated result text
