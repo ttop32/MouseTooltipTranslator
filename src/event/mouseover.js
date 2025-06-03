@@ -342,29 +342,73 @@ function expandRangeWithSeg(rangeOri, type = "word", x, y) {
   // console.timeEnd("getWordSegmentInfo");
   // console.log("Word Segment Info:", wordSliceInfo);
 
-  // console.log('==========================================================');
-  // var wholeText = textNode.innerText;
-  // var wordSliceInfo = getWordSegmentInfo(wholeText, type);
-
-  // console.log("wholeText:", wholeText);
-  // var textLength = wholeText.length;
-  // var newLineCount = (wholeText.match(/\n/g) || []).length;
-
-  // console.log("Text Length:", textLength);
-  // console.log("New Line Count:", newLineCount);
+  console.log('==========================================================1');
+  var wholeText1 = textNode.innerText;
+  var textLength1 = wholeText1.length;
+  var newLineCount1 = (wholeText1.match(/\n/g) || []).length;
+  // console.log("wholeText:", wholeText1);
+  console.log("Text Length:", textLength1);
+  console.log("New Line Count:", newLineCount1);
 
   // console.log("wordSliceInfo:", wordSliceInfo);
 
-  // console.log('==========================================================2');
+  console.log('==========================================================2');
   var wholeText = getNodeText(textNode);
-
-  var wordSliceInfo = getWordSegmentInfo(wholeText, type);
+  var textLength = wholeText.length;
+  var newLineCount = (wholeText.match(/\n/g) || []).length;
   // console.log("wholeText:", wholeText);
-  // var textLength = wholeText.length;
-  // var newLineCount = (wholeText.match(/\n/g) || []).length;
+  console.log("Text Length:", textLength);
+  console.log("New Line Count:", newLineCount);
+  var index1 = 0;
+  var index2 = 0;
+  var newLineIndex = []
+  var noExistCharIndex =[]
+
+  while (index1 < textLength1 || index2 < textLength) {
+    if (wholeText1[index1] === wholeText[index2]) {
+      index1++;
+      index2++;
+      continue;
+    }
+
+    if (wholeText1[index1] === '\n') {
+      newLineIndex.push(index2);
+      index1++;
+      continue;
+    }
+    if (wholeText[index2] === '(' || wholeText[index2] === ')' || wholeText[index2] === '\n') {
+      noExistCharIndex.push(index1);
+      index2++;
+      continue;
+    }
+    console.log("char mismatch: " + wholeText1[index1] + " : " + wholeText[index2]);
+    // index1++;
+    // index2++;
+    console.log(wholeText1.substring(index1, index1+100));
+    console.log(wholeText.substring(index2, index2+100));
+    break
+  }
+
+  console.log("New Line Index:", newLineIndex);
+  console.log("noExistCharIndex Line Index:", noExistCharIndex);
+  
+  console.log(index1, index2);
+
+
+  
+
+  var wordSliceInfo = getWordSegmentInfo(wholeText1, type);
+  var wordSliceInfo0 = getWordSegmentInfo(wholeText, type);
+
+  console.log(wordSliceInfo);
+
+  console.log(wordSliceInfo0);
+
+  // var wordSliceInfo = getWordSegmentInfo(wholeText, type);
 
   var char = getCurrentMousePointedChar(rangeOri, x, y);
-  var wordSegInfoFiltered = filterWordSegInfo(wordSliceInfo, char);
+  console.log("Detected character:", char);
+  var wordSegInfoFiltered = filterWordSegInfo(wordSliceInfo, char, newLineIndex,noExistCharIndex);
   // get all word range by segment
   // console.time("findWordRange");
   const currentWordNode = findWordRange(
@@ -374,7 +418,9 @@ function expandRangeWithSeg(rangeOri, type = "word", x, y) {
     y,
     char
   );
-  // console.timeEnd("findWordRange");
+  console.timeEnd("findWordRange");
+  console.log(currentWordNode)
+  console.log(currentWordNode.toString());
   return currentWordNode;
 }
 function getCurrentMousePointedChar(range, x, y) {
@@ -417,7 +463,7 @@ function getWordSegmentInfo(text, type) {
   return wordsMeta;
 }
 
-function filterWordSegInfo(wordSegInfo, char) {
+function filterWordSegInfo(wordSegInfo, char,newLineIndex,noExistCharIndex) {
   if (!char) {
     return [];
   }
@@ -425,6 +471,7 @@ function filterWordSegInfo(wordSegInfo, char) {
   var wordSegInfoExtract = wordSegInfo
     .map((wordMeta, itemIndex) => {
       var word = wordMeta.segment;
+      var wordLength = word.length;
       var index = wordMeta.index;
       var newLine = 0;
       // if (word.includes("\n")) {
@@ -436,16 +483,42 @@ function filterWordSegInfo(wordSegInfo, char) {
       //   var newLine = 0;
       //   index -= newLineCount; // Adjust index only once
       // }
+
+      var newIndex = index;
+      // Adjust index using newLineIndex
+      newLineIndex.forEach((lineIndex) => {
+        if (lineIndex < index) {
+          newIndex-= 1; // Decrease index for each new line before the current index
+        }
+      });
+      
+      noExistCharIndex.forEach((lineIndex) => {
+        if (lineIndex <= index) {
+          newIndex+= 1; // Decrease index for each new line before the current index
+        }
+      });
+
+      noExistCharIndex.forEach((lineIndex) => {
+        // console.log(newIndex, lineIndex, wordLength);
+        if ( index <lineIndex && lineIndex <= index + wordLength) {
+          // console.log("lineIndex:", lineIndex, "newIndex:", newIndex, "wordLength:", wordLength);
+          newLine+= 1; // Decrease index for each new line before the current index
+        }
+      });
+
+      
+
       return {
         segment: word,
-        index: index, // Use the updated index
+        index: newIndex, // Use the updated index
         newLine: newLine,
         itemIndex: itemIndex, // Add item index key
+        wordLength
       };
     })
     .filter((wordMeta) => wordMeta.segment.length > 0)
     .filter((wordMeta) => wordMeta.segment.includes(char)); // filter out current mouse pointed char
-
+    console.log(wordSegInfoExtract)
   return wordSegInfoExtract;
 }
 
@@ -468,7 +541,9 @@ function findWordRange(wordSegInfo, textNode, x, y) {
       wordRange.setStart(selectedNode1.node, selectedNode1.index);
       wordRange.setEnd(selectedNode2.node, selectedNode2.index);
 
+      
       if (isPointInRange(wordRange, x, y)) {
+        console.log(wordMeta);
         prevWordSegIndex = wordMeta.itemIndex;
         return wordRange;
       }
@@ -577,8 +652,8 @@ function getNextEle(ele) {
 }
 
 function isFirefox() {
-  return !document.createRange().expand;
-  // return true;
+  // return !document.createRange().expand;
+  return true;
 }
 
 //google doc hover =========================================================
