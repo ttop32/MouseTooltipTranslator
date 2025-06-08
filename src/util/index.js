@@ -19,9 +19,13 @@ try {
 
 var reviewUrlJson = {
   nnodgmifnfgkolmakhcfkkbbjjcobhbl:
-    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl",
+    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl", //edge web store id
   hmigninkgibhdckiaphhmbgcghochdjc:
-    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
+    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews", //chrome web store id
+  "firefox":
+    "https://addons.mozilla.org/en-US/firefox/addon/mouse-tooltip-translator-pdf/reviews/",
+  "default":
+    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",  
 };
 
 export var writingField =
@@ -211,13 +215,18 @@ export function checkInDevMode() {
 }
 
 export function getReviewUrl() {
-  var extId =
-    browser.runtime.id in reviewUrlJson
-      ? browser.runtime.id
-      : "hmigninkgibhdckiaphhmbgcghochdjc";
-
-  return reviewUrlJson[extId];
+  if(browser.runtime.id in reviewUrlJson){
+    return reviewUrlJson[extId];
+  }
+  if (isFirefox()) {
+    return reviewUrlJson["firefox"];
+  }
+  return reviewUrlJson["default"];
 }
+function isFirefox() {
+  return typeof InstallTrigger !== 'undefined';
+}
+
 
 export function isIframe() {
   try {
