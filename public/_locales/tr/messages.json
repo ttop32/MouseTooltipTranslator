@@ -26,11 +26,14 @@
 	"Writing_Language": {
 		"message": "Yazım Dili"
 	},
+	"Reverse_Translate_Language": {
+		"message": "Ters Çeviri Dili"
+	},
 	"OCR_Language": {
 		"message": "OCR Dili"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Ters Çeviri Dili"
+	"Detect_Subtitle": {
+		"message": "Altyazıyı Algıla"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "KEYBOARD                                      "
@@ -127,9 +130,6 @@
 	},
 	"ADVANCED": {
 		"message": "ADVANCED"
-	},
-	"Detect_Subtitle": {
-		"message": "Altyazıyı Algıla"
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
@@ -269,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "Kahve                                      "
 	},
-	"Support_the_translator_devs": {
-		"message": "Support the translator devs"
+	"Support_this_extension": {
+		"message": "Support this extension"
 	},
-	"Feed_a_coffee_to_devs": {
-		"message": "Feed a coffee to devs"
+	"Feed_a_coffee_to_the_extension_devs": {
+		"message": "Feed a coffee to the extension devs"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "

@@ -26,11 +26,14 @@
 	"Writing_Language": {
 		"message": "Ngôn ngữ viết"
 	},
+	"Reverse_Translate_Language": {
+		"message": "Ngôn ngữ dịch ngược"
+	},
 	"OCR_Language": {
 		"message": "Ngôn ngữ OCR"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Ngôn ngữ dịch ngược"
+	"Detect_Subtitle": {
+		"message": "Nhận diện phụ đề"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "KEYBOARD                                      "
@@ -127,9 +130,6 @@
 	},
 	"ADVANCED": {
 		"message": "ADVANCED"
-	},
-	"Detect_Subtitle": {
-		"message": "Nhận diện phụ đề"
 	},
 	"Detect_PDF": {
 		"message": "Nhận diện PDF"
@@ -269,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "Coffee                                      "
 	},
-	"Support_the_translator_devs": {
-		"message": "Support the translator devs"
+	"Support_this_extension": {
+		"message": "Support this extension"
 	},
-	"Feed_a_coffee_to_devs": {
-		"message": "Feed a coffee to devs"
+	"Feed_a_coffee_to_the_extension_devs": {
+		"message": "Feed a coffee to the extension devs"
 	},
 	"Title______________________________________": {
 		"message": "Tiêu đề                                      "

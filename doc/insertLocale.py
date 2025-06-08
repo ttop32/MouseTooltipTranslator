@@ -31,8 +31,9 @@ i18List = [
     "Translator Engine",
     "Mouseover Text Type",
     "Writing Language",
-    "OCR Language",
     "Reverse Translate Language",
+    "OCR Language",
+    "Detect Subtitle",
 
     "KEYBOARD                                      ",
     "KEYBOARD",
@@ -69,7 +70,6 @@ i18List = [
 
     "ADVANCED                                      ",
     "ADVANCED",
-    "Detect Subtitle",
     "Detect PDF",
     "Mouseover Pause Subtitle",
     "Tooltip Info Source Text",
@@ -123,9 +123,8 @@ i18List = [
     "Developer love criticism",
 
     "Coffee                                      ",
-    "Support the translator devs",
-    "Feed a coffee to devs",
-
+    "Support this extension",
+    "Feed a coffee to the extension devs",
 
     "Title                                      ",
 ]

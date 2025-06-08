@@ -102,8 +102,8 @@ export default {
           color: "error",
         },
         buyMeCoffee: {
-          name: browser.i18n.getMessage("Support_the_translator_devs"),
-          sub_name: browser.i18n.getMessage("Feed_a_coffee_to_devs"),
+          name: browser.i18n.getMessage("Support_this_extension"),
+          sub_name: browser.i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
           url: "https://buymeacoffee.com/ttop324",
           icon: "mdi-coffee-to-go",
           color: "brown",

@@ -26,11 +26,14 @@
 	"Writing_Language": {
 		"message": "Язык написания текста"
 	},
+	"Reverse_Translate_Language": {
+		"message": "Язык обратного перевода"
+	},
 	"OCR_Language": {
 		"message": "Язык распознавания текста"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Язык обратного перевода"
+	"Detect_Subtitle": {
+		"message": "Определять наличие субтитров"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "KEYBOARD                                      "
@@ -127,9 +130,6 @@
 	},
 	"ADVANCED": {
 		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ"
-	},
-	"Detect_Subtitle": {
-		"message": "Определять наличие субтитров"
 	},
 	"Detect_PDF": {
 		"message": "Определять PDF-файлы"
@@ -269,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "Поддержать разработчика                                      "
 	},
-	"Support_the_translator_devs": {
-		"message": "Support the translator devs"
+	"Support_this_extension": {
+		"message": "Support this extension"
 	},
-	"Feed_a_coffee_to_devs": {
-		"message": "Feed a coffee to devs"
+	"Feed_a_coffee_to_the_extension_devs": {
+		"message": "Feed a coffee to the extension devs"
 	},
 	"Title______________________________________": {
 		"message": "Название                                      "

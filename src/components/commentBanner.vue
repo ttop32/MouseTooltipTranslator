@@ -7,15 +7,22 @@
     closable
     close-label="Close Alert"
     :title="title"
+    style="min-height: 90px;"
   >
     {{ subtitle }}
     <template v-slot:append>
-      <v-btn variant="tonal" @click="handleClick(url)">Open</v-btn>
+      <v-btn
+        variant="tonal"
+        style="position: absolute; bottom: 10px; right: 10px;"
+        @click="handleClick(url)"
+      >
+        Open
+      </v-btn>
     </template>
   </v-alert>
 </template>
 <script>
-import * as util from "/src/util";
+
 import browser from "webextension-polyfill";
 import { useSettingStore } from "/src/stores/setting.js";
 import { mapState } from "pinia";
@@ -26,8 +33,8 @@ export default {
   // props: ["title"],
   data() {
     return {
-      title: browser.i18n.getMessage("Support_the_translator_devs"),
-      subtitle: browser.i18n.getMessage("Feed_a_coffee_to_devs"),
+      title: browser.i18n.getMessage("Support_this_extension"),
+      subtitle: browser.i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
       url: "https://buymeacoffee.com/ttop324",
     };
   },
@@ -39,7 +46,7 @@ export default {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
     isNewVisit() {
       var count = Number(this.setting?.["coffeeCount"]);
-      return 1 < count && count < 7;
+      return 1 < count && count < 15;
     },
   },
   methods: {
@@ -53,7 +60,7 @@ export default {
     },
     increasePopupCount(inc = 1) {
       var count = Number(this.setting["coffeeCount"]);
-      if (count < 10) {
+      if (count < 17) {
         this.setting["coffeeCount"] = count + inc;
       }
     },

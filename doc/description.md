@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.181
+  - change subtitle setting tab
 - 0.1.180
   - fix firefox mouseover detect speed
 - 0.1.179
