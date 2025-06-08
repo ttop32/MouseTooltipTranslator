@@ -328,7 +328,7 @@ export var settingDict = {
     settingTab: "graphic",
   },
   mouseoverTextHighlightColor: {
-    default: "#21dc6d40",
+    default: "#329B7B",
     i18nKey: "Mouseover_Text_Highlight_Color",
     optionList: {},
     optionType: "colorPicker",
