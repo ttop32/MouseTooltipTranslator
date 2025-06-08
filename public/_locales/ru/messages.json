@@ -3,7 +3,7 @@
 		"message": "ГЛАВНЫЕ НАСТРОЙКИ                                      "
 	},
 	"MAIN": {
-		"message": "ГЛАВНОЕ"
+		"message": "ГЛАВНАЯ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -36,10 +36,10 @@
 		"message": "Определять наличие субтитров"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "ГОРЯЧИЕ КЛАВИШИ                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "ГОРЯЧИЕ КЛАВИШИ"
 	},
 	"Show_Tooltip_When": {
 		"message": "Показать подсказку когда"
@@ -153,7 +153,7 @@
 		"message": "Пользовательский словарь в поле переводчика"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "Скорость воспроизведения перевода"
 	},
 	"SPEECH": {
 		"message": "НАСТРОЙКА РЕЧИ"
@@ -270,10 +270,10 @@
 		"message": "Поддержать разработчика                                      "
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "Поддержать разработку расширения"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "Поддержите разработчиков чашкой кофе"
 	},
 	"Title______________________________________": {
 		"message": "Название                                      "
