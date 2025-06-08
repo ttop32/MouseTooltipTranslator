@@ -26,11 +26,14 @@
 	"Writing_Language": {
 		"message": "Idioma de Escrita"
 	},
+	"Reverse_Translate_Language": {
+		"message": "Idioma de Tradução Reversa"
+	},
 	"OCR_Language": {
 		"message": "Idioma de OCR"
 	},
-	"Reverse_Translate_Language": {
-		"message": "Idioma de Tradução Reversa"
+	"Detect_Subtitle": {
+		"message": "Detectar Legenda"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "KEYBOARD                                      "
@@ -127,9 +130,6 @@
 	},
 	"ADVANCED": {
 		"message": "AVANÇADO"
-	},
-	"Detect_Subtitle": {
-		"message": "Detectar Legenda"
 	},
 	"Detect_PDF": {
 		"message": "Detectar PDF"
@@ -269,11 +269,11 @@
 	"Coffee______________________________________": {
 		"message": "Café"
 	},
-	"Support_the_translator_devs": {
-		"message": "Support the translator devs"
+	"Support_this_extension": {
+		"message": "Support this extension"
 	},
-	"Feed_a_coffee_to_devs": {
-		"message": "Feed a coffee to devs"
+	"Feed_a_coffee_to_the_extension_devs": {
+		"message": "Feed a coffee to the extension devs"
 	},
 	"Title______________________________________": {
 		"message": "Título                                      "
