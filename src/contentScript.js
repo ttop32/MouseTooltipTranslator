@@ -1,7 +1,6 @@
 // inject translation tooltip based on user text hover event
 //it gets translation and tts from background.js
 //intercept pdf url
-
 import $ from "jquery";
 import tippy, { sticky, hideAll } from "tippy.js";
 import matchUrl from "match-url-wildcard";
