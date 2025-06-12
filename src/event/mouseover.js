@@ -533,47 +533,55 @@ function getCenterXY(ele) {
 }
 
 // get next range ===========================
+export function getNextExpandedRange(range, detectType) {
+  let nextRange = range;
+  let offsetIncrement = 1;
 
-export function getNextExpand(range, detectType) {
-  var text = util.extractTextFromRange(range);
-  var next = range;
-  var nextText = text;
-  while (text === nextText && next) {
-    next = getNext(next);
-    next = expandRange(next, detectType);
-    nextText = util.extractTextFromRange(next);
+  while (nextRange && checkSameRange(nextRange, range)) {
+    nextRange = getNextRange(nextRange, offsetIncrement);
+    nextRange = expandRange(nextRange, detectType);
+    offsetIncrement += 1;
   }
-  return next;
+
+  return nextRange;
 }
 
-function getNext(range) {
+function checkSameRange(range1, range2) {
+  return (
+    range1.startContainer === range2.startContainer &&
+    range1.startOffset === range2.startOffset &&
+    range1.endContainer === range2.endContainer &&
+    range1.endOffset === range2.endOffset
+  );
+}
+function getNextRange(range, offsetIncrement = 1) {
   const endContainer = range.endContainer;
   const endOffset = range.endOffset;
-  var rangeClone = range.cloneRange();
-  var { node, index } = getNextOffset1(endContainer, endOffset + 1);
+  const rangeClone = range.cloneRange();
+  const { node, index } = getNextNodeAndOffset(endContainer, endOffset + offsetIncrement);
   rangeClone.setStart(node, index);
   rangeClone.setEnd(node, index);
   return rangeClone;
 }
 
-function getNextOffset1(ele, offset) {
-  if (!ele) {
+function getNextNodeAndOffset(element, offset) {
+  if (!element) {
     return;
   }
-  var { node, index } = selectNode(ele, offset + 1);
+  const { node, index } = selectNode(element, offset);
   if (!node.length || index >= node.length) {
-    var nextElement = getNextEle(ele);
-    return getNextOffset1(nextElement, 0);
+    const nextElement = getNextSiblingElement(element);
+    return getNextNodeAndOffset(nextElement, 0);
   }
 
   return { node, index };
 }
 
-function getNextEle(ele) {
-  if (ele === document.body || ele instanceof ShadowRoot) {
+function getNextSiblingElement(element) {
+  if (element === document.body || element instanceof ShadowRoot) {
     return;
   }
-  return ele.nextElementSibling || getNextEle(ele.parentElement);
+  return element.nextElementSibling || getNextSiblingElement(element.parentElement);
 }
 
 function isFirefox() {

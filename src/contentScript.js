@@ -16,7 +16,7 @@ import {
 } from "/src/event/selection";
 import {
   enableMouseoverTextEvent,
-  getNextExpand,
+  getNextExpandedRange,
   getMouseoverText,
 } from "/src/event/mouseover";
 import * as util from "/src/util";
@@ -669,6 +669,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   isAutoReaderRunning = true;
 
   var text = util.extractTextFromRange(stagedRange);
+
   var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
@@ -682,7 +683,8 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     highlightText(stagedRange, true);
   }, autoReaderScrollTime);
   showTooltip(targetText);
-  var nextStagedRange = getNextExpand(
+  
+  var nextStagedRange = getNextExpandedRange(
     stagedRange,
     setting["mouseoverTextType"]
   );
@@ -696,6 +698,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     true,
     isTtsSwap
   );
+
 
   processAutoReader(nextStagedRange, isTtsSwap);
 }
