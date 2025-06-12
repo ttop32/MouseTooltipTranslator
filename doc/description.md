@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.182
+  - fix auto reader crash
 - 0.1.181
   - change subtitle setting tab
   - Russian localization (contributed by D0n-A) 
