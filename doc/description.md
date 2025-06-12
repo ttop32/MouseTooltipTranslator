@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.183
+  - add whitelist website (requested by Fabio Studart)
 - 0.1.182
   - fix auto reader crash
 - 0.1.181

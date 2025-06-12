@@ -70,9 +70,7 @@ var listenText = "";
     injectGoogleDocAnnotation(); //check google doc and add annotation env var
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
-    if (checkExcludeUrl()) {
-      return;
-    }
+    checkExcludeUrl(); //check url is excluded or not in the whitelist
     await dom_util.waitJquery(); //wait jquery load
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
@@ -85,7 +83,12 @@ var listenText = "";
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
   } catch (error) {
-    console.log(error);
+    if (error instanceof util.TooltipUrlExcludeError) {
+      // Do nothing
+      // console.log(error);      
+    } else {
+      console.log(error);
+    }
   }
 })();
 
@@ -810,10 +813,13 @@ function addMsgListener() {
   });
   util.addMessageListener("killAutoReaderTabs", killAutoReader);
 }
-
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
-  return matchUrl(url, setting["websiteExcludeList"]);
+  var isExcludeBan = matchUrl(url, setting["websiteExcludeList"]);
+  var isWhiteListBan = setting["websiteWhiteList"]?.length != 0 && !matchUrl(url, setting["websiteWhiteList"]);
+  if (isExcludeBan || isWhiteListBan) {
+    throw new util.TooltipUrlExcludeError();
+  }
 }
 
 // setting handling & container style===============================================================

@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "Kecualikan Situs Web"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "Tentang                                      "
 	},

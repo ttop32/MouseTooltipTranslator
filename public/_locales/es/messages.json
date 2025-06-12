@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "Excluir Sitio Web"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "Acerca de                                      "
 	},

@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "ยกเว้นเว็บไซต์"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "เกี่ยวกับ                                      "
 	},

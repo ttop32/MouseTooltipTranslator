@@ -99,6 +99,7 @@ i18List = [
     "EXCLUDE",
     "Exclude Language",
     "Exclude Website",
+    "Whitelist Website",
 
     "About                                      ",
     "How to use",

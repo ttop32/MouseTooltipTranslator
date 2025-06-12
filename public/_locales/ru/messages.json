@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "Исключить указанный веб-сайт"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "О программе                                      "
 	},

@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "排除網站"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "關於                                      "
 	},

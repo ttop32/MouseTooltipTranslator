@@ -206,6 +206,9 @@
 	"Exclude_Website": {
 		"message": "אל תתרגם את האתרים"
 	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
 	"About______________________________________": {
 		"message": "אודות                                      "
 	},
