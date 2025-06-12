@@ -654,8 +654,7 @@ async function startAutoReader() {
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
-  var hoveredData = await getMouseoverText(clientX, clientY);
-  var { mouseoverText, mouseoverRange } = hoveredData;
+  var { mouseoverText, mouseoverRange } = await getMouseoverText(clientX, clientY);
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
@@ -667,9 +666,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     return;
   }
   isAutoReaderRunning = true;
-
   var text = util.extractTextFromRange(stagedRange);
-
   var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
