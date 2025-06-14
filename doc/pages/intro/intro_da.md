@@ -1,147 +1,76 @@
-# How to use
+# Hvordan man bruger
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Grundlæggende anvendelser: Hold markøren over eller vælg (fremhæv) tekst for at oversætte.
+  - Test svæver med eksempeltekst:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+Proletarer i alle lande, forenes!
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
-
+  - Hvis oversættelsen ikke fungerer, skal du kontrollere det aktuelle målsprog
+    - Kontroller [hvordan man ændrer sprog] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-miluage)
+    - Denne oversætter udelader tekst, hvis kilden og målsprogene er identiske.
 
 ![Alt Text](/doc/reagre.gif)
 
+- Hold <KBD> Venstrectrl </kbd> -tasten til at høre TTS-udtalen, når der vises en værktøjstip. Tryk på <kbd> esc </kbd> for at stoppe stemmen.
+  - Prøv Double Press <KBD> Venstrectrl </kbd> for at lytte oversat resultattekst
+! [Resultat] (/doc/20.gif)
 
+- Tryk på <KBD> RETT-ELT </kbd> -tasten til at oversætte den tekst, du skriver (eller en hvilken som helst fremhævet tekst) i inputboksen. Hvis det er nødvendigt, kan du fortryde handlingen ved at trykke på <kbd> ctrl </kbd> + <kbd> z </kbd>.
+  - Hvis oversættelsen ikke fungerer, skal du sikre dig, at dit nuværende målsprog matcher dit skriveprog.
+  - Hvis <kbd> højre-Alt </kbd> er anvendelser som Hangul-swap,
+Brug en anden nøgle til at arbejde med.
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [Resultat] (/doc/11.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- Oversæt URL -søgefeltetekst ved at skrive <kbd>/</kbd>+<kbd> plads </kbd> før din forespørgsel.
 
-![result](/doc/20.gif)
+! [Resultat] (/doc/21.gif)
 
+- Support Online PDF til at vise oversat værktøjstip ved hjælp af pdf.js (lokal computer PDF -fil har brug for yderligere tilladelse, se [undtagelse] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
+! [Resultat] (/doc/12.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- Support dobbelt undertekster til YouTube -videoer.
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [Resultat] (/doc/16.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- Proces OCR Når du holder <kbd> til venstre-skift </kbd> nøgle + mus over på et billede (f.eks. Manga)
 
-  use other key to work with. 
+! [Resultat] (/doc/15.gif)
 
+- Kør autolæser af Press <KBD> f2 </kbd> nøgle
+  - Det begynder at læse musen over tekst hele vejen med TTS
+  - For at stoppe billæseren skal du trykke på <kbd> esc </kbd>
+  - Prøv Double Press <kbd> f2 </kbd> for at lytte oversat resultattekst Auto Reader
 
+! [Resultat] (/doc/30.gif)
 
-![result](/doc/11.gif)
+- Aktivér oversætteren af ​​talegenkendelsen ved at holde den <kbd> højrektrl </kbd> -tast.
+  - Standard Talegenkendelsessprog er engelsk.
+  - Hvis talegenkendelsessprog og målsprog er det samme, springer det over.
+  - Lydtilladelse er påkrævet
+  - Kun kompatible med krombaserede browsere, såsom Google Chrome, MS-kant, Vivaldi, Opera, Brave, Arc og Yandex.
+- Tilpas genvejstast
+  - Fra Chrome: // Extensions/genveje eller den tilsvarende browser interne konfigurationsside, tilgængelig ved at udskifte krom: // med din browser's interne URL (f.eks. Kant: //, browser: // eller modig: // osv.).
+# Skift sprog
+- Skift det aktuelle sprog i indstillingssiden
+  - Siden indstillinger kan fås ved at klikke på knappen Puslespil (udvidelse) placeret øverst til højre i din browser.
 
+! [Resultat] (/doc/14.gif)
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
+# Undtagelse
 
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- Hvis kildesekstsprog og oversættelsessprog er det samme, springer det over.
+- Hvis Page ikke er fokuseret, registreres nøgleindgang ikke.
+Klik på Klik for at fokusere side inden input -tastaturet.
+- Applikationen fungerer ikke, hvis webstatus er offline.
+- Hvis webstedet er <https://chrome.google.com/extensions>, fungerer det ikke, fordi Chrome Security Reason.
+- Hvis der ikke gives nogen lokal filtilladelse, kan lokal PDF ikke håndteres.
+  - Hvis filen ikke åbner, kan du prøve at trække og slippe den på fanen.
+  - Det viser en advarsel om tilladelse og omdirigering til tilladelsessiden.
+  - På den omdirigerede side skal du sikre dig, at du vælger "Tillad adgang til fil -URL'er" til at få adgang til filer.
+  - Genåbne PDF for at påvirke med det samme
+! [Resultat] (/doc/10.gif)

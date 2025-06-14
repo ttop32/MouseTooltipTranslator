@@ -1,147 +1,76 @@
-# How to use
+# Com utilitzar
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Usos bàsics: passeu o seleccioneu el text (ressaltar) per traduir.
+  - Prova el pas amb un exemple de text:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+Els proletaris de tots els països, uneixen!
 ```
 
-  - If the translation isn't working, check current target language
+  - Si la traducció no funciona, comproveu el llenguatge de destinació actual
+    - Comproveu [Com canviar el llenguatge] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Aquest traductor ometrà el text si la font i els llenguatges de destinació són idèntics.
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+! [Alt Text] (/doc/reegre.gif)
 
-    - This translator will omit text if the source and target languages are identical.
+- Manteniu la tecla </kbd> left-ctrl </kbd> per escoltar la pronunciació TTS quan apareix un to d'eina. Premeu <KBD> ESC </KBD> per aturar la veu.
+  - Proveu doble premeu <KBD> Left-Ctrl </kbd> per escoltar el text de resultats traduït
+! [Resultat] (/doc/20.gif)
 
+- Premeu la tecla <kbd> dreta-alt </kbd> per traduir el text que escriviu (o qualsevol text ressaltat) al quadre d'entrada. Si cal, podeu desfer l'acció prement <KBD> CTRL </KBD> + <KBD> Z </KBD>.
+  - Si la traducció no funciona, assegureu -vos que el vostre llenguatge objectiu actual coincideixi amb el vostre idioma d’escriptura.
+  - Si <kbd> dreta-alt </kbd> s'utilitza com a intercanvi hangul,
+Utilitzeu una altra clau per treballar.
 
+! [Resultat] (/doc/11.gif)
 
-![Alt Text](/doc/reagre.gif)
+- Traduïu el text de la caixa de cerca d’URL escrivint <KBD>/</KBD>+<KBD> Espai </KBD> abans de la vostra consulta.
 
+! [Resultat] (/doc/21.gif)
 
+- Suport en línia PDF per mostrar el ToolTip traduït mitjançant pdf.js (el fitxer PDF de l'ordinador local necessita permís addicional, vegeu [Excepció] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [Resultat] (/doc/12.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- Donar suport a subtítols dobles per a vídeos de YouTube.
 
-![result](/doc/20.gif)
+! [Resultat] (/doc/16.gif)
 
+- Procés OCR quan manté la retenció <KBD> Shift-Shift </KBD> Key + ratolí sobre una imatge (per exemple, manga)
 
+! [Resultat] (/doc/15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- Executeu Auto Reader per Press <KBD> F2 </KBD> tecla
+  - Comença a llegir el ratolí sobre el text amb TTS
+  - Per aturar el lector automàtic Premeu <KBD> esc </kbd>
+  - Proveu Double Press <KBD> F2 </kbd> per escoltar el text de resultats traduït
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [Resultat] (/doc/30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- Activeu el traductor de reconeixement de la veu mantenint la tecla <kbd> right-ctrl </kbd>.
+  - El llenguatge de reconeixement de la parla predeterminada és anglès.
+  - Si el llenguatge de reconeixement de la parla i el llenguatge objectiu són els mateixos, es salta.
+  - Cal permís d’àudio
+  - Només compatible amb els navegadors basats en crom, com Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc i Yandex.
+- Personalitzeu la clau de drecera
+  - De Chrome: // Extensions/dreceres o la pàgina de configuració interna del navegador equivalent, accessible substituint Chrome: // amb l’URL intern del vostre navegador (per exemple, Edge: //, navegador: // o valent: // etc).
+# Canvia el llenguatge
+- Canvieu l'idioma actual a la pàgina de configuració
+  - Es pot accedir a la pàgina de configuració fent clic al botó Puzzle (extensió) situat a la part superior dreta del navegador.
 
-  use other key to work with. 
+! [Resultat] (/doc/14.gif)
 
 
+# Excepció
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- Si el llenguatge de text de la font i el llenguatge traduït són el mateix, es saltarà.
+- Si la pàgina no està enfocada, no es detecta l’entrada de claus.
+Feu clic per centrar la pàgina abans del teclat d'entrada.
+- L’aplicació no funcionarà si l’estat del web està fora de línia.
+- Si el lloc és <https://chrome.google.com/extensions>, no funciona perquè el motiu de seguretat de Chrome.
+- Si no es dóna permís de fitxer local, no es pot gestionar el PDF local.
+  - Si el fitxer no s’obre, proveu d’arrossegar -lo i deixar -lo caure a la pestanya.
+  - Es mostrarà un advertiment de permís i redirigirà a la pàgina de permís.
+  - A la pàgina redirigida, assegureu -vos que seleccioneu "Permet accedir als URL de fitxers" per accedir als fitxers.
+  - Torneu a obrir PDF per afectar de seguida
+! [Resultat] (/doc/10.gif)

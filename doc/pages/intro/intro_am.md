@@ -1,147 +1,76 @@
-# How to use
+# እንዴት መጠቀም እንደሚቻል
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- መሰረታዊ አጠቃቀሞች: ለመተርጎም ጽሑፍ (ለአስተማማኝ ሁኔታ) ይምረጡ ወይም ይምረጡ ወይም ይምረጡ.
+  - የሙከራ አሠራር ምሳሌ ምሳሌ:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+የሁሉም ሀገሮች ፕሮታርቻዎች አንድ ይሆናሉ!
 ```
 
-  - If the translation isn't working, check current target language
+  - ትርጉሙ የማይሰራ ከሆነ የአሁኑን target ላማ ቋንቋ ያረጋግጡ
+    - ቼክ (እንግሊዝኛን እንዴት እንደሚቀየር] (https://github.com/moithourt32/mourstoooltripslator/bblob/man/manng )-
+    - ይህ ተርጓሚው እና የ target ላማው ቋንቋዎች ተመሳሳይ ከሆኑ ይህ ተርጓሚ ጽሑፍ ይቆጣጠራል.
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+! [ALT The] (/ DOC / ragre.gif)
 
-    - This translator will omit text if the source and target languages are identical.
+- የመሳሪያ መሳሪያዎች በሚታዩበት ጊዜ የ TTS አጠራር ሲታይ የ TTS አጠራር ለመስማት የ <KBD> ግራ-ሲ.ቢ.ኤል. ቁልፍ ይያዙ. ድምፁን ለማስቆም <KBD> ESC </ kbd> ን ይጫኑ.
+  - ለመተግበር የተተረጎመ ውጤት ጽሑፍ ለማዳመጥ ሁለት ጊዜ <KBD> TOT-Ctrl> ይሞክሩ
+! [ውጤት] (/ doc / 20.gif)
 
+- በግቤት ሳጥኑ ውስጥ የጻፉትን ጽሑፍ ለመተርጎም (ወይም የደመቀ ጽሑፍ) የሚለውን ጽሑፍ ለመተርጎም የ <KBD> ቀኝ </ ኪባ> ቁልፍን ተጫን. አስፈላጊ ከሆነ <kbd> Ctrl </ kbd> + <KBD> Z </ KBD> ን በመጫን እርምጃ መውሰድ ይችላሉ.
+  - የትርጉም ትምህርትዎ የእርስዎ get ላማው ቋንቋ ከጽሑፍ ቋንቋዎ ጋር የሚዛመድ መሆኑን ያረጋግጡ.
+  - <KBD> የቀኝ-አሥልት </ kbd> እንደ መንጋ ስውፕ ይጠቀማል,
+ከሌሎች ጋር ለመስራት ሌላ ቁልፍ ይጠቀሙ.
 
+! [ውጤት] (/ DOC / 11.GIF)
 
-![Alt Text](/doc/reagre.gif)
+- ከመጠይቅዎ በፊት <KBD> / </ kbd> + <kbd> / KBD> + <KBD> ቦታ </ kbd>.
 
+! [ውጤት] (/ DOC / 21.gif)
 
+- PDF.JS ን በመጠቀም የተተረጎመ የመሣሪያ ዘዴን ለማሳየት የመስመር ላይ PDF (የአካባቢያዊ የኮምፒዩተር ፒዲኤፍ >/2gtatous.com/moithourTiprinslator/blob/man/dob/intero.mdo/man/man/mody/man/mobive))))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [ውጤት] (/ DOC / 12.GIF)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- ለ YouTube ቪዲዮዎች ባለሁለት ንዑስ ርዕሶችን ይደግፉ.
 
-![result](/doc/20.gif)
+! [ውጤት] (/ DOC / 16.GIF)
 
+- የ <KBD> ቁልፍ </ kbd> ቁልፍን በሚይዝበት ጊዜ ሂደት (ኤ.ቢ.ዲ., ማንጋ)
 
+! [ውጤት] (/ ዶክ / 15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- በራስ-ሰር አንባቢውን በፕሬስ <KBD> F2 </ kbd> ቁልፍ
+  - ከ TTS ጋር ሁል ጊዜ አይጤን ያንብቡ
+  - የመኪና አንባቢው ፕሬስ <KBD> ESC </ kbd>
+  - የተተረጎመ የውጤት ጽሑፍ ራስ-ሰር አንባቢን ለማዳመጥ ሁለት ጊዜ <KBD> F2 </ kbd> ይሞክሩ
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [ውጤት] (/ doc / 30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- <KBD> የቀኝ-CTRIL> </ kbd> ቁልፍን በመያዝ የንግግር ማወቂያ አፕሪተርን ያግብሩ.
+  - ነባሪ የንግግር ማወቂያ ቋንቋ እንግሊዝኛ ነው.
+  - የንግግር ማወቂያ ቋንቋ እና target ላማ ቋንቋ ተመሳሳይ ከሆኑ, ይደክማል.
+  - የድምፅ ፍቃድ ያስፈልጋል
+  - እንደ ጉግል ክሮም, ኤም ኤም-ጠርዝ, ቪትራ, ኦፔራ, አርፋ, እና ያንድበር ካሉ ከ Chromium ላይ የተመሠረተ አሳሾች ብቻ ተኳሃኝ ብቻ ነው.
+- አቋራጭ ቁልፍን ያብጁ
+  - ከ Chrome: // ቅጥያዎች / አቋራጮች / አቋራጮች / አቋራጮች / አቋራጮች, Chrome: // በአሳሽዎ የውስጥ ዩ አር ኤል (ኢ.ኢ.ዲ., ጠርዝ: //, ብራድ: //, ወይም ደፋር).
+# ቋንቋን ይለውጡ
+- የአሁኑን ቋንቋ በማዋቀሩ ውስጥ ይለውጡ
+  - የቅንብሮች ገጽ በአሳሽዎ የላይኛው ቀኝ በኩል የሚገኘውን የእንቆቅልሽ (ቅጥያ) ቁልፍን ጠቅ በማድረግ መድረስ ይችላል.
 
-  use other key to work with. 
+! [ውጤት] (/ doc / 14.gif)
 
 
+# ልዩ
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- ምንጭ የጽሑፍ ቋንቋ እና ቋንቋ ቋንቋ ከተተረጎመ, እሱ ይዝለላል.
+- ገጽ ካተኮረ, ቁልፍ ግቤት አልተገኘም.
+ከግዜውኛ ቁልፍ ሰሌዳው በፊት ለማተኮር ጠቅ ያድርጉ.
+- ድረኛው ከመስመር ውጭ ከሆነ ትግበራው አይሠራም.
+- ጣቢያው <https:/0Cps.google.com/extions.com/extions.com/extions.com/extions >> አይደለም ምክንያቱም አይሰራም ምክንያቱም የ Chrome ደህንነት ምክንያት አይደለም.
+- የአከባቢ ፋይል ፈቃድ ካልተሰጠ የአከባቢው ፒዲኤፍ ሊይዝ አይችልም.
+  - ፋይሉ ካልተከፈተ, መጎተትዎን መጎተት እና መጣል ይሞክሩ.
+  - እሱ የፍቃድ ማስጠንቀቂያ ያሳያል እና ወደ ፍቃድ ገጽ አቅጣጫ ያዞራል.
+  - በተሸፈነው ገጽ ላይ ፋይሎችን ለመድረስ "የፋይል ዩአርኤል መዳረሻን ፍቀድ" የሚለውን ያረጋግጡ.
+  - በቀጥታ ወደ ቀኝ ለመቋቋም ፒዲኤፍ እንደገና ይደግፋል
+! [ውጤት] (/ doc / 10.GIF)

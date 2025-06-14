@@ -1,147 +1,76 @@
-# How to use
+# Wie man benutzt
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Grundlegende Verwendungszwecke: Übersetzen oder SELECT (Highlight) Text.
+  - Testen Sie schweben mit Beispieltext:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
-
 ```
 
-  - If the translation isn't working, check current target language
+  - Wenn die Übersetzung nicht funktioniert, überprüfen Sie die aktuelle Zielsprache
+    - Überprüfen Sie [wie man die Sprache ändern] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Dieser Übersetzer lässt Text weg, wenn die Quelle und die Zielsprachen identisch sind.
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+! [Alt Text] (/doc/reagre.gif)
 
-    - This translator will omit text if the source and target languages are identical.
+- Halten Sie die Taste <KBD> links-ctrg </kbd> gehalten, um die TTS-Aussprache zu hören, wenn ein Tooltip erscheint. Drücken Sie <KBD> ESC </kbd>, um die Stimme zu stoppen.
+  - Versuchen Sie doppelt drücken <kbd> links-ctrg </kbd>, um übersetzte Ergebnistext anzuhören
+! [Ergebnis] (/doc/20.gif)
 
+- Drücken Sie die Taste <KBD> rechts </kbd>, um den Text (oder einen beliebigen hervorgehobenen Text) im Eingabefeld zu übersetzen. Bei Bedarf können Sie die Aktion rückgängig machen, indem Sie <kbd> Strg </kbd> + <kbd> z </kbd> drücken.
+  - Wenn die Übersetzung nicht funktioniert, stellen Sie sicher, dass Ihre aktuelle Zielsprache Ihrer Schreibsprache entspricht.
+  - Wenn <kbd> rechts </kbd> als Hangul-Swap verwendet wird, verwendet
+Verwenden Sie einen anderen Schlüssel, um mit zu arbeiten.
 
+! [Ergebnis] (/doc/11.gif)
 
-![Alt Text](/doc/reagre.gif)
+- Übersetzen Sie das URL -Suchfeld Text, indem Sie <kbd>/</kbd>+<kbd> Speicherplatz </kbd> vor Ihrer Abfrage eingeben.
 
+! [Ergebnis] (/doc/21.gif)
 
+- Support Online PDF zum Anzeigen von übersetzten Tooltip mit PDF.js (lokale Computer -PDF -Datei benötigen zusätzliche Berechtigung, siehe [Ausnahme] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [Ergebnis] (/doc/12.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- Unterstützen Sie zwei Untertitel für YouTube -Videos.
 
-![result](/doc/20.gif)
+! [Ergebnis] (/doc/16.gif)
 
+- Prozess OCR beim Halten von <kbd> linkshift </kbd> Schlüssel + Maus auf einem Bild (z. B. Manga)
 
+! [Ergebnis] (/doc/15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- Auto Reader durch Drücken Sie <KBD> F2 </kbd> Taste aus.
+  - Es beginnt mit TTS Maus über Text über Text zu lesen
+  - Um den Autoleser zu stoppen, drücken Sie <kbd> ESC </kbd>
+  - Versuchen Sie doppelt drücken <kbd> f2 </kbd>, um übersetzte Ergebnistext automatisch zu hören
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [Ergebnis] (/doc/30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- Aktivieren Sie den Spracherkennungsübersetzer, indem Sie die Taste <KBD> rechts-ctrl </kbd> halten.
+  - Die Standardsprache der Spracherkennung ist Englisch.
+  - Wenn die Sprache der Spracherkennung und die Zielsprache gleich sind, überspringt sie.
+  - Die Audioberechtigung ist erforderlich
+  - Nur kompatibel mit Browsern auf Chrombasis wie Google Chrome, MS-Edge, Vivaldi, Opera, Brave, ARC und Yandex.
+- Passen Sie den Kurzschlussschlüssel an
+  - Von Chrome: // Extensions/Verknüpfungen oder der internen Konfigurationsseite der äquivalenten Browser, die durch Ersetzen von Chrome: // durch die interne URL Ihres Browsers zugänglich ist (z. B. Edge: //, Browser: // oder Brave: // etc).
+# Sprache ändern
+- Ändern Sie die aktuelle Sprache bei der Einstellung der Seite
+  - Die Einstellungsseite kann durch Klicken auf die Schaltfläche Puzzle (Erweiterung) oben rechts in Ihrem Browser zugegriffen werden.
 
-  use other key to work with. 
+! [Ergebnis] (/doc/14.gif)
 
 
+# Ausnahme
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- Wenn die Sprache und die Übersetzungssprache aus Quellstext gleich sind, wird sie überspringen.
+- Wenn die Seite nicht fokussiert ist, wird die Schlüsseleingabe nicht erkannt.
+Klicken Sie vor der Eingabe der Tastatur klicken, um die Seite zu fokussieren.
+- Die Anwendung funktioniert nicht, wenn der Webstatus offline ist.
+- Wenn die Website <https://chrome.google.com/extensions> ist, funktioniert sie nicht, weil Chrome -Sicherheitsgrund.
+- Wenn keine lokale Dateiberechtigung erteilt wird, kann die lokale PDF nicht behandelt werden.
+  - Wenn sich die Datei nicht öffnet, schleppt und fallen Sie auf die Registerkarte.
+  - Es wird eine Berechtigungswarnung angezeigt und auf die Berechtigungsseite umgeleitet.
+  - Stellen Sie auf der umgeleiteten Seite sicher, dass Sie "Zugriff auf Datei -URLs zulassen" zum Zugriff auf Dateien auswählen.
+  - Öffnen Sie PDF erneut, um sofort zu beeinflussen
+! [Ergebnis] (/doc/10.gif)

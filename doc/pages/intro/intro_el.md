@@ -1,147 +1,76 @@
-# How to use
+# Πώς να χρησιμοποιήσετε
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Βασικές χρήσεις: Τοποθετήστε το κείμενο ή επιλέξτε (highlight) κείμενο για μετάφραση.
+  - Δοκιμή αιωρούνται με παράδειγμα κειμένου:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+Οι προλετάριοι όλων των χωρών, ενώνουν!
 ```
 
-  - If the translation isn't working, check current target language
+  - Εάν η μετάφραση δεν λειτουργεί, ελέγξτε την τρέχουσα γλώσσα -στόχο
+    - Ελέγξτε [πώς να αλλάξετε τη γλώσσα] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Αυτός ο μεταφραστής θα παραλείψει το κείμενο εάν οι γλώσσες πηγής και στόχου είναι πανομοιότυπες.
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+! [Alt text] (/doc/reagre.gif)
 
-    - This translator will omit text if the source and target languages are identical.
+- Κρατήστε το πλήκτρο <kbd> αριστερό-ctrl </kbd> για να ακούσετε την προφορά TTS όταν εμφανίζεται μια εργαλειοθήκη. Πατήστε <KBD> ESC </kbd> για να σταματήσετε τη φωνή.
+  - Δοκιμάστε το διπλό πατήστε <KBD> αριστερό-ctrl </kbd> για να ακούσετε το μεταφρασμένο κείμενο αποτελεσμάτων
+! [Αποτέλεσμα] (/doc/20.gif)
 
+- Πατήστε το πλήκτρο <kbd> right-alt </kbd> για να μεταφράσετε το κείμενο που γράφετε (ή οποιοδήποτε επισημασμένο κείμενο) στο πλαίσιο εισόδου. Αν χρειαστεί, μπορείτε να αναιρέσετε τη δράση πατώντας <kbd> ctrl </kbd> + <KBD> z </kbd>.
+  - Εάν η μετάφραση δεν λειτουργεί, βεβαιωθείτε ότι η τρέχουσα γλώσσα -στόχος σας ταιριάζει με τη γλώσσα γραφής σας.
+  - Εάν χρησιμοποιείται το <kbd> right-alt </kbd> ως swap hangul,
+Χρησιμοποιήστε άλλο κλειδί για να εργαστείτε.
 
+! [Αποτέλεσμα] (/doc/11.gif)
 
-![Alt Text](/doc/reagre.gif)
+- Μεταφράστε το κείμενο του πλαισίου αναζήτησης URL πληκτρολογώντας <kbd>/</kbd>+<kbd> space </kbd> πριν από το ερώτημά σας.
 
+! [Αποτέλεσμα] (/doc/21.gif)
 
+- Υποστήριξη online pdf για να εμφανιστεί μεταφρασμένη tooltip χρησιμοποιώντας pdf.js (τοπικό αρχείο pdf computer χρειάζονται πρόσθετη άδεια, βλ. [Εξαίρεση] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [Αποτέλεσμα] (/doc/12.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- Υποστήριξη διπλών υπότιτλων για βίντεο YouTube.
 
-![result](/doc/20.gif)
+! [Αποτέλεσμα] (/doc/16.gif)
 
+- Διαδικασία OCR όταν κρατάτε <KBD> αριστερή μετατόπιση </kbd> κλειδί + ποντίκι πάνω σε μια εικόνα (π.χ. manga)
 
+! [Αποτέλεσμα] (/doc/15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- Εκτελέστε αυτόματο αναγνώστη με πατήστε <KBD> F2 </kbd> πλήκτρο
+  - Αρχίζει να διαβάζει το ποντίκι πάνω από το κείμενο σε όλη τη διαδρομή με το TTS
+  - Για να σταματήσετε τον αυτόματο αναγνώστη πατήστε <KBD> ESC </kbd>
+  - Δοκιμάστε το διπλό πατήστε <KBD> F2 </kbd> για να ακούσετε μεταφρασμένο αυτόματο αναγνώστη κειμένου αποτελεσμάτων
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [Αποτέλεσμα] (/doc/30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- Ενεργοποιήστε τον μεταφραστή αναγνώρισης ομιλίας κρατώντας πατημένο το πλήκτρο <KBD> δεξιά-CTRL </kbd>.
+  - Η προεπιλεγμένη γλώσσα αναγνώρισης ομιλίας είναι Αγγλικά.
+  - Εάν η γλώσσα αναγνώρισης ομιλίας και η γλώσσα -στόχος είναι η ίδια, παραλείπει.
+  - Απαιτείται άδεια ήχου
+  - Μόνο συμβατά με προγράμματα περιήγησης με βάση το χρωμίου, όπως το Google Chrome, το MS-Edge, το Vivaldi, η Opera, η Brave, το Arc και το Yandex.
+- Προσαρμόστε το κλειδί συντόμευσης
+  - Από το Chrome: // Extensions/Shortcuts ή η σελίδα εσωτερικής διαμόρφωσης του ισοδύναμου προγράμματος περιήγησης, προσβάσιμη αντικαθιστώντας το Chrome: // με την εσωτερική διεύθυνση URL του προγράμματος περιήγησής σας (π.χ. Edge: //, Browser: //, ή γενναία: // κλπ).
+# Αλλαγή γλώσσας
+- Αλλαγή της τρέχουσας γλώσσας στη σελίδα ρύθμισης
+  - Η σελίδα ρυθμίσεων είναι προσβάσιμη κάνοντας κλικ στο κουμπί παζλ (επέκταση) που βρίσκεται στο επάνω δεξιά του προγράμματος περιήγησής σας.
 
-  use other key to work with. 
+! [Αποτέλεσμα] (/doc/14.gif)
 
 
+# Εξαίρεση
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- Εάν η γλώσσα κειμένου πηγής και η μετάφραση είναι η ίδια, θα παραλείψει.
+- Εάν η σελίδα δεν είναι εστιασμένη, δεν ανιχνεύεται βασική είσοδος.
+Κάντε κλικ για να εστιάσετε τη σελίδα πριν από το πληκτρολόγιο εισόδου.
+- Η εφαρμογή δεν θα λειτουργήσει εάν η κατάσταση ιστού είναι εκτός σύνδεσης.
+- Εάν ο ιστότοπος είναι <https://chrome.google.com/extensions>, δεν λειτουργεί επειδή ο λόγος ασφαλείας του Chrome.
+- Εάν δεν δοθεί άδεια τοπικού αρχείου, δεν μπορεί να αντιμετωπιστεί το τοπικό PDF.
+  - Εάν το αρχείο δεν ανοίξει, δοκιμάστε να σύρετε και να το ρίξετε στην καρτέλα.
+  - Θα εμφανίσει προειδοποίηση άδειας και ανακατεύθυνση στη σελίδα αδειοδότησης.
+  - Στη σελίδα ανακατευθυνόμενης σελίδας, βεβαιωθείτε ότι επιλέγετε "Επιτρέψτε την πρόσβαση σε URL αρχείων" για πρόσβαση σε αρχεία.
+  - Ανοίξτε ξανά το PDF για να επηρεάσετε αμέσως
+! [Αποτέλεσμα] (/doc/10.gif)

@@ -1,147 +1,76 @@
-# How to use
+# কীভাবে ব্যবহার করবেন
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- বেসিক ব্যবহারগুলি: অনুবাদ করার জন্য ওভার বা ওভার বা নির্বাচন করুন (হাইলাইট) পাঠ্য।
+  - উদাহরণস্বরূপ পাঠ্য সহ পরীক্ষা হোভার:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+সমস্ত দেশের সর্বহারা শ্রেণি, ite ক্যবদ্ধ!
 ```
 
-  - If the translation isn't working, check current target language
+  - যদি অনুবাদটি কাজ না করে তবে বর্তমান লক্ষ্য ভাষা পরীক্ষা করুন
+    - [ভাষা কীভাবে পরিবর্তন করতে হয় তা পরীক্ষা করুন] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-ganganaguage)
+    - উত্স এবং লক্ষ্য ভাষাগুলি অভিন্ন হলে এই অনুবাদক পাঠ্যটি বাদ দেবেন।
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+! [আল্ট পাঠ্য] (/ডক/রিগ্রে.জিফ)
 
-    - This translator will omit text if the source and target languages are identical.
+- কোনও টুলটিআইপি প্রদর্শিত হলে টিটিএস উচ্চারণটি শুনতে <কেবিডি> বাম-সিটিআরএল </কেবিডি> কীটি ধরে রাখুন। ভয়েস বন্ধ করতে <কেবিডি> ইএসসি </কেবিডি> টিপুন।
+  - অনুবাদ করা ফলাফলের পাঠ্য শুনতে ডাবল টিপুন <কেবিডি> বাম-সিটিআরএল </কেবিডি>
+! [ফলাফল] (/ডক/20.gif)
 
+- ইনপুট বাক্সে আপনি যে পাঠ্যটি লিখছেন (বা কোনও হাইলাইটযুক্ত পাঠ্য) অনুবাদ করতে <কেবিডি> ডান-আল্ট </কেবিডি> কী টিপুন। যদি প্রয়োজন হয় তবে আপনি <কেবিডি> সিটিআরএল </কেবিডি> + <কেবিডি> জেড </কেবিডি> টিপে ক্রিয়াটি পূর্বাবস্থায় ফিরিয়ে আনতে পারেন।
+  - যদি অনুবাদটি কাজ না করে তবে আপনার বর্তমান লক্ষ্য ভাষা আপনার লেখার ভাষার সাথে মেলে তা নিশ্চিত করুন।
+  - যদি <কেবিডি> ডান-আল্ট </কেবিডি> হ্যাঙ্গুল অদলবদল হিসাবে ব্যবহার করা হয়,
+সাথে কাজ করতে অন্যান্য কী ব্যবহার করুন।
 
+! [ফলাফল] (/ডক/11.gif)
 
-![Alt Text](/doc/reagre.gif)
+- আপনার প্রশ্নের আগে <কেবিডি>/</কেবিডি>+<কেবিডি> স্পেস </কেবিডি> টাইপ করে ইউআরএল অনুসন্ধান বাক্স পাঠ্যটি অনুবাদ করুন।
 
+! [ফলাফল] (/ডক/21.gif)
 
+- পিডিএফ.জেএস ব্যবহার করে অনুবাদকৃত টুলটিআইপি প্রদর্শন করতে অনলাইন পিডিএফ সমর্থন করুন (স্থানীয় কম্পিউটার পিডিএফ ফাইলের অতিরিক্ত অনুমতি প্রয়োজন, দেখুন [ব্যতিক্রম] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [ফলাফল] (/ডক/12.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- ইউটিউব ভিডিওগুলির জন্য দ্বৈত সাবটাইটেলগুলি সমর্থন করুন।
 
-![result](/doc/20.gif)
+! [ফলাফল] (/ডক/16.gif)
 
+- প্রক্রিয়া ওসিআর যখন <কেবিডি> বাম-শিফ্ট </kbd> কী + মাউসকে একটি চিত্রের উপরে (যেমন, মঙ্গা) ধরে রাখার সময় প্রক্রিয়া করুন
 
+! [ফলাফল] (/ডক/15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- <কেবিডি> এফ 2 </কেবিডি> কী টিপে অটো রিডার চালান
+  - এটি টিটিএস দিয়ে পুরো পথ ধরে মাউস পড়তে শুরু করে
+  - অটো রিডার বন্ধ করতে <কেবিডি> এসসি </কেবিডি> টিপুন
+  - অনুবাদ করা ফলাফল পাঠ্য অটো রিডার শুনতে ডাবল প্রেস <কেবিডি> এফ 2 </কেবিডি> চেষ্টা করুন
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [ফলাফল] (/ডক/30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- <কেবিডি> রাইট-সিটিআরএল </কেবিডি> কীটি ধরে রেখে স্পিচ স্বীকৃতি অনুবাদককে সক্রিয় করুন।
+  - ডিফল্ট স্পিচ স্বীকৃতি ভাষা ইংরেজি।
+  - যদি বক্তৃতা স্বীকৃতি ভাষা এবং লক্ষ্য ভাষা একই হয় তবে তা এড়িয়ে যায়।
+  - অডিও অনুমতি প্রয়োজন
+  - গুগল ক্রোম, এমএস-এজ, ভিভালডি, অপেরা, সাহসী, আর্ক এবং ইয়ানডেক্সের মতো ক্রোমিয়াম-ভিত্তিক ব্রাউজারগুলির সাথে কেবল সামঞ্জস্যপূর্ণ।
+- শর্টকাট কী কাস্টমাইজ করুন
+  - ক্রোম থেকে: // এক্সটেনশনস/শর্টকাটস বা সমতুল্য ব্রাউজার অভ্যন্তরীণ কনফিগারেশন পৃষ্ঠা, ক্রোম: // আপনার ব্রাউজারের অভ্যন্তরীণ ইউআরএল (যেমন, প্রান্ত: //, ব্রাউজার: //, বা সাহসী: // ইত্যাদি) দিয়ে প্রতিস্থাপন করে অ্যাক্সেসযোগ্য।
+# ভাষা পরিবর্তন করুন
+- পৃষ্ঠাতে বর্তমান ভাষা পরিবর্তন করুন
+  - আপনার ব্রাউজারের উপরের ডানদিকে অবস্থিত ধাঁধা (এক্সটেনশন) বোতামটি ক্লিক করে সেটিংস পৃষ্ঠাটি অ্যাক্সেস করা যেতে পারে।
 
-  use other key to work with. 
+! [ফলাফল] (/ডক/14.gif)
 
 
+# ব্যতিক্রম
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- যদি উত্স পাঠ্য ভাষা এবং অনুবাদ ভাষা একই হয় তবে তা এড়িয়ে যাবে।
+- যদি পৃষ্ঠাটি ফোকাস না করা হয় তবে কী ইনপুট সনাক্ত করা যায় না।
+ইনপুট কীবোর্ডের আগে ফোকাস পৃষ্ঠাতে ক্লিক করুন।
+- ওয়েব স্থিতি অফলাইনে থাকলে অ্যাপ্লিকেশনটি কাজ করবে না।
+- যদি সাইটটি <https://chrome.google.com/extensions> হয় তবে ক্রোম সুরক্ষার কারণ কারণ এটি কার্যকর হয় না।
+- যদি কোনও স্থানীয় ফাইলের অনুমতি না দেওয়া হয়, স্থানীয় পিডিএফ পরিচালনা করা যায় না।
+  - যদি ফাইলটি না খুলে যায় তবে ট্যাবটিতে টেনে নামানোর চেষ্টা করুন।
+  - এটি একটি অনুমতি সতর্কতা প্রদর্শন করবে এবং অনুমতি পৃষ্ঠায় পুনর্নির্দেশ করবে।
+  - পুনঃনির্দেশিত পৃষ্ঠায়, নিশ্চিত করুন যে আপনি ফাইলগুলি অ্যাক্সেস করতে "ইউআরএল ফাইলগুলিতে অ্যাক্সেসের অনুমতি দিন" নির্বাচন করেছেন তা নিশ্চিত করুন।
+  - এখনই প্রভাবিত করতে পিডিএফ পুনরায় খুলুন
+! [ফলাফল] (/ডক/10.gif)
