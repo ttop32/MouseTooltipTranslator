@@ -1,7 +1,8 @@
 # Comment utiliser
 
+
 - Utilisations de base: survolez-vous ou sélectionnez le texte (en surbrillance) pour traduire.
-  - Testez survol avec un exemple de texte:
+  - Testez survole avec un exemple de texte:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
@@ -12,51 +13,66 @@ Proletarier aller Länder, vereinigt euch!
     - Vérifiez [comment changer la langue] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-Language)
     - Ce traducteur ometra le texte si les langues source et cible sont identiques.
 
+
 ![Alt Text](/doc/reagre.gif)
 
 
-- Tenez la touche <KBD> Left-Ctrl </KBD> pour entendre la prononciation TTS lorsqu'une info-bulle apparaît. Appuyez sur <KBD> ESC </KBD> pour arrêter la voix.
-  - Essayez la double appuyez sur <KBD> Left-Ctrl </KBD> pour écouter le texte du résultat traduit
+
+- Tenez la touche <kbd> Left-Ctrl </kbd> pour entendre la prononciation TTS lorsqu'une info-bulle apparaît. Appuyez sur <kbd> ESC </kbd> pour arrêter la voix.
+  - Essayez la double appuyez sur <kbd> Left-Ctrl </kbd> pour écouter le texte du résultat traduit
 ![result](/doc/20.gif)
 
 
-- Appuyez sur la touche <KBD> Right-ALT </KBD> pour traduire le texte que vous écrivez (ou tout texte en surbrillance) dans la zone d'entrée. Si nécessaire, vous pouvez annuler l'action en appuyant sur <KBD> CTRL </KBD> + <KBD> Z </KBD>.
+
+- Appuyez sur la touche <kbd> Right-ALT </kbd> pour traduire le texte que vous écrivez (ou tout texte en surbrillance) dans la zone d'entrée. Si nécessaire, vous pouvez annuler l'action en appuyant sur <kbd> CTRL </kbd> + <kbd> Z </kbd>.
   - Si la traduction ne fonctionne pas, assurez-vous que votre langue cible actuelle correspond à votre langue d'écriture.
   - Si <kbd> droit-alt </kbd> est des utilisations comme échange de hangul,
 Utilisez une autre clé pour travailler avec.
 
+
 ![result](/doc/11.gif)
+
 
 
 - Traduire le texte de la zone de recherche d'URL en tapant <kbd> / </kbd> + <kbd> espace </kbd> avant votre requête.
 
+
 ![result](/doc/21.gif)
+
 
 
 - Prise en charge du pdf en ligne pour afficher l'info-bulle traduit à l'aide de pdf.js (le fichier PDF de l'ordinateur local a besoin d'une autorisation supplémentaire, voir [Exception] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
+
 ![result](/doc/12.gif)
 
 
-- Prise en charge des sous-titres pour les vidéos YouTube.
+
+- Soutenez les doubles sous-titres pour les vidéos YouTube.
+
 
 ![result](/doc/16.gif)
 
 
-- Traiter l'OCR lors de la maintenance <KBD> Left-Shift </KBD> Clé + souris sur une image (par exemple, manga)
+
+- Traiter l'OCR lors de la maintenance <kbd> Left-Shift </kbd> Clé + souris sur une image (par exemple, manga)
+
 
 ![result](/doc/15.gif)
 
 
-- Exécutez Auto Reader en appuyant sur <KBD> F2 </KBD> touche
+
+- Exécutez Auto Reader en appuyant sur <kbd> F2 </kbd> touche
   - Il commence à lire la souris sur du texte tout le long avec TTS
-  - Pour arrêter le lecteur automatique, appuyez sur <KBD> ESC </KBD>
-  - Essayez la double appuyez sur <KBD> F2 </KBD> pour écouter le lecteur de texte de résultat traduit
+  - Pour arrêter le lecteur automatique, appuyez sur <kbd> ESC </kbd>
+  - Essayez la double appuyez sur <kbd> F2 </kbd> pour écouter le lecteur de texte de résultat traduit
+
 
 ![result](/doc/30.gif)
 
 
-- Activez le traducteur de reconnaissance vocale en maintenant la touche <KBD> Right-Ctrl </KBD>.
+
+- Activez le traducteur de reconnaissance vocale en maintenant la touche <kbd> Right-Ctrl </kbd>.
   - La langue de reconnaissance vocale par défaut est l'anglais.
   - Si le langage de reconnaissance vocale et la langue cible sont les mêmes, il saute.
   - L'autorisation audio est requise
@@ -67,11 +83,15 @@ Utilisez une autre clé pour travailler avec.
 - Modifier la langue actuelle dans la page de réglage
   - La page Paramètres est accessible en cliquant sur le bouton Puzzle (Extension) situé en haut à droite de votre navigateur.
 
+
 ![result](/doc/14.gif)
 
 
 
+
+
 # Exception
+
 
 - Si la langue du texte source et la langue traduise sont les mêmes, il sautera.
 - Si la page n'est pas focalisée, l'entrée de clé n'est pas détectée.

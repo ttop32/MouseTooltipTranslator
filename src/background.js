@@ -18,7 +18,7 @@ var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
 
-var fallbackEngineActList = ["google", "bing", "baidu", "papago", "deepl"];
+var fallbackEngineActList = ["google", "bing", "baidu", "papago", "deepl", "yandex"];
 var fallbackEngineCrashTime = { google: 1, bing: 2, baidu: 3 };
 var fallbackEngineCrashCount = {};
 var fallbackWaitTime = 1000 * 60 * 60; // 1 hour

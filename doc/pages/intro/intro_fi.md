@@ -1,5 +1,6 @@
 # Kuinka käyttää
 
+
 - Peruskäyttöön: Löysää tai valitse (korosta) teksti käännettäväksi.
   - Testaa leijuva esimerkki -tekstin kanssa:
 ```console
@@ -12,51 +13,66 @@ Proletarier aller Länder, vereinigt euch!
     - Tarkista [Kielen vaihtaminen] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
     - Tämä kääntäjä jättää tekstin, jos lähde- ja kohdekielet ovat identtisiä.
 
+
 ![Alt Text](/doc/reagre.gif)
 
 
-- Pidä <KBD> vasen-Ctrl </ KBD> -näppäintä kuullaksesi TTS-ääntämisen, kun työkaluvihje tulee näkyviin. Pysäytä äänen painamalla <KBD> esc </ KBD>.
-  - Kokeile Double Paina <KBD> Vasen-Ctrl </ KBD> kuunnella käännetty tulosteksti
+
+- Pidä <kbd> vasen-Ctrl </kbd> -näppäintä kuullaksesi TTS-ääntämisen, kun työkaluvihje tulee näkyviin. Pysäytä äänen painamalla <kbd> esc </kbd>.
+  - Kokeile Double Paina <kbd> Vasen-Ctrl </kbd> kuunnella käännetty tulosteksti
 ![result](/doc/20.gif)
 
 
-- Paina <KBD> oikea-alt </ KBD> -näppäintä kääntääksesi kirjoittamasi teksti (tai mikä tahansa korostettu teksti) syöttöruutuun. Tarvittaessa voit kumota toiminnan painamalla <KBD> Ctrl </ KBD> + <KBD> Z </ KBD>.
+
+- Paina <kbd> oikea-alt </kbd> -näppäintä kääntääksesi kirjoittamasi teksti (tai mikä tahansa korostettu teksti) syöttöruutuun. Tarvittaessa voit kumota toiminnan painamalla <kbd> Ctrl </kbd> + <kbd> Z </kbd>.
   - Jos käännös ei toimi, varmista, että nykyinen kohdekielesi vastaa kirjoituskieltäsi.
-  - Jos <KBD> oikea-alt </ KBD> käyttää Hangul Swap,
+  - Jos <kbd> oikea-alt </kbd> käyttää Hangul Swap,
 Käytä muuta avainta työskennelläksesi.
+
 
 ![result](/doc/11.gif)
 
 
-- Käännä URL -hakukenttä teksti kirjoittamalla <KBD>/</ KBD>+<KBD> Space </ KBD> Ennen kyselyä.
+
+- Käännä URL -hakukenttä teksti kirjoittamalla <kbd>/</kbd>+<kbd> Space </kbd> Ennen kyselyä.
+
 
 ![result](/doc/21.gif)
 
 
+
 - Tuki online -PDF -tiedosto käännettyjen työkalutyjen näyttämiseksi pdf.js: n avulla (paikallinen tietokone PDF -tiedostot tarvitsevat lisälupaa, katso [poikkeus] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception)))
+
 
 ![result](/doc/12.gif)
 
 
-- Tuki YouTube -videoiden kaksoisalatteita.
+
+- Tuki YouTube -videoiden kaksinkertaista tekstitystä.
+
 
 ![result](/doc/16.gif)
 
 
-- Prosessoi OCR pitämällä <KBD> Vasen-siirto </ KBD> -näppäintä + hiirtä kuvassa (esim. Manga)
+
+- Prosessoi OCR pitämällä <kbd> Vasen-siirto </kbd> -näppäintä + hiirtä kuvassa (esim. Manga)
+
 
 ![result](/doc/15.gif)
 
 
-- Suorita Auto Reader kirjoittanut <KBD> F2 </ KBD> -näppäin
+
+- Suorita Auto Reader kirjoittanut <kbd> F2 </kbd> -näppäin
   - Se alkaa lukea hiirtä tekstin yli TTS: llä
-  - Pysäyttää automaattinen lukija Paina <KBD> ESC </ KBD>
-  - Kokeile Double Paina <KBD> F2 </ KBD> kuunnellaksesi käännetty tulosteksti Autolealer
+  - Pysäyttää automaattinen lukija Paina <kbd> ESC </kbd>
+  - Kokeile Double Paina <kbd> F2 </kbd> kuunnellaksesi käännetty tulosteksti Autolealer
+
 
 ![result](/doc/30.gif)
 
 
-- Aktivoi puheentunnistuksen kääntäjä pitämällä <KBD> Right-Ctrl </ KBD> -näppäintä.
+
+- Aktivoi puheentunnistuksen kääntäjä pitämällä <kbd> Right-Ctrl </kbd> -näppäintä.
   - Oletuspuheentunnistuskieli on englanti.
   - Jos puheentunnistuskieli ja kohdekieli ovat samat, se ohittaa.
   - Äänilupa vaaditaan
@@ -67,15 +83,19 @@ Käytä muuta avainta työskennelläksesi.
 - Vaihda nykyinen kieli asetussivulla
   - Asetukset -sivulle pääsee napsauttamalla selaimen oikeassa yläkulmassa olevaa palapeli (laajennus) -painiketta.
 
+
 ![result](/doc/14.gif)
+
+
 
 
 
 # Poikkeus
 
+
 - Jos lähdekieli ja käännöskieli ovat samat, se ohittaa.
 - Jos sivua ei ole keskitytty, avaintuloa ei havaita.
-Napsauta keskittyäksesi sivulle ennen syöttöäppäimistöä.
+Napsauta keskittyäksesi sivulle ennen syöttönäppäimistöä.
 - Sovellus ei toimi, jos verkkotila on offline -tilassa.
 - Jos sivusto on <https://chrome.google.com/extensions>, se ei toimi, koska Chromen tietoturva.
 - Jos paikallista tiedostolupaa ei anneta, paikallista PDF -tiedostoa ei voida käsitellä.
