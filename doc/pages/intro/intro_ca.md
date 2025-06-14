@@ -1,5 +1,6 @@
 # Com utilitzar
 
+
 - Usos bàsics: passeu o seleccioneu el text (ressaltar) per traduir.
   - Prova el pas amb un exemple de text:
 ```console
@@ -12,48 +13,63 @@ Proletarier aller Länder, vereinigt euch!
     - Comproveu [Com canviar el llenguatge] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
     - Aquest traductor ometrà el text si la font i els llenguatges de destinació són idèntics.
 
+
 ![Alt Text](/doc/reagre.gif)
 
 
-- Manteniu la tecla </kbd> left-ctrl </kbd> per escoltar la pronunciació TTS quan apareix un to d'eina. Premeu <KBD> ESC </KBD> per aturar la veu.
-  - Proveu doble premeu <KBD> Left-Ctrl </kbd> per escoltar el text de resultats traduït
+
+- Manteniu la tecla </kbd> left-ctrl </kbd> per escoltar la pronunciació TTS quan apareix un to d'eina. Premeu <kbd> ESC </kbd> per aturar la veu.
+  - Proveu doble premeu <kbd> Left-Ctrl </kbd> per escoltar el text de resultats traduït
 ![result](/doc/20.gif)
 
 
-- Premeu la tecla <kbd> dreta-alt </kbd> per traduir el text que escriviu (o qualsevol text ressaltat) al quadre d'entrada. Si cal, podeu desfer l'acció prement <KBD> CTRL </KBD> + <KBD> Z </KBD>.
+
+- Premeu la tecla <kbd> dreta-alt </kbd> per traduir el text que escriviu (o qualsevol text ressaltat) al quadre d'entrada. Si cal, podeu desfer l'acció prement <kbd> CTRL </kbd> + <kbd> Z </kbd>.
   - Si la traducció no funciona, assegureu -vos que el vostre llenguatge objectiu actual coincideixi amb el vostre idioma d’escriptura.
   - Si <kbd> dreta-alt </kbd> s'utilitza com a intercanvi hangul,
 Utilitzeu una altra clau per treballar.
 
+
 ![result](/doc/11.gif)
 
 
-- Traduïu el text de la caixa de cerca d’URL escrivint <KBD>/</KBD>+<KBD> Espai </KBD> abans de la vostra consulta.
+
+- Traduïu el text de la caixa de cerca d’URL escrivint <kbd>/</kbd>+<kbd> Espai </kbd> abans de la vostra consulta.
+
 
 ![result](/doc/21.gif)
 
 
+
 - Suport en línia PDF per mostrar el ToolTip traduït mitjançant pdf.js (el fitxer PDF de l'ordinador local necessita permís addicional, vegeu [Excepció] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
+
 
 ![result](/doc/12.gif)
 
 
+
 - Donar suport a subtítols dobles per a vídeos de YouTube.
+
 
 ![result](/doc/16.gif)
 
 
-- Procés OCR quan manté la retenció <KBD> Shift-Shift </KBD> Key + ratolí sobre una imatge (per exemple, manga)
+
+- Procés OCR quan manté la retenció <kbd> Shift-Shift </kbd> Key + ratolí sobre una imatge (per exemple, manga)
+
 
 ![result](/doc/15.gif)
 
 
-- Executeu Auto Reader per Press <KBD> F2 </KBD> tecla
+
+- Executeu Auto Reader per Press <kbd> F2 </kbd> tecla
   - Comença a llegir el ratolí sobre el text amb TTS
-  - Per aturar el lector automàtic Premeu <KBD> esc </kbd>
-  - Proveu Double Press <KBD> F2 </kbd> per escoltar el text de resultats traduït
+  - Per aturar el lector automàtic Premeu <kbd> esc </kbd>
+  - Proveu Double Press <kbd> F2 </kbd> per escoltar el text de resultats traduït
+
 
 ![result](/doc/30.gif)
+
 
 
 - Activeu el traductor de reconeixement de la veu mantenint la tecla <kbd> right-ctrl </kbd>.
@@ -67,11 +83,15 @@ Utilitzeu una altra clau per treballar.
 - Canvieu l'idioma actual a la pàgina de configuració
   - Es pot accedir a la pàgina de configuració fent clic al botó Puzzle (extensió) situat a la part superior dreta del navegador.
 
+
 ![result](/doc/14.gif)
 
 
 
+
+
 # Excepció
+
 
 - Si el llenguatge de text de la font i el llenguatge traduït són el mateix, es saltarà.
 - Si la pàgina no està enfocada, no es detecta l’entrada de claus.
