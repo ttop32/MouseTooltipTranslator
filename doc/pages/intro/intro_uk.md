@@ -1,117 +1,87 @@
-# How to use
+# Як користуватися
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Основне використання: наведіть курсор або виберіть (виділити) текст для перекладу.
+  - Перевірте наведення наведуть з прикладом тексту:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Якщо переклад не працює, перевірте поточну цільову мову
+    - Перевірте [як змінити мову] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Цей перекладач опустить текст, якщо джерело та цільові мови однакові.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Утримуйте клавішу <kbd> лівий-Ctrl </bbd>, щоб почути вимови TTS, коли з’являється підказка. Натисніть <kbd> ESC </bd>, щоб зупинити голос.
+  - Спробуйте подвійно натисніть <kbd> лівий-Ctrl </bbd>, щоб прослухати перекладений текст результату
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Натисніть клавішу <kbd> правий </kbd>, щоб перекласти текст, який ви пишете (або будь-який виділений текст) у поле введення. Якщо потрібно, ви можете скасувати дію, натиснувши <kbd> ctrl </bbd> + <kbd> z </bbd>.
+  - Якщо переклад не працює, переконайтеся, що ваша поточна цільова мова відповідає вашій мові письма.
+  - Якщо <kbd> правий Alt </bd> використовується як обмін Hangul,
+Використовуйте інший ключ для роботи з.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Перекладіть текст пошуку URL -адреси, ввівши <kbd>/</kbd>+<kbd> простір </kbd> перед вашим запитом.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Підтримка онлайн PDF для відображення перекладеного підказки за допомогою pdf.js (локальний комп'ютерний файл PDF потребує додаткового дозволу, див. [Виняток] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Підтримуйте подвійні субтитри для YouTube та Netflix.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Процедіть OCR під час тримання <kbd> ліворуч </kbd> клавіша + миша на зображенні (наприклад, манга)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Запустіть автоматичний зчитувач, натиснувши клавішу <kbd> f2 </kbd>
+  - Він починає читати мишу над текстом всю дорогу за допомогою TTS
+  - Щоб зупинити Auto Reader Press <kbd> ESC </bd>
+  - Спробуйте подвійно натисніть <kbd> f2 </kbd>, щоб слухати перекладений текст Результат автоматичного зчитувача
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Активуйте перекладача розпізнавання мови, утримуючи ключ <kbd> правий ктрл </kbd>.
+  - Мова розпізнавання мови за замовчуванням - англійська.
+  - Якщо мова розпізнавання мови та цільова мова однакові, вона пропускає.
+  - Потрібен дозвіл на аудіо
+  - Сумісний лише з браузерами на основі хрому, такими як Google Chrome, MS-Edge, Vivaldi, Opera, Brave, ARC та Yandex.
+- Налаштуйте ключ ярлика
+  - З Chrome: // Розширення/ярлики або еквівалентної сторінки внутрішньої конфігурації браузера, доступна, замінивши Chrome: // за допомогою внутрішньої URL -адреси вашого браузера (наприклад, Edge: //, браузер: // або сміливий: // тощо).
+# Змінити мову
+- Змініть поточну мову на налаштуванні сторінки
+  - На сторінку Налаштування можна отримати доступ, натиснувши кнопку головоломки (розширення), розташовану в верхній частині правого браузера.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Виняток
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Якщо мова тексту джерела та перекладання мови однакові, вона пропустить.
+- Якщо сторінка не зосереджена, введення ключа не виявляється.
+Зробіть кнопку Клацніть, щоб зосередитись перед введенням клавіатури.
+- Додаток не буде функціонувати, якщо стан веб -сайту буде в режимі офлайн.
+- Якщо сайт є <https://chrome.google.com/extensions>, це не працює, оскільки хромована причина безпеки.
+- Якщо жодного локального дозволу файлу не надається, локальний PDF неможливо обробляти.
+  - Якщо файл не відкривається, спробуйте перетягнути і опустити його на вкладку.
+  - Він відображатиме попередження про дозвіл та перенаправлення на сторінку дозволу.
+  - На сторінці перенаправлених переконайтеся, що ви вибрали "Дозволити доступ до URL -адреси файлів" для доступу до файлів.
+  - Повторно відкрити PDF, щоб вплинути відразу
 ![result](/doc/10.gif)

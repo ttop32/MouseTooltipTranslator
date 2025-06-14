@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Поддержите двойные субтитры для видео на YouTube.
+- Поддержите двойные субтитры для YouTube и Netflix.
 
 
 ![result](/doc/16.gif)

@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- YouTube 비디오의 듀얼 자막을 지원합니다.
+- YouTube 및 Netflix의 듀얼 자막을 지원하십시오.
 
 
 ![result](/doc/16.gif)

@@ -24,7 +24,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Pindutin ang <SRABD> kanang-ALT </nSI> key upang isalin ang teksto na iyong isinusulat (o anumang naka-highlight na teksto) sa kahon ng pag-input. Kung kinakailangan, maaari mong alisin ang aksyon sa pamamagitan ng pagpindot sa <srad>
+- Pindutin ang <SRABD> kanang-ALT </nSI> key upang isalin ang teksto na iyong isinusulat (o anumang naka-highlight na teksto) sa kahon ng pag-input. Kung kinakailangan, maaari mong alisin ang aksyon sa pamamagitan ng pagpindot sa <sbd> ctrl </sbd> + <sbd> z </sbd>.
   - Kung ang pagsasalin ay hindi gumagana, tiyakin na ang iyong kasalukuyang target na wika ay tumutugma sa iyong wika sa pagsulat.
   - Kung ang <sbd> kanan-alt </nkd> ay ginagamit bilang hangul swap,
 Gumamit ng iba pang susi upang gumana.
@@ -48,7 +48,7 @@ Gumamit ng iba pang susi upang gumana.
 
 
 
-- Suportahan ang dalawahang mga subtitle para sa mga video sa YouTube.
+- Suportahan ang dalawahang mga subtitle para sa YouTube at Netflix.
 
 
 ![result](/doc/16.gif)

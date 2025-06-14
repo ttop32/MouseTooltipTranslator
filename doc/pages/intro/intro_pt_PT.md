@@ -48,7 +48,7 @@ Use outra chave para trabalhar.
 
 
 
-- Apoie as legendas duplas para vídeos do YouTube.
+- Apoie as legendas duplas para YouTube e Netflix.
 
 
 ![result](/doc/16.gif)
@@ -95,7 +95,7 @@ Use outra chave para trabalhar.
 
 - Se a linguagem de texto de origem e a linguagem traduzida forem iguais, ela irá pular.
 - Se a página não estiver focada, a entrada de chave não será detectada.
-Faça clicar para focar na página antes do teclado de entrada.
+Faça clique para focar na página antes do teclado de entrada.
 - O aplicativo não funcionará se o status da Web estiver offline.
 - Se o site for <https://chrome.google.com/extensions>, ele não funciona porque o Chrome Security Motivo.
 - Se nenhuma permissão de arquivo local fornecida, o PDF local não poderá ser tratado.

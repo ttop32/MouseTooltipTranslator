@@ -41,14 +41,14 @@ Użyj innego klucza do pracy.
 
 
 
-- Obsługuj online PDF, aby wyświetlić przetłumaczone podpowiedź za pomocą pdf.js (lokalny plik PDF Plik PDF potrzebuje dodatkowego uprawnienia, patrz [wyjątek] (https://github.com/ttop32/mouseTiptranslator/blob/main/doc/intro.md#exception))
+- Obsługuj online PDF, aby wyświetlić przetłumaczone podpowiedź za pomocą pdf.js (lokalny plik pdf komputera potrzebuje dodatkowego uprawnienia, patrz [wyjątek] (https://github.com/ttop32/MouseTiptranslator/blob/Main/doc/Intro.md#exception))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Obsługuj podwójne napisy do filmów na YouTube.
+- Obsługuj podwójne napisy dla YouTube i Netflix.
 
 
 ![result](/doc/16.gif)
@@ -95,9 +95,9 @@ Użyj innego klucza do pracy.
 
 - Jeśli język tekstowy i język tłumaczenia są takie same, przeskakuje.
 - Jeśli strona nie jest skupiona, wejście klucza nie jest wykryte.
-Zrób stronę kliknięcia, aby Focus przed wprowadzeniem klawiatury.
+Zrób stronę kliknięcia, aby Focus przed wejściem klawiatury.
 - Aplikacja nie będzie działać, jeśli status sieci jest offline.
-- Jeśli witryna to <https://chrome.google.com/EXTENSIONS>, nie działa, ponieważ rozum bezpieczeństwa chromu.
+- Jeśli witryna to <https://chrome.google.com/EXTENSIONS>, nie działa, ponieważ chromowany rozum bezpieczeństwa.
 - Jeśli nie udzieliłby lokalnego pliku, nie można obsłużyć lokalnego pliku PDF.
   - Jeśli plik się nie otwiera, spróbuj przeciągnąć i upuścić go na kartę.
   - Wyświetli ostrzeżenie o uprawnieniu i przekieruje na stronę uprawnienia.

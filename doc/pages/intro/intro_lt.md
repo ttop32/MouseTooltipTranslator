@@ -10,7 +10,7 @@ Proletarier aller Länder, vereinigt euch!
 ```
 
   - Jei vertimas neveikia, patikrinkite dabartinę tikslinę kalbą
-    - Patikrinkite [kaip pakeisti kalbą] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Patikrinkite [kaip pakeisti kalbą] (https://github.com/ttop32/mouseTooltiptranslator/blob/main/doc/intro.md#change-language)
     - Šis vertėjas praleis tekstą, jei šaltinis ir tikslinės kalbos yra vienodos.
 
 
@@ -48,7 +48,7 @@ Norėdami dirbti, naudokite kitą raktą.
 
 
 
-- Palaikykite dvigubus subtitrus „YouTube“ vaizdo įrašams.
+- Palaikykite dvigubus „YouTube“ ir „Netflix“ subtitrus.
 
 
 ![result](/doc/16.gif)
@@ -98,7 +98,7 @@ Norėdami dirbti, naudokite kitą raktą.
 Prieš įvesti klaviatūrą spustelėkite puslapį.
 - Programa neveiks, jei žiniatinklio būsena neprisijungusi.
 - Jei svetainė yra <https://chrome.google.com/Extensions>, ji neveikia, nes „Chrome“ saugumo priežastis.
-- Jei nepateiktas vietinio failo leidimo, vietinis PDF negalima tvarkyti.
+- Jei nepateikta jokio vietinio failo leidimo, vietinis PDF negalima tvarkyti.
   - Jei failas neatsidaro, pabandykite vilkti ir numesti jį į skirtuką.
   - Jame bus rodomas įspėjimas apie leidimą ir nukreips į leidimo puslapį.
   - Peržiūrėtame puslapyje įsitikinkite, kad pasirinksite „Leisti prieigą prie failų URL“, kad galėtumėte pasiekti failus.

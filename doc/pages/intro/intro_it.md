@@ -48,7 +48,7 @@ Usa altre chiave con cui lavorare.
 
 
 
-- Supporta doppi sottotitoli per i video di YouTube.
+- Supporta i doppi sottotitoli per YouTube e Netflix.
 
 
 ![result](/doc/16.gif)

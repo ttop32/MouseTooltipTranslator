@@ -1,68 +1,54 @@
-# How to use
+# Jinsi ya kutumia
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Matumizi ya kimsingi: Hover juu au uchague (onyesha) maandishi kutafsiri.
+  - Jaribu Hover na Nakala ya Mfano:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Ikiwa tafsiri haifanyi kazi, angalia lugha ya lengo la sasa
+    - Angalia [Jinsi ya Kubadilisha Lugha] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Mtafsiri huyu ataacha maandishi ikiwa chanzo na lugha za kulenga zinafanana.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Shikilia ufunguo wa <kbd> kushoto-ctrl </kbd> kusikia matamshi ya TTS wakati kifaa cha zana kinaonekana. Bonyeza <kbd> ESC </kbd> kusimamisha sauti.
+  - Jaribu vyombo vya habari mara mbili
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Bonyeza kitufe cha <kbd> kulia-ALT </kbd> kutafsiri maandishi unayoandika (au maandishi yoyote yaliyoangaziwa) kwenye sanduku la pembejeo. Ikiwa inahitajika, unaweza kuondoa hatua hiyo kwa kushinikiza <kbd> ctrl </kbd> + <kbd> Z </kbd>.
+  - Ikiwa tafsiri haifanyi kazi, hakikisha kuwa lugha yako ya lengo inalingana na lugha yako ya uandishi.
+  - Ikiwa <kbd> kulia-alt </kbd> ni matumizi kama ubadilishanaji wa hangul,
+Tumia ufunguo mwingine kufanya kazi na.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Tafsiri maandishi ya kisanduku cha utaftaji wa URL kwa kuandika <kbd>/</kbd>+
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Msaada mtandaoni pdf kuonyesha zana iliyotafsiriwa kwa kutumia pdf.js (faili ya kompyuta ya pdf inahitaji ruhusa ya ziada, ona [isipokuwa] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
+- Support dual subtitles for YouTube and Netflix.
 
 
 
@@ -70,48 +56,33 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Mchakato wa OCR Wakati wa kushikilia <kbd> Kushoto-Shift </kbd> ufunguo + panya juu ya picha (k.m., manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Run Reader Auto na Press <kbd> F2 </kbd> kitufe
+  - Inaanza kusoma panya juu ya maandishi njia yote na tts
+  - Ili kuzuia waandishi wa habari wa Reader <kbd> ESC </kbd>
+  - Jaribu vyombo vya habari mara mbili
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Anzisha mtafsiri wa utambuzi wa hotuba kwa kushikilia kitufe cha <kbd> kulia-ctrl </kbd>.
+  - Lugha ya utambuzi wa hotuba ya chaguo -msingi ni Kiingereza.
+  - Ikiwa lugha ya utambuzi wa hotuba na lugha inayolenga ni sawa, inaruka.
+  - Ruhusa ya sauti inahitajika
+  - Inalingana tu na vivinjari vyenye msingi wa Chromium, kama vile Google Chrome, MS-makali, Vivaldi, Opera, Jasiri, Arc, na Yandex.
+- Badilisha ufunguo wa njia ya mkato
+  - Kutoka kwa chrome: // viongezeo/njia za mkato au ukurasa sawa wa usanidi wa kivinjari, kupatikana kwa kuchukua nafasi ya chrome: // na URL ya ndani ya kivinjari chako (k.v., makali: //, kivinjari: //, au shujaa: // nk).
+# Badilisha lugha
+- Badilisha lugha ya sasa katika ukurasa wa Kuweka
+  - Ukurasa wa Mipangilio unaweza kupatikana kwa kubonyeza kitufe cha Puzzle (Upanuzi) kilichopo kulia juu ya kivinjari chako.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +91,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Isipokuwa
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Ikiwa lugha ya maandishi ya chanzo na lugha ya kutafsiri ni sawa, itaruka.
+- Ikiwa ukurasa haujalenga, pembejeo muhimu haijagunduliwa.
+Fanya bonyeza kwa ukurasa wa kuzingatia kabla ya kibodi cha pembejeo.
+- Maombi hayatafanya kazi ikiwa hali ya wavuti iko nje ya mkondo.
+- Ikiwa tovuti ni <https://chrome.google.com/extensions>, haifanyi kazi kwa sababu sababu ya usalama wa Chrome.
+- Ikiwa hakuna ruhusa ya faili ya ndani iliyopewa, PDF ya ndani haiwezi kushughulikiwa.
+  - Ikiwa faili haifungui, jaribu kuvuta na kuitupa kwenye kichupo.
+  - Itaonyesha onyo la ruhusa na kuelekeza kwenye ukurasa wa ruhusa.
+  - Kwenye ukurasa ulioelekezwa, hakikisha unachagua "Ruhusu ufikiaji wa URL za faili" kupata faili.
+  - Fungua tena PDF kuathiri mara moja
 ![result](/doc/10.gif)

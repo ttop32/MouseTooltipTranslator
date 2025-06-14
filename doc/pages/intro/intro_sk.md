@@ -48,7 +48,7 @@ Použite iný kľúč na prácu.
 
 
 
-- Podporte duálne titulky pre videá YouTube.
+- Podporte duálne titulky pre YouTube a Netflix.
 
 
 ![result](/doc/16.gif)

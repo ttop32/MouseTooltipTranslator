@@ -41,14 +41,14 @@ Kasutage töötamiseks muud võtit.
 
 
 
-- Toetage veebipõhist PDF -i, et kuvada tõlgitud tööriistakat, kasutades PDF.JS (kohalik arvuti PDF -fail vajab täiendavat luba, vt [erand] (https://github.com/ttop32/mousetOltiptranslator/blob/main/doc/intro.md#exception)))))
+- Toetage veebipõhist PDF -i, et kuvada tõlgitud tööriistakat, kasutades PDF.JS (kohalik arvuti PDF -fail vajab täiendavat luba, vt [erand] (https://github.com/ttop32/mouseToltiptranslator/blob/main/doc/intro.md#exception)))))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Toetage YouTube'i videote duaalide subtiitreid.
+- Toetage YouTube'i ja Netflixi kahekordseid subtiitreid.
 
 
 ![result](/doc/16.gif)
@@ -64,7 +64,7 @@ Kasutage töötamiseks muud võtit.
 
 - Käivitage automaatne lugeja vajutage nuppu <kbd> f2 </kbd> klahvi
   - See alustab hiire lugemist tekstiga kogu TTS -iga
-  - Autolugeja peatamiseks vajutage <kbd> ESC </kbd>
+  - Autolugeja peatamiseks vajutage vajutage <kbd> ESC </kbd>
   - Proovige topeltpressi <kbd> F2 </kbd>, et kuulata tõlgitud tulemuse teksti automaatne lugejat
 
 
@@ -81,7 +81,7 @@ Kasutage töötamiseks muud võtit.
   - Chrome'ist: // Laiendused/otseteed või samaväärne brauseri sisemine konfiguratsioonileht, millele on juurdepääs Chrome'i asendamisel: // brauseri sisemise URL -iga (nt serv: //, brauser: // või vapper: // jne).
 # Muutke keelt
 - Muutke praegust keelt lehel seadistamisel
-  - Seadete lehele pääseb juurde, klõpsates brauseri paremas ülanurgas asuvat nuppu Pusle (laiendus).
+  - Seadete lehele pääseb juurde, klõpsates brauseri paremas ülanurgas asuvat nupul (laiendus).
 
 
 ![result](/doc/14.gif)

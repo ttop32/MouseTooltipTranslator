@@ -1,117 +1,87 @@
-# How to use
+＃如何使用
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- 基本用途：悬停或选择（突出显示）文本要翻译。
+  - 测试悬停在示例文本中：
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - 如果翻译不起作用，请检查当前的目标语言
+    - 检查[如何更改语言]（https://github.com/ttop32/mousetooltiptranslator/blob/main/main/doc/intro.md#change-language）
+    - 如果源语言和目标语言相同，则该翻译人员将省略文本。
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- 按下<kbd>左ctrl </kbd>键在出现工具提示时听到tts发音。按<kbd> esc </kbd>停止声音。
+  - 尝试double Press <kbd>左ctrl </kbd>聆听翻译结果文本
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- 按<kbd>右alt </kbd>键，以在输入框中翻译您正在编写的文本（或任何突出显示的文本）。如果需要，您可以通过按<kbd> ctrl </kbd> + <kbd> z </kbd>来撤消操作。
+  - 如果翻译不起作用，请确保您当前的目标语言与您的写作语言匹配。
+  - 如果<kbd>右alt </kbd>用作hangul交换，则
+使用其他钥匙可以使用。
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- 通过键入<kbd>/</kbd>+<kbd> Space </kbd>在查询之前翻译URL搜索框文本。
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- 支持在线pdf使用pdf.js显示翻译工具提示（本地计算机PDF文件需要额外许可，请参见[excefe]（https://github.com/ttop32/mousetooltiptranslator/blob/blob/main/main/main/main/doc/doc/intro.md#exception））
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- 支持YouTube和Netflix的双字幕。
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- 持有<kbd>左移</kbd>键 +鼠标的过程OCR（例如，漫画）
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- 按下<kbd> f2 </kbd>键运行自动读取器
+  - 它开始用TTS一直在文本上读取鼠标
+  - 要停止自动阅读器press <kbd> esc </kbd>
+  - 尝试double Press <kbd> f2 </kbd>聆听翻译结果文本自动读取器
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- 通过按住<kbd>右键</kbd>键来激活语音识别转换器。
+  - 默认语音识别语言是英语。
+  - 如果语音识别语言和目标语言相同，则跳过。
+  - 需要音频许可
+  - 仅与基于铬的浏览器兼容，例如Google Chrome，MS-Edge，Vivaldi，Opera，Brave，Arc和Yandex。
+- 自定义快捷键
+  - 从Chrome：//扩展/快捷方式或等效浏览器内部配置页面，可以通过用浏览器的内部URL替换Chrome：//访问Chrome：//（例如，Edge：//，browser：//，browser：// brave：// brave：// etct）。
+＃更改语言
+- 在设置页面中更改当前语言
+  - 可以通过单击位于浏览器右上方的拼图（扩展）按钮来访问设置页面。
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+＃ 例外
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- 如果源文本语言和翻译语言相同，它将跳过。
+- 如果页面未集中，则未检测到密钥输入。
+在输入键盘之前，请单击“聚焦”页面。
+- 如果Web状态脱机，则应用程序将无法运行。
+- 如果网站为<https://chrome.google.com/extensions>，则由于Chrome安全原因而行不通。
+- 如果未给出本地文件，则无法处理本地PDF。
+  - 如果文件未打开，请尝试将其拖放到选项卡上。
+  - 它将显示一个权限警告，并将其重定向到“权限”页面。
+  - 在重定向页面上，请确保您选择“允许访问文件URL”访问文件。
+  - 重新打开PDF立即影响
 ![result](/doc/10.gif)

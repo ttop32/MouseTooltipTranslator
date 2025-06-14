@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- از زیرنویس های دوگانه برای فیلم های YouTube پشتیبانی کنید.
+- زیرنویس های دوگانه را برای YouTube و Netflix پشتیبانی کنید.
 
 
 ![result](/doc/16.gif)

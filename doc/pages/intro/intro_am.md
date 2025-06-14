@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- ለ YouTube ቪዲዮዎች ባለሁለት ንዑስ ርዕሶችን ይደግፉ.
+- ለ YouTube እና Netflix የሁለትዮሽ ጉዳዮችን ይደግፉ.
 
 
 ![result](/doc/16.gif)

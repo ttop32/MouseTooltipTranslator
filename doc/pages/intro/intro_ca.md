@@ -48,7 +48,7 @@ Utilitzeu una altra clau per treballar.
 
 
 
-- Donar suport a subtítols dobles per a vídeos de YouTube.
+- Donar suport a subtítols dobles per a YouTube i Netflix.
 
 
 ![result](/doc/16.gif)

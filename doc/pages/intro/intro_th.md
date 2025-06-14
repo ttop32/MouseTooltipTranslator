@@ -1,117 +1,87 @@
-# How to use
+# วิธีใช้
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- การใช้งานพื้นฐาน: โฮเวอร์เหนือหรือเลือกข้อความ (ไฮไลต์) เพื่อแปล
+  - ทดสอบโฮเวอร์ด้วยตัวอย่างข้อความ:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - หากการแปลไม่ทำงานให้ตรวจสอบภาษาเป้าหมายปัจจุบัน
+    - ตรวจสอบ [วิธีการเปลี่ยนภาษา] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - นักแปลนี้จะละเว้นข้อความหากภาษาแหล่งที่มาและเป้าหมายเหมือนกัน
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- กดปุ่ม <kbd> left-ctrl </kbd> เพื่อฟังการออกเสียง TTS เมื่อคำแนะนำเครื่องมือปรากฏขึ้น กด <kbd> ESC </kbd> เพื่อหยุดเสียง
+  - ลองกดสองครั้ง <kbd> ซ้าย ctrl </kbd> เพื่อฟังข้อความผลลัพธ์ที่แปล
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- กดปุ่ม <kbd> ขวา </kbd> เพื่อแปลข้อความที่คุณกำลังเขียน (หรือข้อความที่ไฮไลต์ใด ๆ ) ในกล่องอินพุต หากจำเป็นคุณสามารถยกเลิกการดำเนินการได้โดยกด <kbd> CTRL </kbd> + <kbd> Z </kbd>
+  - หากการแปลไม่ทำงานตรวจสอบให้แน่ใจว่าภาษาเป้าหมายปัจจุบันของคุณตรงกับภาษาการเขียนของคุณ
+  - ถ้า <kbd> Right-Alt </kbd> ใช้เป็น Hangul swap
+ใช้คีย์อื่น ๆ เพื่อทำงานด้วย
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- แปลข้อความกล่องค้นหา URL โดยพิมพ์ <kbd>/</kbd>+<kbd> Space </kbd> ก่อนการสืบค้นของคุณ
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- สนับสนุน PDF ออนไลน์เพื่อแสดงคำแนะนำเครื่องมือที่แปลโดยใช้ PDF.JS (ไฟล์ PDF คอมพิวเตอร์ท้องถิ่นต้องการสิทธิ์เพิ่มเติมดู [ข้อยกเว้น] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- รองรับคำบรรยายคู่สำหรับ YouTube และ Netflix
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- ประมวลผล OCR เมื่อถือ <kbd>-shift </kbd> key + mouse บนภาพ (เช่นมังงะ)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- เรียกใช้เครื่องอ่านอัตโนมัติโดยกด <kbd> f2 </kbd> คีย์
+  - มันเริ่มอ่านเมาส์ผ่านข้อความตลอดทางด้วย TTS
+  - หากต้องการหยุดเครื่องอ่านอัตโนมัติกด <kbd> ESC </kbd>
+  - ลองกดสองครั้ง <kbd> f2 </kbd> เพื่อฟังการแปลข้อความผลลัพธ์การแปล Auto Reader
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- เปิดใช้งานตัวแปลการจดจำคำพูดโดยกดปุ่ม <kbd> Right-CTRL </kbd> ค้างไว้
+  - ภาษาการจดจำคำพูดเริ่มต้นเป็นภาษาอังกฤษ
+  - หากภาษาการจดจำคำพูดและภาษาเป้าหมายเหมือนกันมันจะข้าม
+  - จำเป็นต้องได้รับอนุญาตจากเสียง
+  - เข้ากันได้เฉพาะกับเบราว์เซอร์ที่ใช้โครเมียมเช่น Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc และ Yandex
+- ปรับแต่งคีย์ทางลัด
+  - จาก Chrome: // ส่วนขยาย/ทางลัดหรือหน้าการกำหนดค่าภายในเบราว์เซอร์เทียบเท่าสามารถเข้าถึงได้โดยการแทนที่ Chrome: // ด้วย URL ภายในของเบราว์เซอร์ (เช่นขอบ: //, เบราว์เซอร์: // หรือกล้าหาญ: // etc)
+# เปลี่ยนภาษา
+- เปลี่ยนภาษาปัจจุบันในหน้าการตั้งค่า
+  - หน้าการตั้งค่าสามารถเข้าถึงได้โดยคลิกปุ่มปริศนา (ส่วนขยาย) ที่อยู่ด้านบนขวาของเบราว์เซอร์ของคุณ
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# ข้อยกเว้น
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- หากภาษาข้อความต้นฉบับและภาษาแปลเหมือนกันมันจะข้าม
+- หากไม่ได้โฟกัสหน้าเว็บจะไม่พบอินพุตคีย์
+คลิกเพื่อโฟกัสหน้าคีย์บอร์ดอินพุต
+- แอปพลิเคชันจะไม่ทำงานหากสถานะเว็บออฟไลน์
+- หากเว็บไซต์คือ <https://chrome.google.com/extensions> มันไม่ทำงานเพราะเหตุผลด้านความปลอดภัยของโครเมี่ยม
+- หากไม่ได้รับอนุญาตไฟล์ในพื้นที่ไม่สามารถจัดการ PDF ในพื้นที่ได้
+  - หากไฟล์ไม่เปิดให้ลองลากและวางลงบนแท็บ
+  - มันจะแสดงคำเตือนการอนุญาตและเปลี่ยนเส้นทางไปยังหน้าการอนุญาต
+  - ในหน้าเปลี่ยนเส้นทางตรวจสอบให้แน่ใจว่าคุณเลือก "อนุญาตให้เข้าถึง URL ไฟล์" เพื่อเข้าถึงไฟล์
+  - เปิด PDF อีกครั้งเพื่อส่งผลกระทบทันที
 ![result](/doc/10.gif)

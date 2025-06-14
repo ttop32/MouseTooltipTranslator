@@ -1,7 +1,7 @@
 # Jak používat
 
 
-- Základní použití: Umístěte nebo vyberte (zvýrazněte) text k překladu.
+- Základní použití: Umístěte nebo vyberte (zvýrazněte) text, který chcete přeložit.
   - Zkoušejte vznášející se s příkladem textu:
 ```console
 
@@ -48,7 +48,7 @@ K práci použijte další klíč.
 
 
 
-- Podporujte duální titulky pro videa na YouTube.
+- Podporujte duální titulky pro YouTube a Netflix.
 
 
 ![result](/doc/16.gif)
@@ -63,7 +63,7 @@ K práci použijte další klíč.
 
 
 - Spusťte Auto Reader by Press <kbd> f2 </kbd> klíč
-  - Začne číst myši přes text celou cestu s TTS
+  - Začne číst myš přes text celou cestu s TTS
   - Chcete -li zastavit automatické čtečky Press <kbd> esc </kbd>
   - Zkuste dvojité stisknutí <kbd> f2 </kbd> poslouchat přeložený výsledný text Auto Reader
 

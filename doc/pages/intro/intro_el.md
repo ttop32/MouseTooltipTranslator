@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Υποστήριξη διπλών υπότιτλων για βίντεο YouTube.
+- Υποστήριξη διπλών υπότιτλων για το YouTube και το Netflix.
 
 
 ![result](/doc/16.gif)

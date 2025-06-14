@@ -48,7 +48,7 @@ Gebruik een andere sleutel om mee te werken.
 
 
 
-- Ondersteuning van dubbele ondertitels voor YouTube -video's.
+- Ondersteuning van dubbele ondertitels voor YouTube en Netflix.
 
 
 ![result](/doc/16.gif)
@@ -64,7 +64,7 @@ Gebruik een andere sleutel om mee te werken.
 
 - Voer Auto Reader uit door druk op <kbd> F2 </kbd> toets
   - Het begint muis te lezen over tekst helemaal met TTS
-  - Om de automatische lezer te stoppen, drukt u op <kbd> esc </kbd>
+  - Om de Auto Reader te stoppen, drukt u op <kbd> esc </kbd>
   - Probeer dubbele druk op <kbd> f2 </kbd> om te luisteren vertaalde resultaattekst Auto -lezer
 
 
@@ -101,6 +101,6 @@ Maak klik op de focuspagina voordat u toetsenbord invoert.
 - Als er geen lokaal bestandsmachtiging wordt gegeven, kan lokale PDF niet worden afgehandeld.
   - Als het bestand niet wordt geopend, probeer het dan te slepen en op het tabblad te vallen.
   - Het geeft een toestemming waarschuwing weer en leidt naar de toestemmingspagina.
-  - Zorg ervoor dat u op de omgeleide pagina "Toegang tot bestand URL's toestaat" selecteert om toegang te krijgen tot bestanden.
+  - Zorg ervoor dat u op de omgeleide pagina "Toegang tot bestands -URL's toestaat" selecteert om toegang te krijgen tot bestanden.
   - Pdf opnieuw geopend om meteen te beïnvloeden
 ![result](/doc/10.gif)

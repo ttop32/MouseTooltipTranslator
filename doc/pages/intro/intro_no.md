@@ -18,7 +18,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Hold <kbd> venstre-ctrl </kbd> -tasten for å høre TTS-uttalen når en verktøytips vises. Trykk <kbd> esc </kbd> for å stoppe stemmen.
+- Hold <kbd> venstre-ctrl </kbd> -tasten for å høre TTS-uttalen når en verktøytips vises. Trykk på <kbd> esc </kbd> for å stoppe stemmen.
   - Prøv dobbelt trykk <kbd> venstre-ctrl </kbd> for å lytte oversatt resultattekst
 ![result](/doc/20.gif)
 
@@ -48,7 +48,7 @@ Bruk annen tast til å jobbe med.
 
 
 
-- Støtt dobbelt undertekster for YouTube -videoer.
+- Støtt dobbelt undertekster for YouTube og Netflix.
 
 
 ![result](/doc/16.gif)

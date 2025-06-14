@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- YouTubeビデオのデュアルサブタイトルをサポートします。
+- YouTubeとNetflixのデュアルサブタイトルをサポートします。
 
 
 ![result](/doc/16.gif)

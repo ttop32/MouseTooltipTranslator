@@ -24,7 +24,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Tekan kekunci <kbd> Kanan-ALT </kbd> untuk menerjemahkan teks yang anda tulis (atau mana-mana teks yang diserlahkan) dalam kotak input. Jika diperlukan, anda boleh membatalkan tindakan dengan menekan <kbd> Ctrl </kbd> + <kbd> Z </kbd>.
+- Tekan kekunci <kbd> Kanan-Alt </kbd> untuk menerjemahkan teks yang anda tulis (atau mana-mana teks yang diserlahkan) dalam kotak input. Jika diperlukan, anda boleh membatalkan tindakan dengan menekan <kbd> Ctrl </kbd> + <kbd> Z </kbd>.
   - Jika terjemahan tidak berfungsi, pastikan bahasa sasaran semasa anda sepadan dengan bahasa penulisan anda.
   - Jika <kbd> Hak-ALT </kbd> digunakan sebagai swap hangul,
 Gunakan kunci lain untuk bekerja dengan.
@@ -48,7 +48,7 @@ Gunakan kunci lain untuk bekerja dengan.
 
 
 
-- Sokongan sari kata dwi untuk video YouTube.
+- Sokongan sari kata dwi untuk YouTube dan Netflix.
 
 
 ![result](/doc/16.gif)

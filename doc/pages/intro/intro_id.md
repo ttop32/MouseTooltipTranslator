@@ -48,7 +48,7 @@ Gunakan kunci lain untuk dikerjakan.
 
 
 
-- Dukung subtitle ganda untuk video YouTube.
+- Dukung subtitle ganda untuk YouTube dan Netflix.
 
 
 ![result](/doc/16.gif)

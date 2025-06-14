@@ -48,7 +48,7 @@ Verwenden Sie einen anderen Schlüssel, um mit zu arbeiten.
 
 
 
-- Unterstützen Sie zwei Untertitel für YouTube -Videos.
+- Unterstützen Sie zwei Untertitel für YouTube und Netflix.
 
 
 ![result](/doc/16.gif)
@@ -95,7 +95,7 @@ Verwenden Sie einen anderen Schlüssel, um mit zu arbeiten.
 
 - Wenn die Sprache und die Übersetzungssprache aus Quellstext gleich sind, wird sie überspringen.
 - Wenn die Seite nicht fokussiert ist, wird die Schlüsseleingabe nicht erkannt.
-Klicken Sie vor der Eingabe der Tastatur klicken, um die Seite zu fokussieren.
+Klicken Sie vor der Eingabe der Tastatur auf die Fokussierseite.
 - Die Anwendung funktioniert nicht, wenn der Webstatus offline ist.
 - Wenn die Website <https://chrome.google.com/extensions> ist, funktioniert sie nicht, weil Chrome -Sicherheitsgrund.
 - Wenn keine lokale Dateiberechtigung erteilt wird, kann die lokale PDF nicht behandelt werden.

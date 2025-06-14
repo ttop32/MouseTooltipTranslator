@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Подршка Дуал титлова за Иоутубе видеос.
+- Подршка Дуал титлова за ИоуТубе и Нетфлик.
 
 
 ![result](/doc/16.gif)

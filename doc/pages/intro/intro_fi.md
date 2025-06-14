@@ -48,7 +48,7 @@ Käytä muuta avainta työskennelläksesi.
 
 
 
-- Tuki YouTube -videoiden kaksinkertaista tekstitystä.
+- Tuki YouTuben ja Netflixin kaksoisalatteita.
 
 
 ![result](/doc/16.gif)

@@ -48,7 +48,7 @@ Använd annan nyckel för att arbeta med.
 
 
 
-- Stöd med dubbla undertexter för YouTube -videor.
+- Stöd med dubbla undertexter för YouTube och Netflix.
 
 
 ![result](/doc/16.gif)

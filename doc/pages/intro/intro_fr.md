@@ -2,7 +2,7 @@
 
 
 - Utilisations de base: survolez-vous ou sélectionnez le texte (en surbrillance) pour traduire.
-  - Testez survole avec un exemple de texte:
+  - Testez survol avec un exemple de texte:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
@@ -48,7 +48,7 @@ Utilisez une autre clé pour travailler avec.
 
 
 
-- Soutenez les doubles sous-titres pour les vidéos YouTube.
+- Prise en charge des sous-titres pour YouTube et Netflix.
 
 
 ![result](/doc/16.gif)
@@ -95,7 +95,7 @@ Utilisez une autre clé pour travailler avec.
 
 - Si la langue du texte source et la langue traduise sont les mêmes, il sautera.
 - Si la page n'est pas focalisée, l'entrée de clé n'est pas détectée.
-Faites cliquer sur la page de mise au point avant de saisir le clavier.
+Faire Cliquez sur la page de mise au point avant de saisir le clavier.
 - L'application ne fonctionnera pas si l'état Web est hors ligne.
 - Si le site est <https://chrome.google.com/extensions>, cela ne fonctionne pas parce que Chrome Security Reason.
 - Si aucune autorisation de fichier local étant donné, le PDF local ne peut pas être géré.

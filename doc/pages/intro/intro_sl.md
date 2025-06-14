@@ -41,14 +41,14 @@ Uporabite drug ključ za delo.
 
 
 
-- Podprite spletni PDF za prikaz prevedenega orodja s pomočjo pdf.js (lokalna računalniška datoteka PDF potrebuje dodatno dovoljenje, glejte [izjemo] (https://github.com/ttop32/mousetooltiptranslator/blob/moc/intro.md#exception)
+- Podprite spletni PDF za prikaz prevedenega orodja s pomočjo pdf.js (lokalna računalniška datoteka PDF potrebuje dodatno dovoljenje, glejte [izjemo] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception)
 
 
 ![result](/doc/12.gif)
 
 
 
-- Podprite dvojne podnapise za videoposnetke YouTube.
+- Podprite dvojne podnapise za YouTube in Netflix.
 
 
 ![result](/doc/16.gif)

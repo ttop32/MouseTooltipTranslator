@@ -24,7 +24,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Nyomja meg a <kbd> jobboldali </kbd> gombot az írott (vagy bármilyen kiemelt szöveg) lefordításához a bemeneti mezőben. Szükség esetén visszavonhatja a műveletet a <kbd> ctrl </kbd> + <kbd> z </kbd> megnyomásával.
+- Nyomja meg a <kbd> Right-Alt </kbd> gombot az írott (vagy bármilyen kiemelt szöveg) lefordításához a bemeneti mezőben. Szükség esetén visszavonhatja a műveletet a <kbd> ctrl </kbd> + <kbd> z </kbd> megnyomásával.
   - Ha a fordítás nem működik, győződjön meg arról, hogy a jelenlegi célnyelv megfelel -e az írás nyelvének.
   - Ha <kbd> jobbra-alt </kbd> hangulcsere,
 Használjon más kulcsot a munkához.
@@ -48,7 +48,7 @@ Használjon más kulcsot a munkához.
 
 
 
-- Támogassa a YouTube -videók kettős feliratait.
+- Támogassa a YouTube és a Netflix kettős feliratait.
 
 
 ![result](/doc/16.gif)
@@ -95,7 +95,7 @@ Használjon más kulcsot a munkához.
 
 - Ha a forrásszöveg nyelv és a lefordítási nyelv megegyezik, akkor kihagyja.
 - Ha az oldal nem fókuszált, akkor a kulcsbemenetet nem észlelik.
-Kattintson a fókuszba a Bemenet billentyűzet elõtt.
+Kattintson a fókuszálásra az oldalra a bemeneti billentyűzet előtt.
 - Az alkalmazás nem fog működni, ha a webes állapot offline állapotban van.
 - Ha a webhely <https://chrome.google.com/extensions>, akkor az nem működik, mert a króm biztonsági oka.
 - Ha nincs megadva helyi fájl engedély, akkor a helyi PDF nem kezelhető.

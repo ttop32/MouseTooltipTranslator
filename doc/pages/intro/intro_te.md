@@ -1,117 +1,87 @@
-# How to use
+# ఎలా ఉపయోగించాలి
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- ప్రాథమిక ఉపయోగాలు: అనువదించడానికి హోవర్ ఓవర్ లేదా ఎంచుకోండి (హైలైట్) వచనాన్ని ఎంచుకోండి.
+  - ఉదాహరణ వచనంతో పరీక్షించండి:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - అనువాదం పని చేయకపోతే, ప్రస్తుత లక్ష్య భాషను తనిఖీ చేయండి
+    - [భాషను ఎలా మార్చాలో] తనిఖీ చేయండి (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - మూలం మరియు లక్ష్య భాషలు ఒకేలా ఉంటే ఈ అనువాదకుడు వచనాన్ని వదిలివేస్తాడు.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- టూల్టిప్ కనిపించినప్పుడు TTS ఉచ్చారణను వినడానికి <kbd> ఎడమ-CTRL </kbd> కీని పట్టుకోండి. వాయిస్ ఆపడానికి <kbd> ESC </kbd> నొక్కండి.
+  - అనువదించబడిన ఫలిత వచనాన్ని వినడానికి డబుల్ ప్రెస్ <kbd> ఎడమ-CTRL </kbd> ను ప్రయత్నించండి
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- ఇన్పుట్ బాక్స్‌లో మీరు వ్రాస్తున్న వచనాన్ని (లేదా ఏదైనా హైలైట్ చేసిన వచనం) అనువదించడానికి <kbd> కుడి-ALT </kbd> కీని నొక్కండి. అవసరమైతే, మీరు <kbd> ctrl </kbd> + <kbd> z </kbd> నొక్కడం ద్వారా చర్యను రద్దు చేయవచ్చు.
+  - అనువాదం పని చేయకపోతే, మీ ప్రస్తుత లక్ష్య భాష మీ రచనా భాషతో సరిపోతుందని నిర్ధారించుకోండి.
+  - <kbd> కుడి-ALT </kbd> HANGUL SWAP గా ఉపయోగిస్తే,
+పని చేయడానికి ఇతర కీని ఉపయోగించండి.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- మీ ప్రశ్నకు ముందు <kbd>/</kbd>+<kbd> స్థలం </kbd> టైప్ చేయడం ద్వారా URL శోధన పెట్టె వచనాన్ని అనువదించండి.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- ఆన్‌లైన్ PDF కి PDF.JS ఉపయోగించి అనువదించబడిన టూల్‌టిప్‌ను ప్రదర్శించడానికి మద్దతు ఇవ్వండి (స్థానిక కంప్యూటర్ PDF ఫైల్ అదనపు అనుమతి అవసరం, [మినహాయింపు] చూడండి (https://github.com/ttop32/mousetooltiptranslator/blob/blob/main/doc/intro.md#exception)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- యూట్యూబ్ మరియు నెట్‌ఫ్లిక్స్ కోసం ద్వంద్వ ఉపశీర్షికలకు మద్దతు ఇవ్వండి.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- <kbd> ఎడమ-షిఫ్ట్ </kbd> కీ + మౌస్ ఓవర్ ఒక చిత్రంపై (ఉదా., మాంగా) OCR ను ప్రాసెస్ చేయండి
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- ప్రెస్ <kbd> f2 </kbd> కీ ద్వారా ఆటో రీడర్‌ను అమలు చేయండి
+  - ఇది TTS తో వచనంపై మౌస్ చదవడం ప్రారంభించండి
+  - ఆటో రీడర్ ఆపడానికి <kbd> ESC </kbd> నొక్కండి
+  - అనువదించబడిన ఫలితం టెక్స్ట్ ఆటో రీడర్‌ను వినడానికి డబుల్ ప్రెస్ <kbd> F2 </kbd> ప్రయత్నించండి
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- <kbd> కుడి-ctrl </kbd> కీని నొక్కి ఉంచడం ద్వారా ప్రసంగ గుర్తింపు అనువాదకుడిని సక్రియం చేయండి.
+  - డిఫాల్ట్ స్పీచ్ రికగ్నిషన్ లాంగ్వేజ్ ఇంగ్లీష్.
+  - ప్రసంగ గుర్తింపు భాష మరియు లక్ష్య భాష ఒకేలా ఉంటే, అది దాటవేస్తుంది.
+  - ఆడియో అనుమతి అవసరం
+  - గూగుల్ క్రోమ్, ఎంఎస్-ఎడ్జ్, వైవాల్డి, ఒపెరా, బ్రేవ్, ఆర్క్ మరియు యాండెక్స్ వంటి క్రోమియం ఆధారిత బ్రౌజర్‌లతో మాత్రమే అనుకూలంగా ఉంటుంది.
+- సత్వరమార్గం కీని అనుకూలీకరించండి
+  - Chrome నుండి: // పొడిగింపులు/సత్వరమార్గాలు లేదా సమానమైన బ్రౌజర్ అంతర్గత కాన్ఫిగరేషన్ పేజీ, Chrome: // ను మీ బ్రౌజర్ యొక్క అంతర్గత URL తో భర్తీ చేయడం ద్వారా ప్రాప్యత చేయవచ్చు (ఉదా., అంచు: //, బ్రౌజర్: //, లేదా ధైర్య: // మొదలైనవి).
+# భాషను మార్చండి
+- పేజీని అమర్చడంలో ప్రస్తుత భాషను మార్చండి
+  - మీ బ్రౌజర్ యొక్క కుడి ఎగువ భాగంలో ఉన్న పజిల్ (పొడిగింపు) బటన్‌ను క్లిక్ చేయడం ద్వారా సెట్టింగుల పేజీని యాక్సెస్ చేయవచ్చు.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# మినహాయింపు
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- మూల వచన భాష మరియు అనువాద భాష ఒకేలా ఉంటే, అది దాటవేస్తుంది.
+- పేజీ దృష్టి పెట్టకపోతే, కీ ఇన్పుట్ కనుగొనబడదు.
+ఇన్పుట్ కీబోర్డ్ ముందు పేజీకి క్లిక్ చేయండి.
+- వెబ్ స్థితి ఆఫ్‌లైన్‌లో ఉంటే అప్లికేషన్ పనిచేయదు.
+- సైట్ <https://chrome.google.com/extensions> అయితే, అది పనిచేయదు ఎందుకంటే క్రోమ్ భద్రతా కారణం.
+- స్థానిక ఫైల్ అనుమతి ఇవ్వకపోతే, స్థానిక పిడిఎఫ్‌ను నిర్వహించలేము.
+  - ఫైల్ తెరవకపోతే, దాన్ని లాగడానికి మరియు టాబ్‌లోకి వదలడానికి ప్రయత్నించండి.
+  - ఇది అనుమతి హెచ్చరికను ప్రదర్శిస్తుంది మరియు అనుమతి పేజీకి దారి మళ్లిస్తుంది.
+  - మళ్ళించబడిన పేజీలో, ఫైల్‌లను యాక్సెస్ చేయడానికి మీరు "ఫైల్ URL లను ఫైల్ చేయడానికి ప్రాప్యతను అనుమతించండి" ఎంచుకున్నారని నిర్ధారించుకోండి.
+  - వెంటనే ప్రభావితం చేయడానికి పిడిఎఫ్‌ను తిరిగి తెరవండి
 ![result](/doc/10.gif)

@@ -48,7 +48,7 @@ Koristite drugi ključ za rad.
 
 
 
-- Podržite dvostruke titlove za YouTube videozapise.
+- Podržite dvostruke titlove za YouTube i Netflix.
 
 
 ![result](/doc/16.gif)

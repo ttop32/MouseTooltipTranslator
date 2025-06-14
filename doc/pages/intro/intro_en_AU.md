@@ -48,7 +48,7 @@ use other key to work with.
 
 
 
-- Support dual subtitles for YouTube videos.
+- Support dual subtitles for YouTube and Netflix.
 
 
 ![result](/doc/16.gif)

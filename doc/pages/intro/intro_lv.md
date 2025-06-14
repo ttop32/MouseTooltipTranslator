@@ -48,7 +48,7 @@ Izmantojiet citu atslēgu, lai strādātu ar.
 
 
 
-- Atbalstiet dubultus subtitrus YouTube videoklipiem.
+- Atbalstiet dubultus subtitrus YouTube un Netflix.
 
 
 ![result](/doc/16.gif)
@@ -93,7 +93,7 @@ Izmantojiet citu atslēgu, lai strādātu ar.
 # Izņēmums
 
 
-- Ja avota teksta valoda un tulkošanas valoda ir tāda pati, tā tiks izlaista.
+- Ja avota teksta valoda un tulkošanas valoda ir vienāda, tā tiks izlaista.
 - Ja lapa nav fokusēta, atslēgas ievade netiek atklāta.
 Pirms ievades tastatūras izveidojiet noklikšķināšanu uz fokusa lapu.
 - Lietojumprogramma nedarbosies, ja tīmekļa statuss ir bezsaistē.

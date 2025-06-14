@@ -48,7 +48,7 @@ Brug en anden nøgle til at arbejde med.
 
 
 
-- Support dobbelt undertekster til YouTube -videoer.
+- Support dobbelt undertekster til YouTube og Netflix.
 
 
 ![result](/doc/16.gif)

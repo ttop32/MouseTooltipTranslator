@@ -1,117 +1,87 @@
-# How to use
+# எவ்வாறு பயன்படுத்துவது
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- அடிப்படை பயன்பாடுகள்: மொழிபெயர்க்க உரையை வட்டமிடுங்கள் அல்லது தேர்ந்தெடுக்கவும் (சிறப்பம்சமாக).
+  - எடுத்துக்காட்டு உரையுடன் சோதனை ஹோவர்:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - மொழிபெயர்ப்பு செயல்படவில்லை என்றால், தற்போதைய இலக்கு மொழியை சரிபார்க்கவும்
+    - சரிபார்க்கவும் [மொழியை எவ்வாறு மாற்றுவது] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - மூல மற்றும் இலக்கு மொழிகள் ஒரே மாதிரியாக இருந்தால் இந்த மொழிபெயர்ப்பாளர் உரையைத் தவிர்ப்பார்.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- ஒரு உதவிக்குறிப்பு தோன்றும்போது TTS உச்சரிப்பைக் கேட்க <kbd> இடது-CTRL </kbd> விசையை வைத்திருங்கள். குரலை நிறுத்த <kbd> ESC </kbd> ஐ அழுத்தவும்.
+  - மொழிபெயர்க்கப்பட்ட முடிவு உரையைக் கேட்க <kbd> இடது-CTRL </kbd> ஐ இரட்டை அழுத்தவும்
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- உள்ளீட்டு பெட்டியில் நீங்கள் எழுதும் உரையை (அல்லது சிறப்பிக்கப்பட்ட ஏதேனும் உரை) மொழிபெயர்க்க <kbd> வலது-ஆல்ட் </kbd> விசையை அழுத்தவும். தேவைப்பட்டால், <kbd> ctrl </kbd> + <kbd> z </kbd> ஐ அழுத்துவதன் மூலம் நீங்கள் செயலை செயல்தவிர்க்கலாம்.
+  - மொழிபெயர்ப்பு செயல்படவில்லை என்றால், உங்கள் தற்போதைய இலக்கு மொழி உங்கள் எழுதும் மொழியுடன் பொருந்துகிறது என்பதை உறுதிப்படுத்தவும்.
+  - <kbd> வலது-ஆல்ட் </kbd> ஹங்குல் இடமாற்று எனப் பயன்படுத்துகிறது என்றால்,
+வேலை செய்ய பிற விசையைப் பயன்படுத்தவும்.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- உங்கள் வினவலுக்கு முன் <kbd>/</kbd>+<kbd> விண்வெளி </kbd> ஐ தட்டச்சு செய்வதன் மூலம் URL தேடல் பெட்டி உரையை மொழிபெயர்க்கவும்.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- PDF.JS ஐப் பயன்படுத்தி மொழிபெயர்க்கப்பட்ட கருவிப்பட்டியைக் காண்பிக்க ஆன்லைன் PDF ஐ ஆதரிக்கவும் (உள்ளூர் கணினி PDF கோப்புக்கு கூடுதல் அனுமதி தேவை, [விதிவிலக்கு] பார்க்கவும் (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#excection)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- YouTube மற்றும் Netflix க்கான இரட்டை வசனங்களை ஆதரிக்கவும்.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- <kbd> இடது-ஷிப்ட் </kbd> விசை + சுட்டி ஒரு படத்தில் (எ.கா., மங்கா) வைத்திருக்கும் போது OCR ஐ செயலாக்குங்கள்
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- <kbd> f2 </kbd> விசையை அழுத்தவும் ஆட்டோ ரீடரை இயக்கவும்
+  - இது TTS உடன் உரைக்கு மேல் சுட்டியைப் படிக்கத் தொடங்குகிறது
+  - ஆட்டோ ரீடரை நிறுத்த <kbd> ESC </kbd> ஐ அழுத்தவும்
+  - மொழிபெயர்க்கப்பட்ட முடிவு உரை ஆட்டோ ரீடரைக் கேட்க டபுள் பிரஸ் <kbd> f2 </kbd> ஐ முயற்சிக்கவும்
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- <kbd> வலது-சி.டி.ஆர்.எல் </kbd> விசையை அழுத்திப் பிடிப்பதன் மூலம் பேச்சு அங்கீகார மொழிபெயர்ப்பாளரை செயல்படுத்தவும்.
+  - இயல்புநிலை பேச்சு அங்கீகார மொழி ஆங்கிலம்.
+  - பேச்சு அங்கீகார மொழி மற்றும் இலக்கு மொழி ஒரே மாதிரியாக இருந்தால், அது தவிர்க்கிறது.
+  - ஆடியோ அனுமதி தேவை
+  - கூகிள் குரோம், எம்.எஸ்-எட்ஜ், விவால்டி, ஓபரா, பிரேவ், ஆர்க் மற்றும் யாண்டெக்ஸ் போன்ற குரோமியம் அடிப்படையிலான உலாவிகளுடன் மட்டுமே இணக்கமானது.
+- குறுக்குவழி விசையைத் தனிப்பயனாக்குங்கள்
+  - Chrome இலிருந்து: // நீட்டிப்புகள்/குறுக்குவழிகள் அல்லது அதற்கு சமமான உலாவி உள் உள்ளமைவு பக்கம், உங்கள் உலாவியின் உள் URL (எ.கா., விளிம்பு: //, உலாவி: //, அல்லது துணிச்சலான: // போன்றவை) Chrome: // ஐ மாற்றுவதன் மூலம் அணுகலாம்.
+# மொழியை மாற்றவும்
+- பக்கத்தில் தற்போதைய மொழியை மாற்றவும்
+  - உங்கள் உலாவியின் மேல் வலதுபுறத்தில் அமைந்துள்ள புதிர் (நீட்டிப்பு) பொத்தானைக் கிளிக் செய்வதன் மூலம் அமைப்புகள் பக்கத்தை அணுகலாம்.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# விதிவிலக்கு
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- மூல உரை மொழி மற்றும் மொழிபெயர்ப்பு மொழி ஒரே மாதிரியாக இருந்தால், அது தவிர்க்கப்படும்.
+- பக்கம் கவனம் செலுத்தவில்லை என்றால், முக்கிய உள்ளீடு கண்டறியப்படவில்லை.
+உள்ளீட்டு விசைப்பலகை முன் ஃபோகஸ் பக்கத்தை கிளிக் செய்யவும்.
+- வலை நிலை ஆஃப்லைனில் இருந்தால் பயன்பாடு செயல்படாது.
+- தளம் <https://chrome.google.com/extensions> என்றால், அது செயல்படாது, ஏனெனில் Chrome பாதுகாப்பு காரணம்.
+- உள்ளூர் கோப்பு அனுமதி எதுவும் வழங்கப்படவில்லை என்றால், உள்ளூர் PDF ஐ கையாள முடியாது.
+  - கோப்பு திறக்கப்படாவிட்டால், அதை தாவலில் இழுத்து விடுங்கள்.
+  - இது அனுமதி எச்சரிக்கையைக் காண்பிக்கும் மற்றும் அனுமதி பக்கத்திற்கு திருப்பிவிடும்.
+  - திருப்பி விடப்பட்ட பக்கத்தில், கோப்புகளை அணுக "கோப்பு URL களை அணுக அனுமதிக்கவும்" என்பதைத் தேர்ந்தெடுப்பதை உறுதிசெய்க.
+  - PDF ஐ இப்போதே பாதிக்க மீண்டும் திறக்கவும்
 ![result](/doc/10.gif)

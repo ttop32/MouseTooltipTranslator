@@ -18,7 +18,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- Țineți tasta <kbd> left-ctrl </kbd> pentru a auzi pronunția TTS când apare un instrument. Apăsați <kbd> ESC </kbd> pentru a opri vocea.
+- Țineți tasta <kbd> left-Ctrl </kbd> pentru a auzi pronunția TTS când apare un instrument. Apăsați <kbd> ESC </kbd> pentru a opri vocea.
   - Încercați să apăsați dublu <kbd> Left-Ctrl </kbd> pentru a asculta text rezultat tradus
 ![result](/doc/20.gif)
 
@@ -48,7 +48,7 @@ Folosiți alte cheii cu care să lucrați.
 
 
 
-- Susțineți subtitrări duale pentru videoclipuri YouTube.
+- Sprijinirea subtitrărilor duale pentru YouTube și Netflix.
 
 
 ![result](/doc/16.gif)

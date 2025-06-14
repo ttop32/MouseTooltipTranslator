@@ -1,117 +1,87 @@
-# How to use
+# Nasıl Kullanılır
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Temel Kullanımlar: Çeviri için metnin üzerine gelin veya metnini seçin (vurgulayın).
+  - Örnek metinle vurmayı test edin:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Çeviri çalışmıyorsa, mevcut hedef dilini kontrol edin
+    - [Dili nasıl değiştirilir] kontrol edin (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Kaynak ve hedef diller aynı ise bu çevirmen metni atlar.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Bir araç ipucu göründüğünde TTS telaffuzunu duymak için <kbd> sol-ctrl </kbd> tuşunu basılı tutun. Sesi durdurmak için <kbd> ESC </kbd> tuşuna basın.
+  - Çeviren sonuç metnini dinlemek için çift basın <kbd> sol-ctrl </kbd>
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Giriş kutusuna yazdığınız metni (veya vurgulanan herhangi bir metni) çevirmek için <kbd> sağ alt </kbd> tuşuna basın. Gerekirse, <kbd> ctrl </kbd> + <kbd> z </kbd> tuşuna basarak eylemi geri alabilirsiniz.
+  - Çeviri çalışmıyorsa, mevcut hedef dilinizin yazma dilinizle eşleştiğinden emin olun.
+  - <kbd> sağ alt </kbd> Hangul takası olarak kullanılırsa,
+Çalışmak için başka bir anahtarı kullanın.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Sorgunuzdan önce <kbd>/</kbd> boşluk </kbd> yazarak URL arama kutusu metnini çevirin.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- PDF.js kullanarak çevrilmiş araç ipucu görüntülemek için çevrimiçi pdf destek (yerel bilgisayar PDF dosyası ek izne ihtiyaç var, bkz.
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- YouTube ve Netflix için çift altyazıları destekleyin.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- <kbd> sol kaydırma </kbd> tuş + fareyi bir görüntü üzerinde tutarken OCR işleyin (örneğin, manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Otomatik okuyucuyu çalıştırın <kbd> f2 </kbd> tuş
+  - TTS ile Metin Üzerinden Fareyi Okumaya Başlayın
+  - Otomatik okuyucu baskısını durdurmak için <kbd> ESC </kbd>
+  - Çifte Çifte Pres'i Deneyin <kbd> F2 </kbd> Dinlemek için Tercüme Sonuç Metni Otomatik Okuyucu
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- <kbd> sağ ctrl </kbd> tuşunu basılı tutarak konuşma tanıma çevirmenini etkinleştirin.
+  - Varsayılan konuşma tanıma dili İngilizce'dir.
+  - Konuşma tanınma dili ve hedef dil aynısa, atlar.
+  - Ses izni gerekli
+  - Yalnızca Google Chrome, MS-Edge, Vivaldi, Opera, Cesur, ARC ve Yandex gibi krom tabanlı tarayıcılarla uyumludur.
+- Kısayol tuşunu özelleştirin
+  - Chrome'dan: // uzantılar/kısayollar veya eşdeğer tarayıcı dahili yapılandırma sayfası: // tarayıcınızın dahili URL'siyle (örn., Edge: //, tarayıcı: // veya cesur: // vb) değiştirerek erişilebilir.
+# Dil Değiştir
+- Ayar sayfasındaki mevcut dili değiştirin
+  - Ayarlar sayfasına, tarayıcınızın sağ üst kısmında bulunan Bulmaca (Uzantı) düğmesini tıklayarak erişilebilir.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# İstisna
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Kaynak metin dili ve tercüme dil aynıysa, atlar.
+- Sayfa odaklanmıyorsa, anahtar girişi algılanmaz.
+Giriş klavyesinden önce odak sayfasına tıklayın.
+- Web durumu çevrimdışı ise uygulama çalışmaz.
+- Site <https://chrome.google.com/extensions> ise, krom güvenlik nedeni olduğu için çalışmaz.
+- Yerel dosya izni verilmiyorsa, yerel PDF işlenemez.
+  - Dosya açılmazsa, sürüklemeyi ve sekmeye bırakmayı deneyin.
+  - İzin uyarısı görüntüler ve izin sayfasına yönlendirilir.
+  - Yeniden yönlendirilen sayfada, dosyalara erişmek için "Dosya URL'lerine erişime izin ver" i seçtiğinizden emin olun.
+  - PDF'yi hemen etkileyecek şekilde yeniden açın
 ![result](/doc/10.gif)

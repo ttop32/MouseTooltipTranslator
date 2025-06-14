@@ -48,7 +48,7 @@ Use otra clave para trabajar.
 
 
 
-- Admite subtítulos duales para videos de YouTube.
+- Admite subtítulos duales para YouTube y Netflix.
 
 
 ![result](/doc/16.gif)

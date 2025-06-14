@@ -48,7 +48,7 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-- YouTube वीडियो के लिए दोहरे उपशीर्षक का समर्थन करें।
+- YouTube और नेटफ्लिक्स के लिए दोहरे उपशीर्षक का समर्थन करें।
 
 
 ![result](/doc/16.gif)
