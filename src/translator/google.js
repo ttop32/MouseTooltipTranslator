@@ -5,6 +5,7 @@ var apiUrl = "https://translate.googleapis.com/translate_a/single";
 
 export default class google extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {
+    return ;
     var params =
       new URLSearchParams({
         client: "gtx",

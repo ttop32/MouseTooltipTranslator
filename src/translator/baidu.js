@@ -36,6 +36,7 @@ export default class baidu extends BaseTranslator {
   static langCodeJson = baiduLangCode;
 
   static async requestTranslate(text, sourceLang, targetLang) {
+    return;
     return await ky
       .post(baseUrl, {
         searchParams: {

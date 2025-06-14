@@ -20,6 +20,7 @@ var recentRecord = {};
 
 var fallbackEngineActList = ["google", "bing", "baidu", "papago", "deepl"];
 var fallbackEngineCrashTime = { google: 1, bing: 2, baidu: 3 };
+var fallbackEngineCrashCount = {};
 var fallbackWaitTime = 1000 * 60 * 60; // 1 hour
 var fallbackEngineSwapList = ["google", "bing", "baidu"];
 var fallbackMaxRetry = fallbackEngineSwapList.length;
@@ -110,33 +111,29 @@ async function translateWithFallbackEngine(
   engine,
   retry = 0
 ) {
-  if (retry >= fallbackMaxRetry) {
+  if (retry > fallbackMaxRetry) {
     return null;
+  }
+  if (fallbackEngineCrashCount[engine] == null) {
+    fallbackEngineCrashCount[engine] = 0;
+  }
+  if (fallbackEngineCrashTime[engine] == null) {
+    fallbackEngineCrashTime[engine] = 4;
   }
   let translateResult;
   var isFallbackApply =
     setting["fallbackTranslatorEngine"] == "true" &&
     fallbackEngineActList.includes(engine);
   var sortedEngines = Object.keys(fallbackEngineCrashTime)
-    .filter((engine) => fallbackEngineSwapList.includes(engine))
+    .filter((engine_cur) => fallbackEngineSwapList.includes(engine_cur))
+    .filter((engine_cur) => engine_cur != engine)
     .sort((a, b) => fallbackEngineCrashTime[a] - fallbackEngineCrashTime[b]);
   var swapEngine = sortedEngines[0];
 
   if (
-    isFallbackApply &&
-    fallbackEngineCrashTime[engine] &&
-    new Date().getTime() - fallbackEngineCrashTime[engine] < fallbackWaitTime
+    fallbackEngineCrashTime[engine] < new Date().getTime() ||
+    !isFallbackApply
   ) {
-    // console.log(1)
-    translateResult = await translateWithFallbackEngine(
-      text,
-      sourceLang,
-      targetLang,
-      swapEngine,
-      retry + 1
-    );
-  } else {
-    // console.log(2)
     translateResult = await getTranslateCached(
       text,
       sourceLang,
@@ -146,8 +143,10 @@ async function translateWithFallbackEngine(
   }
 
   if (isFallbackApply && !translateResult) {
-    // console.log(3)
-    fallbackEngineCrashTime[engine] = new Date().getTime();
+    fallbackEngineCrashCount[engine] += 1; // increase crash count
+    fallbackEngineCrashTime[engine] =
+      new Date().getTime() +
+      fallbackWaitTime * fallbackEngineCrashCount[engine]; // set next retry time
     translateResult = await translateWithFallbackEngine(
       text,
       sourceLang,
@@ -156,7 +155,6 @@ async function translateWithFallbackEngine(
       retry + 1
     );
   }
-  // console.log(engine, translateResult)
   return translateResult;
 }
 

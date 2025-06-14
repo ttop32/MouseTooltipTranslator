@@ -42,6 +42,7 @@ export default class deepl extends BaseTranslator {
   static langCodeJson = deeplLangCode;
 
   static async requestTranslate(text, sourceLang, targetLang) {
+    return;
     const post_data = initData(text, sourceLang, targetLang);
     post_data.id = getRandomNumber();
     post_data.params.timestamp = getTimeStamp(getICount(text));

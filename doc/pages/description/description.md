@@ -1,0 +1,446 @@
+Mouseover Translate Any Language At Once 
+ 
+# Features        
+     
+- Hover or select (highlight) on text to translate   
+- Use left ctrl to Listen pronunciation with google TTS (text to speech)
+- Use right alt to translate writing text in input box (or highlighted text)
+- Google translator and bing translator are used for translation
+- Support pdf to display translated tooltip using PDF.js
+- Support dual subtitles for youtube video 
+- Process OCR when hold left shift and mouse over on image (ex manga)
+
+# Source code  
+
+- https://github.com/ttop32/MouseTooltipTranslator
+
+# Supported Translation Languages (using google translate)
+
+English, Russian, Japanese, Chinese and so on
+
+# Change Log
+- 0.1.183
+  - Add whitelist website
+  - Change default color setting
+  - Add DeepL fallback translator engine option (swap other engine)
+  - Chinese localization (contributed by Merlette)
+- 0.1.182
+  - Fix auto reader crash
+- 0.1.181
+  - Change subtitle setting tab
+  - Russian localization (contributed by D0n-A)
+- 0.1.180
+  - Fix Firefox mouseover detect speed
+- 0.1.179
+  - Fix browser detect
+- 0.1.178
+  - Fix Firefox text detect conflict
+- 0.1.177
+  - Fix mouseover performance on Chrome
+  - Fix Firefox mouseover text slice logic
+- 0.1.176
+  - Fix Proton Mail mouseover detect
+  - Add double press key function to listen TTS for translated result
+  - Add double press key function for translated result text auto reader
+- 0.1.175
+  - Fix Netflix language detect
+  - Fix mouseover performance (requested by 한원민 (꿀호떡))
+  - Remove mouseover detect type swap key
+- 0.1.174
+  - Support Netflix dual subtitles (requested by IkiamJ)
+- 0.1.173
+  - Reduce auto reader delay
+  - Fix TTS conflict with setting (requested by coco11331134)
+- 0.1.172
+  - Fix language into setting missing
+- 0.1.171
+  - Add keyboard tab
+  - Add Firefox
+- 0.1.170
+  - Add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
+  - Add voice speed vary by translated (requested by guo1970)
+  - Add fix text detect on Proton email list page (requested by AstudilloMarillo)
+  - Fix Firefox text slice logic
+  - Add locale Arabic (contributed by neoOpus)
+- 0.1.169
+  - Change YouTube subtitle slice logic
+- 0.1.168
+  - Change support URL
+- 0.1.167
+  - Fix RTL order for YouTube (requested by shlomova)
+  - Got yellow agron warning by Google on "translator" word. Avoid that word from intro description
+- 0.1.166
+  - Change YouTube subtitle background (requested by Rui Lan)
+  - Add locale for Turkish (contributed by ODK)
+  - Add locale for Russian (contributed by negrityan)
+- 0.1.165
+  - Change locale
+  - Fix Firefox TTS
+  - Add Firefox build command
+- 0.1.164
+  - Fix infinite auto reader loop
+- 0.1.163
+  - Fix auto reader space stop (requested by Neon Velvet)
+- 0.1.162
+  - Fix browser TTS
+- 0.1.161
+  - Rollback PDF usage again
+- 0.1.160
+  - Rollback PDF usage
+- 0.1.159
+  - Version up PDF.js
+  - Fix TTS empty text
+  - Fix writing text space (requested by Varga Endre)
+- 0.1.158
+  - Support auto reader on PDF
+  - Change auto reader stop priority
+  - Refactor TTS code
+  - Russian localization (contributed by D0n-A)
+- 0.1.157
+  - Vietnamese localization (contributed by Duong.Kayce)
+  - Add auto reader on F2 key
+- 0.1.156
+  - Change YouTube subtitle style
+  - Change default tooltip style
+- 0.1.155
+  - Update DOQ library
+- 0.1.154
+  - Fix PDF dark mode
+- 0.1.153
+  - Fix ScienceDirect PDF conflict
+- 0.1.152
+  - Fix web_accessible_resources PDF conflict
+- 0.1.151
+  - Add Chinese (contributed by SFGFDSD)
+- 0.1.150
+  - Russian localization (contributed by ID Hunter (ASAP))
+- 0.1.149
+  - Fix PDF UI space conflict
+- 0.1.148
+  - Korean localization (contributed by 미르냥 (Mirnyang))
+  - Brazilian localization (contributed by helimoreira and Eduardo_91)
+- 0.1.147
+  - Fix writing (requested by Enlight432)
+  - Add buy me coffee page
+- 0.1.146
+  - Fix YouTube subtitle jQuery conflict (requested by anh5983)
+  - Thai localization (contributed by s-upakit)
+- 0.1.145
+  - Fix log exposer (requested by KomodoLegend18)
+- 0.1.144
+  - Fix ebook mouseover conflict
+- 0.1.143
+  - Performance enhance on mouseover (contributed by skfh82)
+  - Fix PDF key conflict (contributed by tofuthefirst)
+  - Redesign intro page (contributed by neoOpus)
+- 0.1.142
+  - Fix CSS conflict on koreatimes (requested by prvDevs)
+- 0.1.141
+  - Fix TTS conflict with low browser version (requested by Курс Курсович)
+- 0.1.140
+  - Add speech panel graphic option
+- 0.1.139
+  - Remove speech recognition from Opera (requested by Fırat Akbıyık)
+  - Add speech recognition panel
+- 0.1.138
+  - Fix mouseover detect performance issue (requested by eSKej)
+  - Fix Google image load
+- 0.1.137
+  - Fix Reddit site conflict
+- 0.1.136
+  - Fix Japanese furigana recognition (requested by cspotcode)
+  - Add speech recognition translator
+- 0.1.135
+  - Add TTS run when only select (requested by IsemicolonI)
+  - Add word dictionary off option (requested by dod storm)
+- 0.1.134
+  - Fix tooltip container conflict
+  - English AU localization (contributed by CreeperYeeter2)
+  - Fix RTL UI
+  - Fix Edge select conflict
+- 0.1.133
+  - Fix YouTube subtitle conflict
+- 0.1.132
+  - Fix copy key conflict with TTS voice (requested by ldrahnik)
+- 0.1.131
+  - Fix TTS voice overlap (requested by Nebras)
+- 0.1.130
+  - Fix review notify
+  - Hide mouseover text error (contributed by gignac-cha)
+- 0.1.129
+  - Fix Korea OCR manga language size
+- 0.1.128
+  - Spanish localization (contributed by di4m0nds)
+  - Turkish localization (contributed by Nejdet ACAR)
+  - China localization (contributed by SFGFDSD)
+  - Add flashcard
+  - Swap Google Translate default engine
+- 0.1.127
+  - Fix tooltip hide conflict
+- 0.1.126
+  - Change UI sequence
+  - Change hold key run to press run (requested by Varga Endre)
+- 0.1.125
+  - Fix YouTube subtitle conflict
+- 0.1.124
+  - Fix butterflies.ai text writing (requested by Enlight432)
+- 0.1.123
+  - Support Google image search
+- 0.1.122
+  - Add text detect time option (requested by 나정휘 (Jn))
+- 0.1.121
+  - Korea localization (contributed by newmind)
+- 0.1.120
+  - Fix Bard text writing (requested by Enlight432)
+- 0.1.119
+  - Fix OCR build conflict
+- 0.1.118
+  - Add language priority on setting (requested by marcello-pietrobon)
+- 0.1.117
+  - Add YouTube subtitle stop option (requested by Daifer Ant. Ramirez Ramirez)
+  - Change option structure
+- 0.1.116
+  - Fix tooltip container removed error (requested by di4m0nds)
+- 0.1.115
+  - Fix Bing chat writing
+- 0.1.114
+  - Fix non-English writing conflict
+- 0.1.113
+  - Change writing text logic (requested by Enlight432)
+- 0.1.112
+  - Fix tooltip highlight (requested by marcello-pietrobon)
+- 0.1.111
+  - Support tooltip border (requested by pussykiller)
+  - Support writing translate on URL search box (type "/ " to start) (requested by Enlight432)
+- 0.1.110
+  - Fix tooltip sticky position (requested by serega)
+- 0.1.109
+  - Rollback OpenCV library
+- 0.1.108
+  - Add Baidu
+  - Support Google Doc hover
+- 0.1.107
+  - Fix intro site
+- 0.1.106
+  - Fix writing box
+- 0.1.105
+  - Fix copy (requested by J-Corleone)
+- 0.1.104
+  - Fix Shadow DOM performance
+- 0.1.103
+  - Update Tesseract.js v5.0.3
+  - Fix PDF shortcut key (requested by Woong Park)
+- 0.1.102
+  - Fix touch recognition
+- 0.1.101
+  - Add source language & mouse click for tooltip (requested by محمد ع. أبو الحسن)
+- 0.1.100
+  - Make hijack injection tighter for support more sites (requested by AstudilloMarillo)
+- 0.1.99
+  - Fix ScienceDirect PDF conflict (requested by Tamer)
+  - Make bidirectional translate for writing (requested by IkiamJ)
+  - Support text select on Google Document
+- 0.1.98
+  - Fix PDF line space
+- 0.1.97
+  - Fix PDF conflict (requested by Mai Thy Đặng)
+- 0.1.96
+  - Fix Bing chat conflict (requested by BlinkDev2k2)
+  - Change review URL
+- 0.1.95
+  - Fix emoji TTS
+- 0.1.94
+  - Hide PDF viewer URL
+  - Add highlight (requested by imymexxx)
+- 0.1.93
+  - Fix PDF URL
+- 0.1.92
+  - Add Google Translate TTS
+- 0.1.91
+  - Add Bing TTS
+- 0.1.90
+  - Add animation option (requested by WellingtonmpdNeves)
+  - Add PDF shortcut for note & draw (contributed by Michael-Nhat)
+- 0.1.89
+  - Fix YouTube embed conflict (requested by BH J)
+- 0.1.88
+  - Fix YouTube subtitle conflict
+  - Add voice target option (requested by trionline1234)
+  - Add voice repeat
+- 0.1.87
+  - Fix Shadow DOM performance issue
+  - Arabic localization (contributed by neoOpus)
+  - Indonesian localization (contributed by ardasatata)
+- 0.1.86
+  - Support ebook using Foliate.js
+  - French localization (contributed by neoOpus)
+- 0.1.85
+  - Fix text editor conflict (requested by ultrabave)
+- 0.1.84
+  - Fix Gmail writing translator conflict
+  - Hebrew localization (contributed by netanel123123)
+  - Detect YouTube player caption on/off (requested by 웃으며살아요)
+  - Add ESC key to stop TTS (requested by 나야브)
+  - Use Vue3
+  - Make advanced tab (requested by JMFierro)
+- 0.1.83
+  - Fix YouTube Shorts subtitle traffic error
+  - Fix CSV format conflict
+- 0.1.82
+  - Fix TTS language detect
+  - Add DeepL translator (requested by neoOpus)
+- 0.1.81
+  - Support dual subtitles for YouTube Shorts
+  - Fix YouTube pause error (requested by shikov)
+- 0.1.80
+  - Support Yandex translator (requested by Bushrangers)
+- 0.1.79
+  - Fix YouTube null fetch error on dual subtitle merge
+  - Fix YouTube TrustedHTML error
+  - Support dual subtitles for YouTube embed video
+- 0.1.78
+  - Google reject by "Blue Argon"
+    - Make ExtReloader works only on development
+    - Remove any unused package
+    - Refactor code
+    - Double check any existence of eval()
+- 0.1.77
+  - Fix YouTube dual subtitles time mismatch
+- 0.1.76
+  - Add dual subtitles for YouTube
+- 0.1.75
+  - Fix translator font customization (requested by Musab Almawed)
+  - Fix YouTube word detect
+  - Add uninstall translator callback page
+- 0.1.74
+  - Fix select destruction
+  - Add intro site
+  - Add hotkey for OCR (requested by neoOpus)
+- 0.1.73
+  - Update Tesseract.js OCR
+  - Fix translate writing box
+  - Make YouTube subtitle selectable
+- 0.1.72
+  - Change default keyset
+  - Add writing translating feature
+  - Add website filter (requested by Serge)
+- 0.1.71
+  - Fix OCR block recognition
+- 0.1.70
+  - Add transliteration (contributed by ardasatata)
+  - Add distance adjustment for tooltip (requested by 이준혁)
+- 0.1.69
+  - Fix CSS conflict on Baidu
+- 0.1.68
+  - Fix shortcut key
+  - Fix YouTube subtitle detection
+- 0.1.67
+  - Fix hidden translator tooltip in Bing chat (requested by Moein)
+  - Add shortcut key for copy translated text
+  - Add detect swap hold key (requested by abonawwaf)
+- 0.1.66
+  - Fix Bing translator response
+  - Fix PDF text select (requested by Furkan Nart1)
+- 0.1.65
+  - Fix PDF URL crash
+  - Change PDF.js version to 3.7.107
+  - Use DOQ for PDF.js dark mode (requested by 6 SEX)
+- 0.1.64
+  - Google reject translator by "clipboardWrite permission"
+    - Remove the permission
+- 0.1.63
+  - Change PDF URL format (requested by shawnding)
+  - Change context menu to include copy (requested by KirpichKrasniy)
+  - Fix PDF permission error (requested by Nevermind)
+  - Fix setting display
+  - Use OpenCV on OCR
+- 0.1.62
+  - Typo fix from option list (contributed by neoOpus)
+- 0.1.61
+  - Fix destruction process
+- 0.1.60
+  - Change OCR Japanese vertical model
+  - Fix Node.js 18 crash (requested by anthony-nyc)
+  - Fix Bing crash (requested by Anh Dao)
+  - Fix OCR schedule
+- 0.1.59
+  - Support bigger translate box (requested by Zoelya)
+  - Add Papago translator
+- 0.1.58
+  - Use Tesseract.js@4.0.1
+  - Change OCR flow
+  - Support more i18 translation
+  - Add Russian language (contributed by Blueberryy)
+- 0.1.57
+  - Add option for font color (requested by WellingtonmpdNeves)
+- 0.1.56
+  - Add voice selection (requested by Joost Dancet)
+  - Add voice speed (requested by vijayabalan)
+  - Add justified text (requested by WellingtonmpdNeves)
+- 0.1.55
+  - Fix mouse back button (requested by SP ND)
+- 0.1.54
+  - Fix container text detect (requested by baroooooody9)
+  - Add context menu for saving translated text
+- 0.1.53
+  - Add exclude language to be translated (requested by kwisatz haderach)
+  - Fix CSS on translator tooltip
+- 0.1.52
+  - Fix Google translator (requested by ATU8020)
+- 0.1.51
+  - Auto script injecting when install
+  - Add TTS stop when tab switching
+- 0.1.50
+  - Add local PDF permission warning
+  - Use Google translator as main translator option
+  - Fix CSS conflict on tooltip radius
+- 0.1.49
+  - Fix conflict with Google web translator (requested by dotdioscorea)
+  - Add blur on tooltip (requested by neoOpus)
+  - Fix CSS conflict on tooltip (requested by Min Geon Shin)
+  - Add sub Google translator option
+- 0.1.48
+  - Google reject by "Irrelevant information about Mouse Tooltip Translator"
+    - Remove description
+- 0.1.47
+  - Update Tesseract OCR library
+  - Add sub Google translator option
+- 0.1.46
+  - Rollback Google Translate fix from 0.1.44
+- 0.1.45
+  - Change mouse detection
+- 0.1.44
+  - Fix Google Translate API (requested by CONATUS)
+  - Change tooltip text to non-transparency (requested by Hakan Özlen)
+- 0.1.43
+  - Google reject by tabs permission
+    - Remove the permission
+- 0.1.42
+  - Fix Chinese default language code (requested by yc-forever)
+- 0.1.41
+  - Fix Google Translate API request
+- 0.1.40
+  - Detect Chrome PDF viewer instead of PDF URL (requested by Justin Brown)
+- 0.1.39
+  - Fix translator crash from Twitter YouTube (requested by PedoBearNomsLoli)
+- 0.1.38
+  - Increase variety on
+
+# Intro  
+Mouse tooltip translator is a google chrome extension that provide convenient translate experience. This translator extension minimize generally required step to translate word. Normally, copying and pasting are used to obtain translated sentence from google translate site. This extension uses text hovering to translate text. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension replaces general translate process which open new tab for using google translate to getting translated sentence. This replace translating way makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
+
+# TTS  
+For supporting translate feature, this translator extension provides text pronunciation using google TTS (text to speech). It uses google TTS to speak text to user to listen its voice. To using tts, user use ctrl key to enable TTS (text to speech) from translator. When TTS is on, this translator extension uses google TTS to speak text. With this translator extension, any language learner student can enhance pronunciation skill by listening this translator extension’s google TTS speech voice.  
+
+# PDF  
+PDF viewer is in this translator extension. Mouse tooltip translator uses PDF.js as built-in PDF reader to support pdf file to provide translate feature over pdf. This translator extension has pdf feature to give a possibility to user to read foreign essay paper with translate service. This translator extension does not use chrome pdf reader. Chrome pdf reader provide pdf as embed text format which has difficulty on text crawling process for translate with this translator extension. This translator extension intercept pdf URL and redirect to mouse tooltip pdf.js page to provide pdf reader with tooltip translate feature. Local pdf file is also supported when user give local URL permission to this translator extension.  
+
+# OCR  
+Mouse tooltip translator has OCR to translate image text. To use Mouse tooltip translator OCR translate feature, user need to press shift to enable OCR. When user mouse over on image (manga, comics, webtoon and etc), this translator extension process OCR using tesseract.js to get its text for translate image.  
+
+# Translate API
+This extension is positioned between user and translator API for providing simple translate experience with google translate. When text translate is required, this translator extension request translate service for given text to google translate. Translator vendor communicates given text to provide its translated text to the extension. Then, this translator extension uses given translated text to display in popover tooltip format. Its translated text can be in any foreign text with google translate. Additionally, Bing translator support to give variety on user translate experience in this translator extension. Moreover, there is another supported translator, Papago translator and deepL translator. Papago translator and deepL use neural machine to translate any text. Papago and deepl help user to get more realistic translated result. 
+
+# Ownership  
+Mouse tooltip translator is an extension that is created by individual developer. It is not officially made by google. It just handles google translate and google text to speech service. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension uses Google’s provided google translate service. Purpose of this translator extension gives translate experience on any web site. This translator extension provides simple tooltip translate service on anywhere like YouTube, ebook and pdf.
+
