@@ -17,7 +17,6 @@ var recentTranslated = "";
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
-var translatorBrokenTime={}
 
 (async function backgroundInit() {
   try {
@@ -80,12 +79,10 @@ function addMessageListener() {
 
 //translate function====================================================
 
-
-
 async function translate({ text, sourceLang, targetLang, engine }) {
   var engine = engine || setting["translatorVendor"];
-  let translateResult = await getTranslatedWithFallbackEngine(    text,    sourceLang,    targetLang,    engine  );
-  return (translateResult || {
+  return (
+    (await getTranslateCached(text, sourceLang, targetLang, engine)) || {
       targetText: `${engine} is broken`,
       transliteration: "",
       sourceLang: "",
@@ -93,25 +90,6 @@ async function translate({ text, sourceLang, targetLang, engine }) {
       isBroken: true,
     }
   );
-}
-
-
-async function getTranslatedWithFallbackEngine(text, sourceLang, targetLang, engine) {
-  let translateResult;  
-  if(engine !=="deepl" || setting["fallbackTranslatorEngine"]=="false"){
-    translateResult = await getTranslateCached(text, sourceLang, targetLang, engine);
-  }else if (translatorBrokenTime[engine] && util.getDateNow() - translatorBrokenTime[engine] < 1000 * 60 * 1) {
-    translateResult = await getTranslateCached(text, sourceLang, targetLang, "google");
-  } else {
-    translateResult = await getTranslateCached(text, sourceLang, targetLang, engine);
-
-    if (!translateResult && engine === "deepl") {
-      translateResult = await getTranslateCached(text, sourceLang, targetLang, "google");
-      translatorBrokenTime[engine] = util.getDateNow();
-    }
-  }
-
-  return translateResult;
 }
 
 const getTranslateCached = util.cacheFn(getTranslate);
