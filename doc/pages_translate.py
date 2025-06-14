@@ -66,6 +66,9 @@ async def main():
             if "!" in line:
                 translated_lines.append(line)
                 continue
+            if ""== line.strip():
+                translated_lines.append(line)
+                continue
             text_split=line.split("- ")
             if len(text_split) > 1:
                 text=await translate(text_split[1] , lang)
