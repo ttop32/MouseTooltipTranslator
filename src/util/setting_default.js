@@ -467,7 +467,7 @@ export var settingDict = {
   },
 
   fallbackTranslatorEngine: {
-    default: "default",
+    default: "true",
     i18nKey: "Fallback_Translator_Engine",
     optionList: toggleList,
     settingTab: "advanced",
