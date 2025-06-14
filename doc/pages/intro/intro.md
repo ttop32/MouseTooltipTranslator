@@ -30,7 +30,7 @@ Proletarier aller Länder, vereinigt euch!
 
 ![result](/doc/12.gif)
 
-- Support dual subtitles for YouTube videos.
+- Support dual subtitles for YouTube and Netflix.
 
 ![result](/doc/16.gif)
 

@@ -1,117 +1,87 @@
-# How to use
+# Како се користи
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Основна употреба: лебдите или одаберите (означите) текст за превођење.
+  - Тест лебдећи са примјером Текст:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Ако превод не ради, проверите тренутни циљни језик
+    - Проверите [Како променити језик] (хттпс: //гитхуб.цом/ттоп32 / моусетоолтиптиптранслатор/блоб/маин/доц/интро.мд#цханге-нгуаге)
+    - Овај преводилац ће изоставити текст ако су извор и циљни језици идентични.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Држите <КБД> Лефт-Цтрл </ КБД> тастер да бисте чули изговор ТТС када се појави тоолтип. Притисните <КБД> ЕСЦ </ КБД> да зауставите глас.
+  - Покушајте са двоструком притиском <КБД> Лефт-ЦТРЛ </ КБД> да бисте преслушали преведени текст резултата
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Притисните типку <КБД> Ригхт-АЛТ </ КБД> да бисте превели текст који пишете (или било који означени текст) у уносу. Ако је потребно, можете поништити акцију притиском на <КБД> Цтрл </ КБД> + <КБД> З </ кбд>.
+  - Ако превод не ради, проверите да ваш тренутни циљни језик одговара вашем језику писања.
+  - Ако се <КБД> десно-алт </ кбд> користи као свап хангул,
+Користите други кључ за рад.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Преведи УРЛ претраживање поље за претрагу упишите <КБД> / </ КБД> + <КБД> Спаце </ КБД> пре вашег упита.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Подршка Онлине ПДФ да бисте приказали преведени алат користећи ПДФ.ЈС (локална рачунарска пдф датотека Потребна је додатна дозвола, погледајте [Изузетак] (хттпс: / / гитхуб.цом/ттоп32 / моусетоолтиптранслатор/блоб/маин/доц/интро.мд#)
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Подршка Дуал титлова за Иоутубе видеос.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Процесни ОЦР Када се држи <КБД> лево-схифт </ кбд> тастер + мишем на слици (нпр. Манга)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Покрените ауто читач притиском <КБД> Ф2 </ кбд> Кеи
+  - Почиње читати миша преко текста скроз са ТТС-ом
+  - За заустављање аутоматског читача Притисните <КБД> ЕСЦ </ КБД>
+  - Покушајте са двоструком притиском <КБД> Ф2 </ кбд> да бисте преслушали преведени текст текста Аутоматски читач
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Активирајте преводиоци препознавања говора држећи тастер <КБД> десног ЦТРЛ </ КБД>.
+  - Подразумевани језик препознавања говора је енглески.
+  - Ако су језик препознавања говора и циљни језик исти, прескаче.
+  - Потребна је аудио дозвола
+  - Компатибилан је само са претраживачима на бази хромима, као што су Гоогле Цхроме, МС-Едге, Вивалди, Опера, Храбар, АРЦ и Иандек.
+- Прилагодите кључ пречице
+  - Од Цхроме: // Ектензиони / пречице или еквивалентна страница за интерну конфигурацију прегледача, доступна заменом хрома: // са унутрашњом УРЛ-ом вашег прегледача (нпр., Ивицом: //, претраживачем: // или храбром: // итд.).
+# Промените језик
+- Промените тренутни језик на страници за подешавање
+  - Страни сеттерс може се приступити кликом на дугме загонетка (проширење) која се налази на горњем десном углу прегледача.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Изузетак
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Ако су изворни језик текста и језик превођења исти, то ће прескочити.
+- Ако страница није фокусирана, кључни улаз се не открива.
+Кликните на страницу за фокусирање пре улазне тастатуре.
+- Апликација неће функционисати ако је веб статус није на мрежи.
+- Ако је сајт <хттпс: //цхроме.гоогле.цом/ектинсион>, не ради, јер хромирани безбедносни разлог.
+- Ако није дата локална дозвола за датотеку, локални ПДФ се не може управљати.
+  - Ако се датотека не отвори, покушајте да се превучете и испустите на картицу.
+  - То ће показати упозорење о дозволу и преусмерити на страници за дозволу.
+  - На преуређивачком страници осигурајте да одаберете "Дозволи приступ УРЛ-овима датотека" да бисте приступили датотекама.
+  - Поново отворити ПДФ да би се одмах унесило
 ![result](/doc/10.gif)

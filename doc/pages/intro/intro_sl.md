@@ -1,117 +1,87 @@
-# How to use
+# Kako uporabiti
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Osnovne uporabe: za prevajanje premikate ali izberite (poudarite (poudarite) besedilo.
+  - Preizkusite menjenje z primerom besedila:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Če prevod ne deluje, preverite trenutni ciljni jezik
+    - Preverite [kako spremeniti jezik] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Ta prevajalec bo izpustil besedilo, če sta vir in ciljni jeziki enaki.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Držite tipko <kbd> levo-CTRL </kbd>, če želite slišati izgovorjavo TTS, ko se prikaže tablo orodja. Pritisnite <kbd> ESC </kbd>, da ustavite glas.
+  - Poskusite z dvojnim pritiskom <kbd> levo-ctrl </kbd> za poslušanje prevedenega besedila rezultatov
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Pritisnite tipko <kbd> desno-alt </kbd>, da v polju za prevedete besedilo, ki ga pišete (ali katero koli označeno besedilo). Če je potrebno, lahko razveljavite dejanje s pritiskom <kbd> ctrl </kbd> + <kbd> z </kbd>.
+  - Če prevod ne deluje, se prepričajte, da se vaš trenutni ciljni jezik ujema z vašim pisanjem jezika.
+  - Če je <kbd> desno-alt </kbd> uporablja kot Hangul Swap,
+Uporabite drug ključ za delo.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Prevedite besedilo iskalnega polja URL tako, da vnesete <kbd>/</kbd>+<kbd> Space </kbd> pred poizvedbo.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Podprite spletni PDF za prikaz prevedenega orodja s pomočjo pdf.js (lokalna računalniška datoteka PDF potrebuje dodatno dovoljenje, glejte [izjemo] (https://github.com/ttop32/mousetooltiptranslator/blob/moc/intro.md#exception)
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Podprite dvojne podnapise za videoposnetke YouTube.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Obdelajte ocr, ko držite <kbd> levi premik </kd> tipka + miška na sliki (npr. Manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Zaženite samodejni bralnik s pritiskom <kbd> f2 </kbd> tipka
+  - Z miško se začne s besedilom do konca s TTS
+  - Za zaustavitev samodejnega bralnika pritisnite <kbd> ESC </kbd>
+  - Poskusite z dvojnim pritiskom <kbd> F2 </kbd> za poslušanje prevedenega rezultata besedila Auto Reader
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Aktivirajte prevajalec prepoznavanja govora tako, da držite tipko <kbd> desno-CTRL </kbd>.
+  - Privzeti jezik prepoznavanja govora je angleščina.
+  - Če sta jezik prepoznavanja govora in ciljni jezik enaka, preskoči.
+  - Zvočno dovoljenje je potrebno
+  - Združljivi samo z brskalniki na osnovi kroma, kot so Google Chrome, MS-Edge, Vivaldi, Opera, Brave, ARC in Yandex.
+- Prilagodite ključ bližnjice
+  - Iz Chrome: // razširitve/bližnjice ali enakovredne strani za notranjo konfiguracijo brskalnika, dostopna z zamenjavo Chrome: // z notranjim URL -jem brskalnika (npr. Edge: //, brskalnik: // ali pogumna: // itd.).
+# Spremeni jezik
+- Spremenite trenutni jezik na nastavitveni strani
+  - Do strani Settings lahko dostopate s klikom na gumb Puzzle (Extension), ki se nahaja v zgornjem desnem kotu brskalnika.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Izjema
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Če sta jezik besedila in prevajanje izvora enaka, bo preskočen.
+- Če stran ni osredotočena, ključni vnos ni zaznan.
+Pred vhodno tipkovnico kliknite stran za fokus.
+- Aplikacija ne bo delovala, če je spletno stanje brez povezave.
+- Če je spletno mesto <https://chrome.google.com/extensions>, ne deluje, ker je krom varnostni razlog.
+- Če nobenega dovoljenja za lokalno datoteko ni dano, lokalnega PDF ni mogoče obravnavati.
+  - Če se datoteka ne odpre, jo poskusite povleči in spustiti na zavihek.
+  - Prikazal bo opozorilo o dovoljenju in preusmeril na stran z dovoljenjem.
+  - Na preusmerjeni strani se prepričajte, da za dostop do datotek izberete "Dovoli dostop do URL -je datotek".
+  - Ponovno odpremo PDF, da takoj vpliva
 ![result](/doc/10.gif)
