@@ -466,6 +466,13 @@ export var settingDict = {
     settingTab: "advanced",
   },
 
+  fallbackTranslatorEngine: {
+    default: "default",
+    i18nKey: "Fallback_Translator_Engine",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+
   // exclude
   langExcludeList: {
     default: [],

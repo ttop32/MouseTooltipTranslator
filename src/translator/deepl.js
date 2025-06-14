@@ -38,6 +38,10 @@ var deeplLangCode = {
 };
 var deeplBaseUrl = "https://www2.deepl.com/jsonrpc";
 
+var totalCount = 0; // Total number of requests made
+var totalLength = 0; // Total length of all texts translated
+var startTime = Date.now(); // Start time of the translation process
+
 export default class deepl extends BaseTranslator {
   static langCodeJson = deeplLangCode;
 
@@ -46,6 +50,16 @@ export default class deepl extends BaseTranslator {
     post_data.id = getRandomNumber();
     post_data.params.timestamp = getTimeStamp(getICount(text));
     let post_str = getDeeplJsonText(post_data);
+
+    totalCount+=1;
+    totalLength +=    text.length
+    console.log("---------------------------------")
+    console.log("Total Count:", totalCount);
+    console.log("Total Length:", totalLength);
+    console.log("Start Time:", new Date(startTime).toLocaleString());
+    var useTime = Date.now() - startTime;
+    console.log("Use Time:", useTime, "ms");
+    console.log("Human-readable Time:", new Date(useTime).toISOString().substr(11, 8));
 
     return await ky
       .post(deeplBaseUrl, {

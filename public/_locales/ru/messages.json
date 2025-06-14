@@ -155,6 +155,9 @@
 	"Voice_Translated_Speed": {
 		"message": "Скорость воспроизведения перевода"
 	},
+	"Fallback_Translator_Engine": {
+		"message": "Fallback Translator Engine"
+	},
 	"SPEECH": {
 		"message": "РАСПОЗНАВАНИЕ РЕЧИ"
 	},

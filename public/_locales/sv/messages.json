@@ -155,6 +155,9 @@
 	"Voice_Translated_Speed": {
 		"message": "Voice Translated Speed"
 	},
+	"Fallback_Translator_Engine": {
+		"message": "Fallback Translator Engine"
+	},
 	"SPEECH": {
 		"message": "SPEECH"
 	},

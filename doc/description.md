@@ -20,559 +20,411 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.183
-  - add whitelist website
-  - change default color setting
+  - Add whitelist website
+  - Change default color setting
+  - Add DeepL fallback translator engine option (swap other engine)
+  - Chinese localization (contributed by Merlette)
 - 0.1.182
-  - fix auto reader crash
+  - Fix auto reader crash
 - 0.1.181
-  - change subtitle setting tab
-  - Russian localization (contributed by D0n-A) 
+  - Change subtitle setting tab
+  - Russian localization (contributed by D0n-A)
 - 0.1.180
-  - fix firefox mouseover detect speed
+  - Fix Firefox mouseover detect speed
 - 0.1.179
-  - fix browser detect
+  - Fix browser detect
 - 0.1.178
-  - fix firefox text detect conflict
+  - Fix Firefox text detect conflict
 - 0.1.177
-  - fix mouseover performance on chrome
-  - fix firefox mouseover text slice logic
+  - Fix mouseover performance on Chrome
+  - Fix Firefox mouseover text slice logic
 - 0.1.176
-  - fix proton mail mouseover detect
-  - add double press key function to listen tts for translated result
-  - add double press key function for translated result text auto reader
+  - Fix Proton Mail mouseover detect
+  - Add double press key function to listen TTS for translated result
+  - Add double press key function for translated result text auto reader
 - 0.1.175
-  - fix netflix lang detect
-  - fix mouseover performance (requested by 한원민 (꿀호떡))
-  - remove mousover detect type swap key
+  - Fix Netflix language detect
+  - Fix mouseover performance (requested by 한원민 (꿀호떡))
+  - Remove mouseover detect type swap key
 - 0.1.174
-  - support netflix dual sub (requested by IkiamJ)
+  - Support Netflix dual subtitles (requested by IkiamJ)
 - 0.1.173
-  - reduce auto reader delay
-  - fix tts conflict with setting (requested by coco11331134)
+  - Reduce auto reader delay
+  - Fix TTS conflict with setting (requested by coco11331134)
 - 0.1.172
-  - fix lang into setting missing
+  - Fix language into setting missing
 - 0.1.171
-  - add keyboard tab
-  - add firefox
+  - Add keyboard tab
+  - Add Firefox
 - 0.1.170
-  - add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
-  - add voice speed vary by translated (requested by guo1970)
-  - add fix text detect on proton email list page (requested by AstudilloMarillo)
-  - fix firefox text slice logic
-  - add locale arabic (contributed by neoOpus)
+  - Add locale for Portuguese, Brazilian (contributed by EdsonBittencourt)
+  - Add voice speed vary by translated (requested by guo1970)
+  - Add fix text detect on Proton email list page (requested by AstudilloMarillo)
+  - Fix Firefox text slice logic
+  - Add locale Arabic (contributed by neoOpus)
 - 0.1.169
-  - change youtube sub slice logic
+  - Change YouTube subtitle slice logic
 - 0.1.168
-  - change support url
+  - Change support URL
 - 0.1.167
-  - fix rtl order for youtube (requested by shlomova)
-  - got yellow agron warning by google on "translator" word. avoid that word from intro description
+  - Fix RTL order for YouTube (requested by shlomova)
+  - Got yellow agron warning by Google on "translator" word. Avoid that word from intro description
 - 0.1.166
-  - change youtube sub background (requested by Rui Lan) 
-  - add locale for Turkish (contributed by ODK)
-  - add locale for Russian (contributed by negrityan)
+  - Change YouTube subtitle background (requested by Rui Lan)
+  - Add locale for Turkish (contributed by ODK)
+  - Add locale for Russian (contributed by negrityan)
 - 0.1.165
-  - change locale  
-  - fix firefox tts
-  - add firefox build command
+  - Change locale
+  - Fix Firefox TTS
+  - Add Firefox build command
 - 0.1.164
-  - fix infinite auto reader loop
+  - Fix infinite auto reader loop
 - 0.1.163
-  - fix auto reader space stop (requested by Neon Velvet) 
+  - Fix auto reader space stop (requested by Neon Velvet)
 - 0.1.162
-  - fix browser tts
+  - Fix browser TTS
 - 0.1.161
-  - rollback pdf usage again
+  - Rollback PDF usage again
 - 0.1.160
-  - rollback pdf usage 
+  - Rollback PDF usage
 - 0.1.159
-  - version up pdf js
-  - fix tts empty text
-  - fix writing text space (requested by Varga Endre)
+  - Version up PDF.js
+  - Fix TTS empty text
+  - Fix writing text space (requested by Varga Endre)
 - 0.1.158
-  - support auto reader on pdf
-  - change auto reader stop priority
-  - refactor tts code
-  - Russian localization (contributed by D0n-A) 
+  - Support auto reader on PDF
+  - Change auto reader stop priority
+  - Refactor TTS code
+  - Russian localization (contributed by D0n-A)
 - 0.1.157
-  - Vietnamese localization (contributed by Duong.Kayce )
-  - add auto reader on F2 key
+  - Vietnamese localization (contributed by Duong.Kayce)
+  - Add auto reader on F2 key
 - 0.1.156
-  - change youtube sub style
-  - change default tooltip style
+  - Change YouTube subtitle style
+  - Change default tooltip style
 - 0.1.155
-  - update doq library
+  - Update DOQ library
 - 0.1.154
-  - fix pdf dark mode
+  - Fix PDF dark mode
 - 0.1.153
-  - fix sciencedirect pdf conflict
+  - Fix ScienceDirect PDF conflict
 - 0.1.152
-  - fix web_accessible_resources pdf conflict
+  - Fix web_accessible_resources PDF conflict
 - 0.1.151
-  - add chinese ( contributed by SFGFDSD )
+  - Add Chinese (contributed by SFGFDSD)
 - 0.1.150
-  - Russian localization (contributed by ID Hunter (ASAP) )
+  - Russian localization (contributed by ID Hunter (ASAP))
 - 0.1.149
-  - Fix pdf ui space conflict
+  - Fix PDF UI space conflict
 - 0.1.148
   - Korean localization (contributed by 미르냥 (Mirnyang))
   - Brazilian localization (contributed by helimoreira and Eduardo_91)
 - 0.1.147
-  - Fix writing (request by Enlight432 )
-  - add buy me coffee page
+  - Fix writing (requested by Enlight432)
+  - Add buy me coffee page
 - 0.1.146
-  - Fix youtube subtitle jquery conflict  (request by anh5983 )
+  - Fix YouTube subtitle jQuery conflict (requested by anh5983)
   - Thai localization (contributed by s-upakit)
 - 0.1.145
-  - Fix log exposer  (request by KomodoLegend18 )
+  - Fix log exposer (requested by KomodoLegend18)
 - 0.1.144
   - Fix ebook mouseover conflict
 - 0.1.143
   - Performance enhance on mouseover (contributed by skfh82)
-  - Fix pdf key conflict (contributed by tofuthefirst)
-  - Redesign Intro page (contributed by neoOpus)
+  - Fix PDF key conflict (contributed by tofuthefirst)
+  - Redesign intro page (contributed by neoOpus)
 - 0.1.142
-  - Fix css conflict on koreatimes (request by prvDevs)
+  - Fix CSS conflict on koreatimes (requested by prvDevs)
 - 0.1.141
-  - Fix tts conflict with low browser version (request by Курс Курсович)
+  - Fix TTS conflict with low browser version (requested by Курс Курсович)
 - 0.1.140
   - Add speech panel graphic option
 - 0.1.139
-  - Remove speech recognition from opera (request by Fırat Akbıyık)
-  - add speech recognition panel
+  - Remove speech recognition from Opera (requested by Fırat Akbıyık)
+  - Add speech recognition panel
 - 0.1.138
-  - Fix mouseover detect performance issue (request by eSKej)
-  - Fix google image load
+  - Fix mouseover detect performance issue (requested by eSKej)
+  - Fix Google image load
 - 0.1.137
-  - Fix reddit site conflict
+  - Fix Reddit site conflict
 - 0.1.136
-  - Fix Japanese furigana recognition (request by cspotcode)
+  - Fix Japanese furigana recognition (requested by cspotcode)
   - Add speech recognition translator
 - 0.1.135
-  - Add tts run when only select (request by IsemicolonI)
-  - Add word dictionary off option (request by dod storm)
+  - Add TTS run when only select (requested by IsemicolonI)
+  - Add word dictionary off option (requested by dod storm)
 - 0.1.134
   - Fix tooltip container conflict
-- 0.1.134
   - English AU localization (contributed by CreeperYeeter2)
-  - fix RTL UI
-  - fix edge select conflict
+  - Fix RTL UI
+  - Fix Edge select conflict
 - 0.1.133
-  - fix youtube subtitle conflict
+  - Fix YouTube subtitle conflict
 - 0.1.132
-  - fix copy key conflict with tts voice(request by ldrahnik)
+  - Fix copy key conflict with TTS voice (requested by ldrahnik)
 - 0.1.131
-  - fix tts voice overlap(request by Nebras)
+  - Fix TTS voice overlap (requested by Nebras)
 - 0.1.130
-  - fix review notify
-  - hide mouseover text error (contributed by gignac-cha)
+  - Fix review notify
+  - Hide mouseover text error (contributed by gignac-cha)
 - 0.1.129
-  - fix korea ocr manga lang size
+  - Fix Korea OCR manga language size
 - 0.1.128
   - Spanish localization (contributed by di4m0nds)
   - Turkish localization (contributed by Nejdet ACAR)
   - China localization (contributed by SFGFDSD)
-  - add flashcard
-  - swap google translate default engine
+  - Add flashcard
+  - Swap Google Translate default engine
 - 0.1.127
-  - fix tooltip hide conflict
+  - Fix tooltip hide conflict
 - 0.1.126
-  - change ui sequence
-  - change hold key run to press run(request by Varga Endre)
+  - Change UI sequence
+  - Change hold key run to press run (requested by Varga Endre)
 - 0.1.125
-  - fix youtube subtitle conflict
+  - Fix YouTube subtitle conflict
 - 0.1.124
-  - fix butterflies.ai text writing  (request by Enlight432)
+  - Fix butterflies.ai text writing (requested by Enlight432)
 - 0.1.123
-  - support google image search
+  - Support Google image search
 - 0.1.122
-  - add text detect time option (request by 나정휘 (Jn))
+  - Add text detect time option (requested by 나정휘 (Jn))
 - 0.1.121
   - Korea localization (contributed by newmind)
 - 0.1.120
-  - fix bard text writing  (request by Enlight432)
+  - Fix Bard text writing (requested by Enlight432)
 - 0.1.119
-  - fix ocr build conflict
+  - Fix OCR build conflict
 - 0.1.118
-  - Add language priority on setting (request by marcello-pietrobon)
+  - Add language priority on setting (requested by marcello-pietrobon)
 - 0.1.117
-  - Add youtube subtitle stop option (request by Daifer Ant. Ramirez Ramirez)
+  - Add YouTube subtitle stop option (requested by Daifer Ant. Ramirez Ramirez)
   - Change option structure
 - 0.1.116
-  - Fix tooltip container removed error (request by di4m0nds)
+  - Fix tooltip container removed error (requested by di4m0nds)
 - 0.1.115
-  - fix bing chat writing
+  - Fix Bing chat writing
 - 0.1.114
-  - fix non english writing conflict
+  - Fix non-English writing conflict
 - 0.1.113
-  - change writing text logic (request by Enlight432)
+  - Change writing text logic (requested by Enlight432)
 - 0.1.112
-  - fix tooltip highlight (request by marcello-pietrobon)
+  - Fix tooltip highlight (requested by marcello-pietrobon)
 - 0.1.111
-  - support tooltip border (request by pussykiller)
-  - support writing translate on url search box (type "/ " to start) (request by Enlight432)
+  - Support tooltip border (requested by pussykiller)
+  - Support writing translate on URL search box (type "/ " to start) (requested by Enlight432)
 - 0.1.110
-  - fix tooltip sticky position (request by serega)
+  - Fix tooltip sticky position (requested by serega)
 - 0.1.109
-  - rollback opencv library
+  - Rollback OpenCV library
 - 0.1.108
-  - add baidu
-  - support google doc hover
+  - Add Baidu
+  - Support Google Doc hover
 - 0.1.107
-  - fix intro site
+  - Fix intro site
 - 0.1.106
-  - fix writing box
+  - Fix writing box
 - 0.1.105
-  - fix copy (request by J-Corleone)
+  - Fix copy (requested by J-Corleone)
 - 0.1.104
-  - fix shadow dom performance
+  - Fix Shadow DOM performance
 - 0.1.103
-  - update tesseract js v5.0.3
-  - fix pdf shortcut key (request by woong park)
+  - Update Tesseract.js v5.0.3
+  - Fix PDF shortcut key (requested by Woong Park)
 - 0.1.102
-  - fix touch recognition
+  - Fix touch recognition
 - 0.1.101
-  - add source language & mouse click for tooltip (request by محمد ع. أبو الحسن)
+  - Add source language & mouse click for tooltip (requested by محمد ع. أبو الحسن)
 - 0.1.100
-  - make hijack injection tighter for support more site (request by AstudilloMarillo)
+  - Make hijack injection tighter for support more sites (requested by AstudilloMarillo)
 - 0.1.99
-  - fix sciencedirect pdf conflict (request by Tamer)
-  - make bidirectional translate for writing (request by IkiamJ)
-  - support text select on google document
+  - Fix ScienceDirect PDF conflict (requested by Tamer)
+  - Make bidirectional translate for writing (requested by IkiamJ)
+  - Support text select on Google Document
 - 0.1.98
-  - fix pdf line space
+  - Fix PDF line space
 - 0.1.97
-  - fix pdf conflict (request by Mai Thy Đặng)
+  - Fix PDF conflict (requested by Mai Thy Đặng)
 - 0.1.96
-  - fix bing chat conflict (request by BlinkDev2k2)
-  - change review url
+  - Fix Bing chat conflict (requested by BlinkDev2k2)
+  - Change review URL
 - 0.1.95
-  - fix emoji tts
+  - Fix emoji TTS
 - 0.1.94
-  - hide pdf viewer url
-  - add highlight (request by imymexxx)
+  - Hide PDF viewer URL
+  - Add highlight (requested by imymexxx)
 - 0.1.93
-  - fix pdf url
+  - Fix PDF URL
 - 0.1.92
-  - add google translate tts
+  - Add Google Translate TTS
 - 0.1.91
-  - add bing tts
+  - Add Bing TTS
 - 0.1.90
-  - add animation option (request by WellingtonmpdNeves)
-  - add pdf shortcut for note & draw (contributed by michael-nhat)
+  - Add animation option (requested by WellingtonmpdNeves)
+  - Add PDF shortcut for note & draw (contributed by Michael-Nhat)
 - 0.1.89
-  - fix youtube embed conflict (request by BH J)
+  - Fix YouTube embed conflict (requested by BH J)
 - 0.1.88
-  - fix youtube sub conflict
-  - add voice target option (request by trionline1234)
-  - add voice repeat
+  - Fix YouTube subtitle conflict
+  - Add voice target option (requested by trionline1234)
+  - Add voice repeat
 - 0.1.87
-  - fix shadow dom performance issue
+  - Fix Shadow DOM performance issue
   - Arabic localization (contributed by neoOpus)
-  - indonesian localization (contributed by ardasatata)
+  - Indonesian localization (contributed by ardasatata)
 - 0.1.86
-  - support ebook using foliate-js
-  - french localization (contributed by neoOpus)
+  - Support ebook using Foliate.js
+  - French localization (contributed by neoOpus)
 - 0.1.85
-  - fix text editor conflict (request by ultrabave) 
+  - Fix text editor conflict (requested by ultrabave)
 - 0.1.84
-  - fix gmail writing translator conflict
-  - hebrew localization (contributed by netanel123123)
-  - detect youtube player caption on/off (request by 웃으며살아요)
-  - add esc key to stop tts (request by 나야브)
-  - use vue3
-  - make advanced tab (request by JMFierro)
+  - Fix Gmail writing translator conflict
+  - Hebrew localization (contributed by netanel123123)
+  - Detect YouTube player caption on/off (requested by 웃으며살아요)
+  - Add ESC key to stop TTS (requested by 나야브)
+  - Use Vue3
+  - Make advanced tab (requested by JMFierro)
 - 0.1.83
-  - fix youtube shorts subtitle traffic error
-  - fix csv format conflict
+  - Fix YouTube Shorts subtitle traffic error
+  - Fix CSV format conflict
 - 0.1.82
-  - fix tts lang detect
-  - add deepl translator (request by neoOpus)
+  - Fix TTS language detect
+  - Add DeepL translator (requested by neoOpus)
 - 0.1.81
-  - Support dual sub for youtube shorts
-  - fix youtube pause error (request by shikov)
+  - Support dual subtitles for YouTube Shorts
+  - Fix YouTube pause error (requested by shikov)
 - 0.1.80
-  - support yandex translator (requested by Bushrangers)
+  - Support Yandex translator (requested by Bushrangers)
 - 0.1.79
-  - fix youtube null fetch error on dual sub merge
-  - fix youtube trustedHTML error
-  - support dual sub for youtube embed video
+  - Fix YouTube null fetch error on dual subtitle merge
+  - Fix YouTube TrustedHTML error
+  - Support dual subtitles for YouTube embed video
 - 0.1.78
-  - google reject by "Blue Argon"
-    - make ExtReloader works only on development
-    - remove any unused package
-    - refactor code
-    - double check any existence of eval()
+  - Google reject by "Blue Argon"
+    - Make ExtReloader works only on development
+    - Remove any unused package
+    - Refactor code
+    - Double check any existence of eval()
 - 0.1.77
-  - fix youtube dual subtitles time mismatch
+  - Fix YouTube dual subtitles time mismatch
 - 0.1.76
-  - add dual subtitle for youtube
+  - Add dual subtitles for YouTube
 - 0.1.75
-  - fix translator font customization (request by Musab Almawed)
-  - fix youtube word detect
-  - add uninstall translator callback page
+  - Fix translator font customization (requested by Musab Almawed)
+  - Fix YouTube word detect
+  - Add uninstall translator callback page
 - 0.1.74
-  - fix select destruction
-  - add intro site
-  - add hotkey for OCR (request by neoOpus)
+  - Fix select destruction
+  - Add intro site
+  - Add hotkey for OCR (requested by neoOpus)
 - 0.1.73
-  - update tesseract js ocr
-  - fix translate writing box
-  - make youtube subtitle selectable
+  - Update Tesseract.js OCR
+  - Fix translate writing box
+  - Make YouTube subtitle selectable
 - 0.1.72
-  - change default keyset
-  - add writing translating feature
-  - add website filter (request by Serge)
+  - Change default keyset
+  - Add writing translating feature
+  - Add website filter (requested by Serge)
 - 0.1.71
-  - fix ocr block recognition
+  - Fix OCR block recognition
 - 0.1.70
-  - add transliteration (contributed by ardasatata)
-  - add distance adjustment for tooltip (request by 이준혁)
+  - Add transliteration (contributed by ardasatata)
+  - Add distance adjustment for tooltip (requested by 이준혁)
 - 0.1.69
-  - fix css conflict on baidu
+  - Fix CSS conflict on Baidu
 - 0.1.68
-  - fix shortcut key
-  - fix youtube subtitle detection
+  - Fix shortcut key
+  - Fix YouTube subtitle detection
 - 0.1.67
-  - fix hidden translator tooltip in bing chat (request by Moein)
-  - add shortcut key for copy translated text
-  - add detect swap hold key (request by abonawwaf)
+  - Fix hidden translator tooltip in Bing chat (requested by Moein)
+  - Add shortcut key for copy translated text
+  - Add detect swap hold key (requested by abonawwaf)
 - 0.1.66
-  - fix bing translator response
-  - fix pdf text select (request by Furkan Nart1)
+  - Fix Bing translator response
+  - Fix PDF text select (requested by Furkan Nart1)
 - 0.1.65
-  - fix pdf url crash
-  - change pdf js version to 3.7.107
-  - use doq for pdf js dark mode (request by 6 SEX)
+  - Fix PDF URL crash
+  - Change PDF.js version to 3.7.107
+  - Use DOQ for PDF.js dark mode (requested by 6 SEX)
 - 0.1.64
-  - google reject translator by "clipboardWrite permission"
-    - remove the permission
+  - Google reject translator by "clipboardWrite permission"
+    - Remove the permission
 - 0.1.63
-  - Change pdf url format (request by shawnding)
-  - Change context menu to include copy (request by KirpichKrasniy)
-  - Fix pdf permission error (request by Nevermind)
-  - fix setting display
-  - use opencv on ocr
+  - Change PDF URL format (requested by shawnding)
+  - Change context menu to include copy (requested by KirpichKrasniy)
+  - Fix PDF permission error (requested by Nevermind)
+  - Fix setting display
+  - Use OpenCV on OCR
 - 0.1.62
   - Typo fix from option list (contributed by neoOpus)
 - 0.1.61
   - Fix destruction process
 - 0.1.60
-  - change ocr japanese vertical model
-  - fix node js 18 crash (request by anthony-nyc)
-  - fix bing crash (request by Anh Dao)
-  - fix ocr schedule
+  - Change OCR Japanese vertical model
+  - Fix Node.js 18 crash (requested by anthony-nyc)
+  - Fix Bing crash (requested by Anh Dao)
+  - Fix OCR schedule
 - 0.1.59
-  - support bigger translate box (request by Zoelya)
-  - add papago translator
+  - Support bigger translate box (requested by Zoelya)
+  - Add Papago translator
 - 0.1.58
-  - use tesseract.js@4.0.1
-  - change OCR flow
-  - support more i18 translation
-  - add Russian language (contributed by Blueberryy)  
+  - Use Tesseract.js@4.0.1
+  - Change OCR flow
+  - Support more i18 translation
+  - Add Russian language (contributed by Blueberryy)
 - 0.1.57
-  - add option for font color (request by WellingtonmpdNeves)
+  - Add option for font color (requested by WellingtonmpdNeves)
 - 0.1.56
-  - add voice selection (request by Joost Dancet)
-  - add voice speed (request by vijayabalan)
-  - add justified text (request by WellingtonmpdNeves)
+  - Add voice selection (requested by Joost Dancet)
+  - Add voice speed (requested by vijayabalan)
+  - Add justified text (requested by WellingtonmpdNeves)
 - 0.1.55
-  - fix mouse back button (request by SP ND)
+  - Fix mouse back button (requested by SP ND)
 - 0.1.54
-  - fix container text detect (request by baroooooody9)
-  - add context menu for saving translated text
+  - Fix container text detect (requested by baroooooody9)
+  - Add context menu for saving translated text
 - 0.1.53
-  - add exclude language to be translated (request by kwisatz haderach)
-  - fix css on translator tooltip
+  - Add exclude language to be translated (requested by kwisatz haderach)
+  - Fix CSS on translator tooltip
 - 0.1.52
-  - fix google translator (request by ATU8020)
+  - Fix Google translator (requested by ATU8020)
 - 0.1.51
   - Auto script injecting when install
-  - Add tts stop when tab switching
+  - Add TTS stop when tab switching
 - 0.1.50
-  - Add local pdf permission warning
-  - Use google translator as main translator option
-  - Fix css conflict on tooltip radius
+  - Add local PDF permission warning
+  - Use Google translator as main translator option
+  - Fix CSS conflict on tooltip radius
 - 0.1.49
-  - Fix conflict with google web translator (request by dotdioscorea)
-  - Add blur on tooltip (request by neoOpus)
-  - Fix css conflict on tooltip (request by min geon shin)
-  - Add sub google translator option
+  - Fix conflict with Google web translator (requested by dotdioscorea)
+  - Add blur on tooltip (requested by neoOpus)
+  - Fix CSS conflict on tooltip (requested by Min Geon Shin)
+  - Add sub Google translator option
 - 0.1.48
-  - google reject by "Irrelevant information about Mouse Tooltip Translator"
-    - remove description
+  - Google reject by "Irrelevant information about Mouse Tooltip Translator"
+    - Remove description
 - 0.1.47
-  - update tesseract ocr library
-  - add sub google translator option
+  - Update Tesseract OCR library
+  - Add sub Google translator option
 - 0.1.46
-  - rollback google translate fix from 0.1.44
+  - Rollback Google Translate fix from 0.1.44
 - 0.1.45
-  - change mouse detection
+  - Change mouse detection
 - 0.1.44
-  - fix google translate api (request by CONATUS)
-  - change tooltip text to non transparency (request by Hakan Özlen)
+  - Fix Google Translate API (requested by CONATUS)
+  - Change tooltip text to non-transparency (requested by Hakan Özlen)
 - 0.1.43
-  - google reject by tabs permission
-    - remove the permission
+  - Google reject by tabs permission
+    - Remove the permission
 - 0.1.42
-  - fix chinese default language code (request by yc-forever)
+  - Fix Chinese default language code (requested by yc-forever)
 - 0.1.41
-  - fix google translate api request
+  - Fix Google Translate API request
 - 0.1.40
-  - detect chrome pdf viewer instead of pdf url (request by Justin Brown)
+  - Detect Chrome PDF viewer instead of PDF URL (requested by Justin Brown)
 - 0.1.39
-  - fix translator crash from twitter youtube (request by PedoBearNomsLoli)
+  - Fix translator crash from Twitter YouTube (requested by PedoBearNomsLoli)
 - 0.1.38
-  - increase variety on tooltip font size
-  - change description
-- 0.1.37
-  - Google reject by description
-    - remove "Translate" from title
-    - remove some description about "Translate"  
-- 0.1.36  
-  - alert local pdf file permission  
-  - fix pdf request header detection
-  - add pdf detect option to allow pdf translate (request by Meow Meow)
-- 0.1.35
-  - fix pdf viewer problem when open with new tab (request by M9VK)
-  - fix pdf viewer url parameter crash (request by sensypo)
-- 0.1.34
-  - remove sendMessage (stop tts)
-- 0.1.33
-  - avoid to use sendMessage (stop tts) when leave tab
-- 0.1.32
-  - add "translate When" option to replace "translate on hover" (request by Alex)
-  - load setting from storage instead of background service worker
-  - fix tooltip position problem when crtl pressed
-  - set initial "translate into" value correctly
-- 0.1.31
-  - fix cpu usage (request by M9VK)
-- 0.1.30
-  - update to google chrome manifest v3  
-  - remove opencv, use canvas to process crop for ocr translate
-  - remove option "translate on hover" and "translate on select"
-  - use vue loader for translator popup page
-  - use chrome tts instead of google tts api
-  - update tooltip translator pdf viewer to use v2.8.335 pdfjs  
-  - support command key for translator activation
-  - support right to left alignment for translate to Persian
-  - move ocr translate process to iframe  
-  - fix translator tooltip position (problem when it is first shot)
-- 0.1.29
-  - fix bing translator crash(request by zx xu)  
-  - support right to left alignment for translate to Arabic (request by mohamad-b)
-  - add translate text history section on popup page (request by TeraStrider)  
-- 0.1.28  
-  - support translate on selection (contributed by sanprojects)  
-- 0.1.27  
-  - support youtube subtitle caption to show translator tooltip (request by Veratyr)  
-  - fix gmail pdf attachment crash with translator viewer (request by junkey)  
-- 0.1.26  
-  - increase tooltip z-index (request by WM)  
-  - add customization on tooltip width (request by Bambang Sutrisno)  
-- 0.1.25
-  - Google reject by description
-    - Google said "Irrelevant information about Mouseover Translate" again
-    - remove all main description
-- 0.1.24
-  - Google reject by description
-    - Google said "Irrelevant information about Mouseover Translate"
-    - remove "Mouseover Translate" from title and package summarization
-- 0.1.23
-  - Google reject by description
-    - Google said to remove "google translate"
-    - remove “google translate” from package summarization
-    - avoid to use continuously mentioned “google translate”
-- 0.1.22
-  - fix translator type "bing" to correctly uses bing translator api
-- 0.1.21
-  - Support translator to translate word (request by Amir Rezaei)
-  - Support reverse translate (request by Amir Rezaei)
-  - When activation hold key is set, turn off permanent feature enable
-- 0.1.20
-  - Change promo name to Mouseover Translate
-  - Change manifest description to Mouseover Translate
-- 0.1.19
-  - remove vue jsx from translator popup configuration page
-  - fix translator popup page title name
-  - add "about section" on popup page
-- 0.1.18
-  - Rollback description
-- 0.1.17
-  - Google reject by description
-    - No detail guideline is provided. Make guess to remove some item.
-    - Remove all related description
-- 0.1.16
-  - google reject by description
-    - Remove “Supported Translation Languages with google translate”
-    - Remove “Supported TTS languages with google TTS”
-    - Avoid frequently mentioned Mouse tooltip translator in description
-  - Remove multilingual description
-  - Rollback google translate
-  - Rollback name to Mouse tooltip translator
-- 0.1.15
-  - Change name, Mouse tooltip translator to Mouseover translator
-  - Support font size customization (request by Ramy_Ahmed.87)
-  - Support Bing translator (request by Ramy_Ahmed.87)
-  - Fix google translate response
-- 0.1.14
-  - Fix hide tooltip (show tooltip after mouse move)
-  - Support multilingual description using google translate
-- 0.1.13
-  - Filter out when only detect currency text
-- 0.1.12
-  - Fix base64 image OCR response for translate ocr correctly
-  - Use Vue JSX on translator popup page
-- 0.1.11
-  - Use Vue and Vuetify on translator popup page
-  - Add options ui
-  - Add load base64 image on OCR
-  - Add resize image on OCR
-  - Add image preprocessing step on OCR
-- 0.1.10
-  - Fix URL text filter
-  - Filter text that only include number and special character
-  - Hide tooltip when leave tab
-  - Fix hiding when ctrl+a or ctrl+f
-- 0.1.9
-  - Only load bootstrap tooltip library
-  - Apply lazy load on manga OCR
-  - Use transform for positioning
-- 0.1.8
-  - Fix TTS (text to speech) stop message sending
-  - Fix image load for translate OCR image
-  - Use zodiac3539's train data for tesseract jpn_vert OCR
-- 0.1.7
-  - Fix scrolled tooltip dictionary position
-  - Hide tooltip when ctrl+a or ctrl+f is pressed
-  - Change translator popup page container design as cool design
-  - Stop played TTS (text to speech) when leave tab
-  - Only activate tooltip when tab is focused
-  - Support bubble translate using tesseract.js OCR
-  - Update translated pdf viewer using PDF.js 2.5.207
-  - Filter out 1000 length text 
-- 0.1.6
-  - Fix translator setting error
-  - Change hold key action
-  - Fix popup typo
-- 0.1.5
-  - Fix subframe pdf to translate correctly
-  - Fix bootstrap dropdown crash  
-- 0.1.4
-  - Fix translator pdf viewer line break
-- 0.1.3
-  - Add fade
-  - Fix TTS (text to speech) recognize
-- 0.1.2
-  - Increase tooltip margin
-  - Prevent translate on URL text
-  - Support pdf tooltip translate using PDF.js (pdf reader)
-- 0.1.1
-  - Support long sentence for TTS (text to speech)
-  - Fix tooltip arrow display error
-  - Fix key hold error (issue on tab switching)
-- 0.1.0
-  - First release of Mouse tooltip translator
+  - Increase variety on
 
 # Intro  
 Mouse tooltip translator is a google chrome extension that provide convenient translate experience. This translator extension minimize generally required step to translate word. Normally, copying and pasting are used to obtain translated sentence from google translate site. This extension uses text hovering to translate text. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension replaces general translate process which open new tab for using google translate to getting translated sentence. This replace translating way makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
