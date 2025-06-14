@@ -36,10 +36,10 @@
 		"message": "檢測字幕"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "鍵盤                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "鍵盤"
 	},
 	"Show_Tooltip_When": {
 		"message": "何時顯示工具提示"
@@ -51,7 +51,7 @@
 		"message": "何時翻譯書寫"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "何時進行自動閱讀"
 	},
 	"OCR_When": {
 		"message": "何時進行OCR"
@@ -153,10 +153,10 @@
 		"message": "工具提示詞典"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "語音翻譯速度"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "備用翻譯引擎"
 	},
 	"SPEECH": {
 		"message": "語音識別"
@@ -210,7 +210,7 @@
 		"message": "排除網站"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "網站白名單"
 	},
 	"About______________________________________": {
 		"message": "關於                                      "
@@ -276,10 +276,10 @@
 		"message": "咖啡                                      "
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "支援此應用程式"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "請開發者喝杯咖啡"
 	},
 	"Title______________________________________": {
 		"message": "標題                                      "
@@ -288,6 +288,6 @@
 		"message": "滑鼠工具提示翻譯器 - PDF 和 Netflix Youtube 雙字幕"
 	},
 	"appDesc": {
-		"message": "滑鼠工具提示轉換器使用谷歌翻譯翻譯滑鼠懸停文本。支持 OCR、TTS、漫畫翻譯和 PDF 翻譯。"
+		"message": "滑鼠工具提示翻譯器使用谷歌翻譯對滑鼠懸停文字進行翻譯。支援OCR、TTS、漫畫翻譯和PDF翻譯。"
 	}
 }

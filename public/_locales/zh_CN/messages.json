@@ -27,7 +27,7 @@
 		"message": "写作语言"
 	},
 	"Reverse_Translate_Language": {
-		"message": "逆向翻译语言"
+		"message": "反向翻译语言"
 	},
 	"OCR_Language": {
 		"message": "OCR 语言"
@@ -156,7 +156,7 @@
 		"message": "语音翻译速度"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "备用翻译引擎"
 	},
 	"SPEECH": {
 		"message": "语音"
@@ -234,7 +234,7 @@
 		"message": "翻译本地电子书文件"
 	},
 	"Twitter": {
-		"message": "Twitter"
+		"message": "推特"
 	},
 	"Retweet_twitter_post": {
 		"message": "转发推特帖子"
@@ -288,6 +288,6 @@
 		"message": "鼠标工具提示翻译器 - PDF 和 Netflix Youtube 双字幕"
 	},
 	"appDesc": {
-		"message": "鼠标工具提示转换器使用谷歌翻译翻译鼠标悬停文本。支持 OCR、TTS、漫画翻译和 PDF 翻译。"
+		"message": "鼠标工具提示翻译器使用谷歌翻译对鼠标悬停文本进行翻译。支持OCR、TTS、漫画翻译和PDF翻译。"
 	}
 }
