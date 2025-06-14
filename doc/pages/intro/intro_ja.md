@@ -1,117 +1,87 @@
-# How to use
+＃使用方法
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- 基本的な用途：翻訳するテキストを上回るか、選択（ハイライト）します。
+  - テキストを使用してホバーをテストします：
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - 翻訳が機能していない場合は、現在のターゲット言語を確認してください
+    - [言語の変更方法]（https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language）
+    - この翻訳者は、ソースとターゲット言語が同一である場合、テキストを省略します。
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- <kbd>左ctrl </kbd>キーを保持して、ツールチップが表示されたときにTTS発音を聞きます。 <kbd> esc </kbd>を押して、声を止めます。
+  - 翻訳された結果テキストを聞くには、ダブルプレス<kbd>左ctrl </kbd>を試してください
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- <kbd>右Alt </kbd>キーを押して、入力ボックスに書いている（または強調表示されたテキスト）を翻訳します。必要に応じて、<kbd> ctrl </kbd> + <kbd> z </kbd>を押すことでアクションを元に戻すことができます。
+  - 翻訳が機能していない場合は、現在のターゲット言語がライティング言語と一致していることを確認してください。
+  - <kbd>右alt </kbd>がハングルスワップとして使用される場合、
+他のキーを使用して作業します。
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- クエリの前に<kbd>/</kbd>+<kbd> space </kbd>を入力して、URL検索ボックスのテキストを翻訳します。
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- オンラインPDFをサポートして、pdf.jsを使用して翻訳されたツールチップを表示します（ローカルコンピューターPDFファイルには追加の許可が必要です。
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- YouTubeビデオのデュアルサブタイトルをサポートします。
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- <kbd>左シフト</kbd>キー +マウスを画像上に保持するときにOCRを処理します（例えば、マンガ）
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- プレス<kbd> f2 </kbd>キーで自動リーダーを実行します
+  - TTSを使用してテキストよりもマウスを読み始めます
+  - Auto Readerを停止するには、<kbd> esc </kbd>を押します
+  - ダブルプレス<kbd> f2 </kbd>を試して、翻訳された結果テキストオートリーダーを聞く
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- <kbd>右ctrl </kbd>キーを押さえて、音声認識翻訳者をアクティブにします。
+  - デフォルトの音声認識言語は英語です。
+  - 音声認識言語とターゲット言語が同じ場合、スキップします。
+  - オーディオ許可が必要です
+  - Google Chrome、MS-Edge、Vivaldi、Opera、Brave、Arc、YandexなどのChromiumベースのブラウザーとのみ互換性があります。
+- ショートカットキーをカスタマイズします
+  - Chrome：//拡張機能/ショートカットまたは同等のブラウザ内部構成ページから、Chrome：//をブラウザの内部URLに置き換えることでアクセスできます（例：Edge：//、browser：//、またはbrave：// etc）。
+＃言語を変更します
+- [設定]ページで現在の言語を変更します
+  - [設定]ページには、ブラウザの右上にあるパズル（拡張子）ボタンをクリックしてアクセスできます。
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+＃ 例外
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- ソーステキスト言語と翻訳言語が同じ場合、スキップします。
+- ページが焦点を合わせていない場合、キー入力は検出されません。
+入力キーボードの前にページにフォーカスをクリックします。
+- Webステータスがオフラインである場合、アプリケーションは機能しません。
+- サイトが<https://chrome.google.com/extensions>の場合、Chromeセキュリティの理由で動作しません。
+- ローカルファイルの許可が与えられない場合、ローカルPDFを処理できません。
+  - ファイルが開いていない場合は、ドラッグしてタブにドロップしてみてください。
+  - 許可警告を表示し、許可ページにリダイレクトします。
+  - リダイレクトされたページで、ファイルにアクセスするには「ファイルへのアクセスを許可する」を選択してください。
+  - PDFを再開してすぐに影響を与えます
 ![result](/doc/10.gif)

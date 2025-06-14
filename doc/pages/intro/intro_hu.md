@@ -1,117 +1,87 @@
-# How to use
+# Hogyan kell használni
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Alapvető felhasználások: A lefordításhoz oldja meg vagy válassza ki (jelölje ki) a szöveget.
+  - Tesztelje a példa szövegét:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Ha a fordítás nem működik, ellenőrizze az aktuális célnyelvt
+    - Ellenőrizze a [nyelv megváltoztatásának módját] (https://github.com/ttop32/mouseToolTiptranlatator/blob/main/doc/intro.md#change-Language)
+    - Ez a fordító elhagyja a szöveget, ha a forrás és a célnyelv azonosak.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Tartsa a <kbd> bal-ctrl </kbd> gombot a TTS kiejtésének meghallgatásához, amikor egy eszköztipp megjelenik. Nyomja meg a <kbd> esc </kbd> gombot a hang leállításához.
+  - Próbálja ki a duplán nyomja meg a <kbd> bal-ctrl </kbd> gombot a lefordított eredmény szöveg meghallgatásához
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Nyomja meg a <kbd> jobboldali </kbd> gombot az írott (vagy bármilyen kiemelt szöveg) lefordításához a bemeneti mezőben. Szükség esetén visszavonhatja a műveletet a <kbd> ctrl </kbd> + <kbd> z </kbd> megnyomásával.
+  - Ha a fordítás nem működik, győződjön meg arról, hogy a jelenlegi célnyelv megfelel -e az írás nyelvének.
+  - Ha <kbd> jobbra-alt </kbd> hangulcsere,
+Használjon más kulcsot a munkához.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Fordítsa meg az URL -keresési doboz szövegét a <kbd>/</kbd>+<kbd> Space </kbd> gépelésével.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Támogassa az online PDF -et a lefordított ToolTIP megjelenítéséhez a pdf.js használatával (a helyi számítógépes PDF fájlnak további engedélyre van szüksége, lásd [Kivétel] (https://github.com/ttop32/mouseToolTiptranlator/blob/main/doc/intro.md#exception)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Támogassa a YouTube -videók kettős feliratait.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Folytassa az OCR-t, ha a <kbd> bal-SHIFT </kbd> Key + egér egy képen tartja (például manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Futtassa az Auto Reader gombot a <kbd> f2 </kbd> gombnyomással
+  - Elkezdi olvasni az egér olvasását a szövegen keresztül egészen a TTS -sel
+  - Az automatikus olvasó leállításához nyomja meg a <kbd> esc </kbd> gombot
+  - Próbálja ki a duplán nyomja meg a <kbd> f2 </kbd> gombot a lefordított eredményszöveg Auto olvasó meghallgatásához
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Aktiválja a beszédfelismerő fordítót a <kbd> jobbra-ctrl </kbd> gomb lenyomásával.
+  - Az alapértelmezett beszédfelismerő nyelv angol.
+  - Ha a beszédfelismerő nyelv és a célnyelv azonosak, akkor kihagyja.
+  - Audio engedély szükséges
+  - Csak a króm-alapú böngészőkkel, például a Google Chrome, az MS-Edge, a Vivaldi, az Opera, a Brave, az ARC és a Yandex kompatibilis.
+- Testreszabhatja a parancsikon gombot
+  - A Chrome: // kiterjesztések/parancsikonok vagy az azzal egyenértékű böngésző belső konfigurációs oldalán, amely a Chrome: // helyettesítésével elérhető a böngésző belső URL -jével (pl. Edge: //, böngésző: //, vagy bátor: // stb.).
+# Változtassa meg a nyelvet
+- Változtassa meg az aktuális nyelvet a beállítási oldalon
+  - A Beállítások oldal hozzáférhető a puzzle (kiterjesztés) gombra kattintva, amely a böngésző jobb felső sarkában található.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Kivétel
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Ha a forrásszöveg nyelv és a lefordítási nyelv megegyezik, akkor kihagyja.
+- Ha az oldal nem fókuszált, akkor a kulcsbemenetet nem észlelik.
+Kattintson a fókuszba a Bemenet billentyűzet elõtt.
+- Az alkalmazás nem fog működni, ha a webes állapot offline állapotban van.
+- Ha a webhely <https://chrome.google.com/extensions>, akkor az nem működik, mert a króm biztonsági oka.
+- Ha nincs megadva helyi fájl engedély, akkor a helyi PDF nem kezelhető.
+  - Ha a fájl nem nyílik meg, próbálja meg húzni és dobja el a fülre.
+  - Megjeleníti az engedély figyelmeztetését és átirányítását az engedély oldalra.
+  - Az átirányított oldalon ügyeljen arra, hogy a fájlok hozzáféréséhez válassza a "Hozzáférés az URL -ek fájlokhoz való hozzáférés engedélyezése" lehetőséget.
+  - Újra nyitja meg a PDF -et, hogy azonnal befolyásolja
 ![result](/doc/10.gif)
