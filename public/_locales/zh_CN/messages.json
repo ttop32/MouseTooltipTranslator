@@ -36,10 +36,10 @@
 		"message": "检测字幕"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "键盘                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "键盘"
 	},
 	"Show_Tooltip_When": {
 		"message": "何时显示工具提示"
@@ -51,7 +51,7 @@
 		"message": "何时翻译书写"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "何时进行自动阅读"
 	},
 	"OCR_When": {
 		"message": "何时进行OCR"
@@ -153,7 +153,7 @@
 		"message": "工具提示词典"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "语音翻译速度"
 	},
 	"SPEECH": {
 		"message": "语音"
@@ -207,7 +207,7 @@
 		"message": "排除网站"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "网站白名单"
 	},
 	"About______________________________________": {
 		"message": "关于                                      "
@@ -273,10 +273,10 @@
 		"message": "咖啡                                      "
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "支持此扩展程序"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "请开发者喝杯咖啡"
 	},
 	"Title______________________________________": {
 		"message": "标题                                      "
