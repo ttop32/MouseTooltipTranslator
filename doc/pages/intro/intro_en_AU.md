@@ -4,7 +4,8 @@
   - Test hover with example text:
 ```console
 
-Proletarians of all countries, unite!
+Proletarier aller Länder, vereinigt euch!
+
 ```
 
   - If the translation isn't working, check current target language
@@ -13,9 +14,11 @@ Proletarians of all countries, unite!
 
 ![Alt Text](/doc/reagre.gif)
 
+
 - Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
   - Try double press <kbd>left-ctrl</kbd> to listen translated result text
 ![result](/doc/20.gif)
+
 
 - Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
   - If the translation isn't working, ensure that your current target language matches your writing language.
@@ -24,21 +27,26 @@ use other key to work with.
 
 ![result](/doc/11.gif)
 
+
 - Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
 
 ![result](/doc/21.gif)
+
 
 - Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
 
 ![result](/doc/12.gif)
 
+
 - Support dual subtitles for YouTube videos.
 
 ![result](/doc/16.gif)
 
+
 - Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
 
 ![result](/doc/15.gif)
+
 
 - Run auto reader by press <kbd>F2</kbd> key
   - It start read mouse over text all the way with tts
@@ -46,6 +54,7 @@ use other key to work with.
   - Try double press <kbd>F2</kbd> to listen translated result text auto reader
 
 ![result](/doc/30.gif)
+
 
 - Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
   - Default speech recognition language is English.
@@ -59,6 +68,7 @@ use other key to work with.
   - The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
 
 ![result](/doc/14.gif)
+
 
 
 # Exception

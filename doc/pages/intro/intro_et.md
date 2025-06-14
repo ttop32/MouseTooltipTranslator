@@ -1,147 +1,86 @@
-# How to use
+# Kuidas kasutada
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Põhikasutus: Hõljutage tõlkimiseks teksti üle või valige (tõstke esile).
+  - Testige hõljumist näite tekstiga:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
-
+  - Kui tõlge ei toimi, kontrollige praegust sihtkeelt
+    - Kontrollige [Kuidas keelt muuta] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - See tõlk jätab teksti välja, kui allikas ja sihtkeeled on identsed.
 
 ![Alt Text](/doc/reagre.gif)
 
 
-
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Hoidke TTS-i häälduse kuulamiseks tööriistakatte ilmumisel klahvi <KBD> vasak-Ctrl </ KBD>. Hääle peatamiseks vajutage <KBD> ESC </ KBD>.
+  - Proovige topeltpressi <KBD> Left-Ctrl </ KBD>, et kuulata tõlgitud tulemuste teksti
 ![result](/doc/20.gif)
 
 
-
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
-
+- Vajutage sisendikasti kirjutatud teksti (või mis tahes esiletõstetud teksti) tõlkimiseks nuppu <KBD> parempoolne Alt-Alt </ KBD>. Vajadusel saate toimingu tühistada, vajutades <KBD> ctrl </ kbd> + <kbd> z </ kbd>.
+  - Kui tõlge ei toimi, veenduge, et teie praegune sihtkeel vastaks teie kirjutamiskeelele.
+  - Kui <kbd> parem-alt </ kbd> kasutatakse Hanguli vahetustega,
+Kasutage töötamiseks muud võtit.
 
 ![result](/doc/11.gif)
 
 
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
+- Tõlgi URL -i otsingukasti tekst, kirjutades <Kbd>/</ kbd>+<kbd> kosmose </ kbd> enne oma päringut.
 
 ![result](/doc/21.gif)
 
 
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
+- Toetage veebipõhist PDF -i, et kuvada tõlgitud tööriistakat, kasutades PDF.JS (kohalik arvuti PDF -fail vajab täiendavat luba, vt [erand] (https://github.com/ttop32/mouseToltiptranslator/blob/main/doc/intro.md#exception)))))
 
 ![result](/doc/12.gif)
 
 
-
-- Support dual subtitles for YouTube videos.
-
-
+- Toetage YouTube'i videote duaalide subtiitreid.
 
 ![result](/doc/16.gif)
 
 
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
+- Protsessi OCR <KBD> vasakpoolse vahetuse </ KBD> võtme hoidmisel + hiire pildil (nt manga)
 
 ![result](/doc/15.gif)
 
 
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
+- Käivitage automaatne lugeja vajutage nuppu <kbd> f2 </ kbd> klahvi
+  - See alustab hiire lugemist tekstiga kogu TTS -iga
+  - Autolugeja peatamiseks vajutage <KBD> ESC </ KBD>
+  - Proovige topeltpressi <KBD> F2 </ KBD>, et kuulata tõlgitud tulemuse teksti automaatne lugejat
 
 ![result](/doc/30.gif)
 
 
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
+- Aktiveerige kõnetuvastuse tõlkija, hoides all klahvi <KBD> parempoolne-Ctrl </ KBD>.
+  - Kõne äratundmiskeel on inglise keel.
+  - Kui kõnetuvastuskeel ja sihtkeel on samad, jätab see vahele.
+  - Vaja on heli luba
+  - Ühildub ainult kroomipõhiste brauseritega, näiteks Google Chrome, MS-Sing, Vivaldi, Opera, Brave, ARC ja Yandex.
+- Kohandage otsetee võti
+  - Chrome'ist: // Laiendused/otseteed või samaväärne brauseri sisemine konfiguratsioonileht, millele on juurdepääs Chrome'i asendamisel: // brauseri sisemise URL -iga (nt serv: //, brauser: // või vapper: // jne).
+# Muutke keelt
+- Muutke praegust keelt lehel seadistamisel
+  - Seadete lehele pääseb juurde, klõpsates brauseri paremas ülanurgas asuvat nupul (laiendus).
 
 ![result](/doc/14.gif)
 
 
 
+# Erand
 
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Kui lähteteksti keel ja tõlke keel on samad, siis see vahele jääb.
+- Kui leht ei ole keskendunud, ei tuvastata võtmesisendit.
+Enne sisendklaviatuuri klõpsake lehel Fooct.
+- Rakendus ei tööta, kui veebi olek on võrguühenduseta.
+- Kui sait on <https://chrome.google.com/extensions>, siis see ei toimi, kuna Chrome'i turvalisuse põhjus.
+- Kui kohaliku faili luba ei antud, ei saa kohalikku PDF -i käsitleda.
+  - Kui fail ei avane, proovige see vahekaardile lohistada ja kukutada.
+  - See kuvab loahoiatuse ja suunab loa lehele.
+  - Ümbersuunatud lehel veenduge, et valige failidele juurdepääsu "Luba faili URL -idele juurdepääs".
+  - Avage PDF uuesti, et mõjutada kohe
 ![result](/doc/10.gif)

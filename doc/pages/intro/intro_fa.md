@@ -1,147 +1,86 @@
-# How to use
+# نحوه استفاده
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- کاربردهای اساسی: متن را برای ترجمه ، متن را انتخاب کنید یا انتخاب کنید (برجسته).
+  - آزمون شناور با متن مثال:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
-
+  - اگر ترجمه کار نمی کند ، زبان هدف فعلی را بررسی کنید
+    - [نحوه تغییر زبان] را بررسی کنید (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - اگر منبع و زبانهای هدف یکسان باشند ، این مترجم متن را حذف می کند.
 
 ![Alt Text](/doc/reagre.gif)
 
 
-
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- کلید <kbd> چپ ctrl </kbd> را برای شنیدن تلفظ tts هنگام ظاهر شدن یک ابزار نگه دارید. برای متوقف کردن صدا ، <kbd> esc </kbd> را فشار دهید.
+  - برای گوش دادن به متن نتیجه ترجمه شده ، دو برابر را فشار دهید
 ![result](/doc/20.gif)
 
 
-
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
-
+- برای ترجمه متنی که می نویسید (یا هر متن برجسته شده) را در کادر ورودی ترجمه کنید ، کلید <kbd> سمت راست را فشار دهید. در صورت لزوم ، می توانید با فشار دادن <kbd> ctrl </kbd> + <kbd> z </kbd> عمل را خنثیسازی کنید.
+  - اگر ترجمه کار نمی کند ، اطمینان حاصل کنید که زبان هدف فعلی شما با زبان نوشتن شما مطابقت دارد.
+  - اگر <kbd> سمت راست alt </kbd> به عنوان مبادله hangul استفاده می شود ،
+از کلید دیگر برای کار با آن استفاده کنید.
 
 ![result](/doc/11.gif)
 
 
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
+- متن جعبه جستجوی URL را با تایپ کردن <kbd>/</kbd>+<kbd> فضای قبل از پرس و جو خود ترجمه کنید.
 
 ![result](/doc/21.gif)
 
 
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
+- پشتیبانی از PDF آنلاین برای نمایش ابزار ترجمه شده با استفاده از pdf.js (پرونده PDF رایانه محلی به مجوز اضافی نیاز دارد ، به [استثنا] مراجعه کنید (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
 ![result](/doc/12.gif)
 
 
-
-- Support dual subtitles for YouTube videos.
-
-
+- از زیرنویس های دوگانه برای فیلم های YouTube پشتیبانی کنید.
 
 ![result](/doc/16.gif)
 
 
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
+- پردازش OCR هنگام نگه داشتن <kbd> چپ تغییر </kbd> کلید + ماوس روی یک تصویر (به عنوان مثال ، مانگا)
 
 ![result](/doc/15.gif)
 
 
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
+- کلید Auto Reader را با فشار دادن <KBD> F2 </kbd> کلید اجرا کنید
+  - این شروع به خواندن ماوس از روی متن با TTS می کند
+  - برای متوقف کردن فشار خواننده خودکار <kbd> ESC </kbd>
+  - برای گوش دادن به متن ترجمه شده متن خواننده خودکار ، دو برابر را فشار دهید
 
 ![result](/doc/30.gif)
 
 
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
+- با نگه داشتن کلید <kbd> راست-ctrl </kbd> مترجم تشخیص گفتار را فعال کنید.
+  - زبان تشخیص پیش فرض گفتار انگلیسی است.
+  - اگر زبان تشخیص گفتار و زبان هدف یکسان باشد ، از آن می پرید.
+  - اجازه صوتی لازم است
+  - فقط با مرورگرهای مبتنی بر کروم ، مانند Google Chrome ، MS-Edge ، Vivaldi ، Opera ، Brave ، Arc و Yandex سازگار است.
+- کلید میانبر را سفارشی کنید
+  - از کروم: // پسوند/میانبرها یا صفحه پیکربندی داخلی مرورگر معادل ، با جایگزینی Chrome: // با URL داخلی مرورگر خود (به عنوان مثال ، لبه: // ، مرورگر: // ، یا شجاع: // و غیره) قابل دسترسی است.
+# تغییر زبان
+- تغییر زبان فعلی در صفحه تنظیم
+  - با کلیک بر روی دکمه پازل (پسوند) واقع در سمت راست بالای مرورگر ، می توانید به صفحه تنظیمات دسترسی پیدا کنید.
 
 ![result](/doc/14.gif)
 
 
 
+# استثنا
 
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- اگر زبان متن منبع و زبان ترجمه یکسان باشد ، پرش می شود.
+- اگر صفحه متمرکز نشده باشد ، ورودی کلیدی شناسایی نمی شود.
+قبل از صفحه کلید ورودی ، روی صفحه تمرکز کنید.
+- اگر وضعیت وب آفلاین باشد ، برنامه کاربردی نخواهد بود.
+- اگر سایت <https://chrome.google.com/extensions> باشد ، به دلیل دلیل امنیتی Chrome کار نمی کند.
+- در صورت عدم اجازه پرونده محلی ، PDF محلی قابل کنترل نیست.
+  - اگر پرونده باز نشود ، سعی کنید آن را روی برگه بکشید و رها کنید.
+  - این یک هشدار مجوز را نشان می دهد و به صفحه مجوز هدایت می شود.
+  - در صفحه هدایت شده ، اطمینان حاصل کنید که "اجازه دسترسی به URL های پرونده" را برای دسترسی به پرونده ها انتخاب کنید.
+  - PDF را دوباره باز کنید تا بلافاصله تأثیر بگذارد
 ![result](/doc/10.gif)
