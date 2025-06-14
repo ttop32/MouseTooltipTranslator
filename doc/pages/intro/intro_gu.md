@@ -1,147 +1,86 @@
-# How to use
+# કેવી રીતે ઉપયોગ કરવો
 
-
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- મૂળભૂત ઉપયોગો: ભાષાંતર કરવા માટે હોવર અથવા પસંદ કરો (હાઇલાઇટ) પસંદ કરો.
+  - ઉદાહરણ ટેક્સ્ટ સાથે ટેસ્ટ હોવર:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
-
+  - જો અનુવાદ કાર્યરત નથી, તો વર્તમાન લક્ષ્ય ભાષા તપાસો
+    - [ભાષા કેવી રીતે બદલવી તે તપાસો] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-langage)
+    - જો સ્રોત અને લક્ષ્ય ભાષાઓ સમાન હોય તો આ અનુવાદક ટેક્સ્ટને બાકાત રાખશે.
 
 ![Alt Text](/doc/reagre.gif)
 
 
-
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- જ્યારે ટૂલટિપ દેખાય છે ત્યારે ટીટીએસ ઉચ્ચારણ સાંભળવા માટે <કેબીડી> ડાબે-સીટીઆરએલ </kbd> કીને પકડો. અવાજને રોકવા માટે <kbd> ESC </kbd> દબાવો.
+  - અનુવાદિત પરિણામ ટેક્સ્ટ સાંભળવા માટે ડબલ પ્રેસ <કેબીડી> ડાબે-સીટીઆરએલ </kbd> અજમાવો
 ![result](/doc/20.gif)
 
 
-
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
-
+- ઇનપુટ બ in ક્સમાં તમે લખી રહ્યાં છો તે ટેક્સ્ટ (અથવા કોઈપણ પ્રકાશિત ટેક્સ્ટ) ને અનુવાદિત કરવા માટે <kbd> રાઇટ-ઓએલટી </kbd> કી દબાવો. જો જરૂરી હોય, તો તમે <kbd> ctrl </kbd> + <kbd> ઝેડ </kbd> દબાવીને ક્રિયાને પૂર્વવત્ કરી શકો છો.
+  - જો અનુવાદ કાર્યરત નથી, તો ખાતરી કરો કે તમારી વર્તમાન લક્ષ્ય ભાષા તમારી લેખન ભાષા સાથે મેળ ખાય છે.
+  - જો <કેબીડી> રાઇટ-ઓએલટી </kbd> હંગુલ સ્વેપ તરીકે ઉપયોગ કરે છે,
+સાથે કામ કરવા માટે અન્ય કીનો ઉપયોગ કરો.
 
 ![result](/doc/11.gif)
 
 
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
+- તમારી ક્વેરી પહેલાં <kbd>/</kbd>+<kbd> સ્પેસ </kbd> ટાઇપ કરીને URL શોધ બ text ક્સ ટેક્સ્ટનું ભાષાંતર કરો.
 
 ![result](/doc/21.gif)
 
 
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
+- પીડીએફ.જેએસ (સ્થાનિક કમ્પ્યુટર પીડીએફ ફાઇલને વધારાની પરવાનગીની જરૂર હોય છે, [અપવાદ] (https://github.com/ttooltiptranslator/blob/main/doc/intro.md#exception જુઓ) નો ઉપયોગ કરીને અનુવાદિત ટૂલટિપ પ્રદર્શિત કરવા માટે PDF ને PDF ને સપોર્ટ કરો)
 
 ![result](/doc/12.gif)
 
 
-
-- Support dual subtitles for YouTube videos.
-
-
+- યુટ્યુબ વિડિઓઝ માટે ડ્યુઅલ સબટાઈટલને સપોર્ટ કરો.
 
 ![result](/doc/16.gif)
 
 
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
+- <kbd> ડાબી-શિફ્ટ </KBD> કી + માઉસને એક છબી પર હોલ્ડિંગ કરતી વખતે ઓસીઆર પ્રક્રિયા કરો (દા.ત., મંગા)
 
 ![result](/doc/15.gif)
 
 
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
+- પ્રેસ <કેબીડી> એફ 2 </kbd> કી દ્વારા Auto ટો રીડર ચલાવો
+  - તે ટીટીએસ સાથે બધી રીતે ટેક્સ્ટ પર માઉસ વાંચવાનું શરૂ કરે છે
+  - Auto ટો રીડર રોકવા માટે <kbd> ESC </kbd> દબાવો
+  - અનુવાદિત પરિણામ ટેક્સ્ટ Auto ટો રીડર સાંભળવા માટે ડબલ પ્રેસ <kbd> f2 </kbd> પ્રયાસ કરો
 
 ![result](/doc/30.gif)
 
 
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
+- <kbd> રાઇટ-સીટીઆરએલ </kbd> કીને પકડી રાખીને ભાષણ માન્યતા અનુવાદકને સક્રિય કરો.
+  - ડિફ ault લ્ટ સ્પીચ રેકગ્નિશન લેંગ્વેજ અંગ્રેજી છે.
+  - જો ભાષણ માન્યતા ભાષા અને લક્ષ્ય ભાષા સમાન છે, તો તે અવગણે છે.
+  - Audio ડિઓ પરવાનગી જરૂરી છે
+  - ફક્ત ગૂગલ ક્રોમ, એમએસ-એજ, વિવલ્ડી, ઓપેરા, બહાદુર, આર્ક અને યાન્ડેક્સ જેવા ક્રોમિયમ આધારિત બ્રાઉઝર્સ સાથે સુસંગત છે.
+- શોર્ટકટ કીને કસ્ટમાઇઝ કરો
+  - ક્રોમથી: // એક્સ્ટેંશન/શ shortc ર્ટકટ્સ અથવા સમકક્ષ બ્રાઉઝર આંતરિક રૂપરેખાંકન પૃષ્ઠ, ક્રોમ: // ને તમારા બ્રાઉઝરના આંતરિક યુઆરએલ (દા.ત., ધાર: //, બ્રાઉઝર: //, અથવા બહાદુર: // વગેરે) સાથે બદલીને access ક્સેસિબલ.
+# ભાષા બદલો
+- સેટિંગ પૃષ્ઠમાં વર્તમાન ભાષા બદલો
+  - સેટિંગ્સ પૃષ્ઠને તમારા બ્રાઉઝરની ઉપર જમણી બાજુએ સ્થિત પઝલ (એક્સ્ટેંશન) બટનને ક્લિક કરીને ces ક્સેસ કરી શકાય છે.
 
 ![result](/doc/14.gif)
 
 
 
+# અપવાદ
 
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- જો સ્રોત ટેક્સ્ટ ભાષા અને ભાષાંતર ભાષા સમાન છે, તો તે અવગણશે.
+- જો પૃષ્ઠ કેન્દ્રિત નથી, તો કી ઇનપુટ શોધી શકાતું નથી.
+ઇનપુટ કીબોર્ડ પહેલાં ધ્યાન કેન્દ્રિત કરવા માટે ક્લિક કરો.
+- જો વેબ સ્થિતિ offline ફલાઇન હોય તો એપ્લિકેશન કાર્ય કરશે નહીં.
+- જો સાઇટ <https://chrome.google.com/extensions> છે, તો તે કામ કરતું નથી કારણ કે ક્રોમ સુરક્ષા કારણ છે.
+- જો કોઈ સ્થાનિક ફાઇલ પરવાનગી આપવામાં આવી નથી, તો સ્થાનિક પીડીએફને નિયંત્રિત કરી શકાતી નથી.
+  - જો ફાઇલ ખોલતી નથી, તો તેને ટેબ પર ખેંચીને છોડી દેવાનો પ્રયાસ કરો.
+  - તે પરવાનગીની ચેતવણી પ્રદર્શિત કરશે અને પરવાનગી પૃષ્ઠ પર રીડાયરેક્ટ કરશે.
+  - રીડાયરેક્ટ કરેલા પૃષ્ઠ પર, ખાતરી કરો કે તમે ફાઇલોને access ક્સેસ કરવા માટે "ફાઇલ URL ની access ક્સેસને મંજૂરી આપો" પસંદ કરો.
+  - તરત જ અસર કરવા માટે પીડીએફ ફરીથી ખોલો
 ![result](/doc/10.gif)

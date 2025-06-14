@@ -10,6 +10,7 @@ import json
 from googletrans import Translator
 from tqdm import tqdm
 import time
+import re
 
 
 translator = Translator()
@@ -55,26 +56,29 @@ async def main():
     for lang in tqdm(localeList):
         translated_lines = []
         for line in lines:
+            text=""
             if not isCode or ("```" in line):
                 isCode=True
-                translated_lines.append(line)
-                continue
-            if isCode and ("```" in line):
+                text=line
+            elif isCode and ("```" in line):
                 isCode=False
-                translated_lines.append(line)
-                continue
-            if "!" in line:
-                translated_lines.append(line)
-                continue
-            if ""== line.strip():
-                translated_lines.append(line)
-                continue
-            text_split=line.split("- ")
-            if len(text_split) > 1:
-                text=await translate(text_split[1] , lang)
-                translated_lines.append("- ".join([text_split[0], text]))
-                continue
-            translated_lines.append(await translate(line, lang))
+                text=line
+            elif "!" in line:
+                text=line
+            elif ""== line.strip():
+                text=line            
+            elif len(text_split:=line.split("- ")) > 1:
+                text1=await translate(text_split[1] , lang)
+                text="- ".join([text_split[0], text1])
+            else:
+                text=await translate(line, lang)
+    
+            text = re.sub(r"<KBD>", "<kbd>", text, flags=re.IGNORECASE)
+            text = re.sub(r"</KBD>", "</kbd>", text, flags=re.IGNORECASE)
+            text = re.sub(r"< KBD>", "<kbd>", text, flags=re.IGNORECASE)
+            text = re.sub(r"</ KBD>", "</kbd>", text, flags=re.IGNORECASE)
+            
+            translated_lines.append(text)
         output_file = os.path.join(output_dir, f"intro_{lang}.md")
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("\n".join(translated_lines))
