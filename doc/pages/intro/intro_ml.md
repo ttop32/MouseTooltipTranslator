@@ -1,117 +1,87 @@
-# How to use
+# എങ്ങനെ ഉപയോഗിക്കാം
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- അടിസ്ഥാന ഉപയോഗങ്ങൾ: ഹോവർ ചെയ്യുക അല്ലെങ്കിൽ വിവർത്തനം ചെയ്യാൻ വാചകം തിരഞ്ഞെടുക്കുക (ഹൈലൈറ്റ് ചെയ്യുക).
+  - ഉദാഹരണം ടെക്സ്റ്റ് ഉപയോഗിച്ച് ഹോവർ പരിശോധിക്കുക:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - വിവർത്തനം പ്രവർത്തിക്കുന്നില്ലെങ്കിൽ, നിലവിലെ ടാർഗെറ്റ് ഭാഷ പരിശോധിക്കുക
+    - പരിശോധിക്കുക [ഭാഷ എങ്ങനെ മാറ്റാമെന്ന് പരിശോധിക്കുക] (https://gethub.com/ttop32/mouseooltiptanslator/bone/doc/intrgoo.mdrcange-language)
+    - ഉറവിടവും ടാർഗെറ്റ് ഭാഷകളും സമാനമാണെങ്കിൽ ഈ വിവർത്തകൻ വാചകം ഒഴിവാക്കും.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- ഒരു ടൂൾടിപ്പ് ദൃശ്യമാകുമ്പോൾ ടിടിഎസ് ഉച്ചാരണം കേൾക്കാൻ <kbd> ഇടത്-Ctrl </kbd> അമർത്തിപ്പിടിക്കുക. ശബ്ദം നിർത്താൻ <kbd> Esc </kbd> അമർത്തുക.
+  - വിവർത്തനം ചെയ്ത ഫലമായി വാചകം കേൾക്കാൻ <kbd> ഇടത്-Ctrl </kbd> ഇരട്ട അമർത്തുക
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- ഇൻപുട്ട് ബോക്സിൽ നിങ്ങൾ എഴുതുന്ന വാചകം വിവർത്തനം ചെയ്യുന്നതിന് <kbd> വലത്-Alt </kbd> അമർത്തുക (അല്ലെങ്കിൽ ഏതെങ്കിലും ഹൈലൈറ്റ് ചെയ്ത വാചകം) വിവർത്തനം ചെയ്യുന്നതിന് കീ അമർത്തുക. ആവശ്യമെങ്കിൽ, <kbd> ctrl </kbd> + <kbd> zbd> അമർത്തിക്കൊണ്ട് നിങ്ങൾക്ക് പ്രവർത്തനം പഴയപടിയാക്കാൻ കഴിയും.
+  - വിവർത്തനം പ്രവർത്തിക്കുന്നില്ലെങ്കിൽ, നിങ്ങളുടെ നിലവിലെ ടാർഗെറ്റ് ഭാഷ നിങ്ങളുടെ എഴുത്ത് ഭാഷയുമായി പൊരുത്തപ്പെടുന്നുവെന്ന് ഉറപ്പാക്കുക.
+  - <kbd> വലത്-Alt </kbd> Hangul സ്വാപ്പ് ആയി ഉപയോഗിക്കുന്നുവെങ്കിൽ,
+ഉപയോഗിച്ച് പ്രവർത്തിക്കാൻ മറ്റ് കീ ഉപയോഗിക്കുക.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- നിങ്ങളുടെ ചോദ്യത്തിന് മുമ്പ് <kbd> / </kbd> + </kbd> space </kbd> ടൈപ്പുചെയ്ത് വിവർത്തനം ചെയ്യുക.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- PDF.JS (പ്രാദേശിക കമ്പ്യൂട്ടർ PDF ഫയലിന് അധിക അനുമതി ആവശ്യമാണ് (httptop32/mousettiptantor) കാണുക (http/gop32/mouseooltiptantor)
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- YouTube വീഡിയോകൾക്കായി ഡ്യുവൽ സബ്ടൈറ്റിലുകൾ പിന്തുണയ്ക്കുക.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- ഒരു ഇമേജിൽ <kbd> ഇടത്-ഷിഫ്റ്റ് </kbd> കീ + മൗസ് ഓവർ അമർത്തിക്കുമ്പോൾ OR പ്രോസസ്സ് ചെയ്യുക (ഉദാ. മംഗ)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- <kbd> F2 </kbd> കീ അമർത്തി ഓട്ടോ റീഡർ പ്രവർത്തിപ്പിക്കുക
+  - ടിടിഎസിനൊപ്പം വാചകത്തിന് മുകളിലൂടെ മൗസ് വായിക്കാൻ ആരംഭിക്കുന്നു
+  - യാന്ത്രിക റീഡർ നിർത്താൻ <kbd> Esc </kbd> അമർത്തുക
+  - വിവർത്തനം ചെയ്ത ഫലം കേൾക്കുന്നതിന് ഇരട്ട അമർത്തുക <kbd> f2 </kbd> ടെക്സ്റ്റ് ഓട്ടോ റീഡർ
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- <kbd> വലത്-CTRL </kbd> കീ അമർത്തിക്കൊണ്ട് സംഭാഷണ തിരിച്ചറിയൽ പരിവർത്തകൾ സജീവമാക്കുക.
+  - സ്ഥിരസ്ഥിതി സംഭാഷണ തിരിച്ചറിയൽ ഭാഷ ഇംഗ്ലീഷ് ആണ്.
+  - സ്പീച്ച് റെക്കഗ്നിഷൻ ഭാഷയും ടാർഗെറ്റ് ഭാഷയും ഒന്നുതന്നെയാണെങ്കിൽ, അത് ഒഴിവാക്കുന്നു.
+  - ഓഡിയോ അനുമതി ആവശ്യമാണ്
+  - Google Chrome, Ms-Adgt, vivalli, Ora, rare, Arc, Yandex പോലുള്ള ക്രോമിയം അടിസ്ഥാനമാക്കിയുള്ള ബ്ര rowsers സറുകളുമായി മാത്രം പൊരുത്തപ്പെടുന്നു.
+- കമാൻഡ് കുറുക്കുവഴി കീ
+  - Chrome- ൽ നിന്ന്: // വിപുലീകരണ / കുറുക്കുവഴികൾ അല്ലെങ്കിൽ തുല്യമായ ബ്ര browser സർ ആന്തരിക കോൺഫിഗറേഷൻ പേജ് നിങ്ങളുടെ ബ്ര browser സറിന്റെ ഇന്റേണൽ URL ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കാം (ഉദാ. എഡ്ജ്: //, ബ്ര browser സർ: // മുതലായവ).
+# ഭാഷ മാറ്റുക
+- പേജ് ക്രമീകരിക്കുന്നതിൽ നിലവിലെ ഭാഷ മാറ്റുക
+  - നിങ്ങളുടെ ബ്ര .സറിന്റെ മുകളിൽ വലതുവശത്തുള്ള പസിൽ (വിപുലീകരണം) ബട്ടൺ ക്ലിക്കുചെയ്തുകൊണ്ട് ക്രമീകരണ പേജ് ആക്സസ് ചെയ്യാൻ കഴിയും.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# ഒഴിവാക്കൽ
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- ഉറവിട വാചക ഭാഷയും വിവർത്തനം ഭാഷയും ഒന്നുതന്നെയാണെങ്കിൽ, അത് ഒഴിവാക്കും.
+- പേജ് ഫോക്കസ് ചെയ്തിട്ടില്ലെങ്കിൽ, പ്രധാന ഇൻപുട്ട് കണ്ടെത്തിയില്ല.
+കീബോർഡിന് മുമ്പ് പേജ് ഫോക്കസ് ചെയ്യാൻ ക്ലിക്കുചെയ്യുക.
+- വെബ് സ്റ്റാറ്റസ് ഓഫ്ലൈനിലാണെങ്കിൽ അപ്ലിക്കേഷൻ പ്രവർത്തിക്കില്ല.
+- സൈറ്റ് <https://chroom.google.com/ ടെക്സ്റ്റൻഷനുകൾ>, അത് പ്രവർത്തിക്കുന്നില്ല, കാരണം Chrome സുരക്ഷാ കാരണം.
+- പ്രാദേശിക ഫയൽ അനുമതിയില്ലെങ്കിൽ, പ്രാദേശിക PDF കൈകാര്യം ചെയ്യാൻ കഴിയില്ല.
+  - ഫയൽ തുറക്കുന്നില്ലെങ്കിൽ, വലിച്ചിടുകയും ടാബിലേക്ക് വലിച്ചിടുകയും ചെയ്യുക.
+  - ഇത് ഒരു അനുമതി മുന്നറിയിപ്പ് നൽകും, അനുമതി പേജിലേക്ക് റീഡയറക്ട് ചെയ്യും.
+  - റീഡയറക്ട് ചെയ്ത പേജിൽ, ഫയലുകൾ ആക്സസ് ചെയ്യുന്നതിന് നിങ്ങൾ "ഫയൽ URL- കളിലേക്ക് ആക്സസ്സ് അനുവദിക്കുക" തിരഞ്ഞെടുക്കുക.
+  - ഉടൻ തന്നെ സ്വാധീനിക്കാൻ PDF വീണ്ടും തുറക്കുക
 ![result](/doc/10.gif)

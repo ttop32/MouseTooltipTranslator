@@ -1,117 +1,87 @@
-# How to use
+# Kā lietot
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Pamata lietojumi: virziet kursoru virs vai atlasiet (iezīmējiet) tekstu, lai tulkotu.
+  - Pārbaudiet kursoru ar teksta piemēru:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Ja tulkojums nedarbojas, pārbaudiet pašreizējo mērķa valodu
+    - Pārbaudiet [kā mainīt valodu] (https://github.com/ttop32/muousetooltiptranslator/blob/main/doc/intro.md#change-wanguage)
+    - Šis tulkotājs izlaiž tekstu, ja avots un mērķa valodas ir identiskas.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Turiet taustiņu <kbd> LECENT-CTRL </kbd>, lai dzirdētu TTS izrunu, kad parādās rīka padoms. Nospiediet <kbd> esc </kbd>, lai apturētu balsi.
+  - Izmēģiniet dubultā nospiediet <kbd> LECE-Ctrl </kbd>, lai klausītos tulkoto rezultāta tekstu
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Ievades lodziņā nospiediet taustiņu <kbd> Right-Alt </kbd>, lai tulkotu jūsu rakstīto tekstu (vai jebkuru izcelto tekstu). Ja nepieciešams, jūs varat atsaukt darbību, nospiežot <ktrl </kbd> + <kbd> z </kbd>.
+  - Ja tulkojums nedarbojas, pārliecinieties, vai jūsu pašreizējā mērķa valoda atbilst jūsu rakstīšanas valodai.
+  - Ja <kbd> Right-Alt </kbd> tiek izmantots kā Hangul Swap,
+Izmantojiet citu atslēgu, lai strādātu ar.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Tulkojiet URL meklēšanas lodziņa tekstu, ierakstot <kbd>/</kbd>+<kbd> Space </kbd> pirms jūsu vaicājuma.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Atbalstiet tiešsaistes PDF, lai parādītu tulkoto rīku padomu, izmantojot pdf.js (vietējais datora PDF fails ir nepieciešama papildu atļauja, sk. [Izņēmums] (https://github.com/ttop32/muousetooltiptranslator/blob/main/doc/intro.md#exception)))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Atbalstiet dubultus subtitrus YouTube videoklipiem.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Process OCR, turot <kbd> kreiso maiņu </kbd> taustiņš + pele uz attēla (piemēram, manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Palaidiet Auto Reader, nospiediet <kbd> f2 </kbd> taustiņu
+  - Tas visu laiku sāk lasīt peli virs teksta ar TTS
+  - Lai apturētu automātisko lasītāju nospiediet <kbd> ESC </kbd>
+  - Izmēģiniet dubultā nospiediet <kbd> f2 </kbd>, lai klausītos tulkoto rezultātu teksta auto lasītājs
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Aktivizējiet runas atpazīšanas tulkotāju, turot nospiestu taustiņu <kbd> pa labi.
+  - Noklusējuma runas atpazīšanas valoda ir angļu valoda.
+  - Ja runas atpazīšanas valoda un mērķa valoda ir vienāda, tā izlaiž.
+  - Nepieciešama audio atļauja
+  - Savietojams tikai ar hromium balstītiem pārlūkprogrammām, piemēram, Google Chrome, MS-Edge, Vivaldi, Opera, Drosmīgajiem, loka un Yandex.
+- Pielāgojiet saīsnes atslēgu
+  - No hroma: // pagarinājumi/saīsnes vai līdzvērtīga pārlūka iekšējās konfigurācijas lapa, kas pieejama, aizstājot Chrome: // ar pārlūka iekšējo URL (piemēram, mala: //, pārlūks: // vai drosmīgs: // utt.).
+# Mainīt valodu
+- Mainiet pašreizējo valodu, iestatot lapu
+  - Iestatījumu lapai var piekļūt, noklikšķinot uz pogas Puzzle (paplašinājums), kas atrodas pārlūkprogrammas augšējā labajā stūrī.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Izņēmums
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Ja avota teksta valoda un tulkošanas valoda ir tāda pati, tā tiks izlaista.
+- Ja lapa nav fokusēta, atslēgas ievade netiek atklāta.
+Pirms ievades tastatūras izveidojiet noklikšķināšanu uz fokusa lapu.
+- Lietojumprogramma nedarbosies, ja tīmekļa statuss ir bezsaistē.
+- Ja vietne ir <https://chrome.google.com/extensions>, tā nedarbojas, jo hroma drošības iemesls.
+- Ja vietējā faila atļauja nav norādīta, vietējo PDF nevar apstrādāt.
+  - Ja fails netiek atvērts, mēģiniet vilkt un nomest to cilnē.
+  - Tajā tiks parādīts brīdinājums par atļauju un novirzīšana uz atļaujas lapu.
+  - Pārliecinieties, ka novirzītais lapā pārliecinieties, ka piekļuvei failiem izvēlaties “Atļaut piekļuvi failu URL”.
+  - Atkārtoti atveriet PDF, lai tā uzreiz ietekmētu
 ![result](/doc/10.gif)

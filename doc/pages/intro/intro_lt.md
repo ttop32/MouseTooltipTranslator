@@ -1,117 +1,87 @@
-# How to use
+# Kaip naudoti
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Pagrindiniai naudojimo būdai: užveskite pelės žymeklį arba pasirinkite (paryškinti) tekstą, kad galėtumėte išversti.
+  - Testo pelės žymeklis su pavyzdžiu tekstu:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Jei vertimas neveikia, patikrinkite dabartinę tikslinę kalbą
+    - Patikrinkite [kaip pakeisti kalbą] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Šis vertėjas praleis tekstą, jei šaltinis ir tikslinės kalbos yra vienodos.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Laikykite <kbd> kairiąją-Ctrl </kbd> klavišą, kad išgirstumėte TTS tarimą, kai pasirodo patarimas. Norėdami sustabdyti balsą, paspauskite <kbd> ESC </kbd>.
+  - Išbandykite dvigubai paspauskite <kbd> kairiąją-Ctrl </kbd> Norėdami klausytis išversto rezultato teksto
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Paspauskite mygtuką <kbd> dešiniarankis </kbd>, jei norite išversti jūsų rašomą (arba bet kokį paryškintą tekstą) tekstą įvesties laukelyje. Jei reikia, galite anuliuoti veiksmą paspausdami <kbd> Ctrl </kbd> + <kbd> Z </kbd>.
+  - Jei vertimas neveikia, įsitikinkite, kad dabartinė tikslinė kalba atitinka jūsų rašymo kalbą.
+  - Jei <kbd> dešiniojo alt </kbd> yra naudojamas kaip pakabos keitimas,
+Norėdami dirbti, naudokite kitą raktą.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Išverskite URL paieškos laukelio tekstą spausdindami <kbd>/</kbd>+<kbd> Space </kbd> prieš užklausą.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Palaikykite internetinį PDF, kad būtų rodomas išverstas patarimas naudojant pdf.js (vietiniam kompiuterio PDF failui reikia papildomo leidimo, žr. [Išimtis] (https://gitro.com/ttop32/mouseToolTiptranslator/Blob/main/doc/intro.md#exception))).
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Palaikykite dvigubus subtitrus „YouTube“ vaizdo įrašams.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Proces
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Vykdykite automatinį skaitytuvą paspauskite <kbd> F2 </kbd> klavišą
+  - Jis pradeda skaityti pelės per tekstą iki TTS
+  - Norėdami sustabdyti automatinio skaitytuvo paspaudimą <kbd> Esc </kbd>
+  - Pabandykite dvigubai paspauskite <kbd> F2 </kbd> Norėdami klausytis išversto rezultato teksto automatinio skaitytuvo
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Suaktyvinkite kalbos atpažinimo vertėją laikydami žemyn <kbd> dešiniojo-Ctrl </kbd> klavišą.
+  - Numatytoji kalbos atpažinimo kalba yra anglų.
+  - Jei kalbos atpažinimo kalba ir tikslinė kalba yra ta pati, ji praleidžia.
+  - Reikia garso leidimo
+  - Suderinamos tik su chromo pagrindu sukurtomis naršyklėmis, tokiomis kaip „Google Chrome“, „MS-Edge“, „Vivaldi“, „Opera“, „Brave“, „Arc“ ir „Yandex“.
+- Tinkinkite trumpąjį klavišą
+  - Iš „Chrome“: // plėtiniai/trumpieji klojimai arba lygiavertis naršyklės vidinis konfigūracijos puslapis, prieinamas pakeičiant „Chrome: //“ savo naršyklės vidiniu URL (pvz., Edge: //, naršyklė: // arba drąsiai: // ir tt).
+# Keisti kalbą
+- Pakeiskite dabartinę kalbą nustatymo puslapyje
+  - Puslapį „Nustatymai“ galima pasiekti spustelėjus mygtuką „Dėlionė (plėtinys), esantį viršutiniame savo naršyklės dešinėje.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Išimtis
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Jei šaltinio teksto kalba ir vertimo kalba yra ta pati, ji praleis.
+- Jei puslapis nėra orientuotas, rakto įvestis nenustatytas.
+Prieš įvesti klaviatūrą spustelėkite puslapį.
+- Programa neveiks, jei žiniatinklio būsena neprisijungusi.
+- Jei svetainė yra <https://chrome.google.com/Extensions>, ji neveikia, nes „Chrome“ saugumo priežastis.
+- Jei nepateiktas vietinio failo leidimo, vietinis PDF negalima tvarkyti.
+  - Jei failas neatsidaro, pabandykite vilkti ir numesti jį į skirtuką.
+  - Jame bus rodomas įspėjimas apie leidimą ir nukreips į leidimo puslapį.
+  - Peržiūrėtame puslapyje įsitikinkite, kad pasirinksite „Leisti prieigą prie failų URL“, kad galėtumėte pasiekti failus.
+  - Iš naujo atidarykite PDF, kad iš karto paveiktumėte
 ![result](/doc/10.gif)

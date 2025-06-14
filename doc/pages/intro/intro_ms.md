@@ -1,117 +1,87 @@
-# How to use
+# Cara Menggunakan
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Penggunaan Asas: Hover over atau pilih (sorot) teks untuk diterjemahkan.
+  - Uji hover dengan teks contoh:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Sekiranya terjemahan tidak berfungsi, periksa bahasa sasaran semasa
+    - Semak [cara menukar bahasa] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Penerjemah ini akan menghilangkan teks jika bahasa sumber dan sasaran adalah sama.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Pegang kekunci <kbd> Kiri-Ctrl </kbd> untuk mendengar sebutan TTS apabila tooltip muncul. Tekan <kbd> ESC </kbd> untuk menghentikan suara.
+  - Cuba Double Press <kbd> Left-Ctrl </kbd> untuk mendengar teks hasil yang diterjemahkan
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Tekan kekunci <kbd> Kanan-ALT </kbd> untuk menerjemahkan teks yang anda tulis (atau mana-mana teks yang diserlahkan) dalam kotak input. Jika diperlukan, anda boleh membatalkan tindakan dengan menekan <kbd> Ctrl </kbd> + <kbd> Z </kbd>.
+  - Jika terjemahan tidak berfungsi, pastikan bahasa sasaran semasa anda sepadan dengan bahasa penulisan anda.
+  - Jika <kbd> Hak-ALT </kbd> digunakan sebagai swap hangul,
+Gunakan kunci lain untuk bekerja dengan.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Terjemahkan teks kotak carian URL dengan menaip <kbd>/</kbd>+<kbd> ruang </kbd> sebelum pertanyaan anda.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Sokongan PDF dalam talian untuk memaparkan tooltip yang diterjemahkan menggunakan pdf.js (fail PDF komputer tempatan memerlukan kebenaran tambahan, lihat [Pengecualian] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Sokongan sari kata dwi untuk video YouTube.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Proses OCR semasa memegang <kbd> Shift Left </kbd> Kunci + tetikus pada imej (mis., Manga)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Run Auto Reader oleh Tekan <kbd> F2 </kbd> Kekunci
+  - Ia mula membaca tetikus melalui teks sepanjang jalan dengan TTS
+  - Untuk menghentikan pembaca auto Press <kbd> ESC </kbd>
+  - Cuba Double Press <kbd> F2 </kbd> untuk mendengar pembaca auto teks hasil yang diterjemahkan
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Aktifkan penterjemah pengiktirafan pertuturan dengan menahan kekunci <kbd> CTRL </kbd>.
+  - Bahasa pengiktirafan ucapan lalai adalah bahasa Inggeris.
+  - Jika bahasa pengiktirafan pertuturan dan bahasa sasaran adalah sama, ia melangkau.
+  - Kebenaran audio diperlukan
+  - Hanya serasi dengan pelayar berasaskan kromium, seperti Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, dan Yandex.
+- Sesuaikan kekunci pintasan
+  - Dari Chrome: // Extensions/Shortcuts atau halaman konfigurasi dalaman penyemak imbas yang setara, boleh diakses dengan menggantikan Chrome: // dengan url dalaman penyemak imbas anda (mis., Edge: //, penyemak imbas: //, atau berani: // dll).
+# Menukar bahasa
+- Tukar bahasa semasa dalam menetapkan halaman
+  - Halaman Tetapan boleh diakses dengan mengklik butang teka -teki (lanjutan) yang terletak di sebelah kanan atas penyemak imbas anda.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Pengecualian
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Jika bahasa teks sumber dan terjemahan bahasa adalah sama, ia akan melangkau.
+- Jika halaman tidak difokuskan, input utama tidak dikesan.
+Buat Klik untuk Fokus Halaman Sebelum Papan Kekunci Input.
+- Permohonan tidak akan berfungsi jika status web di luar talian.
+- Jika tapak <https://chrome.google.com/extensions>, ia tidak berfungsi kerana alasan keselamatan Chrome.
+- Jika tiada kebenaran fail tempatan yang diberikan, PDF tempatan tidak dapat dikendalikan.
+  - Jika fail tidak dibuka, cuba menyeret dan menjatuhkannya ke tab.
+  - Ia akan memaparkan amaran kebenaran dan mengarahkan ke halaman kebenaran.
+  - Pada halaman yang diarahkan, pastikan anda memilih "Benarkan akses ke URL fail" untuk mengakses fail.
+  - Membuka semula pdf untuk menjejaskan segera
 ![result](/doc/10.gif)
