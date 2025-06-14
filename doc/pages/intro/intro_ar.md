@@ -1,143 +1,77 @@
-# كيفية الاستخدام
+# How to use
+
 
 - الاستخدامات الأساسية: تحوم أو تحديد نص (تسليط الضوء) للترجمة.
   - اختبار التحوم مع النص على سبيل المثال:
 ```console
 
-Proletarier aller Länder, vereinigt euch!
-
+البروليتاريين من جميع البلدان ، توحد!
 ```
 
-  - If the translation isn't working, check current target language
+  - إذا لم تكن الترجمة تعمل ، تحقق من اللغة المستهدفة الحالية
+    - تحقق [كيفية تغيير اللغة] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - سيحذف هذا المترجم النص إذا كانت اللغات المصدر والهدف متطابقة.
 
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
+!
 
-    - This translator will omit text if the source and target languages are identical.
+- احتفظ بمفتاح <KBD> LEAD-CTRL </kbd> لسماع نطق TTS عندما تظهر تلميح الأدوات. اضغط على <kbd> esc </kbd> لإيقاف الصوت.
+  - حاول الضغط المزدوج <KBD> على اليسار ctrl </kbd> للاستماع إلى نص النتيجة المترجمة
+! [نتيجة] (/doc/20.gif)
 
+- اضغط على مفتاح <KBD> الأيمن </kbd> لترجمة النص الذي تكتبه (أو أي نص مميز) في مربع الإدخال. إذا لزم الأمر ، يمكنك التراجع عن الإجراء عن طريق الضغط على <kbd> Ctrl </kbd> + <kbd> z </kbd>.
+  - إذا لم تكن الترجمة تعمل ، فتأكد من أن لغتك المستهدفة الحالية تتطابق مع لغة الكتابة الخاصة بك.
+  - إذا كان <KBD> يمينًا </kbd> يستخدم كمبادلة هانغول ،
+استخدم مفتاح آخر للعمل معه.
 
+! [نتيجة] (/doc/11.gif)
 
-![Alt Text](/doc/reagre.gif)
+- ترجمة نص مربع البحث عن عنوان URL عن طريق كتابة <KBD>/</kbd>+<kbd> Space </kbd> قبل استعلامك.
 
+! [نتيجة] (/doc/21.gif)
 
+- دعم PDF عبر الإنترنت لعرض تلميح الأدوات المترجمة باستخدام pdf.js (ملف PDF المحلي يحتاج إلى إذن إضافي ، راجع [استثناء] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
+! [نتيجة] (/doc/12.gif)
 
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
+- دعم ترجمات مزدوجة لمقاطع فيديو YouTube.
 
-![result](/doc/20.gif)
+! [نتيجة] (/doc/16.gif)
 
+- المعالجة OCR عند الضغط على <KBD> التحول الأيسر </kbd> مفتاح + الماوس فوق صورة (على سبيل المثال ، المانجا)
 
+! [نتيجة] (/doc/15.gif)
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
+- قم بتشغيل قارئ Auto by Press <Kbd> F2 </kbd> مفتاح
+  - تبدأ قراءة الماوس فوق النص على طول الطريق مع TTS
+  - لإيقاف القارئ التلقائي ، اضغط على <kbd> esc </kbd>
+  - جرب مضغط مزدوج <kbd> f2 </kbd> للاستماع
 
-  - If the translation isn't working, ensure that your current target language matches your writing language.
+! [نتيجة] (/doc/30.gif)
 
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
+- قم بتنشيط مترجم التعرف على الكلام عن طريق الضغط على مفتاح <KBD> CTRL </kbd>.
+  - لغة التعرف على الكلام الافتراضي هي اللغة الإنجليزية.
+  - إذا كانت لغة التعرف على الكلام واللغة المستهدفة هي نفسها ، فإنها تتخطى.
+  - مطلوب إذن صوتي
+  - متوافقة فقط مع المتصفحات القائمة على الكروم ، مثل Google Chrome و MS-Edge و Vivaldi و Opera و Brave و Arc و Yandex.
+- تخصيص مفتاح الاختصار
+  - من Chrome: // extensions/اختصارات أو صفحة التكوين الداخلي للمتصفح المكافئ ، يمكن الوصول إليها عن طريق استبدال Chrome: // بعنوان URL الداخلي للمتصفح (على سبيل المثال ، EDGE: // ، Browser: // ، أو Brave: // etc).
+# تغيير اللغة
+- قم بتغيير اللغة الحالية في إعداد الصفحة
+  - يمكن الوصول إلى صفحة الإعدادات بالنقر فوق الزر "اللغز) (التمديد) الموجود في الجزء العلوي الأيمن من متصفحك.
 
-  use other key to work with. 
+! [نتيجة] (/doc/14.gif)
 
 
+# استثناء
 
-![result](/doc/11.gif)
-
-
-
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
-
-
-![result](/doc/21.gif)
-
-
-
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
-
-
-![result](/doc/12.gif)
-
-
-
-- Support dual subtitles for YouTube videos.
-
-
-
-![result](/doc/16.gif)
-
-
-
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
-
-
-![result](/doc/15.gif)
-
-
-
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
-
-
-![result](/doc/30.gif)
-
-
-
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
-
-
-![result](/doc/14.gif)
-
-
-
-
-
-# Exception
-
-
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
-![result](/doc/10.gif)
+- إذا كانت لغة النص المصدر واللغة مترجمة هي نفسها ، فسوف تتخطى.
+- إذا لم يتم تركيز الصفحة ، فلا يتم الكشف عن إدخال المفاتيح.
+اجعل PLUCH FORCE FORCE قبل إدخال لوحة المفاتيح.
+- لن يعمل التطبيق إذا كانت حالة الويب غير متصلة بالإنترنت.
+- إذا كان الموقع <https://chrome.google.com/extensions> ، فهو لا يعمل بسبب سبب أمان الكروم.
+- إذا لم يتم تقديم إذن ملف محلي ، فلا يمكن معالجة PDF المحلي.
+  - إذا لم يفتح الملف ، فحاول سحبه وإسقاطه على علامة التبويب.
+  - سيعرض تحذيرًا للإذن وإعادة توجيه إلى صفحة الإذن.
+  - في الصفحة التي تم إعادة توجيهها ، تأكد من تحديد "السماح للوصول إلى عناوين URL للملف" للوصول إلى الملفات.
+  - إعادة فتح PDF للتأثير على الفور
+! [نتيجة] (/doc/10.gif)

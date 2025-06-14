@@ -89,7 +89,6 @@ export default class bing extends BaseTranslator {
   static bingAccessToken;
 
   static async requestTranslate(text, sourceLang, targetLang) {
-    return;
     const { token, key, IG, IID } = await this.getBingAccessToken();
 
     return await ky
