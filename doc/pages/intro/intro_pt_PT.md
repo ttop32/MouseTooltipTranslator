@@ -1,117 +1,87 @@
-# How to use
+# Como usar
 
 
-
-- Basic Uses: Hover over or select (highlight) text to translate. 
-
-  - Test hover with example text:  
-
+- Usos básicos: Passe o mouse ou selecione (destaque) o texto para traduzir.
+  - Teste Passe o mouse com exemplo de texto:
 ```console
 
 Proletarier aller Länder, vereinigt euch!
 
 ```
 
-  - If the translation isn't working, check current target language
-
-    - Check [how to change language](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#change-language)
-
-    - This translator will omit text if the source and target languages are identical.
-
+  - Se a tradução não estiver funcionando, verifique a linguagem de destino atual
+    - Verifique [como mudar a linguagem] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#change-language)
+    - Este tradutor omitirá o texto se a fonte e os idiomas de destino forem idênticos.
 
 
 ![Alt Text](/doc/reagre.gif)
 
 
 
-- Hold the <kbd>left-ctrl</kbd> key to hear the TTS pronunciation when a tooltip appears. Press <kbd>Esc</kbd> to stop the voice.
-
-  - Try double press <kbd>left-ctrl</kbd> to listen translated result text
-
+- Segure a tecla <kbd> esquerda-ctrl </kbd> para ouvir a pronúncia do TTS quando uma dica de ferramenta aparecer. Pressione <kbd> esc </kbd> para parar a voz.
+  - Tente pressionar dupla <kbd> esquerda-ctrl </kbd> para ouvir o texto do resultado traduzido
 ![result](/doc/20.gif)
 
 
 
-- Press the <kbd>right-alt</kbd> key to translate the text you're writing (or any highlighted text) in the input box. If needed, you can undo the action by pressing <kbd>ctrl</kbd> + <kbd>z</kbd>.
-
-  - If the translation isn't working, ensure that your current target language matches your writing language.
-
-  - If <kbd>right-alt</kbd> is uses as hangul swap,
-
-  use other key to work with. 
-
+- Pressione a tecla <kbd> Right-Alt </kbd> para traduzir o texto que você está escrevendo (ou qualquer texto destacado) na caixa de entrada. Se necessário, você pode desfazer a ação pressionando <kbd> CTRL </kbd> + <kbd> z </kbd>.
+  - Se a tradução não estiver funcionando, verifique se o seu idioma de destino atual corresponde ao seu idioma de escrita.
+  - Se <kbd> right-alt </kbd> é usado como troca de hangul,
+Use outra chave para trabalhar.
 
 
 ![result](/doc/11.gif)
 
 
 
-- Translate URL search box text by typing <kbd>/</kbd>+<kbd>space</kbd> before your query.
-
+- Traduzir o texto da caixa de pesquisa URL digitando <kbd>/</kbd>+<kbd> espaço </kbd> antes da sua consulta.
 
 
 ![result](/doc/21.gif)
 
 
 
-- Support online pdf to display translated tooltip using PDF.js (local computer pdf file need additional permission, see [exception](https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#exception))
-
+- Apoie o PDF online para exibir a ToolTip traduzida usando o PDF.JS (o arquivo PDF do computador local precisa de permissão adicional, consulte [Exception] (https://github.com/ttop32/mousetooltiptranslator/blob/main/doc/intro.md#exception))
 
 
 ![result](/doc/12.gif)
 
 
 
-- Support dual subtitles for YouTube videos.
-
+- Apoie as legendas duplas para vídeos do YouTube.
 
 
 ![result](/doc/16.gif)
 
 
 
-- Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
-
+- Processe OCR ao segurar <kbd> shift esquerdo </kbd> tecla + mouse em uma imagem (por exemplo, mangá)
 
 
 ![result](/doc/15.gif)
 
 
 
-- Run auto reader by press <kbd>F2</kbd> key
-
-  - It start read mouse over text all the way with tts
-
-  - To stop the auto reader press <kbd>Esc</kbd> 
-
-  - Try double press <kbd>F2</kbd> to listen translated result text auto reader
-
+- Execute o leitor de automóveis por pressionamento <kbd> f2 </kbd> tecla
+  - Comece a ler o mouse sobre o texto até o TTS
+  - Para parar o leitor de automóveis pressionando <kbd> esc </kbd>
+  - Tente pressionar duplo <kbd> f2 </kbd> para ouvir o resultado de texto traduzido leitor de automóveis
 
 
 ![result](/doc/30.gif)
 
 
 
-- Activate the speech recognition translator by holding down the <kbd>right-ctrl</kbd> key.
-
-  - Default speech recognition language is English.
-
-  - If the speech recognition language and target language are the same, it skips.
-
-  - Audio permission is required
-
-  - Only compatible with Chromium-based browsers, such as Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc, and Yandex.
-
-- Customize shortcut key
-
-  - From chrome://extensions/shortcuts or the equivalent browser internal configuration page, accessible by replacing chrome:// with your browser's internal URL (e.g., edge://, browser://, or brave:// etc).
-
-# Change Language
-
-- Change current language in setting page
-
-  -  The Settings page can be accessed by clicking the puzzle (extension) button  located at the top right of your browser.
-
+- Ative o tradutor de reconhecimento de fala mantendo a tecla <kbd> direita-ctrl </kbd>.
+  - O idioma de reconhecimento de fala padrão é o inglês.
+  - Se o idioma de reconhecimento de fala e a linguagem de destino forem iguais, ele pula.
+  - A permissão de áudio é necessária
+  - Somente compatível com navegadores baseados em cromo, como Google Chrome, MS-Edge, Vivaldi, Opera, Brave, Arc e Yandex.
+- Personalize a chave de atalho
+  - De Chrome: // Extensões/atalhos ou a página de configuração interna do navegador equivalente, acessível substituindo o Chrome: // pelo URL interno do seu navegador (por exemplo, Edge: //, navegador: // ou corajoso: // etc).
+# Mude a linguagem
+- Alterar o idioma atual na página de configuração
+  - A página Configurações pode ser acessada clicando no botão Puzzle (extensão) localizado no canto superior direito do seu navegador.
 
 
 ![result](/doc/14.gif)
@@ -120,28 +90,17 @@ Proletarier aller Länder, vereinigt euch!
 
 
 
-# Exception
+# Exceção
 
 
-
-- If source text language and translate language are same, it will skip. 
-
-- If page is not focused, key input is not detected. 
-
-Make click to focus page before input keyboard.
-
-- The application will not function if the web status is offline. 
-
-- If site is <https://chrome.google.com/extensions>, it does not work because Chrome security reason. 
-
-- If no local file permission given, local pdf cannot be handled.
-
-  - If the file doesn't open, try dragging and dropping it onto the tab.
-
-  - It will display a permission warning and redirect to the permission page.
-
-  - On the redirected page, ensure that you select "allow access to file URLs" to access files.
-
-  - Reopen PDF to affect right away
-
+- Se a linguagem de texto de origem e a linguagem traduzida forem iguais, ela irá pular.
+- Se a página não estiver focada, a entrada de chave não será detectada.
+Faça clicar para focar na página antes do teclado de entrada.
+- O aplicativo não funcionará se o status da Web estiver offline.
+- Se o site for <https://chrome.google.com/extensions>, ele não funciona porque o Chrome Security Motivo.
+- Se nenhuma permissão de arquivo local fornecida, o PDF local não poderá ser tratado.
+  - Se o arquivo não abrir, tente arrastar e soltá -lo na guia.
+  - Ele exibirá um aviso de permissão e redirecionará para a página de permissão.
+  - Na página redirecionada, verifique se você seleciona "Permitir acesso aos URLs arquivados" para acessar arquivos.
+  - Reabrir PDF para afetar imediatamente
 ![result](/doc/10.gif)

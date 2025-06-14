@@ -411,6 +411,18 @@ function isPointInRange(range, x, y) {
   return false;
 }
 
+function getRangeCenterXY(range) {
+  if (!range || !range.getClientRects) {
+    return {x: 0, y: 0};
+  }
+  const rects = range.getClientRects();
+  if (rects.length === 0) return {x: 0, y: 0};
+  const rect = rects[0];
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  return { x: centerX, y: centerY };
+}
+
 function getWordSegmentInfo(text, type) {
   const segmenter = new Intl.Segmenter("en-US", { granularity: type });
   const wordsMeta = [...segmenter.segment(text)];
@@ -539,7 +551,8 @@ export function getNextExpandedRange(range, detectType) {
 
   while (nextRange && checkSameRange(nextRange, range)) {
     nextRange = getNextRange(nextRange, offsetIncrement);
-    nextRange = expandRange(nextRange, detectType);
+    const { x, y } = getRangeCenterXY(nextRange);
+    nextRange = expandRange(nextRange, detectType,false,x,y);
     offsetIncrement += 1;
   }
 
