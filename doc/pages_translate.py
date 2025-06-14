@@ -15,8 +15,10 @@ import time
 translator = Translator()
 
 
-appName = "Mouse Tooltip Translator - PDF & Youtube dual subs"
-appDesc = "Mouse Tooltip Translator translate mouseover text using google translate"
+isCode= False
+input_file = "./doc/pages/intro/intro.md"
+output_dir = "./doc/pages/intro"
+
 
 localeList = ['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_AU', 'en_GB', 'en_US', 'es', 'es_419', 'et', 'fa', 'fi', 'fil', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it',
               'ja', 'kn', 'ko', 'lt', 'lv', 'ml', 'mr', 'ms', 'nl', 'no', 'pl', 'pt_BR', 'pt_PT',  'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW']
@@ -42,8 +44,7 @@ async def translate(text, lang):
 
 
 async def main():
-    input_file = "./doc/pages/intro.md"
-    output_dir = "./doc/pages/"
+    global isCode
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -54,7 +55,20 @@ async def main():
     for lang in tqdm(localeList):
         translated_lines = []
         for line in lines:
-            translated_lines.append(await translate(line.strip(), lang))
+            if not isCode or ("```" in line):
+                isCode=True
+                translated_lines.append(line)
+                continue
+            if isCode and ("```" in line):
+                isCode=False
+                translated_lines.append(line)
+                continue
+            text_split=line.split("- ")
+            if len(text_split) > 1:
+                text=await translate(text_split[1] , lang)
+                translated_lines.append("- ".join([text_split[0], text]))
+                continue
+            translated_lines.append(await translate(line, lang))
         output_file = os.path.join(output_dir, f"intro_{lang}.md")
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("\n".join(translated_lines))
