@@ -21,7 +21,7 @@ jobs:
       - run: npm ci
 
       - name: Run Jest tests
-        run: npx test
+        run: npx jest
 
   build:
     runs-on: ubuntu-latest
