@@ -16,8 +16,11 @@
     "watch-firefox": "web-ext run --source-dir=build --firefox=firefox"
   },
   "devDependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^5.9.55",
+    "babel-jest": "^30.0.0",
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.7",
@@ -25,6 +28,7 @@
     "deepmerge": "^4.2.2",
     "del-cli": "^5.0.0",
     "file-loader": "^6.2.0",
+    "jest": "^30.0.0",
     "mini-css-extract-plugin": "^0.10.1",
     "npm-build-zip": "^1.0.4",
     "sass": "^1.32.7",
@@ -74,5 +78,15 @@
     "webextension-polyfill": "^0.10.0",
     "whatwg-fetch": "^3.6.18",
     "window-post-message-proxy": "^0.2.6"
+  },
+  "jest": {
+    "transform": {
+        "^.+\\.js$": "babel-jest"
+    },
+    "moduleFileExtensions": ["js", "json"],
+    "testEnvironment": "node",
+    "transformIgnorePatterns": [
+     "/node_modules/(?!ky|another-library)/"
+    ]
   }
 }
