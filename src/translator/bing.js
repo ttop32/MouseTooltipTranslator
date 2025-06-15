@@ -91,13 +91,11 @@ export default class bing extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {
     const { token, key, IG, IID } = await this.getBingAccessToken();
 
-    const headers = {
-      "User-Agent": this.customAgent || navigator.userAgent,
-    };
-
     return await ky
       .post(this.bingBaseUrl, {
-        headers,
+        headers:{
+          "User-Agent": this.customAgent || navigator.userAgent,
+        },
         searchParams: {
           IG,
           IID:
