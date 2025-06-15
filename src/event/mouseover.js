@@ -106,23 +106,23 @@ export async function getMouseoverText(x, y) {
   var range = getPointedRange(x, y);
 
   //get text from range
-  var mouseoverText = getTextFromRange(range, x, y, false, mouseoverType);
+  var mouseoverText = getTextFromRange(range, mouseoverType);
   // if fail detect using expand range use seg range
   if (
     !isFirefox() &&
     (mouseoverType === "word" || mouseoverType === "sentence") &&
     !mouseoverText["mouseoverText"] &&
-    checkContainerDetectText(range, x, y) // check if container detect text
+    checkContainerDetectText(range) // check if container detect text
   ) {
-    return getTextFromRange(range, x, y, true, mouseoverType);
+    return getTextFromRange(range, mouseoverType, true);
   }
 
   return mouseoverText;
 }
 
-function getTextFromRange(range, x, y, useSegmentation, mouseoverType) {
+function getTextFromRange(range, mouseoverType, useSegmentation= false) {
   var output = { mouseoverText: "", mouseoverRange: range };
-  var wordRange = expandRange(range, mouseoverType, useSegmentation, x, y);
+  var wordRange = expandRange(range, mouseoverType, useSegmentation);
   if (checkXYInElement(wordRange, clientX, clientY)) {
     output["mouseoverText"] = util.extractTextFromRange(wordRange);
     output["mouseoverRange"] = wordRange;
@@ -131,7 +131,7 @@ function getTextFromRange(range, x, y, useSegmentation, mouseoverType) {
   return output;
 }
 
-function expandRange(range, type, useSegmentation, x, y) {
+function expandRange(range, type, useSegmentation) {
   try {
     if (!range) {
       return;
@@ -141,11 +141,7 @@ function expandRange(range, type, useSegmentation, x, y) {
       range = getContainerRange(range);
     } else if (isFirefox() || useSegmentation) {
       // for firefox, use segmentation to extract word
-
-      // console.time("expandRangeWithSeg");
-      range = expandRangeWithSeg(range, type, x, y);
-
-      // console.timeEnd("expandRangeWithSeg");
+      range = expandRangeWithSeg(range, type);
     } else {
       // for chrome, use range expand
       range = getExpandRange(range, type);
@@ -323,16 +319,18 @@ export function checkXYInElement(ele, x, y) {
   }
 }
 
-function checkContainerDetectText(rangeOri, x, y) {
-  var mouseoverText = getTextFromRange(rangeOri, x, y, false, "container");
+function checkContainerDetectText(rangeOri) {
+  var mouseoverText = getTextFromRange(rangeOri, "container");
   return mouseoverText["mouseoverText"] ? mouseoverText : null;
 }
 
 //firefox word break ====================================
-function expandRangeWithSeg(rangeOri, type = "word", x, y) {
+function expandRangeWithSeg(rangeOri, type = "word") {
   //check text exist over container for fast checking
   var range = rangeOri.cloneRange();
+  const { x, y } = getRangeCenterXY(range);
   var rangeContainer = expandRange(range, "container");
+
   const textNode = rangeContainer.commonAncestorContainer;
   // var wholeText = textNode.innerText;
   // console.timeEnd("expandRangeWithSeginit");
@@ -551,8 +549,7 @@ export function getNextExpandedRange(range, detectType) {
 
   while (nextRange && checkSameRange(nextRange, range)) {
     nextRange = getNextRange(nextRange, offsetIncrement);
-    const { x, y } = getRangeCenterXY(nextRange);
-    nextRange = expandRange(nextRange, detectType,false,x,y);
+    nextRange = expandRange(nextRange, detectType);
     offsetIncrement += 1;
   }
 
@@ -609,7 +606,7 @@ async function getGoogleDocText(x, y, mouseoverType) {
   var textElement;
   var rect = getGoogleDocRect(x, y);
   var { textElement, range } = getGoogleDocCaretRange(rect, x, y);
-  var mouseoverText = await getTextFromRange(range, x, y, false, mouseoverType);
+  var mouseoverText = await getTextFromRange(range, mouseoverType);
   textElement?.remove();
   return mouseoverText;
 }
