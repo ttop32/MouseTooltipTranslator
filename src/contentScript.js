@@ -75,6 +75,7 @@ var listenText = "";
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
+    insertIntroPopup(); //insert intro popup for first time user
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addMsgListener(); // get background listener for copy request
@@ -1105,4 +1106,26 @@ function loadSpeechRecognition() {
     }
   );
   speech.initSpeechRecognitionLang(setting);
+}
+
+function insertIntroPopup() {
+  if (!matchUrl(window.location.href, "github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md")) {
+    return;
+  }
+
+  const iframe = $("<iframe/>", {
+    src: browser.runtime.getURL("popup.html#/"),
+    css: {
+      width: "500px",
+      height: "800px",
+      zIndex: "999999",
+    },
+  });
+
+  const changeLanguageElement = $("#user-content-change-language");
+  const parentElement = changeLanguageElement?.parent();
+
+  if (parentElement?.length) {
+    parentElement.after(iframe);
+  }
 }

@@ -15,7 +15,7 @@
 
 
 
-    "web_accessible_resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js", "offscreen.js"],
+    "web_accessible_resources": ["pdfjs/web/viewer.html", "ocr.html", "opencvHandler.html", "videoHandler.js","googleDocInject.js","subtitle.js", "offscreen.js", "popup.html"],
     "commands": {
         "copy-translated-text": {
         "suggested_key": {

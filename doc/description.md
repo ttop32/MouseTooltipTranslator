@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.184
+  - insert setting popup on intro page
 - 0.1.183
   - Add whitelist website
   - Change default color setting

@@ -46,7 +46,7 @@ export default {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
     isNewVisit() {
       var count = Number(this.setting?.["coffeeCount"]);
-      return 1 < count && count < 15;
+      return 3 < count && count < 15;
     },
   },
   methods: {
