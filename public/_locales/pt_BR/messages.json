@@ -36,10 +36,10 @@
 		"message": "Detectar Legenda"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "TECLADO                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "TECLADO"
 	},
 	"Show_Tooltip_When": {
 		"message": "Mostrar Dica Quando"
@@ -153,10 +153,10 @@
 		"message": "Tooltip Word Dictionary"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "Velocidade de voz traduzida"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "Motor de tradução de Fallback"
 	},
 	"SPEECH": {
 		"message": "DISCURSO"
@@ -210,7 +210,7 @@
 		"message": "Exclude Website"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "Lista de permissões"
 	},
 	"About______________________________________": {
 		"message": "Sobre                                      "
@@ -276,16 +276,16 @@
 		"message": "Café"
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "Apoie esta extensão"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "Doe um café para os desenvolvedores da extensão"
 	},
 	"Title______________________________________": {
 		"message": "Título                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
+		"message": "Mouse Tooltip Translator - Legendas duplas em PDF, Netflix e YouTube"
 	},
 	"appDesc": {
 		"message": "Tradução de Texto usando google tradutor do Mouse Tooltip Translator. Suporte ao OCR, TTS, tradutor de manga & tradutor de PDF."
