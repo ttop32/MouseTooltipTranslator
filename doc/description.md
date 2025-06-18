@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.185
   - Portuguese, Brazilian localization (contributed by edsonbittencourt)
+  - fix setting help not open
 - 0.1.184
   - insert setting popup on intro page
 - 0.1.183
