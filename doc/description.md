@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.185
+  - Portuguese, Brazilian localization (contributed by edsonbittencourt)
 - 0.1.184
   - insert setting popup on intro page
 - 0.1.183
