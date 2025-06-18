@@ -7,13 +7,13 @@
     closable
     close-label="Close Alert"
     :title="title"
-    style="min-height: 90px;"
+    class="comment-alert"
   >
     {{ subtitle }}
     <template v-slot:append>
       <v-btn
         variant="tonal"
-        style="position: absolute; bottom: 10px; right: 10px;"
+        class="comment-btn"
         @click="handleClick(url)"
       >
         Open
@@ -59,8 +59,8 @@ export default {
       this.$emit("click");
     },
     increasePopupCount(inc = 1) {
-      var count = Number(this.setting["coffeeCount"]);
-      if (count < 17) {
+      var count = Number(this.setting?.["coffeeCount"]);
+      if (count < 17 && this.setting?.["coffeeCount"] != null) {
         this.setting["coffeeCount"] = count + inc;
       }
     },
@@ -70,4 +70,14 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.comment-alert {
+  min-height: 90px;
+}
+
+.comment-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+</style>
