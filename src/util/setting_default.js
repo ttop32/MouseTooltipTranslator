@@ -42,11 +42,11 @@ var translatorList = {
   "yandex (Experimental)": "yandex",
   "baidu (Experimental)": "baidu",
   "papago (Experimental)": "papago",
-  "googleWebImage (Experimental)": "googleWebImage",
   "googleGTX (Experimental)": "googleGTX",
   "googleWeb (Experimental)": "googleWeb",
   "googleV2 (Experimental)": "googleV2",
-  // "chatgpt (Experimental)": "chatgpt",
+  "googleWebImage (Experimental)": "googleWebImage",
+  // chatgpt: "chatgpt",
   // "lingva (Experimental)": "lingva",
   // "libreTranslate (Experimental)": "libreTranslate",
   // "duckduckgo (Experimental)": "duckduckgo",
@@ -328,7 +328,7 @@ export var settingDict = {
     settingTab: "graphic",
   },
   mouseoverTextHighlightColor: {
-    default: "#21dc6d40",
+    default: "#329B7B",
     i18nKey: "Mouseover_Text_Highlight_Color",
     optionList: {},
     optionType: "colorPicker",
@@ -413,7 +413,7 @@ export var settingDict = {
     settingTab: "speech",
   },
   voicePanelBackgroundColor: {
-    default: "#333333",
+    default: "#002918",
     i18nKey: "Voice_Panel_Background_Color",
     optionList: {},
     optionType: "colorPicker",
@@ -466,13 +466,6 @@ export var settingDict = {
     settingTab: "advanced",
   },
 
-  fallbackTranslatorEngine: {
-    default: "true",
-    i18nKey: "Fallback_Translator_Engine",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-
   // exclude
   langExcludeList: {
     default: [],
@@ -488,13 +481,6 @@ export var settingDict = {
     optionType: "comboBox",
     settingTab: "exclude",
   },
-  websiteWhiteList: {
-    default: [],
-    i18nKey: "Whitelist_Website",
-    optionList: "",
-    optionType: "comboBox",
-    settingTab: "exclude",
-  },  
 
   // remains
   subtitleButtonToggle: {

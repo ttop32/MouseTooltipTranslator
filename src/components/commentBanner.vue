@@ -7,13 +7,13 @@
     closable
     close-label="Close Alert"
     :title="title"
-    class="comment-alert"
+    style="min-height: 90px;"
   >
     {{ subtitle }}
     <template v-slot:append>
       <v-btn
         variant="tonal"
-        class="comment-btn"
+        style="position: absolute; bottom: 10px; right: 10px;"
         @click="handleClick(url)"
       >
         Open
@@ -46,7 +46,7 @@ export default {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
     isNewVisit() {
       var count = Number(this.setting?.["coffeeCount"]);
-      return 3 < count && count < 15;
+      return 1 < count && count < 15;
     },
   },
   methods: {
@@ -59,8 +59,8 @@ export default {
       this.$emit("click");
     },
     increasePopupCount(inc = 1) {
-      var count = Number(this.setting?.["coffeeCount"]);
-      if (count < 17 && this.setting?.["coffeeCount"] != null) {
+      var count = Number(this.setting["coffeeCount"]);
+      if (count < 17) {
         this.setting["coffeeCount"] = count + inc;
       }
     },
@@ -70,14 +70,4 @@ export default {
   },
 };
 </script>
-<style>
-.comment-alert {
-  min-height: 90px;
-}
-
-.comment-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-</style>
+<style></style>

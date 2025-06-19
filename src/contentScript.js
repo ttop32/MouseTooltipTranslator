@@ -70,12 +70,13 @@ var listenText = "";
     injectGoogleDocAnnotation(); //check google doc and add annotation env var
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
-    checkExcludeUrl(); //check url is excluded or not in the whitelist
+    if (checkExcludeUrl()) {
+      return;
+    }
     await dom_util.waitJquery(); //wait jquery load
     detectPDF(); //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
-    insertIntroPopup(); //insert intro popup for first time user
     addElementEnv(); //add tooltip container
     applyStyleSetting(); //add tooltip style
     addMsgListener(); // get background listener for copy request
@@ -84,12 +85,7 @@ var listenText = "";
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
   } catch (error) {
-    if (error instanceof util.TooltipUrlExcludeError) {
-      // Do nothing
-      // console.log(error);      
-    } else {
-      console.log(error);
-    }
+    console.log(error);
   }
 })();
 
@@ -814,13 +810,10 @@ function addMsgListener() {
   });
   util.addMessageListener("killAutoReaderTabs", killAutoReader);
 }
+
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
-  var isExcludeBan = matchUrl(url, setting["websiteExcludeList"]);
-  var isWhiteListBan = setting["websiteWhiteList"]?.length != 0 && !matchUrl(url, setting["websiteWhiteList"]);
-  if (isExcludeBan || isWhiteListBan) {
-    throw new util.TooltipUrlExcludeError();
-  }
+  return matchUrl(url, setting["websiteExcludeList"]);
 }
 
 // setting handling & container style===============================================================
@@ -1106,26 +1099,4 @@ function loadSpeechRecognition() {
     }
   );
   speech.initSpeechRecognitionLang(setting);
-}
-
-function insertIntroPopup() {
-  if (!matchUrl(window.location.href, "github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md")) {
-    return;
-  }
-
-  const iframe = $("<iframe/>", {
-    src: browser.runtime.getURL("popup.html#/"),
-    css: {
-      width: "500px",
-      height: "800px",
-      zIndex: "999999",
-    },
-  });
-
-  const changeLanguageElement = $("#user-content-change-language");
-  const parentElement = changeLanguageElement?.parent();
-
-  if (parentElement?.length) {
-    parentElement.after(iframe);
-  }
 }
