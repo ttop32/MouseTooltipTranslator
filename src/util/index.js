@@ -678,3 +678,11 @@ export function getAllShadows(el = document.body) {
   const result = Array.from(childShadows);
   return result.concat(childResults).flat();
 }
+
+export class TooltipUrlExcludeError extends Error {
+  constructor(name = "TooltipUrlExcludeError", message = "URL is excluded or not in the whitelist.", details = {}) {
+    super(message);
+    this.name = name;
+    this.details = details;
+  }
+}
