@@ -25,8 +25,6 @@
   </div>
 </template>
 <script>
-import * as util from "/src/util";
-
 import _ from "lodash";
 import * as speech from "/src/speech";
 import SettingUtil from "/src/util/setting_util.js";
