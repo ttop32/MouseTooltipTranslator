@@ -2,7 +2,7 @@
   <v-app id="appWindow">
     <slot />
 
-    <alertPopup></alertPopup>
+    <!-- <alertPopup></alertPopup> -->
   </v-app>
 </template>
 <script>

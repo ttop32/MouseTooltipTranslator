@@ -17,17 +17,6 @@ try {
   });
 }catch (error) {}
 
-var reviewUrlJson = {
-  nnodgmifnfgkolmakhcfkkbbjjcobhbl:
-    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl", //edge web store id
-  hmigninkgibhdckiaphhmbgcghochdjc:
-    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews", //chrome web store id
-  "firefox":
-    "https://addons.mozilla.org/en-US/firefox/addon/mouse-tooltip-translator-pdf/reviews/",
-  "default":
-    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",  
-};
-
 export var writingField =
   'input[type="text"], input[type="search"], input:not([type]), textarea, [contenteditable], [contenteditable="true"], [role=textbox], [spellcheck]';
   
@@ -212,19 +201,6 @@ export function checkInDevMode() {
     }
   } catch (error) {}
   return false;
-}
-
-export function getReviewUrl() {
-  if(browser.runtime.id in reviewUrlJson){
-    return reviewUrlJson[extId];
-  }
-  if (isFirefox()) {
-    return reviewUrlJson["firefox"];
-  }
-  return reviewUrlJson["default"];
-}
-function isFirefox() {
-  return typeof InstallTrigger !== 'undefined';
 }
 
 
@@ -619,44 +595,8 @@ export async function removeOffscreen() {
   });
 }
 
-export async function openUrlAsPanel(url) {
-  url = getUrlExt(url);
-  await removePreviousTab(url);
-  openPanel(url);
-}
-function openPanel(url) {
-  var width = Math.round(screen.width * 0.5);
-  var height = Math.round(screen.height * 0.15);
-  var left = Math.round(screen.width / 2 - width / 2);
-  var top = Math.round(screen.height / 2 - height / 2);
-  browser.windows.create({
-    url,
-    type: "panel",
-    width,
-    height,
-    left,
-    top,
-  });
-}
-
-export async function removePreviousTab(url) {
-  var urlParsed = new URL(url);
-  var urlWithoutParam = urlParsed.origin + urlParsed.pathname;
-  var tabs = await browser.tabs.query({ url: urlWithoutParam });
-
-  for (const tab of tabs) {
-    if (url == tab.url) {
-      await browser.tabs.remove(tab.id);
-    }
-  }
-}
-
 export function openSettingPage() {
   openPage(`chrome://extensions/?id=${browser.runtime?.id}`);
-}
-
-export function openAudioPermissionPage() {
-  openPage(`chrome://settings/content/microphone`);
 }
 
 export function openPage(url) {
