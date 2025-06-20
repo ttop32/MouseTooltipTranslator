@@ -19,7 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.187
+- 0.1.189
+  - remove util import from speech
+- 0.1.188
   - revert remove alert popup
 - 0.1.187
   - change about page structure
