@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.187
+  - revert remove alert popup
+- 0.1.187
   - change about page structure
 - 0.1.186
   - revert to 0.1.182
