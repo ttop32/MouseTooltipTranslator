@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.191
+  - change exception exclude logic
+- 0.1.190
+  - revert 183-184 feature
 - 0.1.189
   - remove util import from speech
 - 0.1.188
