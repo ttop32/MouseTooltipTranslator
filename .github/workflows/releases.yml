@@ -6,8 +6,26 @@ on:
       - "*"
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+
+      - name: Run Jest tests
+        run: npx jest
+
   build:
     runs-on: ubuntu-latest
+    needs: test
     strategy:
       matrix:
         node-version: [18.x]
@@ -23,12 +41,12 @@ jobs:
       - name: Write firefox manifest version json
         run: cat <<< $(jq '.version="${{github.ref_name}}"' public/manifest.firefox.json) > public/manifest.firefox.json
 
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
+
       - run: npm run build-zip
       - run: npm run build-firefox-zip
 
