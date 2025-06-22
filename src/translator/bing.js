@@ -87,12 +87,15 @@ export default class bing extends BaseTranslator {
 
   static langCodeJson = bingLangCode;
   static bingAccessToken;
-
+  static customAgent;
   static async requestTranslate(text, sourceLang, targetLang) {
     const { token, key, IG, IID } = await this.getBingAccessToken();
 
     return await ky
       .post(this.bingBaseUrl, {
+        headers:{
+          "User-Agent": this.customAgent || navigator.userAgent,
+        },
         searchParams: {
           IG,
           IID:
