@@ -112,7 +112,39 @@ function detectText(canvasIn, mode) {
     var ksize = new cv.Size(12, 12);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
-    paddingSize = 5;
+    paddingSize = 10;
+  } else if (mode.includes("white")) {
+    var ksize = new cv.Size(15, 15);
+    var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+
+    // Convert image to grayscale and ensure single-channel
+    let gray = new cv.Mat();
+    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
+    let singleChannelGray = new cv.Mat();
+    cv.convertScaleAbs(gray, singleChannelGray);
+
+    // Threshold to get white areas (255, 255, 255)
+    cv.threshold(singleChannelGray, dst, 250, 255, cv.THRESH_BINARY);
+    gray.delete();
+    singleChannelGray.delete();
+
+    // Erode and dilate to refine the mask
+    cv.erode(dst, dst, element);
+    cv.dilate(dst, dst, element);
+
+    // Apply the mask to the original image
+    let mask = new cv.Mat();
+    cv.bitwise_and(src, src, mask, dst);
+    src = mask;
+    dst = mask;
+
+
+    // Ensure the image is single-channel before applying threshold
+    if (dst.channels() > 1) {
+      let gray = new cv.Mat();
+      cv.cvtColor(dst, gray, cv.COLOR_RGBA2GRAY, 0);
+      dst = gray;
+    }
   } else {
     //get only contour bounded image to extract manga bubble only
 
@@ -219,10 +251,46 @@ function detectText(canvasIn, mode) {
       let point1 = new cv.Point(left, top);
       let point2 = new cv.Point(left + width, top + height);
       cv.rectangle(src, point1, point2, color, 2, cv.LINE_AA, 0);
-      console.log(bbox);
     }
   }
+
+  
+  for (let i = 0; i < bboxList.length; i++) {
+    for (let j = i + 1; j < bboxList.length; j++) {
+      let rect1 = bboxList[i];
+      let rect2 = bboxList[j];
+
+      // Check if rectangles overlap
+      if (
+        rect1.left < rect2.left + rect2.width &&
+        rect1.left + rect1.width > rect2.left &&
+        rect1.top < rect2.top + rect2.height &&
+        rect1.top + rect1.height > rect2.top
+      ) {
+        // Create a new rectangle that encompasses both
+        let newRect = {
+          left: Math.min(rect1.left, rect2.left),
+          top: Math.min(rect1.top, rect2.top),
+          width: Math.max(rect1.left + rect1.width, rect2.left + rect2.width) - Math.min(rect1.left, rect2.left),
+          height: Math.max(rect1.top + rect1.height, rect2.top + rect2.height) - Math.min(rect1.top, rect2.top),
+        };
+
+        // Replace rect1 with the new rectangle and remove rect2
+        bboxList[i] = newRect;
+        bboxList.splice(j, 1);
+        j--; // Adjust index after removal
+      }
+    }
+  }
+
+  // // Log bounding boxes for debugging
+  // bboxList.forEach((bbox, index) => {
+  //   console.log(`Bounding Box ${index + 1}:`, bbox);
+  // });
+
+
   if (showResult) {
+    // console.log(mode)
     console.log(bboxList.length);
     showImage(src);
     showImage(dst);
@@ -236,6 +304,7 @@ function showImage(cvImage) {
   var canvas = document.createElement("canvas");
   cv.imshow(canvas, cvImage);
   document.body.appendChild(canvas);
+  // console.log(canvas.toDataURL())
 }
 
 function sortBbox(bboxList) {

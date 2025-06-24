@@ -384,7 +384,8 @@ export async function requestTranslate(
   word,
   sourceLang,
   targetLang,
-  reverseLang
+  reverseLang,
+  engine
 ) {
   return await sendMessage({
     type: "translate",
@@ -393,6 +394,7 @@ export async function requestTranslate(
       sourceLang,
       targetLang,
       reverseLang,
+      engine,
     },
   });
 }

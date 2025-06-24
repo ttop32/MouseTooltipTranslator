@@ -70,7 +70,7 @@ var listenText = "";
     injectGoogleDocAnnotation(); //check google doc and add annotation env var
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
-    if(checkExcludeUrl()) {
+    if (checkExcludeUrl()) {
       return;
     }
     await dom_util.waitJquery(); //wait jquery load
@@ -278,7 +278,7 @@ function showTooltip(text) {
 
 function hideTooltip(resetAll = false) {
   if (resetAll) {
-    hideAll({ duration: 0 }); //hide all tippy
+    // hideAll({ duration: 0 }); //hide all tippy
   }
   tooltip?.hide();
   hideHighlight();
@@ -654,7 +654,10 @@ async function startAutoReader() {
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
-  var { mouseoverText, mouseoverRange } = await getMouseoverText(clientX, clientY);
+  var { mouseoverText, mouseoverRange } = await getMouseoverText(
+    clientX,
+    clientY
+  );
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
@@ -680,7 +683,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     highlightText(stagedRange, true);
   }, autoReaderScrollTime);
   showTooltip(targetText);
-  
+
   var nextStagedRange = getNextExpandedRange(
     stagedRange,
     setting["mouseoverTextType"]
@@ -695,7 +698,6 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     true,
     isTtsSwap
   );
-
 
   processAutoReader(nextStagedRange, isTtsSwap);
 }
@@ -814,12 +816,13 @@ function addMsgListener() {
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
   var isExcludeBan = matchUrl(url, setting["websiteExcludeList"]);
-  var isWhiteListBan = setting["websiteWhiteList"]?.length != 0 && !matchUrl(url, setting["websiteWhiteList"]);
+  var isWhiteListBan =
+    setting["websiteWhiteList"]?.length != 0 &&
+    !matchUrl(url, setting["websiteWhiteList"]);
   if (isExcludeBan || isWhiteListBan) {
     return true;
   }
 }
-
 
 // setting handling & container style===============================================================
 
@@ -902,6 +905,16 @@ function applyStyleSetting() {
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       border: 1px solid ${setting["tooltipBorderColor"]}; 
       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      opacity: 1.0; /* Adjusted opacity for transparency */
+    }
+    .tippy-box[data-theme~="transparent"] {
+      max-width: 200px  !important;
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
+      background-color: ${setting["tooltipBackgroundColor"]} !important;
+      border: 1px solid ${setting["tooltipBorderColor"]}; 
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      opacity: 0.0; /* Adjusted opacity for transparency */
+      transition: opacity 0.3s ease-in-out; /* Added transition for opacity */
     }
     [data-tippy-root] {
       display: inline-block !important;
@@ -934,7 +947,7 @@ function applyStyleSetting() {
     }
     .ocr_text_div{
       position: absolute;
-      opacity: 0.5;
+      opacity: 0.4;
       color: transparent !important;
       border: 2px solid CornflowerBlue;
       background: none !important;

@@ -158,6 +158,9 @@
 	"Fallback_Translator_Engine": {
 		"message": "Fallback Translator Engine"
 	},
+	"OCR_Tooltip_Box": {
+		"message": "OCR Tooltip Box"
+	},
 	"SPEECH": {
 		"message": "การพูด"
 	},

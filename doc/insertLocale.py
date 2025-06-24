@@ -79,7 +79,7 @@ i18List = [
     "Tooltip Word Dictionary",
     "Voice Translated Speed",
     "Fallback Translator Engine",
-
+    "OCR Tooltip Box",
 
     "SPEECH",
     "Speech Recognition Language",

@@ -158,6 +158,9 @@
 	"Fallback_Translator_Engine": {
 		"message": "備用翻譯引擎"
 	},
+	"OCR_Tooltip_Box": {
+		"message": "OCR Tooltip Box"
+	},
 	"SPEECH": {
 		"message": "語音識別"
 	},
