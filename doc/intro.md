@@ -36,7 +36,7 @@ Proletarier aller Länder, vereinigt euch!
 
 - Process OCR when holding <kbd>left-shift</kbd> key + mouse over on an image (e.g., manga)
 
-![result](/doc/15.gif)
+![result](/doc/ocr_result1.gif)
 
 - Run auto reader by press <kbd>F2</kbd> key
   - It start read mouse over text all the way with tts
