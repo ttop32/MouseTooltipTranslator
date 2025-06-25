@@ -186,6 +186,14 @@ npm run build        // or 'npm run watch' for developing
       <br /><sub><b><code title="Vietnamese">vi</code></b></sub>
     </td>
     <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/merlette"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17150502/medium/0b41e0651072a8a930db192f29cc35e9.png" />
+        <br />
+        <sub><b>Logan Shen (merlette)</b></sub></a>
+      <br />
+      <sub><b>88 words</b></sub>
+      <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b>, <b><code title="Chinese Traditional">zh-TW</code></b></sub>
+    </td>
+    <td align="center" valign="top">
       <a href="https://crowdin.com/profile/Mirnyang"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/14153733/medium/9a2fe282298d66026016c71086cc6d6e.png" />
         <br />
         <sub><b>미르냥 (Mirnyang)</b></sub></a>
@@ -200,14 +208,6 @@ npm run build        // or 'npm run watch' for developing
       <br />
       <sub><b>83 words</b></sub>
       <br /><sub><b><code title="Turkish">tr</code></b></sub>
-    </td>
-    <td align="center" valign="top">
-      <a href="https://crowdin.com/profile/merlette"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17150502/medium/0b41e0651072a8a930db192f29cc35e9.png" />
-        <br />
-        <sub><b>Logan Shen (merlette)</b></sub></a>
-      <br />
-      <sub><b>82 words</b></sub>
-      <br /><sub><b><code title="Chinese Simplified">zh-CN</code></b>, <b><code title="Chinese Traditional">zh-TW</code></b></sub>
     </td>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/helimoreira"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16569873/medium/2a7d04568e352021ae7b1eba23f28074_default.png" />
@@ -236,6 +236,14 @@ npm run build        // or 'npm run watch' for developing
       <br /><sub><b><code title="Turkish">tr</code></b></sub>
     </td>
     <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/EdsonBittencourt"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17063692/medium/6e515b39a5c761ac0aacb767ea092783.png" />
+        <br />
+        <sub><b>EdsonBittencourt</b></sub></a>
+      <br />
+      <sub><b>38 words</b></sub>
+      <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
+    </td>
+    <td align="center" valign="top">
       <a href="https://crowdin.com/profile/annatomika.one"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16117142/medium/6c5bd49cb0c367978de3a95ff43cc973.jpeg" />
         <br />
         <sub><b>ID Hunter (ASAP) (annatomika.one)</b></sub></a>
@@ -250,14 +258,6 @@ npm run build        // or 'npm run watch' for developing
       <br />
       <sub><b>13 words</b></sub>
       <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
-    </td>
-    <td align="center" valign="top">
-      <a href="https://crowdin.com/profile/EdsonBittencourt"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17063692/medium/6e515b39a5c761ac0aacb767ea092783.png" />
-        <br />
-        <sub><b>EdsonBittencourt</b></sub></a>
-      <br />
-      <sub><b>10 words</b></sub>
-      <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
     </td>
   </tr>
   <tr>
