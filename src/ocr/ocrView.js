@@ -66,6 +66,7 @@ export function removeAllOcrEnv() {
   iFrames = {};
   ocrHistory = {};
   hideAll({ duration: 0 });
+  ocrResultHistory={}
 }
 
 async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
