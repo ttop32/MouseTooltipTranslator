@@ -118,33 +118,75 @@ function detectText(canvasIn, mode) {
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
 
     // Convert image to grayscale and ensure single-channel
-    let gray = new cv.Mat();
-    cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
-    let singleChannelGray = new cv.Mat();
-    cv.convertScaleAbs(gray, singleChannelGray);
-
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     // Threshold to get white areas (255, 255, 255)
-    cv.threshold(singleChannelGray, dst, 250, 255, cv.THRESH_BINARY);
-    gray.delete();
-    singleChannelGray.delete();
-
-    // Erode and dilate to refine the mask
-    cv.erode(dst, dst, element);
-    cv.dilate(dst, dst, element);
+    cv.threshold(dst, dst, 250, 255, cv.THRESH_BINARY);
 
     // Apply the mask to the original image
     let mask = new cv.Mat();
     cv.bitwise_and(src, src, mask, dst);
-    src = mask;
-    dst = mask;
+    dst = mask.clone(); // Update dst to the masked image
+    cv.copyMakeBorder(
+      dst,
+      dst,
+      1,
+      1,
+      1,
+      1,
+      cv.BORDER_CONSTANT,
+      new cv.Scalar(0)
+    );
 
+    // Use the custom flood fill function
+    let floodFillMask = customFloodFillWithoutCv(
+      dst,
+      { x: 0, y: 0 },
+      [0],
+      10,
+      10
+    );
 
-    // Ensure the image is single-channel before applying threshold
-    if (dst.channels() > 1) {
-      let gray = new cv.Mat();
-      cv.cvtColor(dst, gray, cv.COLOR_RGBA2GRAY, 0);
-      dst = gray;
-    }
+    // Invert the floodFillMask
+    let invertedFloodFillMask = new cv.Mat();
+    cv.bitwise_not(floodFillMask, invertedFloodFillMask);
+
+    // Slice the border of the floodFillMask using ROI (Region of Interest)
+    let slicedBorderMask = invertedFloodFillMask.roi(
+      new cv.Rect(
+        1,
+        1,
+        invertedFloodFillMask.cols - 2,
+        invertedFloodFillMask.rows - 2
+      )
+    );
+
+    // Apply the sliced border mask to the original image
+    let slicedResultMask = new cv.Mat();
+    cv.bitwise_and(src, src, slicedResultMask, slicedBorderMask);
+
+    // Invert slicedBorderMask
+    let invertedMask = new cv.Mat();
+    cv.bitwise_not(slicedBorderMask, invertedMask);
+
+    // Make white and mat
+    let whiteMat = new cv.Mat(
+      invertedMask.rows,
+      invertedMask.cols,
+      cv.CV_8UC4,
+      new cv.Scalar(255, 255, 255, 255)
+    );
+    let combinedMask = new cv.Mat();
+    cv.bitwise_and(whiteMat, whiteMat, combinedMask, invertedMask);
+
+    // Combine with slicedResultMask
+    let finalResult = new cv.Mat();
+    cv.addWeighted(slicedResultMask, 1, combinedMask, 1, 0, finalResult);
+
+    // Update src and dst with the sliced result
+    src = finalResult;
+    dst = finalResult;
+
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
   } else {
     //get only contour bounded image to extract manga bubble only
 
@@ -254,7 +296,6 @@ function detectText(canvasIn, mode) {
     }
   }
 
-  
   for (let i = 0; i < bboxList.length; i++) {
     for (let j = i + 1; j < bboxList.length; j++) {
       let rect1 = bboxList[i];
@@ -271,8 +312,12 @@ function detectText(canvasIn, mode) {
         let newRect = {
           left: Math.min(rect1.left, rect2.left),
           top: Math.min(rect1.top, rect2.top),
-          width: Math.max(rect1.left + rect1.width, rect2.left + rect2.width) - Math.min(rect1.left, rect2.left),
-          height: Math.max(rect1.top + rect1.height, rect2.top + rect2.height) - Math.min(rect1.top, rect2.top),
+          width:
+            Math.max(rect1.left + rect1.width, rect2.left + rect2.width) -
+            Math.min(rect1.left, rect2.left),
+          height:
+            Math.max(rect1.top + rect1.height, rect2.top + rect2.height) -
+            Math.min(rect1.top, rect2.top),
         };
 
         // Replace rect1 with the new rectangle and remove rect2
@@ -283,28 +328,23 @@ function detectText(canvasIn, mode) {
     }
   }
 
-  // // Log bounding boxes for debugging
-  // bboxList.forEach((bbox, index) => {
-  //   console.log(`Bounding Box ${index + 1}:`, bbox);
-  // });
-
-
   if (showResult) {
     // console.log(mode)
     console.log(bboxList.length);
-    showImage(src);
-    showImage(dst);
+    showImage(src, mode);
+    showImage(dst, mode);
   }
 
   bboxList = sortBbox(bboxList);
   return bboxList;
 }
 
-function showImage(cvImage) {
+function showImage(cvImage, mode) {
   var canvas = document.createElement("canvas");
   cv.imshow(canvas, cvImage);
   document.body.appendChild(canvas);
-  // console.log(canvas.toDataURL())
+  const dataURL = canvas.toDataURL();
+  console.log(dataURL);
 }
 
 function sortBbox(bboxList) {
@@ -353,4 +393,43 @@ function preprocessImage(canvasIn, isResize) {
   dst.delete();
 
   return [canvasOut, ratio];
+}
+
+function customFloodFillWithoutCv(
+  image,
+  startPoint,
+  fillColor,
+  loDiff,
+  upDiff
+) {
+  let rows = image.rows;
+  let cols = image.cols;
+  let mask = new cv.Mat(rows, cols, cv.CV_8U, new cv.Scalar(0));
+  let stack = [startPoint];
+  let originalColor = image.ucharPtr(startPoint.y, startPoint.x);
+
+  loDiff = loDiff || 10;
+  upDiff = upDiff || 10;
+
+  while (stack.length > 0) {
+    let { x, y } = stack.pop();
+
+    if (x < 0 || y < 0 || x >= cols || y >= rows) continue;
+    if (mask.ucharPtr(y, x)[0] === 255) continue;
+
+    let currentColor = image.ucharPtr(y, x);
+    let diff = Math.abs(currentColor[0] - originalColor[0]);
+
+    if (diff <= loDiff || diff <= upDiff) {
+      mask.ucharPtr(y, x)[0] = 255;
+      image.ucharPtr(y, x)[0] = fillColor[0];
+
+      stack.push({ x: x + 1, y });
+      stack.push({ x: x - 1, y });
+      stack.push({ x, y: y + 1 });
+      stack.push({ x, y: y - 1 });
+    }
+  }
+
+  return mask;
 }

@@ -23,7 +23,6 @@ export function enableMouseoverTextEvent(_window = window, currentSetting) {
   setting = currentSetting;
   var textDetectTime = setting?.["mouseoverEventInterval"] || 700;
   
-  console.log(textDetectTime)
   _win = _window;
   textDetectTime = Number(textDetectTime);
   const triggerMouseoverTextWithDelay = debounce(async () => {

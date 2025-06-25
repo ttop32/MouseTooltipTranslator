@@ -5,7 +5,7 @@ import delay from "delay";
 
 import * as util from "/src/util";
 import TextUtil from "/src/util/text_util.js";
-import tippy from "tippy.js";
+import tippy, { sticky, hideAll } from "tippy.js";
 import { getRtlDir } from "/src/util/lang.js";
 
 const windowPostMessageProxy = new WindowPostMessageProxy({
@@ -50,10 +50,8 @@ export async function checkImage(img, currentSetting, keyDownList) {
   await Promise.all([
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox_small"),
-    // processOcr(img.src, lang, base64Url, img, "CYAN", "bbox_large"),
     processOcr(img.src, lang, base64Url, img, "GREEN", "bbox"),
-    // processOcr(img.src, lang, base64Url, img, "PURPLE", "bbox_white"),
-    // processOcr(img.src, lang, base64Url, img, "ORANGE", "bbox_auto_nobox"),
+    processOcr(img.src, lang, base64Url, img, "PURPLE", "bbox_white"),
   ]);
 
   makeNormalMouseStyle(img);
@@ -67,6 +65,7 @@ export function removeAllOcrEnv() {
   removeOcrBlock();
   iFrames = {};
   ocrHistory = {};
+  hideAll({ duration: 0 });
 }
 
 async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
@@ -236,7 +235,7 @@ function filterDuplicateOcr(img, textBoxList, ocrData) {
   // Filter out text boxes that are similar to previous history
   const filteredTextBoxList = textBoxList.filter((textBox) => {
     const isSimilar = ocrResultHistory[img.src].some((prevTextBox) => {
-      const bboxThreshold = 10; // Threshold for bounding box similarity (bbox is a common term in OCR)
+      const bboxThreshold = 15; // Threshold for bounding box similarity (bbox is a common term in OCR)
       const textSimilarityThreshold = 0.8; // Threshold for text similarity (e.g., Levenshtein distance ratio)
 
       // Check bounding box similarity
@@ -466,11 +465,16 @@ function makeNormalMouseStyle(ele) {
 }
 
 async function handleTranslate(text) {
+  var translatorVendor = setting["translatorVendor"];
+  if (translatorVendor !== "bing" && translatorVendor !== "google") {
+    translatorVendor = "google";
+  }
+
   return await util.requestTranslate(
     text,
     setting["translateSource"],
     setting["translateTarget"],
     setting["translateReverseTarget"],
-    "google"
+    translatorVendor
   );
 }
