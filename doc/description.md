@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.192
+  - add ocr text block tooltip show feature
+  - add ocr white text detect
 - 0.1.191
   - change exception exclude logic
 - 0.1.190
