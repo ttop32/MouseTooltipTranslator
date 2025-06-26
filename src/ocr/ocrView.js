@@ -15,12 +15,10 @@ var ocrHistory = {};
 var iFrames = {};
 var ocrResultHistory = {}; // store ocr result to avoid duplicate request
 var setting;
-var ocrFrameName="ocrFrame"
-var opencvFrameName="opencvFrame";
-
+var ocrFrameName = "ocrFrame";
+var opencvFrameName = "opencvFrame";
 // var ocrFrameName="ocrFrameDebug"
 // var opencvFrameName="opencvFrameDebug";
-
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
@@ -57,7 +55,14 @@ export async function checkImage(img, currentSetting, keyDownList) {
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox_small"),
     processOcr(img.src, lang, base64Url, img, "GREEN", "bbox"),
-    processOcr(img.src, lang, base64Url, img, "ORANGE", "bbox_white_useOpencvImg"),
+    processOcr(
+      img.src,
+      lang,
+      base64Url,
+      img,
+      "ORANGE",
+      "bbox_white_useOpencvImg"
+    ),
   ]);
 
   makeNormalMouseStyle(img);
@@ -72,7 +77,7 @@ export function removeAllOcrEnv() {
   iFrames = {};
   ocrHistory = {};
   hideAll({ duration: 0 });
-  ocrResultHistory={}
+  ocrResultHistory = {};
 }
 
 async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
@@ -87,7 +92,7 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   if (mode.includes("bbox")) {
     // var startTime = new Date().getTime(); // Start time for measuring delay
 
-    var { bboxList, base64Url, ratio, opencvImg } = await requestSegmentBox(
+    var { bboxList, base64Url, ratio } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,
@@ -97,26 +102,12 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
     // var endTime = new Date().getTime(); // End time after processing
     // console.log(`Delay for mode ${mode}: ${endTime - startTime} ms`);
   }
-
-  // Combine all OCR requests into a single Promise.all
-  const ocrRequests = bboxList.map((bbox) => 
-    requestOcr(mainUrl, lang, [bbox], base64Url, mode)
+  await Promise.all(
+    bboxList.map(async (bbox) => {
+      var res = await requestOcr(mainUrl, lang, [bbox], base64Url, mode);
+      showOcrData(img, res.ocrData, ratio, color);
+    })
   );
-
-  // Include opencvImg-based OCR requests if opencvImg exists
-  if (opencvImg) {
-    ocrRequests.push(
-      ...bboxList.map((bbox) => 
-        requestOcr(mainUrl, lang, [bbox], opencvImg, mode)
-      )
-    );
-  }
-
-  // Wait for all OCR requests and process results
-  const ocrResults = await Promise.all(ocrRequests);
-  ocrResults.forEach((res) => {
-    showOcrData(img, res.ocrData, ratio, color);
-  });
 }
 
 function checkIsImage(ele) {
@@ -134,7 +125,7 @@ function checkIsImage(ele) {
 // create ocr==================
 async function initOCRIframe() {
   await Promise.all([
-    createIframe(opencvFrameName, "/opencvHandler.html"),    
+    createIframe(opencvFrameName, "/opencvHandler.html"),
     createIframe(ocrFrameName, "/ocr.html"),
   ]);
 }
@@ -208,21 +199,18 @@ async function showOcrData(img, ocrData, ratio, color) {
   textBoxList.forEach((textBox) => adjustTextBoxBbox(textBox, ratio));
 
   if (setting["ocrTooltipBox"] == "true") {
-    showTooltipBoxes(img, ocrData, textBoxList);
+    showTooltipBoxes(img, textBoxList);
   } else {
     createOcrTextBlocks(img, textBoxList, color);
   }
-  // createOcrTextBlocks(img, textBoxList, color);
 }
 
-async function showTooltipBoxes(img, ocrData, textBoxList) {
-  var filteredTextBoxList = filterDuplicateOcr(img, textBoxList, ocrData);
-
+async function showTooltipBoxes(img, textBoxList) {
+  var filteredTextBoxList = filterDuplicateOcr(img, textBoxList);
   for (var textBox of filteredTextBoxList) {
     var { targetText, sourceLang, targetLang } = await handleTranslate(
       textBox["text"]
     );
-
     addTooltipBox(img, textBox, targetText, targetLang);
   }
 }
@@ -253,17 +241,17 @@ function calculateTextSimilarity(text1, text2) {
   return 1 - levenshteinDistance / maxLen;
 }
 
-function filterDuplicateOcr(img, textBoxList, ocrData) {
+function filterDuplicateOcr(img, textBoxList) {
   // Ensure ocrResultHistory exists for the image
   if (!ocrResultHistory[img.src]) {
     ocrResultHistory[img.src] = [];
   }
+  const bboxThreshold = 15; // Threshold for bounding box similarity (bbox is a common term in OCR)
+  const textSimilarityThreshold = 0.8; // Threshold for text similarity (e.g., Levenshtein distance ratio)
+
   // Filter out text boxes that are similar to previous history
   const filteredTextBoxList = textBoxList.filter((textBox) => {
     const isSimilar = ocrResultHistory[img.src].some((prevTextBox) => {
-      const bboxThreshold = 15; // Threshold for bounding box similarity (bbox is a common term in OCR)
-      const textSimilarityThreshold = 0.8; // Threshold for text similarity (e.g., Levenshtein distance ratio)
-
       // Check bounding box similarity
       const isBboxSimilar = // bbox is a common term in OCR
         Math.abs(prevTextBox.bbox.x0 - textBox.bbox.x0) < bboxThreshold && // bbox is a common term in OCR
@@ -283,10 +271,7 @@ function filterDuplicateOcr(img, textBoxList, ocrData) {
   });
 
   // Update ocrResultHistory with the new OCR data
-  ocrResultHistory[img.src] = ocrResultHistory[img.src].concat(
-    ocrData.flatMap((item) => item.data.blocks)
-  );
-
+  ocrResultHistory[img.src] = ocrResultHistory[img.src].concat(textBoxList);
   return filteredTextBoxList;
 }
 

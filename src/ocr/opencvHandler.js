@@ -20,7 +20,7 @@ async function segmentBox(request, isResize = true) {
   var base64 = request.base64Url;
   var ratio = 1;
   var mode = request.mode;
-  var opencvImg;
+  // var opencvImg;
 
   try {
     await waitOpencvLoad();
@@ -32,9 +32,9 @@ async function segmentBox(request, isResize = true) {
 
     // get bbox from image
     var { bboxList, preprocessedSourceImage } = detectText(canvas1, mode);
-    
+
     if (preprocessedSourceImage && mode.includes("useOpencvImg")) {
-      opencvImg = opencvMatToBase64(preprocessedSourceImage);
+      base64 = opencvMatToBase64(preprocessedSourceImage);
     }
 
     resultBboxList = resultBboxList.concat(bboxList);
@@ -49,7 +49,6 @@ async function segmentBox(request, isResize = true) {
     base64Url: base64,
     lang: request.lang,
     bboxList: resultBboxList,
-    opencvImg,
     ratio,
     windowPostMessageProxy: request.windowPostMessageProxy,
   });
@@ -130,14 +129,38 @@ function detectText(canvasIn, mode) {
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     // Threshold to get white areas (255, 255, 255)
 
-    //get white area as mask 
+    //get white area as mask
     cv.threshold(dst, dst, 230, 255, cv.THRESH_BINARY);
 
     // Create floodfill masks for each edge
-    let topLeftMask = customFloodFillWithoutCv(dst, { x: 0, y: 0 }, [255], 10, 10);
-    let topRightMask = customFloodFillWithoutCv(dst, { x: dst.cols - 1, y: 0 }, [255], 10, 10);
-    let bottomLeftMask = customFloodFillWithoutCv(dst, { x: 0, y: dst.rows - 1 }, [255], 10, 10);
-    let bottomRightMask = customFloodFillWithoutCv(dst, { x: dst.cols - 1, y: dst.rows - 1 }, [255], 10, 10);
+    let topLeftMask = customFloodFillWithoutCv(
+      dst,
+      { x: 0, y: 0 },
+      [255],
+      10,
+      10
+    );
+    let topRightMask = customFloodFillWithoutCv(
+      dst,
+      { x: dst.cols - 1, y: 0 },
+      [255],
+      10,
+      10
+    );
+    let bottomLeftMask = customFloodFillWithoutCv(
+      dst,
+      { x: 0, y: dst.rows - 1 },
+      [255],
+      10,
+      10
+    );
+    let bottomRightMask = customFloodFillWithoutCv(
+      dst,
+      { x: dst.cols - 1, y: dst.rows - 1 },
+      [255],
+      10,
+      10
+    );
     // Combine all masks into one
     let combinedFloodMask = new cv.Mat();
     cv.bitwise_or(topLeftMask, topRightMask, combinedFloodMask);
@@ -149,12 +172,11 @@ function detectText(canvasIn, mode) {
     cv.bitwise_not(dst, dst);
     cv.bitwise_or(dst, combinedFloodMask, dst);
     cv.bitwise_not(dst, dst);
-    
 
     // Apply the mask to the original image grep white area as mask
     let mask = new cv.Mat();
     cv.bitwise_and(src, src, mask, dst);
-    
+
     // make invert white area using floodfill
     dst = mask.clone(); // Update dst to the masked image
     cv.copyMakeBorder(
@@ -218,9 +240,9 @@ function detectText(canvasIn, mode) {
     cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Increase intensity
     cv.bitwise_not(enhancedImage, enhancedImage); // Ivert colors
     cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Adjust intensity
-    cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors    
+    cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors
     preprocessedSourceImage = enhancedImage.clone();
-    
+
     // Update src and dst with the sliced result
     src = finalResult;
     dst = finalResult;
@@ -264,8 +286,6 @@ function detectText(canvasIn, mode) {
     cv.add(area_bounded_contour_mask_inv, dst, y);
     src = y;
     dst = y;
-    // showImage(y);
-
     paddingSize = 3;
 
     // blurred = cv2.GaussianBlur(gray, (5,5), 0)
@@ -303,7 +323,7 @@ function detectText(canvasIn, mode) {
     var top = parseInt(Math.max(rect.y - paddingSize, 0));
     var width = parseInt(Math.min(rect.width + paddingSize * 2, w - left));
     var height = parseInt(Math.min(rect.height + paddingSize * 2, h - top));
-    var whRatio = Math.max(width / height, height / width);
+    // var whRatio = Math.max(width / height, height / width);
     var rectCoverRatio = area / (rect.width * rect.height);
 
     // if not sharp, small size, wrong angle, too side pos
