@@ -240,7 +240,7 @@ npm run build        // or 'npm run watch' for developing
         <br />
         <sub><b>EdsonBittencourt</b></sub></a>
       <br />
-      <sub><b>38 words</b></sub>
+      <sub><b>57 words</b></sub>
       <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
     </td>
     <td align="center" valign="top">
