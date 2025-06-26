@@ -150,7 +150,7 @@
 		"message": "Intervalo de Tempo da Dica"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Dicionário de Palavras de Dicas"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Velocidade de voz traduzida"
@@ -159,7 +159,7 @@
 		"message": "Motor de tradução de Fallback"
 	},
 	"OCR_Tooltip_Box": {
-		"message": "OCR Tooltip Box"
+		"message": "Caixa de dica de OCR"
 	},
 	"SPEECH": {
 		"message": "DISCURSO"
@@ -210,7 +210,7 @@
 		"message": "Excluir Idioma"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Excluir site"
 	},
 	"Whitelist_Website": {
 		"message": "Lista de permissões"
@@ -243,16 +243,16 @@
 		"message": "Respostar a postagem do Twitter"
 	},
 	"Review_Page": {
-		"message": "Revisão da Página"
+		"message": "Avaliações"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comentar nessa extensão"
+		"message": "Avalie esta extensão"
 	},
 	"Source_code": {
 		"message": "Código-fonte"
 	},
 	"Check_source_code_in_github": {
-		"message": "Checar o código fonte no github"
+		"message": "Checar o código-fonte no GitHub"
 	},
 	"Privacy_Policy": {
 		"message": "Política de Privacidade"
