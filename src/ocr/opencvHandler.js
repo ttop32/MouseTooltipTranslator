@@ -1,6 +1,6 @@
 import { waitUntil, WAIT_FOREVER } from "async-wait-until";
 
-var showResult = false;
+var isDebug = window.name?.includes("Debug") || false;
 
 window.addEventListener(
   "message",
@@ -16,10 +16,11 @@ window.addEventListener(
 
 async function segmentBox(request, isResize = true) {
   var type = "segmentSuccess";
-  var bboxList = [];
+  var resultBboxList = [];
   var base64 = request.base64Url;
   var ratio = 1;
   var mode = request.mode;
+  var opencvImg;
 
   try {
     await waitOpencvLoad();
@@ -30,7 +31,13 @@ async function segmentBox(request, isResize = true) {
     base64 = canvas1.toDataURL();
 
     // get bbox from image
-    bboxList = bboxList.concat(detectText(canvas1, mode));
+    var { bboxList, preprocessedSourceImage } = detectText(canvas1, mode);
+    
+    if (preprocessedSourceImage && mode.includes("useOpencvImg")) {
+      opencvImg = opencvMatToBase64(preprocessedSourceImage);
+    }
+
+    resultBboxList = resultBboxList.concat(bboxList);
   } catch (err) {
     console.log(err);
     type = "segmentFail";
@@ -41,7 +48,8 @@ async function segmentBox(request, isResize = true) {
     mainUrl: request.mainUrl,
     base64Url: base64,
     lang: request.lang,
-    bboxList,
+    bboxList: resultBboxList,
+    opencvImg,
     ratio,
     windowPostMessageProxy: request.windowPostMessageProxy,
   });
@@ -103,6 +111,7 @@ function detectText(canvasIn, mode) {
   var paddingSize = 10;
   let contours = new cv.MatVector();
   let hierarchy = new cv.Mat();
+  var preprocessedSourceImage;
 
   if (mode.includes("large")) {
     var ksize = new cv.Size(50, 50);
@@ -120,11 +129,33 @@ function detectText(canvasIn, mode) {
     // Convert image to grayscale and ensure single-channel
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     // Threshold to get white areas (255, 255, 255)
-    cv.threshold(dst, dst, 250, 255, cv.THRESH_BINARY);
 
-    // Apply the mask to the original image
+    //get white area as mask 
+    cv.threshold(dst, dst, 230, 255, cv.THRESH_BINARY);
+
+    // Create floodfill masks for each edge
+    let topLeftMask = customFloodFillWithoutCv(dst, { x: 0, y: 0 }, [255], 10, 10);
+    let topRightMask = customFloodFillWithoutCv(dst, { x: dst.cols - 1, y: 0 }, [255], 10, 10);
+    let bottomLeftMask = customFloodFillWithoutCv(dst, { x: 0, y: dst.rows - 1 }, [255], 10, 10);
+    let bottomRightMask = customFloodFillWithoutCv(dst, { x: dst.cols - 1, y: dst.rows - 1 }, [255], 10, 10);
+    // Combine all masks into one
+    let combinedFloodMask = new cv.Mat();
+    cv.bitwise_or(topLeftMask, topRightMask, combinedFloodMask);
+    cv.bitwise_or(combinedFloodMask, bottomLeftMask, combinedFloodMask);
+    cv.bitwise_or(combinedFloodMask, bottomRightMask, combinedFloodMask);
+    // Remove mask area that exists in combinedFloodMask
+    let invertedCombinedFloodMask = new cv.Mat();
+    cv.bitwise_not(combinedFloodMask, invertedCombinedFloodMask);
+    cv.bitwise_not(dst, dst);
+    cv.bitwise_or(dst, combinedFloodMask, dst);
+    cv.bitwise_not(dst, dst);
+    
+
+    // Apply the mask to the original image grep white area as mask
     let mask = new cv.Mat();
     cv.bitwise_and(src, src, mask, dst);
+    
+    // make invert white area using floodfill
     dst = mask.clone(); // Update dst to the masked image
     cv.copyMakeBorder(
       dst,
@@ -136,7 +167,6 @@ function detectText(canvasIn, mode) {
       cv.BORDER_CONSTANT,
       new cv.Scalar(0)
     );
-
     // Use the custom flood fill function
     let floodFillMask = customFloodFillWithoutCv(
       dst,
@@ -182,6 +212,15 @@ function detectText(canvasIn, mode) {
     let finalResult = new cv.Mat();
     cv.addWeighted(slicedResultMask, 1, combinedMask, 1, 0, finalResult);
 
+    // Enhance color saturation
+    let enhancedImage = new cv.Mat();
+    cv.cvtColor(finalResult, enhancedImage, cv.COLOR_RGBA2RGB, 0);
+    cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Increase intensity
+    cv.bitwise_not(enhancedImage, enhancedImage); // Ivert colors
+    cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Adjust intensity
+    cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors    
+    preprocessedSourceImage = enhancedImage.clone();
+    
     // Update src and dst with the sliced result
     src = finalResult;
     dst = finalResult;
@@ -284,7 +323,7 @@ function detectText(canvasIn, mode) {
     var bbox = { left, top, width, height };
     bboxList.push(bbox);
 
-    if (showResult) {
+    if (isDebug) {
       let color = new cv.Scalar(
         Math.round(Math.random() * 255),
         Math.round(Math.random() * 255),
@@ -328,7 +367,7 @@ function detectText(canvasIn, mode) {
     }
   }
 
-  if (showResult) {
+  if (isDebug) {
     // console.log(mode)
     console.log(bboxList.length);
     showImage(src, mode);
@@ -336,10 +375,11 @@ function detectText(canvasIn, mode) {
   }
 
   bboxList = sortBbox(bboxList);
-  return bboxList;
+  return { bboxList, preprocessedSourceImage };
 }
 
 function showImage(cvImage, mode) {
+  console.log(mode);
   var canvas = document.createElement("canvas");
   cv.imshow(canvas, cvImage);
   document.body.appendChild(canvas);
@@ -432,4 +472,14 @@ function customFloodFillWithoutCv(
   }
 
   return mask;
+}
+
+function opencvMatToBase64(mat) {
+  var canvas = document.createElement("canvas");
+  canvas.width = mat.cols;
+  canvas.height = mat.rows;
+  cv.imshow(canvas, mat);
+  var base64 = canvas.toDataURL("image/png");
+  mat.delete();
+  return base64;
 }

@@ -14,8 +14,14 @@ const windowPostMessageProxy = new WindowPostMessageProxy({
 var ocrHistory = {};
 var iFrames = {};
 var ocrResultHistory = {}; // store ocr result to avoid duplicate request
-var showFrame = false;
 var setting;
+var ocrFrameName="ocrFrame"
+var opencvFrameName="opencvFrame";
+
+// var ocrFrameName="ocrFrameDebug"
+// var opencvFrameName="opencvFrameDebug";
+
+
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
 export async function checkImage(img, currentSetting, keyDownList) {
@@ -51,7 +57,7 @@ export async function checkImage(img, currentSetting, keyDownList) {
     processOcr(img.src, lang, base64Url, img, "BLUE", "auto"),
     processOcr(img.src, lang, base64Url, img, "RED", "bbox_small"),
     processOcr(img.src, lang, base64Url, img, "GREEN", "bbox"),
-    processOcr(img.src, lang, base64Url, img, "PURPLE", "bbox_white"),
+    processOcr(img.src, lang, base64Url, img, "ORANGE", "bbox_white_useOpencvImg"),
   ]);
 
   makeNormalMouseStyle(img);
@@ -75,24 +81,42 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   }
   var ratio = 1;
   var bboxList = [[]];
+  var opencvImg;
 
   //ocr process with opencv , then display
   if (mode.includes("bbox")) {
-    var { bboxList, base64Url, ratio } = await requestSegmentBox(
+    // var startTime = new Date().getTime(); // Start time for measuring delay
+
+    var { bboxList, base64Url, ratio, opencvImg } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,
       mode
     );
+
+    // var endTime = new Date().getTime(); // End time after processing
+    // console.log(`Delay for mode ${mode}: ${endTime - startTime} ms`);
   }
 
-  // request ocr per bbox
-  await Promise.all(
-    bboxList.map(async (bbox) => {
-      var res = await requestOcr(mainUrl, lang, [bbox], base64Url, mode);
-      showOcrData(img, res.ocrData, ratio, color);
-    })
+  // Combine all OCR requests into a single Promise.all
+  const ocrRequests = bboxList.map((bbox) => 
+    requestOcr(mainUrl, lang, [bbox], base64Url, mode)
   );
+
+  // Include opencvImg-based OCR requests if opencvImg exists
+  if (opencvImg) {
+    ocrRequests.push(
+      ...bboxList.map((bbox) => 
+        requestOcr(mainUrl, lang, [bbox], opencvImg, mode)
+      )
+    );
+  }
+
+  // Wait for all OCR requests and process results
+  const ocrResults = await Promise.all(ocrRequests);
+  ocrResults.forEach((res) => {
+    showOcrData(img, res.ocrData, ratio, color);
+  });
 }
 
 function checkIsImage(ele) {
@@ -110,8 +134,8 @@ function checkIsImage(ele) {
 // create ocr==================
 async function initOCRIframe() {
   await Promise.all([
-    createIframe("opencvFrame", "/opencvHandler.html"),
-    createIframe("ocrFrame", "/ocr.html"),
+    createIframe(opencvFrameName, "/opencvHandler.html"),    
+    createIframe(ocrFrameName, "/ocr.html"),
   ]);
 }
 async function initOCRLibrary(lang) {
@@ -136,7 +160,7 @@ function loadScript(name, htmlPath) {
       css: {
         width: "700",
         height: "700",
-        display: showFrame ? "block" : "none",
+        display: name.includes("Debug") ? "block" : "none",
       },
     })
       .appendTo("body")
@@ -151,19 +175,19 @@ function loadScript(name, htmlPath) {
 async function requestSegmentBox(mainUrl, lang, base64Url, mode) {
   return await postMessage(
     { type: "segmentBox", mainUrl, lang, base64Url, mode },
-    iFrames["opencvFrame"]
+    iFrames[opencvFrameName]
   );
 }
 
 async function requestOcr(mainUrl, lang, bboxList, base64Url, mode) {
   return await postMessage(
     { type: "ocr", mainUrl, lang, bboxList, base64Url, mode },
-    iFrames["ocrFrame"]
+    iFrames[ocrFrameName]
   );
 }
 
 async function requestOcrInit(lang, mode) {
-  return await postMessage({ type: "init", lang, mode }, iFrames["ocrFrame"]);
+  return await postMessage({ type: "init", lang, mode }, iFrames[ocrFrameName]);
 }
 
 async function postMessage(data, frame) {
@@ -188,6 +212,7 @@ async function showOcrData(img, ocrData, ratio, color) {
   } else {
     createOcrTextBlocks(img, textBoxList, color);
   }
+  // createOcrTextBlocks(img, textBoxList, color);
 }
 
 async function showTooltipBoxes(img, ocrData, textBoxList) {

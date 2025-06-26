@@ -9,6 +9,7 @@ import browser from "webextension-polyfill";
 
 var schedulerList = {};
 var loadingList = {};
+var isDebug = window.name?.includes("Debug") || false;
 
 window.addEventListener(
   "message",
@@ -33,7 +34,11 @@ async function doOcr(request) {
 
   try {
     var canvas = await loadImage(request.base64Url);
-    // document.body.appendChild(canvas);
+    
+    if(isDebug){
+      document.body.appendChild(canvas);
+    }
+
     ocrData = await useTesseract(
       canvas,
       request.lang,
@@ -119,7 +124,7 @@ async function getScheduler(lang, mode) {
   loadingList[id] = true;
 
   var scheduler = Tesseract.createScheduler();
-  var workerIndexList = mode.includes("auto") ? [0] : [0, 1, 2, 3, 4];
+  var workerIndexList = mode.includes("auto") ? [0] : [0, 1, 2, 3];
   var workerPath = browser.runtime.getURL("/tesseract/worker.min.js");
   var corePath = browser.runtime.getURL(
     "/tesseract/tesseract-core-lstm.wasm.js"
