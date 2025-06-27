@@ -90,17 +90,12 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
 
   //ocr process with opencv , then display
   if (mode.includes("bbox")) {
-    var startTime = new Date().getTime(); // Start time for measuring delay
-
     var { bboxList, base64Url, ratio } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,
       mode
     );
-
-    var endTime = new Date().getTime(); // End time after processing
-    // console.log(`Delay for mode ${mode}: ${endTime - startTime} ms`);
   }
   await Promise.all(
     bboxList.map(async (bbox) => {
