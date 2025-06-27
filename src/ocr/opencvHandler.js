@@ -454,35 +454,22 @@ function preprocessImage(canvasIn, isResize) {
 
   return [canvasOut, ratio];
 }
+function customFloodFillWithoutCv(  image,  startPoint) {
+  console.time("customFloodFillWithoutCv");
 
-function customFloodFillWithoutCv(
-  image,
-  startPoint,
-  fillColor,
-  loDiff,
-  upDiff
-) {
   let rows = image.rows;
   let cols = image.cols;
   let mask = new cv.Mat(rows, cols, cv.CV_8U, new cv.Scalar(0));
   let stack = [startPoint];
   let originalColor = image.ucharPtr(startPoint.y, startPoint.x);
 
-  loDiff = loDiff || 10;
-  upDiff = upDiff || 10;
-
   while (stack.length > 0) {
     let { x, y } = stack.pop();
 
-    if (x < 0 || y < 0 || x >= cols || y >= rows) continue;
-    if (mask.ucharPtr(y, x)[0] === 255) continue;
+    if (x < 0 || y < 0 || x >= cols || y >= rows || mask.ucharPtr(y, x)[0] === 255) continue;
 
-    let currentColor = image.ucharPtr(y, x);
-    let diff = Math.abs(currentColor[0] - originalColor[0]);
-
-    if (diff <= loDiff || diff <= upDiff) {
+    if (image.ucharPtr(y, x)[0] === originalColor[0]) {
       mask.ucharPtr(y, x)[0] = 255;
-      image.ucharPtr(y, x)[0] = fillColor[0];
 
       stack.push({ x: x + 1, y });
       stack.push({ x: x - 1, y });
@@ -490,6 +477,8 @@ function customFloodFillWithoutCv(
       stack.push({ x, y: y - 1 });
     }
   }
+  // console.log("Start Point:", startPoint);
+  console.timeEnd("customFloodFillWithoutCv");
 
   return mask;
 }
