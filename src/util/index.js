@@ -620,3 +620,13 @@ export function getAllShadows(el = document.body) {
   const result = Array.from(childShadows);
   return result.concat(childResults).flat();
 }
+
+export function deepElementFromPoint(x, y) {
+  let el = document.elementFromPoint(x, y);
+  while (el && el.shadowRoot) {
+    const inner = el.shadowRoot.elementFromPoint(x, y);
+    if (!inner || inner === el) break; // avoid infinite loop
+    el = inner;
+  }
+  return el;
+}

@@ -570,7 +570,7 @@ function handleMousemove(e) {
   }
   setMouseStatus(e);
   setTooltipPosition(e.clientX, e.clientY);
-  ocrView.checkImage(mouseTarget, setting, keyDownList);
+  ocrView.checkImage(e.clientX, e.clientY, setting, keyDownList);
 }
 
 function handleTouchstart(e) {

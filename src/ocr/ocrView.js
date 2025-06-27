@@ -22,10 +22,11 @@ var opencvFrameName = "opencvFrame";
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
-export async function checkImage(img, currentSetting, keyDownList) {
+export async function checkImage(x,y, currentSetting, keyDownList) {
   // if  ocr is not on or no key bind, skip
   // if mouse target is not image, skip
   // if already ocr processed,skip
+  var img=util.deepElementFromPoint(x, y);
   if (
     !keyDownList[currentSetting["keyDownOCR"]] ||
     !checkIsImage(img) ||
