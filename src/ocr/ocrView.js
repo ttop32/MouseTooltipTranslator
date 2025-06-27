@@ -87,16 +87,18 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   var ratio = 1;
   var bboxList = [[]];
   var opencvImg;
-
-  //ocr process with opencv , then display
+  // OCR process with opencv, then display
   if (mode.includes("bbox")) {
-    var { bboxList, base64Url, ratio } = await requestSegmentBox(
+    // console.time("OCR Process with OpenCV"+mode);
+    var { bboxList, base64Url, ratio ,opencvImg } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,
       mode
     );
+    // console.timeEnd("OCR Process with OpenCV"+mode);
   }
+  
   await Promise.all(
     bboxList.map(async (bbox) => {
       var res = await requestOcr(mainUrl, lang, [bbox], base64Url, mode);
@@ -138,16 +140,25 @@ async function createIframe(name, htmlPath) {
 }
 
 function loadScript(name, htmlPath) {
+  var debugCSS={
+    width: "700",
+    height: "700",
+    pointerEvents: "auto",
+    opacity: 1.0,
+  }
+  var iFrameCSS = {
+    width: "1",
+    height: "1",
+    pointerEvents: "none",
+    opacity: 0.0,
+  };
+  
   return new Promise(function (resolve, reject) {
     var iFrame = $("<iframe />", {
       name: name,
       id: name,
       src: util.getUrlExt(htmlPath),
-      css: {
-        width: "700",
-        height: "700",
-        display: name.includes("Debug") ? "block" : "none",
-      },
+      css: name.includes("Debug") ? debugCSS : iFrameCSS, // use debug css for debug iframe
     })
       .appendTo("body")
       .on("load", () => {
