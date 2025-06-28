@@ -124,10 +124,12 @@ function detectText(canvasIn, mode) {
     // Convert image to grayscale and ensure single-channel
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     // Threshold to get white areas (255, 255, 255)
+    // cv.bitwise_not(dst, dst);
 
     //get white area as mask
     cv.threshold(dst, dst, 230, 255, cv.THRESH_BINARY);
 
+      // showImage(dst, mode);
     // Combine all masks into one
     let combinedFloodMask = new cv.Mat(
       dst.rows,
@@ -162,6 +164,7 @@ function detectText(canvasIn, mode) {
       combinedFloodMask,
       combinedFloodVisited
     );
+    // showImage(combinedFloodMask, mode);
 
     // Remove mask area that exists in combinedFloodMask
     cv.bitwise_not(dst, dst);
@@ -171,6 +174,8 @@ function detectText(canvasIn, mode) {
     // Apply the mask to the original image grep white area as mask
     let mask = new cv.Mat();
     cv.bitwise_and(src, src, mask, dst);
+
+    // showImage(mask, mode);
 
     // make invert white area using floodfill
     dst = mask.clone(); // Update dst to the masked image
@@ -199,11 +204,13 @@ function detectText(canvasIn, mode) {
     let slicedResultMask = new cv.Mat();
     cv.bitwise_and(src, src, slicedResultMask, slicedBorderMask);
 
+    // showImage(slicedResultMask, mode);
     // // make white background and combine with slicedResultMask
     cv.bitwise_not(slicedBorderMask, slicedBorderMask);
     cv.cvtColor(slicedBorderMask, slicedBorderMask, cv.COLOR_GRAY2RGBA, 0);
     cv.bitwise_or(slicedResultMask, slicedBorderMask, slicedBorderMask);
     // showImage(slicedBorderMask, mode);
+
 
     // Enhance color saturation
     let enhancedImage = new cv.Mat();

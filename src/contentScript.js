@@ -887,7 +887,7 @@ function applyStyleSetting() {
       visibility: visible  !important;
       white-space: pre-line;
     }
-    .tippy-box[data-theme~="custom"], .tippy-content *{
+    .tippy-box[data-theme~="custom"], .tippy-box[data-theme~="ocr"], .tippy-content *{
       font-size: ${setting["tooltipFontSize"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
       overflow-wrap: break-word !important;
@@ -907,8 +907,16 @@ function applyStyleSetting() {
       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
       opacity: 1.0; /* Adjusted opacity for transparency */
     }
+    .tippy-box[data-theme~="ocr"]{
+      max-width: $1000px  !important;
+      backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
+      background-color: ${setting["tooltipBackgroundColor"]} !important;
+      border: 1px solid ${setting["tooltipBorderColor"]}; 
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      opacity: 1.0; /* Adjusted opacity for transparency */
+    }
     .tippy-box[data-theme~="transparent"] {
-      max-width: 200px  !important;
+      max-width: $1000px  !important;
       backdrop-filter: blur(${setting["tooltipBackgroundBlur"]}px) !important;
       background-color: ${setting["tooltipBackgroundColor"]} !important;
       border: 1px solid ${setting["tooltipBorderColor"]}; 
@@ -921,18 +929,19 @@ function applyStyleSetting() {
       visibility: visible  !important;
       position: absolute !important;
     }
-    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before { 
+    .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before, .tippy-box[data-theme~='ocr'][data-placement^='top'] > .tippy-arrow::before { 
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
     }
-    .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before {
+    .tippy-box[data-theme~='custom'][data-placement^='bottom'] > .tippy-arrow::before, .tippy-box[data-theme~='ocr'][data-placement^='bottom'] > .tippy-arrow::before {
       border-bottom-color: ${setting["tooltipBackgroundColor"]} !important;
     }
-    .tippy-box[data-theme~='custom'][data-placement^='left'] > .tippy-arrow::before {
+    .tippy-box[data-theme~='custom'][data-placement^='left'] > .tippy-arrow::before, .tippy-box[data-theme~='ocr'][data-placement^='left'] > .tippy-arrow::before {
       border-left-color: ${setting["tooltipBackgroundColor"]} !important;
     }
-    .tippy-box[data-theme~='custom'][data-placement^='right'] > .tippy-arrow::before {
+    .tippy-box[data-theme~='custom'][data-placement^='right'] > .tippy-arrow::before, .tippy-box[data-theme~='ocr'][data-placement^='right'] > .tippy-arrow::before {
       border-right-color: ${setting["tooltipBackgroundColor"]} !important;
     }
+
     .mtt-highlight{
       background-color: ${setting["mouseoverTextHighlightColor"]}  !important;
       position: absolute !important;   

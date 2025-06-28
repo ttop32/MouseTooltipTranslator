@@ -218,6 +218,10 @@ async function showTooltipBoxes(img, textBoxList) {
     var { targetText, sourceLang, targetLang } = await handleTranslate(
       textBox["text"]
     );
+    // filter large translate text len gap
+    if(targetText.length >textBox["text"].length*7){
+      continue;
+    }
     addTooltipBox(img, textBox, targetText, targetLang);
   }
 }
@@ -289,12 +293,13 @@ function adjustTextBoxBbox(textBox, ratio) {
   textBox["bbox"]["y1"] = Math.ceil(textBox["bbox"]["y1"] / ratio);
 }
 
+
 function addTooltipBox(img, textBox, text, targetLang) {
   // Create a tooltip element using Tippy.js
-  const tooltipContent = $("<div/>", {
+  var tooltipWidth = textBox["bbox"]["x1"] - textBox["bbox"]["x0"];
+  const tooltipContent = $("<span/>", {
     text: text,
     css: {
-      maxWidth: "200px",
       wordWrap: "break-word",
       zIndex: 1000001, // Ensure tooltip content is in front
       pointerEvents: "auto", // Allow pointer interactions with the tooltip content
@@ -322,13 +327,14 @@ function addTooltipBox(img, textBox, text, targetLang) {
   const instance = tippy(tooltipTarget[0], {
     content: tooltipContent[0],
     allowHTML: true,
-    theme: "custom",
+    theme: "ocr",
     placement: "top",
     zIndex: 100000 + textBox["text"].length, // Adjust z-index based on text length
     arrow: false,
     role: "mtttooltip",
     showOnCreate: true, // Ensure the tooltip is always visible
     hideOnClick: false, // Prevent hiding on outside click
+    maxWidth: `${tooltipWidth}px`, // Set tooltip width dynamically
     popperOptions: {
       modifiers: [
         {
@@ -365,9 +371,19 @@ function addTooltipBox(img, textBox, text, targetLang) {
   // Restore the tooltip visibility when mouse leaves the tooltip content
   tooltipContent.on("mouseleave", () => {
     instance.setProps({
-      theme: "custom", // Restore the original theme
+      theme: "ocr", // Restore the original theme
     });
     tooltipContent.css("opacity", 1); // Restore opacity
+  });
+
+  $(window).on("resize", () => {
+    const { left, top, width, height } = calculateImgSegBoxSize(img, textBox["bbox"]);
+    tooltipTarget.css({
+      left: `${left}px`,
+      top: `${top + height * 0.7}px`,
+      width: `${width}px`,
+      height: `1px`,
+    });
   });
 }
 

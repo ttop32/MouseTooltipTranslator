@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.194
+  - Fix Shadow root image ocr not working
+  - Enhance performance speed for OCR
 - 0.1.193
   - Fix OCR reprocess conflict  
   - Portuguese, Brazilian localization (contributed by EdsonBittencourt)
