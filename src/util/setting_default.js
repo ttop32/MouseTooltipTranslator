@@ -42,6 +42,7 @@ var translatorList = {
   "yandex (Experimental)": "yandex",
   "baidu (Experimental)": "baidu",
   "papago (Experimental)": "papago",
+  "browser API (Experimental)": "browserAPI",
   "googleWebImage (Experimental)": "googleWebImage",
   "googleGTX (Experimental)": "googleGTX",
   "googleWeb (Experimental)": "googleWeb",

@@ -117,6 +117,113 @@ function detectText(canvasIn, mode) {
     var ksize = new cv.Size(12, 12);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+  } else if (mode.includes("black")) {
+    var ksize = new cv.Size(15, 15);
+    var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+
+    cv.bitwise_not(src, src);
+
+    // Convert image to grayscale and ensure single-channel
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+    // Threshold to get white areas (255, 255, 255)
+
+    //get white area as mask
+    cv.threshold(dst, dst, 210, 255, cv.THRESH_BINARY);
+    // showImage(dst, mode);
+
+    // Create floodfill masks for each edge
+    let combinedFloodMask = new cv.Mat(
+      dst.rows,
+      dst.cols,
+      cv.CV_8U,
+      new cv.Scalar(0)
+    );
+    var combinedFloodVisited = new Set();
+    combinedFloodMask = customFloodFillWithoutCv(
+      dst,
+      { x: 0, y: 0 },
+      combinedFloodMask,
+      combinedFloodVisited
+    );
+    combinedFloodMask = customFloodFillWithoutCv(
+      dst,
+      { x: dst.cols - 1, y: 0 },
+      combinedFloodMask,
+      combinedFloodVisited
+    );
+    combinedFloodMask = customFloodFillWithoutCv(
+      dst,
+      { x: 0, y: dst.rows - 1 },
+      combinedFloodMask,
+      combinedFloodVisited
+    );
+    combinedFloodMask = customFloodFillWithoutCv(
+      dst,
+      { x: dst.cols - 1, y: dst.rows - 1 },
+      combinedFloodMask,
+      combinedFloodVisited
+    );
+    // showImage(combinedFloodMask, mode);
+    // Remove mask area that exists in combinedFloodMask
+    cv.bitwise_not(dst, dst);
+    cv.bitwise_or(dst, combinedFloodMask, dst);
+    cv.bitwise_not(dst, dst);
+
+    // cv.bitwise_not(dst, dst); // Invert the image to get black areas
+    // cv.bitwise_not(combinedFloodMask, combinedFloodMask); // Invert the image to get black areas
+    // cv.bitwise_and(dst, dst, dst, combinedFloodMask); // Apply the mask to the original image grep white area as mask
+    // cv.bitwise_not(dst, dst); // Invert the image to get black areas again
+
+    // showImage(dst, mode);
+
+    // // Apply the mask to the original image grep white area as mask
+    // let mask = new cv.Mat();
+    // cv.bitwise_and(src, src, mask, dst);
+    // showImage(mask, mode);
+
+    // make invert white area using floodfill
+    // dst = mask.clone(); // Update dst to the masked image
+
+    cv.copyMakeBorder(
+      dst,
+      dst,
+      1,
+      1,
+      1,
+      1,
+      cv.BORDER_CONSTANT,
+      new cv.Scalar(0)
+    );
+    // Flood fill the mask to get the white area
+    let floodFillMask = customFloodFillWithoutCv(dst, { x: 0, y: 0 });
+    cv.bitwise_not(floodFillMask, floodFillMask);
+    floodFillMask = floodFillMask.roi(
+      new cv.Rect(1, 1, floodFillMask.cols - 2, floodFillMask.rows - 2)
+    );
+    let slicedResultMask = new cv.Mat();
+    cv.bitwise_and(src, src, slicedResultMask, floodFillMask);
+
+    // showImage(slicedResultMask, mode);
+    // // make white background and combine with slicedResultMask
+    cv.bitwise_not(floodFillMask, floodFillMask);
+    cv.cvtColor(floodFillMask, floodFillMask, cv.COLOR_GRAY2RGBA, 0);
+    cv.bitwise_or(slicedResultMask, floodFillMask, floodFillMask);
+    // showImage(floodFillMask, mode);
+
+    // Enhance color saturation
+    let enhancedImage = new cv.Mat();
+    cv.cvtColor(floodFillMask, enhancedImage, cv.COLOR_RGBA2RGB, 0);
+    cv.convertScaleAbs(enhancedImage, enhancedImage, 2.1, 0); // Increase intensity
+    cv.bitwise_not(enhancedImage, enhancedImage); // Ivert colors
+    cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Adjust intensity
+    cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors
+    preprocessedSourceImage = enhancedImage;
+    
+    // showImage(preprocessedSourceImage, mode);
+    // Update src and dst with the sliced result
+    src = floodFillMask;
+    dst = preprocessedSourceImage.clone();
+    cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
   } else if (mode.includes("white")) {
     var ksize = new cv.Size(15, 15);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
@@ -129,7 +236,7 @@ function detectText(canvasIn, mode) {
     //get white area as mask
     cv.threshold(dst, dst, 230, 255, cv.THRESH_BINARY);
 
-      // showImage(dst, mode);
+    // showImage(dst, mode);
     // Combine all masks into one
     let combinedFloodMask = new cv.Mat(
       dst.rows,
@@ -172,13 +279,13 @@ function detectText(canvasIn, mode) {
     cv.bitwise_not(dst, dst);
 
     // Apply the mask to the original image grep white area as mask
-    let mask = new cv.Mat();
-    cv.bitwise_and(src, src, mask, dst);
+    // let mask = new cv.Mat();
+    // cv.bitwise_and(src, src, mask, dst);
 
     // showImage(mask, mode);
 
     // make invert white area using floodfill
-    dst = mask.clone(); // Update dst to the masked image
+    // dst = mask.clone(); // Update dst to the masked image
     cv.copyMakeBorder(
       dst,
       dst,
@@ -211,7 +318,6 @@ function detectText(canvasIn, mode) {
     cv.bitwise_or(slicedResultMask, slicedBorderMask, slicedBorderMask);
     // showImage(slicedBorderMask, mode);
 
-
     // Enhance color saturation
     let enhancedImage = new cv.Mat();
     cv.cvtColor(slicedBorderMask, enhancedImage, cv.COLOR_RGBA2RGB, 0);
@@ -220,6 +326,7 @@ function detectText(canvasIn, mode) {
     cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Adjust intensity
     cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors
     preprocessedSourceImage = enhancedImage;
+    // showImage(preprocessedSourceImage, mode);
 
     // Update src and dst with the sliced result
     src = slicedBorderMask;
@@ -309,11 +416,11 @@ function detectText(canvasIn, mode) {
       rectCoverRatio < 0.15 ||
       cnt.rows < 100 ||
       area < 150 ||
-      !isRightAngle ||
-      left == 0 ||
-      top == 0 ||
-      left + width == w ||
-      top + height == h
+      !isRightAngle
+      // left == 0 ||
+      // top == 0
+      // left + width == w ||
+      // top + height == h
     ) {
       continue;
     }
@@ -434,6 +541,8 @@ function preprocessImage(canvasIn, isResize) {
 }
 
 function customFloodFillWithoutCv(image, startPoint, mask, visited) {
+  // console.time("customFloodFillWithoutCv");
+
   let rows = image.rows;
   let cols = image.cols;
   var mask = mask || new cv.Mat(rows, cols, cv.CV_8U, new cv.Scalar(0));
@@ -463,6 +572,8 @@ function customFloodFillWithoutCv(image, startPoint, mask, visited) {
       { x, y: y - 1 }
     );
   }
+
+  // console.timeEnd("customFloodFillWithoutCv");
   return mask;
 }
 

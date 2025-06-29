@@ -14,19 +14,22 @@ const windowPostMessageProxy = new WindowPostMessageProxy({
 var ocrHistory = {};
 var iFrames = {};
 var ocrResultHistory = {}; // store ocr result to avoid duplicate request
+var translatorHistory = {}; // Store translation history to avoid duplicate translations
 var setting;
 var ocrFrameName = "ocrFrame";
 var opencvFrameName = "opencvFrame";
 // var ocrFrameName="ocrFrameDebug"
 // var opencvFrameName="opencvFrameDebug";
+const textSimilarityThreshold = 0.8; // Threshold for text similarity
+var textLengthMultiplier = 7; // Multiplier for text length gap filtering
 
 //detect mouse positioned image to process ocr in ocr.html iframe
 //create text box from ocr result
-export async function checkImage(x,y, currentSetting, keyDownList) {
+export async function checkImage(x, y, currentSetting, keyDownList) {
   // if  ocr is not on or no key bind, skip
   // if mouse target is not image, skip
   // if already ocr processed,skip
-  var img=util.deepElementFromPoint(x, y);
+  var img = util.deepElementFromPoint(x, y);
   if (
     !keyDownList[currentSetting["keyDownOCR"]] ||
     !checkIsImage(img) ||
@@ -36,6 +39,8 @@ export async function checkImage(x,y, currentSetting, keyDownList) {
   }
   setting = currentSetting;
   ocrHistory[img.src] = img;
+  translatorHistory[img.src] = [];
+  ocrResultHistory[img.src] = [];
   var lang = setting["ocrLang"];
   makeLoadingMouseStyle(img);
 
@@ -64,6 +69,14 @@ export async function checkImage(x,y, currentSetting, keyDownList) {
       "ORANGE",
       "bbox_white_useOpencvImg"
     ),
+    processOcr(
+      img.src,
+      lang,
+      base64Url,
+      img,
+      "PURPLE",
+      "bbox_black_useOpencvImg"
+    ),
   ]);
 
   makeNormalMouseStyle(img);
@@ -79,6 +92,7 @@ export function removeAllOcrEnv() {
   ocrHistory = {};
   hideAll({ duration: 0 });
   ocrResultHistory = {};
+  translatorHistory = {};
 }
 
 async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
@@ -91,7 +105,7 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   // OCR process with opencv, then display
   if (mode.includes("bbox")) {
     // console.time("OCR Process with OpenCV"+mode);
-    var { bboxList, base64Url, ratio ,opencvImg } = await requestSegmentBox(
+    var { bboxList, base64Url, ratio, opencvImg } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,
@@ -99,7 +113,7 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
     );
     // console.timeEnd("OCR Process with OpenCV"+mode);
   }
-  
+
   await Promise.all(
     bboxList.map(async (bbox) => {
       var res = await requestOcr(mainUrl, lang, [bbox], base64Url, mode);
@@ -141,19 +155,19 @@ async function createIframe(name, htmlPath) {
 }
 
 function loadScript(name, htmlPath) {
-  var debugCSS={
+  var debugCSS = {
     width: "700",
     height: "700",
     pointerEvents: "auto",
     opacity: 1.0,
-  }
+  };
   var iFrameCSS = {
     width: "1",
     height: "1",
     pointerEvents: "none",
     opacity: 0.0,
   };
-  
+
   return new Promise(function (resolve, reject) {
     var iFrame = $("<iframe />", {
       name: name,
@@ -214,14 +228,30 @@ async function showOcrData(img, ocrData, ratio, color) {
 
 async function showTooltipBoxes(img, textBoxList) {
   var filteredTextBoxList = filterDuplicateOcr(img, textBoxList);
+
   for (var textBox of filteredTextBoxList) {
     var { targetText, sourceLang, targetLang } = await handleTranslate(
       textBox["text"]
     );
-    // filter large translate text len gap
-    if(targetText.length >textBox["text"].length*7){
+
+    const isAlreadyTranslated = translatorHistory[img.src].some(
+      (prevTargetText) => {
+        return (
+          calculateTextSimilarity(prevTargetText, targetText) >
+          textSimilarityThreshold
+        );
+      }
+    );
+
+    // Filter large translate text length gap
+    if (
+      targetText.length > textBox["text"].length * textLengthMultiplier ||
+      isAlreadyTranslated
+    ) {
       continue;
     }
+
+    translatorHistory[img.src].push(targetText);
     addTooltipBox(img, textBox, targetText, targetLang);
   }
 }
@@ -254,11 +284,7 @@ function calculateTextSimilarity(text1, text2) {
 
 function filterDuplicateOcr(img, textBoxList) {
   // Ensure ocrResultHistory exists for the image
-  if (!ocrResultHistory[img.src]) {
-    ocrResultHistory[img.src] = [];
-  }
   const bboxThreshold = 15; // Threshold for bounding box similarity (bbox is a common term in OCR)
-  const textSimilarityThreshold = 0.8; // Threshold for text similarity (e.g., Levenshtein distance ratio)
 
   // Filter out text boxes that are similar to previous history
   const filteredTextBoxList = textBoxList.filter((textBox) => {
@@ -293,10 +319,12 @@ function adjustTextBoxBbox(textBox, ratio) {
   textBox["bbox"]["y1"] = Math.ceil(textBox["bbox"]["y1"] / ratio);
 }
 
-
 function addTooltipBox(img, textBox, text, targetLang) {
   // Create a tooltip element using Tippy.js
-  var tooltipWidth = textBox["bbox"]["x1"] - textBox["bbox"]["x0"];
+  var tooltipWidth = Math.max(
+    200,
+    textBox["bbox"]["x1"] - textBox["bbox"]["x0"]
+  );
   const tooltipContent = $("<span/>", {
     text: text,
     css: {
@@ -377,7 +405,10 @@ function addTooltipBox(img, textBox, text, targetLang) {
   });
 
   $(window).on("resize", () => {
-    const { left, top, width, height } = calculateImgSegBoxSize(img, textBox["bbox"]);
+    const { left, top, width, height } = calculateImgSegBoxSize(
+      img,
+      textBox["bbox"]
+    );
     tooltipTarget.css({
       left: `${left}px`,
       top: `${top + height * 0.7}px`,
