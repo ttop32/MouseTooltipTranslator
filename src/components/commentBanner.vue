@@ -1,71 +1,86 @@
 <template>
   <v-alert
-    v-if="isNewVisit"
-    type="success"
+    v-if="isBannerVisible"
+    :type="alertType"
     border="start"
     variant="tonal"
     closable
     close-label="Close Alert"
-    :title="title"
+    :title="alertTitle"
     style="min-height: 90px;"
   >
-    {{ subtitle }}
+    {{ alertSubtitle }}
     <template v-slot:append>
       <v-btn
         variant="tonal"
         style="position: absolute; bottom: 10px; right: 10px;"
-        @click="handleClick(url)"
+        @click="handleClick(alertUrl)"
       >
-        Open
+        {{ buttonText }}
       </v-btn>
     </template>
   </v-alert>
 </template>
-<script>
 
+<script>
 import browser from "webextension-polyfill";
 import { useSettingStore } from "/src/stores/setting.js";
 import { mapState } from "pinia";
+import {getReviewUrl} from "/src/util/review_util.js";
+
 
 export default {
   name: "CommentBanner",
   emits: ["click"],
-  // props: ["title"],
   data() {
     return {
-      title: browser.i18n.getMessage("Support_this_extension"),
-      subtitle: browser.i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
-      url: "https://buymeacoffee.com/ttop324",
+      messages: {
+        title: browser.i18n.getMessage("Support_this_extension"),
+        subtitle: browser.i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
+        url: "https://buymeacoffee.com/ttop324",
+        reviewTitle: browser.i18n.getMessage("Review_this"),
+        reviewSubtitle: browser.i18n.getMessage("Developer_love_criticism"),
+        reviewUrl: getReviewUrl(),
+      },
+      coffeeCount: 0,
+      isBannerVisible: false,
+      alertType: "",
+      alertTitle: "",
+      alertSubtitle: "",
+      alertUrl: "",
+      buttonText: "",
     };
   },
   async mounted() {
     await this.waitSettingLoad();
-    this.increasePopupCount();
+    this.updateCoffeeCount();
+    this.updateBannerProperties();
   },
   computed: {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
-    isNewVisit() {
-      var count = Number(this.setting?.["coffeeCount"]);
-      return 1 < count && count < 15;
+    coffeeCount() {
+      return Number(this.setting?.["coffeeCount"]);
     },
   },
   methods: {
-    openUrl(newURL) {
-      window.open(newURL);
-    },
-    handleClick(newURL) {
-      this.openUrl(newURL);
-      this.finishPopupCount();
+    handleClick(url) {
+      window.open(url);
+      this.updateCoffeeCount(10);
+      this.updateBannerProperties();
       this.$emit("click");
     },
-    increasePopupCount(inc = 1) {
-      var count = Number(this.setting["coffeeCount"]);
-      if (count < 17) {
-        this.setting["coffeeCount"] = count + inc;
-      }
+    updateCoffeeCount(increment = 1) {
+      const count = Number(this.setting["coffeeCount"]);
+      this.setting["coffeeCount"] = Math.min(count + increment, 17);
+      this.coffeeCount = this.setting["coffeeCount"];
     },
-    finishPopupCount() {
-      this.increasePopupCount(100);
+    updateBannerProperties() {
+      this.isBannerVisible = this.coffeeCount < 15;
+      this.alertType = this.coffeeCount < 5 ? "info" : "success";
+      this.alertTitle = this.coffeeCount < 5 ? this.messages.reviewTitle : this.messages.title;
+      this.alertSubtitle = this.coffeeCount < 5 ? this.messages.reviewSubtitle : this.messages.subtitle;
+      this.alertUrl = this.coffeeCount < 5 ? this.messages.reviewUrl : this.messages.url;
+      this.buttonText = this.coffeeCount < 5 ? "Review" : "Open";
     },
   },
 };

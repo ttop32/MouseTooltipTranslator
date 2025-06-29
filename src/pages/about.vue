@@ -42,18 +42,7 @@
 </template>
 <script>
 import browser from "webextension-polyfill";
-// import * as util from "/src/util";
-
-var reviewUrlJson = {
-  nnodgmifnfgkolmakhcfkkbbjjcobhbl:
-    "https://microsoftedge.microsoft.com/addons/detail/mouse-tooltip-translator/nnodgmifnfgkolmakhcfkkbbjjcobhbl", //edge web store id
-  hmigninkgibhdckiaphhmbgcghochdjc:
-    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews", //chrome web store id
-  firefox:
-    "https://addons.mozilla.org/en-US/firefox/addon/mouse-tooltip-translator-pdf/reviews/",
-  default:
-    "https://chromewebstore.google.com/detail/hmigninkgibhdckiaphhmbgcghochdjc/reviews",
-};
+import { getReviewUrl } from "/src/util/review_util.js";
 
 export default {
   name: "AboutView",
@@ -93,8 +82,8 @@ export default {
         },
         reviewPage: {
           name: browser.i18n.getMessage("Review_Page"),
-          sub_name: browser.i18n.getMessage("Comment_on_this_extension"),
-          url: this.getReviewUrl(),
+          sub_name: browser.i18n.getMessage("Comment_on_this extension"),
+          url: getReviewUrl(),
           icon: "mdi-message-draw",
           color: "primary",
         },
@@ -131,19 +120,6 @@ export default {
       } else {
         this.openUrlAsPanel(url);
       }
-    },
-    getReviewUrl() {
-      const extId = browser.runtime.id;
-      if (extId in reviewUrlJson) {
-        return reviewUrlJson[extId];
-      }
-      if (this.isFirefox()) {
-        return reviewUrlJson["firefox"];
-      }
-      return reviewUrlJson["default"];
-    },
-    isFirefox() {
-      return typeof InstallTrigger !== "undefined";
     },
     async openUrlAsPanel(url) {
       var url = browser.runtime.getURL(url);
