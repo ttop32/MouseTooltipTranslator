@@ -1,5 +1,6 @@
 import { Setting } from "./setting.js";
 import { defaultData } from "./setting_default.js";
+import { navigatorLangToISO } from "./lang.js";
 import { parse } from "bcp-47";
 
 import {
@@ -33,16 +34,27 @@ export default class SettingUtil {
   static getDefaultLang() {
     return this.parseLocaleLang(navigator.language);
   }
-
+  
   static parseLocaleLang(localeLang) {
-    const langCovert = {
-      zh: "zh-CN",
-      he: "iw",
-      fil: "tl",
-    };
+    if(    navigatorLangToISO[localeLang]) {
+      return navigatorLangToISO[localeLang];
+    }
     let lang = parse(localeLang).language;
-    lang = langCovert[lang] || lang;
-    return localeLang === "zh-TW" ? "zh-TW" : lang;
+    return  lang;
+  }
+
+  static async getDefaultTranslator() {
+    if (navigator.language.startsWith("zh")) {
+      try {
+        const response = await fetch("https://www.google.com", { method: "HEAD" });
+        if (!response.ok || response.type === "opaque") {
+          return "baidu";
+        }
+      } catch (error) {
+        return "baidu";
+      }
+    }
+    return defaultData["translatorVendor"];
   }
 
   static async getDefaultVoice() {

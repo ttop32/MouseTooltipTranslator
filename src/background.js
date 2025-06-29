@@ -27,8 +27,8 @@ var recentRecord = {};
 
 (async function backgroundInit() {
   try {
+    handleFirstTimeInstall(introSiteUrl); // check first start and redirect to how to use url
     injectContentScriptForAllTab(); // check extension updated, then re inject content script
-    addInstallUrl(introSiteUrl); // check first start and redirect to how to use url
     // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
@@ -338,10 +338,14 @@ function addUninstallUrl(url) {
   browser.runtime.setUninstallURL(url);
 }
 
-function addInstallUrl(url) {
+function handleFirstTimeInstall(url) {
   browser.runtime.onInstalled.addListener(async (details) => {
     if (details.reason == "install") {
       browser.tabs.create({ url });
+      await getSetting();
+      var translatorVendor=await SettingUtil.getDefaultTranslator();
+      setting["translatorVendor"]= translatorVendor;
+      setting.save();
     }
   });
 }
