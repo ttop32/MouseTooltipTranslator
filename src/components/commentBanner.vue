@@ -42,7 +42,6 @@ export default {
         reviewSubtitle: browser.i18n.getMessage("Developer_love_criticism"),
         reviewUrl: getReviewUrl(),
       },
-      coffeeCount: 0,
       isBannerVisible: false,
       alertType: "",
       alertTitle: "",
@@ -72,7 +71,6 @@ export default {
     updateCoffeeCount(increment = 1) {
       const count = Number(this.setting["coffeeCount"]);
       this.setting["coffeeCount"] = Math.min(count + increment, 17);
-      this.coffeeCount = this.setting["coffeeCount"];
     },
     updateBannerProperties() {
       this.isBannerVisible = this.coffeeCount < 15;
