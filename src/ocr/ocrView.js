@@ -321,25 +321,25 @@ function adjustTextBoxBbox(textBox, ratio) {
 
 function addTooltipBox(img, textBox, text, targetLang) {
   // Create a tooltip element using Tippy.js
+  var zIndex = 100000 + textBox["text"].length +textBox["confidence"]; // Adjust z-index based on text length
   var tooltipWidth = Math.max(
     200,
     textBox["bbox"]["x1"] - textBox["bbox"]["x0"]
   );
-  const tooltipContent = $("<span/>", {
-    text: text,
-    css: {
-      wordWrap: "break-word",
-      zIndex: 1000001, // Ensure tooltip content is in front
-      pointerEvents: "auto", // Allow pointer interactions with the tooltip content
-      dir: getRtlDir(targetLang), // Set direction based on target language
-    },
-  });
-
   const { left, top, width, height } = calculateImgSegBoxSize(
     img,
     textBox["bbox"]
   );
 
+  const tooltipContent = $("<span/>", {
+    text: text,
+    css: {
+      wordWrap: "break-word",
+      zIndex: 100000, // Ensure tooltip content is in front
+      pointerEvents: "auto", // Allow pointer interactions with the tooltip content
+      dir: getRtlDir(targetLang), // Set direction based on target language
+    },
+  });
   const tooltipTarget = $("<div/>", {
     css: {
       position: "absolute",
@@ -347,7 +347,7 @@ function addTooltipBox(img, textBox, text, targetLang) {
       top: `${top + height * 0.7}px`,
       width: `${width}px`,
       height: `1px`,
-      zIndex: 100000 + textBox["text"].length, // Adjust z-index based on text length
+      zIndex,
       pointerEvents: "none",
     },
   }).appendTo(img.parentElement);
@@ -357,7 +357,7 @@ function addTooltipBox(img, textBox, text, targetLang) {
     allowHTML: true,
     theme: "ocr",
     placement: "top",
-    zIndex: 100000 + textBox["text"].length, // Adjust z-index based on text length
+    zIndex, 
     arrow: false,
     role: "mtttooltip",
     showOnCreate: true, // Ensure the tooltip is always visible
