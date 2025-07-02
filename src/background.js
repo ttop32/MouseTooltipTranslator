@@ -12,6 +12,12 @@ import * as util from "/src/util";
 import SettingUtil from "/src/util/setting_util.js";
 import _util from "/src/util/lodash_util.js";
 
+var setting;
+var recentTranslated = "";
+var introSiteUrl =
+  "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
+var recentRecord = {};
+
 var fallbackEngineActList = ["google", "bing", "baidu", "papago", "deepl", "yandex"];
 var fallbackEngineCrashTime = { google: 1, bing: 2, baidu: 3 };
 var fallbackEngineCrashCount = {};
@@ -19,11 +25,6 @@ var fallbackWaitTime = 1000 * 60 * 60; // 1 hour
 var fallbackEngineSwapList = ["google", "bing", "baidu"];
 var fallbackMaxRetry = fallbackEngineSwapList.length;
 
-var setting;
-var recentTranslated = "";
-var introSiteUrl =
-  "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
-var recentRecord = {};
 
 (async function backgroundInit() {
   try {
@@ -86,6 +87,8 @@ function addMessageListener() {
 
 //translate function====================================================
 
+
+
 async function translateWithReverse({
   text,
   sourceLang,
@@ -94,41 +97,33 @@ async function translateWithReverse({
   engine,
 }) {
   var engine = engine || setting["translatorVendor"];
-  var response = await translate({ text, sourceLang, targetLang, engine });
-  //if to,from lang are same and reverse translate on
+  var response = await translateWithFallbackEngine(
+    text,
+    sourceLang,
+    targetLang,
+    engine
+  );
+
   if (
-    !response.isBroken &&
-    targetLang == response.sourceLang &&
-    // text == response.translatedText &&
-    reverseLang != null &&
+    targetLang == response?.sourceLang &&
     reverseLang != "null" &&
     reverseLang != targetLang
   ) {
-    response = await translate({
+    response = await translateWithFallbackEngine(
       text,
-      sourceLang: response.sourceLang,
-      targetLang: reverseLang,
-      engine,
-    });
-  }
-  return response;
-}
-
-async function translate({ text, sourceLang, targetLang, engine }) {
-  return (
-    (await translateWithFallbackEngine(
-      text,
-      sourceLang,
-      targetLang,
+      response.sourceLang,
+      reverseLang,
       engine
-    )) || {
-      targetText: `${engine} is broken`,
-      transliteration: "",
-      sourceLang: "",
-      targetLang: setting["translateTarget"],
-      isBroken: true,
-    }
-  );
+    );
+  }
+
+  return response || {
+    targetText: `${engine} is broken`,
+    transliteration: "",
+    sourceLang: "",
+    targetLang: setting["translateTarget"],
+    isBroken: true,
+  };
 }
 
 async function translateWithFallbackEngine(
@@ -138,42 +133,28 @@ async function translateWithFallbackEngine(
   engine,
   retry = 0
 ) {
-  if (retry > fallbackMaxRetry) {
-    return null;
-  }
-  if (fallbackEngineCrashCount[engine] == null) {
-    fallbackEngineCrashCount[engine] = 0;
-  }
-  if (fallbackEngineCrashTime[engine] == null) {
-    fallbackEngineCrashTime[engine] = 4;
-  }
-  let translateResult;
-  var isFallbackApply =
-    setting["fallbackTranslatorEngine"] == "true" &&
+  if (retry > fallbackMaxRetry) return null;
+
+  fallbackEngineCrashCount[engine] ??= 0;
+  fallbackEngineCrashTime[engine] ??= 0;
+
+  const isFallbackEnabled =
+    setting["fallbackTranslatorEngine"] === "true" &&
     fallbackEngineActList.includes(engine);
-  var sortedEngines = Object.keys(fallbackEngineCrashTime)
-    .filter((engine_cur) => fallbackEngineSwapList.includes(engine_cur))
-    .filter((engine_cur) => engine_cur != engine)
-    .sort((a, b) => fallbackEngineCrashTime[a] - fallbackEngineCrashTime[b]);
-  var swapEngine = sortedEngines[0];
 
-  if (
-    fallbackEngineCrashTime[engine] < new Date().getTime() ||
-    !isFallbackApply
-  ) {
-    translateResult = await getTranslateCached(
-      text,
-      sourceLang,
-      targetLang,
-      engine
-    );
-  }
+  const swapEngine = Object.keys(fallbackEngineCrashTime)
+    .filter((e) => fallbackEngineSwapList.includes(e) && e !== engine)
+    .sort((a, b) => fallbackEngineCrashTime[a] - fallbackEngineCrashTime[b])[0];
 
-  if (isFallbackApply && !translateResult) {
-    fallbackEngineCrashCount[engine] += 1; // increase crash count
+  let translateResult =
+    fallbackEngineCrashTime[engine] < Date.now() || !isFallbackEnabled
+      ? await getTranslateCached(text, sourceLang, targetLang, engine)
+      : null;
+
+  if (isFallbackEnabled && !translateResult) {
+    fallbackEngineCrashCount[engine]++;
     fallbackEngineCrashTime[engine] =
-      new Date().getTime() +
-      fallbackWaitTime * fallbackEngineCrashCount[engine]; // set next retry time
+      Date.now() + fallbackWaitTime * fallbackEngineCrashCount[engine];
     translateResult = await translateWithFallbackEngine(
       text,
       sourceLang,
@@ -182,6 +163,7 @@ async function translateWithFallbackEngine(
       retry + 1
     );
   }
+
   return translateResult;
 }
 
@@ -190,6 +172,7 @@ const getTranslateCached = util.cacheFn(getTranslate);
 async function getTranslate(text, sourceLang, targetLang, engine) {
   return await translator[engine].translate(text, sourceLang, targetLang);
 }
+
 
 //setting ============================================================
 
