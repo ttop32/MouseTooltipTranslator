@@ -121,8 +121,8 @@ function detectText(canvasIn, mode) {
     var ksize = new cv.Size(15, 15);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
 
+    // Invert colors for black mode
     if (mode.includes("black")) {
-      // Invert colors for black mode
       cv.bitwise_not(src, src);
     }
 
@@ -130,8 +130,8 @@ function detectText(canvasIn, mode) {
     // Threshold to get white areas
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     cv.threshold(dst, dst, 200, 255, cv.THRESH_BINARY);
-    // showImage(dst, mode);
-
+    showDebugImage(dst, mode);
+    
     // Create floodfill masks for each edge
     let combinedFloodMask = new cv.Mat(
       dst.rows,
@@ -159,6 +159,7 @@ function detectText(canvasIn, mode) {
     cv.bitwise_not(dst, dst);
     cv.bitwise_or(dst, combinedFloodMask, dst);
     cv.bitwise_not(dst, dst);
+    showDebugImage(dst, mode);
 
     cv.copyMakeBorder(
       dst,
@@ -178,14 +179,14 @@ function detectText(canvasIn, mode) {
     );
     let slicedResultMask = new cv.Mat();
     cv.bitwise_and(src, src, slicedResultMask, floodFillMask);
+    showDebugImage (slicedResultMask, mode);
 
-    // showImage(slicedResultMask, mode);
     // // make white background and combine with slicedResultMask
     cv.bitwise_not(floodFillMask, floodFillMask);
     cv.cvtColor(floodFillMask, floodFillMask, cv.COLOR_GRAY2RGBA, 0);
     cv.bitwise_or(slicedResultMask, floodFillMask, floodFillMask);
-    // showImage(floodFillMask, mode);
-
+    showDebugImage(floodFillMask, mode);
+    
     // Enhance color saturation
     let enhancedImage = new cv.Mat();
     cv.cvtColor(floodFillMask, enhancedImage, cv.COLOR_RGBA2RGB, 0);
@@ -194,19 +195,56 @@ function detectText(canvasIn, mode) {
     cv.bitwise_not(enhancedImage, enhancedImage); // Invert colors
     cv.convertScaleAbs(enhancedImage, enhancedImage, 1.5, 0); // Increase intensity
     preprocessedSourceImage = enhancedImage;
+    showDebugImage(preprocessedSourceImage, mode);
 
-    // showImage(preprocessedSourceImage, mode);
     // Update src and dst with the sliced result
     src = floodFillMask;
     dst = preprocessedSourceImage.clone();
     cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
+  } else if (mode.includes("contour")) {
+    var ksize = new cv.Size(12, 12);
+    var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
+    let elementDilate = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(3, 3));
+
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+    cv.GaussianBlur(dst, dst, new cv.Size(5, 5), 0, 0, cv.BORDER_DEFAULT);
+    cv.Canny(dst, dst, 30, 150, 3, false);
+    
+    // 2. 외곽선 추출
+    cv.findContours(
+      dst,
+      contours,
+      hierarchy,
+      cv.RETR_EXTERNAL,
+      cv.CHAIN_APPROX_SIMPLE
+    );
+    showDebugImage(dst, mode);
+
+
+    // 3. 마스크 생성 (말풍선 내부를 흰색으로 채움)
+    let mask = new cv.Mat(h, w, cv.CV_8U, new cv.Scalar(0));
+    cv.drawContours(mask, contours, -1, new cv.Scalar(255), -1); // 내부 채움
+  
+    cv.dilate(mask, mask, elementDilate, new cv.Point(-1, -1), 2, cv.BORDER_CONSTANT, cv.morphologyDefaultBorderValue());
+
+
+    showDebugImage(mask, mode);
+
+
+    
+    // 4. 마스크를 이용해서 원본 이미지에서 말풍선 영역만 추출
+    let result = new cv.Mat();
+    src.copyTo(result, mask); // mask가 255인 부분만 복사됨
+    src= result.clone(); // src에 결과 저장
+    // dst= result.clone(); // dst에 결과 저장
+    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
+
+    // 5. 결과 확인
+    showDebugImage(result, mode);
   } else {
     //get only contour bounded image to extract manga bubble only
-
     var ksize = new cv.Size(15, 15);
-    // var element = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize);
     var element = cv.getStructuringElement(cv.MORPH_RECT, ksize);
-
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     cv.GaussianBlur(dst, dst, new cv.Size(5, 5), 0, 0, cv.BORDER_DEFAULT);
     cv.Canny(dst, dst, 30, 150, 3, false);
@@ -217,29 +255,35 @@ function detectText(canvasIn, mode) {
       cv.RETR_EXTERNAL,
       cv.CHAIN_APPROX_SIMPLE
     );
+    showDebugImage(dst, mode);
 
-    // # Create a mask from the contours, 1for bounded, 2for non bounded
+    // # Create a mask from the contours, 1for bounded, 2for non bounded, bold not bold
     let mask1 = new cv.Mat(h, w, cv.CV_8U, new cv.Scalar(0));
     cv.drawContours(mask1, contours, -1, new cv.Scalar(255), -1);
     let mask2 = new cv.Mat(h, w, cv.CV_8U, new cv.Scalar(0, 0, 0));
     cv.drawContours(mask2, contours, -1, new cv.Scalar(255), 5);
     cv.bitwise_not(mask2, mask2);
+    showDebugImage(mask1, mode);
+    showDebugImage(mask2, mode);
 
     // # Bitwise-AND bounded mask with the non bounded mask to remove edges
     let area_bounded_contour_mask = new cv.Mat();
     cv.bitwise_and(mask1, mask1, area_bounded_contour_mask, mask2);
+    showDebugImage(area_bounded_contour_mask, mode);
+
+
     cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY, 0);
     cv.bitwise_and(dst, dst, dst, area_bounded_contour_mask);
-
     let area_bounded_contour_mask_inv = new cv.Mat();
     cv.bitwise_not(area_bounded_contour_mask, area_bounded_contour_mask_inv);
+    showDebugImage(area_bounded_contour_mask, mode);
 
     let y = new cv.Mat();
     cv.add(area_bounded_contour_mask_inv, dst, y);
     src = y;
     dst = y;
     paddingSize = 3;
-
+    showDebugImage(dst, mode);
     // blurred = cv2.GaussianBlur(gray, (5,5), 0)
     // edges = cv2.Canny(blurred, 50, 200,apertureSize=7,L2gradient=True)
   }
@@ -339,24 +383,26 @@ function detectText(canvasIn, mode) {
     }
   }
 
-  if (isDebug) {
-    // console.log(mode)
-    console.log(bboxList.length);
-    showImage(src, mode);
-    showImage(dst, mode);
-  }
 
+  // console.log(mode)
+  // console.log(bboxList.length);
+  showDebugImage(src, mode);
+  showDebugImage(dst, mode);
+
+    
   bboxList = sortBbox(bboxList);
   return { bboxList, preprocessedSourceImage };
 }
 
-function showImage(cvImage, mode) {
+function showDebugImage(cvImage, mode) {
+  if (!isDebug) {
+    return;
+  }
+
   console.log(mode);
   var canvas = document.createElement("canvas");
   cv.imshow(canvas, cvImage);
   document.body.appendChild(canvas);
-  const dataURL = canvas.toDataURL();
-  console.log(dataURL);
 }
 
 function sortBbox(bboxList) {

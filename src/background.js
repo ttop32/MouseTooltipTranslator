@@ -5,9 +5,8 @@
 import browser from "webextension-polyfill";
 import TextUtil from "/src/util/text_util.js";
 
-import translator from "./translator/index.js";
 import TTS from "/src/tts";
-
+import { translate } from "/src/translator/translateCaller.js";
 import * as util from "/src/util";
 import SettingUtil from "/src/util/setting_util.js";
 import _util from "/src/util/lodash_util.js";
@@ -17,14 +16,6 @@ var recentTranslated = "";
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
-
-var fallbackEngineActList = ["google", "bing", "baidu", "papago", "deepl", "yandex"];
-var fallbackEngineCrashTime = { google: 1, bing: 2, baidu: 3 };
-var fallbackEngineCrashCount = {};
-var fallbackWaitTime = 1000 * 60 * 60; // 1 hour
-var fallbackEngineSwapList = ["google", "bing", "baidu"];
-var fallbackMaxRetry = fallbackEngineSwapList.length;
-
 
 (async function backgroundInit() {
   try {
@@ -53,7 +44,7 @@ function addMessageListener() {
   ) {
     (async () => {
       if (request.type === "translate") {
-        var translatedResult = await translateWithReverse(request.data);
+        var translatedResult = await translate(request.data, setting);
         sendResponse(translatedResult);
       } else if (request.type === "tts") {
         request.data.setting = setting;
@@ -84,95 +75,6 @@ function addMessageListener() {
     return true;
   });
 }
-
-//translate function====================================================
-
-
-
-async function translateWithReverse({
-  text,
-  sourceLang,
-  targetLang,
-  reverseLang,
-  engine,
-}) {
-  var engine = engine || setting["translatorVendor"];
-  var response = await translateWithFallbackEngine(
-    text,
-    sourceLang,
-    targetLang,
-    engine
-  );
-
-  if (
-    targetLang == response?.sourceLang &&
-    reverseLang != "null" &&
-    reverseLang != targetLang
-  ) {
-    response = await translateWithFallbackEngine(
-      text,
-      response.sourceLang,
-      reverseLang,
-      engine
-    );
-  }
-
-  return response || {
-    targetText: `${engine} is broken`,
-    transliteration: "",
-    sourceLang: "",
-    targetLang: setting["translateTarget"],
-    isBroken: true,
-  };
-}
-
-async function translateWithFallbackEngine(
-  text,
-  sourceLang,
-  targetLang,
-  engine,
-  retry = 0
-) {
-  if (retry > fallbackMaxRetry) return null;
-
-  fallbackEngineCrashCount[engine] ??= 0;
-  fallbackEngineCrashTime[engine] ??= 0;
-
-  const isFallbackEnabled =
-    setting["fallbackTranslatorEngine"] === "true" &&
-    fallbackEngineActList.includes(engine);
-
-  const swapEngine = Object.keys(fallbackEngineCrashTime)
-    .filter((e) => fallbackEngineSwapList.includes(e) && e !== engine)
-    .sort((a, b) => fallbackEngineCrashTime[a] - fallbackEngineCrashTime[b])[0];
-
-  let translateResult =
-    fallbackEngineCrashTime[engine] < Date.now() || !isFallbackEnabled
-      ? await getTranslateCached(text, sourceLang, targetLang, engine)
-      : null;
-
-  if (isFallbackEnabled && !translateResult) {
-    fallbackEngineCrashCount[engine]++;
-    fallbackEngineCrashTime[engine] =
-      Date.now() + fallbackWaitTime * fallbackEngineCrashCount[engine];
-    translateResult = await translateWithFallbackEngine(
-      text,
-      sourceLang,
-      targetLang,
-      swapEngine,
-      retry + 1
-    );
-  }
-
-  return translateResult;
-}
-
-const getTranslateCached = util.cacheFn(getTranslate);
-
-async function getTranslate(text, sourceLang, targetLang, engine) {
-  return await translator[engine].translate(text, sourceLang, targetLang);
-}
-
 
 //setting ============================================================
 
@@ -326,8 +228,8 @@ function handleFirstTimeInstall(url) {
     if (details.reason == "install") {
       browser.tabs.create({ url });
       await getSetting();
-      var translatorVendor=await SettingUtil.getDefaultTranslator();
-      setting["translatorVendor"]= translatorVendor;
+      var translatorVendor = await SettingUtil.getDefaultTranslator();
+      setting["translatorVendor"] = translatorVendor;
       setting.save();
     }
   });
@@ -378,12 +280,15 @@ function addSearchBarListener() {
   });
 
   browser.omnibox.onInputEntered.addListener(async (text) => {
-    var translatedResult = await translateWithReverse({
-      text,
-      sourceLang: "auto",
-      targetLang: setting["writingLanguage"],
-      reverseLang: setting["translateTarget"],
-    });
+    var translatedResult = await translate(
+      {
+        text,
+        sourceLang: "auto",
+        targetLang: setting["writingLanguage"],
+        reverseLang: setting["translateTarget"],
+      },
+      setting
+    );
     var text = translatedResult.isBroken ? text : translatedResult.targetText;
     //search with default search engine on current tab
     browser.search.query({ text });

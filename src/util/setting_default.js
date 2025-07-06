@@ -547,7 +547,7 @@ export var settingDict = {
     settingTab: "remains",
   },
   mouseoverEventInterval: {
-    default: "400",
+    default: "300",
     i18nKey: "Mouseover_Event_Interval",
     optionList: tooltipIntervalTimeList,
     settingTab: "remains",

@@ -21,7 +21,7 @@ var prevWordSegIndex = 0;
 
 export function enableMouseoverTextEvent(_window = window, currentSetting) {
   setting = currentSetting;
-  var textDetectTime = setting?.["mouseoverEventInterval"] || 700;
+  var textDetectTime = setting?.["mouseoverEventInterval"] || 300;
   
   _win = _window;
   textDetectTime = Number(textDetectTime);
