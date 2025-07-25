@@ -20,7 +20,7 @@ describe("Translator - translate", () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
-    bing.customAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36";
+    bing.customAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0';
     const result = await bing.translate(text, sourceLang, targetLang);
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
