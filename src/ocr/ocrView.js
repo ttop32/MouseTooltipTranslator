@@ -32,7 +32,7 @@ export async function checkImage(x, y, currentSetting, keyDownList) {
   if ( !keyDownList[currentSetting["keyDownOCR"]] ) {
     return;
   }
-  var img = util.getPointedImg(x, y);  
+  var img = util.getPointedImg(x, y);
   if( !img ||  ocrHistory[img?.src]) {
     return;
   }
@@ -102,11 +102,10 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   }
   var ratio = 1;
   var bboxList = [[]];
-  var opencvImg;
   // OCR process with opencv, then display
   if (mode.includes("bbox")) {
     // console.time("OCR Process with OpenCV"+mode);
-    var { bboxList, base64Url, ratio, opencvImg } = await requestSegmentBox(
+    var { bboxList, base64Url, ratio } = await requestSegmentBox(
       mainUrl,
       lang,
       base64Url,

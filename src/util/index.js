@@ -632,12 +632,66 @@ export function deepElementFromPoint(x, y) {
 }
 
 export function getPointedImg(x, y) {
-  let ele = deepElementFromPoint(x, y);
-  if (checkIsImage(ele)) return ele;
-  return document.elementsFromPoint(x, y).find(checkIsImage);
+  // Check if the primary element is an image
+  const primaryElement = deepElementFromPoint(x, y);
+  if (checkIsImage(primaryElement)) return primaryElement;
+
+  // Check for an image element in the elements stack
+  const elements = document.elementsFromPoint(x, y);
+  const imageElement = elements.find(checkIsImage);
+  if (imageElement) return imageElement;
+
+  // Check for a CSS background image in the elements stack
+  const cssImageElement = elements.find(checkIsCSSImage);
+  if (cssImageElement) {
+    return createHiddenImageFromCSS(cssImageElement);
+  }
+
+  return null;
+}
+
+function createHiddenImageFromCSS(element) {
+  const url = extractBackgroundImageUrl(element.style.backgroundImage);
+  const hiddenImg = document.createElement("img");
+  hiddenImg.src = url;
+  hiddenImg.style.position = "absolute";
+  hiddenImg.style.opacity = "0";
+  hiddenImg.style.zIndex = "-999";
+
+  const rect = element.getBoundingClientRect();
+  hiddenImg.style.left = `${rect.left + window.scrollX}px`;
+  hiddenImg.style.top = `${rect.top + window.scrollY}px`;
+  hiddenImg.style.width = `${element.offsetWidth}px`;
+  hiddenImg.style.height = `${element.offsetHeight}px`;
+
+  document.body.appendChild(hiddenImg);
+  return hiddenImg;
+}
+function checkIsCSSImage(ele) {
+  if (!ele || !ele.style || !ele.style.backgroundImage) return false;
+  const url = extractBackgroundImageUrl(ele.style.backgroundImage);
+  return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+}
+
+function extractBackgroundImageUrl(backgroundImage) {
+  let url = backgroundImage
+    .replace(/^url\(["']?/, "") // Remove 'url("' or "url('" or 'url('
+    .replace(/["']?\)$/, "") // Remove '")' or "')" or ')'
+    .trim(); // Trim whitespace
+    
+  if (url.startsWith("//")) {
+    url = "https:" + url;
+  } else if (url.startsWith("/")) {
+    url = window.location.origin + url;
+  }  
+
+  return url;
 }
 
 function checkIsImage(ele) {
+
+  
+
   return (
     ele?.tagName == "IMG" &&
     ele?.src &&

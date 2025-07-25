@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.195
+  - fix ocr img detect from taobao (requested by 어디로가는하마)
 - 0.1.194
   - Fix Shadow root image ocr not working
   - Enhance performance speed for OCR
