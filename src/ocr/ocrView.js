@@ -29,12 +29,11 @@ export async function checkImage(x, y, currentSetting, keyDownList) {
   // if  ocr is not on or no key bind, skip
   // if mouse target is not image, skip
   // if already ocr processed,skip
-  var img = util.deepElementFromPoint(x, y);
-  if (
-    !keyDownList[currentSetting["keyDownOCR"]] ||
-    !checkIsImage(img) ||
-    ocrHistory[img.src]
-  ) {
+  if ( !keyDownList[currentSetting["keyDownOCR"]] ) {
+    return;
+  }
+  var img = util.getPointedImg(x, y);  
+  if( !img ||  ocrHistory[img?.src]) {
     return;
   }
   setting = currentSetting;
@@ -124,17 +123,6 @@ async function processOcr(mainUrl, lang, base64Url, img, color, mode = "auto") {
   );
 }
 
-function checkIsImage(ele) {
-  // loaded image that has big enough size,
-  return (
-    ele?.src &&
-    ele?.tagName == "IMG" &&
-    ele?.complete &&
-    ele?.naturalHeight !== 0 &&
-    ele?.width > 300 &&
-    ele?.height > 300
-  );
-}
 
 // create ocr==================
 async function initOCRIframe() {

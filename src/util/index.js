@@ -630,3 +630,20 @@ export function deepElementFromPoint(x, y) {
   }
   return el;
 }
+
+export function getPointedImg(x, y) {
+  let ele = deepElementFromPoint(x, y);
+  if (checkIsImage(ele)) return ele;
+  return document.elementsFromPoint(x, y).find(checkIsImage);
+}
+
+function checkIsImage(ele) {
+  return (
+    ele?.tagName == "IMG" &&
+    ele?.src &&
+    ele?.complete &&
+    ele?.naturalHeight !== 0 &&
+    ele?.width > 150 &&
+    ele?.height > 150
+  );
+}
