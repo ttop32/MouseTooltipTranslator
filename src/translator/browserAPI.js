@@ -16,19 +16,14 @@ export default class browserAPI extends BaseTranslator {
 
       // Always use language detector for better accuracy
       if (sourceLang === "auto") {
-        try {
-          if (!this.detector) {
-            this.detector = await LanguageDetector.create();
-          }
-          const results = await this.detector.detect(text);
+        if (!this.detector) {
+          this.detector = await LanguageDetector.create();
+        }
+        const results = await this.detector.detect(text);
 
-          if (results && results.length > 0 && results[0].confidence > 0.5) {
-            detectedLang = results[0].detectedLanguage;
-          } else {
-            detectedLang = sourceLang === "auto" ? "en" : sourceLang;
-          }
-        } catch (error) {
-          console.warn("Language detection failed:", error);
+        if (results && results.length > 0 && results[0].confidence > 0.5) {
+          detectedLang = results[0].detectedLanguage;
+        } else {
           detectedLang = sourceLang === "auto" ? "en" : sourceLang;
         }
       }
@@ -75,7 +70,7 @@ export default class browserAPI extends BaseTranslator {
       console.error("Translation failed:", error);
       return {
         targetText: text,
-        detectedLang: sourceLang === "auto" ? "en" : sourceLang,
+        detectedLang,
         skipped: true
       };
     }
