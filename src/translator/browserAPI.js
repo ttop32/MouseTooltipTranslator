@@ -23,8 +23,8 @@ export default class browserAPI extends BaseTranslator {
 
         if (results && results.length > 0 && results[0].confidence > 0.5) {
           detectedLang = results[0].detectedLanguage;
-        } else {
-          detectedLang = sourceLang === "auto" ? "en" : sourceLang;
+        }else{
+          throw new Error("Language detection failed or confidence too low.");
         }
       }
 
