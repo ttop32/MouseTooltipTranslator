@@ -79,6 +79,7 @@ var tooltipPositionList = {
   Fixed: "fixed",
 };
 var tooltipAnimationList = {
+  None: "",
   Fade: "fade",
   Scale: "scale",
   "Shift-away": "shift-away",
