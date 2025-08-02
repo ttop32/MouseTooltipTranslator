@@ -23,7 +23,7 @@ English, Russian, Japanese, Chinese and so on
   - add option tooltip animation none (requested by xshrim)
   - support dark mode popup (requested by tipodanet)
 - 0.1.196
-  - fix to implement browser api
+  - fix to implement browser api  (requested by KenjiBaheux)
 - 0.1.195
   - fix ocr img detect from taobao (requested by 어디로가는하마)
 - 0.1.194
