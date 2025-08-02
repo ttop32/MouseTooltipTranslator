@@ -1,7 +1,7 @@
 <template>
   <popupWindow>
     <!-- top nav bar -->
-    <v-toolbar color="blue" dark dense>
+    <v-toolbar color="primary" dark dense>
       <v-col cols="7">
         <v-toolbar-title Class="text-subtitle-1 ml-3 font-weight-bold">
         <div>{{ remainSettingDesc["appName"] }}</div>

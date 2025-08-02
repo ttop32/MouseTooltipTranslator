@@ -30,6 +30,8 @@ var lang = SettingUtil.getDefaultLang();
 var messages = {};
 messages[lang] = { open: "Open", close: "Close" };
 
+const prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -39,6 +41,21 @@ const vuetify = createVuetify({
     messages,
   },
   theme: {
+    defaultTheme: prefersDarkTheme ? "dark" : "light", // Set theme based on OS preference
+    themes: {
+      dark: {
+        colors: {
+          primary: "#0D47A1", // Darker blue for primary color
+          secondary: "#424242", // Customize secondary color
+        },
+      },
+      light: {
+        colors: {
+          primary: "#1976D2",
+          secondary: "#424242",
+        },
+      },
+    },
     options: {
       customProperties: true,
     },

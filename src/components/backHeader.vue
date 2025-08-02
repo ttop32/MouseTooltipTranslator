@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="blue" dark dense>
+  <v-toolbar color="primary" dark dense>
     <v-btn icon @click="$router.go(-1)">
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>

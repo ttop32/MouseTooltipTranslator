@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.197
   - add option tooltip animation none (requested by xshrim)
+  - support dark mode popup (requested by tipodanet)
 - 0.1.196
   - fix to implement browser api
 - 0.1.195
