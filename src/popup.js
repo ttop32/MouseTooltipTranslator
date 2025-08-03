@@ -30,7 +30,7 @@ var lang = SettingUtil.getDefaultLang();
 var messages = {};
 messages[lang] = { open: "Open", close: "Close" };
 
-const prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const prefersDarkTheme = window?.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
 
 const vuetify = createVuetify({
   components,
