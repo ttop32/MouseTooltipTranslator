@@ -51,7 +51,7 @@ const vuetify = createVuetify({
       },
       light: {
         colors: {
-          primary: "#1976D2",
+          primary: "#2196F3", // Brighter blue for primary color in light theme
           secondary: "#424242",
         },
       },
