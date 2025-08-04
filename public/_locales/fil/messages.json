@@ -36,10 +36,10 @@
 		"message": "Detect Subtitle"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "Teklado teklado                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "TEKLADO"
 	},
 	"Show_Tooltip_When": {
 		"message": "Show Tooltip When"
@@ -51,7 +51,7 @@
 		"message": "Translate Writing When"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Awtomatikong tagabasa kapag"
 	},
 	"OCR_When": {
 		"message": "OCR When"
