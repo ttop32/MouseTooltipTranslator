@@ -245,12 +245,30 @@ npm run build        // or 'npm run watch' for developing
       <br /><sub><b><code title="Portuguese, Brazilian">pt-BR</code></b></sub>
     </td>
     <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/SamoE"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17221816/medium/77fb63b08a8b1ac2744ece7f05820749.png" />
+        <br />
+        <sub><b>Samo (SamoE)</b></sub></a>
+      <br />
+      <sub><b>31 words</b></sub>
+      <br /><sub><b><code title="Turkish">tr</code></b></sub>
+    </td>
+    <td align="center" valign="top">
       <a href="https://crowdin.com/profile/annatomika.one"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16117142/medium/6c5bd49cb0c367978de3a95ff43cc973.jpeg" />
         <br />
         <sub><b>ID Hunter (ASAP) (annatomika.one)</b></sub></a>
       <br />
       <sub><b>27 words</b></sub>
       <br /><sub><b><code title="Russian">ru</code></b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <a href="https://crowdin.com/profile/Amydette"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/17252996/medium/aae7d898db662404667eb5b37414b017_default.png" />
+        <br />
+        <sub><b>Amydette</b></sub></a>
+      <br />
+      <sub><b>24 words</b></sub>
+      <br /><sub><b><code title="Filipino">fil</code></b></sub>
     </td>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/CreeperYeeter2"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16245208/medium/8a0163ae0953c336a9a02f1562f292c5_default.png" />
@@ -260,8 +278,6 @@ npm run build        // or 'npm run watch' for developing
       <sub><b>13 words</b></sub>
       <br /><sub><b><code title="English, Australia">en-AU</code></b></sub>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/TTT01"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/16469337/medium/6ff0dcfb321853011aba8cfc4abcdc82.png" />
         <br />
