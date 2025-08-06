@@ -60,7 +60,7 @@
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Kapag Ginagamit ang Pagtukoy ng Pananalita"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -150,16 +150,16 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Diksyunaryo ng mga Salita sa Tooltip"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "Bilis ng Pagsasalin ng Boses"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "Pampalit na Tagasalin na Makina"
 	},
 	"OCR_Tooltip_Box": {
-		"message": "OCR Tooltip Box"
+		"message": ""
 	},
 	"SPEECH": {
 		"message": "SPEECH"
