@@ -159,13 +159,13 @@
 		"message": "Pampalit na Tagasalin na Makina"
 	},
 	"OCR_Tooltip_Box": {
-		"message": ""
+		"message": "OCR Tooltip Box"
 	},
 	"SPEECH": {
-		"message": ""
+		"message": "SPEECH"
 	},
 	"Speech_Recognition_Language": {
-		"message": ""
+		"message": "Speech Recognition Language"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Voice Panel Translate Language"
