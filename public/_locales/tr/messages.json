@@ -39,7 +39,7 @@
 		"message": "KEYBOARD                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "KLAVYE"
 	},
 	"Show_Tooltip_When": {
 		"message": "İpucu Ne Zaman Gösterilsin"
@@ -153,13 +153,13 @@
 		"message": "Tooltip Kelime Sözlüğü"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "Sesli Çeviri Hızı"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "Yedek Çevirmen Motoru"
 	},
 	"OCR_Tooltip_Box": {
-		"message": "OCR Tooltip Box"
+		"message": "OCR Araç İpucu Kutusu"
 	},
 	"SPEECH": {
 		"message": "Konuşma"
@@ -213,7 +213,7 @@
 		"message": "Exclude Website"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "Beyaz Liste Web Sitesi"
 	},
 	"About______________________________________": {
 		"message": "About                                      "
@@ -279,16 +279,16 @@
 		"message": "Kahve                                      "
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "Bu uzantıyı destekleyin"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "Uzantı geliştiricilerine bir kahve verin"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
+		"message": "Fare Araç İpucu Çevirmeni - PDF & Netflix Youtube çift alt yazı"
 	},
 	"appDesc": {
 		"message": "Fare araç ipucu çevirmen google çevirisini kullanarak mouseover metnini çevir. Support OCR, TTS, manga translator & pdf translator"

@@ -36,10 +36,10 @@
 		"message": "Detect Subtitle"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "Teklado teklado                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "TEKLADO"
 	},
 	"Show_Tooltip_When": {
 		"message": "Show Tooltip When"
@@ -51,7 +51,7 @@
 		"message": "Translate Writing When"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Awtomatikong tagabasa kapag"
 	},
 	"OCR_When": {
 		"message": "OCR When"
@@ -60,7 +60,7 @@
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Kapag Ginagamit ang Pagtukoy ng Pananalita"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -150,22 +150,22 @@
 		"message": "Tooltip Interval Time"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "Diksyunaryo ng mga Salita sa Tooltip"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "Bilis ng Pagsasalin ng Boses"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "Pampalit na Tagasalin na Makina"
 	},
 	"OCR_Tooltip_Box": {
-		"message": "OCR Tooltip Box"
+		"message": ""
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": ""
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": ""
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Voice Panel Translate Language"
