@@ -158,6 +158,9 @@
 	"Fallback_Translator_Engine": {
 		"message": "Yedek Çevirmen Motoru"
 	},
+	"OCR_Tooltip_Box": {
+		"message": "OCR Araç İpucu Kutusu"
+	},
 	"SPEECH": {
 		"message": "Konuşma"
 	},

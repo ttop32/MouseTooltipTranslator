@@ -158,6 +158,9 @@
 	"Fallback_Translator_Engine": {
 		"message": "Motor de tradução de Fallback"
 	},
+	"OCR_Tooltip_Box": {
+		"message": "Caixa de dica de OCR"
+	},
 	"SPEECH": {
 		"message": "DISCURSO"
 	},
