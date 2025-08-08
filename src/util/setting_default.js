@@ -473,13 +473,6 @@ export var settingDict = {
     optionList: toggleList,
     settingTab: "advanced",
   },
-  ocrTooltipBox: {
-    default: "true",
-    i18nKey: "OCR_Tooltip_Box",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-
 
   // exclude
   langExcludeList: {

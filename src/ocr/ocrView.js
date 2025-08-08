@@ -208,11 +208,8 @@ async function showOcrData(img, ocrData, ratio, color) {
   var textBoxList = getTextBoxList(ocrData);
   textBoxList.forEach((textBox) => adjustTextBoxBbox(textBox, ratio));
 
-  if (setting["ocrTooltipBox"] == "true") {
-    showTooltipBoxes(img, textBoxList);
-  } else {
-    createOcrTextBlocks(img, textBoxList, color);
-  }
+  showTooltipBoxes(img, textBoxList);
+  // createOcrTextBlocks(img, textBoxList, color);
 }
 
 async function showTooltipBoxes(img, textBoxList) {
