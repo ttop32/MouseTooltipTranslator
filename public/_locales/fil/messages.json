@@ -159,10 +159,10 @@
 		"message": "Pampalit na Tagasalin na Makina"
 	},
 	"SPEECH": {
-		"message": ""
+		"message": "SPEECH"
 	},
 	"Speech_Recognition_Language": {
-		"message": ""
+		"message": "Speech Recognition Language"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Voice Panel Translate Language"
@@ -211,6 +211,21 @@
 	},
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
+	},
+	"BACKUP______________________________________": {
+		"message": "BACKUP                                      "
+	},
+	"BACKUP": {
+		"message": "BACKUP"
+	},
+	"Import_Setting": {
+		"message": "Import Setting"
+	},
+	"Export_Setting": {
+		"message": "Export Setting"
+	},
+	"Reset_Setting": {
+		"message": "Reset Setting"
 	},
 	"About______________________________________": {
 		"message": "About                                      "
