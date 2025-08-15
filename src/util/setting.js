@@ -68,4 +68,8 @@ export class Setting {
   save() {
     browser.storage.local.set(this);
   }
+
+  async clear() {
+    await browser.storage.local.clear();
+  }
 }

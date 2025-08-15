@@ -156,4 +156,27 @@ export default class SettingUtil {
       return true;
     }
   }
+
+  static async resetSetting() {
+    const resetSetting = await this.loadSetting();
+    await resetSetting.clear();
+    resetSetting.save();
+    const settingInstance = await this.loadSetting();
+    settingInstance.save();
+    return settingInstance;
+  }
+
+  static async importSetting(settingData) {
+    const settingInstance = await this.loadSetting();
+    settingInstance.loadData(settingData);
+    settingInstance.save();
+    return settingInstance;
+  }
+
+  static async exportSetting() {
+    const settingInstance = await this.loadSetting();
+    const settingData = JSON.parse(JSON.stringify(settingInstance));
+    return settingData;
+  }
+
 }

@@ -103,6 +103,13 @@ i18List = [
     "Exclude Website",
     "Whitelist Website",
 
+
+    "BACKUP                                      ",
+    "BACKUP",
+    "Import Setting",
+    "Export Setting",
+    "Reset Setting",
+
     "About                                      ",
     "How to use",
     "Check how to use this extension",

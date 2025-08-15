@@ -70,6 +70,15 @@ function addMessageListener() {
           request?.data?.includeCaller
         );
         sendResponse({});
+      } else if (request.type === "resetSetting") {
+        setting = await SettingUtil.resetSetting();
+        sendResponse({ success: true });
+      } else if (request.type === "importSetting") {
+        setting = await SettingUtil.importSetting(request.data);
+        sendResponse({ success: true });
+      } else if (request.type === "exportSetting") {
+        const settingData = await SettingUtil.exportSetting();
+        sendResponse({ settingData });
       }
     })();
     return true;

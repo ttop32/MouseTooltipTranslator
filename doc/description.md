@@ -19,7 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.197
+- 0.1.199
+ - add setting backup (requested by emrestive)
+ - add setting reset (requested by 7xx)
+- 0.1.198
   - remove ocr tooltip box option
   - support select box locale
   - Filipino localization (contributed by Amydette)

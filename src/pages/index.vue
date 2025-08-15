@@ -49,7 +49,8 @@
           <v-list-item
             v-for="(option, optionName) in tabItems[tabId]"
             :key="optionName"
-            flat
+            :flat="!option.onClick"
+            @click="option.onClick ? option.onClick() : null"
           >
             <!-- single select (default null) and multiple select option -->
             <v-select
@@ -105,6 +106,16 @@
                 </v-menu>
               </template>
             </v-text-field>
+
+
+            <v-list-item-title v-else-if="option.optionType == 'button'">
+              {{ option.description }}
+            </v-list-item-title>
+            <template v-slot:prepend v-if="option.optionType == 'button'">
+              <v-avatar :color="option.color">
+                <v-icon size="25" color="white">{{ option.icon }}</v-icon>
+              </v-avatar>
+            </template>
           </v-list-item>
         </v-window-item>
       </v-window>
@@ -143,7 +154,6 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
 
   value.description = browser.i18n.getMessage(value.i18nKey);
   value.optionList = convertOptionI18n(value.optionList);
-  console.log(value.optionList);
   acc[tab][key] = value;
   return acc;
 }, {});

@@ -1,12 +1,6 @@
 import TextUtil from "/src/util/text_util.js";
-import {
-  langList,
-  ocrLangList,
-  listenLangList,
-} from "/src/util/lang.js";
+import { langList, ocrLangList, listenLangList } from "/src/util/lang.js";
 import _util from "/src/util/lodash_util.js";
-
-
 
 var langListWithAuto = TextUtil.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = TextUtil.concatJson({ None: "null" }, langList); //copy lang and add none
@@ -19,20 +13,20 @@ var toggleList = {
 
 var keyList = {
   None: "null",
-  "Ctrl_Left": "ControlLeft",
-  "Ctrl_Right": "ControlRight",
-  "Alt_Left": "AltLeft",
-  "Alt_Right": "AltRight",
-  "Shift_Left": "ShiftLeft",
-  "Shift_Right": "ShiftRight",
-  "Meta_Left": "MetaLeft",
-  "Meta_Right": "MetaRight",
-  "Click_Left": "ClickLeft",
-  "Click_Middle": "ClickMiddle",
-  "Click_Right": "ClickRight",
-  "F2": "F2",
-  "F8": "F8",
-  "F9": "F9",
+  Ctrl_Left: "ControlLeft",
+  Ctrl_Right: "ControlRight",
+  Alt_Left: "AltLeft",
+  Alt_Right: "AltRight",
+  Shift_Left: "ShiftLeft",
+  Shift_Right: "ShiftRight",
+  Meta_Left: "MetaLeft",
+  Meta_Right: "MetaRight",
+  Click_Left: "ClickLeft",
+  Click_Middle: "ClickMiddle",
+  Click_Right: "ClickRight",
+  F2: "F2",
+  F8: "F8",
+  F9: "F9",
 };
 
 var translatorList = {
@@ -60,10 +54,8 @@ var translatorList = {
 var translateActionList = {
   Select: "select",
   Mouseover: "mouseover",
-  "Mouseover_n_Select": "mouseoverselect",
+  Mouseover_n_Select: "mouseoverselect",
 };
-
-
 
 var tooltipFontSizeList = _util.getRangeOption(6, 41, 2, 0);
 var tooltipWidth = _util.getRangeOption(100, 1001, 100, 0);
@@ -82,8 +74,8 @@ var tooltipAnimationList = {
   None: "",
   Fade: "fade",
   Scale: "scale",
-  "Shift_away": "shift-away",
-  "Shift_toward": "shift-toward",
+  Shift_away: "shift-away",
+  Shift_toward: "shift-toward",
   Perspective: "perspective",
 };
 
@@ -101,16 +93,16 @@ keyListWithAlwaysSelect["Select"] = "select";
 keyListWithAlwaysSelect["Always"] = "always";
 
 var voiceTargetList = {
-  "Source_Text": "source",
-  "Translated_Text": "target",
-  "Source_n_Translated": "sourcetarget",
-  "Translated_n_Source": "targetsource",
+  Source_Text: "source",
+  Translated_Text: "target",
+  Source_n_Translated: "sourcetarget",
+  Translated_n_Source: "targetsource",
 };
 
 var subtitleTypeList = {
-  "Dual_Subtitle": "dualsub",
-  "Target_Single_Subtitle": "targetsinglesub",
-  "Source_Single_Subtitle": "sourcesinglesub",
+  Dual_Subtitle: "dualsub",
+  Target_Single_Subtitle: "targetsinglesub",
+  Source_Single_Subtitle: "sourcesinglesub",
   None: "null",
 };
 
@@ -124,13 +116,12 @@ var textAlignList = {
 var speechTextTargetList = {
   Source: "source",
   Translated: "target",
-  "Source_n_Translated": "sourcetarget",
+  Source_n_Translated: "sourcetarget",
 };
 
-
-var defaultDict={
-  "Default": "default",
-}
+var defaultDict = {
+  Default: "default",
+};
 
 var voiceRateListWithDefault = TextUtil.concatJson(defaultDict, voiceRateList);
 
@@ -191,7 +182,7 @@ export var settingDict = {
     optionList: subtitleTypeList,
     settingTab: "main",
   },
-  
+
   // keyboard
   showTooltipWhen: {
     default: "always",
@@ -345,7 +336,7 @@ export var settingDict = {
     optionList: listenLangList,
     settingTab: "speech",
   },
-  
+
   voicePanelTranslateLanguage: {
     default: "default",
     i18nKey: "Voice_Panel_Translate_Language",
@@ -495,7 +486,7 @@ export var settingDict = {
     optionList: "",
     optionType: "comboBox",
     settingTab: "exclude",
-  },  
+  },
 
   // remains
   subtitleButtonToggle: {
@@ -570,8 +561,87 @@ export var settingDict = {
     optionList: [],
     settingTab: "remains",
   },
+
+  importSetting: {
+    i18nKey: "Import_Setting",
+    optionList: [],
+    settingTab: "backup",
+    optionType: "button",
+    icon: "mdi-file-upload",
+    color: "primary",
+    onClick: () => {
+      importSettingOnclickFunc();
+    },
+  },
+  exportSetting: {
+    i18nKey: "Export_Setting",
+    optionList: [],
+    settingTab: "backup",
+    optionType: "button",
+    icon: "mdi-content-save",
+    color: "primary",
+    onClick: async () => {
+      exportSettingOnclickFunc();
+    },
+  },
+  resetSetting: {
+    i18nKey: "Reset_Setting",
+    optionList: [],
+    settingTab: "backup",
+    optionType: "button",
+    icon: "mdi-restore",
+    color: "red",
+    onClick: () => {
+      resetSettingOnclickFunc();
+    },
+  },
 };
 
+function importSettingOnclickFunc() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = ".json";
+  input.onchange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const settings = JSON.parse(e.target.result);
+
+          browser.runtime.sendMessage({
+            type: "importSetting",
+            data: settings,
+          });
+        } catch (error) {
+          console.error("Invalid JSON file:", error);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+  input.click();
+}
+
+async function exportSettingOnclickFunc() {
+  var data = await browser.runtime.sendMessage({
+    type: "exportSetting",
+  });
+  const settings = JSON.stringify(data?.settingData, null, 2);
+  const blob = new Blob([settings], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mouse-tooltip-translator-settings.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetSettingOnclickFunc() {
+  browser.runtime.sendMessage({
+    type: "resetSetting",
+  });
+}
 
 // Default values for settings get only default key
 export var defaultData = Object.fromEntries(
