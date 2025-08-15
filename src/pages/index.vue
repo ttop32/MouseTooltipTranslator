@@ -125,16 +125,31 @@ import {
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
 
+function convertOptionI18n(option) {
+  return Object.fromEntries(
+      Object.entries(option).map(([key, value]) => [
+        browser.i18n.getMessage(key) || key,
+        value,
+      ])
+    );
+}
+
+
+// load setting with i18 convert
 var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
   const tab = value.settingTab.toUpperCase();
   if (tab === "REMAINS") return acc;
   if (!acc[tab]) acc[tab] = {};
 
   value.description = browser.i18n.getMessage(value.i18nKey);
+  value.optionList = convertOptionI18n(value.optionList);
+  console.log(value.optionList);
   acc[tab][key] = value;
   return acc;
 }, {});
 
+
+// convert tab name to i18n
 var tabs = Object.keys(tabItems).reduce((acc, tab) => {
   if (tab === "REMAINS") return acc;
   acc[tab] = browser.i18n.getMessage(tab);

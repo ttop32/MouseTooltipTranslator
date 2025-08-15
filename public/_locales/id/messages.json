@@ -284,6 +284,141 @@
 	"Title______________________________________": {
 		"message": "Judul                                      "
 	},
+	"SELECT_OPTION______________________________": {
+		"message": "SELECT OPTION                              "
+	},
+	"On": {
+		"message": "On"
+	},
+	"Off": {
+		"message": "Off"
+	},
+	"Auto": {
+		"message": "Auto"
+	},
+	"None": {
+		"message": "None"
+	},
+	"Select": {
+		"message": "Select"
+	},
+	"Mouseover": {
+		"message": "Mouseover"
+	},
+	"Mouseover_n_Select": {
+		"message": "Mouseover n Select"
+	},
+	"Follow": {
+		"message": "Follow"
+	},
+	"Fixed": {
+		"message": "Fixed"
+	},
+	"Fade": {
+		"message": "Fade"
+	},
+	"Scale": {
+		"message": "Scale"
+	},
+	"Shift_away": {
+		"message": "Shift away"
+	},
+	"Shift_toward": {
+		"message": "Shift toward"
+	},
+	"Perspective": {
+		"message": "Perspective"
+	},
+	"Word": {
+		"message": "Word"
+	},
+	"Sentence": {
+		"message": "Sentence"
+	},
+	"Container": {
+		"message": "Container"
+	},
+	"Source": {
+		"message": "Source"
+	},
+	"Source_Text": {
+		"message": "Source Text"
+	},
+	"Translated_Text": {
+		"message": "Translated Text"
+	},
+	"Source_n_Translated": {
+		"message": "Source n Translated"
+	},
+	"Translated_n_Source": {
+		"message": "Translated n Source"
+	},
+	"Dual_Subtitle": {
+		"message": "Dual Subtitle"
+	},
+	"Target_Single_Subtitle": {
+		"message": "Target Single Subtitle"
+	},
+	"Source_Single_Subtitle": {
+		"message": "Source Single Subtitle"
+	},
+	"Always": {
+		"message": "Always"
+	},
+	"Center": {
+		"message": "Center"
+	},
+	"Left": {
+		"message": "Left"
+	},
+	"Right": {
+		"message": "Right"
+	},
+	"Justify": {
+		"message": "Justify"
+	},
+	"Default": {
+		"message": "Default"
+	},
+	"Ctrl_Left": {
+		"message": "Ctrl Left"
+	},
+	"Ctrl_Right": {
+		"message": "Ctrl Right"
+	},
+	"Alt_Left": {
+		"message": "Alt Left"
+	},
+	"Alt_Right": {
+		"message": "Alt Right"
+	},
+	"Shift_Left": {
+		"message": "Shift Left"
+	},
+	"Shift_Right": {
+		"message": "Shift Right"
+	},
+	"Meta_Left": {
+		"message": "Meta Left"
+	},
+	"Meta_Right": {
+		"message": "Meta Right"
+	},
+	"Click_Left": {
+		"message": "Click Left"
+	},
+	"Click_Middle": {
+		"message": "Click Middle"
+	},
+	"Click_Right": {
+		"message": "Click Right"
+	},
+	"google": {
+		"message": "google"
+	},
+	"bing": {
+		"message": "bing"
+	},
 	"appName": {
 		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
 	},

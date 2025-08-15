@@ -19,17 +19,17 @@ var toggleList = {
 
 var keyList = {
   None: "null",
-  "Ctrl Left": "ControlLeft",
-  "Ctrl Right": "ControlRight",
-  "Alt Left": "AltLeft",
-  "Alt Right": "AltRight",
-  "Shift Left": "ShiftLeft",
-  "Shift Right": "ShiftRight",
-  "Meta Left": "MetaLeft",
-  "Meta Right": "MetaRight",
-  "Click Left": "ClickLeft",
-  "Click Middle": "ClickMiddle",
-  "Click Right": "ClickRight",
+  "Ctrl_Left": "ControlLeft",
+  "Ctrl_Right": "ControlRight",
+  "Alt_Left": "AltLeft",
+  "Alt_Right": "AltRight",
+  "Shift_Left": "ShiftLeft",
+  "Shift_Right": "ShiftRight",
+  "Meta_Left": "MetaLeft",
+  "Meta_Right": "MetaRight",
+  "Click_Left": "ClickLeft",
+  "Click_Middle": "ClickMiddle",
+  "Click_Right": "ClickRight",
   "F2": "F2",
   "F8": "F8",
   "F9": "F9",
@@ -60,7 +60,7 @@ var translatorList = {
 var translateActionList = {
   Select: "select",
   Mouseover: "mouseover",
-  "Mouseover & Select": "mouseoverselect",
+  "Mouseover_n_Select": "mouseoverselect",
 };
 
 
@@ -82,8 +82,8 @@ var tooltipAnimationList = {
   None: "",
   Fade: "fade",
   Scale: "scale",
-  "Shift-away": "shift-away",
-  "Shift-toward": "shift-toward",
+  "Shift_away": "shift-away",
+  "Shift_toward": "shift-toward",
   Perspective: "perspective",
 };
 
@@ -101,16 +101,16 @@ keyListWithAlwaysSelect["Select"] = "select";
 keyListWithAlwaysSelect["Always"] = "always";
 
 var voiceTargetList = {
-  "Source Text": "source",
-  "Translated Text": "target",
-  "Source & Translated": "sourcetarget",
-  "Translated & Source": "targetsource",
+  "Source_Text": "source",
+  "Translated_Text": "target",
+  "Source_n_Translated": "sourcetarget",
+  "Translated_n_Source": "targetsource",
 };
 
 var subtitleTypeList = {
-  "Dual Subtitle": "dualsub",
-  "Target Single Subtitle": "targetsinglesub",
-  "Source Single Subtitle": "sourcesinglesub",
+  "Dual_Subtitle": "dualsub",
+  "Target_Single_Subtitle": "targetsinglesub",
+  "Source_Single_Subtitle": "sourcesinglesub",
   None: "null",
 };
 
@@ -124,7 +124,7 @@ var textAlignList = {
 var speechTextTargetList = {
   Source: "source",
   Translated: "target",
-  "Source & Translated": "sourcetarget",
+  "Source_n_Translated": "sourcetarget",
 };
 
 
