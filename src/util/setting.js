@@ -72,4 +72,5 @@ ww
   async clear() {
     await browser.storage.local.clear();
   }
+  qwq
 }
