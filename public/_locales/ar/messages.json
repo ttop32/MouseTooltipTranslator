@@ -212,6 +212,21 @@
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
 	},
+	"BACKUP______________________________________": {
+		"message": "BACKUP                                      "
+	},
+	"BACKUP": {
+		"message": "BACKUP"
+	},
+	"Import_Setting": {
+		"message": "Import Setting"
+	},
+	"Export_Setting": {
+		"message": "Export Setting"
+	},
+	"Reset_Setting": {
+		"message": "Reset Setting"
+	},
 	"About______________________________________": {
 		"message": "عن                                      "
 	},
