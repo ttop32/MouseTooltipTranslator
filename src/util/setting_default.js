@@ -579,7 +579,7 @@ export var settingDict = {
     settingTab: "backup",
     optionType: "button",
     icon: "mdi-content-save",
-    color: "primary",
+    color: "green",
     onClick: async () => {
       exportSettingOnclickFunc();
     },
