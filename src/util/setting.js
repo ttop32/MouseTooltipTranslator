@@ -64,7 +64,7 @@ export class Setting {
       updateCallbackFn(changes);
     }
   }
-
+ww
   save() {
     browser.storage.local.set(this);
   }
