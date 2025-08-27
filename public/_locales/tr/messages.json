@@ -213,19 +213,19 @@
 		"message": "Beyaz Liste Web Sitesi"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP                                      "
+		"message": "YEDEKLE                                      "
 	},
 	"BACKUP": {
-		"message": "BACKUP"
+		"message": "YEDEKLE"
 	},
 	"Import_Setting": {
-		"message": "Import Setting"
+		"message": "Ayarları İçe Aktar"
 	},
 	"Export_Setting": {
-		"message": "Export Setting"
+		"message": "Ayarları Dışarı Aktar"
 	},
 	"Reset_Setting": {
-		"message": "Reset Setting"
+		"message": "Ayarları Sıfırla"
 	},
 	"About______________________________________": {
 		"message": "About                                      "
@@ -300,7 +300,7 @@
 		"message": "Title                                      "
 	},
 	"SELECT_OPTION______________________________": {
-		"message": "SELECT OPTION                              "
+		"message": "SEÇENEĞİ SEÇ                              "
 	},
 	"On": {
 		"message": "On"
