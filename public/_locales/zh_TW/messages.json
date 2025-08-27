@@ -213,19 +213,19 @@
 		"message": "網站白名單"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP                                      "
+		"message": "備份                                      "
 	},
 	"BACKUP": {
-		"message": "BACKUP"
+		"message": "備份"
 	},
 	"Import_Setting": {
-		"message": "Import Setting"
+		"message": "匯入設定"
 	},
 	"Export_Setting": {
-		"message": "Export Setting"
+		"message": "匯出設定"
 	},
 	"Reset_Setting": {
-		"message": "Reset Setting"
+		"message": "重設設定"
 	},
 	"About______________________________________": {
 		"message": "關於                                      "
@@ -300,139 +300,139 @@
 		"message": "標題                                      "
 	},
 	"SELECT_OPTION______________________________": {
-		"message": "SELECT OPTION                              "
+		"message": "選擇選項                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "開"
 	},
 	"Off": {
-		"message": "Off"
+		"message": "關"
 	},
 	"Auto": {
-		"message": "Auto"
+		"message": "自動"
 	},
 	"None": {
-		"message": "None"
+		"message": "無"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "選擇"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "滑鼠懸停"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "懸停並選擇"
 	},
 	"Follow": {
-		"message": "Follow"
+		"message": "跟隨"
 	},
 	"Fixed": {
-		"message": "Fixed"
+		"message": "固定"
 	},
 	"Fade": {
-		"message": "Fade"
+		"message": "淡入淡出"
 	},
 	"Scale": {
-		"message": "Scale"
+		"message": "縮放"
 	},
 	"Shift_away": {
-		"message": "Shift away"
+		"message": "遠移"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "近移"
 	},
 	"Perspective": {
-		"message": "Perspective"
+		"message": "透視"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "單字"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "句子"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "容器"
 	},
 	"Source": {
-		"message": "Source"
+		"message": "原文"
 	},
 	"Source_Text": {
-		"message": "Source Text"
+		"message": "原文文字"
 	},
 	"Translated_Text": {
-		"message": "Translated Text"
+		"message": "翻譯文字"
 	},
 	"Source_n_Translated": {
-		"message": "Source n Translated"
+		"message": "原文 + 翻譯"
 	},
 	"Translated_n_Source": {
-		"message": "Translated n Source"
+		"message": "翻譯 + 原文"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "雙語字幕"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "譯文字幕"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "原文字幕"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "總是顯示"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "置中"
 	},
 	"Left": {
-		"message": "Left"
+		"message": "靠左對齊"
 	},
 	"Right": {
-		"message": "Right"
+		"message": "靠右對齊"
 	},
 	"Justify": {
-		"message": "Justify"
+		"message": "兩端對齊"
 	},
 	"Default": {
-		"message": "Default"
+		"message": "預設"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Ctrl + 左鍵"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Ctrl + 右鍵"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Alt + 左鍵"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Alt + 右鍵"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "Shift + 左鍵"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "Shift + 右鍵"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "Win/⌘ + 左鍵"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "Win/⌘ + 右鍵"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "左鍵點擊"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "中鍵點擊"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "右鍵點擊"
 	},
 	"google": {
-		"message": "google"
+		"message": "Google"
 	},
 	"bing": {
-		"message": "bing"
+		"message": "Bing"
 	},
 	"appName": {
 		"message": "滑鼠工具提示翻譯器 - PDF 和 Netflix Youtube 雙字幕"
