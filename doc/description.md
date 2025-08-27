@@ -20,8 +20,10 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.199
- - add setting backup (requested by emrestive)
- - add setting reset (requested by 7xx)
+  - add setting backup (requested by emrestive)
+  - add setting reset (requested by 7xx)
+  - Chinese localization (contributed by merlette)
+  - Turkish localization (contributed by odk-0160)
 - 0.1.198
   - remove ocr tooltip box option
   - support select box locale
