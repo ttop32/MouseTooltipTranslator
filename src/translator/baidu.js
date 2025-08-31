@@ -38,16 +38,24 @@ export default class baidu extends BaseTranslator {
   static async requestTranslate(text, sourceLang, targetLang) {
     return await ky
       .post(baseUrl, {
-        searchParams: {
-          from: sourceLang,
-          to: targetLang,
-        },
-        body: new URLSearchParams({
-          from: sourceLang,
-          to: targetLang,
-          query: text,
-          source: "txt",
-        }),
+      searchParams: {
+        from: sourceLang,
+        to: targetLang,
+      },
+      body: new URLSearchParams({
+        from: sourceLang,
+        to: targetLang,
+        query: text,
+        source: "txt",
+        isAi: false,
+        sseStartTime: Date.now(),
+        reference: "",
+        corpusIds: [],
+        needPhonetic: false,
+        domain: "common",
+        detectLang: "",
+        milliTimestamp: Date.now(),
+      }),
       })
       .json();
   }
