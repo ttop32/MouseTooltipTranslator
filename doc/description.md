@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.200
   - reset fallback engine if all cooldown
+  - fix baidu
 - 0.1.199
   - add setting backup (requested by emrestive)
   - add setting reset (requested by 7xx)
