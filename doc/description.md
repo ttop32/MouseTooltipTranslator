@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.200
+  - reset fallback engine if all cooldown
 - 0.1.199
   - add setting backup (requested by emrestive)
   - add setting reset (requested by 7xx)

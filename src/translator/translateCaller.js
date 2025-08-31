@@ -9,7 +9,8 @@ var fallbackEngineActList = [
   "deepl",
   "yandex",
 ];
-var fallbackEngineCrashTime = { google: 1, bing: 2, baidu: 3 };
+var fallbackEngineCrashTimeInit = { google: 1, bing: 2, baidu: 3 };
+var fallbackEngineCrashTime = { ...fallbackEngineCrashTimeInit };
 var fallbackEngineCrashCount = {};
 var fallbackWaitTime = 1000 * 60 * 60; // 1 hour
 var fallbackEngineSwapList = ["google", "bing", "baidu"];
@@ -97,6 +98,11 @@ async function translateWithFallbackEngine(
   engine,
   retry = 0
 ) {
+  // Reset crash times if all engines are in cooldown
+  if (retry === 0 && Object.values(fallbackEngineCrashTime).every(time => Date.now() < time)) {
+    fallbackEngineCrashTime = { ...fallbackEngineCrashTimeInit };
+    fallbackEngineCrashCount = {};
+  }
   if (retry > fallbackMaxRetry) return null;
 
   fallbackEngineCrashCount[engine] ??= 0;
