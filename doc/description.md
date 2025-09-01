@@ -20,6 +20,8 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.200
+  - add more lang support (requested by abasakre)
+- 0.1.200
   - reset fallback engine if all cooldown
   - fix baidu
 - 0.1.199
