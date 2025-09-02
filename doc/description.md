@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.202
+  - fix youtube conflict sub
 - 0.1.201
   - add more lang support (requested by abasakre)
 - 0.1.200
