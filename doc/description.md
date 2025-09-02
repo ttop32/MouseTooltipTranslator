@@ -463,18 +463,167 @@ English, Russian, Japanese, Chinese and so on
   - Fix Google Translate API (requested by CONATUS)
   - Change tooltip text to non-transparency (requested by Hakan Özlen)
 - 0.1.43
-  - Google reject by tabs permission
-    - Remove the permission
+  - google reject by tabs permission
+    - remove the permission
 - 0.1.42
-  - Fix Chinese default language code (requested by yc-forever)
+  - fix chinese default language code (request by yc-forever)
 - 0.1.41
-  - Fix Google Translate API request
+  - fix google translate api request
 - 0.1.40
-  - Detect Chrome PDF viewer instead of PDF URL (requested by Justin Brown)
+  - detect chrome pdf viewer instead of pdf url (request by Justin Brown)
 - 0.1.39
-  - Fix translator crash from Twitter YouTube (requested by PedoBearNomsLoli)
+  - fix translator crash from twitter youtube (request by PedoBearNomsLoli)
 - 0.1.38
-  - Increase variety on
+  - increase variety on tooltip font size
+  - change description
+- 0.1.37
+  - Google reject by description
+    - remove "Translate" from title
+    - remove some description about "Translate"  
+- 0.1.36  
+  - alert local pdf file permission  
+  - fix pdf request header detection
+  - add pdf detect option to allow pdf translate (request by Meow Meow)
+- 0.1.35
+  - fix pdf viewer problem when open with new tab (request by M9VK)
+  - fix pdf viewer url parameter crash (request by sensypo)
+- 0.1.34
+  - remove sendMessage (stop tts)
+- 0.1.33
+  - avoid to use sendMessage (stop tts) when leave tab
+- 0.1.32
+  - add "translate When" option to replace "translate on hover" (request by Alex)
+  - load setting from storage instead of background service worker
+  - fix tooltip position problem when crtl pressed
+  - set initial "translate into" value correctly
+- 0.1.31
+  - fix cpu usage (request by M9VK)
+- 0.1.30
+  - update to google chrome manifest v3  
+  - remove opencv, use canvas to process crop for ocr translate
+  - remove option "translate on hover" and "translate on select"
+  - use vue loader for translator popup page
+  - use chrome tts instead of google tts api
+  - update tooltip translator pdf viewer to use v2.8.335 pdfjs  
+  - support command key for translator activation
+  - support right to left alignment for translate to Persian
+  - move ocr translate process to iframe  
+  - fix translator tooltip position (problem when it is first shot)
+- 0.1.29
+  - fix bing translator crash(request by zx xu)  
+  - support right to left alignment for translate to Arabic (request by mohamad-b)
+  - add translate text history section on popup page (request by TeraStrider)  
+- 0.1.28  
+  - support translate on selection (contributed by sanprojects)  
+- 0.1.27  
+  - support youtube subtitle caption to show translator tooltip (request by Veratyr)  
+  - fix gmail pdf attachment crash with translator viewer (request by junkey)  
+- 0.1.26  
+  - increase tooltip z-index (request by WM)  
+  - add customization on tooltip width (request by Bambang Sutrisno)  
+- 0.1.25
+  - Google reject by description
+    - Google said "Irrelevant information about Mouseover Translate" again
+    - remove all main description
+- 0.1.24
+  - Google reject by description
+    - Google said "Irrelevant information about Mouseover Translate"
+    - remove "Mouseover Translate" from title and package summarization
+- 0.1.23
+  - Google reject by description
+    - Google said to remove "google translate"
+    - remove “google translate” from package summarization
+    - avoid to use continuously mentioned “google translate”
+- 0.1.22
+  - fix translator type "bing" to correctly uses bing translator api
+- 0.1.21
+  - Support translator to translate word (request by Amir Rezaei)
+  - Support reverse translate (request by Amir Rezaei)
+  - When activation hold key is set, turn off permanent feature enable
+- 0.1.20
+  - Change promo name to Mouseover Translate
+  - Change manifest description to Mouseover Translate
+- 0.1.19
+  - remove vue jsx from translator popup configuration page
+  - fix translator popup page title name
+  - add "about section" on popup page
+- 0.1.18
+  - Rollback description
+- 0.1.17
+  - Google reject by description
+    - No detail guideline is provided. Make guess to remove some item.
+    - Remove all related description
+- 0.1.16
+  - google reject by description
+    - Remove “Supported Translation Languages with google translate”
+    - Remove “Supported TTS languages with google TTS”
+    - Avoid frequently mentioned Mouse tooltip translator in description
+  - Remove multilingual description
+  - Rollback google translate
+  - Rollback name to Mouse tooltip translator
+- 0.1.15
+  - Change name, Mouse tooltip translator to Mouseover translator
+  - Support font size customization (request by Ramy_Ahmed.87)
+  - Support Bing translator (request by Ramy_Ahmed.87)
+  - Fix google translate response
+- 0.1.14
+  - Fix hide tooltip (show tooltip after mouse move)
+  - Support multilingual description using google translate
+- 0.1.13
+  - Filter out when only detect currency text
+- 0.1.12
+  - Fix base64 image OCR response for translate ocr correctly
+  - Use Vue JSX on translator popup page
+- 0.1.11
+  - Use Vue and Vuetify on translator popup page
+  - Add options ui
+  - Add load base64 image on OCR
+  - Add resize image on OCR
+  - Add image preprocessing step on OCR
+- 0.1.10
+  - Fix URL text filter
+  - Filter text that only include number and special character
+  - Hide tooltip when leave tab
+  - Fix hiding when ctrl+a or ctrl+f
+- 0.1.9
+  - Only load bootstrap tooltip library
+  - Apply lazy load on manga OCR
+  - Use transform for positioning
+- 0.1.8
+  - Fix TTS (text to speech) stop message sending
+  - Fix image load for translate OCR image
+  - Use zodiac3539's train data for tesseract jpn_vert OCR
+- 0.1.7
+  - Fix scrolled tooltip dictionary position
+  - Hide tooltip when ctrl+a or ctrl+f is pressed
+  - Change translator popup page container design as cool design
+  - Stop played TTS (text to speech) when leave tab
+  - Only activate tooltip when tab is focused
+  - Support bubble translate using tesseract.js OCR
+  - Update translated pdf viewer using PDF.js 2.5.207
+  - Filter out 1000 length text 
+- 0.1.6
+  - Fix translator setting error
+  - Change hold key action
+  - Fix popup typo
+- 0.1.5
+  - Fix subframe pdf to translate correctly
+  - Fix bootstrap dropdown crash  
+- 0.1.4
+  - Fix translator pdf viewer line break
+- 0.1.3
+  - Add fade
+  - Fix TTS (text to speech) recognize
+- 0.1.2
+  - Increase tooltip margin
+  - Prevent translate on URL text
+  - Support pdf tooltip translate using PDF.js (pdf reader)
+- 0.1.1
+  - Support long sentence for TTS (text to speech)
+  - Fix tooltip arrow display error
+  - Fix key hold error (issue on tab switching)
+- 0.1.0
+  - First release of Mouse tooltip translator
 
 # Intro  
 Mouse tooltip translator is a google chrome extension that provide convenient translate experience. This translator extension minimize generally required step to translate word. Normally, copying and pasting are used to obtain translated sentence from google translate site. This extension uses text hovering to translate text. It automatically detects pointed area and it collect near words to group them as sentence. This translator extension translate mouse pointed sentence text into user language using any translator API like google translate and Bing translator. For providing direct translation, it displays given translated text with tooltip. User does not require any other more action for translate text. This extension replaces general translate process which open new tab for using google translate to getting translated sentence. This replace translating way makes new paradigm on translator. It helps users to learn language directly in one place by providing translated text one another. Learning language activity is not only stopped in web site. Mouse tooltip translator also support pdf, youtube subtitle, image (manga, comics and webtoon).  
@@ -493,4 +642,5 @@ This extension is positioned between user and translator API for providing simpl
 
 # Ownership  
 Mouse tooltip translator is an extension that is created by individual developer. It is not officially made by google. It just handles google translate and google text to speech service. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension uses Google’s provided google translate service. Purpose of this translator extension gives translate experience on any web site. This translator extension provides simple tooltip translate service on anywhere like YouTube, ebook and pdf.
+
 
