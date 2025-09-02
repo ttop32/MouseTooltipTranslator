@@ -60,6 +60,7 @@ export default class Youtube extends BaseVideo {
     await this.interceptCaption(); // start caption intercept
     this.loadCaption(); // turn on caption for embed video
     this.setPlayerCaption(lang, tlang); //turn on caption on specified lang
+    await this.waitRandom(4000, 5000);
     this.reloadCaption(); //reset previous caption immediately
   }
 
@@ -109,26 +110,34 @@ export default class Youtube extends BaseVideo {
     if (lang) {
       subUrl = await this.getTranslatedSubtitleUrl(subUrl, lang);
     }
+    var json;
     try {
       var res = await fetch(this.getTrafficSafeUrl(subUrl));
+      json = await res.json();
     } catch (error) {
       console.log(error);
     }
 
-    // if fail, change base url and try again
-    if (res?.status != 200) {
-      this.isSubtitleRequestFailed = !this.isSubtitleRequestFailed;
-      res = await fetch(this.getTrafficSafeUrl(subUrl));
+    try {
+      // if fail, change base url and try again
+      if (!json) {
+        this.isSubtitleRequestFailed = !this.isSubtitleRequestFailed;
+        const res = await fetch(this.getTrafficSafeUrl(subUrl));
+        json = await res.json();
+      }
+    } catch (error) {
+      console.error("Failed to fetch subtitle:", error);
     }
-    return await res.json();
+    return json;
   }
   static getTrafficSafeUrl(url) {
-    return this.isSubtitleRequestFailed
-      ? url.replace(
-          `${this.baseUrl}/api/timedtext`,
-          "video.google.com/timedtext"
-        )
-      : url;
+    if (this.isSubtitleRequestFailed) {
+      const urlObj = new URL(url);
+      urlObj.hostname = "video.google.com";
+      urlObj.pathname = "/timedtext";
+      return urlObj.toString();
+    }
+    return url;
   }
 
   static async getTranslatedSubtitleUrl(subUrl, lang) {
@@ -156,6 +165,9 @@ export default class Youtube extends BaseVideo {
 
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
+    if (!subtitle?.events) {
+      return {events: [], pens: [{}], wireMagic: "pb3", wpWinPositions: [{}], wsWinStyles: [{}]};
+    }
     var newEvents = [];
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {

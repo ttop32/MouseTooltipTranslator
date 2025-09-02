@@ -223,6 +223,7 @@ export default class BaseVideo {
             sourceLang != targetLang &&
             this.setting["detectSubtitle"] == "dualsub"
           ) {
+            await this.waitRandom(300, 2000); //wait for avoid ban
             var sub2 = await this.requestSubtitleCached(
               request.url,
               targetLang
@@ -268,6 +269,10 @@ export default class BaseVideo {
   }
   static async wait(time) {
     await new Promise((resolve) => setTimeout(resolve, time));
+  }
+  static async waitRandom(min, max) {
+    const time = Math.random() * (max - min) + min;
+    await this.wait(time);
   }
 
 
