@@ -19,7 +19,7 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.200
+- 0.1.201
   - add more lang support (requested by abasakre)
 - 0.1.200
   - reset fallback engine if all cooldown
@@ -642,5 +642,6 @@ This extension is positioned between user and translator API for providing simpl
 
 # Ownership  
 Mouse tooltip translator is an extension that is created by individual developer. It is not officially made by google. It just handles google translate and google text to speech service. This translator extension does not own google translate and Bing translator. Google translate is owned by google and Bing translator is owned by Microsoft. This translator extension uses Google’s provided google translate service. Purpose of this translator extension gives translate experience on any web site. This translator extension provides simple tooltip translate service on anywhere like YouTube, ebook and pdf.
+
 
 
