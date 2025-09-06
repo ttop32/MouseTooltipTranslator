@@ -117,10 +117,10 @@
 		"message": "Скорость голоса"
 	},
 	"Voice_Target": {
-		"message": "Цель воспроизведения"
+		"message": "Что озвучивать"
 	},
 	"Voice_Repeat": {
-		"message": "Повторение воспроизведения"
+		"message": "Повтор озвучивания"
 	},
 	"Voice_for_": {
 		"message": "Голосовой синтезатор для "
@@ -138,16 +138,16 @@
 		"message": "Пауза субтитров при наведении курсора"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Исходный текст в поле переводчика"
+		"message": "Показывать оригинал в подсказке"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Информация об исходном тексте в поле переводчика"
+		"message": "Показывать язык исходного текста"
 	},
 	"Tooltip_Info_Transliteration": {
 		"message": "Транслитерация исходного текста в поле переводчика"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Время интервала до появления поля переводчика"
+		"message": "Задержка показа подсказки"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
@@ -213,10 +213,10 @@
 		"message": "Белый список сайтов"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP                                      "
+		"message": "РЕЗЕРВНОЕ КОПИРОВАНИЕ                                      "
 	},
 	"BACKUP": {
-		"message": "BACKUP"
+		"message": "РЕЗЕРВНОЕ КОПИРОВАНИЕ"
 	},
 	"Import_Setting": {
 		"message": "Импорт настроек"
@@ -243,10 +243,10 @@
 		"message": "Перевести локальный PDF-файл"
 	},
 	"Ebook_Reader": {
-		"message": "Просмотр Ebook-файла"
+		"message": "Читалка EPUB"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Перевести локальный Ebook-файл"
+		"message": "Перевести локальный EPUB-файл"
 	},
 	"Twitter": {
 		"message": "X"
@@ -270,7 +270,7 @@
 		"message": "Политика конфиденциальности"
 	},
 	"User_privacy_policy": {
-		"message": "Политика конфиденциальности пользователя"
+		"message": "Пользовательская политика конфиденциальности"
 	},
 	"Voice_Panel": {
 		"message": "Голосовая панель"
@@ -309,13 +309,13 @@
 		"message": "Выкл."
 	},
 	"Auto": {
-		"message": "Auto"
+		"message": "Авто"
 	},
 	"None": {
-		"message": "None"
+		"message": "Не выбрано"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "Выделение"
 	},
 	"Mouseover": {
 		"message": "Наведение курсора"
@@ -324,25 +324,25 @@
 		"message": "Наведение и выделение"
 	},
 	"Follow": {
-		"message": "Follow"
+		"message": "Следовать за курсором"
 	},
 	"Fixed": {
-		"message": "Fixed"
+		"message": "Фиксированная"
 	},
 	"Fade": {
-		"message": "Fade"
+		"message": "Затухание"
 	},
 	"Scale": {
-		"message": "Scale"
+		"message": "Масштабирование"
 	},
 	"Shift_away": {
-		"message": "Shift away"
+		"message": "Сдвиг от курсора"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "Сдвиг к курсору"
 	},
 	"Perspective": {
-		"message": "Perspective"
+		"message": "Перспектива"
 	},
 	"Word": {
 		"message": "Слово"
@@ -354,7 +354,7 @@
 		"message": "Контейнер"
 	},
 	"Source": {
-		"message": "Source"
+		"message": "Оригинал"
 	},
 	"Source_Text": {
 		"message": "Текст оригинала"
@@ -369,64 +369,64 @@
 		"message": "Перевод и оригинал"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "Двойные субтитры"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "Только перевод"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "Только оригинал"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "Всегда"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "По центру"
 	},
 	"Left": {
-		"message": "Left"
+		"message": "Слева"
 	},
 	"Right": {
-		"message": "Right"
+		"message": "Справа"
 	},
 	"Justify": {
-		"message": "Justify"
+		"message": "По ширине"
 	},
 	"Default": {
-		"message": "Default"
+		"message": "По умолчанию"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Левый Ctrl"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Правый Ctrl"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Левый Alt"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Правый Alt"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "Левый Shift"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "Правый Shift"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "Левая клавиша Windows"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "Правая клавиша Windows"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "Клик левой кнопкой мыши"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "Клик средней кнопкой мыши"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "Клик правой кнопкой мыши"
 	},
 	"google": {
 		"message": "Google"
