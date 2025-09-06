@@ -156,7 +156,7 @@
 		"message": "Скорость воспроизведения перевода"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "Резервный движок перевода"
 	},
 	"SPEECH": {
 		"message": "РАСПОЗНАВАНИЕ РЕЧИ"
@@ -210,7 +210,7 @@
 		"message": "Исключить указанный веб-сайт"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "Белый список сайтов"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "
@@ -219,13 +219,13 @@
 		"message": "BACKUP"
 	},
 	"Import_Setting": {
-		"message": "Import Setting"
+		"message": "Импорт настроек"
 	},
 	"Export_Setting": {
-		"message": "Export Setting"
+		"message": "Экспорт настроек"
 	},
 	"Reset_Setting": {
-		"message": "Reset Setting"
+		"message": "Сброс настроек"
 	},
 	"About______________________________________": {
 		"message": "О программе                                      "
@@ -300,13 +300,13 @@
 		"message": "Название                                      "
 	},
 	"SELECT_OPTION______________________________": {
-		"message": "SELECT OPTION                              "
+		"message": "ВЫБЕРИТЕ ОПЦИЮ                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "Вкл."
 	},
 	"Off": {
-		"message": "Off"
+		"message": "Выкл."
 	},
 	"Auto": {
 		"message": "Auto"
@@ -318,10 +318,10 @@
 		"message": "Select"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "Наведение курсора"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "Наведение и выделение"
 	},
 	"Follow": {
 		"message": "Follow"
@@ -345,28 +345,28 @@
 		"message": "Perspective"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "Слово"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "Предложение"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "Контейнер"
 	},
 	"Source": {
 		"message": "Source"
 	},
 	"Source_Text": {
-		"message": "Source Text"
+		"message": "Текст оригинала"
 	},
 	"Translated_Text": {
-		"message": "Translated Text"
+		"message": "Переведённый текст"
 	},
 	"Source_n_Translated": {
-		"message": "Source n Translated"
+		"message": "Оригинал и перевод"
 	},
 	"Translated_n_Source": {
-		"message": "Translated n Source"
+		"message": "Перевод и оригинал"
 	},
 	"Dual_Subtitle": {
 		"message": "Dual Subtitle"
@@ -429,10 +429,10 @@
 		"message": "Click Right"
 	},
 	"google": {
-		"message": "google"
+		"message": "Google"
 	},
 	"bing": {
-		"message": "bing"
+		"message": "Bing"
 	},
 	"appName": {
 		"message": "Переводчик подсказок мыши - PDF и субтитры Netflix Youtube"
