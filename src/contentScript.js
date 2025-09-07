@@ -927,7 +927,6 @@ function applyStyleSetting() {
     [data-tippy-root] {
       display: inline-block !important;
       visibility: visible  !important;
-      position: absolute !important;
     }
     .tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before, .tippy-box[data-theme~='ocr'][data-placement^='top'] > .tippy-arrow::before { 
       border-top-color: ${setting["tooltipBackgroundColor"]} !important;
