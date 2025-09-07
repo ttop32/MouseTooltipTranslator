@@ -120,7 +120,7 @@
 		"message": "Что озвучивать"
 	},
 	"Voice_Repeat": {
-		"message": "Повтор озвучивания"
+		"message": "Повторение воспроизведения"
 	},
 	"Voice_for_": {
 		"message": "Голосовой синтезатор для "
@@ -138,16 +138,16 @@
 		"message": "Пауза субтитров при наведении курсора"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Показывать оригинал в подсказке"
+		"message": "Исходный текст в поле переводчика"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Показывать язык исходного текста"
+		"message": "Информация об исходном тексте в поле переводчика"
 	},
 	"Tooltip_Info_Transliteration": {
 		"message": "Транслитерация исходного текста в поле переводчика"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Задержка показа подсказки"
+		"message": "Время интервала до появления поля переводчика"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
@@ -243,7 +243,7 @@
 		"message": "Перевести локальный PDF-файл"
 	},
 	"Ebook_Reader": {
-		"message": "Читалка EPUB"
+		"message": "Просмотр Ebook-файла"
 	},
 	"Translate_local_ebook_file": {
 		"message": "Перевести локальный EPUB-файл"
