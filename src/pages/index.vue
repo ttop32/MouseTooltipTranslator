@@ -185,9 +185,9 @@ var toolbarIcons = {
     path: "/deck",
   },
   history: {
-    title: "history",
+    title: "dictionary",
     icon: "mdi-history",
-    path: "/history",
+    path: "/dictionary",
   },
   about: {
     title: "about",

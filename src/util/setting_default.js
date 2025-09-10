@@ -501,15 +501,16 @@ export var settingDict = {
     optionList: [],
     settingTab: "remains",
   },
-  historyRecordActions: {
+  dictionaryEntries: {
     default: [],
-    i18nKey: "History_Record_Actions",
+    i18nKey: "Dictionary_Entries",
     optionList: [],
     settingTab: "remains",
   },
-  ignoreCallbackOptionList: {
-    default: ["historyList"],
-    i18nKey: "Ignore_Callback_Option_List",
+  
+  historyRecordActions: {
+    default: [],
+    i18nKey: "History_Record_Actions",
     optionList: [],
     settingTab: "remains",
   },

@@ -136,6 +136,11 @@ function insertHistory(actionType) {
 
     // save
     setting["historyList"].unshift(newRecord);
+    
+
+    setting["dictionaryEntries"].unshift(newRecord);
+
+
     //remove when too many list
     if (setting["historyList"].length > 10000) {
       setting["historyList"].pop();

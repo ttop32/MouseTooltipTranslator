@@ -99,14 +99,13 @@ export default {
       //   .reduce((acc, cur, idx) => new Set([...acc, ...cur]), new Set());
       // var keyList = [...keySet];
       return [
-        "date",
-        "sourceLang",
-        "targetLang",
         "sourceText",
         "targetText",
+        "sourceLang",
+        "targetLang",
         "dict",
-        "actionType",
-        "translator",
+        "category",
+        "date",
       ];
     },
     getCsvContent() {

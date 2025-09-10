@@ -8,6 +8,10 @@ try {
 // automatic setting update class===============================
 var updateCallbackFn = [];
 var defaultSettingList = {};
+var ignoreCallbackOptionList = [
+  "historyList",
+  "dictionaryEntries"
+];
 export class Setting {
   constructor() {}
 
@@ -54,7 +58,7 @@ export class Setting {
 
   runSettingCallback(changes) {
     var keys = Object.keys(changes).filter(
-      (item) => !this.ignoreCallbackOptionList.includes(item)
+      (item) => !ignoreCallbackOptionList.includes(item)
     );
     if (keys.length == 0) {
       return;
