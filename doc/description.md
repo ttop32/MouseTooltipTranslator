@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.204
+  - fix setting export
 - 0.1.203
   - Russian localization (contributed by D0n-A)
   - fix tooltip site conflict with tippy (requested by l-Nuril-l)

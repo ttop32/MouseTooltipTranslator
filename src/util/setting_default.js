@@ -1,6 +1,10 @@
 import TextUtil from "/src/util/text_util.js";
 import { langList, ocrLangList, listenLangList } from "/src/util/lang.js";
 import _util from "/src/util/lodash_util.js";
+var browser;
+try {
+  browser = require("webextension-polyfill");
+} catch (error) {}
 
 var langListWithAuto = TextUtil.concatJson({ Auto: "auto" }, langList); //copy lang and add auto
 var langListWithNone = TextUtil.concatJson({ None: "null" }, langList); //copy lang and add none
@@ -128,12 +132,6 @@ var voiceRateListWithDefault = TextUtil.concatJson(defaultDict, voiceRateList);
 export var settingDict = {
   // main
 
-  translateWhen: {
-    default: "mouseoverselect",
-    i18nKey: "Translate_When",
-    optionList: translateActionList,
-    settingTab: "main",
-  },
   translateSource: {
     default: "auto",
     i18nKey: "Translate_From",
@@ -150,6 +148,12 @@ export var settingDict = {
     default: "google",
     i18nKey: "Translator_Engine",
     optionList: translatorList,
+    settingTab: "main",
+  },
+  translateWhen: {
+    default: "mouseoverselect",
+    i18nKey: "Translate_When",
+    optionList: translateActionList,
     settingTab: "main",
   },
   mouseoverTextType: {
