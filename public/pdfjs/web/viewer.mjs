@@ -22,25 +22,30 @@
 
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
-/******/ 
+/******/
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
 /******/ 	// define getter functions for harmony exports
 /******/ 	__webpack_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
-/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 		for (var key in definition) {
+/******/ 			if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
 /******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 			}
-/******/ 		}
-/******/ 	};
-/******/ })();
-/******/ 
+        /******/
+      }
+      /******/
+    }
+    /******/
+  };
+  /******/
+})();
+/******/
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
 /******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ })();
-/******/ 
+  /******/
+})();
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -1171,7 +1176,7 @@ class PDFLinkService {
       if (!Array.isArray(dest)) {
         dest = dest.toString();
       }
-    } catch {}
+    } catch { }
     if (typeof dest === "string" || PDFLinkService.#isValidExplicitDest(dest)) {
       this.goToDestination(dest);
       return;
@@ -1269,7 +1274,7 @@ class PDFLinkService {
   }
 }
 class SimpleLinkService extends PDFLinkService {
-  setDocument(pdfDocument, baseUrl = null) {}
+  setDocument(pdfDocument, baseUrl = null) { }
 }
 
 ;// ./web/pdfjs.js
@@ -1442,10 +1447,10 @@ class FirefoxEventBus extends EventBus {
 
 ;// ./web/external_services.js
 class BaseExternalServices {
-  updateFindControlState(data) {}
-  updateFindMatchesCount(data) {}
-  initPassiveLoading() {}
-  reportTelemetry(data) {}
+  updateFindControlState(data) { }
+  updateFindMatchesCount(data) { }
+  initPassiveLoading() { }
+  reportTelemetry(data) { }
   async createL10n() {
     throw new Error("Not implemented: createL10n");
   }
@@ -1455,7 +1460,7 @@ class BaseExternalServices {
   updateEditorStates(data) {
     throw new Error("Not implemented: updateEditorStates");
   }
-  dispatchGlobalEvent(_event) {}
+  dispatchGlobalEvent(_event) { }
 }
 
 ;// ./web/preferences.js
@@ -2907,7 +2912,7 @@ class L10n {
     try {
       this.#l10n.connectRoot(element);
       await this.#l10n.translateRoots();
-    } catch {}
+    } catch { }
   }
   async translateOnce(element) {
     try {
@@ -3022,7 +3027,7 @@ class genericl10n_GenericL10n extends L10n {
         baseURL: href.replace(/[^/]*$/, "") || "./",
         paths
       };
-    } catch {}
+    } catch { }
     return {
       baseURL: "./",
       paths: Object.create(null)
@@ -3094,7 +3099,7 @@ class GenericScripting {
 
 
 
-function initCom(app) {}
+function initCom(app) { }
 class Preferences extends BasePreferences {
   async _writeToStorage(prefObj) {
     localStorage.setItem("pdfjs.preferences", JSON.stringify(prefObj));
@@ -3123,8 +3128,8 @@ class MLManager {
   isReady(_name) {
     return false;
   }
-  guess(_data) {}
-  toggleService(_name, _enabled) {}
+  guess(_data) { }
+  toggleService(_name, _enabled) { }
   static getFakeMLManager(options) {
     return new FakeMLManager(options);
   }
@@ -3149,7 +3154,7 @@ class FakeMLManager {
     this.enableAltTextModelDownload = false;
     return null;
   }
-  async loadModel(_name) {}
+  async loadModel(_name) { }
   async downloadModel(_name) {
     this.hasProgress = true;
     const {
@@ -3833,8 +3838,8 @@ class AltTextManager {
     this.#hasUsedPointer = false;
     this.#clickAC = new AbortController();
     const clickOpts = {
-        signal: this.#clickAC.signal
-      },
+      signal: this.#clickAC.signal
+    },
       onClick = this.#onClick.bind(this);
     for (const element of [this.#optionDescription, this.#optionDecorative, this.#textarea, this.#saveButton, this.#cancelButton]) {
       element.addEventListener("click", onClick, clickOpts);
@@ -4696,6 +4701,8 @@ class GrabToPan {
   #activateAC = null;
   #mouseDownAC = null;
   #scrollAC = null;
+  #isActivePan = false;
+  #isRightMousePan = false;
   constructor({
     element
   }) {
@@ -4732,34 +4739,39 @@ class GrabToPan {
   ignoreTarget(node) {
     return node.matches("a[href], a[href] *, input, textarea, button, button *, select, option");
   }
-  #onMouseDown(event) {
-    if (event.button !== 0 || this.ignoreTarget(event.target)) {
+  #startPan(event) {
+    if (this.#mouseDownAC) {
+      return; // Pan already in progress
+    }
+    const isLeftMouse = event.button === 0;
+    const isRightMouse = event.button === 2;
+    if (!isLeftMouse && !isRightMouse) {
+      return;
+    }
+    if (this.ignoreTarget(event.target)) {
       return;
     }
     if (event.originalTarget) {
       try {
+        // Accessing tagName may throw for some XUL elements (Firefox)
+        // If it throws, abort to avoid unintended behavior.
         event.originalTarget.tagName;
       } catch {
         return;
       }
     }
+    this.#isRightMousePan = isRightMouse;
     this.scrollLeftStart = this.element.scrollLeft;
     this.scrollTopStart = this.element.scrollTop;
     this.clientXStart = event.clientX;
     this.clientYStart = event.clientY;
     this.#mouseDownAC = new AbortController();
-    const boundEndPan = this.#endPan.bind(this),
-      mouseOpts = {
-        capture: true,
-        signal: this.#mouseDownAC.signal
-      };
+    const boundEndPan = this.#endPan.bind(this);
+    const mouseOpts = { capture: true, signal: this.#mouseDownAC.signal };
     this.document.addEventListener("mousemove", this.#onMouseMove.bind(this), mouseOpts);
     this.document.addEventListener("mouseup", boundEndPan, mouseOpts);
     this.#scrollAC = new AbortController();
-    this.element.addEventListener("scroll", boundEndPan, {
-      capture: true,
-      signal: this.#scrollAC.signal
-    });
+    this.element.addEventListener("scroll", boundEndPan, { capture: true, signal: this.#scrollAC.signal });
     event.preventDefault();
     event.stopPropagation();
     const focusedElement = document.activeElement;
@@ -4767,13 +4779,29 @@ class GrabToPan {
       focusedElement.blur();
     }
   }
+  #onMouseDown(event) {
+    this.#startPan(event);
+  }
+  // Public: allow external code to trigger a pan without toggling activation state.
+  beginPanFromMouseDown(event) {
+    this.#startPan(event);
+  }
   #onMouseMove(event) {
     this.#scrollAC?.abort();
     this.#scrollAC = null;
-    if (!(event.buttons & 1)) {
+
+    // For left mouse: check if left button is still pressed
+    if (!this.#isRightMousePan && !(event.buttons & 1)) {
       this.#endPan();
       return;
     }
+
+    // For right mouse: check if right button is still pressed
+    if (this.#isRightMousePan && !(event.buttons & 2)) {
+      this.#endPan();
+      return;
+    }
+
     const xDiff = event.clientX - this.clientXStart;
     const yDiff = event.clientY - this.clientYStart;
     this.element.scrollTo({
@@ -4790,6 +4818,8 @@ class GrabToPan {
     this.#mouseDownAC = null;
     this.#scrollAC?.abort();
     this.#scrollAC = null;
+    this.#isActivePan = false;
+    this.#isRightMousePan = false;
     this.overlay.remove();
   }
 }
@@ -4801,6 +4831,7 @@ class GrabToPan {
 class PDFCursorTools {
   #active = CursorTool.SELECT;
   #prevActive = null;
+  #globalMouseUpHandler = null;
   constructor({
     container,
     eventBus,
@@ -4809,6 +4840,7 @@ class PDFCursorTools {
     this.container = container;
     this.eventBus = eventBus;
     this.#addEventListeners();
+    this.#setupGlobalRightMouseHandler();
     Promise.resolve().then(() => {
       this.switchTool(cursorToolOnLoad);
     });
@@ -4849,6 +4881,7 @@ class PDFCursorTools {
         break;
       case CursorTool.HAND:
         disableActiveTool();
+        // Activate hand tool listeners for left/right pan when selected
         this._handTool.activate();
         break;
       case CursorTool.ZOOM:
@@ -4862,6 +4895,35 @@ class PDFCursorTools {
       tool,
       disabled
     });
+  }
+  #setupGlobalRightMouseHandler() {
+    // Ephemeral right-drag pan without switching tool/mode.
+    // We intercept right mousedown and start a pan directly via GrabToPan,
+    // regardless of the current tool, then let it end on mouseup.
+    document.addEventListener("mousedown", (event) => {
+      if (event.button !== 2) {
+        return;
+      }
+      // Restrict right-drag pan to the viewer container region only.
+      if (!this.container.contains(event.target)) {
+        return;
+      }
+      // Do not start pan on interactive elements (GrabToPan checks too)
+      // Prevent context menu immediately to ensure smooth panning UX.
+      event.preventDefault();
+      // If Hand tool is already active, its own handler will manage pan.
+      // Otherwise use an ephemeral pan start.
+      if (this.#active !== CursorTool.HAND) {
+        this._handTool.beginPanFromMouseDown(event);
+      }
+    }, { capture: true });
+
+    // Prevent context menu on the container to avoid accidental menus during panning.
+    this.container.addEventListener("contextmenu", (event) => {
+      if (event.button === 2) {
+        event.preventDefault();
+      }
+    }, { capture: true });
   }
   #addEventListeners() {
     this.eventBus._on("switchcursortool", evt => {
@@ -7500,7 +7562,7 @@ class PDFPrintService {
     } = Promise.withResolvers();
     img.onload = resolve;
     img.onerror = reject;
-    promise.catch(() => {}).then(() => {
+    promise.catch(() => { }).then(() => {
       URL.revokeObjectURL(img.src);
     });
     return promise;
@@ -7553,7 +7615,7 @@ window.print = function () {
     const activeServiceOnEntry = activeService;
     activeService.renderPages().then(function () {
       return activeServiceOnEntry.performPrint();
-    }).catch(function () {}).then(function () {
+    }).catch(function () { }).then(function () {
       if (activeServiceOnEntry.active) {
         abort();
       }
@@ -8090,13 +8152,13 @@ class PDFScriptingManager {
     if (this.#closeCapability) {
       await Promise.race([this.#closeCapability.promise, new Promise(resolve => {
         setTimeout(resolve, 1000);
-      })]).catch(() => {});
+      })]).catch(() => { });
       this.#closeCapability = null;
     }
     this.#pdfDocument = null;
     try {
       await this.#scripting.destroySandbox();
-    } catch {}
+    } catch { }
     this.#willPrintCapability?.reject(new Error("Scripting destroyed."));
     this.#willPrintCapability = null;
     this.#eventAbortController?.abort();
@@ -9267,7 +9329,7 @@ class StructTreeLayerBuilder {
     try {
       await this.render();
       return this.#elementAttributes.get(annotationId);
-    } catch {}
+    } catch { }
     return null;
   }
   hide() {
@@ -11249,7 +11311,7 @@ class PDFViewer {
         source: this,
         pagesCount
       });
-    }, () => {});
+    }, () => { });
     const onBeforeDraw = evt => {
       const pageView = this._pages[evt.pageNumber - 1];
       if (!pageView) {
@@ -12115,8 +12177,8 @@ class PDFViewer {
       case ScrollMode.WRAPPED:
         {
           const {
-              views
-            } = this._getVisiblePages(),
+            views
+          } = this._getVisiblePages(),
             pageLayout = new Map();
           for (const {
             id,
@@ -12191,8 +12253,8 @@ class PDFViewer {
             break;
           }
           const {
-              views
-            } = this._getVisiblePages(),
+            views
+          } = this._getVisiblePages(),
             expectedId = previous ? currentPageNumber - 1 : currentPageNumber + 1;
           for (const {
             id,
@@ -13157,9 +13219,9 @@ const PDFViewerApplication = {
       return;
     }
     const {
-        mainContainer,
-        viewerContainer
-      } = this.appConfig,
+      mainContainer,
+      viewerContainer
+    } = this.appConfig,
       params = parseQueryString(hash);
     const loadPDFBug = async () => {
       if (this._PDFBug) {
@@ -13571,7 +13633,7 @@ const PDFViewerApplication = {
     if (!title) {
       try {
         title = decodeURIComponent(getFilenameFromUrl(url));
-      } catch {}
+      } catch { }
     }
     this.setTitle(title || url);
   },
@@ -13604,7 +13666,7 @@ const PDFViewerApplication = {
     if (this.pdfDocument?.annotationStorage.size > 0 && this._annotationStorageModified) {
       try {
         await this.save();
-      } catch {}
+      } catch { }
     }
     const promises = [];
     promises.push(this.pdfLoadingTask.destroy());
@@ -13695,7 +13757,7 @@ const PDFViewerApplication = {
     let data;
     try {
       data = await this.pdfDocument.getData();
-    } catch {}
+    } catch { }
     this.downloadManager.download(data, this._downloadUrl, this._docFilename);
   },
   async save() {
@@ -13783,9 +13845,9 @@ const PDFViewerApplication = {
         });
       });
     });
-    const pageLayoutPromise = pdfDocument.getPageLayout().catch(() => {});
-    const pageModePromise = pdfDocument.getPageMode().catch(() => {});
-    const openActionPromise = pdfDocument.getOpenAction().catch(() => {});
+    const pageLayoutPromise = pdfDocument.getPageLayout().catch(() => { });
+    const pageModePromise = pdfDocument.getPageMode().catch(() => { });
+    const openActionPromise = pdfDocument.getOpenAction().catch(() => { });
     this.toolbar?.setPagesCount(pdfDocument.numPages, false);
     this.secondaryToolbar?.setPagesCount(pdfDocument.numPages);
     this.pdfLinkService.setDocument(pdfDocument);
@@ -13807,7 +13869,7 @@ const PDFViewerApplication = {
       sidebarView: SidebarView.UNKNOWN,
       scrollMode: ScrollMode.UNKNOWN,
       spreadMode: SpreadMode.UNKNOWN
-    }).catch(() => {});
+    }).catch(() => { });
     firstPagePromise.then(pdfPage => {
       this.loadingBar?.setWidth(this.appConfig.viewerContainer);
       this._initializeAnnotationStorageCallbacks(pdfDocument);
@@ -14156,7 +14218,7 @@ const PDFViewerApplication = {
     this.pdfRenderingQueue.renderHighestPriority();
   },
   beforePrint() {
-    this._printAnnotationStoragePromise = this.pdfScriptingManager.dispatchWillPrint().catch(() => {}).then(() => this.pdfDocument?.annotationStorage.print);
+    this._printAnnotationStoragePromise = this.pdfScriptingManager.dispatchWillPrint().catch(() => { }).then(() => this.pdfDocument?.annotationStorage.print);
     if (this.printService) {
       return;
     }
@@ -14434,7 +14496,7 @@ const PDFViewerApplication = {
   },
   _unblockDocumentLoadEvent() {
     document.blockUnblockOnload?.(false);
-    this._unblockDocumentLoadEvent = () => {};
+    this._unblockDocumentLoadEvent = () => { };
   },
   get scriptingReady() {
     return this.pdfScriptingManager.ready;
@@ -14555,7 +14617,7 @@ function onSidebarViewChanged({
 }) {
   this.pdfRenderingQueue.isThumbnailViewEnabled = view === SidebarView.THUMBS;
   if (this.isInitialViewSet) {
-    this.store?.set("sidebarView", view).catch(() => {});
+    this.store?.set("sidebarView", view).catch(() => { });
   }
 }
 function onUpdateViewarea({
@@ -14568,7 +14630,7 @@ function onUpdateViewarea({
       scrollLeft: location.left,
       scrollTop: location.top,
       rotation: location.rotation
-    }).catch(() => {});
+    }).catch(() => { });
   }
   if (this.appConfig.secondaryToolbar) {
     this.appConfig.secondaryToolbar.viewBookmarkButton.href = this.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
@@ -14576,7 +14638,7 @@ function onUpdateViewarea({
 }
 function onViewerModesChanged(name, evt) {
   if (this.isInitialViewSet && !this.pdfViewer.isInPresentationMode) {
-    this.store?.set(name, evt.mode).catch(() => {});
+    this.store?.set(name, evt.mode).catch(() => { });
   }
 }
 function onResize() {
