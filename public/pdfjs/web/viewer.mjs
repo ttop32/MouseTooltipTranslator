@@ -4840,7 +4840,10 @@ class PDFCursorTools {
     this.container = container;
     this.eventBus = eventBus;
     this.#addEventListeners();
-    this.#setupGlobalRightMouseHandler();
+    // Initialize right-pan functionality
+    if (window.RightPanInjector) {
+      this.rightPanInjector = new window.RightPanInjector(this);
+    }
     Promise.resolve().then(() => {
       this.switchTool(cursorToolOnLoad);
     });
@@ -4895,35 +4898,6 @@ class PDFCursorTools {
       tool,
       disabled
     });
-  }
-  #setupGlobalRightMouseHandler() {
-    // Ephemeral right-drag pan without switching tool/mode.
-    // We intercept right mousedown and start a pan directly via GrabToPan,
-    // regardless of the current tool, then let it end on mouseup.
-    document.addEventListener("mousedown", (event) => {
-      if (event.button !== 2) {
-        return;
-      }
-      // Restrict right-drag pan to the viewer container region only.
-      if (!this.container.contains(event.target)) {
-        return;
-      }
-      // Do not start pan on interactive elements (GrabToPan checks too)
-      // Prevent context menu immediately to ensure smooth panning UX.
-      event.preventDefault();
-      // If Hand tool is already active, its own handler will manage pan.
-      // Otherwise use an ephemeral pan start.
-      if (this.#active !== CursorTool.HAND) {
-        this._handTool.beginPanFromMouseDown(event);
-      }
-    }, { capture: true });
-
-    // Prevent context menu on the container to avoid accidental menus during panning.
-    this.container.addEventListener("contextmenu", (event) => {
-      if (event.button === 2) {
-        event.preventDefault();
-      }
-    }, { capture: true });
   }
   #addEventListeners() {
     this.eventBus._on("switchcursortool", evt => {
