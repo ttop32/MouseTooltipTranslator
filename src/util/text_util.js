@@ -60,6 +60,7 @@ export default class TextUtil {
     text=this.filterEmoji(text)
     text=this.filterHtmlTag(text)
     text=this.filterNonSoundText(text)
+    text=this.filterParenthesis(text)
     return text
   }
   static filterNonSoundText(text){
@@ -77,7 +78,9 @@ export default class TextUtil {
     return word.replace(/([<>])/g, "");
   }
 
-  
+  static filterParenthesis(text){
+    return text.replace(/\([^\)]*\)/g, "");
+  }
 
   static truncate(str, n) {
     return str.length > n ? str.slice(0, n - 1) + "..." : str;
