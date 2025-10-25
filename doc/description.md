@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.205
+  - Add right mouse hold in pdf viewer now act as handtool (contributed by Witnull)
 - 0.1.204
   - fix setting export
 - 0.1.203
