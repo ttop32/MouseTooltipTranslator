@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.206
+  - fix pdf line break (requested by mrk67422)
 - 0.1.205
   - Add right mouse hold in pdf viewer now act as handtool (contributed by Witnull)
   - filter parenthesis text from tts (requested by Gobidobi)

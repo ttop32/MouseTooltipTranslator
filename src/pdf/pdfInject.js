@@ -88,8 +88,8 @@ function waitUntilPdfLoad() {
 async function addSpaceBetweenPdfText() {
   var prevY;
   var prevLine;
-  var newLineScale = 1.5;
-  var spaceScale = 1.0;
+  var newLineScale = 1.3;  // if line gap more than 1.3 times font size, add new line
+  var spaceScale = 1.0;  // if line gap more than 1.0 times font size, add space
 
   // remove all br
   $("br").remove();

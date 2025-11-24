@@ -108,7 +108,7 @@ export async function getMouseoverText(x, y) {
   var mouseoverText = getTextFromRange(range, mouseoverType);
   // if fail detect using expand range use seg range
   if (
-    !isFirefox() &&
+    !shouldUseSegmentation() &&
     (mouseoverType === "word" || mouseoverType === "sentence") &&
     !mouseoverText["mouseoverText"] &&
     checkContainerDetectText(range) // check if container detect text
@@ -130,6 +130,10 @@ function getTextFromRange(range, mouseoverType, useSegmentation= false) {
   return output;
 }
 
+function shouldUseSegmentation() {
+  return isFirefox() || util.isPDFViewer();
+}
+
 function expandRange(range, type, useSegmentation) {
   try {
     if (!range) {
@@ -138,7 +142,7 @@ function expandRange(range, type, useSegmentation) {
     if (type == "container") {
       // get whole text paragraph
       range = getContainerRange(range);
-    } else if (isFirefox() || useSegmentation) {
+    } else if (shouldUseSegmentation() || useSegmentation) {
       // for firefox, use segmentation to extract word
       range = expandRangeWithSeg(range, type);
     } else {
