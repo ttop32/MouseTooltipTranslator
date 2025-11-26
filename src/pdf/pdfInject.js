@@ -9,6 +9,8 @@ import * as dom_util from "/src/util/dom";
 // <script src="../../pdfInject.js"></script>
 // <script type="module" src="../../doq/doq.js"></script>
 // validateFileURL(file);
+var isPdfSpaceInserted= false;
+var waitCount=[1000,5000,10000,15000,20000,30000,60000]; //ms
 
 initPdf();
 
@@ -18,10 +20,13 @@ async function initPdf() {
   checkLocalFileUrl(); // warn no permission if file url
   checkLocalFileType();
   addCustomKeystroke();
+
   //make line break for spaced text
   addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
-  await delay(1000); //wait pdf load // run again if text rendered not called
-  addSpaceBetweenPdfText();
+  for (const wait of waitCount) {
+    await delay(wait);
+    addSpaceBetweenPdfText();
+  }
   // initButton();
 }
 
@@ -84,15 +89,35 @@ function waitUntilPdfLoad() {
   });
 }
 
+
 // change space system for tooltip
 async function addSpaceBetweenPdfText() {
+
+  if(isPdfSpaceInserted){
+    console.log("PDF space already inserted");
+    return;
+  }else{
+    console.log("Inserting PDF space");
+  }
+
+  // remove all br
+  var brCount = $("br").length;
+  if (brCount == 0) {
+    console.log("No removing <br> elements");
+    return;
+  }
+  console.log("Removed " + brCount + " <br> elements");
+  isPdfSpaceInserted = true;
+  $("br").remove();
+  
+  insertLineBreak();
+}
+
+function insertLineBreak(){
   var prevY;
   var prevLine;
   var newLineScale = 1.3;  // if line gap more than 1.3 times font size, add new line
   var spaceScale = 1.0;  // if line gap more than 1.0 times font size, add space
-
-  // remove all br
-  $("br").remove();
 
   // add new line for split text
   //only select leaf element, not item has child
@@ -127,8 +152,9 @@ async function addSpaceBetweenPdfText() {
     } catch (error) {
       console.log(error);
     }
-  });
+  });  
 }
+
 
 function addCustomKeystroke() {
   document.addEventListener("keydown", function onPress(evt) {

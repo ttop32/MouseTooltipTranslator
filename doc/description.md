@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.207
+  - fix pdf line break on download delayed pdf
 - 0.1.206
   - fix pdf line break (requested by mrk67422)
 - 0.1.205
