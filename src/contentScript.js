@@ -556,6 +556,7 @@ function loadEventListener() {
   addEventHandler("mousedown", handleMouseKeyDown);
   addEventHandler("mouseup", handleMouseKeyUp);
   addEventHandler("mouseup", disableEdgeMiniMenu, false);
+  window.onmouseup = event => disableEdgeMiniMenu(event);
 
   //detect tab switching to reset env
   addEventHandler("blur", resetTooltipStatus);
@@ -742,10 +743,10 @@ async function killAutoReader() {
 function disableEdgeMiniMenu(e) {
   //prevent mouse tooltip overlap with edge mini menu
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
-    e.preventDefault();
+    window.onmouseup = event => event.preventDefault();
   }
-  window.onmouseup = event => event.preventDefault();
 }
+
 
 async function releaseKeydownList(key) {
   await delay(20);
