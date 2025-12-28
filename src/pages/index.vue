@@ -400,6 +400,11 @@ export default {
   height: calc(100vh - 112px);
 }
 
+.custom-tabs :deep(.v-tab) {
+  font-size: 0.75rem;
+  min-width: 60px;
+  padding: 0 12px;
+}
 
 .compact-list-item {
   min-height: 18px !important;

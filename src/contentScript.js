@@ -739,12 +739,12 @@ async function killAutoReader() {
   await util.waitUntilForever(() => !isAutoReaderRunning);
   isStopAutoReaderOn = false;
 }
-
 function disableEdgeMiniMenu(e) {
   //prevent mouse tooltip overlap with edge mini menu
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
     e.preventDefault();
   }
+  window.onmouseup = event => event.preventDefault();
 }
 
 async function releaseKeydownList(key) {
