@@ -21,6 +21,11 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.208
   - add button to exclude current website (requested by coffeechococake7)
+  - make smooth setting tab transition
+  - remove comment alert
+  - reduce setting tab font size (requested by oblominsk)
+  - reduce setting list item padding space(requested by oblominsk)
+
 - 0.1.207
   - fix pdf line break on download delayed pdf
 - 0.1.206

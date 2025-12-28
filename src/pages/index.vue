@@ -26,6 +26,7 @@
           center-active
           show-arrows
           slider-color="red"
+          class="custom-tabs"
         >
           <v-tab v-for="(tabName, tabId) in tabs" :key="tabId" :value="tabId" :text="tabName">
           </v-tab>
@@ -37,6 +38,8 @@
 
     <v-tabs-window v-model="currentTab" class="scroll-container">
 
+
+      
 
         <v-tabs-window-item
           v-for="(tabName, tabId) in tabs"
@@ -53,6 +56,7 @@
             :key="optionName"
             :flat="!option.onClick"
             @click="option.onClick ? option.onClick() : null"
+            class="compact-list-item"
           >
             <v-lazy>
 
@@ -66,6 +70,7 @@
               :chips="option.optionType == 'multipleSelect'"
               :closable-chips="option.optionType == 'multipleSelect'"
               variant="underlined"
+              class="compact-input"
             >
             </v-select>
 
@@ -82,6 +87,7 @@
               multiple
               closable-chips
               variant="underlined"
+              class="compact-input"
             >
             </v-combobox>
 
@@ -92,6 +98,7 @@
               :label="option.description"
               variant="underlined"
               v-maska:[options]
+              class="compact-input"
             >
               <template v-slot:append>
                 <v-menu v-model="option.menu" :close-on-content-click="false">
@@ -129,6 +136,7 @@
 
         </v-tabs-window-item>
 
+        
       </v-tabs-window>
 
 
@@ -391,4 +399,12 @@ export default {
 .scroll-container {
   height: calc(100vh - 112px);
 }
+
+
+.compact-list-item {
+  min-height: 18px !important;
+  padding-top: 1px !important;
+  padding-bottom: 0px !important;
+}
+
 </style>

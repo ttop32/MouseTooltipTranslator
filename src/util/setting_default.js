@@ -377,6 +377,57 @@ export var settingDict = {
     onClickFuncName: "includeWhitelistCurrentWebsiteOnclickFunc",
   },
   
+  // advanced
+
+  detectPDF: {
+    default: "true",
+    i18nKey: "Detect_PDF",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  mouseoverPauseSubtitle: {
+    default: "true",
+    i18nKey: "Mouseover_Pause_Subtitle",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  tooltipInfoSourceText: {
+    default: "false",
+    i18nKey: "Tooltip_Info_Source_Text",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  tooltipInfoSourceLanguage: {
+    default: "false",
+    i18nKey: "Tooltip_Info_Source_Language",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  tooltipInfoTransliteration: {
+    default: "false",
+    i18nKey: "Tooltip_Info_Transliteration",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  tooltipWordDictionary: {
+    default: "true",
+    i18nKey: "Tooltip_Word_Dictionary",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+  voiceTranslatedRate: {
+    default: "default",
+    i18nKey: "Voice_Translated_Speed",
+    optionList: voiceRateListWithDefault,
+    settingTab: "advanced",
+  },
+  fallbackTranslatorEngine: {
+    default: "true",
+    i18nKey: "Fallback_Translator_Engine",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
+
 
   // speech
   speechRecognitionLanguage: {
@@ -462,57 +513,7 @@ export var settingDict = {
     menu: false,
     settingTab: "speech",
   },
-  // advanced
-
-  detectPDF: {
-    default: "true",
-    i18nKey: "Detect_PDF",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  mouseoverPauseSubtitle: {
-    default: "true",
-    i18nKey: "Mouseover_Pause_Subtitle",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  tooltipInfoSourceText: {
-    default: "false",
-    i18nKey: "Tooltip_Info_Source_Text",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  tooltipInfoSourceLanguage: {
-    default: "false",
-    i18nKey: "Tooltip_Info_Source_Language",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  tooltipInfoTransliteration: {
-    default: "false",
-    i18nKey: "Tooltip_Info_Transliteration",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  tooltipWordDictionary: {
-    default: "true",
-    i18nKey: "Tooltip_Word_Dictionary",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-  voiceTranslatedRate: {
-    default: "default",
-    i18nKey: "Voice_Translated_Speed",
-    optionList: voiceRateListWithDefault,
-    settingTab: "advanced",
-  },
-  fallbackTranslatorEngine: {
-    default: "true",
-    i18nKey: "Fallback_Translator_Engine",
-    optionList: toggleList,
-    settingTab: "advanced",
-  },
-
+  
 
   // remains
   subtitleButtonToggle: {

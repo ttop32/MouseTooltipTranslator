@@ -70,15 +70,15 @@ export default {
     },
     updateCoffeeCount(increment = 1) {
       const count = Number(this.setting["coffeeCount"]);
-      this.setting["coffeeCount"] = Math.min(count + increment, 17);
+      this.setting["coffeeCount"] = Math.min(count + increment, 11);
     },
     updateBannerProperties() {
-      this.isBannerVisible = this.coffeeCount < 15;
-      this.alertType = this.coffeeCount < 5 ? "info" : "success";
-      this.alertTitle = this.coffeeCount < 5 ? this.messages.reviewTitle : this.messages.title;
-      this.alertSubtitle = this.coffeeCount < 5 ? this.messages.reviewSubtitle : this.messages.subtitle;
-      this.alertUrl = this.coffeeCount < 5 ? this.messages.reviewUrl : this.messages.url;
-      this.buttonText = this.coffeeCount < 5 ? "Review" : "Open";
+      this.isBannerVisible = this.coffeeCount < 10;
+      this.alertType = "success";
+      this.alertTitle = this.messages.title;
+      this.alertSubtitle = this.messages.subtitle;
+      this.alertUrl = this.messages.url;
+      this.buttonText = "Open";
     },
   },
 };
