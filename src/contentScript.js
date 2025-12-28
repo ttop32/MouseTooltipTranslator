@@ -743,7 +743,7 @@ async function killAutoReader() {
 function disableEdgeMiniMenu(e) {
   //prevent mouse tooltip overlap with edge mini menu
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
-    window.onmouseup = event => event.preventDefault();
+    e.preventDefault();
   }
 }
 
