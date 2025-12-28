@@ -69,6 +69,15 @@ i18List = [
     "Voice Repeat",
     "Voice for ",
 
+
+    "EXCLUDE                                      ",
+    "EXCLUDE",
+    "Exclude Language",
+    "Exclude Website",
+    "Whitelist Website",
+    "Block Current Site",
+    "Allow Current Site",
+
     "ADVANCED                                      ",
     "ADVANCED",
     "Detect PDF",
@@ -96,12 +105,6 @@ i18List = [
     "Voice Panel Background Color",
 
 
-
-    "EXCLUDE                                      ",
-    "EXCLUDE",
-    "Exclude Language",
-    "Exclude Website",
-    "Whitelist Website",
 
 
     "BACKUP                                      ",

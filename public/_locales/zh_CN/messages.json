@@ -125,6 +125,27 @@
 	"Voice_for_": {
 		"message": "语音用于 "
 	},
+	"EXCLUDE______________________________________": {
+		"message": "排除                                      "
+	},
+	"EXCLUDE": {
+		"message": "排除"
+	},
+	"Exclude_Language": {
+		"message": "排除语言"
+	},
+	"Exclude_Website": {
+		"message": "排除网站"
+	},
+	"Whitelist_Website": {
+		"message": "网站白名单"
+	},
+	"Block_Current_Site": {
+		"message": "Block Current Site"
+	},
+	"Allow_Current_Site": {
+		"message": "Allow Current Site"
+	},
 	"ADVANCED______________________________________": {
 		"message": "高级                                      "
 	},
@@ -196,21 +217,6 @@
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "语音面板背景颜色"
-	},
-	"EXCLUDE______________________________________": {
-		"message": "排除                                      "
-	},
-	"EXCLUDE": {
-		"message": "排除"
-	},
-	"Exclude_Language": {
-		"message": "排除语言"
-	},
-	"Exclude_Website": {
-		"message": "排除网站"
-	},
-	"Whitelist_Website": {
-		"message": "网站白名单"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "

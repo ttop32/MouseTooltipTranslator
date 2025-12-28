@@ -125,6 +125,27 @@
 	"Voice_for_": {
 		"message": "Voice for "
 	},
+	"EXCLUDE______________________________________": {
+		"message": "EXCLUDE                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
+	},
+	"Exclude_Language": {
+		"message": "אל תתרגם את השפות"
+	},
+	"Exclude_Website": {
+		"message": "אל תתרגם את האתרים"
+	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
+	"Block_Current_Site": {
+		"message": "Block Current Site"
+	},
+	"Allow_Current_Site": {
+		"message": "Allow Current Site"
+	},
 	"ADVANCED______________________________________": {
 		"message": "ADVANCED                                      "
 	},
@@ -196,21 +217,6 @@
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Voice Panel Background Color"
-	},
-	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
-	},
-	"EXCLUDE": {
-		"message": "EXCLUDE"
-	},
-	"Exclude_Language": {
-		"message": "אל תתרגם את השפות"
-	},
-	"Exclude_Website": {
-		"message": "אל תתרגם את האתרים"
-	},
-	"Whitelist_Website": {
-		"message": "Whitelist Website"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "

@@ -125,6 +125,27 @@
 	"Voice_for_": {
 		"message": "Голосовой синтезатор для "
 	},
+	"EXCLUDE______________________________________": {
+		"message": "ИСКЛЮЧЕНИЯ                                      "
+	},
+	"EXCLUDE": {
+		"message": "ИСКЛЮЧЕНИЯ"
+	},
+	"Exclude_Language": {
+		"message": "Исключить язык"
+	},
+	"Exclude_Website": {
+		"message": "Исключить указанный веб-сайт"
+	},
+	"Whitelist_Website": {
+		"message": "Белый список сайтов"
+	},
+	"Block_Current_Site": {
+		"message": "Block Current Site"
+	},
+	"Allow_Current_Site": {
+		"message": "Allow Current Site"
+	},
 	"ADVANCED______________________________________": {
 		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ                                      "
 	},
@@ -196,21 +217,6 @@
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Цвет фона голосовой панели"
-	},
-	"EXCLUDE______________________________________": {
-		"message": "ИСКЛЮЧЕНИЯ                                      "
-	},
-	"EXCLUDE": {
-		"message": "ИСКЛЮЧЕНИЯ"
-	},
-	"Exclude_Language": {
-		"message": "Исключить язык"
-	},
-	"Exclude_Website": {
-		"message": "Исключить указанный веб-сайт"
-	},
-	"Whitelist_Website": {
-		"message": "Белый список сайтов"
 	},
 	"BACKUP______________________________________": {
 		"message": "РЕЗЕРВНОЕ КОПИРОВАНИЕ                                      "

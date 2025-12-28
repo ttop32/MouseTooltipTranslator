@@ -357,7 +357,7 @@ export var settingDict = {
     settingTab: "exclude",
   },
   websiteExcludeBtn: {
-    i18nKey: "Exclude_Current_Website",
+    i18nKey: "Block_Current_site",
     optionList: [],
     settingTab: "exclude",
     optionType: "button",
@@ -367,7 +367,7 @@ export var settingDict = {
     onClickFuncName: "excludeCurrentWebsiteOnclickFunc",
   },
   websiteWhitelistBtn: {
-    i18nKey: "Whitelist_Current_Website",
+    i18nKey: "Allow_Current_site",
     optionList: [],
     settingTab: "exclude",
     optionType: "button",

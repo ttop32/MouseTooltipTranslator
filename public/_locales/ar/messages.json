@@ -125,6 +125,27 @@
 	"Voice_for_": {
 		"message": "صوت ل "
 	},
+	"EXCLUDE______________________________________": {
+		"message": "استبعاد                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
+	},
+	"Exclude_Language": {
+		"message": "استبعاد اللغة"
+	},
+	"Exclude_Website": {
+		"message": "استبعاد موقع الويب"
+	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
+	"Block_Current_Site": {
+		"message": "Block Current Site"
+	},
+	"Allow_Current_Site": {
+		"message": "Allow Current Site"
+	},
 	"ADVANCED______________________________________": {
 		"message": "متقدم                                      "
 	},
@@ -196,21 +217,6 @@
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "لون خلفية لوحة الصوت"
-	},
-	"EXCLUDE______________________________________": {
-		"message": "استبعاد                                      "
-	},
-	"EXCLUDE": {
-		"message": "EXCLUDE"
-	},
-	"Exclude_Language": {
-		"message": "استبعاد اللغة"
-	},
-	"Exclude_Website": {
-		"message": "استبعاد موقع الويب"
-	},
-	"Whitelist_Website": {
-		"message": "Whitelist Website"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "

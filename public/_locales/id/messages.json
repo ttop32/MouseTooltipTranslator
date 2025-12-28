@@ -125,6 +125,27 @@
 	"Voice_for_": {
 		"message": "Suara untuk "
 	},
+	"EXCLUDE______________________________________": {
+		"message": "KECUALI                                      "
+	},
+	"EXCLUDE": {
+		"message": "EXCLUDE"
+	},
+	"Exclude_Language": {
+		"message": "Kecualikan Bahasa"
+	},
+	"Exclude_Website": {
+		"message": "Kecualikan Situs Web"
+	},
+	"Whitelist_Website": {
+		"message": "Whitelist Website"
+	},
+	"Block_Current_Site": {
+		"message": "Block Current Site"
+	},
+	"Allow_Current_Site": {
+		"message": "Allow Current Site"
+	},
 	"ADVANCED______________________________________": {
 		"message": "LANJUTAN                                      "
 	},
@@ -196,21 +217,6 @@
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Voice Panel Background Color"
-	},
-	"EXCLUDE______________________________________": {
-		"message": "KECUALI                                      "
-	},
-	"EXCLUDE": {
-		"message": "EXCLUDE"
-	},
-	"Exclude_Language": {
-		"message": "Kecualikan Bahasa"
-	},
-	"Exclude_Website": {
-		"message": "Kecualikan Situs Web"
-	},
-	"Whitelist_Website": {
-		"message": "Whitelist Website"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "
