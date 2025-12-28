@@ -72,19 +72,22 @@
     "uuid": "^9.0.0",
     "vue": "^3.3.4",
     "vue-router": "^4.3.0",
-    "vuetify": "^3.3.16",
+    "vuetify": "^3.11.5",
     "webextension-polyfill": "^0.10.0",
     "whatwg-fetch": "^3.6.18",
     "window-post-message-proxy": "^0.2.6"
   },
   "jest": {
     "transform": {
-        "^.+\\.js$": "babel-jest"
+      "^.+\\.js$": "babel-jest"
     },
-    "moduleFileExtensions": ["js", "json"],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
     "testEnvironment": "node",
     "transformIgnorePatterns": [
-     "/node_modules/(?!ky|another-library)/"
+      "/node_modules/(?!ky|another-library)/"
     ]
   }
 }

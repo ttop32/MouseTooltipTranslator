@@ -333,6 +333,51 @@ export var settingDict = {
     settingTab: "graphic",
   },
 
+
+  // exclude
+  langExcludeList: {
+    default: [],
+    i18nKey: "Exclude_Language",
+    optionList: langList,
+    optionType: "multipleSelect",
+    settingTab: "exclude",
+  },
+  websiteExcludeList: {
+    default: ["*.example.com"],
+    i18nKey: "Exclude_Website",
+    optionList: "",
+    optionType: "comboBox",
+    settingTab: "exclude",
+  },
+  websiteWhiteList: {
+    default: [],
+    i18nKey: "Whitelist_Website",
+    optionList: "",
+    optionType: "comboBox",
+    settingTab: "exclude",
+  },
+  websiteExcludeBtn: {
+    i18nKey: "Exclude_Current_Website",
+    optionList: [],
+    settingTab: "exclude",
+    optionType: "button",
+    icon: "mdi-web-cancel",
+    color: "red",
+    onClick: () => {},
+    onClickFuncName: "excludeCurrentWebsiteOnclickFunc",
+  },
+  websiteWhitelistBtn: {
+    i18nKey: "Whitelist_Current_Website",
+    optionList: [],
+    settingTab: "exclude",
+    optionType: "button",
+    icon: "mdi-web-check",
+    color: "green",
+    onClick: () => {},
+    onClickFuncName: "includeWhitelistCurrentWebsiteOnclickFunc",
+  },
+  
+
   // speech
   speechRecognitionLanguage: {
     default: "en-US",
@@ -417,7 +462,6 @@ export var settingDict = {
     menu: false,
     settingTab: "speech",
   },
-
   // advanced
 
   detectPDF: {
@@ -469,28 +513,6 @@ export var settingDict = {
     settingTab: "advanced",
   },
 
-  // exclude
-  langExcludeList: {
-    default: [],
-    i18nKey: "Exclude_Language",
-    optionList: langList,
-    optionType: "multipleSelect",
-    settingTab: "exclude",
-  },
-  websiteExcludeList: {
-    default: ["*.example.com"],
-    i18nKey: "Exclude_Website",
-    optionList: "",
-    optionType: "comboBox",
-    settingTab: "exclude",
-  },
-  websiteWhiteList: {
-    default: [],
-    i18nKey: "Whitelist_Website",
-    optionList: "",
-    optionType: "comboBox",
-    settingTab: "exclude",
-  },
 
   // remains
   subtitleButtonToggle: {
