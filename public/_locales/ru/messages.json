@@ -108,7 +108,7 @@
 		"message": "ГОЛОСОВЫЕ НАСТРОЙКИ                                      "
 	},
 	"VOICE": {
-		"message": "ГОЛОСОВЫЕ НАСТРОЙКИ"
+		"message": "ГОЛОС"
 	},
 	"Voice_Volume": {
 		"message": "Громкость голоса"
@@ -150,7 +150,7 @@
 		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ                                      "
 	},
 	"ADVANCED": {
-		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ"
+		"message": "ДОПОЛНИТЕЛЬНО"
 	},
 	"Detect_PDF": {
 		"message": "Определять PDF-файлы"
@@ -180,7 +180,7 @@
 		"message": "Резервный движок перевода"
 	},
 	"SPEECH": {
-		"message": "РАСПОЗНАВАНИЕ РЕЧИ"
+		"message": "РЕЧЬ"
 	},
 	"Speech_Recognition_Language": {
 		"message": "Язык распознавания речи"
@@ -222,7 +222,7 @@
 		"message": "РЕЗЕРВНОЕ КОПИРОВАНИЕ                                      "
 	},
 	"BACKUP": {
-		"message": "Резерв"
+		"message": "РЕЗЕРВ"
 	},
 	"Import_Setting": {
 		"message": "Импорт настроек"
