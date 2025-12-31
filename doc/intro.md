@@ -62,6 +62,7 @@ Proletarier aller Länder, vereinigt euch!
 # Exception
 
 - If source text language and translate language are same, it will skip. 
+  - Manual source language selection may bypass the same language omit logic.
 - If page is not focused, key input is not detected. 
 Make click to focus page before input keyboard.
 - The application will not function if the web status is offline. 
