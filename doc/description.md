@@ -25,7 +25,9 @@ English, Russian, Japanese, Chinese and so on
   - remove comment alert
   - reduce setting tab font size (requested by oblominsk)
   - reduce setting list item padding space(requested by oblominsk)
-  - fix edge select menu conflict
+  - add toggle mouseover type swap key setting(requested by oblominsk)
+  - fix edge select menu conflict  
+  - fix vivaldi writing conflict(requested by oblominsk)
 - 0.1.207
   - fix pdf line break on download delayed pdf
 - 0.1.206

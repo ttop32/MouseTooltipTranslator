@@ -62,6 +62,9 @@
 	"Speech_Recognition_When": {
 		"message": "何時進行語音識別"
 	},
+	"Toggle_Mouseover_Text_Type_When": {
+		"message": "Toggle Mouseover Text Type When"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "圖形                                      "
 	},

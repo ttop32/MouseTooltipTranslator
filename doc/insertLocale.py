@@ -45,6 +45,7 @@ i18List = [
     "OCR When",
     "Mouseover Text Type Swap Key",
     "Speech Recognition When",
+    "Toggle Mouseover Text Type When",
 
     "GRAPHIC                                      ",
     "GRAPHIC",

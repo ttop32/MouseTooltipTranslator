@@ -15,12 +15,14 @@ var _isIframe = false;
 var styleElement;
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 var setting = {};
+var keyDownList = {};
 var mouseTarget = null;
 const nodeLengthCache = new WeakMap();
 var prevWordSegIndex = 0;
 
-export function enableMouseoverTextEvent(_window = window, currentSetting) {
+export function enableMouseoverTextEvent(_window = window, currentSetting, keyDownListParam) {
   setting = currentSetting;
+  keyDownList = keyDownListParam;
   var textDetectTime = setting?.["mouseoverEventInterval"] || 300;
   
   _win = _window;
@@ -38,16 +40,19 @@ export function enableMouseoverTextEvent(_window = window, currentSetting) {
   });
 }
 
+export async function forceTriggerMouseoverText() {
+  triggerMouseoverText(await getMouseoverText(clientX, clientY));
+}
+
 function getMouseoverType() {
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
   var detectType = setting["mouseoverTextType"];
-  // detectType = keyDownList[setting["keyDownMouseoverTextSwap"]]
+  // detectType = keyDownList[setting["keyToggleMouseoverTextType"]]
   //   ? detectType == "word"
   //     ? "sentence"
   //     : "word"
   //   : detectType;
-
   detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
   return detectType;
 }
@@ -84,12 +89,17 @@ function updateWindowPos(e) {
   mouseTarget = e.target;
 }
 
-export const triggerMouseoverText = (mouseoverText) => {
+export function wrapMouseoverEvent(mouseoverText) {
   var evt = new CustomEvent("mouseoverText", {
     bubbles: true,
     cancelable: false,
   });
   evt.mouseoverText = mouseoverText;
+  return evt;
+}
+
+export const triggerMouseoverText = (mouseoverText) => {
+  var evt = wrapMouseoverEvent(mouseoverText);
   document.dispatchEvent(evt);
 };
 

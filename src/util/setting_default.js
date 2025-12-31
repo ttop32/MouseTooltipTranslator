@@ -224,6 +224,12 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  keyToggleMouseoverTextType: {
+    default: "F8",
+    i18nKey: "Toggle_Mouseover_Text_Type_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
 
   // voice
   voiceVolume: {
