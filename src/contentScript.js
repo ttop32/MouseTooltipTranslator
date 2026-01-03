@@ -756,7 +756,9 @@ async function killAutoReader() {
   isStopAutoReaderOn = false;
 }
 function disableEdgeMiniMenu(e) {
-  e.preventDefault();
+  if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
+    e.preventDefault();
+  }
 }
 
 

@@ -353,7 +353,11 @@ export function isCharKey(key) {
 }
 
 export function isEdge() {
-  return /Edg\//.test(window.navigator.userAgent);
+  return (
+    typeof window.StyleMedia !== "undefined" ||
+    (typeof window.external === "object" &&
+     typeof window.external.AddSearchProvider === "function")
+  );
 }
 
 export function extractTextFromHtml(html) {
