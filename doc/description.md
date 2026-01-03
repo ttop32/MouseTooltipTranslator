@@ -19,8 +19,11 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
-- 0.1.209
+- 0.1.210
   - fix mouse button conflict 
+  - reapply 0.1.208
+- 0.1.209
+  - rollback 0.1.208
 - 0.1.208
   - add button to exclude current website (requested by coffeechococake7)
   - make smooth setting tab transition
