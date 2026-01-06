@@ -558,7 +558,6 @@ function loadEventListener() {
   addEventHandler("keyup", handleKeyup);
   addEventHandler("mousedown", handleMouseKeyDown);
   addEventHandler("mouseup", handleMouseKeyUp);
-  addEventHandler("mouseup", disableEdgeMiniMenu, false);
   
   //detect tab switching to reset env
   addEventHandler("blur", resetTooltipStatus);

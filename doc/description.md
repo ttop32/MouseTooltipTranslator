@@ -19,8 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.211
+  - fix mouse deselect button conflict
 - 0.1.210
-  - fix mouse button conflict 
+  - fix mouse back button conflict 
   - reapply 0.1.208
 - 0.1.209
   - rollback 0.1.208
