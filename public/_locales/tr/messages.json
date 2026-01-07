@@ -9,13 +9,13 @@
 		"message": "Fare İpucu Çevirisi"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "Şu Durumda Çevir"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "Çeviri Kaynağı"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "Şuna Çevir"
 	},
 	"Translator_Engine": {
 		"message": "Çeviri Motoru"
@@ -33,7 +33,7 @@
 		"message": "OCR Dili"
 	},
 	"Detect_Subtitle": {
-		"message": "Altyazıyı Algıla"
+		"message": "Altyazı Algıla"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "KEYBOARD                                      "
@@ -42,22 +42,22 @@
 		"message": "KLAVYE"
 	},
 	"Show_Tooltip_When": {
-		"message": "İpucu Ne Zaman Gösterilsin"
+		"message": "İpucu Şu Durumda Gösterilsin"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "Şu Durumda Seslendir"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "Yazıyı Şu Durumda Çevir"
 	},
 	"Auto_Reader_When": {
 		"message": "Otomatik Okuyucu Ne Zaman"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "OCR Şu Durumda"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "Üzerine Gelince Metin Türünü Değiştirme Tuşu"
 	},
 	"Speech_Recognition_When": {
 		"message": "Konuşma Tanıma Ne Zaman"
@@ -87,25 +87,25 @@
 		"message": "İpucu Konumu"
 	},
 	"Tooltip_Text_Align": {
-		"message": "İpucu Metin Hizalaması"
+		"message": "İpucu Metni Hizalama"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "İpucu Arkaplanı Şeffaflığı"
+		"message": "İpucu Arkaplan Bulanıklığı"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "Üzerine Gelince Metni Vurgula"
 	},
 	"Tooltip_Font_Color": {
 		"message": "İpucu Yazı Rengi"
 	},
 	"Tooltip_Background_Color": {
-		"message": "İpucu Arkaplanı Rengi"
+		"message": "İpucu Arkaplan Rengi"
 	},
 	"Tooltip_Border_Color": {
 		"message": "İpucu Kenarlığı Rengi"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Üzerine Gelince Metin Vurgu Rengi"
 	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "
@@ -126,7 +126,7 @@
 		"message": "Ses Tekrarı"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "Şunun İçin Seslendirme"
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -138,7 +138,7 @@
 		"message": "Dili Hariç Tut"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "Veb Sitesini Hariç Tut"
 	},
 	"Whitelist_Website": {
 		"message": "Beyaz Liste Web Sitesi"
@@ -312,133 +312,133 @@
 		"message": "SEÇENEĞİ SEÇ                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "Açık"
 	},
 	"Off": {
-		"message": "Off"
+		"message": "Kapalı"
 	},
 	"Auto": {
-		"message": "Auto"
+		"message": "Otomatik"
 	},
 	"None": {
-		"message": "None"
+		"message": "Yok"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "Seç"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "Fare Üstündeyken"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "Üzerine Gel & Seç"
 	},
 	"Follow": {
-		"message": "Follow"
+		"message": "Takip Et"
 	},
 	"Fixed": {
-		"message": "Fixed"
+		"message": "Düzeltildi"
 	},
 	"Fade": {
-		"message": "Fade"
+		"message": "Karart"
 	},
 	"Scale": {
-		"message": "Scale"
+		"message": "Ölçek"
 	},
 	"Shift_away": {
 		"message": "Shift away"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "Yaklaş"
 	},
 	"Perspective": {
-		"message": "Perspective"
+		"message": "Perspektif"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "Kelime"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "Cümle"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "Kapsayıcı"
 	},
 	"Source": {
-		"message": "Source"
+		"message": "Kaynak"
 	},
 	"Source_Text": {
-		"message": "Source Text"
+		"message": "Kaynak Metin"
 	},
 	"Translated_Text": {
-		"message": "Translated Text"
+		"message": "Çevirilmiş Metin"
 	},
 	"Source_n_Translated": {
-		"message": "Source n Translated"
+		"message": "Kaynak & Çeviri"
 	},
 	"Translated_n_Source": {
-		"message": "Translated n Source"
+		"message": "Çeviri & Kaynak"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "Çift Altyazı"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "Hedef Tek Altyazı"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "Kaynak Tek Altyazı"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "Her Zaman"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "Merkez"
 	},
 	"Left": {
-		"message": "Left"
+		"message": "Sol"
 	},
 	"Right": {
-		"message": "Right"
+		"message": "Sağ"
 	},
 	"Justify": {
-		"message": "Justify"
+		"message": "Yasla"
 	},
 	"Default": {
-		"message": "Default"
+		"message": "Varsayılan"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Sol Control"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Sol Control"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Sol Alt"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Sağ Alt"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "Sol Shift"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "Sağ Shift"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "Sol Meta"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "Sağ Meta"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "Sol Tıkla"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "Ortaya Tıkla"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "Sağ Tıkla"
 	},
 	"google": {
-		"message": "google"
+		"message": "Google"
 	},
 	"bing": {
 		"message": "bing"
