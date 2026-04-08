@@ -138,9 +138,13 @@ async function stageTooltipText(text, actionType, range) {
     keyDownList[setting["TTSWhen"]] ||
     (setting["TTSWhen"] == "select" && actionType == "select");
   var isTtsSwap = keyDownDoublePress[setting["TTSWhen"]];
-  var isTooltipOn = keyDownList[setting["showTooltipWhen"]];
+  var useSecondary =
+    setting["keySecondaryLang"] != "null" &&
+    keyDownList[setting["keySecondaryLang"]] &&
+    setting["translateTarget2"] != "null";
+  var isTooltipOn = keyDownList[setting["showTooltipWhen"]] || useSecondary;
   var timestamp = Number(Date.now());
-  
+
   // skip if mouse target is tooltip or no text, if no new word or  tab is not activated
   // hide tooltip, if  no text
   // if tooltip is off, hide tooltip
@@ -169,7 +173,7 @@ async function stageTooltipText(text, actionType, range) {
   var translatedData = await util.requestTranslate(
     text,
     setting["translateSource"],
-    setting["translateTarget"],
+    useSecondary ? setting["translateTarget2"] : setting["translateTarget"],
     setting["translateReverseTarget"]
   );
   var { targetText, sourceLang, targetLang } = translatedData;
@@ -652,7 +656,12 @@ async function runKeydownPostProcess(key, detectKeyDown) {
       setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
       setting.save();
     }
-    restartWordProcess();
+    if (setting["keySecondaryLang"]==key && setting["translateTarget2"] != "null") {
+      stagedText = null;
+      stageTooltipTextHover(null, false);
+    } else {
+      restartWordProcess();
+    }
   }
 
   if (util.isCharKey(key)) {
@@ -766,6 +775,10 @@ async function releaseKeydownList(key) {
   keyDownList[key] = false;
   if (key == setting["keySpeechRecognition"]) {
     speech.stopSpeechRecognition();
+  }
+  if (key == setting["keySecondaryLang"] && setting["translateTarget2"] != "null") {
+    stagedText = null;
+    stageTooltipTextHover(null, false);
   }
 }
 
