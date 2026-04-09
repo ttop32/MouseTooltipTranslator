@@ -144,6 +144,12 @@ export var settingDict = {
     optionList: langList,
     settingTab: "main",
   },
+  translateTarget2: {
+    default: "null",
+    i18nKey: "Translate_Into_2",
+    optionList: langListWithNone,
+    settingTab: "main",
+  },
   translatorVendor: {
     default: "google",
     i18nKey: "Translator_Engine",
@@ -227,6 +233,12 @@ export var settingDict = {
   keyToggleMouseoverTextType: {
     default: "F8",
     i18nKey: "Toggle_Mouseover_Text_Type_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
+  keySecondaryLang: {
+    default: "null",
+    i18nKey: "Secondary_Language_When",
     optionList: keyList,
     settingTab: "keyboard",
   },
