@@ -17,6 +17,9 @@
 	"Translate_Into": {
 		"message": "Traduire en"
 	},
+	"Translate_Into_2": {
+		"message": "Secondary Translate Into"
+	},
 	"Translator_Engine": {
 		"message": "Moteur de traduction"
 	},
@@ -64,6 +67,9 @@
 	},
 	"Toggle_Mouseover_Text_Type_When": {
 		"message": "Toggle Mouseover Text Type When"
+	},
+	"Secondary_Language_When": {
+		"message": "Secondary Language When"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
