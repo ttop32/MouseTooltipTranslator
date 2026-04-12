@@ -100,10 +100,24 @@ npm run build        // or 'npm run watch' for developing
     </td></tr>
 <tr>
     <td align="center">
+        <a href="https://github.com/ImgBotApp">
+            <img src="https://avatars.githubusercontent.com/u/31427850?v=4" width="100;" alt="ImgBotApp"/>
+            <br />
+            <sub><b>Imgbot</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/newmind">
             <img src="https://avatars.githubusercontent.com/u/379460?v=4" width="100;" alt="newmind"/>
             <br />
             <sub><b>JG</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/trysomeway">
+            <img src="https://avatars.githubusercontent.com/u/25189461?v=4" width="100;" alt="trysomeway"/>
+            <br />
+            <sub><b>Max</b></sub>
         </a>
     </td>
     <td align="center">
@@ -126,7 +140,8 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Silvestri, Javier</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/netanelavi">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanelavi"/>
