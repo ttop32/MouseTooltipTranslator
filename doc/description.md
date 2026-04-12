@@ -19,58 +19,60 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.212
+  - Add secondary target language (contributed by trysomeway)
 - 0.1.211
-  - fix mouse deselect button conflict
+  - Fix mouse deselect button conflict
 - 0.1.210
-  - fix mouse back button conflict 
-  - reapply 0.1.208
+  - Fix mouse back button conflict 
+  - Reapply 0.1.208
 - 0.1.209
-  - rollback 0.1.208
+  - Rollback 0.1.208
 - 0.1.208
-  - add button to exclude current website (requested by coffeechococake7)
-  - make smooth setting tab transition
-  - remove comment alert
-  - reduce setting tab font size (requested by oblominsk)
-  - reduce setting list item padding space(requested by oblominsk)
-  - add toggle mouseover type swap key setting(requested by oblominsk)
-  - fix edge select menu conflict  
-  - fix vivaldi writing conflict(requested by oblominsk)
+  - Add button to exclude current website (requested by coffeechococake7)
+  - Make smooth setting tab transition
+  - Remove comment alert
+  - Reduce setting tab font size (requested by oblominsk)
+  - Reduce setting list item padding space(requested by oblominsk)
+  - Add toggle mouseover type swap key setting(requested by oblominsk)
+  - Fix edge select menu conflict  
+  - Fix vivaldi writing conflict(requested by oblominsk)
 - 0.1.207
-  - fix pdf line break on download delayed pdf
+  - Fix pdf line break on download delayed pdf
 - 0.1.206
-  - fix pdf line break (requested by mrk67422)
+  - Fix pdf line break (requested by mrk67422)
 - 0.1.205
   - Add right mouse hold in pdf viewer now act as handtool (contributed by Witnull)
-  - filter parenthesis text from tts (requested by Gobidobi)
+  - Filter parenthesis text from tts (requested by Gobidobi)
 - 0.1.204
-  - fix setting export
+  - Fix setting export
 - 0.1.203
   - Russian localization (contributed by D0n-A)
-  - fix tooltip site conflict with tippy (requested by l-Nuril-l)
+  - Fix tooltip site conflict with tippy (requested by l-Nuril-l)
 - 0.1.202
-  - fix youtube conflict sub
+  - Fix youtube conflict sub
 - 0.1.201
-  - add more lang support (requested by abasakre)
+  - Add more lang support (requested by abasakre)
 - 0.1.200
-  - reset fallback engine if all cooldown
-  - fix baidu
+  - Reset fallback engine if all cooldown
+  - Fix baidu
 - 0.1.199
-  - add setting backup (requested by emrestive)
-  - add setting reset (requested by 7xx)
+  - Add setting backup (requested by emrestive)
+  - Add setting reset (requested by 7xx)
   - Chinese localization (contributed by merlette)
   - Turkish localization (contributed by odk-0160)
 - 0.1.198
-  - remove ocr tooltip box option
-  - support select box locale
+  - Remove ocr tooltip box option
+  - Support select box locale
   - Filipino localization (contributed by Amydette)
   - Turkish localization (contributed by Samo)
 - 0.1.197
-  - add option tooltip animation none (requested by xshrim)
-  - support dark mode popup (requested by tipodanet)
+  - Add option tooltip animation none (requested by xshrim)
+  - Support dark mode popup (requested by tipodanet)
 - 0.1.196
-  - fix to implement browser api  (requested by KenjiBaheux)
+  - Fix to implement browser api  (requested by KenjiBaheux)
 - 0.1.195
-  - fix ocr img detect from taobao (requested by 어디로가는하마)
+  - Fix ocr img detect from taobao (requested by 어디로가는하마)
 - 0.1.194
   - Fix Shadow root image ocr not working
   - Enhance performance speed for OCR
@@ -78,32 +80,32 @@ English, Russian, Japanese, Chinese and so on
   - Fix OCR reprocess conflict  
   - Portuguese, Brazilian localization (contributed by EdsonBittencourt)
 - 0.1.192
-  - add ocr text block tooltip show feature
-  - add ocr white text detect
+  - Add ocr text block tooltip show feature
+  - Add ocr white text detect
   - Chinese localization (contributed by Merlette)  
 - 0.1.191
-  - change exception exclude logic
+  - Change exception exclude logic
 - 0.1.190
-  - revert 183-184 feature
+  - Revert 183-184 feature
 - 0.1.189
-  - remove util import from speech
+  - Remove util import from speech
 - 0.1.188
-  - revert remove alert popup
+  - Revert remove alert popup
 - 0.1.187
-  - change about page structure
+  - Change about page structure
 - 0.1.186
-  - revert to 0.1.182
+  - Revert to 0.1.182
 - 0.1.185
   - Portuguese, Brazilian localization (contributed by edsonbittencourt)
-  - fix setting help not open
+  - Fix setting help not open
 - 0.1.184
-  - insert setting popup on intro page
+  - Insert setting popup on intro page
 - 0.1.183
   - Add whitelist website
   - Change default color setting
   - Add fallback translator engine option (swap other engine)
   - Chinese localization (contributed by Merlette)
-  - fix firefox auto reader not working
+  - Fix firefox auto reader not working
 - 0.1.182
   - Fix auto reader crash
 - 0.1.181
