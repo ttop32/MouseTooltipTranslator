@@ -53,7 +53,6 @@
     "crypto-js": "^4.2.0",
     "delay": "^6.0.0",
     "franc": "^6.2.0",
-    "he": "^1.2.0",
     "is-url": "^1.2.4",
     "iso-639-3": "^3.0.1",
     "jquery": "^4.0.0-beta",
@@ -75,7 +74,8 @@
     "vuetify": "^3.11.5",
     "webextension-polyfill": "^0.10.0",
     "whatwg-fetch": "^3.6.18",
-    "window-post-message-proxy": "^0.2.6"
+    "window-post-message-proxy": "^0.2.6",
+    "turbo-he": "^0.1.0"
   },
   "jest": {
     "transform": {

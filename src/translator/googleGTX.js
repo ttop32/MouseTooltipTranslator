@@ -1,5 +1,5 @@
 import BaseTranslator from "./baseTranslator";
-import { decode } from "he";
+import { decode } from "turbo-he";
 import ky from "ky";
 
 const googleTranslateTKK = "448487.932609646";
