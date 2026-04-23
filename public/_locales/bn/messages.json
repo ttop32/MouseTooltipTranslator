@@ -9,7 +9,7 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "অনুবাদের সময়"
 	},
 	"Translate_From": {
 		"message": "Translate From"
@@ -21,7 +21,7 @@
 		"message": "Secondary Translate Into"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "অনুবাদের ইঞ্জিন"
 	},
 	"Mouseover_Text_Type": {
 		"message": "Mouseover Text Type"
