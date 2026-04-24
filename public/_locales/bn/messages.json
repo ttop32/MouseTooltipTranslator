@@ -24,7 +24,7 @@
 		"message": "অনুবাদের ইঞ্জিন"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Writing_Language": {
 		"message": "Writing Language"
@@ -330,13 +330,13 @@
 		"message": "None"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "সিলেক্ট করা"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "মাউস ধরা"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "মাউস ধরা ও সিলেক্ট করা"
 	},
 	"Follow": {
 		"message": "Follow"
@@ -360,13 +360,13 @@
 		"message": "Perspective"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "শব্দ"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "বাক্য"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "ধারক"
 	},
 	"Source": {
 		"message": "Source"
