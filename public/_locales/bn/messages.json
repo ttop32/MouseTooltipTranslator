@@ -12,10 +12,10 @@
 		"message": "অনুবাদের সময়"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "যে ভাষা থেকে করা হবে"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "যে ভাষায় করা হবে"
 	},
 	"Translate_Into_2": {
 		"message": "Secondary Translate Into"
