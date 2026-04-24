@@ -9,16 +9,16 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"Translate_When": {
-		"message": "অনুবাদের সময়"
+		"message": "অনুবাদ হওয়ার শর্ত"
 	},
 	"Translate_From": {
-		"message": "যে ভাষা থেকে করা হবে"
+		"message": "অনুবাদের মূল ভাষা"
 	},
 	"Translate_Into": {
-		"message": "যে ভাষায় করা হবে"
+		"message": "অনুবাদের উদ্দিষ্ট ভাষা"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষা"
 	},
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
