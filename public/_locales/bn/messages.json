@@ -27,16 +27,16 @@
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "লেখার ভাষা"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "উল্টো অনুবাদের ভাষা"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "ওসিআরের ভাষা"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "সাবটাইটেল শনাক্তকরণ"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "কিবোর্ড                                      "
@@ -45,31 +45,31 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "টুলটিপ ওঠার শর্ত"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "কথা শোনা যাওয়ার শর্ত"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "লেখা অনুবাদ হওয়ার শর্ত"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "অটো রিডার চলার শর্ত"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "ওসিআর চলার শর্ত"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "কথা শনাক্তকরণের শর্ত"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Toggle Mouseover Text Type When"
+		"message": "মাউস ধরার লক্ষ্যের ধরন পরিবর্তনের শর্ত"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার ক্ষেত্রে শর্ত"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
@@ -327,7 +327,7 @@
 		"message": "Auto"
 	},
 	"None": {
-		"message": "None"
+		"message": "প্রযোজ্য নয়"
 	},
 	"Select": {
 		"message": "সিলেক্ট করা"
@@ -384,13 +384,13 @@
 		"message": "Translated n Source"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "দুই ভাষার সাবটাইটেল"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "উদ্দিষ্ট ভাষার একক সাবটাইটেল"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "মূল ভাষার একক সাবটাইটেল"
 	},
 	"Always": {
 		"message": "Always"
