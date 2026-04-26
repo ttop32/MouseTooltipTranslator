@@ -66,25 +66,25 @@
 		"message": "কথা শনাক্তকরণের শর্ত"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "মাউস ধরার লক্ষ্যের ধরন পরিবর্তনের শর্ত"
+		"message": "মাউস ধরার লেখার ধরন পরিবর্তনের শর্ত"
 	},
 	"Secondary_Language_When": {
 		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার ক্ষেত্রে শর্ত"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "রূপ                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "রূপ"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "টুলটিপের ফন্টের সাইজ"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "টুলটিপের প্রস্থ"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "টুলটিপের দূরত্ব"
 	},
 	"Tooltip_Animation": {
 		"message": "Tooltip Animation"
@@ -114,25 +114,25 @@
 		"message": "Mouseover Text Highlight Color"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "কথা                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "কথা"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "কথার ভলিউম"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "কথার গতি"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "কথার পুনরাবৃত্তির সংখ্যা"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "কণ্ঠ: "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "
@@ -393,7 +393,7 @@
 		"message": "মূল ভাষার একক সাবটাইটেল"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "সবসময়"
 	},
 	"Center": {
 		"message": "Center"
@@ -411,37 +411,37 @@
 		"message": "Default"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Ctrl - বাম"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Ctrl - ডান"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Alt - বাম"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Alt - ডান"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "শিফট - বাম"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "শিফট - ডান"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "মেটা - বাম"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "মেটা - ডান"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "ক্লিক - লেফট"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "ক্লিক - মিডল"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "ক্লিক - রাইট"
 	},
 	"google": {
 		"message": "google"
