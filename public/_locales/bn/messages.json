@@ -87,28 +87,28 @@
 		"message": "টুলটিপের দূরত্ব"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "টুলটিপের অ্যানিমেশন"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "টুলটিপের অবস্থান"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "টুলটিপের লেখার অনুভূমিক অবস্থান"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Mouseover Highlight Text"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "টুলটিপের লেখার রং"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "টুলটিপের পটভূমির রং"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "টুলটিপের সীমারেখার রং"
 	},
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Mouseover Text Highlight Color"
@@ -453,6 +453,6 @@
 		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
 	},
 	"appDesc": {
-		"message": "মাউস টুলটিপ অনুবাদক গুগল অনুবাদ ব্যবহার করে মাউসওভার পাঠ্য অনুবাদ করুন. Support OCR, TTS, manga translator & pdf translator."
+		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রানস্লেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
 	}
 }
