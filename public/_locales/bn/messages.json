@@ -6,7 +6,7 @@
 		"message": "মূল"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর"
 	},
 	"Translate_When": {
 		"message": "অনুবাদ হওয়ার শর্ত"
@@ -99,7 +99,7 @@
 		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণ"
 	},
 	"Tooltip_Font_Color": {
 		"message": "টুলটিপের লেখার রং"
@@ -111,7 +111,7 @@
 		"message": "টুলটিপের সীমারেখার রং"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
 	},
 	"VOICE______________________________________": {
 		"message": "কথা                                      "
@@ -135,34 +135,34 @@
 		"message": "কণ্ঠ: "
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "বাদ                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "বাদ"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "পরিহার্য ভাষা"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "পরিহার্য ওয়েবসাইট"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
 	},
 	"Block_Current_Site": {
-		"message": "Block Current Site"
+		"message": "এই সাইটে অনুবাদ হবে না"
 	},
 	"Allow_Current_Site": {
-		"message": "Allow Current Site"
+		"message": "এই সাইটে অনুবাদ হবে"
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "উন্নীত                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "উন্নীত"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "পিডিএফ শনাক্তকরণ"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
@@ -318,10 +318,10 @@
 		"message": "SELECT OPTION                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "চালু"
 	},
 	"Off": {
-		"message": "Off"
+		"message": "বন্ধ"
 	},
 	"Auto": {
 		"message": "Auto"
@@ -453,6 +453,6 @@
 		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
 	},
 	"appDesc": {
-		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রানস্লেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
+		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রান্সলেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
 	}
 }
