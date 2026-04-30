@@ -1,168 +1,168 @@
 {
 	"MAIN______________________________________": {
-		"message": "MAIN                                      "
+		"message": "মূল                                      "
 	},
 	"MAIN": {
-		"message": "MAIN"
+		"message": "মূল"
 	},
 	"Mouse_Tooltip_Translator": {
-		"message": "Mouse Tooltip Translator"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর"
 	},
 	"Translate_When": {
-		"message": "Translate When"
+		"message": "অনুবাদ হওয়ার শর্ত"
 	},
 	"Translate_From": {
-		"message": "Translate From"
+		"message": "অনুবাদের মূল ভাষা"
 	},
 	"Translate_Into": {
-		"message": "Translate Into"
+		"message": "অনুবাদের উদ্দিষ্ট ভাষা"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষা"
 	},
 	"Translator_Engine": {
-		"message": "Translator Engine"
+		"message": "অনুবাদের ইঞ্জিন"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Mouseover Text Type"
+		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Writing_Language": {
-		"message": "Writing Language"
+		"message": "লেখার ভাষা"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Reverse Translate Language"
+		"message": "উল্টো অনুবাদের ভাষা"
 	},
 	"OCR_Language": {
-		"message": "OCR Language"
+		"message": "ওসিআরের ভাষা"
 	},
 	"Detect_Subtitle": {
-		"message": "Detect Subtitle"
+		"message": "সাবটাইটেল শনাক্তকরণ"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "কিবোর্ড                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "Show Tooltip When"
+		"message": "টুলটিপ ওঠার শর্ত"
 	},
 	"Voice_When": {
-		"message": "Voice When"
+		"message": "কথা শোনা যাওয়ার শর্ত"
 	},
 	"Translate_Writing_When": {
-		"message": "Translate Writing When"
+		"message": "লেখা অনুবাদ হওয়ার শর্ত"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "অটো রিডার চলার শর্ত"
 	},
 	"OCR_When": {
-		"message": "OCR When"
+		"message": "ওসিআর চলার শর্ত"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "কথা শনাক্তকরণের শর্ত"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Toggle Mouseover Text Type When"
+		"message": "মাউস ধরার লেখার ধরন পরিবর্তনের শর্ত"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার ক্ষেত্রে শর্ত"
 	},
 	"GRAPHIC______________________________________": {
-		"message": "GRAPHIC                                      "
+		"message": "রূপ                                      "
 	},
 	"GRAPHIC": {
-		"message": "GRAPHIC"
+		"message": "রূপ"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tooltip Font Size"
+		"message": "টুলটিপের ফন্টের সাইজ"
 	},
 	"Tooltip_Width": {
-		"message": "Tooltip Width"
+		"message": "টুলটিপের প্রস্থ"
 	},
 	"Tooltip_Distance": {
-		"message": "Tooltip Distance"
+		"message": "টুলটিপের দূরত্ব"
 	},
 	"Tooltip_Animation": {
-		"message": "Tooltip Animation"
+		"message": "টুলটিপের অ্যানিমেশন"
 	},
 	"Tooltip_Position": {
-		"message": "Tooltip Position"
+		"message": "টুলটিপের অবস্থান"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Tooltip Text Align"
+		"message": "টুলটিপের লেখার অনুভূমিক অবস্থান"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Tooltip Background Blur"
+		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Mouseover Highlight Text"
+		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণ"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "টুলটিপের লেখার রং"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "টুলটিপের পটভূমির রং"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "টুলটিপের সীমারেখার রং"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
 	},
 	"VOICE______________________________________": {
-		"message": "VOICE                                      "
+		"message": "কথা                                      "
 	},
 	"VOICE": {
-		"message": "VOICE"
+		"message": "কথা"
 	},
 	"Voice_Volume": {
-		"message": "Voice Volume"
+		"message": "কথার ভলিউম"
 	},
 	"Voice_Speed": {
-		"message": "Voice Speed"
+		"message": "কথার গতি"
 	},
 	"Voice_Target": {
-		"message": "Voice Target"
+		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "Voice Repeat"
+		"message": "কথার পুনরাবৃত্তির সংখ্যা"
 	},
 	"Voice_for_": {
-		"message": "Voice for "
+		"message": "কণ্ঠ: "
 	},
 	"EXCLUDE______________________________________": {
-		"message": "EXCLUDE                                      "
+		"message": "বাদ                                      "
 	},
 	"EXCLUDE": {
-		"message": "EXCLUDE"
+		"message": "বাদ"
 	},
 	"Exclude_Language": {
-		"message": "Exclude Language"
+		"message": "পরিহার্য ভাষা"
 	},
 	"Exclude_Website": {
-		"message": "Exclude Website"
+		"message": "পরিহার্য ওয়েবসাইট"
 	},
 	"Whitelist_Website": {
-		"message": "Whitelist Website"
+		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
 	},
 	"Block_Current_Site": {
-		"message": "Block Current Site"
+		"message": "এই সাইটে অনুবাদ হবে না"
 	},
 	"Allow_Current_Site": {
-		"message": "Allow Current Site"
+		"message": "এই সাইটে অনুবাদ হবে"
 	},
 	"ADVANCED______________________________________": {
-		"message": "ADVANCED                                      "
+		"message": "উন্নীত                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "উন্নীত"
 	},
 	"Detect_PDF": {
-		"message": "Detect PDF"
+		"message": "পিডিএফ শনাক্তকরণ"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
@@ -318,25 +318,25 @@
 		"message": "SELECT OPTION                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "চালু"
 	},
 	"Off": {
-		"message": "Off"
+		"message": "বন্ধ"
 	},
 	"Auto": {
 		"message": "Auto"
 	},
 	"None": {
-		"message": "None"
+		"message": "প্রযোজ্য নয়"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "সিলেক্ট করা"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "মাউস ধরা"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "মাউস ধরা ও সিলেক্ট করা"
 	},
 	"Follow": {
 		"message": "Follow"
@@ -360,13 +360,13 @@
 		"message": "Perspective"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "শব্দ"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "বাক্য"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "ধারক"
 	},
 	"Source": {
 		"message": "Source"
@@ -384,16 +384,16 @@
 		"message": "Translated n Source"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "দুই ভাষার সাবটাইটেল"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "উদ্দিষ্ট ভাষার একক সাবটাইটেল"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "মূল ভাষার একক সাবটাইটেল"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "সবসময়"
 	},
 	"Center": {
 		"message": "Center"
@@ -411,37 +411,37 @@
 		"message": "Default"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Ctrl - বাম"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Ctrl - ডান"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Alt - বাম"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Alt - ডান"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "শিফট - বাম"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "শিফট - ডান"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "মেটা - বাম"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "মেটা - ডান"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "ক্লিক - লেফট"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "ক্লিক - মিডল"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "ক্লিক - রাইট"
 	},
 	"google": {
 		"message": "google"
@@ -453,6 +453,6 @@
 		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
 	},
 	"appDesc": {
-		"message": "মাউস টুলটিপ অনুবাদক গুগল অনুবাদ ব্যবহার করে মাউসওভার পাঠ্য অনুবাদ করুন. Support OCR, TTS, manga translator & pdf translator."
+		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রান্সলেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
 	}
 }
