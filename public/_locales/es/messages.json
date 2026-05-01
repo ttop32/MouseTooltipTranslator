@@ -26,6 +26,9 @@
 	"Mouseover_Text_Type": {
 		"message": "Tipo de Texto al Pasar el Mouse"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Writing_Language": {
 		"message": "Idioma de Escritura"
 	},
