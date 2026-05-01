@@ -26,6 +26,9 @@
 	"Mouseover_Text_Type": {
 		"message": "Văn bản khi di chuột qua"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Writing_Language": {
 		"message": "Ngôn ngữ viết"
 	},
