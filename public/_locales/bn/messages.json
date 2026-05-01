@@ -96,7 +96,7 @@
 		"message": "টুলটিপের অবস্থান"
 	},
 	"Tooltip_Text_Align": {
-		"message": "টুলটিপের লেখার অনুভূমিক অবস্থান"
+		"message": "টুলটিপের লেখার আড়াআড়ি অবস্থান"
 	},
 	"Tooltip_Background_Blur": {
 		"message": "টুলটিপের পটভূমির ব্লার"
@@ -117,10 +117,10 @@
 		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
 	},
 	"VOICE______________________________________": {
-		"message": "কথা                                      "
+		"message": "কণ্ঠ                                      "
 	},
 	"VOICE": {
-		"message": "কথা"
+		"message": "কণ্ঠ"
 	},
 	"Voice_Volume": {
 		"message": "কথার ভলিউম"
@@ -207,7 +207,7 @@
 		"message": "ভয়েস প্যানেলের প্যাডিং"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "ভয়েস প্যানেলে লেখার অনুভূমিক অবস্থান"
+		"message": "ভয়েস প্যানেলে লেখার আড়াআড়ি অবস্থান"
 	},
 	"Voice_Panel_Source_Font_Size": {
 		"message": "ভয়েস প্যানেলে মূল লেখার সাইজ"
@@ -231,88 +231,88 @@
 		"message": "ভয়েস প্যানেলের পটভূমির রং"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP                                      "
+		"message": "ব্যাকআপ                                      "
 	},
 	"BACKUP": {
-		"message": "BACKUP"
+		"message": "ব্যাকআপ"
 	},
 	"Import_Setting": {
-		"message": "Import Setting"
+		"message": "সেটিং ইম্পোর্ট করব"
 	},
 	"Export_Setting": {
-		"message": "Export Setting"
+		"message": "সেটিং এক্সপোর্ট করব"
 	},
 	"Reset_Setting": {
-		"message": "Reset Setting"
+		"message": "সেটিং রিসেট করব"
 	},
 	"About______________________________________": {
 		"message": "About                                      "
 	},
 	"How_to_use": {
-		"message": "How to use"
+		"message": "ব্যবহারের উপায়"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Check how to use this extension"
+		"message": "কীভাবে এই এক্সটেনশন চালাতে হয় তা দেখে নিন"
 	},
 	"PDF_Viewer": {
-		"message": "PDF Viewer"
+		"message": "পিডিএফ ভিউয়ার"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Translate local PDF file"
+		"message": "লোকাল পিডিএফ ফাইল অনুবাদ করুন"
 	},
 	"Ebook_Reader": {
-		"message": "Ebook Reader"
+		"message": "ইবুক রিডার"
 	},
 	"Translate_local_ebook_file": {
-		"message": "Translate local ebook file"
+		"message": "লোকাল ইবুক ফাইল অনুবাদ করুন"
 	},
 	"Twitter": {
-		"message": "Twitter"
+		"message": "টুইটার"
 	},
 	"Retweet_twitter_post": {
-		"message": "Retweet twitter post"
+		"message": "টুইটারে পোস্ট রি-টুইট করুন"
 	},
 	"Review_Page": {
-		"message": "Review Page"
+		"message": "রিভিউয়ের পেইজ"
 	},
 	"Comment_on_this_extension": {
-		"message": "Comment on this extension"
+		"message": "এক্সটেনশনটি কেমন লাগল তা জানান"
 	},
 	"Source_code": {
-		"message": "Source code"
+		"message": "সোর্স কোড"
 	},
 	"Check_source_code_in_github": {
-		"message": "Check source code in github"
+		"message": "গিটহাবে গিয়ে সোর্স কোড দেখুন"
 	},
 	"Privacy_Policy": {
-		"message": "Privacy Policy"
+		"message": "গোপনীয়তা নীতি"
 	},
 	"User_privacy_policy": {
-		"message": "User privacy policy"
+		"message": "ইউজার-সংক্রান্ত গোপনীয়তা নীতি"
 	},
 	"Voice_Panel": {
 		"message": "ভয়েস প্যানেল"
 	},
 	"Translate_Voice": {
-		"message": "Translate Voice"
+		"message": "সবাক অনুবাদ"
 	},
 	"Review______________________________________": {
-		"message": "Review                                      "
+		"message": "রিভিউ                                      "
 	},
 	"Review_this": {
-		"message": "Review this"
+		"message": "এটির রিভিউ দিন"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "সমালোচনা ডেভেলপারদের কাছে সমাদৃত"
 	},
 	"Coffee______________________________________": {
-		"message": "Coffee                                      "
+		"message": "কফি                                      "
 	},
 	"Support_this_extension": {
-		"message": "Support this extension"
+		"message": "সমর্থন জানান"
 	},
 	"Feed_a_coffee_to_the_extension_devs": {
-		"message": "Feed a coffee to the extension devs"
+		"message": "এক্সটেনশনটির ডেভেলপারদের কফি খাওয়ান"
 	},
 	"Title______________________________________": {
 		"message": "Title                                      "
@@ -381,7 +381,7 @@
 		"message": "Translated Text"
 	},
 	"Source_n_Translated": {
-		"message": "Source n Translated"
+		"message": "উদ্দিষ্ট ও অনূদিত"
 	},
 	"Translated_n_Source": {
 		"message": "Translated n Source"
@@ -399,19 +399,19 @@
 		"message": "সবসময়"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "মাঝ বরাবর"
 	},
 	"Left": {
-		"message": "Left"
+		"message": "বামে"
 	},
 	"Right": {
-		"message": "Right"
+		"message": "ডানে"
 	},
 	"Justify": {
-		"message": "Justify"
+		"message": "দু’পাশ সমান"
 	},
 	"Default": {
-		"message": "Default"
+		"message": "ডিফল্ট"
 	},
 	"Ctrl_Left": {
 		"message": "Ctrl - বাম"
@@ -447,13 +447,13 @@
 		"message": "ক্লিক - রাইট"
 	},
 	"google": {
-		"message": "google"
+		"message": "গুগোল"
 	},
 	"bing": {
-		"message": "bing"
+		"message": "বিং"
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ও ইউটিউবে দ্বিভাষী সাবটাইটেল"
 	},
 	"appDesc": {
 		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রানস্লেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
