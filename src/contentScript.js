@@ -92,7 +92,7 @@ var listenText = "";
 
 //determineTooltipShowHide based on hover, check mouse over word on every 700ms
 function startMouseoverDetector() {
-  enableMouseoverTextEvent(window, setting, keyDownList);
+  enableMouseoverTextEvent(window, setting, () => keyDownList);
   addEventHandler("mouseoverText", stageTooltipTextHover);
 }
 

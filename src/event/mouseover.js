@@ -15,14 +15,14 @@ var _isIframe = false;
 var styleElement;
 const PARENT_TAGS_TO_EXCLUDE = ["STYLE", "SCRIPT", "TITLE"];
 var setting = {};
-var keyDownList = {};
+var getKeyDownList = {};
 var mouseTarget = null;
 const nodeLengthCache = new WeakMap();
 var prevWordSegIndex = 0;
 
-export function enableMouseoverTextEvent(_window = window, currentSetting, keyDownListParam) {
+export function enableMouseoverTextEvent(_window = window, currentSetting, keyDownListGetter) {
   setting = currentSetting;
-  keyDownList = keyDownListParam;
+  getKeyDownList = keyDownListGetter;
   var textDetectTime = setting?.["mouseoverEventInterval"] || 300;
   
   _win = _window;
@@ -45,9 +45,14 @@ export async function forceTriggerMouseoverText() {
 }
 
 function getMouseoverType() {
+  var useSecondary =
+    setting["keySecondaryLang"] != "null" &&
+    getKeyDownList()[setting["keySecondaryLang"]] &&
+    setting["translateTarget2"] != "null";
+
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
-  var detectType = setting["mouseoverTextType"];
+  var detectType = useSecondary ? setting["mouseoverTextType2"] : setting["mouseoverTextType"];
   // detectType = keyDownList[setting["keyToggleMouseoverTextType"]]
   //   ? detectType == "word"
   //     ? "sentence"
