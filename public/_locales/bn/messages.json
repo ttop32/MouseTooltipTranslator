@@ -26,6 +26,9 @@
 	"Mouseover_Text_Type": {
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Writing_Language": {
 		"message": "লেখার ভাষা"
 	},
