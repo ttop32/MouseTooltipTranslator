@@ -18,13 +18,16 @@
 		"message": "翻译成"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "次要翻译成"
 	},
 	"Translator_Engine": {
 		"message": "翻译引擎"
 	},
 	"Mouseover_Text_Type": {
 		"message": "鼠标悬停文本类型"
+	},
+	"Mouseover_Text_Type_2": {
+		"message": "次要鼠标悬停文本类型"
 	},
 	"Writing_Language": {
 		"message": "写作语言"
@@ -69,7 +72,7 @@
 		"message": "Toggle Mouseover Text Type When"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "次要语言显示"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "图形                                      "
