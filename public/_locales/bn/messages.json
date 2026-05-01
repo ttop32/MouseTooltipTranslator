@@ -27,7 +27,7 @@
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
+		"message": "আরও যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Writing_Language": {
 		"message": "লেখার ভাষা"
@@ -63,7 +63,7 @@
 		"message": "ওসিআর চলার শর্ত"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Mouseover Text Type Swap Key"
+		"message": "মাউস ধরার লেখার ধরন বদলের কি"
 	},
 	"Speech_Recognition_When": {
 		"message": "কথা শনাক্তকরণের শর্ত"
@@ -132,7 +132,7 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "কথার পুনরাবৃত্তির সংখ্যা"
+		"message": "যতবার কথার পুনরাবৃত্তি হবে"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
@@ -168,67 +168,67 @@
 		"message": "পিডিএফ শনাক্তকরণ"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Mouseover Pause Subtitle"
+		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Tooltip Info Source Text"
+		"message": "টুলটিপের তথ্যে মূল লেখা"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Tooltip Info Source Language"
+		"message": "টুলটিপের তথ্যে মূল ভাষা"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Tooltip Info Transliteration"
+		"message": "টুলটিপের তথ্যে প্রতিবর্ণীকরণ"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Tooltip Interval Time"
+		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Tooltip Word Dictionary"
+		"message": "টুলটিপের শব্দের ডিকশনারি"
 	},
 	"Voice_Translated_Speed": {
-		"message": "Voice Translated Speed"
+		"message": "সবাক অনুবাদের গতি"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Fallback Translator Engine"
+		"message": "অনুবাদের ফলব্যাক ইঞ্জিন\""
 	},
 	"SPEECH": {
-		"message": "SPEECH"
+		"message": "কথা"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Speech Recognition Language"
+		"message": "কথা শনাক্তকরণে ভাষা"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Voice Panel Translate Language"
+		"message": "ভয়েস প্যানেলে অনুবাদের ভাষা"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Voice Panel Text Target"
+		"message": "ভয়েস প্যানেলে উদ্দিষ্ট লেখা"
 	},
 	"Voice_Panel_Padding": {
-		"message": "Voice Panel Padding"
+		"message": "ভয়েস প্যানেলের প্যাডিং"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "Voice Panel Text Align"
+		"message": "ভয়েস প্যানেলে লেখার অনুভূমিক অবস্থান"
 	},
 	"Voice_Panel_Source_Font_Size": {
-		"message": "Voice Panel Source Font Size"
+		"message": "ভয়েস প্যানেলে মূল লেখার সাইজ"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Voice Panel Target Font Size"
+		"message": "ভয়েস প্যানেলে উদ্দিষ্ট লেখার সাইজ"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "ভয়েস প্যানেলে মূল লেখার রং"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "ভয়েস প্যানেলে উদ্দিষ্ট লেখার রং"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "ভয়েস প্যানেলে মূল লেখার সীমারেখার রং"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "ভয়েস প্যানেলে উদ্দিষ্ট লেখার সীমারেখার রং"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "ভয়েস প্যানেলের পটভূমির রং"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "
@@ -291,7 +291,7 @@
 		"message": "User privacy policy"
 	},
 	"Voice_Panel": {
-		"message": "Voice Panel"
+		"message": "ভয়েস প্যানেল"
 	},
 	"Translate_Voice": {
 		"message": "Translate Voice"
