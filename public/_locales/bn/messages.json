@@ -48,7 +48,7 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "টুলটিপ দেখা যাওয়ার শর্ত"
+		"message": "টুলটিপ ওঠার শর্ত"
 	},
 	"Voice_When": {
 		"message": "কথা শোনা যাওয়ার শর্ত"
@@ -96,7 +96,7 @@
 		"message": "টুলটিপের অবস্থান"
 	},
 	"Tooltip_Text_Align": {
-		"message": "টুলটিপের লেখার আড়াআড়ি অবস্থান"
+		"message": "টুলটিপের লেখার অনুভূমিক অবস্থান"
 	},
 	"Tooltip_Background_Blur": {
 		"message": "টুলটিপের পটভূমির ব্লার"
@@ -117,10 +117,10 @@
 		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
 	},
 	"VOICE______________________________________": {
-		"message": "কণ্ঠ                                      "
+		"message": "কথা                                      "
 	},
 	"VOICE": {
-		"message": "কণ্ঠ"
+		"message": "কথা"
 	},
 	"Voice_Volume": {
 		"message": "কথার ভলিউম"
@@ -132,7 +132,7 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "যতবার কথার পুনরাবৃত্তি হবে"
+		"message": "কথার পুনরাবৃত্তির সংখ্যা"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
@@ -207,7 +207,7 @@
 		"message": "ভয়েস প্যানেলের প্যাডিং"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "ভয়েস প্যানেলে লেখার আড়াআড়ি অবস্থান"
+		"message": "ভয়েস প্যানেলে লেখার অনুভূমিক অবস্থান"
 	},
 	"Voice_Panel_Source_Font_Size": {
 		"message": "ভয়েস প্যানেলে মূল লেখার সাইজ"
