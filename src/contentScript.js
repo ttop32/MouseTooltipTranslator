@@ -102,7 +102,10 @@ function startTextSelectDetector() {
   addEventHandler("selectionEnd", stageTooltipTextSelect);
 }
 
-function stageTooltipTextHover(event, useEvent = true) {
+function stageTooltipTextHover(event, useEvent = true, resetStaged = false) {
+  if (resetStaged) {
+    stagedText = null;
+  }
   hoveredData = useEvent ? event?.mouseoverText : hoveredData;
   // if mouseover detect setting is on and
   // if no selected text
@@ -652,13 +655,12 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     if (setting["keyDownAutoReader"]==key) {
       startAutoReader();
     }
-    if (setting["keyToggleMouseoverTextType"]==key) {
-      setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
-      setting.save();
-    }
+    // if (setting["keyToggleMouseoverTextType"]==key) {
+    //   setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
+    //   setting.save();
+    // }
     if (setting["keySecondaryLang"]==key && setting["translateTarget2"] != "null") {
-      stagedText = null;
-      stageTooltipTextHover(null, false);
+      stageTooltipTextHover(null, false, true);
     } else {
       restartWordProcess();
     }
@@ -777,8 +779,10 @@ async function releaseKeydownList(key) {
     speech.stopSpeechRecognition();
   }
   if (key == setting["keySecondaryLang"] && setting["translateTarget2"] != "null") {
-    stagedText = null;
-    stageTooltipTextHover(null, false);
+    stageTooltipTextHover(null, false, true);
+  }
+  if (key == setting["keyToggleMouseoverTextType"]) {
+    restartWordProcess();
   }
 }
 

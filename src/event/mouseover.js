@@ -52,12 +52,13 @@ function getMouseoverType() {
 
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
-  var detectType = useSecondary ? setting["mouseoverTextType2"] : setting["mouseoverTextType"];
-  // detectType = keyDownList[setting["keyToggleMouseoverTextType"]]
-  //   ? detectType == "word"
-  //     ? "sentence"
-  //     : "word"
-  //   : detectType;
+  // var detectType = useSecondary ? setting["mouseoverTextType2"] : setting["mouseoverTextType"];
+  var detectType = setting["mouseoverTextType"];
+  detectType = getKeyDownList()[setting["keyToggleMouseoverTextType"]]
+    ? detectType == "word"
+      ? "sentence"
+      : "word"
+    : detectType;
   detectType = checkMouseTargetIsSpecialWebBlock() ? "container" : detectType;
   return detectType;
 }
