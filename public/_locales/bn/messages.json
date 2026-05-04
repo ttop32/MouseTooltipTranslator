@@ -68,8 +68,8 @@
 	"Toggle_Mouseover_Text_Type_When": {
 		"message": "মাউস ধরার লক্ষ্যের ধরন পরিবর্তনের শর্ত"
 	},
-	"Mouseover_Text_Type_Key_Down": {
-		"message": "Mouseover Text Type Key Down"
+	"Mouseover_Text_Type_Key_Hold": {
+		"message": "Mouseover Text Type Key Hold"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "রূপ                                      "
