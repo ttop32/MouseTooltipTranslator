@@ -26,6 +26,9 @@
 	"Mouseover_Text_Type": {
 		"message": "ประเภทข้อความ"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Writing_Language": {
 		"message": "แปลภาษาพิมพ์"
 	},

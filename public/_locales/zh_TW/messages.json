@@ -26,6 +26,9 @@
 	"Mouseover_Text_Type": {
 		"message": "滑鼠懸停文本類型"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Writing_Language": {
 		"message": "寫作語言"
 	},
