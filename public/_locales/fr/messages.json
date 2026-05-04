@@ -24,7 +24,7 @@
 		"message": "Mouseover Text Type"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "Traduction secondaire en"
 	},
 	"Writing_Language": {
 		"message": "Langue d'écriture"
@@ -39,10 +39,10 @@
 		"message": "Detect Subtitle"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "CLAVIER                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "CLAVIER"
 	},
 	"Show_Tooltip_When": {
 		"message": "Afficher l'infobulle lorsque"
@@ -54,7 +54,7 @@
 		"message": "Translate Writing When"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Lecture automatique quand"
 	},
 	"OCR_When": {
 		"message": "OCR Quand"
@@ -63,7 +63,7 @@
 		"message": "Mouseover Text Type Swap Key"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Reconnaissance vocale quand"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
 		"message": "Toggle Mouseover Text Type When"
@@ -159,7 +159,7 @@
 		"message": "AVANCÉ                                      "
 	},
 	"ADVANCED": {
-		"message": "ADVANCED"
+		"message": "AVANCÉ"
 	},
 	"Detect_PDF": {
 		"message": "Détecter PDF"
@@ -453,6 +453,6 @@
 		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
 	},
 	"appDesc": {
-		"message": "Traduire le texte pointé par la souris à l'aide de différent moteur de traduction. Support OCR, TTS, manga translator & pdf transl"
+		"message": "Mouse Tooltip Translator traduit le texte sous la souris avec Google translate. Support OCR, TTS, PDF, vignettes manga."
 	}
 }
