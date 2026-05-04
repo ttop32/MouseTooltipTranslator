@@ -23,6 +23,7 @@ English, Russian, Japanese, Chinese and so on
   - Add Secondary Mouseover Text Type setting (contributed by wysha-object)
   - Bengali localization (contributed by nr072)
   - Turkish localization (contributed by Sezen Keskin)
+  - remove toggle mouseover text type key and use down key to swap mouseover text type
 - 0.1.212
   - Add secondary target language (contributed by trysomeway)
 - 0.1.211
