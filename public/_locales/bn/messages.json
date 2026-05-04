@@ -17,17 +17,14 @@
 	"Translate_Into": {
 		"message": "যে ভাষায় করা হবে"
 	},
-	"Translate_Into_2": {
-		"message": "দ্বিতীয় উদ্দিষ্ট ভাষা"
-	},
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
 	},
 	"Mouseover_Text_Type": {
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
-	"Mouseover_Text_Type_2": {
-		"message": "আরও যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
+	"Translate_Into_2": {
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষা"
 	},
 	"Writing_Language": {
 		"message": "লেখার ভাষা"
@@ -71,8 +68,8 @@
 	"Toggle_Mouseover_Text_Type_When": {
 		"message": "মাউস ধরার লক্ষ্যের ধরন পরিবর্তনের শর্ত"
 	},
-	"Secondary_Language_When": {
-		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার ক্ষেত্রে শর্ত"
+	"Mouseover_Text_Type_Key_Down": {
+		"message": "Mouseover Text Type Key Down"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "রূপ                                      "

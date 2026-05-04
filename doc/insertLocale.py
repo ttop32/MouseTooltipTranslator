@@ -1,5 +1,3 @@
-
-
 # python -m pip install --pre googletrans
 #  pip install "httpx>=0.27.2,<1.0"
 # pip install tqdm
@@ -11,18 +9,71 @@ from googletrans import Translator
 from tqdm import tqdm
 import time
 
-
 translator = Translator()
 
 
 appName = "Mouse Tooltip Translator - PDF & Youtube dual subs"
 appDesc = "Mouse Tooltip Translator translate mouseover text using google translate"
 
-localeList = ['ar', 'am', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en_AU', 'en_GB', 'en_US', 'es', 'es_419', 'et', 'fa', 'fi', 'fil', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it',
-              'ja', 'kn', 'ko', 'lt', 'lv', 'ml', 'mr', 'ms', 'nl', 'no', 'pl', 'pt_BR', 'pt_PT',  'ro', 'ru', 'sk', 'sl', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW']
+localeList = [
+    "ar",
+    "am",
+    "bg",
+    "bn",
+    "ca",
+    "cs",
+    "da",
+    "de",
+    "el",
+    "en",
+    "en_AU",
+    "en_GB",
+    "en_US",
+    "es",
+    "es_419",
+    "et",
+    "fa",
+    "fi",
+    "fil",
+    "fr",
+    "gu",
+    "he",
+    "hi",
+    "hr",
+    "hu",
+    "id",
+    "it",
+    "ja",
+    "kn",
+    "ko",
+    "lt",
+    "lv",
+    "ml",
+    "mr",
+    "ms",
+    "nl",
+    "no",
+    "pl",
+    "pt_BR",
+    "pt_PT",
+    "ro",
+    "ru",
+    "sk",
+    "sl",
+    "sr",
+    "sv",
+    "sw",
+    "ta",
+    "te",
+    "th",
+    "tr",
+    "uk",
+    "vi",
+    "zh_CN",
+    "zh_TW",
+]
 translateLangCodeDict = {"zh_CN": "zh-CN", "zh_TW": "zh-TW"}
 i18List = [
-
     "MAIN                                      ",
     "MAIN",
     "Mouse Tooltip Translator",
@@ -31,11 +82,11 @@ i18List = [
     "Translate Into",
     "Translator Engine",
     "Mouseover Text Type",
+    "Translate Into 2",
     "Writing Language",
     "Reverse Translate Language",
     "OCR Language",
     "Detect Subtitle",
-
     "KEYBOARD                                      ",
     "KEYBOARD",
     "Show Tooltip When",
@@ -46,7 +97,7 @@ i18List = [
     "Mouseover Text Type Swap Key",
     "Speech Recognition When",
     "Toggle Mouseover Text Type When",
-
+    "Mouseover Text Type Key Down",
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",
@@ -61,7 +112,6 @@ i18List = [
     "Tooltip Background Color",
     "Tooltip Border Color",
     "Mouseover Text Highlight Color",
-
     "VOICE                                      ",
     "VOICE",
     "Voice Volume",
@@ -69,8 +119,6 @@ i18List = [
     "Voice Target",
     "Voice Repeat",
     "Voice for ",
-
-
     "EXCLUDE                                      ",
     "EXCLUDE",
     "Exclude Language",
@@ -78,7 +126,6 @@ i18List = [
     "Whitelist Website",
     "Block Current Site",
     "Allow Current Site",
-
     "ADVANCED                                      ",
     "ADVANCED",
     "Detect PDF",
@@ -90,7 +137,6 @@ i18List = [
     "Tooltip Word Dictionary",
     "Voice Translated Speed",
     "Fallback Translator Engine",
-
     "SPEECH",
     "Speech Recognition Language",
     "Voice Panel Translate Language",
@@ -104,16 +150,11 @@ i18List = [
     "Voice Panel Source Border Color",
     "Voice Panel Target Border Color",
     "Voice Panel Background Color",
-
-
-
-
     "BACKUP                                      ",
     "BACKUP",
     "Import Setting",
     "Export Setting",
     "Reset Setting",
-
     "About                                      ",
     "How to use",
     "Check how to use this extension",
@@ -131,18 +172,13 @@ i18List = [
     "User privacy policy",
     "Voice Panel",
     "Translate Voice",
-
     "Review                                      ",
     "Review this",
     "Developer love criticism",
-
     "Coffee                                      ",
     "Support this extension",
     "Feed a coffee to the extension devs",
-
     "Title                                      ",
-    
-    
     "SELECT OPTION                              ",
     "On",
     "Off",
@@ -194,7 +230,7 @@ i18List = [
 def openJson(filePath):
     jsonDict = dict({})
     try:
-        with open(filePath, 'r', encoding='utf8') as file:
+        with open(filePath, "r", encoding="utf8") as file:
             jsonDict = json.load(file)
     except FileNotFoundError as e:
         print(e)
@@ -204,12 +240,12 @@ def openJson(filePath):
 def writeJson(filePath, jsonDict):
     os.makedirs(os.path.dirname(filePath), exist_ok=True)
 
-    with open(filePath, 'w', encoding='utf8') as file:
+    with open(filePath, "w", encoding="utf8") as file:
         json.dump(jsonDict, file, indent="\t", ensure_ascii=False)
 
 
 def getI18Chrome(text):
-    return 'chrome.i18n.getMessage("'+getI18Id(text)+'")'
+    return 'chrome.i18n.getMessage("' + getI18Id(text) + '")'
 
 
 def getI18Id(text):
@@ -226,7 +262,9 @@ def getTranslateLangCode(lang):
 def translate(text, lang):
     try:
         time.sleep(2)
-        return translator.translate(text, src="auto", dest=getTranslateLangCode(lang)).text
+        return translator.translate(
+            text, src="auto", dest=getTranslateLangCode(lang)
+        ).text
     except Exception as e:
         print(lang)
         print(e)
@@ -243,19 +281,22 @@ def addBasicDescription(jsonDict, locale):
     #     jsonDict["appDesc"] = {"message": jsonDict["appDesc"]["message"][:130]}
     pass
 
+
 def getI18IdList():
     return [getI18Id(i18) for i18 in i18List]
 
 
-def addI18Description(jsonDict,):
+def addI18Description(
+    jsonDict,
+):
     idList = getI18IdList()
-    for (i18, i18Id) in zip(i18List, idList):
+    for i18, i18Id in zip(i18List, idList):
         if i18Id not in jsonDict or not jsonDict[i18Id]["message"]:
             jsonDict[i18Id] = {"message": i18}
 
 
 def insertI18Json(locale):
-    filePath = "./public/_locales/"+locale+"/messages.json"
+    filePath = "./public/_locales/" + locale + "/messages.json"
     jsonData = openJson(filePath)
     addBasicDescription(jsonData, locale)
     addI18Description(jsonData)

@@ -17,17 +17,14 @@
 	"Translate_Into": {
 		"message": "Переводить на"
 	},
-	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
-	},
 	"Translator_Engine": {
 		"message": "Выбор системы перевода"
 	},
 	"Mouseover_Text_Type": {
 		"message": "Тип текста при наведении курсора"
 	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
+	"Translate_Into_2": {
+		"message": "Secondary Translate Into"
 	},
 	"Writing_Language": {
 		"message": "Язык написания текста"
@@ -71,8 +68,8 @@
 	"Toggle_Mouseover_Text_Type_When": {
 		"message": "Toggle Mouseover Text Type When"
 	},
-	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+	"Mouseover_Text_Type_Key_Down": {
+		"message": "Mouseover Text Type Key Down"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
