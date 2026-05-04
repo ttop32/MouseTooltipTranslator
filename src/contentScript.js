@@ -655,7 +655,7 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     if (setting["keyDownAutoReader"]==key) {
       startAutoReader();
     }
-    // if (setting["keyToggleMouseoverTextType"]==key) {
+    // if (setting["keyHoldMouseoverTextType"]==key) {
     //   setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
     //   setting.save();
     // }
@@ -781,7 +781,7 @@ async function releaseKeydownList(key) {
   if (key == setting["keySecondaryLang"] && setting["translateTarget2"] != "null") {
     stageTooltipTextHover(null, false, true);
   }
-  if (key == setting["keyToggleMouseoverTextType"]) {
+  if (key == setting["keyHoldMouseoverTextType"]) {
     restartWordProcess();
   }
 }

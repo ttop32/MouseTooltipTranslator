@@ -230,9 +230,9 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
-  keyToggleMouseoverTextType: {
+  keyHoldMouseoverTextType: {
     default: "F8",
-    i18nKey: "Toggle_Mouseover_Text_Type_When",
+    i18nKey: "Mouseover_Text_Type_Key_Hold",
     optionList: keyList,
     settingTab: "keyboard",
   },

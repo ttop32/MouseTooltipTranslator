@@ -97,7 +97,7 @@ i18List = [
     "Mouseover Text Type Swap Key",
     "Speech Recognition When",
     "Toggle Mouseover Text Type When",
-    "Mouseover Text Type Key Down",
+    "Mouseover Text Type Key Hold",
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",

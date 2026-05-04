@@ -54,7 +54,7 @@ function getMouseoverType() {
   //if mouse target is special web block, handle as block
   // var detectType = useSecondary ? setting["mouseoverTextType2"] : setting["mouseoverTextType"];
   var detectType = setting["mouseoverTextType"];
-  detectType = getKeyDownList()[setting["keyToggleMouseoverTextType"]]
+  detectType = getKeyDownList()[setting["keyHoldMouseoverTextType"]]
     ? detectType == "word"
       ? "sentence"
       : "word"

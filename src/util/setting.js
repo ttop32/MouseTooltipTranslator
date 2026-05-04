@@ -8,6 +8,14 @@ try {
 // automatic setting update class===============================
 var updateCallbackFn = [];
 var defaultSettingList = {};
+
+// renamed setting keys: oldKey -> newKey
+// when a user has the old key in storage, copy its value to the new key
+// (unless the new key is already set) and remove the old key
+const DEPRECATED_KEY_MAP = {
+  keyToggleMouseoverTextType: "keyHoldMouseoverTextType",
+};
+
 export class Setting {
   constructor() {}
 
@@ -39,8 +47,29 @@ export class Setting {
 
   async loadStorageData() {
     var settingData = this;
-    var storage = await browser.storage.local.get(Object.keys(settingData));
+    var keysToFetch = [
+      ...Object.keys(settingData),
+      ...Object.keys(DEPRECATED_KEY_MAP),
+    ];
+    var storage = await browser.storage.local.get(keysToFetch);
+
+    var migrated = false;
+    for (var [oldKey, newKey] of Object.entries(DEPRECATED_KEY_MAP)) {
+      if (storage[oldKey] !== undefined) {
+        if (storage[newKey] === undefined) {
+          storage[newKey] = storage[oldKey];
+        }
+        delete storage[oldKey];
+        migrated = true;
+      }
+    }
+
     this.loadData(storage);
+
+    if (migrated) {
+      await browser.storage.local.remove(Object.keys(DEPRECATED_KEY_MAP));
+      this.save();
+    }
   }
 
   initSettingListener() {
