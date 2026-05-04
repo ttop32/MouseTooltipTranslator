@@ -149,6 +149,13 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Null</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/wysha-object">
+            <img src="https://avatars.githubusercontent.com/u/152023695?v=4" width="100;" alt="wysha-object"/>
+            <br />
+            <sub><b>StarsSail</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: contributors -end -->
