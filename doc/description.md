@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.213
+  - Add Secondary Mouseover Text Type setting (contributed by wysha-object)
+  - Bengali localization (contributed by nr072)
+  - Turkish localization (contributed by Sezen Keskin)
 - 0.1.212
   - Add secondary target language (contributed by trysomeway)
 - 0.1.211
