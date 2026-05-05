@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.215
+  - fix sw locale manifest conflict
+- 0.1.214
+  - fix bing jest conflict
 - 0.1.213
   - Add Secondary Mouseover Text Type setting (contributed by wysha-object)
   - Bengali localization (contributed by nr072)
