@@ -133,12 +133,14 @@ export default class bing extends BaseTranslator {
   static bingAccessToken;
   static customAgent;
   static async requestTranslate(text, sourceLang, targetLang) {
-    const { token, key, IG, IID } = await this.getBingAccessToken();
+    const { token, key, IG, IID, cookie } = await this.getBingAccessToken();
 
     return await ky
       .post(this.bingBaseUrl, {
-        headers:{
+        headers: {
           "User-Agent": this.customAgent || navigator.userAgent,
+          Referer: this.bingTokenUrl,
+          ...(cookie ? { Cookie: cookie } : {}),
         },
         searchParams: {
           IG,
@@ -179,7 +181,20 @@ export default class bing extends BaseTranslator {
         Date.now() - this.bingAccessToken["tokenTs"] >
           this.bingAccessToken["tokenExpiryInterval"]
       ) {
-        const data = await ky(this.bingTokenUrl).text();
+        const response = await ky(this.bingTokenUrl, {
+          headers: {
+            "User-Agent":
+              this.customAgent ||
+              (typeof navigator !== "undefined" ? navigator.userAgent : ""),
+          },
+        });
+        const data = await response.text();
+        const setCookies =
+          response.headers.getSetCookie?.() ||
+          (response.headers.get("set-cookie")
+            ? [response.headers.get("set-cookie")]
+            : []);
+        const cookie = setCookies.map((c) => c.split(";")[0]).join("; ");
         const IG = data.match(/IG:"([^"]+)"/)[1];
         const IID = data.match(/data-iid="([^"]+)"/)[1];
         var [_key, _token, interval] = JSON.parse(
@@ -190,10 +205,11 @@ export default class bing extends BaseTranslator {
           IID,
           key: _key,
           token: _token,
-          tokenTs: _key,
+          tokenTs: Date.now(),
           tokenExpiryInterval: interval,
           isAuthv2: undefined,
           count: 0,
+          cookie,
         };
       }
       return this.bingAccessToken;
