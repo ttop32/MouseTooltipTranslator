@@ -58,7 +58,9 @@
             @click="option.onClick ? option.onClick() : null"
             class="compact-list-item"
           >
-            <v-lazy>
+          <div class="setting-item">
+            <div class="left-space" :class="!isDefaultSetting(optionName) ? 'modified' : ''"></div>
+            <v-lazy style="flex: 1;">
 
             <!-- single select (default null) and multiple select option -->
             <v-select
@@ -71,6 +73,7 @@
               :closable-chips="option.optionType == 'multipleSelect'"
               variant="underlined"
               class="compact-input"
+              hide-details="auto"
             >
             </v-select>
 
@@ -88,6 +91,7 @@
               closable-chips
               variant="underlined"
               class="compact-input"
+              hide-details="auto"
             >
             </v-combobox>
 
@@ -99,6 +103,7 @@
               variant="underlined"
               v-maska:[options]
               class="compact-input"
+              hide-details="auto"
             >
               <template v-slot:append>
                 <v-menu v-model="option.menu" :close-on-content-click="false">
@@ -128,7 +133,13 @@
 
 
             
-          </v-lazy>
+            </v-lazy>
+            <div class="right-space">
+              <div v-if="!isDefaultSetting(optionName)">
+                <v-icon @click="setting[optionName] = defaultSettings[optionName]" class="reset-icon">mdi-restore</v-icon>
+              </div>
+            </div>
+          </div>
 
           </v-list-item>
 
@@ -208,6 +219,15 @@ function convertOptionI18n(option) {
     );
 }
 
+function isSettingEqual(setting1, setting2) {
+  if (setting1 === setting2) return true;
+  if (typeof setting1 !== typeof setting2) return false;
+  if (Array.isArray(setting1)) {
+    if (setting1.length !== setting2.length) return false;
+    return setting1.every((item, i) => isSettingEqual(item, setting2[i]));
+  }
+  return false;
+}
 
 // load setting with i18 convert
 var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
@@ -275,11 +295,13 @@ export default {
       currentPage: "main",
       toolbarIcons,
       open: false,
+      defaultSettings: {}
     };
   },
   async mounted() {
     await this.addTtsVoiceTabOption();
     await this.waitSettingLoad();
+    this.defaultSettings = await SettingUtil.getDefaultDataAll();
   },
   computed: {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
@@ -392,6 +414,9 @@ export default {
         transition: "border-radius 200ms ease-in-out",
       };
     },
+    isDefaultSetting(optionName) {
+      return isSettingEqual(this.setting[optionName], this.defaultSettings[optionName]);
+    },
   },
 };
 </script>
@@ -407,9 +432,45 @@ export default {
 }
 
 .compact-list-item {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
   min-height: 18px !important;
   padding-top: 1px !important;
   padding-bottom: 0px !important;
 }
+
+.setting-item {
+  display: flex;
+  margin: 16px 0;
+
+  .left-space {
+    margin: 0 8px;
+    border: 2px solid yellow;
+    opacity: 0;
+  }
+
+  .right-space {
+    width: 40px;
+    margin: 0 10px 0 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .modified {
+    opacity: 0.5;
+  }
+
+  .reset-icon {
+    padding: 16px;
+    background-color: #ffffff11;
+    border-radius: 50%;
+  }
+
+  .reset-icon:hover {
+    background-color: #ffffff55;
+  }
+}
+
 
 </style>
