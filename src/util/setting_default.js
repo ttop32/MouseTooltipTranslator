@@ -445,12 +445,6 @@ export var settingDict = {
     optionList: toggleList,
     settingTab: "advanced",
   },
-  mouseoverTextType2: {
-    default: "sentence",
-    i18nKey: "Mouseover_Text_Type_2",
-    optionList: detectTypeList,
-    settingTab: "advanced",
-  },
 
   // speech
   speechRecognitionLanguage: {
