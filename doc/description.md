@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.216
+  - feat: enhance settings UI with default state indication and reset option (contrinbuted by wysha-object)
+  - Add SVT Play subtitle translation support (contributed by trysomeway)
 - 0.1.215
   - fix sw locale manifest conflict
 - 0.1.214
