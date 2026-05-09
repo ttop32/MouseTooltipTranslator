@@ -117,7 +117,8 @@ export default class Netflix extends BaseVideo {
           var videoId = this.getVideoId();
           var xml = await response.text();
           var sub1 = this.parseSubtitle(xml, videoId);
-          var responseSub = sub1;
+          // 단일 자막은 원본 xml 그대로 반환 → ruby/br/nested span 구조 100% 보존
+          var xmlRes = xml;
 
           if (
             sourceLang != targetLang &&
@@ -125,9 +126,10 @@ export default class Netflix extends BaseVideo {
           ) {
             var sub2 = await this.requestSubtitleWithReset(targetLang);
             var mergedSub = this.mergeSubtitles(sub1, sub2);
-            responseSub = mergedSub;
+            if (mergedSub) {
+              xmlRes = this.encodeMergedSubtitles(mergedSub);
+            }
           }
-          var xmlRes = this.encodeMergedSubtitles(responseSub);
           request.respondWith(new Response(xmlRes));
         }
       } catch (error) {
@@ -199,23 +201,40 @@ export default class Netflix extends BaseVideo {
     return this.sub?.[videoId]?.[lang];
   }
   static parseSubtitle(sub, videoId) {
-    var styles = {};
-    var regions = {};
     const concatSubtitles = [];
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(sub, "text/xml");
-    const subtitles = Array.from(xmlDoc.getElementsByTagName("p")).map((p) =>
+
+    // 원본 p 구조 보존 위해 deep clone (ruby/br/nested span 모두 살림)
+    const clonedPs = Array.from(xmlDoc.getElementsByTagName("p")).map((p) =>
       p.cloneNode(true)
     );
     var lang = this.getCurrentSubtitleLang();
+
+    // clone 안의 region/style 참조도 lang suffix로 갱신해서 renamed ID와 매치
+    const suffixRef = (el, attr) => {
+      if (el.hasAttribute(attr)) {
+        el.setAttribute(attr, el.getAttribute(attr) + "_" + lang);
+      }
+    };
+    clonedPs.forEach((p) => {
+      suffixRef(p, "region");
+      suffixRef(p, "style");
+      Array.from(p.getElementsByTagName("span")).forEach((s) => {
+        suffixRef(s, "style");
+        suffixRef(s, "region");
+      });
+    });
+
     // remove div tag
     const div = xmlDoc.querySelector("div");
     div?.parentNode?.removeChild(div);
 
-    // Extract all regions and update their IDs to start with the language code
+    // Extract all regions and update their IDs to add lang suffix
     const layout = xmlDoc.getElementsByTagName("layout")[0];
+    let regions = [];
     if (layout) {
-      var regions = Array.from(layout.getElementsByTagName("region"));
+      regions = Array.from(layout.getElementsByTagName("region"));
       regions.forEach((region, index) => {
         const newId = `region${index}_${lang}`;
         region.setAttribute("xml:id", newId);
@@ -223,8 +242,9 @@ export default class Netflix extends BaseVideo {
     }
 
     const styling = xmlDoc.getElementsByTagName("styling")[0];
+    let styles = [];
     if (styling) {
-      var styles = Array.from(styling.getElementsByTagName("style"));
+      styles = Array.from(styling.getElementsByTagName("style"));
       styles.forEach((style) => {
         const newId = `${style.getAttribute("xml:id")}_${lang}`;
         style.setAttribute("xml:id", newId);
@@ -232,21 +252,35 @@ export default class Netflix extends BaseVideo {
     }
 
     // parse subtitles
-    for (let i = 0; i < subtitles.length; i++) {
-      const subtitle = subtitles[i];
+    for (let i = 0; i < clonedPs.length; i++) {
+      const subtitle = clonedPs[i];
       const start = parseInt(subtitle.getAttribute("begin").replace("t", ""));
       const end = parseInt(subtitle.getAttribute("end").replace("t", ""));
       const text = subtitle.textContent;
-      const region = subtitle.getAttribute("region") + "_" + lang;
+      // suffixRef로 이미 lang 붙어있어 그대로 읽음
+      const region = subtitle.getAttribute("region");
+      // p의 style 우선, 없으면 첫 span style fallback
       const style =
-        subtitle.getElementsByTagName("span")[0]?.getAttribute("style") +
-        "_" +
-        lang;
+        subtitle.getAttribute("style") ||
+        subtitle.getElementsByTagName("span")[0]?.getAttribute("style") ||
+        "";
       var prev = concatSubtitles?.[concatSubtitles.length - 1];
       if (prev && prev.start === start && prev.end === end) {
+        // 같은 시간대 p 병합: text + 자식 둘 다 이어붙임
         prev.text += " " + text;
+        prev.originalP.appendChild(xmlDoc.createTextNode(" "));
+        Array.from(subtitle.childNodes).forEach((child) => {
+          prev.originalP.appendChild(child.cloneNode(true));
+        });
       } else {
-        concatSubtitles.push({ start, end, text, region, style });
+        concatSubtitles.push({
+          start,
+          end,
+          text,
+          region,
+          style,
+          originalP: subtitle,
+        });
       }
     }
 
@@ -278,38 +312,68 @@ export default class Netflix extends BaseVideo {
     var sub2 = sub2Meta.subtitles;
     var mergedSubMeta = { ...sub1Meta };
 
-    const layout = mergedSubMeta?.xmlDoc?.getElementsByTagName("layout")?.[0];
+    const targetDoc = mergedSubMeta?.xmlDoc;
+    const layout = targetDoc?.getElementsByTagName("layout")?.[0];
 
+    // importNode로 sub2 region을 sub1 xmlDoc에 복제해서 추가
+    // (원본 appendChild는 cross-doc 노드를 옮겨버려서 캐시된 sub2의 layout이 비어버림)
     sub2Meta?.regions?.forEach((region) => {
-      layout?.appendChild(region);
+      if (layout && region) {
+        layout.appendChild(targetDoc.importNode(region, true));
+      }
     });
 
-    // Merge styles from sub2 into sub1
-    const styling = sub1Meta?.xmlDoc?.getElementsByTagName("styling")?.[0];
+    // Merge styles from sub2 into sub1 (importNode로 동일하게)
+    const styling = targetDoc?.getElementsByTagName("styling")?.[0];
     sub2Meta?.styles?.forEach((style) => {
-      styling?.appendChild(style);
+      if (styling && style) {
+        styling.appendChild(targetDoc.importNode(style, true));
+      }
     });
 
-    // fix mismatch length between sub1 sub2
-    for (let [i, sub1Line] of sub1.entries()) {
-      var line1 = sub1Line;
-      var line2 = "";
+    // 가로/세로 섞이면 가로 region을 base로 합치기 위한 helper
+    const isRegionVertical = (xmlDoc, regionId) => {
+      if (!xmlDoc || !regionId) return false;
+      const region = Array.from(xmlDoc.getElementsByTagName("region")).find(
+        (r) => r.getAttribute("xml:id") === regionId
+      );
+      if (!region) return false;
+      const wmAttr = Array.from(region.attributes).find(
+        (a) => a.localName === "writingMode" || a.name.endsWith(":writingMode")
+      );
+      return wmAttr ? /^tb/.test(wmAttr.value) : false;
+    };
+
+    // 두 자막을 같은 p에 br로 합쳐서 region 충돌 방지 (한 region에 stacked 표시)
+    for (const line1 of sub1) {
       // get most overlapped sub
       sub2.forEach((line) => {
         line.overlap = Math.max(
-          sub1Line.end - line.start,
-          line.end - sub1Line.start
+          line1.end - line.start,
+          line.end - line1.start
         );
       });
       sub2.sort((a, b) => a.overlap - b.overlap);
 
-      // if sub2 has no overlap, use sub1
-      mergedSub.push(line1);
       if (sub2.length && 0 < sub2[0].overlap) {
-        line2 = sub2[0];
-        let line1Copy = { ...line1 };
-        line1Copy.text = line2.text;
-        mergedSub.push(line1Copy);
+        const line2 = sub2[0];
+        const v1 = isRegionVertical(sub1Meta.xmlDoc, line1.region);
+        const v2 = isRegionVertical(sub2Meta.xmlDoc, line2.region);
+        // sub1 세로 + sub2 가로 → sub2(가로) region/style을 base로 (TTML writingMode는 region 단위)
+        const useSwap = v1 && !v2;
+        mergedSub.push({
+          start: line1.start,
+          end: line1.end,
+          region: useSwap ? line2.region : line1.region,
+          style: useSwap ? line2.style : line1.style,
+          text: line1.text,
+          originalP: line1.originalP,
+          text2: line2.text,
+          style2: line2.style,
+          originalP2: line2.originalP,
+        });
+      } else {
+        mergedSub.push(line1);
       }
     }
 
@@ -327,27 +391,51 @@ export default class Netflix extends BaseVideo {
       body.appendChild(div);
     }
 
-    subtitles.forEach((sub) => {
+    // sourceP 자식들을 target에 복사 (같은 doc이면 cloneNode, 아니면 importNode)
+    const copyChildren = (sourceP, target) => {
+      Array.from(sourceP.childNodes).forEach((child) => {
+        const cloned =
+          child.ownerDocument === xmlDoc
+            ? child.cloneNode(true)
+            : xmlDoc.importNode(child, true);
+        target.appendChild(cloned);
+      });
+    };
+
+    subtitles.forEach((sub, idx) => {
       const p = xmlDoc.createElement("p");
-      p.setAttribute("xml:id", `subtitle${subtitles.indexOf(sub) + 1}`);
+      p.setAttribute("xml:id", `subtitle${idx + 1}`);
       p.setAttribute("begin", `${sub.start}t`);
       p.setAttribute("end", `${sub.end}t`);
-      p.setAttribute("region", sub.region);
-      p.setAttribute("style", sub.style);
+      if (sub.region) p.setAttribute("region", sub.region);
+      if (sub.style) p.setAttribute("style", sub.style);
 
-      const span = xmlDoc.createElement("span");
-      span.setAttribute("style", "style0");
-      span.textContent = sub.text;
+      // sub1 본문: originalP 자식 그대로 복사 (ruby/br/nested span 보존)
+      if (sub.originalP) {
+        copyChildren(sub.originalP, p);
+      } else {
+        const span = xmlDoc.createElement("span");
+        span.textContent = sub.text;
+        p.appendChild(span);
+      }
 
-      p.appendChild(span);
+      // dual-sub: br + span2(번역언어 wrapper)로 두번째 언어 추가
+      if (sub.originalP2 || sub.text2) {
+        p.appendChild(xmlDoc.createElement("br"));
+        const span2 = xmlDoc.createElement("span");
+        if (sub.style2) span2.setAttribute("style", sub.style2);
+        if (sub.originalP2) {
+          copyChildren(sub.originalP2, span2);
+        } else {
+          span2.textContent = sub.text2;
+        }
+        p.appendChild(span2);
+      }
+
       div.appendChild(p);
     });
 
     const serializer = new XMLSerializer();
     return serializer.serializeToString(xmlDoc);
-  }
-
-  static encodeSubtitle(subtitles) {
-    return subtitles;
   }
 }
