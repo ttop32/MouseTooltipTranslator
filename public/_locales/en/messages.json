@@ -191,6 +191,9 @@
 	"Fallback_Translator_Engine": {
 		"message": "Fallback Translator Engine"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"SPEECH": {
 		"message": "SPEECH"
 	},
