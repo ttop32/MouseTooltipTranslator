@@ -71,6 +71,9 @@
 	"Mouseover_Text_Type_Key_Hold": {
 		"message": "Mouseover Text Type Key Hold"
 	},
+	"Secondary_Language_When": {
+		"message": "Secondary Language When"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "图形                                      "
 	},
@@ -187,6 +190,9 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "备用翻译引擎"
+	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "语音"
