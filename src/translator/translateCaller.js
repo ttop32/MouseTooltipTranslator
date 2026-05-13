@@ -140,5 +140,6 @@ async function translateWithFallbackEngine(
 const getTranslateCached = util.cacheFn(getTranslate);
 
 async function getTranslate(text, sourceLang, targetLang, engine) {
+  translator[engine].setSettings?.(setting);
   return await translator[engine].translate(text, sourceLang, targetLang);
 }

@@ -17,6 +17,7 @@ import googleWebImage from "./googleWebImage.js";
 // import unsplash from "./unsplash.js";
 // import watson from "./watson.js";
 import browserAPI from "./browserAPI.js";
+import localLlm from "./localLlm.js";
 
 export default {
   google,
@@ -38,4 +39,5 @@ export default {
   // unsplash,
   // watson,
   browserAPI,
+  localLlm,
 };
