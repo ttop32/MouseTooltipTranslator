@@ -1,9 +1,9 @@
 {
 	"MAIN______________________________________": {
-		"message": "ГЛАВНОЕ"
+		"message": "ОСНОВНЫЕ                                      "
 	},
 	"MAIN": {
-		"message": "ГЛАВНАЯ"
+		"message": "ОСНОВНЫЕ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -24,7 +24,7 @@
 		"message": "Тип текста при наведении курсора"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "Второй язык перевода"
 	},
 	"Writing_Language": {
 		"message": "Язык написания текста"
@@ -60,19 +60,19 @@
 		"message": "Распознавание текста при нажатии"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Смена типа текста при наведении курсора при нажатии"
+		"message": "Клавиша смены типа текста при наведении"
 	},
 	"Speech_Recognition_When": {
 		"message": "Распознавание речи при нажатии"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Toggle Mouseover Text Type When"
+		"message": "Переключение типа текста при нажатии"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
-		"message": "Mouseover Text Type Key Hold"
+		"message": "Смена типа текста при удержании клавиши"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "Второй язык при нажатии"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
@@ -81,37 +81,37 @@
 		"message": "ГРАФИКА"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Размер шрифта в поле переводчика"
+		"message": "Размер шрифта подсказки"
 	},
 	"Tooltip_Width": {
-		"message": "Ширина поля переводчика"
+		"message": "Ширина подсказки"
 	},
 	"Tooltip_Distance": {
-		"message": "Расстояние до поля переводчика"
+		"message": "Отступ подсказки"
 	},
 	"Tooltip_Animation": {
-		"message": "Анимация появления поля переводчика"
+		"message": "Анимация появления подсказки"
 	},
 	"Tooltip_Position": {
-		"message": "Позиция поля переводчика"
+		"message": "Позиция подсказки"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Выравнивание текста в поле переводчика"
+		"message": "Выравнивание текста в подсказке"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Размытие фона поля переводчика"
+		"message": "Размытие фона подсказки"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Подсветка текста при наведении курсора"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Цвет шрифта в поле переводчика"
+		"message": "Цвет шрифта подсказки"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Цвет фона поля переводчика"
+		"message": "Цвет фона подсказки"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Цвет рамки поля переводчика"
+		"message": "Цвет рамки подсказки"
 	},
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Цвет подсветки текста при наведении курсора"
@@ -132,10 +132,10 @@
 		"message": "Что озвучивать"
 	},
 	"Voice_Repeat": {
-		"message": "Повторение воспроизведения"
+		"message": "Повтор озвучки"
 	},
 	"Voice_for_": {
-		"message": "Голосовой синтезатор для "
+		"message": "Голос для "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ИСКЛЮЧЕНИЯ                                      "
@@ -153,10 +153,10 @@
 		"message": "Белый список сайтов"
 	},
 	"Block_Current_Site": {
-		"message": "Block Current Site"
+		"message": "Блокировать текущий сайт"
 	},
 	"Allow_Current_Site": {
-		"message": "Allow Current Site"
+		"message": "Разрешить текущий сайт"
 	},
 	"ADVANCED______________________________________": {
 		"message": "РАСШИРЕННЫЕ НАСТРОЙКИ                                      "
@@ -180,10 +180,10 @@
 		"message": "Транслитерация исходного текста в поле переводчика"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Время интервала до появления поля переводчика"
+		"message": "Задержка появления подсказки"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Пользовательский словарь в поле переводчика"
+		"message": "Перевод по словам в поле переводчика"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Скорость воспроизведения перевода"
@@ -192,7 +192,7 @@
 		"message": "Резервный движок перевода"
 	},
 	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
+		"message": "Альтернативный тип текста при наведении"
 	},
 	"SPEECH": {
 		"message": "РЕЧЬ"
@@ -255,7 +255,7 @@
 		"message": "Инструкция"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Изучить инструкцию по использованию расширения"
+		"message": "Посмотреть инструкцию к расширению"
 	},
 	"PDF_Viewer": {
 		"message": "Просмотр PDF-файла"
@@ -279,7 +279,7 @@
 		"message": "Отзывы"
 	},
 	"Comment_on_this_extension": {
-		"message": "Оценить работу данного расширения"
+		"message": "Написать отзыв"
 	},
 	"Source_code": {
 		"message": "Исходный код"
@@ -300,16 +300,16 @@
 		"message": "Голосовой перевод"
 	},
 	"Review______________________________________": {
-		"message": "Оценить                                      "
+		"message": "Отзывы                                      "
 	},
 	"Review_this": {
-		"message": "Оценить работу данного расширения"
+		"message": "Оценить это расширение"
 	},
 	"Developer_love_criticism": {
 		"message": "Разработчик любит конструктивную критику"
 	},
 	"Coffee______________________________________": {
-		"message": "Поддержать разработчика                                      "
+		"message": "Поддержка                                      "
 	},
 	"Support_this_extension": {
 		"message": "Поддержать разработку расширения"
@@ -318,7 +318,7 @@
 		"message": "Поддержите разработчиков чашкой кофе"
 	},
 	"Title______________________________________": {
-		"message": "Название                                      "
+		"message": "Заголовок                                      "
 	},
 	"SELECT_OPTION______________________________": {
 		"message": "ВЫБЕРИТЕ ОПЦИЮ                              "
@@ -435,10 +435,10 @@
 		"message": "Правый Shift"
 	},
 	"Meta_Left": {
-		"message": "Левая клавиша Windows"
+		"message": "Левая клавиша Win/Cmd"
 	},
 	"Meta_Right": {
-		"message": "Правая клавиша Windows"
+		"message": "Правая клавиша Win/Cmd"
 	},
 	"Click_Left": {
 		"message": "Клик левой кнопкой мыши"
@@ -456,9 +456,9 @@
 		"message": "Bing"
 	},
 	"appName": {
-		"message": "Переводчик подсказок мыши - PDF и субтитры Netflix Youtube"
+		"message": "Переводчик контекста мышью — PDF и двойные субтитры Netflix и YouTube"
 	},
 	"appDesc": {
-		"message": "Переводчик контекста с всплывающей подсказкой использует службу Google Переводчик."
+		"message": "Переводчик контекста мышью переводит текст при наведении, используя Google Переводчик. Поддерживает OCR, TTS, перевод манги и PDF."
 	}
 }
