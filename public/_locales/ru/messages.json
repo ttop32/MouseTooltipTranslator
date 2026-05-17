@@ -3,7 +3,7 @@
 		"message": "ОСНОВНЫЕ                                      "
 	},
 	"MAIN": {
-		"message": "ОСНОВНЫЕ"
+		"message": "ГЛАВНАЯ"
 	},
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
@@ -60,7 +60,7 @@
 		"message": "Распознавание текста при нажатии"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Клавиша смены типа текста при наведении"
+		"message": "Смена типа текста при наведении курсора при нажатии"
 	},
 	"Speech_Recognition_When": {
 		"message": "Распознавание речи при нажатии"
@@ -81,37 +81,37 @@
 		"message": "ГРАФИКА"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Размер шрифта подсказки"
+		"message": "Размер шрифта в поле переводчика"
 	},
 	"Tooltip_Width": {
-		"message": "Ширина подсказки"
+		"message": "Ширина поля переводчика"
 	},
 	"Tooltip_Distance": {
-		"message": "Отступ подсказки"
+		"message": "Расстояние до поля переводчика"
 	},
 	"Tooltip_Animation": {
-		"message": "Анимация появления подсказки"
+		"message": "Анимация появления поля переводчика"
 	},
 	"Tooltip_Position": {
-		"message": "Позиция подсказки"
+		"message": "Позиция поля переводчика"
 	},
 	"Tooltip_Text_Align": {
 		"message": "Выравнивание текста в подсказке"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Размытие фона подсказки"
+		"message": "Размытие фона поля переводчика"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Подсветка текста при наведении курсора"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Цвет шрифта подсказки"
+		"message": "Цвет шрифта в поле переводчика"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Цвет фона подсказки"
+		"message": "Цвет фона поля переводчика"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Цвет рамки подсказки"
+		"message": "Цвет рамки поля переводчика"
 	},
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Цвет подсветки текста при наведении курсора"
@@ -135,7 +135,7 @@
 		"message": "Повтор озвучки"
 	},
 	"Voice_for_": {
-		"message": "Голос для "
+		"message": "Голосовой синтезатор для "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ИСКЛЮЧЕНИЯ                                      "
@@ -183,7 +183,7 @@
 		"message": "Задержка появления подсказки"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Перевод по словам в поле переводчика"
+		"message": "Пользовательский словарь в поле переводчика"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Скорость воспроизведения перевода"
@@ -255,7 +255,7 @@
 		"message": "Инструкция"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Посмотреть инструкцию к расширению"
+		"message": "Изучить инструкцию по использованию расширения"
 	},
 	"PDF_Viewer": {
 		"message": "Просмотр PDF-файла"
@@ -300,16 +300,16 @@
 		"message": "Голосовой перевод"
 	},
 	"Review______________________________________": {
-		"message": "Отзывы                                      "
+		"message": "Оценить                                      "
 	},
 	"Review_this": {
-		"message": "Оценить это расширение"
+		"message": "Оценить работу данного расширения"
 	},
 	"Developer_love_criticism": {
 		"message": "Разработчик любит конструктивную критику"
 	},
 	"Coffee______________________________________": {
-		"message": "Поддержка                                      "
+		"message": "Поддержать разработчика                                      "
 	},
 	"Support_this_extension": {
 		"message": "Поддержать разработку расширения"
@@ -318,7 +318,7 @@
 		"message": "Поддержите разработчиков чашкой кофе"
 	},
 	"Title______________________________________": {
-		"message": "Заголовок                                      "
+		"message": "Название                                      "
 	},
 	"SELECT_OPTION______________________________": {
 		"message": "ВЫБЕРИТЕ ОПЦИЮ                              "
@@ -435,10 +435,10 @@
 		"message": "Правый Shift"
 	},
 	"Meta_Left": {
-		"message": "Левая клавиша Win/Cmd"
+		"message": "Левая клавиша Windows"
 	},
 	"Meta_Right": {
-		"message": "Правая клавиша Win/Cmd"
+		"message": "Правая клавиша Windows"
 	},
 	"Click_Left": {
 		"message": "Клик левой кнопкой мыши"
