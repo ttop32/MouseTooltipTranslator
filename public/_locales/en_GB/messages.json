@@ -105,16 +105,16 @@
 		"message": "Mouseover Highlight Text"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Tooltip Font Color"
+		"message": "Tooltip Font Colour"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Tooltip Background Color"
+		"message": "Tooltip Background Colour"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Tooltip Border Color"
+		"message": "Tooltip Border Colour"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Mouseover Text Highlight Color"
+		"message": "Mouseover Text Highlight Colour"
 	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "
@@ -219,19 +219,19 @@
 		"message": "Voice Panel Target Font Size"
 	},
 	"Voice_Panel_Source_Font_Color": {
-		"message": "Voice Panel Source Font Color"
+		"message": "Voice Panel Source Font Colour"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Voice Panel Target Font Color"
+		"message": "Voice Panel Target Font Colour"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Voice Panel Source Border Color"
+		"message": "Voice Panel Source Border Colour"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Voice Panel Target Border Color"
+		"message": "Voice Panel Target Border Colour"
 	},
 	"Voice_Panel_Background_Color": {
-		"message": "Voice Panel Background Color"
+		"message": "Voice Panel Background Colour"
 	},
 	"BACKUP______________________________________": {
 		"message": "BACKUP                                      "
@@ -360,7 +360,7 @@
 		"message": "Shift away"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "Shift towards"
 	},
 	"Perspective": {
 		"message": "Perspective"
@@ -402,7 +402,7 @@
 		"message": "Always"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "Centre"
 	},
 	"Left": {
 		"message": "Left"
@@ -456,7 +456,7 @@
 		"message": "bing"
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - PDF & Netflix Youtube dual subs"
+		"message": "Mouse Tooltip Translator - PDF & Netflix YouTube dual subs"
 	},
 	"appDesc": {
 		"message": "Mouse Tooltip Translator translate mouseover text using google translate. Support OCR, TTS, manga translator & pdf translator."
