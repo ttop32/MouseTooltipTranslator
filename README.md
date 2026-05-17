@@ -180,8 +180,8 @@ npm run build        // or 'npm run watch' for developing
         <br />
         <sub><b>D0n-A</b></sub></a>
       <br />
-      <sub><b>443 words</b></sub>
-      <br /><sub><b><code title="English, United States">en-US</code></b>, <b><code title="Russian">ru</code></b></sub>
+      <sub><b>825 words</b></sub>
+      <br /><sub><b><code title="English, United Kingdom">en-GB</code></b>, <b><code title="English, United States">en-US</code></b>, <b><code title="Russian">ru</code></b></sub>
     </td>
     <td align="center" valign="top">
       <a href="https://crowdin.com/profile/nr072"><img alt="logo" style="width: 100px" src="https://crowdin-static.cf-downloads.crowdin.com/avatar/13708927/medium/fc8654a6a4854eed56e0c249a8aa9022.png" />
