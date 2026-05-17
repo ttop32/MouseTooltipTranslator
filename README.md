@@ -80,12 +80,27 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/trysomeway">
+            <img src="https://avatars.githubusercontent.com/u/25189461?v=4" width="100;" alt="trysomeway"/>
+            <br />
+            <sub><b>Max</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/lg28literconvectionmicrowaveoven">
             <img src="https://avatars.githubusercontent.com/u/68274755?v=4" width="100;" alt="lg28literconvectionmicrowaveoven"/>
             <br />
             <sub><b>Lg28literconvectionmicrowaveoven</b></sub>
         </a>
     </td>
+    <td align="center">
+        <a href="https://github.com/wysha-object">
+            <img src="https://avatars.githubusercontent.com/u/152023695?v=4" width="100;" alt="wysha-object"/>
+            <br />
+            <sub><b>StarsSail</b></sub>
+        </a>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Blueberryy">
             <img src="https://avatars.githubusercontent.com/u/36592509?v=4" width="100;" alt="Blueberryy"/>
@@ -99,8 +114,7 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Hoang Van Nhat</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/ImgBotApp">
             <img src="https://avatars.githubusercontent.com/u/31427850?v=4" width="100;" alt="ImgBotApp"/>
@@ -116,13 +130,6 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/trysomeway">
-            <img src="https://avatars.githubusercontent.com/u/25189461?v=4" width="100;" alt="trysomeway"/>
-            <br />
-            <sub><b>Max</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/SFGFDSD">
             <img src="https://avatars.githubusercontent.com/u/162313212?v=4" width="100;" alt="SFGFDSD"/>
             <br />
@@ -135,27 +142,20 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Trần Nguyễn Tiến Thành</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/di4m0nds">
             <img src="https://avatars.githubusercontent.com/u/84233833?v=4" width="100;" alt="di4m0nds"/>
             <br />
             <sub><b>Silvestri, Javier</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/netanelavi">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanelavi"/>
             <br />
             <sub><b>Null</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/wysha-object">
-            <img src="https://avatars.githubusercontent.com/u/152023695?v=4" width="100;" alt="wysha-object"/>
-            <br />
-            <sub><b>StarsSail</b></sub>
         </a>
     </td></tr>
 </table>
