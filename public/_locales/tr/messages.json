@@ -20,6 +20,15 @@
 	"Translator_Engine": {
 		"message": "Çeviri Motoru"
 	},
+	"LLM_Api_Endpoint": {
+		"message": "LLM API Endpoint URL"
+	},
+	"LLM_Api_Key": {
+		"message": "LLM API Key"
+	},
+	"LLM_Model": {
+		"message": "LLM Model"
+	},
 	"Mouseover_Text_Type": {
 		"message": "Fare Hareketi Yazı Tipi"
 	},
