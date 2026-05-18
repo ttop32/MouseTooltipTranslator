@@ -20,9 +20,6 @@
 	"Translator_Engine": {
 		"message": "翻译引擎"
 	},
-	"LLM_Provider": {
-		"message": "LLM Provider"
-	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
 	},
@@ -179,9 +176,6 @@
 	"Detect_PDF": {
 		"message": "检测PDF"
 	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
-	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "鼠标悬停暂停字幕"
 	},
@@ -205,6 +199,9 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "备用翻译引擎"
+	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "语音"

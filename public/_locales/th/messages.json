@@ -20,9 +20,6 @@
 	"Translator_Engine": {
 		"message": "นักแปล"
 	},
-	"LLM_Provider": {
-		"message": "LLM Provider"
-	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
 	},
@@ -179,9 +176,6 @@
 	"Detect_PDF": {
 		"message": "ตรวจจับ PDF"
 	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
-	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "หยุดคำบรรยายชั่วคราว Mouseover"
 	},
@@ -205,6 +199,9 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "Fallback Translator Engine"
+	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "การพูด"

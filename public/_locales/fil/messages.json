@@ -20,9 +20,6 @@
 	"Translator_Engine": {
 		"message": "Translator Engine"
 	},
-	"LLM_Provider": {
-		"message": "LLM Provider"
-	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
 	},
@@ -179,9 +176,6 @@
 	"Detect_PDF": {
 		"message": "Detect PDF"
 	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
-	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
 	},
@@ -205,6 +199,9 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "Pampalit na Tagasalin na Makina"
+	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "SPEECH"
