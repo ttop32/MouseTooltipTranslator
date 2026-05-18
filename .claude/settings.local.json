@@ -30,7 +30,11 @@
       "PowerShell($out = & \"C:\\\\Users\\\\TSOP\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe\" --version 2>&1; Write-Output \"exit=$LASTEXITCODE\"; Write-Output \"out=$out\")",
       "PowerShell(winget install Python.Python.3.12 --accept-source-agreements --accept-package-agreements --silent)",
       "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python --version; python -m pip --version)",
-      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python -m pip install --pre googletrans tqdm \"httpx>=0.27.2,<1.0\" --quiet 2>&1 | Select-Object -Last 30)"
+      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python -m pip install --pre googletrans tqdm \"httpx>=0.27.2,<1.0\" --quiet 2>&1 | Select-Object -Last 30)",
+      "PowerShell(Invoke-RestMethod \"https://raw.githubusercontent.com/deedy5/duckai/main/src/duckai/duckai.py\")",
+      "PowerShell(Invoke-RestMethod \"https://raw.githubusercontent.com/deedy5/duckai/main/src/duckai/libs/utils_chat.py\")",
+      "PowerShell(\"=== duckai.py ===\")",
+      "PowerShell(\"=== utils_chat.py ===\")"
     ]
   }
 }

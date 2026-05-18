@@ -39,7 +39,11 @@ async function getVqd(force = false) {
   });
   const vqd = res.headers.get("x-vqd-4");
   if (!vqd) {
-    throw new Error("DuckDuckGo status returned no x-vqd-4 header");
+    throw new Error(
+      "DuckDuckGo now requires x-vqd-hash-1 page-context challenge that " +
+        "cannot be solved from a service worker. Use the LLM translator " +
+        "with a free provider (Groq, OpenRouter, Gemini) instead."
+    );
   }
   cachedVqd = vqd;
   cachedVqdAt = Date.now();
