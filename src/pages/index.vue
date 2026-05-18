@@ -57,6 +57,7 @@
             :flat="!option.onClick"
             @click="option.onClick ? option.onClick() : null"
             class="compact-list-item"
+            v-show="!option.visibleWhen || option.visibleWhen(setting)"
           >
           <div class="setting-item">
             <div class="left-space" :class="!isDefaultSetting(optionName) ? 'modified' : ''"></div>
@@ -123,7 +124,43 @@
               </template>
             </v-text-field>
 
-            
+            <!-- plain text / url / password input -->
+            <v-text-field
+              v-else-if="option.optionType == 'textField'"
+              v-model="setting[optionName]"
+              :label="option.description"
+              :type="option.inputType || 'text'"
+              :placeholder="option.placeholder || ''"
+              variant="underlined"
+              class="compact-input"
+              hide-details="auto"
+            />
+
+            <!-- LLM model selector with fetch button -->
+            <div
+              v-else-if="option.optionType == 'llmModelSelect'"
+              style="display:flex; align-items:center; flex:1; gap:4px;"
+            >
+              <v-combobox
+                v-model="setting[optionName]"
+                :label="option.description"
+                :items="llmAvailableModels"
+                variant="underlined"
+                class="compact-input"
+                hide-details="auto"
+                style="flex:1;"
+              />
+              <v-btn
+                icon
+                size="small"
+                :loading="llmModelsFetching"
+                @click="fetchLlmModels"
+                title="Fetch models from endpoint"
+              >
+                <v-icon>mdi-refresh</v-icon>
+              </v-btn>
+            </div>
+
             <v-list-item-title v-else-if="option.optionType == 'button'" class="ma-2" @click="option.onClickFuncName ? this[option.onClickFuncName]() : null">
               <v-avatar :color="option.color" class="mr-2">
               <v-icon size="25" color="white">{{ option.icon }}</v-icon>
@@ -295,7 +332,9 @@ export default {
       currentPage: "main",
       toolbarIcons,
       open: false,
-      defaultSettings: {}
+      defaultSettings: {},
+      llmAvailableModels: [],
+      llmModelsFetching: false,
     };
   },
   async mounted() {
@@ -416,6 +455,19 @@ export default {
     },
     isDefaultSetting(optionName) {
       return isSettingEqual(this.setting[optionName], this.defaultSettings[optionName]);
+    },
+    async fetchLlmModels() {
+      const endpoint = this.setting["llmApiEndpoint"];
+      if (!endpoint) return;
+      this.llmModelsFetching = true;
+      try {
+        const { default: localLlm } = await import("/src/translator/localLlm.js");
+        this.llmAvailableModels = await localLlm.getModels(endpoint, this.setting["llmApiKey"]);
+      } catch (e) {
+        console.error("Failed to fetch LLM models:", e);
+      } finally {
+        this.llmModelsFetching = false;
+      }
     },
   },
 };
