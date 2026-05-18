@@ -20,6 +20,15 @@
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
 	},
+	"LLM_Api_Endpoint": {
+		"message": "LLM API Endpoint URL"
+	},
+	"LLM_Api_Key": {
+		"message": "LLM API Key"
+	},
+	"LLM_Model": {
+		"message": "LLM Model"
+	},
 	"Mouseover_Text_Type": {
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
