@@ -20,6 +20,9 @@
 	"Translator_Engine": {
 		"message": "Motor de Traducción"
 	},
+	"LLM_Provider": {
+		"message": "LLM Provider"
+	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
 	},
@@ -176,6 +179,9 @@
 	"Detect_PDF": {
 		"message": "Detectar PDF"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Pausar Subtítulo al Pasar el Mouse"
 	},
@@ -199,9 +205,6 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "Fallback Translator Engine"
-	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "SPEECH"
