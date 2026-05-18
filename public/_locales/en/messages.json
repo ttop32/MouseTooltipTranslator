@@ -24,7 +24,7 @@
 		"message": "LLM API Endpoint URL"
 	},
 	"LLM_Api_Key": {
-		"message": "LLM API Key"
+		"message": "LLM API Key (optional)"
 	},
 	"LLM_Model": {
 		"message": "LLM Model"

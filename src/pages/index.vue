@@ -190,6 +190,15 @@
 
 
       
+    <v-snackbar
+      v-model="llmFetchErrorShown"
+      color="error"
+      :timeout="4000"
+      location="bottom"
+    >
+      {{ llmFetchError }}
+    </v-snackbar>
+
     <!-- <v-fab
       :color="open ? '' : 'primary'"
       location="bottom end"
@@ -243,6 +252,7 @@ import {settingDict} from "/src/util/setting_default.js";
 import {
   langListOpposite,
 } from "/src/util/lang.js";
+import localLlm from "/src/translator/localLlm.js";
 
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
@@ -335,6 +345,8 @@ export default {
       defaultSettings: {},
       llmAvailableModels: [],
       llmModelsFetching: false,
+      llmFetchError: "",
+      llmFetchErrorShown: false,
     };
   },
   async mounted() {
@@ -458,16 +470,26 @@ export default {
     },
     async fetchLlmModels() {
       const endpoint = this.setting["llmApiEndpoint"];
-      if (!endpoint) return;
+      if (!endpoint) {
+        this.showLlmFetchError("API endpoint is empty");
+        return;
+      }
       this.llmModelsFetching = true;
       try {
-        const { default: localLlm } = await import("/src/translator/localLlm.js");
         this.llmAvailableModels = await localLlm.getModels(endpoint, this.setting["llmApiKey"]);
+        if (!this.llmAvailableModels.length) {
+          this.showLlmFetchError("No models returned by endpoint");
+        }
       } catch (e) {
         console.error("Failed to fetch LLM models:", e);
+        this.showLlmFetchError(e?.message || String(e));
       } finally {
         this.llmModelsFetching = false;
       }
+    },
+    showLlmFetchError(msg) {
+      this.llmFetchError = `Failed to fetch LLM models: ${msg}`;
+      this.llmFetchErrorShown = true;
     },
   },
 };

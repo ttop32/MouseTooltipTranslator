@@ -6,7 +6,14 @@
       "Bash(npm ls *)",
       "Bash(npm install *)",
       "Bash(npm uninstall *)",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "PowerShell(Get-Command node, npm, nvm, npx -ErrorAction SilentlyContinue | Select-Object Name, Source; Write-Output \"---\"; Get-ChildItem \"C:\\\\Program Files\\\\nodejs\", \"C:\\\\Program Files \\(x86\\)\\\\nodejs\", \"$env:APPDATA\\\\npm\", \"$env:ProgramData\\\\nvm\", \"$env:USERPROFILE\\\\AppData\\\\Roaming\\\\nvm\" -ErrorAction SilentlyContinue | Select-Object FullName | Select-Object -First 20)",
+      "PowerShell(where.exe node 2>$null; where.exe npm 2>$null; Write-Output \"---env PATH---\"; $env:Path -split ';' | Where-Object { $_ -match \"node|nvm|npm\" })",
+      "PowerShell(Get-ChildItem \"C:\\\\\", \"D:\\\\\", \"$env:USERPROFILE\", \"$env:LOCALAPPDATA\", \"$env:APPDATA\", \"$env:ProgramFiles\", \"${env:ProgramFiles\\(x86\\)}\" -Filter \"node.exe\" -Recurse -ErrorAction SilentlyContinue -Depth 4 | Select-Object -First 5 FullName)",
+      "PowerShell(winget install OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements --silent)",
+      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); node -v; npm -v)",
+      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); npm run watch)",
+      "Read(//c/Users/TSOP/AppData/Local/Temp/claude/d--Administrator-Desktop-source-mouse-MouseTooltipTranslator/9467bcc6-f90c-4b05-9570-80c92a2feade/tasks/**)"
     ]
   }
 }
