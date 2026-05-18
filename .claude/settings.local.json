@@ -13,7 +13,24 @@
       "PowerShell(winget install OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements --silent)",
       "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); node -v; npm -v)",
       "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); npm run watch)",
-      "Read(//c/Users/TSOP/AppData/Local/Temp/claude/d--Administrator-Desktop-source-mouse-MouseTooltipTranslator/9467bcc6-f90c-4b05-9570-80c92a2feade/tasks/**)"
+      "Read(//c/Users/TSOP/AppData/Local/Temp/claude/d--Administrator-Desktop-source-mouse-MouseTooltipTranslator/9467bcc6-f90c-4b05-9570-80c92a2feade/tasks/**)",
+      "PowerShell(gh pr view 311 --repo ttop32/MouseTooltipTranslator)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:patch-diff.githubusercontent.com)",
+      "Bash(dir d:\\\\Administrator\\\\Desktop\\\\source\\\\mouse\\\\MouseTooltipTranslator\\\\src\\\\background)",
+      "WebSearch",
+      "Bash(gh api *)",
+      "PowerShell(gh api repos/josStorer/chatGPTBox --jq '{name, stars: .stargazers_count, pushed: .pushed_at, archived, description}')",
+      "PowerShell(gh api repos/yetone/openai-translator --jq '{name, stars: .stargazers_count, pushed: .pushed_at, archived, description}')",
+      "PowerShell(gh api repos/immersive-translate/immersive-translate --jq '{name, stars: .stargazers_count, pushed: .pushed_at, archived, description}')",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Read(//tmp/**)",
+      "Bash(awk '{$1=$1; print}')",
+      "PowerShell(Get-Command python, python3, py -ErrorAction SilentlyContinue)",
+      "PowerShell($out = & \"C:\\\\Users\\\\TSOP\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe\" --version 2>&1; Write-Output \"exit=$LASTEXITCODE\"; Write-Output \"out=$out\")",
+      "PowerShell(winget install Python.Python.3.12 --accept-source-agreements --accept-package-agreements --silent)",
+      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python --version; python -m pip --version)",
+      "PowerShell($env:Path = [Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); python -m pip install --pre googletrans tqdm \"httpx>=0.27.2,<1.0\" --quiet 2>&1 | Select-Object -Last 30)"
     ]
   }
 }
