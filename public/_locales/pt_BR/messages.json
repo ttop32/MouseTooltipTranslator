@@ -20,6 +20,15 @@
 	"Translator_Engine": {
 		"message": "Mecanismo de Tradução"
 	},
+	"LLM_Api_Endpoint": {
+		"message": "LLM API Endpoint URL"
+	},
+	"LLM_Api_Key": {
+		"message": "LLM API Key"
+	},
+	"LLM_Model": {
+		"message": "LLM Model"
+	},
 	"Mouseover_Text_Type": {
 		"message": "Tipo de Texto ao Passar o Mouse"
 	},

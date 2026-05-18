@@ -20,6 +20,15 @@
 	"Translator_Engine": {
 		"message": "번역 엔진"
 	},
+	"LLM_Api_Endpoint": {
+		"message": "LLM API Endpoint URL"
+	},
+	"LLM_Api_Key": {
+		"message": "LLM API Key"
+	},
+	"LLM_Model": {
+		"message": "LLM Model"
+	},
 	"Mouseover_Text_Type": {
 		"message": "마우스오버 텍스트 타입"
 	},
