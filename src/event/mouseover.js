@@ -50,10 +50,12 @@ function getMouseoverType() {
     getKeyDownList()[setting["keySecondaryLang"]] &&
     setting["translateTarget2"] != "null";
 
+  //if secondary lang key pressed, use secondary detect type
   //if swap key pressed, swap detect type
   //if mouse target is special web block, handle as block
-  // var detectType = useSecondary ? setting["mouseoverTextType2"] : setting["mouseoverTextType"];
-  var detectType = setting["mouseoverTextType"];
+  var detectType = useSecondary
+    ? setting["mouseoverTextType2"]
+    : setting["mouseoverTextType"];
   detectType = getKeyDownList()[setting["keyHoldMouseoverTextType"]]
     ? detectType == "word"
       ? "sentence"

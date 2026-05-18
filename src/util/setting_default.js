@@ -45,15 +45,39 @@ var translatorList = {
   "googleGTX (Experimental)": "googleGTX",
   "googleWeb (Experimental)": "googleWeb",
   "googleV2 (Experimental)": "googleV2",
-  "OpenAI-Compatible API - Local or Remote (Experimental)": "localLlm",
-  // "chatgpt (Experimental)": "chatgpt",
+  "LLM - OpenAI / Claude / Gemini / Local (Experimental)": "localLlm",
+  "DuckDuckGo AI (Experimental, no key, anonymous)": "duckduckgo",
+  // "chatgpt (Experimental)": "chatgpt", // hidden: chatgpt.com requires Turnstile/PoW challenges we cannot solve from MV3 service worker. Code retained for reference.
   // "lingva (Experimental)": "lingva",
   // "libreTranslate (Experimental)": "libreTranslate",
-  // "duckduckgo (Experimental)": "duckduckgo",
   // "myMemory (Experimental)": "myMemory",
   // "watson (Experimental)": "watson",
   // "pixabay (Experimental)": "pixabay",
   // "unsplash (Experimental)": "unsplash",
+};
+
+export var llmProviderEndpoints = {
+  custom: "",
+  openai: "https://api.openai.com/v1",
+  claude: "https://api.anthropic.com/v1",
+  gemini: "https://generativelanguage.googleapis.com/v1beta/openai",
+  groq: "https://api.groq.com/openai/v1",
+  openrouter: "https://openrouter.ai/api/v1",
+  githubModels: "https://models.inference.ai.azure.com",
+  ollama: "http://localhost:11434/v1",
+  lmstudio: "http://localhost:1234/v1",
+};
+
+var llmProviderList = {
+  Custom: "custom",
+  "OpenAI (ChatGPT)": "openai",
+  "Claude (Anthropic)": "claude",
+  "Gemini (Google, free tier available)": "gemini",
+  "Groq (free, fast Llama)": "groq",
+  "OpenRouter (free models with :free suffix)": "openrouter",
+  "GitHub Models (free with GitHub token)": "githubModels",
+  "Ollama (local)": "ollama",
+  "LM Studio (local)": "lmstudio",
 };
 
 var translateActionList = {
@@ -157,6 +181,13 @@ export var settingDict = {
     optionList: translatorList,
     settingTab: "main",
   },
+  llmProvider: {
+    default: "custom",
+    i18nKey: "LLM_Provider",
+    optionList: llmProviderList,
+    settingTab: "main",
+    visibleWhen: (setting) => setting?.translatorVendor === "localLlm",
+  },
   llmApiEndpoint: {
     default: "",
     i18nKey: "LLM_Api_Endpoint",
@@ -166,6 +197,8 @@ export var settingDict = {
     placeholder: "http://localhost:11434/v1",
     settingTab: "main",
     visibleWhen: (setting) => setting?.translatorVendor === "localLlm",
+    readonlyWhen: (setting) =>
+      setting?.llmProvider && setting.llmProvider !== "custom",
   },
   llmApiKey: {
     default: "",
@@ -404,7 +437,7 @@ export var settingDict = {
     settingTab: "exclude",
   },
   websiteExcludeBtn: {
-    i18nKey: "Block_Current_site",
+    i18nKey: "Block_Current_Site",
     optionList: [],
     settingTab: "exclude",
     optionType: "button",
@@ -414,7 +447,7 @@ export var settingDict = {
     onClickFuncName: "excludeCurrentWebsiteOnclickFunc",
   },
   websiteWhitelistBtn: {
-    i18nKey: "Allow_Current_site",
+    i18nKey: "Allow_Current_Site",
     optionList: [],
     settingTab: "exclude",
     optionType: "button",
@@ -430,6 +463,12 @@ export var settingDict = {
     default: "true",
     i18nKey: "Detect_PDF",
     optionList: toggleList,
+    settingTab: "advanced",
+  },
+  mouseoverTextType2: {
+    default: "sentence",
+    i18nKey: "Mouseover_Text_Type_2",
+    optionList: detectTypeList,
     settingTab: "advanced",
   },
   mouseoverPauseSubtitle: {

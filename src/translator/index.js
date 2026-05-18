@@ -12,7 +12,7 @@ import googleWebImage from "./googleWebImage.js";
 // import libreTranslate from "./libreTranslate.js";
 // import lingva from "./lingva.js";
 // import mymemory from "./mymemory.js";
-// import duckduckgo from "./duckduckgo.js";
+import duckduckgo from "./duckduckgo.js";
 // import pixabay from "./pixabay.js";
 // import unsplash from "./unsplash.js";
 // import watson from "./watson.js";
@@ -34,7 +34,7 @@ export default {
   // libreTranslate,
   // lingva,
   // mymemory,
-  // duckduckgo,
+  duckduckgo,
   // pixabay,
   // unsplash,
   // watson,

@@ -131,6 +131,7 @@
               :label="option.description"
               :type="option.inputType || 'text'"
               :placeholder="option.placeholder || ''"
+              :readonly="!!option.readonlyWhen && option.readonlyWhen(setting)"
               variant="underlined"
               class="compact-input"
               hide-details="auto"
@@ -248,7 +249,7 @@ import { isProxy, toRaw } from "vue";
 import _ from "lodash";
 import TextUtil from "/src/util/text_util.js";
 import SettingUtil from "/src/util/setting_util.js";
-import {settingDict} from "/src/util/setting_default.js";
+import {settingDict, llmProviderEndpoints} from "/src/util/setting_default.js";
 import {
   langListOpposite,
 } from "/src/util/lang.js";
@@ -366,6 +367,7 @@ export default {
       handler(newSetting, oldSetting) {
         // use wrapper to detect new old comparable
         this.checkSettingLangPriority(newSetting, oldSetting);
+        this.applyLlmProviderPreset(newSetting, oldSetting);
       },
     },
   },
@@ -490,6 +492,15 @@ export default {
     showLlmFetchError(msg) {
       this.llmFetchError = `Failed to fetch LLM models: ${msg}`;
       this.llmFetchErrorShown = true;
+    },
+    applyLlmProviderPreset(newSetting, oldSetting) {
+      const provider = newSetting.llmProvider;
+      if (!provider || provider === oldSetting.llmProvider) return;
+      const endpoint = llmProviderEndpoints[provider];
+      if (endpoint == null || provider === "custom") return;
+      this.setting.llmApiEndpoint = endpoint;
+      this.setting.llmModel = "";
+      this.llmAvailableModels = [];
     },
   },
 };

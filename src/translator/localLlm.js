@@ -10,24 +10,33 @@ function langName(code) {
   return langCodeToName[code] || code;
 }
 
-export default class localLlm extends BaseTranslator {
-  static apiEndpoint = "";
-  static apiKey = "";
-  static model = "";
+// last config we already warned about — only warn again when it changes
+let lastWarnConfigKey = null;
 
-  static setSettings(settings) {
-    this.apiEndpoint = settings.llmApiEndpoint || "";
-    this.apiKey = settings.llmApiKey || "";
-    this.model = settings.llmModel || "";
+export default class localLlm extends BaseTranslator {
+  static async translate(text, sourceLang, targetLang, settings) {
+    const endpoint = settings?.llmApiEndpoint || "";
+    const model = settings?.llmModel || "";
+    if (!endpoint || !model) {
+      const key = `${endpoint}|${model}`;
+      if (lastWarnConfigKey !== key) {
+        console.warn(
+          "[localLlm] Skipping translation: API endpoint or model not configured"
+        );
+        lastWarnConfigKey = key;
+      }
+      return;
+    }
+    return await super.translate(text, sourceLang, targetLang, settings);
   }
 
-  static async requestTranslate(text, sourceLang, targetLang) {
-    if (!this.apiEndpoint) throw new Error("LLM API endpoint is not set");
-    if (!this.model) throw new Error("LLM model is not set");
+  static async requestTranslate(text, sourceLang, targetLang, settings) {
+    const endpoint = (settings?.llmApiEndpoint || "").replace(/\/$/, "");
+    const apiKey = settings?.llmApiKey || "";
+    const model = settings?.llmModel || "";
 
-    const endpoint = this.apiEndpoint.replace(/\/$/, "");
     const headers = { "Content-Type": "application/json" };
-    if (this.apiKey) headers["Authorization"] = `Bearer ${this.apiKey}`;
+    if (apiKey) headers["Authorization"] = `Bearer ${apiKey}`;
 
     const target = langName(targetLang);
     const instruction =
@@ -41,7 +50,7 @@ export default class localLlm extends BaseTranslator {
         timeout: 60000,
         retry: 0,
         json: {
-          model: this.model,
+          model,
           messages: [
             {
               role: "system",
@@ -60,7 +69,7 @@ export default class localLlm extends BaseTranslator {
   }
 
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    const targetText = res.choices?.[0]?.message?.content?.trim() || "";
+    const targetText = res?.choices?.[0]?.message?.content?.trim() || "";
     return {
       targetText,
       detectedLang: "",
