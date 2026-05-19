@@ -20,14 +20,17 @@
 	"Translator_Engine": {
 		"message": "Выбор системы перевода"
 	},
+	"LLM_Provider": {
+		"message": "Провайдер LLM"
+	},
 	"LLM_Api_Endpoint": {
-		"message": "LLM API Endpoint URL"
+		"message": "URL-адрес эндпоинта API LLM"
 	},
 	"LLM_Api_Key": {
 		"message": "LLM API Key"
 	},
 	"LLM_Model": {
-		"message": "LLM Model"
+		"message": "Модель LLM"
 	},
 	"Mouseover_Text_Type": {
 		"message": "Тип текста при наведении курсора"
@@ -176,6 +179,9 @@
 	"Detect_PDF": {
 		"message": "Определять PDF-файлы"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Альтернативный тип текста при наведении"
+	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Пауза субтитров при наведении курсора"
 	},
@@ -199,9 +205,6 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "Резервный движок перевода"
-	},
-	"Mouseover_Text_Type_2": {
-		"message": "Альтернативный тип текста при наведении"
 	},
 	"SPEECH": {
 		"message": "РЕЧЬ"

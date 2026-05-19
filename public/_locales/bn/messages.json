@@ -20,6 +20,9 @@
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
 	},
+	"LLM_Provider": {
+		"message": "LLM Provider"
+	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
 	},
@@ -176,6 +179,9 @@
 	"Detect_PDF": {
 		"message": "পিডিএফ শনাক্তকরণ"
 	},
+	"Mouseover_Text_Type_2": {
+		"message": "Secondary Mouseover Text Type"
+	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
@@ -199,9 +205,6 @@
 	},
 	"Fallback_Translator_Engine": {
 		"message": "অনুবাদের ফলব্যাক ইঞ্জিন\""
-	},
-	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
 	},
 	"SPEECH": {
 		"message": "কথা"
