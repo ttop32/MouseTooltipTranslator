@@ -218,6 +218,12 @@ export var settingDict = {
     settingTab: "main",
     visibleWhen: (setting) => setting?.translatorVendor === "localLlm",
   },
+  llmProviderSettings: {
+    default: {},
+    i18nKey: "LLM_Provider_Settings",
+    optionList: [],
+    settingTab: "remains",
+  },
   translateWhen: {
     default: "mouseoverselect",
     i18nKey: "Translate_When",

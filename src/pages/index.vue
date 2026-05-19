@@ -495,11 +495,29 @@ export default {
     },
     applyLlmProviderPreset(newSetting, oldSetting) {
       const provider = newSetting.llmProvider;
-      if (!provider || provider === oldSetting.llmProvider) return;
-      const endpoint = llmProviderEndpoints[provider];
-      if (endpoint == null || provider === "custom") return;
-      this.setting.llmApiEndpoint = endpoint;
-      this.setting.llmModel = "";
+      if (!provider || oldSetting.llmProvider == null) return;
+      if (provider === oldSetting.llmProvider) return;
+
+      const prevProvider = oldSetting.llmProvider;
+      const savedMap = { ...(this.setting.llmProviderSettings || {}) };
+      savedMap[prevProvider] = {
+        apiEndpoint: oldSetting.llmApiEndpoint || "",
+        apiKey: oldSetting.llmApiKey || "",
+        model: oldSetting.llmModel || "",
+      };
+      this.setting.llmProviderSettings = savedMap;
+
+      const restored = savedMap[provider];
+      if (restored) {
+        this.setting.llmApiEndpoint = restored.apiEndpoint || "";
+        this.setting.llmApiKey = restored.apiKey || "";
+        this.setting.llmModel = restored.model || "";
+      } else {
+        const endpoint = llmProviderEndpoints[provider];
+        this.setting.llmApiEndpoint = provider === "custom" ? "" : (endpoint || "");
+        this.setting.llmApiKey = "";
+        this.setting.llmModel = "";
+      }
       this.llmAvailableModels = [];
     },
   },
