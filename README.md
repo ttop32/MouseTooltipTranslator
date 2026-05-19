@@ -109,6 +109,13 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/claude">
+            <img src="https://avatars.githubusercontent.com/u/81847?v=4" width="100;" alt="claude"/>
+            <br />
+            <sub><b>Claude</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/michael-nhat">
             <img src="https://avatars.githubusercontent.com/u/66666570?v=4" width="100;" alt="michael-nhat"/>
             <br />
@@ -135,15 +142,15 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Null</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/Witnull">
             <img src="https://avatars.githubusercontent.com/u/110181476?v=4" width="100;" alt="Witnull"/>
             <br />
             <sub><b>Trần Nguyễn Tiến Thành</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/di4m0nds">
             <img src="https://avatars.githubusercontent.com/u/84233833?v=4" width="100;" alt="di4m0nds"/>
