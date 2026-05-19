@@ -7,6 +7,10 @@ import baidu from "../src/translator/baidu";
 
 // npx jest
 
+// Bing serves a captcha/blocked page to datacenter IPs (GitHub Actions, etc.),
+// so its scraping-based token endpoint fails on CI but works on residential IPs.
+const testSkipOnCi = process.env.CI ? test.skip : test;
+
 describe("Translator - translate", () => {
   test("google translator - translate", async () => {
     const text = "Hello";
@@ -16,7 +20,7 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  test("bing translator - translate", async () => {
+  testSkipOnCi("bing translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
