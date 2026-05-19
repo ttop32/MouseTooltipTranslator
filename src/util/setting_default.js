@@ -36,6 +36,7 @@ var keyList = {
 var translatorList = {
   google: "google",
   bing: "bing",
+  "LLM - OpenAI / Claude / Gemini / Local (Experimental)": "localLlm",
   "deepl (Experimental)": "deepl",
   "yandex (Experimental)": "yandex",
   "baidu (Experimental)": "baidu",
@@ -45,7 +46,6 @@ var translatorList = {
   "googleGTX (Experimental)": "googleGTX",
   "googleWeb (Experimental)": "googleWeb",
   "googleV2 (Experimental)": "googleV2",
-  "LLM - OpenAI / Claude / Gemini / Local (Experimental)": "localLlm",
   // "duckduckgo (Experimental)": "duckduckgo", // hidden: duck.ai added x-vqd-hash-1 challenge requiring page-context JS execution (impossible from MV3 service worker). deedy5/duckai and gpt4free DDG provider both archived/deprecated. Code retained for reference.
   // "chatgpt (Experimental)": "chatgpt", // hidden: chatgpt.com requires Turnstile/PoW challenges we cannot solve from MV3 service worker. Code retained for reference.
   // "lingva (Experimental)": "lingva",
