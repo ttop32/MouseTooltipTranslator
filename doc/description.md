@@ -23,6 +23,7 @@ English, Russian, Japanese, Chinese and so on
   - Add LLM translator - OpenAI / Claude / Gemini / Groq / OpenRouter / GitHub Models / Ollama / LM Studio (contributed by rustiebeats)
   - Fix Secondary Language When label in keyboard settings (contributed by trysomeway)
   - Fix Netflix style conflict
+  - Russian, English UK, English US localization (contributed by D0n-A)
 - 0.1.216
   - feat: enhance settings UI with default state indication and reset option (contrinbuted by wysha-object)
   - Add SVT Play subtitle translation support (contributed by trysomeway)
