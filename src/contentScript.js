@@ -689,10 +689,12 @@ async function startAutoReader() {
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
-  var { mouseoverText, mouseoverRange } = await getMouseoverText(
-    clientX,
-    clientY
-  );
+  // hoveredData.mouseoverRange was detected with correct iframe-local coords;
+  // re-detecting via clientX/clientY fails for scaled iframes (BookFusion)
+  // because those are outer-page coords, not iframe-local coords.
+  var mouseoverRange =
+    hoveredData?.mouseoverRange ||
+    (await getMouseoverText(clientX, clientY)).mouseoverRange;
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
