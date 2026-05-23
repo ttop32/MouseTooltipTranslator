@@ -61,6 +61,7 @@ var isStopAutoReaderOn = false;
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
 var autoReaderScrollTime = 400;
+var bookFusionActiveIframe = null;
 
 var listenText = "";
 
@@ -428,15 +429,12 @@ function highlightText(range, force = false) {
     var ebookViewerRect = util.getEbookIframe()?.getBoundingClientRect();
     adjustX += ebookViewerRect?.left;
     adjustY += ebookViewerRect?.top;
-  } else if (util.isBookFusion()) {
-    var bfIframe = util.getEbookIframe();
-    if (bfIframe) {
-      var bfRect = bfIframe.getBoundingClientRect();
-      scaleX = bfRect.width / (bfIframe.offsetWidth || 1);
-      scaleY = bfRect.height / (bfIframe.offsetHeight || 1);
-      adjustX += bfRect.left;
-      adjustY += bfRect.top;
-    }
+  } else if (util.isBookFusion() && bookFusionActiveIframe) {
+    var bfRect = bookFusionActiveIframe.getBoundingClientRect();
+    scaleX = bfRect.width / (bookFusionActiveIframe.offsetWidth || 1);
+    scaleY = bfRect.height / (bookFusionActiveIframe.offsetHeight || 1);
+    adjustX += bfRect.left;
+    adjustY += bfRect.top;
   }
 
   for (var rect of rects) {
@@ -755,6 +753,13 @@ async function preloadNextTranslation(stagedRange) {
 
 function scrollAutoReader(range) {
   var rect = range.getBoundingClientRect();
+  if (util.isBookFusion() && bookFusionActiveIframe) {
+    const iframeRect = bookFusionActiveIframe.getBoundingClientRect();
+    const bfScaleY = iframeRect.height / (bookFusionActiveIframe.offsetHeight || 1);
+    const bfScrollTop = window.scrollY + iframeRect.top + rect.top * bfScaleY - window.innerHeight / 2;
+    $("body,html").animate({ scrollTop: bfScrollTop }, autoReaderScrollTime);
+    return;
+  }
   const scrollContainer = util.isPDFViewer()
     ? $("#viewerContainer")
     : $("body,html");
@@ -1126,34 +1131,37 @@ function injectGoogleDocAnnotation() {
 //bookfusion=========================================================
 function bindBookFusionIframe() {
   if (!util.isBookFusion()) return;
-  let boundSrc = "";
+  const bound = new WeakSet();
   setInterval(() => {
-    const iframe = document.querySelector('iframe[id^="bf-epub-view-"]');
-    if (!iframe || iframe.src === boundSrc) return;
-    boundSrc = iframe.src;
-    iframe.contentWindow.addEventListener("mousemove", (e) => {
-      const clRect = iframe.getBoundingClientRect();
-      const scaleX = clRect.width / (iframe.offsetWidth || 1);
-      const scaleY = clRect.height / (iframe.offsetHeight || 1);
-      const evt = new CustomEvent("mousemove", { bubbles: true, cancelable: false });
-      evt.ebookWindow = iframe.contentWindow;
-      evt.clientX = e.clientX * scaleX + clRect.left;
-      evt.clientY = e.clientY * scaleY + clRect.top;
-      evt.iframeX = e.clientX;
-      evt.iframeY = e.clientY;
-      window.dispatchEvent(evt);
-      document.dispatchEvent(evt);
-    });
-    ["keydown", "keyup"].forEach((eventName) => {
-      iframe.contentWindow.addEventListener(eventName, (e) => {
-        const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
-        evt.key = e?.key;
-        evt.code = e?.code;
-        evt.ctrlKey = e?.ctrlKey;
+    const iframes = document.querySelectorAll('iframe[id^="bf-epub-view-"]');
+    for (const iframe of iframes) {
+      if (bound.has(iframe) || !iframe.contentWindow) continue;
+      bound.add(iframe);
+      iframe.contentWindow.addEventListener("mousemove", (e) => {
+        bookFusionActiveIframe = iframe;
+        const clRect = iframe.getBoundingClientRect();
+        const scaleX = clRect.width / (iframe.offsetWidth || 1);
+        const scaleY = clRect.height / (iframe.offsetHeight || 1);
+        const evt = new CustomEvent("mousemove", { bubbles: true, cancelable: false });
+        evt.ebookWindow = iframe.contentWindow;
+        evt.clientX = e.clientX * scaleX + clRect.left;
+        evt.clientY = e.clientY * scaleY + clRect.top;
+        evt.iframeX = e.clientX;
+        evt.iframeY = e.clientY;
         window.dispatchEvent(evt);
         document.dispatchEvent(evt);
       });
-    });
+      ["keydown", "keyup"].forEach((eventName) => {
+        iframe.contentWindow.addEventListener(eventName, (e) => {
+          const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
+          evt.key = e?.key;
+          evt.code = e?.code;
+          evt.ctrlKey = e?.ctrlKey;
+          window.dispatchEvent(evt);
+          document.dispatchEvent(evt);
+        });
+      });
+    }
   }, 1000);
 }
 
