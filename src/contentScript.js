@@ -1133,7 +1133,22 @@ function bindBookFusionIframe() {
     for (const iframe of iframes) {
       if (bound.has(iframe) || !iframe.contentWindow) continue;
       bound.add(iframe);
-      iframe.contentWindow.addEventListener("mousemove", (e) => {
+      const win = iframe.contentWindow;
+      const dispatchSelect = (text) => {
+        const evt = new CustomEvent("selectionEnd", { bubbles: true, cancelable: false });
+        evt.selectedText = text;
+        document.dispatchEvent(evt);
+      };
+      let selectTimer;
+      win.document.addEventListener("selectionchange", () => {
+        clearTimeout(selectTimer);
+        selectTimer = setTimeout(() => dispatchSelect(win.getSelection()?.toString() || ""), 700);
+      }, false);
+      win.document.addEventListener("mouseup", () => {
+        clearTimeout(selectTimer);
+        dispatchSelect(win.getSelection()?.toString() || "");
+      }, false);
+      win.document.addEventListener("mousemove", (e) => {
         bookFusionActiveIframe = iframe;
         const clRect = iframe.getBoundingClientRect();
         const scaleX = clRect.width / (iframe.offsetWidth || 1);
@@ -1148,7 +1163,7 @@ function bindBookFusionIframe() {
         document.dispatchEvent(evt);
       });
       ["keydown", "keyup"].forEach((eventName) => {
-        iframe.contentWindow.addEventListener(eventName, (e) => {
+        win.addEventListener(eventName, (e) => {
           const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
           evt.key = e?.key;
           evt.code = e?.code;
