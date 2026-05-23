@@ -69,6 +69,7 @@ var listenText = "";
 (async function initMouseTooltipTranslator() {
   try {
     injectGoogleDocAnnotation(); //check google doc and add annotation env var
+    bindBookFusionIframe(); // bridge bookfusion iframe events
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
     if (checkExcludeUrl()) {
@@ -422,10 +423,20 @@ function highlightText(range, force = false) {
   rects = util.filterOverlappedRect(rects);
   var adjustX = window.scrollX;
   var adjustY = window.scrollY;
+  var scaleX = 1, scaleY = 1;
   if (util.isEbookReader()) {
     var ebookViewerRect = util.getEbookIframe()?.getBoundingClientRect();
     adjustX += ebookViewerRect?.left;
     adjustY += ebookViewerRect?.top;
+  } else if (util.isBookFusion()) {
+    var bfIframe = util.getEbookIframe();
+    if (bfIframe) {
+      var bfRect = bfIframe.getBoundingClientRect();
+      scaleX = bfRect.width / (bfIframe.offsetWidth || 1);
+      scaleY = bfRect.height / (bfIframe.offsetHeight || 1);
+      adjustX += bfRect.left;
+      adjustY += bfRect.top;
+    }
   }
 
   for (var rect of rects) {
@@ -433,10 +444,10 @@ function highlightText(range, force = false) {
       class: "mtt-highlight",
       css: {
         position: "absolute",
-        left: rect.left + adjustX,
-        top: rect.top + adjustY,
-        width: rect.width,
-        height: rect.height,
+        left: rect.left * scaleX + adjustX,
+        top: rect.top * scaleY + adjustY,
+        width: rect.width * scaleX,
+        height: rect.height * scaleY,
       },
     }).appendTo("body");
   }
@@ -1110,6 +1121,40 @@ function injectGoogleDocAnnotation() {
   var s = document.createElement("script");
   s.src = browser.runtime.getURL("googleDocInject.js"); //chrome.runtime.getURL("js/docs-canvas.js");
   document.documentElement.appendChild(s);
+}
+
+//bookfusion=========================================================
+function bindBookFusionIframe() {
+  if (!util.isBookFusion()) return;
+  let boundSrc = "";
+  setInterval(() => {
+    const iframe = document.querySelector('iframe[id^="bf-epub-view-"]');
+    if (!iframe || iframe.src === boundSrc) return;
+    boundSrc = iframe.src;
+    iframe.contentWindow.addEventListener("mousemove", (e) => {
+      const clRect = iframe.getBoundingClientRect();
+      const scaleX = clRect.width / (iframe.offsetWidth || 1);
+      const scaleY = clRect.height / (iframe.offsetHeight || 1);
+      const evt = new CustomEvent("mousemove", { bubbles: true, cancelable: false });
+      evt.ebookWindow = iframe.contentWindow;
+      evt.clientX = e.clientX * scaleX + clRect.left;
+      evt.clientY = e.clientY * scaleY + clRect.top;
+      evt.iframeX = e.clientX;
+      evt.iframeY = e.clientY;
+      window.dispatchEvent(evt);
+      document.dispatchEvent(evt);
+    });
+    ["keydown", "keyup"].forEach((eventName) => {
+      iframe.contentWindow.addEventListener(eventName, (e) => {
+        const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
+        evt.key = e?.key;
+        evt.code = e?.code;
+        evt.ctrlKey = e?.ctrlKey;
+        window.dispatchEvent(evt);
+        document.dispatchEvent(evt);
+      });
+    });
+  }, 1000);
 }
 
 // youtube================================
