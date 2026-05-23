@@ -755,13 +755,7 @@ async function preloadNextTranslation(stagedRange) {
 
 function scrollAutoReader(range) {
   var rect = range.getBoundingClientRect();
-  if (util.isBookFusion() && bookFusionActiveIframe) {
-    const iframeRect = bookFusionActiveIframe.getBoundingClientRect();
-    const bfScaleY = iframeRect.height / (bookFusionActiveIframe.offsetHeight || 1);
-    const bfScrollTop = window.scrollY + iframeRect.top + rect.top * bfScaleY - window.innerHeight / 2;
-    $("body,html").animate({ scrollTop: bfScrollTop }, autoReaderScrollTime);
-    return;
-  }
+  if (util.isBookFusion()) return;
   const scrollContainer = util.isPDFViewer()
     ? $("#viewerContainer")
     : $("body,html");
