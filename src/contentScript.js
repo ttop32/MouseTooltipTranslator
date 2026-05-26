@@ -61,6 +61,7 @@ var isStopAutoReaderOn = false;
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
 var autoReaderScrollTime = 400;
+var bookFusionActiveIframe = null;
 
 var listenText = "";
 
@@ -69,6 +70,7 @@ var listenText = "";
 (async function initMouseTooltipTranslator() {
   try {
     injectGoogleDocAnnotation(); //check google doc and add annotation env var
+    bindBookFusionIframe(); // bridge bookfusion iframe events
     loadDestructor(); //remove previous tooltip script
     await getSetting(); //load setting
     if (checkExcludeUrl()) {
@@ -98,7 +100,9 @@ function startMouseoverDetector() {
 
 //determineTooltipShowHide based on selection
 function startTextSelectDetector() {
-  enableSelectionEndEvent(window, setting["tooltipEventInterval"]); //set mouse drag text selection event
+  if (!util.isBookFusion()) {
+    enableSelectionEndEvent(window, setting["tooltipEventInterval"]); //set mouse drag text selection event
+  }
   addEventHandler("selectionEnd", stageTooltipTextSelect);
 }
 
@@ -422,10 +426,17 @@ function highlightText(range, force = false) {
   rects = util.filterOverlappedRect(rects);
   var adjustX = window.scrollX;
   var adjustY = window.scrollY;
+  var scaleX = 1, scaleY = 1;
   if (util.isEbookReader()) {
     var ebookViewerRect = util.getEbookIframe()?.getBoundingClientRect();
     adjustX += ebookViewerRect?.left;
     adjustY += ebookViewerRect?.top;
+  } else if (util.isBookFusion() && bookFusionActiveIframe) {
+    var bfRect = bookFusionActiveIframe.getBoundingClientRect();
+    scaleX = bfRect.width / (bookFusionActiveIframe.offsetWidth || 1);
+    scaleY = bfRect.height / (bookFusionActiveIframe.offsetHeight || 1);
+    adjustX += bfRect.left;
+    adjustY += bfRect.top;
   }
 
   for (var rect of rects) {
@@ -433,10 +444,10 @@ function highlightText(range, force = false) {
       class: "mtt-highlight",
       css: {
         position: "absolute",
-        left: rect.left + adjustX,
-        top: rect.top + adjustY,
-        width: rect.width,
-        height: rect.height,
+        left: rect.left * scaleX + adjustX,
+        top: rect.top * scaleY + adjustY,
+        width: rect.width * scaleX,
+        height: rect.height * scaleY,
       },
     }).appendTo("body");
   }
@@ -680,10 +691,12 @@ async function startAutoReader() {
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
-  var { mouseoverText, mouseoverRange } = await getMouseoverText(
-    clientX,
-    clientY
-  );
+  // hoveredData.mouseoverRange was detected with correct iframe-local coords;
+  // re-detecting via clientX/clientY fails for scaled iframes (BookFusion)
+  // because those are outer-page coords, not iframe-local coords.
+  var mouseoverRange =
+    hoveredData?.mouseoverRange ||
+    (await getMouseoverText(clientX, clientY)).mouseoverRange;
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
@@ -744,6 +757,7 @@ async function preloadNextTranslation(stagedRange) {
 
 function scrollAutoReader(range) {
   var rect = range.getBoundingClientRect();
+  if (util.isBookFusion()) return;
   const scrollContainer = util.isPDFViewer()
     ? $("#viewerContainer")
     : $("body,html");
@@ -805,9 +819,9 @@ function resetTooltipStatus(keyReset=true, mouseReset=true) {
 async function restartWordProcess() {
   //rerun staged text
   await delay(10); //wait for select changed by click
-  var selectedText = getSelectionText();
+  var outerSelectedText = getSelectionText();
   stagedText = null;
-  if (selectedText) {
+  if (outerSelectedText || selectedText) {
     stageTooltipTextSelect("", false);
   } else {
     forceTriggerMouseoverText();
@@ -1110,6 +1124,79 @@ function injectGoogleDocAnnotation() {
   var s = document.createElement("script");
   s.src = browser.runtime.getURL("googleDocInject.js"); //chrome.runtime.getURL("js/docs-canvas.js");
   document.documentElement.appendChild(s);
+}
+
+//bookfusion=========================================================
+function bindBookFusionIframe() {
+  if (!util.isBookFusion()) return;
+  const bound = new WeakSet();
+  setInterval(() => {
+    const iframes = document.querySelectorAll('iframe[id^="bf-epub-view-"]');
+    for (const iframe of iframes) {
+      if (bound.has(iframe) || !iframe.contentWindow) continue;
+      bound.add(iframe);
+      const win = iframe.contentWindow;
+      const dispatchSelect = (text) => {
+        const evt = new CustomEvent("selectionEnd", { bubbles: true, cancelable: false });
+        evt.selectedText = text;
+        document.dispatchEvent(evt);
+      };
+      let selectTimer;
+      let lastGoodSelection = "";
+      let selectionDispatchLock = false;
+      let lockTimer;
+      win.document.addEventListener("selectionchange", () => {
+        const text = win.getSelection()?.toString() || "";
+        if (text) lastGoodSelection = text;
+        clearTimeout(selectTimer);
+        selectTimer = setTimeout(() => {
+          const current = win.getSelection()?.toString() || "";
+          if (current) {
+            dispatchSelect(current);
+          } else if (!selectionDispatchLock) {
+            lastGoodSelection = "";
+            dispatchSelect("");
+          }
+        }, 700);
+      }, false);
+      // capture=true: fires before BookFusion's bubble handlers that may clear selection
+      win.document.addEventListener("mouseup", () => {
+        clearTimeout(selectTimer);
+        const text = win.getSelection()?.toString() || lastGoodSelection || "";
+        lastGoodSelection = "";
+        if (text) {
+          selectionDispatchLock = true;
+          clearTimeout(lockTimer);
+          lockTimer = setTimeout(() => { selectionDispatchLock = false; }, 3000);
+        }
+        dispatchSelect(text);
+      }, true);
+      win.document.addEventListener("mousemove", (e) => {
+        bookFusionActiveIframe = iframe;
+        const clRect = iframe.getBoundingClientRect();
+        const scaleX = clRect.width / (iframe.offsetWidth || 1);
+        const scaleY = clRect.height / (iframe.offsetHeight || 1);
+        const evt = new CustomEvent("mousemove", { bubbles: true, cancelable: false });
+        evt.ebookWindow = iframe.contentWindow;
+        evt.clientX = e.clientX * scaleX + clRect.left;
+        evt.clientY = e.clientY * scaleY + clRect.top;
+        evt.iframeX = e.clientX;
+        evt.iframeY = e.clientY;
+        window.dispatchEvent(evt);
+        document.dispatchEvent(evt);
+      });
+      ["keydown", "keyup"].forEach((eventName) => {
+        win.addEventListener(eventName, (e) => {
+          const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
+          evt.key = e?.key;
+          evt.code = e?.code;
+          evt.ctrlKey = e?.ctrlKey;
+          window.dispatchEvent(evt);
+          document.dispatchEvent(evt);
+        });
+      });
+    }
+  }, 1000);
 }
 
 // youtube================================
