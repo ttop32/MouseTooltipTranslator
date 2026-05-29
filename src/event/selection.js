@@ -5,7 +5,7 @@ import $ from "jquery";
 import { debounce } from "lodash";
 import * as util from "/src/util";
 
-var _win;
+var _win = window;
 var prevNoneSelect = false;
 export function enableSelectionEndEvent(
   _window = window,

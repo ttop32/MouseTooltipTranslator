@@ -589,7 +589,9 @@ function getNextRange(range, offsetIncrement = 1) {
   const endContainer = range.endContainer;
   const endOffset = range.endOffset;
   const rangeClone = range.cloneRange();
-  const { node, index } = getNextNodeAndOffset(endContainer, endOffset + offsetIncrement);
+  const nextNodeAndOffset = getNextNodeAndOffset(endContainer, endOffset + offsetIncrement);
+  if (!nextNodeAndOffset) return null;
+  const { node, index } = nextNodeAndOffset;
   rangeClone.setStart(node, index);
   rangeClone.setEnd(node, index);
   return rangeClone;
@@ -609,8 +611,8 @@ function getNextNodeAndOffset(element, offset) {
 }
 
 function getNextSiblingElement(element) {
-  if (element === document.body || element instanceof ShadowRoot) {
-    return;
+  if (!element || element === document.body || element instanceof ShadowRoot) {
+    return null;
   }
   return element.nextElementSibling || getNextSiblingElement(element.parentElement);
 }

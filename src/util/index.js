@@ -232,7 +232,12 @@ export function isPDF() {
 export function getEbookIframe() {
   var shadows = getAllShadows();
   var iframe = shadows?.[1]?.querySelectorAll("iframe")[0];
-  return iframe;
+  if (iframe) return iframe;
+  return document.querySelector('iframe[id^="bf-epub-view-"]') ?? null;
+}
+
+export function isBookFusion() {
+  return window.location.hostname === "reader.bookfusion.com";
 }
 
 export function getPDFUrl(url){
