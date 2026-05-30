@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.219
+  - Fix BookFusion auto-reader scroll tracking and cross-chapter continuation (contributed by trysomeway)
 - 0.1.218
   - Add BookFusion.com EPUB reader support (contributed by trysomeway)
 - 0.1.217
