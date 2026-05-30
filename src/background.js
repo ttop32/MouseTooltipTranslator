@@ -13,6 +13,7 @@ import _util from "/src/util/lodash_util.js";
 
 var setting;
 var recentTranslated = "";
+const DEFAULT_WORD_GROUP_ID = 0; // default saved-word group
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
@@ -108,6 +109,7 @@ function recordHistory({
     actionType,
     date: util.getDateNow(),
     translator: setting["translatorVendor"],
+    groupId: DEFAULT_WORD_GROUP_ID, // saved words belong to the default group (0)
   };
   insertHistory();
 }
@@ -147,7 +149,8 @@ function insertHistory(actionType) {
 function addSaveTranslationKeyListener() {
   util.addCommandListener("save-translation", () =>
     insertHistory("shortcutkey")
-  );
+  ); // command shortcut key handler for save
+  util.addContextListener("save", () => insertHistory("shortcutkey")); // right-click "Save" handler
 }
 
 // ================= Copy
@@ -160,10 +163,17 @@ function addCopyRequestListener() {
 async function updateCopyContext({ targetText }) {
   // remove previous
   await removeContext("copy");
+  await removeContext("save");
   //create new menu
   browser.contextMenus.create({
     id: "copy",
     title: "Copy : " + TextUtil.truncate(targetText, 20),
+    contexts: ["all"],
+    visible: true,
+  });
+  browser.contextMenus.create({
+    id: "save",
+    title: "Save : " + TextUtil.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });
