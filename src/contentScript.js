@@ -23,6 +23,10 @@ import {
 } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as dom_util from "/src/util/dom";
+import {
+  refreshSavedWordHighlight,
+  cleanupSavedWordHighlight,
+} from "/src/event/savedHighlight.js";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
@@ -88,6 +92,7 @@ var listenText = "";
     loadSpeechRecognition();
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
+    refreshSavedWordHighlight(setting); // highlight saved words (enabled groups only)
   } catch (error) {
     console.log(error);
   }
@@ -908,6 +913,7 @@ async function getSetting() {
     applyStyleSetting();
     checkVideo();
     speech.initSpeechRecognitionLang(setting);
+    refreshSavedWordHighlight(setting); // re-highlight on group enable/color change
   });
 }
 
@@ -1244,6 +1250,7 @@ function loadDestructor() {
 function destructor() {
   resetTooltipStatus();
   removePrevElement(); //remove element
+  cleanupSavedWordHighlight(); //disconnect highlight observer + unwrap highlights
   controller.abort(); //clear all event Listener by controller signal
 }
 
