@@ -17,6 +17,7 @@ import {
 import {
   enableMouseoverTextEvent,
   getNextExpandedRange,
+  getFirstExpandedRangeInDoc,
   getMouseoverText,
   forceTriggerMouseoverText
 } from "/src/event/mouseover";
@@ -700,6 +701,16 @@ async function startAutoReader() {
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
+function syncBookFusionActiveIframe(range) {
+  if (!util.isBookFusion() || !range) return;
+  for (const iframe of document.querySelectorAll('iframe[id^="bf-epub-view-"]')) {
+    if (iframe.contentDocument?.contains(range.startContainer)) {
+      bookFusionActiveIframe = iframe;
+      return;
+    }
+  }
+}
+
 async function processAutoReader(stagedRange, isTtsSwap) {
   if (!stagedRange || isStopAutoReaderOn) {
     hideTooltip();
@@ -707,6 +718,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     isAutoReaderRunning = false;
     return;
   }
+  syncBookFusionActiveIframe(stagedRange);
   isAutoReaderRunning = true;
   var text = util.extractTextFromRange(stagedRange);
   var translatedData = await util.requestTranslate(
@@ -723,10 +735,9 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   }, autoReaderScrollTime);
   showTooltip(targetText);
 
-  var nextStagedRange = getNextExpandedRange(
-    stagedRange,
-    setting["mouseoverTextType"]
-  );
+  var nextStagedRange =
+    getNextExpandedRange(stagedRange, setting["mouseoverTextType"]) ||
+    getNextBookFusionChapterRange(stagedRange, setting["mouseoverTextType"]);
   preloadNextTranslation(nextStagedRange);
   await callTTS(
     text,
@@ -739,6 +750,14 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   );
 
   processAutoReader(nextStagedRange, isTtsSwap);
+}
+
+function getNextBookFusionChapterRange(currentRange, detectType) {
+  if (!util.isBookFusion() || !currentRange) return null;
+  const iframes = Array.from(document.querySelectorAll('iframe[id^="bf-epub-view-"]'));
+  const idx = iframes.findIndex((f) => f.contentDocument?.contains(currentRange.startContainer));
+  if (idx < 0 || idx >= iframes.length - 1) return null;
+  return getFirstExpandedRangeInDoc(iframes[idx + 1].contentDocument, detectType);
 }
 
 async function preloadNextTranslation(stagedRange) {
@@ -757,7 +776,14 @@ async function preloadNextTranslation(stagedRange) {
 
 function scrollAutoReader(range) {
   var rect = range.getBoundingClientRect();
-  if (util.isBookFusion()) return;
+  if (util.isBookFusion()) {
+    if (!bookFusionActiveIframe) return;
+    var bfRect = bookFusionActiveIframe.getBoundingClientRect();
+    var bfScaleY = bfRect.height / (bookFusionActiveIframe.offsetHeight || 1);
+    var bfScrollTop = window.scrollY + bfRect.top + rect.top * bfScaleY - window.innerHeight / 2;
+    $("body,html").animate({ scrollTop: bfScrollTop }, autoReaderScrollTime);
+    return;
+  }
   const scrollContainer = util.isPDFViewer()
     ? $("#viewerContainer")
     : $("body,html");

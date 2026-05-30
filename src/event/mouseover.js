@@ -563,6 +563,19 @@ function getCenterXY(ele) {
   return { x: centerX, y: centerY };
 }
 
+// get first range in a document (used for next chapter continuation) ===========
+export function getFirstExpandedRangeInDoc(doc, detectType) {
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => (n.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP),
+  });
+  const textNode = walker.nextNode();
+  if (!textNode) return null;
+  const range = doc.createRange();
+  range.setStart(textNode, 0);
+  range.setEnd(textNode, 0);
+  return expandRange(range, detectType) ?? null;
+}
+
 // get next range ===========================
 export function getNextExpandedRange(range, detectType) {
   let nextRange = range;
