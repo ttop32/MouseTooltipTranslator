@@ -13,28 +13,58 @@
       </v-btn>
     </BackHeader>
 
-    <!-- board style list -->
     <div class="saved-board">
+      <!-- group filter -->
+      <div class="saved-filter px-4 pt-2">
+        <v-select
+          v-model="groupFilter"
+          :items="groupFilterOptions"
+          label="Group"
+          density="compact"
+          variant="underlined"
+          hide-details
+        ></v-select>
+      </div>
+
+      <!-- board style list -->
       <v-table density="compact" class="saved-table">
         <thead>
           <tr>
-            <th class="text-center" style="width: 48px">#</th>
+            <th class="text-center" style="width: 44px">#</th>
             <th class="text-left">Source</th>
             <th class="text-left">Translation</th>
-            <th class="text-center" style="width: 56px"></th>
+            <th class="text-left" style="width: 120px">Group</th>
+            <th class="text-center" style="width: 48px"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!savedList.length">
-            <td colspan="4" class="text-center text-disabled py-6">
+          <tr v-if="!filteredList.length">
+            <td colspan="5" class="text-center text-disabled py-6">
               No saved words yet
             </td>
           </tr>
-          <tr v-for="row in pagedRows" :key="row.absoluteIndex">
+          <tr v-for="row in pagedRows" :key="row.no">
             <td class="text-center text-disabled">{{ row.no }}</td>
-            <td class="text-left">{{ row.item.sourceText }}</td>
+            <td class="text-left">
+              <span
+                class="group-dot"
+                :style="{ backgroundColor: getGroupColor(row.item.groupId) }"
+              ></span>
+              {{ row.item.sourceText }}
+            </td>
             <td class="text-left text-medium-emphasis">
               {{ truncate(row.item.targetText) }}
+            </td>
+            <td class="text-left">
+              <v-select
+                :model-value="row.item.groupId ?? 0"
+                :items="groupSelectOptions"
+                density="compact"
+                variant="plain"
+                hide-details
+                class="row-group-select"
+                @update:model-value="(v) => assignGroup(row.item, v)"
+              ></v-select>
             </td>
             <td class="text-center">
               <v-btn
@@ -42,7 +72,7 @@
                 icon="mdi-close-circle"
                 variant="text"
                 size="small"
-                @click="removeSaved(row.absoluteIndex)"
+                @click="removeSaved(row.item)"
               ></v-btn>
             </td>
           </tr>
@@ -59,6 +89,79 @@
         class="saved-pagination"
       ></v-pagination>
     </div>
+
+    <!-- group management dialog -->
+    <v-dialog v-model="groupDialog" max-width="460">
+      <v-card>
+        <v-card-title class="d-flex align-center">
+          Manage Groups
+          <v-spacer></v-spacer>
+          <v-btn icon variant="text" size="small" @click="addGroup">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <div
+            v-for="group in groups"
+            :key="group.id"
+            class="d-flex align-center my-2 group-row"
+          >
+            <!-- color swatch + picker -->
+            <v-menu :close-on-content-click="false">
+              <template v-slot:activator="{ props }">
+                <div
+                  v-bind="props"
+                  class="group-swatch mr-3"
+                  :style="{ backgroundColor: group.color }"
+                ></div>
+              </template>
+              <v-color-picker
+                :model-value="group.color"
+                mode="hexa"
+                @update:model-value="(c) => (group.color = c)"
+              ></v-color-picker>
+            </v-menu>
+
+            <!-- name -->
+            <v-text-field
+              v-model="group.name"
+              density="compact"
+              variant="underlined"
+              hide-details
+              :readonly="group.id === DEFAULT_GROUP_ID"
+              class="flex-grow-1"
+            ></v-text-field>
+
+            <!-- highlight on/off -->
+            <v-switch
+              v-model="group.enabled"
+              color="primary"
+              density="compact"
+              hide-details
+              title="Highlight on page"
+              class="ml-3"
+            ></v-switch>
+
+            <!-- delete (default group not deletable) -->
+            <v-btn
+              icon
+              variant="text"
+              size="small"
+              :disabled="group.id === DEFAULT_GROUP_ID"
+              @click="removeGroup(group)"
+            >
+              <v-icon>mdi-trash-can</v-icon>
+            </v-btn>
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn variant="text" @click="groupDialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </popupWindow>
 </template>
 <script>
@@ -74,9 +177,18 @@ export default {
   name: "SavedView",
   data() {
     return {
+      DEFAULT_GROUP_ID,
       page: 1,
       itemsPerPage: 20,
+      groupFilter: null, // null = all groups
+      groupDialog: false,
       toolbarButtons: {
+        groups: {
+          name: "Manage groups",
+          title: "Manage groups",
+          icon: "mdi-tag-multiple",
+          func: () => (this.groupDialog = true),
+        },
         remove: {
           name: "Remove all",
           title: "Remove all",
@@ -97,26 +209,38 @@ export default {
     savedList() {
       return this.setting["historyList"] || [];
     },
+    groups() {
+      return this.setting["wordGroups"] || [];
+    },
+    groupSelectOptions() {
+      return this.groups.map((g) => ({ title: g.name, value: g.id }));
+    },
+    groupFilterOptions() {
+      return [{ title: "All", value: null }, ...this.groupSelectOptions];
+    },
+    filteredList() {
+      if (this.groupFilter == null) return this.savedList;
+      return this.savedList.filter(
+        (item) => (item.groupId ?? DEFAULT_GROUP_ID) === this.groupFilter
+      );
+    },
     pageCount() {
-      return Math.max(1, Math.ceil(this.savedList.length / this.itemsPerPage));
+      return Math.max(1, Math.ceil(this.filteredList.length / this.itemsPerPage));
     },
     pagedRows() {
       const start = (this.page - 1) * this.itemsPerPage;
-      return this.savedList
+      return this.filteredList
         .slice(start, start + this.itemsPerPage)
-        .map((item, i) => ({
-          item,
-          absoluteIndex: start + i,
-          no: start + i + 1,
-        }));
+        .map((item, i) => ({ item, no: start + i + 1 }));
     },
   },
   watch: {
-    // keep page in range when list shrinks (e.g. after deletion)
+    // keep page in range when the visible list shrinks
     pageCount(newCount) {
-      if (this.page > newCount) {
-        this.page = newCount;
-      }
+      if (this.page > newCount) this.page = newCount;
+    },
+    groupFilter() {
+      this.page = 1;
     },
   },
   mounted() {
@@ -135,21 +259,47 @@ export default {
         }
         return item;
       });
-      if (changed) {
-        this.setting["historyList"] = normalized;
-      }
+      if (changed) this.setting["historyList"] = normalized;
+    },
+    getGroupColor(groupId) {
+      const group = this.groups.find((g) => g.id === (groupId ?? DEFAULT_GROUP_ID));
+      return group?.color || "transparent";
     },
     truncate(text) {
       return text?.substring(0, 40) || "";
     },
-    removeSaved(index) {
-      this.setting["historyList"] = [
-        ...this.savedList.slice(0, index),
-        ...this.savedList.slice(index + 1),
-      ];
+    assignGroup(item, groupId) {
+      item.groupId = groupId;
+    },
+    removeSaved(item) {
+      this.setting["historyList"] = this.savedList.filter((it) => it !== item);
     },
     removeAllSaved() {
       this.setting["historyList"] = [];
+    },
+    // ---- group CRUD ----
+    addGroup() {
+      const nextId = this.groups.reduce((max, g) => Math.max(max, g.id), 0) + 1;
+      this.setting["wordGroups"] = [
+        ...this.groups,
+        {
+          id: nextId,
+          name: `Group ${nextId}`,
+          color: "#21dc6d40",
+          enabled: true,
+        },
+      ];
+    },
+    removeGroup(group) {
+      if (group.id === DEFAULT_GROUP_ID) return;
+      // reassign this group's entries back to the default group
+      this.setting["historyList"] = this.savedList.map((item) =>
+        (item.groupId ?? DEFAULT_GROUP_ID) === group.id
+          ? { ...item, groupId: DEFAULT_GROUP_ID }
+          : item
+      );
+      this.setting["wordGroups"] = this.groups.filter((g) => g.id !== group.id);
+      if (this.groupFilter === group.id) this.groupFilter = null;
     },
     getHeaderKey() {
       return [
@@ -204,5 +354,27 @@ export default {
 }
 .saved-pagination {
   padding: 8px 0 16px;
+}
+.group-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.group-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 6px;
+}
+.row-group-select {
+  font-size: 0.8rem;
+}
+.row-group-select :deep(.v-field__input) {
+  padding-top: 0;
+  min-height: 28px;
 }
 </style>

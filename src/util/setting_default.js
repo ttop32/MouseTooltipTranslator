@@ -619,6 +619,15 @@ export var settingDict = {
     optionList: [],
     settingTab: "remains",
   },
+  wordGroups: {
+    // saved-word groups; id 0 is the default group (not deletable).
+    // color = in-page highlight background, enabled = highlight on/off.
+    // group 0 starts disabled so the whole history isn't highlighted at once.
+    default: [{ id: 0, name: "Default", color: "#21dc6d40", enabled: false }],
+    i18nKey: "Word_Groups",
+    optionList: [],
+    settingTab: "remains",
+  },
   historyRecordActions: {
     default: [],
     i18nKey: "History_Record_Actions",
