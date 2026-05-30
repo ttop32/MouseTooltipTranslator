@@ -314,6 +314,11 @@ var toolbarIcons = {
     icon: "mdi-card-multiple",
     path: "/deck",
   },
+  saved: {
+    title: "saved words",
+    icon: "mdi-bookmark-multiple",
+    path: "/saved",
+  },
   history: {
     title: "history",
     icon: "mdi-history",
