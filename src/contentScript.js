@@ -1130,7 +1130,8 @@ function injectGoogleDocAnnotation() {
 function bindBookFusionIframe() {
   if (!util.isBookFusion()) return;
   const bound = new WeakSet();
-  setInterval(() => {
+  // clear polling on content script reload/destruct (controller.abort)
+  const bindInterval = setInterval(() => {
     const iframes = document.querySelectorAll('iframe[id^="bf-epub-view-"]');
     for (const iframe of iframes) {
       if (bound.has(iframe) || !iframe.contentWindow) continue;
@@ -1158,7 +1159,7 @@ function bindBookFusionIframe() {
             dispatchSelect("");
           }
         }, 700);
-      }, false);
+      }, { signal });
       // capture=true: fires before BookFusion's bubble handlers that may clear selection
       win.document.addEventListener("mouseup", () => {
         clearTimeout(selectTimer);
@@ -1170,7 +1171,7 @@ function bindBookFusionIframe() {
           lockTimer = setTimeout(() => { selectionDispatchLock = false; }, 3000);
         }
         dispatchSelect(text);
-      }, true);
+      }, { capture: true, signal });
       win.document.addEventListener("mousemove", (e) => {
         bookFusionActiveIframe = iframe;
         const clRect = iframe.getBoundingClientRect();
@@ -1184,7 +1185,7 @@ function bindBookFusionIframe() {
         evt.iframeY = e.clientY;
         window.dispatchEvent(evt);
         document.dispatchEvent(evt);
-      });
+      }, { signal });
       ["keydown", "keyup"].forEach((eventName) => {
         win.addEventListener(eventName, (e) => {
           const evt = new CustomEvent(eventName, { bubbles: true, cancelable: false });
@@ -1193,10 +1194,11 @@ function bindBookFusionIframe() {
           evt.ctrlKey = e?.ctrlKey;
           window.dispatchEvent(evt);
           document.dispatchEvent(evt);
-        });
+        }, { signal });
       });
     }
   }, 1000);
+  signal.addEventListener("abort", () => clearInterval(bindInterval));
 }
 
 // youtube================================
