@@ -15,7 +15,7 @@
         :key="iconId"
         :title="iconData.title"
         icon
-        @click="$router.push(iconData.path)"
+        @click="openIcon(iconData)"
       >
         <v-icon>{{ iconData.icon }}</v-icon>
       </v-btn>
@@ -318,6 +318,7 @@ var toolbarIcons = {
     title: "saved words",
     icon: "mdi-bookmark-multiple",
     path: "/saved",
+    newTab: true, // open saved-words board in a full browser tab
   },
   about: {
     title: "about",
@@ -373,6 +374,15 @@ export default {
   },
 
   methods: {
+    openIcon(iconData) {
+      if (iconData.newTab) {
+        browser.tabs.create({
+          url: browser.runtime.getURL("popup.html#" + iconData.path),
+        });
+      } else {
+        this.$router.push(iconData.path);
+      }
+    },
     async getCurrentTabUrl() {
       const tabs1 = await browser.tabs.query({ active: true, currentWindow: true });
       const currentTab = tabs1[0];
