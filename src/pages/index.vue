@@ -319,11 +319,6 @@ var toolbarIcons = {
     icon: "mdi-bookmark-multiple",
     path: "/saved",
   },
-  history: {
-    title: "history",
-    icon: "mdi-history",
-    path: "/history",
-  },
   about: {
     title: "about",
     icon: "mdi-menu",
