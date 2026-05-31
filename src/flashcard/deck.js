@@ -178,21 +178,10 @@ export default class Deck {
       .length;
   }
   getDueDatedTagCards() {
+    // cards are selected purely by saved-word group now
     var tags = this.setting["cardTagSelected"] || [];
-    // word-group tags are optional: only narrow by group when at least one
-    // group tag is selected, otherwise keep all groups (backward compatible)
-    var selectedGroupTags = tags.filter(
-      (t) => typeof t === "string" && t.startsWith(GROUP_TAG_PREFIX)
-    );
     return this.setting["historyList"]
-      .filter(
-        (c) => tags?.includes(c.actionType) && tags?.includes(c.sourceLang)
-      )
-      .filter(
-        (c) =>
-          selectedGroupTags.length === 0 ||
-          selectedGroupTags.includes(GROUP_TAG_PREFIX + (c.groupId ?? 0))
-      )
+      .filter((c) => tags.includes(GROUP_TAG_PREFIX + (c.groupId ?? 1)))
       .filter((c) => util.isDueDate(c.scheduledDate))
       .sort((card1, card2) =>
         util.getDateOrder(card1.scheduledDate, card2.scheduledDate)
@@ -448,16 +437,11 @@ export default class Deck {
   }
 
   getAllFilterTag() {
-    var allCard = this.getAllCard();
-    var actions = allCard.map((c) => c.actionType);
-    var sourceLangs = allCard.map((c) => c.sourceLang);
-    var tags = _.uniq(_.concat(actions, sourceLangs));
-    // append saved-word groups as { title, value } chips
-    var groupTags = (this.setting["wordGroups"] || []).map((g) => ({
+    // play filter is by saved-word group only
+    return (this.setting["wordGroups"] || []).map((g) => ({
       title: g.name,
       value: GROUP_TAG_PREFIX + g.id,
     }));
-    return _.concat(tags, groupTags);
   }
   resetFlashcard() {
     this.setting["cardTagSelected"] = [];

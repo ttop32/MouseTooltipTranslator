@@ -261,6 +261,12 @@ export default {
           icon: "mdi-trash-can",
           func: this.removeAllSaved,
         },
+        importCsv: {
+          name: "Import CSV",
+          title: "Import CSV",
+          icon: "mdi-upload",
+          func: this.importCSV,
+        },
         download: {
           name: "Download CSV",
           title: "Download CSV",
@@ -544,6 +550,51 @@ export default {
       });
       csvContent = [headerKey.join(",")].concat(csvContent).join("\n");
       return csvContent;
+    },
+    importCSV() {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".csv";
+      input.onchange = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => this.parseAndImportCsv(ev.target.result);
+        reader.readAsText(file);
+      };
+      input.click();
+    },
+    parseAndImportCsv(text) {
+      const lines = String(text)
+        .replace(/^﻿/, "")
+        .split(/\r?\n/)
+        .filter((l) => l.trim());
+      if (lines.length < 2) return;
+      const headers = lines[0].split(",").map((h) => h.trim());
+      const groupByName = {};
+      for (const g of this.groups) groupByName[g.name] = g.id;
+
+      const records = lines
+        .slice(1)
+        .map((line) => {
+          const cols = line.split(",");
+          const obj = {};
+          headers.forEach((h, i) => (obj[h] = (cols[i] ?? "").trim()));
+          return {
+            date: obj.date || "",
+            sourceLang: obj.sourceLang || "",
+            targetLang: obj.targetLang || "",
+            sourceText: obj.sourceText || "",
+            targetText: obj.targetText || "",
+            dict: obj.dict || "",
+            translator: obj.translator || "",
+            groupId: groupByName[obj.group] ?? DEFAULT_GROUP_ID,
+            actionType: "import",
+          };
+        })
+        .filter((r) => r.sourceText);
+
+      this.setting["historyList"] = [...records, ...this.savedList];
     },
     downloadCSV() {
       const csvContent = this.getCsvContent();
