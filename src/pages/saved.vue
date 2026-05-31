@@ -49,11 +49,36 @@
         ></v-select>
       </div>
 
+      <!-- bulk action bar (shown when rows are selected) -->
+      <div v-if="selected.length" class="saved-bulk px-4 py-1">
+        <span class="text-caption">{{ selected.length }} selected</span>
+        <v-select
+          :model-value="null"
+          :items="groupSelectOptions"
+          label="Move to group"
+          density="compact"
+          variant="underlined"
+          hide-details
+          class="bulk-move-select"
+          @update:model-value="moveSelectedToGroup"
+        ></v-select>
+        <v-btn variant="text" size="small" @click="clearSelection">Clear</v-btn>
+      </div>
+
       <!-- board style list -->
       <v-table density="compact" class="saved-table">
         <thead>
           <tr>
-            <th class="text-center" style="width: 44px">#</th>
+            <th style="width: 40px">
+              <v-checkbox
+                :model-value="allPageSelected"
+                :indeterminate="somePageSelected && !allPageSelected"
+                density="compact"
+                hide-details
+                @update:model-value="toggleSelectAllPage"
+              ></v-checkbox>
+            </th>
+            <th class="text-center" style="width: 40px">#</th>
             <th class="text-left">Source</th>
             <th class="text-left">Translation</th>
             <th class="text-left" style="width: 120px">Group</th>
@@ -61,12 +86,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!filteredList.length">
-            <td colspan="5" class="text-center text-disabled py-6">
+          <tr v-if="!displayList.length">
+            <td colspan="6" class="text-center text-disabled py-6">
               No saved words yet
             </td>
           </tr>
           <tr v-for="row in pagedRows" :key="row.no">
+            <td>
+              <v-checkbox
+                :model-value="isSelected(row.item)"
+                density="compact"
+                hide-details
+                @update:model-value="() => toggleSelect(row.item)"
+              ></v-checkbox>
+            </td>
             <td class="text-center text-disabled">{{ row.no }}</td>
             <td class="text-left">
               <span
@@ -114,7 +147,7 @@
     </div>
 
     <!-- group management dialog (edits a local buffer, commits on close) -->
-    <v-dialog v-model="groupDialog" max-width="460">
+    <v-dialog v-model="groupDialog" max-width="560">
       <v-card>
         <v-card-title class="d-flex align-center">
           Manage Groups
@@ -146,15 +179,25 @@
               ></v-color-picker>
             </v-menu>
 
-            <!-- name -->
+            <!-- name (group 1 is renamable too; only deletion is blocked) -->
             <v-text-field
               v-model="group.name"
               density="compact"
               variant="underlined"
               hide-details
-              :readonly="group.id === DEFAULT_GROUP_ID"
               class="flex-grow-1"
             ></v-text-field>
+
+            <!-- per-group save shortcut key -->
+            <v-select
+              v-model="group.key"
+              :items="groupKeyOptions"
+              label="Save key"
+              density="compact"
+              variant="underlined"
+              hide-details
+              class="group-key-select ml-3"
+            ></v-select>
 
             <!-- highlight on/off -->
             <v-switch
@@ -201,6 +244,11 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+// a group's effective save shortcut defaults to Ctrl+Shift+<id> when unset
+function effectiveGroupKey(group) {
+  return group.key ?? "CtrlShift" + group.id;
+}
+
 export default {
   name: "SavedView",
   data() {
@@ -218,6 +266,7 @@ export default {
         { title: "Source Lang", value: "sourceLang" },
         { title: "Target Lang", value: "targetLang" },
       ],
+      selected: [], // selected entry references for bulk move
       groupDialog: false,
       editGroups: [], // local edit buffer for the group dialog
       toolbarButtons: {
@@ -255,6 +304,13 @@ export default {
         ([title, value]) => ({ title, value })
       );
     },
+    groupKeyOptions() {
+      const opts = [{ title: "None", value: "null" }];
+      for (let i = 1; i <= 9; i++) {
+        opts.push({ title: `Ctrl+Shift+${i}`, value: `CtrlShift${i}` });
+      }
+      return opts;
+    },
     groupSelectOptions() {
       return this.groups.map((g) => ({ title: g.name, value: g.id }));
     },
@@ -286,6 +342,15 @@ export default {
         .slice(start, start + this.itemsPerPage)
         .map((item, i) => ({ item, no: start + i + 1 }));
     },
+    allPageSelected() {
+      return (
+        this.pagedRows.length > 0 &&
+        this.pagedRows.every((r) => this.selected.includes(r.item))
+      );
+    },
+    somePageSelected() {
+      return this.pagedRows.some((r) => this.selected.includes(r.item));
+    },
   },
   watch: {
     pageCount(newCount) {
@@ -309,7 +374,7 @@ export default {
     this.normalizeGroupId();
   },
   methods: {
-    // migration: ensure every entry has a groupId (default group 0)
+    // migration: ensure every entry has a groupId (default group 1)
     normalizeGroupId() {
       const list = this.setting["historyList"];
       if (!list?.length) return;
@@ -339,10 +404,43 @@ export default {
     },
     removeAllSaved() {
       this.setting["historyList"] = [];
+      this.clearSelection();
+    },
+    // ---- selection / bulk move ----
+    isSelected(item) {
+      return this.selected.includes(item);
+    },
+    toggleSelect(item) {
+      this.selected = this.isSelected(item)
+        ? this.selected.filter((it) => it !== item)
+        : [...this.selected, item];
+    },
+    toggleSelectAllPage() {
+      const pageItems = this.pagedRows.map((r) => r.item);
+      if (this.allPageSelected) {
+        this.selected = this.selected.filter((it) => !pageItems.includes(it));
+      } else {
+        const set = new Set([...this.selected, ...pageItems]);
+        this.selected = [...set];
+      }
+    },
+    clearSelection() {
+      this.selected = [];
+    },
+    moveSelectedToGroup(groupId) {
+      if (groupId == null || !this.selected.length) return;
+      const sel = new Set(this.selected);
+      this.setting["historyList"] = this.savedList.map((item) =>
+        sel.has(item) ? { ...item, groupId } : item
+      );
+      this.clearSelection();
     },
     // ---- group dialog (local buffer, committed on close) ----
     openGroupDialog() {
-      this.editGroups = clone(this.groups);
+      this.editGroups = clone(this.groups).map((g) => ({
+        ...g,
+        key: effectiveGroupKey(g), // surface the effective key in the selector
+      }));
       this.groupDialog = true;
     },
     addGroup() {
@@ -353,6 +451,7 @@ export default {
         name: `Group ${nextId}`,
         color: "#21dc6d40",
         enabled: true,
+        key: nextId <= 9 ? `CtrlShift${nextId}` : "null",
       });
     },
     removeGroup(group) {
@@ -430,6 +529,15 @@ export default {
   display: flex;
   gap: 16px;
 }
+.saved-bulk {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #00000011;
+}
+.bulk-move-select {
+  max-width: 220px;
+}
 .saved-table {
   flex: 1;
 }
@@ -450,6 +558,9 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 6px;
+}
+.group-key-select {
+  max-width: 130px;
 }
 .row-group-select {
   font-size: 0.8rem;

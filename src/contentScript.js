@@ -604,11 +604,18 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
-  // Ctrl+Shift+1..5 -> save current translation into word group 1..5
-  if (e.ctrlKey && e.shiftKey && /^Digit[1-5]$/.test(e.code)) {
-    e.preventDefault();
-    util.requestSaveTranslation(parseInt(e.code.replace("Digit", ""), 10));
-    return;
+  // Ctrl+Shift+1..9 -> save into the group whose shortcut matches.
+  // A group's effective key defaults to "CtrlShift<id>" when unset.
+  if (e.ctrlKey && e.shiftKey && /^Digit[1-9]$/.test(e.code)) {
+    var combo = "CtrlShift" + e.code.replace("Digit", "");
+    var group = (setting["wordGroups"] || []).find(
+      (g) => (g.key ?? "CtrlShift" + g.id) === combo
+    );
+    if (group) {
+      e.preventDefault();
+      util.requestSaveTranslation(group.id);
+      return;
+    }
   }
   //if user pressed ctrl+f  ctrl+a, hide tooltip
   if (/KeyA|KeyF/.test(e.code) && e.ctrlKey) {
