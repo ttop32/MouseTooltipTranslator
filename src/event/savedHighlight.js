@@ -59,7 +59,7 @@ function buildWordColorMap(setting) {
   if (!Object.keys(enabledColor).length) return map;
 
   for (const item of setting?.["historyList"] || []) {
-    const groupId = item?.groupId ?? 0;
+    const groupId = item?.groupId ?? 1; // entries without a group default to group 1
     const color = enabledColor[groupId];
     if (!color) continue;
     const word = (item?.sourceText || "").trim();

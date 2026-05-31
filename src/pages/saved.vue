@@ -80,7 +80,7 @@
             </td>
             <td class="text-left">
               <v-select
-                :model-value="row.item.groupId ?? 0"
+                :model-value="row.item.groupId ?? DEFAULT_GROUP_ID"
                 :items="groupSelectOptions"
                 density="compact"
                 variant="plain"
