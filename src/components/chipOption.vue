@@ -1,6 +1,7 @@
 <template>
   <v-chip-group
     multiple
+    column
     filter
     active-class="primary--text"
     v-model="setting[settingName]"
