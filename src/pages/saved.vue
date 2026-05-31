@@ -60,6 +60,7 @@
               v-for="col in columns"
               :key="col.key"
               class="text-left sortable-th"
+              :style="col.width ? { width: col.width } : {}"
               @click="sortBy(col.key)"
             >
               {{ col.label }}
@@ -243,12 +244,12 @@ export default {
       sortDesc: true, // newest first by default
       // data columns (in table order); headers are click-to-sort
       columns: [
-        { key: "date", label: "Date" },
-        { key: "sourceText", label: "Source" },
-        { key: "targetText", label: "Translation" },
-        { key: "sourceLang", label: "Src Lang" },
-        { key: "targetLang", label: "Tgt Lang" },
-        { key: "groupId", label: "Group" },
+        { key: "date", label: "Date", width: "150px" },
+        { key: "sourceText", label: "Source" }, // flexible
+        { key: "targetText", label: "Translation" }, // flexible
+        { key: "sourceLang", label: "Src Lang", width: "80px" },
+        { key: "targetLang", label: "Tgt Lang", width: "80px" },
+        { key: "groupId", label: "Group", width: "110px" },
       ],
       selected: [], // selected entry references for bulk move
       groupDialog: false,
@@ -592,6 +593,17 @@ export default {
 }
 .saved-table :deep(.v-table__wrapper) {
   overflow: hidden;
+}
+/* fixed layout + ellipsis so long text never wraps / breaks row height */
+.saved-table :deep(table) {
+  table-layout: fixed;
+  width: 100%;
+}
+.saved-table :deep(td),
+.saved-table :deep(th) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sortable-th {
   cursor: pointer;
