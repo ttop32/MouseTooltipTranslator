@@ -389,8 +389,8 @@ export function clearSelection()
 
 //send to background.js for background processing  ===========================================================================
 
-export async function requestSaveTranslation() {
-  return await sendMessage({ type: "saveTranslation" });
+export async function requestSaveTranslation(groupId) {
+  return await sendMessage({ type: "saveTranslation", data: { groupId } });
 }
 
 export async function requestTranslate(

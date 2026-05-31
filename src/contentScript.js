@@ -604,6 +604,12 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
+  // Ctrl+Shift+1..5 -> save current translation into word group 1..5
+  if (e.ctrlKey && e.shiftKey && /^Digit[1-5]$/.test(e.code)) {
+    e.preventDefault();
+    util.requestSaveTranslation(parseInt(e.code.replace("Digit", ""), 10));
+    return;
+  }
   //if user pressed ctrl+f  ctrl+a, hide tooltip
   if (/KeyA|KeyF/.test(e.code) && e.ctrlKey) {
     mouseMoved = false;

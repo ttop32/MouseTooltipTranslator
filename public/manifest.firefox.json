@@ -19,7 +19,7 @@
     "commands": {
         "copy-translated-text": {
         "suggested_key": {
-            "default": "Ctrl+Shift+1"
+            "default": "Ctrl+Shift+6"
         },
         "description": "Copy Translated Text"
         }

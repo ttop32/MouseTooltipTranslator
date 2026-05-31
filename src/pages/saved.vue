@@ -194,8 +194,8 @@ import { settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
 // every saved/history entry belongs to a group; entries without an
-// explicit group are treated as group 0 (the default group)
-export const DEFAULT_GROUP_ID = 0;
+// explicit group are treated as group 1 (the default group)
+export const DEFAULT_GROUP_ID = 1;
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -315,7 +315,8 @@ export default {
       if (!list?.length) return;
       let changed = false;
       const normalized = list.map((item) => {
-        if (item.groupId == null) {
+        // missing group, or legacy group 0, -> default group 1
+        if (item.groupId == null || item.groupId === 0) {
           changed = true;
           return { ...item, groupId: DEFAULT_GROUP_ID };
         }

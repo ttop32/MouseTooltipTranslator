@@ -32,15 +32,9 @@
   "commands": {
     "copy-translated-text": {
       "suggested_key": {
-        "default": "Ctrl+Shift+1"
+        "default": "Ctrl+Shift+6"
       },
       "description": "Copy Translated Text"
-    },
-    "save-translation": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+2"
-      },
-      "description": "Save Translation"
     }
   },
   "omnibox": { "keyword" : "/" },

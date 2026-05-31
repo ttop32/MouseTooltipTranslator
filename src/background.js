@@ -13,7 +13,7 @@ import _util from "/src/util/lodash_util.js";
 
 var setting;
 var recentTranslated = "";
-const DEFAULT_WORD_GROUP_ID = 0; // default saved-word group
+const DEFAULT_WORD_GROUP_ID = 1; // default saved-word group
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
@@ -59,7 +59,8 @@ function addMessageListener() {
         updateCopyContext(request.data);
         sendResponse({});
       } else if (request.type === "saveTranslation") {
-        insertHistory("shortcutkey"); // in-page save key -> force record into group 0
+        // in-page save key / Ctrl+Shift+1..5 -> force record into target group
+        insertHistory("shortcutkey", request?.data?.groupId);
         sendResponse({});
       } else if (request.type === "requestBase64") {
         var base64Url = await util.getBase64(request.url);
@@ -117,7 +118,7 @@ function recordHistory({
   insertHistory();
 }
 
-function insertHistory(actionType) {
+function insertHistory(actionType, groupId) {
   if (
     setting["historyRecordActions"].includes(recentRecord.actionType) ||
     actionType
@@ -125,6 +126,10 @@ function insertHistory(actionType) {
     var newRecord = actionType
       ? TextUtil.concatJson(recentRecord, { actionType })
       : recentRecord;
+    // explicit save (Ctrl+Shift+1..5 / right-click) targets a specific group
+    if (groupId != null) {
+      newRecord = TextUtil.concatJson(newRecord, { groupId });
+    }
     var prevRecord = setting["historyList"][0];
 
     //skip if same prev
@@ -150,10 +155,9 @@ function insertHistory(actionType) {
 }
 
 function addSaveTranslationKeyListener() {
-  util.addCommandListener("save-translation", () =>
-    insertHistory("shortcutkey")
-  ); // command shortcut key handler for save
-  util.addContextListener("save", () => insertHistory("shortcutkey")); // right-click "Save" handler
+  // right-click "Save" -> default group (1). Ctrl+Shift+1..5 are handled
+  // in-page (contentScript) and routed via the saveTranslation message.
+  util.addContextListener("save", () => insertHistory("shortcutkey"));
 }
 
 // ================= Copy

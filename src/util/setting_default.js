@@ -626,10 +626,17 @@ export var settingDict = {
     settingTab: "remains",
   },
   wordGroups: {
-    // saved-word groups; id 0 is the default group (not deletable).
+    // saved-word groups; id 1 is the default group (not deletable).
     // color = in-page highlight background, enabled = highlight on/off.
-    // group 0 starts disabled so the whole history isn't highlighted at once.
-    default: [{ id: 0, name: "Default", color: "#21dc6d40", enabled: false }],
+    // groups start disabled so the whole history isn't highlighted at once.
+    // Ctrl+Shift+1..5 save the current translation into group 1..5.
+    default: [
+      { id: 1, name: "Group 1", color: "#21dc6d40", enabled: false },
+      { id: 2, name: "Group 2", color: "#2196f340", enabled: false },
+      { id: 3, name: "Group 3", color: "#ff980040", enabled: false },
+      { id: 4, name: "Group 4", color: "#9c27b040", enabled: false },
+      { id: 5, name: "Group 5", color: "#f4433640", enabled: false },
+    ],
     i18nKey: "Word_Groups",
     optionList: [],
     settingTab: "remains",
