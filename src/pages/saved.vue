@@ -215,6 +215,7 @@
 <script>
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
+import { defaultData } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
 // every saved/history entry belongs to a group; entries without an
@@ -358,10 +359,29 @@ export default {
     },
   },
   mounted() {
+    this.migrateGroups();
     this.normalizeGroupId();
     this.migrateRecordWhenToGroup1();
   },
   methods: {
+    // upgrade stale wordGroups from earlier builds (old "Default" group id 0)
+    // to the new 1-5 scheme. Idempotent: no-op once group 0 is gone.
+    migrateGroups() {
+      const groups = this.groups;
+      if (!groups.some((g) => g.id === 0)) return;
+      let migrated = groups.map((g) =>
+        g.id === 0
+          ? { ...g, id: DEFAULT_GROUP_ID, name: g.name === "Default" ? "Group 1" : g.name }
+          : g
+      );
+      // ensure the preset groups 1-5 all exist
+      for (const preset of defaultData.wordGroups) {
+        if (!migrated.some((g) => g.id === preset.id)) {
+          migrated.push({ ...preset });
+        }
+      }
+      this.setting["wordGroups"] = migrated;
+    },
     // the old global "Record when" (historyRecordActions) is inherited by the
     // default group 1 as its auto-save trigger, then cleared (run once)
     migrateRecordWhenToGroup1() {
