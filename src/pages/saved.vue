@@ -362,8 +362,20 @@ export default {
     this.migrateGroups();
     this.normalizeGroupId();
     this.migrateRecordWhenToGroup1();
+    this.updateItemsPerPage();
+    window.addEventListener("resize", this.updateItemsPerPage);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.updateItemsPerPage);
   },
   methods: {
+    // fit rows to the viewport so the board paginates instead of scrolling
+    updateItemsPerPage() {
+      const rowHeight = 40; // approx compact row height
+      const reserved = 220; // header + controls + table head + pagination
+      const avail = window.innerHeight - reserved;
+      this.itemsPerPage = Math.max(5, Math.floor(avail / rowHeight));
+    },
     // upgrade stale wordGroups from earlier builds (old "Default" group id 0)
     // to the new 1-5 scheme. Idempotent: no-op once group 0 is gone.
     migrateGroups() {
@@ -557,7 +569,7 @@ export default {
 <style scoped>
 .saved-board {
   height: calc(100vh - 64px);
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -576,6 +588,10 @@ export default {
 }
 .saved-table {
   flex: 1;
+  overflow: hidden;
+}
+.saved-table :deep(.v-table__wrapper) {
+  overflow: hidden;
 }
 .sortable-th {
   cursor: pointer;
