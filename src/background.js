@@ -25,8 +25,7 @@ var recentRecord = {};
     // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
-    addCopyRequestListener(); // listen copy context menu and shortcut key
-    addSaveTranslationKeyListener(); // listen save translation
+    addCopyRequestListener(); // listen copy / save context menus and shortcut key
     addTabSwitchEventListener(); // listen tab switch for kill tts
     addPdfFileTabListener(); //listen drag and drop pdf
     addSearchBarListener(); // listen url search bar for translate omnibox
@@ -56,7 +55,7 @@ function addMessageListener() {
         sendResponse({});
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
-        updateCopyContext(request.data);
+        updateContextMenus(request.data);
         sendResponse({});
       } else if (request.type === "saveTranslation") {
         // in-page save key / Ctrl+Shift+1..5 -> force record into target group
@@ -167,36 +166,40 @@ function insertHistory(actionType, groupId) {
   setting.save();
 }
 
-function addSaveTranslationKeyListener() {
-  // right-click "Save" -> default group (1). Ctrl+Shift+1..5 are handled
-  // in-page (contentScript) and routed via the saveTranslation message.
-  util.addContextListener("save", () => insertHistory("shortcutkey"));
-}
-
-// ================= Copy
+// ================= Copy / Save context menus
 
 function addCopyRequestListener() {
-  util.addContextListener("copy", requestCopyForTargetText); // context menu handler for copy
   util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy
+  // single onClicked handler: "copy" + dynamic "save-group-<id>" menus
+  browser.contextMenus.onClicked.addListener((info) => {
+    if (info.menuItemId === "copy") {
+      requestCopyForTargetText();
+    } else if (String(info.menuItemId).startsWith("save-group-")) {
+      var gid = parseInt(String(info.menuItemId).replace("save-group-", ""), 10);
+      insertHistory("shortcutkey", gid);
+    }
+  });
 }
 
-async function updateCopyContext({ targetText }) {
-  // remove previous
-  await removeContext("copy");
-  await removeContext("save");
-  //create new menu
+async function updateContextMenus({ targetText }) {
+  // rebuild our menus: Copy by default + one Save per context-enabled group
+  await browser.contextMenus.removeAll();
   browser.contextMenus.create({
     id: "copy",
     title: "Copy : " + TextUtil.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });
-  browser.contextMenus.create({
-    id: "save",
-    title: "Save : " + TextUtil.truncate(targetText, 20),
-    contexts: ["all"],
-    visible: true,
-  });
+  for (const group of setting["wordGroups"] || []) {
+    if (group.context) {
+      browser.contextMenus.create({
+        id: "save-group-" + group.id,
+        title: "Save to " + group.name,
+        contexts: ["all"],
+        visible: true,
+      });
+    }
+  }
   recentTranslated = targetText;
 }
 

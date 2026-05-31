@@ -192,6 +192,19 @@
               class="ml-3"
             ></v-switch>
 
+            <!-- right-click "Save to <group>" context menu on/off -->
+            <v-checkbox
+              v-model="group.context"
+              density="compact"
+              hide-details
+              title="Add right-click save menu"
+              class="ml-2"
+            >
+              <template v-slot:label>
+                <v-icon size="small">mdi-menu</v-icon>
+              </template>
+            </v-checkbox>
+
             <!-- delete (default group not deletable) -->
             <v-btn
               icon
@@ -518,6 +531,7 @@ export default {
         color: "#21dc6d40",
         enabled: true,
         key: nextId <= 9 ? `CtrlShift${nextId}` : "null",
+        context: false,
       });
     },
     removeGroup(group) {
