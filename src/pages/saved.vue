@@ -526,7 +526,7 @@ export default {
         "dict",
         "actionType",
         "translator",
-        "groupId",
+        "group", // group name (not the numeric id)
       ];
     },
     getCsvContent() {
@@ -534,14 +534,13 @@ export default {
       // export what is currently shown (current group filter + sort order)
       let csvContent = this.displayList.map((history) => {
         let line = "";
-        headerKey.forEach(
-          (key) =>
-            (line +=
-              TextUtil.trimAllSpace(String(history[key] ?? "")).replace(
-                /[,#'"]/g,
-                " "
-              ) + ",")
-        );
+        headerKey.forEach((key) => {
+          const value =
+            key === "group" ? this.getGroupName(history.groupId) : history[key];
+          line +=
+            TextUtil.trimAllSpace(String(value ?? "")).replace(/[,#'"]/g, " ") +
+            ",";
+        });
         return line;
       });
       csvContent = [headerKey.join(",")].concat(csvContent).join("\n");
