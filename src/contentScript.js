@@ -685,9 +685,6 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     if (setting["keyDownAutoReader"]==key) {
       startAutoReader();
     }
-    if (setting["keySaveWord"]==key) {
-      util.requestSaveTranslation(); // save current translation to group 0
-    }
     // if (setting["keyHoldMouseoverTextType"]==key) {
     //   setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
     //   setting.save();

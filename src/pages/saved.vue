@@ -14,7 +14,7 @@
     </BackHeader>
 
     <div class="saved-board">
-      <!-- group filter + sort + save shortcut key -->
+      <!-- group filter + record trigger -->
       <div class="saved-controls px-4 pt-2">
         <v-select
           v-model="groupFilter"
@@ -25,24 +25,9 @@
           hide-details
         ></v-select>
         <v-select
-          v-model="sortKey"
-          :items="sortFieldOptions"
-          label="Sort by"
-          density="compact"
-          variant="underlined"
-          hide-details
-        ></v-select>
-        <v-btn
-          :icon="sortDesc ? 'mdi-sort-descending' : 'mdi-sort-ascending'"
-          :title="sortDesc ? 'Descending' : 'Ascending'"
-          variant="text"
-          size="small"
-          @click="sortDesc = !sortDesc"
-        ></v-btn>
-        <v-select
-          v-model="setting['keySaveWord']"
-          :items="keyOptions"
-          label="Save shortcut key"
+          v-model="recordWhen"
+          :items="recordWhenOptions"
+          label="Record when"
           density="compact"
           variant="underlined"
           hide-details
@@ -65,7 +50,7 @@
         <v-btn variant="text" size="small" @click="clearSelection">Clear</v-btn>
       </div>
 
-      <!-- board style list -->
+      <!-- board style list; click a header to sort by that column -->
       <v-table density="compact" class="saved-table">
         <thead>
           <tr>
@@ -79,15 +64,23 @@
               ></v-checkbox>
             </th>
             <th class="text-center" style="width: 40px">#</th>
-            <th class="text-left">Source</th>
-            <th class="text-left">Translation</th>
-            <th class="text-left" style="width: 120px">Group</th>
+            <th
+              v-for="col in columns"
+              :key="col.key"
+              class="text-left sortable-th"
+              @click="sortBy(col.key)"
+            >
+              {{ col.label }}
+              <v-icon v-if="sortKey === col.key" size="x-small">
+                {{ sortDesc ? "mdi-arrow-down" : "mdi-arrow-up" }}
+              </v-icon>
+            </th>
             <th class="text-center" style="width: 48px"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="!displayList.length">
-            <td colspan="6" class="text-center text-disabled py-6">
+            <td :colspan="columns.length + 3" class="text-center text-disabled py-6">
               No saved words yet
             </td>
           </tr>
@@ -101,6 +94,9 @@
               ></v-checkbox>
             </td>
             <td class="text-center text-disabled">{{ row.no }}</td>
+            <td class="text-left text-medium-emphasis text-no-wrap">
+              {{ formatDate(row.item.date) }}
+            </td>
             <td class="text-left">
               <span
                 class="group-dot"
@@ -108,19 +104,13 @@
               ></span>
               {{ row.item.sourceText }}
             </td>
+            <td class="text-left text-medium-emphasis">{{ row.item.sourceLang }}</td>
             <td class="text-left text-medium-emphasis">
               {{ truncate(row.item.targetText) }}
             </td>
-            <td class="text-left">
-              <v-select
-                :model-value="row.item.groupId ?? DEFAULT_GROUP_ID"
-                :items="groupSelectOptions"
-                density="compact"
-                variant="plain"
-                hide-details
-                class="row-group-select"
-                @update:model-value="(v) => assignGroup(row.item, v)"
-              ></v-select>
+            <td class="text-left text-medium-emphasis">{{ row.item.targetLang }}</td>
+            <td class="text-left text-medium-emphasis">
+              {{ getGroupName(row.item.groupId) }}
             </td>
             <td class="text-center">
               <v-btn
@@ -233,7 +223,6 @@
 <script>
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
-import { settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
 // every saved/history entry belongs to a group; entries without an
@@ -259,12 +248,20 @@ export default {
       groupFilter: null, // null = all groups
       sortKey: "date",
       sortDesc: true, // newest first by default
-      sortFieldOptions: [
-        { title: "Date", value: "date" },
-        { title: "Source", value: "sourceText" },
-        { title: "Translation", value: "targetText" },
-        { title: "Source Lang", value: "sourceLang" },
-        { title: "Target Lang", value: "targetLang" },
+      // data columns (in table order); headers are click-to-sort
+      columns: [
+        { key: "date", label: "Date" },
+        { key: "sourceText", label: "Source" },
+        { key: "sourceLang", label: "Src Lang" },
+        { key: "targetText", label: "Translation" },
+        { key: "targetLang", label: "Tgt Lang" },
+        { key: "groupId", label: "Group" },
+      ],
+      recordWhenOptions: [
+        { title: "Off", value: "none" },
+        { title: "Select", value: "select" },
+        { title: "Hover", value: "mouseover" },
+        { title: "Select + Hover", value: "both" },
       ],
       selected: [], // selected entry references for bulk move
       groupDialog: false,
@@ -299,11 +296,6 @@ export default {
     groups() {
       return this.setting["wordGroups"] || [];
     },
-    keyOptions() {
-      return Object.entries(settingDict["keySaveWord"].optionList).map(
-        ([title, value]) => ({ title, value })
-      );
-    },
     groupKeyOptions() {
       const opts = [{ title: "None", value: "null" }];
       for (let i = 1; i <= 9; i++) {
@@ -323,11 +315,36 @@ export default {
         (item) => (item.groupId ?? DEFAULT_GROUP_ID) === this.groupFilter
       );
     },
+    recordWhen: {
+      get() {
+        const a = this.setting["historyRecordActions"] || [];
+        const s = a.includes("select");
+        const m = a.includes("mouseover");
+        if (s && m) return "both";
+        if (s) return "select";
+        if (m) return "mouseover";
+        return "none";
+      },
+      set(v) {
+        const map = {
+          none: [],
+          select: ["select"],
+          mouseover: ["mouseover"],
+          both: ["select", "mouseover"],
+        };
+        this.setting["historyRecordActions"] = map[v] || [];
+      },
+    },
     // filtered + sorted; drives both the board and the CSV export
     displayList() {
       const key = this.sortKey;
       const dir = this.sortDesc ? -1 : 1;
       return [...this.filteredList].sort((a, b) => {
+        if (key === "groupId") {
+          return (
+            dir * ((a.groupId ?? DEFAULT_GROUP_ID) - (b.groupId ?? DEFAULT_GROUP_ID))
+          );
+        }
         const av = String(a?.[key] ?? "");
         const bv = String(b?.[key] ?? "");
         return dir * av.localeCompare(bv, undefined, { sensitivity: "base" });
@@ -393,11 +410,24 @@ export default {
       const group = this.groups.find((g) => g.id === (groupId ?? DEFAULT_GROUP_ID));
       return group?.color || "transparent";
     },
+    getGroupName(groupId) {
+      const group = this.groups.find((g) => g.id === (groupId ?? DEFAULT_GROUP_ID));
+      return group?.name || "";
+    },
     truncate(text) {
       return text?.substring(0, 40) || "";
     },
-    assignGroup(item, groupId) {
-      item.groupId = groupId;
+    formatDate(date) {
+      // ISO (toJSON) -> "YYYY-MM-DD HH:mm"
+      return date ? String(date).replace("T", " ").slice(0, 16) : "";
+    },
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortDesc = !this.sortDesc;
+      } else {
+        this.sortKey = key;
+        this.sortDesc = false;
+      }
     },
     removeSaved(item) {
       this.setting["historyList"] = this.savedList.filter((it) => it !== item);
@@ -541,6 +571,14 @@ export default {
 .saved-table {
   flex: 1;
 }
+.sortable-th {
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.sortable-th:hover {
+  background-color: #00000011;
+}
 .saved-pagination {
   padding: 8px 0 16px;
 }
@@ -561,12 +599,5 @@ export default {
 }
 .group-key-select {
   max-width: 130px;
-}
-.row-group-select {
-  font-size: 0.8rem;
-}
-.row-group-select :deep(.v-field__input) {
-  padding-top: 0;
-  min-height: 28px;
 }
 </style>
