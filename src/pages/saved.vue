@@ -14,7 +14,7 @@
     </BackHeader>
 
     <div class="saved-board">
-      <!-- group filter -->
+      <!-- group filter + saved count / cap -->
       <div class="saved-controls px-4 pt-2">
         <v-select
           v-model="groupFilter"
@@ -24,6 +24,10 @@
           variant="underlined"
           hide-details
         ></v-select>
+        <span class="saved-count text-caption text-medium-emphasis">
+          {{ savedList.length.toLocaleString() }} /
+          {{ maxSaved.toLocaleString() }}
+        </span>
       </div>
 
       <!-- bulk action bar (shown when rows are selected) -->
@@ -236,6 +240,7 @@ export default {
   data() {
     return {
       DEFAULT_GROUP_ID,
+      maxSaved: MAX_SAVED,
       page: 1,
       itemsPerPage: 20,
       groupFilter: null, // null = all groups
@@ -629,6 +634,10 @@ export default {
 .saved-controls {
   display: flex;
   gap: 16px;
+  align-items: center;
+}
+.saved-count {
+  white-space: nowrap;
 }
 .saved-bulk {
   display: flex;
