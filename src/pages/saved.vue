@@ -14,20 +14,12 @@
     </BackHeader>
 
     <div class="saved-board">
-      <!-- group filter + record trigger -->
+      <!-- group filter -->
       <div class="saved-controls px-4 pt-2">
         <v-select
           v-model="groupFilter"
           :items="groupFilterOptions"
           label="Group"
-          density="compact"
-          variant="underlined"
-          hide-details
-        ></v-select>
-        <v-select
-          v-model="recordWhen"
-          :items="recordWhenOptions"
-          label="Record when"
           density="compact"
           variant="underlined"
           hide-details
@@ -104,10 +96,10 @@
               ></span>
               {{ row.item.sourceText }}
             </td>
-            <td class="text-left text-medium-emphasis">{{ row.item.sourceLang }}</td>
             <td class="text-left text-medium-emphasis">
               {{ truncate(row.item.targetText) }}
             </td>
+            <td class="text-left text-medium-emphasis">{{ row.item.sourceLang }}</td>
             <td class="text-left text-medium-emphasis">{{ row.item.targetLang }}</td>
             <td class="text-left text-medium-emphasis">
               {{ getGroupName(row.item.groupId) }}
@@ -252,16 +244,10 @@ export default {
       columns: [
         { key: "date", label: "Date" },
         { key: "sourceText", label: "Source" },
-        { key: "sourceLang", label: "Src Lang" },
         { key: "targetText", label: "Translation" },
+        { key: "sourceLang", label: "Src Lang" },
         { key: "targetLang", label: "Tgt Lang" },
         { key: "groupId", label: "Group" },
-      ],
-      recordWhenOptions: [
-        { title: "Off", value: "none" },
-        { title: "Select", value: "select" },
-        { title: "Hover", value: "mouseover" },
-        { title: "Select + Hover", value: "both" },
       ],
       selected: [], // selected entry references for bulk move
       groupDialog: false,
@@ -301,6 +287,10 @@ export default {
       for (let i = 1; i <= 9; i++) {
         opts.push({ title: `Ctrl+Shift+${i}`, value: `CtrlShift${i}` });
       }
+      // auto-save triggers (replaces the old global "Record when")
+      opts.push({ title: "On Select", value: "select" });
+      opts.push({ title: "On Hover", value: "mouseover" });
+      opts.push({ title: "On Select + Hover", value: "both" });
       return opts;
     },
     groupSelectOptions() {
@@ -314,26 +304,6 @@ export default {
       return this.savedList.filter(
         (item) => (item.groupId ?? DEFAULT_GROUP_ID) === this.groupFilter
       );
-    },
-    recordWhen: {
-      get() {
-        const a = this.setting["historyRecordActions"] || [];
-        const s = a.includes("select");
-        const m = a.includes("mouseover");
-        if (s && m) return "both";
-        if (s) return "select";
-        if (m) return "mouseover";
-        return "none";
-      },
-      set(v) {
-        const map = {
-          none: [],
-          select: ["select"],
-          mouseover: ["mouseover"],
-          both: ["select", "mouseover"],
-        };
-        this.setting["historyRecordActions"] = map[v] || [];
-      },
     },
     // filtered + sorted; drives both the board and the CSV export
     displayList() {
@@ -389,8 +359,24 @@ export default {
   },
   mounted() {
     this.normalizeGroupId();
+    this.migrateRecordWhenToGroup1();
   },
   methods: {
+    // the old global "Record when" (historyRecordActions) is inherited by the
+    // default group 1 as its auto-save trigger, then cleared (run once)
+    migrateRecordWhenToGroup1() {
+      const actions = this.setting["historyRecordActions"] || [];
+      if (!actions.length) return;
+      const s = actions.includes("select");
+      const m = actions.includes("mouseover");
+      const val = s && m ? "both" : s ? "select" : m ? "mouseover" : null;
+      if (val) {
+        this.setting["wordGroups"] = this.groups.map((g) =>
+          g.id === DEFAULT_GROUP_ID ? { ...g, key: val } : g
+        );
+      }
+      this.setting["historyRecordActions"] = []; // consumed
+    },
     // migration: ensure every entry has a groupId (default group 1)
     normalizeGroupId() {
       const list = this.setting["historyList"];

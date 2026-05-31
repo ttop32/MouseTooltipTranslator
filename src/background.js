@@ -113,45 +113,58 @@ function recordHistory({
     actionType,
     date: util.getDateNow(),
     translator: setting["translatorVendor"],
-    groupId: DEFAULT_WORD_GROUP_ID, // saved words belong to the default group (0)
   };
-  insertHistory();
+  insertHistory(); // auto-record path (group decided by each group's key)
+}
+
+// which group auto-saves this action ("select"/"mouseover"); null = none.
+// a group's key may be "select" / "mouseover" / "both" (exact wins over both)
+function getAutoGroupId(action) {
+  var groups = setting["wordGroups"] || [];
+  var exact = groups.find((g) => g.key === action);
+  if (exact) return exact.id;
+  var both = groups.find((g) => g.key === "both");
+  return both ? both.id : null;
 }
 
 function insertHistory(actionType, groupId) {
-  if (
-    setting["historyRecordActions"].includes(recentRecord.actionType) ||
-    actionType
-  ) {
-    var newRecord = actionType
-      ? TextUtil.concatJson(recentRecord, { actionType })
-      : recentRecord;
-    // explicit save (Ctrl+Shift+1..5 / right-click) targets a specific group
-    if (groupId != null) {
-      newRecord = TextUtil.concatJson(newRecord, { groupId });
-    }
-    var prevRecord = setting["historyList"][0];
-
-    //skip if same prev
-    if (_util.getRecordID(newRecord) == _util.getRecordID(prevRecord)) {
+  var isExplicit = !!actionType; // manual save (Ctrl+Shift+N / right-click)
+  var targetGroupId;
+  if (isExplicit) {
+    targetGroupId = groupId != null ? groupId : DEFAULT_WORD_GROUP_ID;
+  } else {
+    // auto-record: only when a group is configured to auto-save this action
+    targetGroupId = getAutoGroupId(recentRecord.actionType);
+    if (targetGroupId == null) {
       return;
     }
-    //skip duplicate select
-    if (
-      newRecord.actionType == "select" &&
-      newRecord.sourceText.includes(setting["historyList"]?.[0]?.sourceText)
-    ) {
-      setting["historyList"].shift();
-    }
-
-    // save
-    setting["historyList"].unshift(newRecord);
-    //remove when too many list
-    if (setting["historyList"].length > 10000) {
-      setting["historyList"].pop();
-    }
-    setting.save();
   }
+
+  var base = isExplicit
+    ? TextUtil.concatJson(recentRecord, { actionType })
+    : recentRecord;
+  var newRecord = TextUtil.concatJson(base, { groupId: targetGroupId });
+  var prevRecord = setting["historyList"][0];
+
+  //skip if same prev
+  if (_util.getRecordID(newRecord) == _util.getRecordID(prevRecord)) {
+    return;
+  }
+  //skip duplicate select
+  if (
+    newRecord.actionType == "select" &&
+    newRecord.sourceText.includes(setting["historyList"]?.[0]?.sourceText)
+  ) {
+    setting["historyList"].shift();
+  }
+
+  // save
+  setting["historyList"].unshift(newRecord);
+  //remove when too many list
+  if (setting["historyList"].length > 10000) {
+    setting["historyList"].pop();
+  }
+  setting.save();
 }
 
 function addSaveTranslationKeyListener() {
