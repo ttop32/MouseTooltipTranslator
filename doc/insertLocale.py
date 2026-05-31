@@ -103,6 +103,7 @@ i18List = [
     "Toggle Mouseover Text Type When",
     "Mouseover Text Type Key Hold",
     "Secondary Language When",
+    "Save Word When",
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",

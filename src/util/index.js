@@ -389,6 +389,10 @@ export function clearSelection()
 
 //send to background.js for background processing  ===========================================================================
 
+export async function requestSaveTranslation() {
+  return await sendMessage({ type: "saveTranslation" });
+}
+
 export async function requestTranslate(
   word,
   sourceLang,

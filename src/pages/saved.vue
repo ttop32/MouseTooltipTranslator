@@ -1,7 +1,7 @@
 <template>
   <popupWindow>
-    <!-- top nav bar -->
-    <BackHeader title="Saved Words">
+    <!-- top nav bar (no back button: opened as a standalone tab) -->
+    <BackHeader title="Saved Words" :hideBack="true">
       <v-btn
         v-for="buttonData in toolbarButtons"
         :key="buttonData.name"
@@ -14,12 +14,20 @@
     </BackHeader>
 
     <div class="saved-board">
-      <!-- group filter -->
-      <div class="saved-filter px-4 pt-2">
+      <!-- group filter + save shortcut key -->
+      <div class="saved-controls px-4 pt-2">
         <v-select
           v-model="groupFilter"
           :items="groupFilterOptions"
           label="Group"
+          density="compact"
+          variant="underlined"
+          hide-details
+        ></v-select>
+        <v-select
+          v-model="setting['keySaveWord']"
+          :items="keyOptions"
+          label="Save shortcut key"
           density="compact"
           variant="underlined"
           hide-details
@@ -90,7 +98,7 @@
       ></v-pagination>
     </div>
 
-    <!-- group management dialog -->
+    <!-- group management dialog (edits a local buffer, commits on close) -->
     <v-dialog v-model="groupDialog" max-width="460">
       <v-card>
         <v-card-title class="d-flex align-center">
@@ -103,7 +111,7 @@
         <v-divider></v-divider>
         <v-card-text>
           <div
-            v-for="group in groups"
+            v-for="group in editGroups"
             :key="group.id"
             class="d-flex align-center my-2 group-row"
           >
@@ -158,7 +166,7 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn variant="text" @click="groupDialog = false">Close</v-btn>
+          <v-btn variant="text" @click="groupDialog = false">Done</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -167,11 +175,16 @@
 <script>
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
+import { settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
 // every saved/history entry belongs to a group; entries without an
 // explicit group are treated as group 0 (the default group)
 export const DEFAULT_GROUP_ID = 0;
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
 
 export default {
   name: "SavedView",
@@ -182,12 +195,13 @@ export default {
       itemsPerPage: 20,
       groupFilter: null, // null = all groups
       groupDialog: false,
+      editGroups: [], // local edit buffer for the group dialog
       toolbarButtons: {
         groups: {
           name: "Manage groups",
           title: "Manage groups",
           icon: "mdi-tag-multiple",
-          func: () => (this.groupDialog = true),
+          func: this.openGroupDialog,
         },
         remove: {
           name: "Remove all",
@@ -212,6 +226,11 @@ export default {
     groups() {
       return this.setting["wordGroups"] || [];
     },
+    keyOptions() {
+      return Object.entries(settingDict["keySaveWord"].optionList).map(
+        ([title, value]) => ({ title, value })
+      );
+    },
     groupSelectOptions() {
       return this.groups.map((g) => ({ title: g.name, value: g.id }));
     },
@@ -235,12 +254,15 @@ export default {
     },
   },
   watch: {
-    // keep page in range when the visible list shrinks
     pageCount(newCount) {
       if (this.page > newCount) this.page = newCount;
     },
     groupFilter() {
       this.page = 1;
+    },
+    // commit the local group buffer once when the dialog closes
+    groupDialog(open) {
+      if (!open) this.commitGroups();
     },
   },
   mounted() {
@@ -277,29 +299,37 @@ export default {
     removeAllSaved() {
       this.setting["historyList"] = [];
     },
-    // ---- group CRUD ----
+    // ---- group dialog (local buffer, committed on close) ----
+    openGroupDialog() {
+      this.editGroups = clone(this.groups);
+      this.groupDialog = true;
+    },
     addGroup() {
-      const nextId = this.groups.reduce((max, g) => Math.max(max, g.id), 0) + 1;
-      this.setting["wordGroups"] = [
-        ...this.groups,
-        {
-          id: nextId,
-          name: `Group ${nextId}`,
-          color: "#21dc6d40",
-          enabled: true,
-        },
-      ];
+      const nextId =
+        this.editGroups.reduce((max, g) => Math.max(max, g.id), 0) + 1;
+      this.editGroups.push({
+        id: nextId,
+        name: `Group ${nextId}`,
+        color: "#21dc6d40",
+        enabled: true,
+      });
     },
     removeGroup(group) {
       if (group.id === DEFAULT_GROUP_ID) return;
-      // reassign this group's entries back to the default group
+      this.editGroups = this.editGroups.filter((g) => g.id !== group.id);
+    },
+    commitGroups() {
+      const validIds = new Set(this.editGroups.map((g) => g.id));
+      // reassign entries whose group was deleted back to the default group
       this.setting["historyList"] = this.savedList.map((item) =>
-        (item.groupId ?? DEFAULT_GROUP_ID) === group.id
-          ? { ...item, groupId: DEFAULT_GROUP_ID }
-          : item
+        validIds.has(item.groupId ?? DEFAULT_GROUP_ID)
+          ? item
+          : { ...item, groupId: DEFAULT_GROUP_ID }
       );
-      this.setting["wordGroups"] = this.groups.filter((g) => g.id !== group.id);
-      if (this.groupFilter === group.id) this.groupFilter = null;
+      this.setting["wordGroups"] = clone(this.editGroups);
+      if (this.groupFilter != null && !validIds.has(this.groupFilter)) {
+        this.groupFilter = null;
+      }
     },
     getHeaderKey() {
       return [
@@ -348,6 +378,10 @@ export default {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+.saved-controls {
+  display: flex;
+  gap: 16px;
 }
 .saved-table {
   flex: 1;

@@ -310,6 +310,12 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  keySaveWord: {
+    default: "null",
+    i18nKey: "Save_Word_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
 
   // voice
   voiceVolume: {

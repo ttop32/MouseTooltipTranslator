@@ -1,9 +1,9 @@
 <template>
   <v-toolbar color="primary" dark dense>
-    <v-btn icon @click="$router.go(-1)">
+    <v-btn v-if="!hideBack" icon @click="$router.go(-1)">
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-toolbar-title :class="{ 'ml-4': hideBack }">{{ title }}</v-toolbar-title>
     <v-spacer></v-spacer>
 
     <slot />
@@ -12,7 +12,10 @@
 <script>
 export default {
   name: "BackHeader",
-  props: ["title"],
+  props: {
+    title: String,
+    hideBack: { type: Boolean, default: false },
+  },
 };
 </script>
 <style>

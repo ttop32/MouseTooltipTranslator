@@ -58,6 +58,9 @@ function addMessageListener() {
         recordHistory(request.data);
         updateCopyContext(request.data);
         sendResponse({});
+      } else if (request.type === "saveTranslation") {
+        insertHistory("shortcutkey"); // in-page save key -> force record into group 0
+        sendResponse({});
       } else if (request.type === "requestBase64") {
         var base64Url = await util.getBase64(request.url);
         sendResponse({ base64Url });
