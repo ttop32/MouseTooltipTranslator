@@ -39,6 +39,14 @@
           class="bulk-move-select"
           @update:model-value="moveSelectedToGroup"
         ></v-select>
+        <v-btn
+          variant="text"
+          size="small"
+          color="red"
+          prepend-icon="mdi-trash-can"
+          @click="deleteSelected"
+          >Delete</v-btn
+        >
         <v-btn variant="text" size="small" @click="clearSelection">Clear</v-btn>
       </div>
 
@@ -68,12 +76,11 @@
                 {{ sortDesc ? "mdi-arrow-down" : "mdi-arrow-up" }}
               </v-icon>
             </th>
-            <th class="text-center" style="width: 48px"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="!displayList.length">
-            <td :colspan="columns.length + 3" class="text-center text-disabled py-6">
+            <td :colspan="columns.length + 2" class="text-center text-disabled py-6">
               No saved words yet
             </td>
           </tr>
@@ -90,29 +97,18 @@
             <td class="text-left text-medium-emphasis text-no-wrap">
               {{ formatDate(row.item.date) }}
             </td>
-            <td class="text-left">
+            <td class="text-left" :title="row.item.sourceText">
               <span
                 class="group-dot"
                 :style="{ backgroundColor: getGroupColor(row.item.groupId) }"
               ></span>
               {{ row.item.sourceText }}
             </td>
-            <td class="text-left text-medium-emphasis">
-              {{ truncate(row.item.targetText) }}
+            <td class="text-left text-medium-emphasis" :title="row.item.targetText">
+              {{ row.item.targetText }}
             </td>
-            <td class="text-left text-medium-emphasis">{{ row.item.sourceLang }}</td>
-            <td class="text-left text-medium-emphasis">{{ row.item.targetLang }}</td>
             <td class="text-left text-medium-emphasis">
               {{ getGroupName(row.item.groupId) }}
-            </td>
-            <td class="text-center">
-              <v-btn
-                color="grey-lighten-1"
-                icon="mdi-close-circle"
-                variant="text"
-                size="small"
-                @click="removeSaved(row.item)"
-              ></v-btn>
             </td>
           </tr>
         </tbody>
@@ -247,8 +243,6 @@ export default {
         { key: "date", label: "Date", width: "150px" },
         { key: "sourceText", label: "Source" }, // flexible
         { key: "targetText", label: "Translation" }, // flexible
-        { key: "sourceLang", label: "Src Lang", width: "80px" },
-        { key: "targetLang", label: "Tgt Lang", width: "80px" },
         { key: "groupId", label: "Group", width: "110px" },
       ],
       selected: [], // selected entry references for bulk move
@@ -365,9 +359,11 @@ export default {
     this.migrateRecordWhenToGroup1();
     this.updateItemsPerPage();
     window.addEventListener("resize", this.updateItemsPerPage);
+    document.body.classList.add("saved-wide"); // widen this tab past popup cap
   },
   beforeUnmount() {
     window.removeEventListener("resize", this.updateItemsPerPage);
+    document.body.classList.remove("saved-wide");
   },
   methods: {
     // fit rows to the viewport so the board paginates instead of scrolling
@@ -433,9 +429,6 @@ export default {
       const group = this.groups.find((g) => g.id === (groupId ?? DEFAULT_GROUP_ID));
       return group?.name || "";
     },
-    truncate(text) {
-      return text?.substring(0, 40) || "";
-    },
     formatDate(date) {
       // ISO (toJSON) -> "YYYY-MM-DD HH:mm"
       return date ? String(date).replace("T", " ").slice(0, 16) : "";
@@ -448,8 +441,11 @@ export default {
         this.sortDesc = false;
       }
     },
-    removeSaved(item) {
-      this.setting["historyList"] = this.savedList.filter((it) => it !== item);
+    deleteSelected() {
+      if (!this.selected.length) return;
+      const sel = new Set(this.selected);
+      this.setting["historyList"] = this.savedList.filter((it) => !sel.has(it));
+      this.clearSelection();
     },
     removeAllSaved() {
       this.setting["historyList"] = [];
@@ -633,5 +629,11 @@ export default {
 }
 .group-key-select {
   max-width: 130px;
+}
+</style>
+<!-- non-scoped: widen the saved-words tab beyond the popup's 800px cap -->
+<style>
+body.saved-wide #appWindow {
+  max-width: 1400px;
 }
 </style>
