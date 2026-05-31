@@ -219,6 +219,9 @@ import TextUtil from "/src/util/text_util.js";
 // explicit group are treated as group 1 (the default group)
 export const DEFAULT_GROUP_ID = 1;
 
+// keep in sync with background.js history cap (oldest dropped beyond this)
+const MAX_SAVED = 10000;
+
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -594,7 +597,11 @@ export default {
         })
         .filter((r) => r.sourceText);
 
-      this.setting["historyList"] = [...records, ...this.savedList];
+      // respect the same cap as auto-records (drop oldest beyond MAX_SAVED)
+      this.setting["historyList"] = [...records, ...this.savedList].slice(
+        0,
+        MAX_SAVED
+      );
     },
     downloadCSV() {
       const csvContent = this.getCsvContent();
