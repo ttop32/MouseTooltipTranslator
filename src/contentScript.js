@@ -604,9 +604,9 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
-  // Ctrl+Shift+1..9 -> save into the group whose shortcut matches.
+  // Ctrl+Shift+0..9 -> save into the group whose shortcut matches.
   // A group's effective key defaults to "CtrlShift<id>" when unset.
-  if (e.ctrlKey && e.shiftKey && /^Digit[1-9]$/.test(e.code)) {
+  if (e.ctrlKey && e.shiftKey && /^Digit[0-9]$/.test(e.code)) {
     var combo = "CtrlShift" + e.code.replace("Digit", "");
     var group = (setting["wordGroups"] || []).find(
       (g) => (g.key ?? "CtrlShift" + g.id) === combo
@@ -684,6 +684,11 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     }
     if (setting["keyDownAutoReader"]==key) {
       startAutoReader();
+    }
+    // per-group save shortcut using a single allowed key (Ctrl/Alt/F2/click...)
+    var saveGroup = (setting["wordGroups"] || []).find((g) => g.key === key);
+    if (saveGroup) {
+      util.requestSaveTranslation(saveGroup.id);
     }
     // if (setting["keyHoldMouseoverTextType"]==key) {
     //   setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";

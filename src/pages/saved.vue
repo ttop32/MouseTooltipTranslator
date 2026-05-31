@@ -216,7 +216,7 @@
 <script>
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
-import { defaultData } from "/src/util/setting_default.js";
+import { defaultData, settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
 // every saved/history entry belongs to a group; entries without an
@@ -294,8 +294,15 @@ export default {
     },
     groupKeyOptions() {
       const opts = [{ title: "None", value: "null" }];
-      for (let i = 1; i <= 9; i++) {
+      // Ctrl+Shift+0..9 combos
+      for (let i = 0; i <= 9; i++) {
         opts.push({ title: `Ctrl+Shift+${i}`, value: `CtrlShift${i}` });
+      }
+      // existing single keys (Ctrl/Alt/Shift/Meta/Click/F-keys) from keyList
+      for (const [title, value] of Object.entries(
+        settingDict["keySecondaryLang"].optionList
+      )) {
+        if (value !== "null") opts.push({ title, value });
       }
       // auto-save triggers (replaces the old global "Record when")
       opts.push({ title: "On Select", value: "select" });
