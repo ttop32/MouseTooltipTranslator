@@ -14,7 +14,7 @@
     </BackHeader>
 
     <div class="saved-board">
-      <!-- group filter + save shortcut key -->
+      <!-- group filter + sort + save shortcut key -->
       <div class="saved-controls px-4 pt-2">
         <v-select
           v-model="groupFilter"
@@ -24,6 +24,21 @@
           variant="underlined"
           hide-details
         ></v-select>
+        <v-select
+          v-model="sortKey"
+          :items="sortFieldOptions"
+          label="Sort by"
+          density="compact"
+          variant="underlined"
+          hide-details
+        ></v-select>
+        <v-btn
+          :icon="sortDesc ? 'mdi-sort-descending' : 'mdi-sort-ascending'"
+          :title="sortDesc ? 'Descending' : 'Ascending'"
+          variant="text"
+          size="small"
+          @click="sortDesc = !sortDesc"
+        ></v-btn>
         <v-select
           v-model="setting['keySaveWord']"
           :items="keyOptions"
@@ -194,6 +209,15 @@ export default {
       page: 1,
       itemsPerPage: 20,
       groupFilter: null, // null = all groups
+      sortKey: "date",
+      sortDesc: true, // newest first by default
+      sortFieldOptions: [
+        { title: "Date", value: "date" },
+        { title: "Source", value: "sourceText" },
+        { title: "Translation", value: "targetText" },
+        { title: "Source Lang", value: "sourceLang" },
+        { title: "Target Lang", value: "targetLang" },
+      ],
       groupDialog: false,
       editGroups: [], // local edit buffer for the group dialog
       toolbarButtons: {
@@ -243,12 +267,22 @@ export default {
         (item) => (item.groupId ?? DEFAULT_GROUP_ID) === this.groupFilter
       );
     },
+    // filtered + sorted; drives both the board and the CSV export
+    displayList() {
+      const key = this.sortKey;
+      const dir = this.sortDesc ? -1 : 1;
+      return [...this.filteredList].sort((a, b) => {
+        const av = String(a?.[key] ?? "");
+        const bv = String(b?.[key] ?? "");
+        return dir * av.localeCompare(bv, undefined, { sensitivity: "base" });
+      });
+    },
     pageCount() {
-      return Math.max(1, Math.ceil(this.filteredList.length / this.itemsPerPage));
+      return Math.max(1, Math.ceil(this.displayList.length / this.itemsPerPage));
     },
     pagedRows() {
       const start = (this.page - 1) * this.itemsPerPage;
-      return this.filteredList
+      return this.displayList
         .slice(start, start + this.itemsPerPage)
         .map((item, i) => ({ item, no: start + i + 1 }));
     },
@@ -258,6 +292,12 @@ export default {
       if (this.page > newCount) this.page = newCount;
     },
     groupFilter() {
+      this.page = 1;
+    },
+    sortKey() {
+      this.page = 1;
+    },
+    sortDesc() {
       this.page = 1;
     },
     // commit the local group buffer once when the dialog closes
@@ -346,7 +386,8 @@ export default {
     },
     getCsvContent() {
       const headerKey = this.getHeaderKey();
-      let csvContent = this.savedList.map((history) => {
+      // export what is currently shown (current group filter + sort order)
+      let csvContent = this.displayList.map((history) => {
         let line = "";
         headerKey.forEach(
           (key) =>
@@ -366,7 +407,12 @@ export default {
       const url = "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(csvContent);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "Mouse_Tooltip_Translator_Saved.csv";
+      const groupName =
+        this.groupFilter == null
+          ? "All"
+          : this.groups.find((g) => g.id === this.groupFilter)?.name ||
+            this.groupFilter;
+      link.download = `Mouse_Tooltip_Translator_Saved_${groupName}.csv`;
       link.click();
     },
   },
