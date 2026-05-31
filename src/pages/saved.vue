@@ -63,7 +63,7 @@
                 @update:model-value="toggleSelectAllPage"
               ></v-checkbox>
             </th>
-            <th class="text-center" style="width: 40px">#</th>
+            <th class="text-center num-col">#</th>
             <th
               v-for="col in columns"
               :key="col.key"
@@ -93,7 +93,7 @@
                 @update:model-value="() => toggleSelect(row.item)"
               ></v-checkbox>
             </td>
-            <td class="text-center text-disabled">{{ row.no }}</td>
+            <td class="text-center text-disabled num-col">{{ row.no }}</td>
             <td class="text-left text-medium-emphasis text-no-wrap">
               {{ formatDate(row.item.date) }}
             </td>
@@ -600,6 +600,13 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+/* # number column: never truncate */
+.saved-table :deep(.num-col) {
+  width: 56px;
+  min-width: 56px;
+  overflow: visible;
+  text-overflow: clip;
 }
 .sortable-th {
   cursor: pointer;
