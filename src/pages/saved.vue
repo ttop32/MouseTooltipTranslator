@@ -524,7 +524,6 @@ export default {
         "sourceText",
         "targetText",
         "dict",
-        "actionType",
         "translator",
         "group", // group name (not the numeric id)
       ];
