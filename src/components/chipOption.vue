@@ -6,13 +6,13 @@
     v-model="setting[settingName]"
   >
     <v-chip
-      v-for="chipName in chipData"
-      :value="chipName"
-      :key="chipName"
+      v-for="chip in chipData"
+      :value="getChipValue(chip)"
+      :key="getChipValue(chip)"
       filter
       @click="handleClick"
     >
-      {{ chipName }}
+      {{ getChipLabel(chip) }}
     </v-chip>
   </v-chip-group>
 </template>
@@ -28,6 +28,13 @@ export default {
     ...mapState(useSettingStore, ["setting"]),
   },
   methods: {
+    // chipData items may be plain strings or { title, value } objects
+    getChipValue(chip) {
+      return typeof chip === "object" && chip !== null ? chip.value : chip;
+    },
+    getChipLabel(chip) {
+      return typeof chip === "object" && chip !== null ? chip.title : chip;
+    },
     handleClick() {
       this.$emit("click");
     },

@@ -5,6 +5,10 @@ import SettingUtil from "/src/util/setting_util.js";
 
 import { toRaw } from "vue";
 
+// saved-word group tags share the cardTagSelected list with action/lang tags;
+// prefixed to avoid colliding with actionType / sourceLang values
+const GROUP_TAG_PREFIX = "wordgroup:";
+
 // todo
 // popup
 // finished popup
@@ -174,10 +178,20 @@ export default class Deck {
       .length;
   }
   getDueDatedTagCards() {
-    var tags = this.setting["cardTagSelected"];
+    var tags = this.setting["cardTagSelected"] || [];
+    // word-group tags are optional: only narrow by group when at least one
+    // group tag is selected, otherwise keep all groups (backward compatible)
+    var selectedGroupTags = tags.filter(
+      (t) => typeof t === "string" && t.startsWith(GROUP_TAG_PREFIX)
+    );
     return this.setting["historyList"]
       .filter(
         (c) => tags?.includes(c.actionType) && tags?.includes(c.sourceLang)
+      )
+      .filter(
+        (c) =>
+          selectedGroupTags.length === 0 ||
+          selectedGroupTags.includes(GROUP_TAG_PREFIX + (c.groupId ?? 0))
       )
       .filter((c) => util.isDueDate(c.scheduledDate))
       .sort((card1, card2) =>
@@ -437,7 +451,13 @@ export default class Deck {
     var allCard = this.getAllCard();
     var actions = allCard.map((c) => c.actionType);
     var sourceLangs = allCard.map((c) => c.sourceLang);
-    return _.uniq(_.concat(actions, sourceLangs));
+    var tags = _.uniq(_.concat(actions, sourceLangs));
+    // append saved-word groups as { title, value } chips
+    var groupTags = (this.setting["wordGroups"] || []).map((g) => ({
+      title: g.name,
+      value: GROUP_TAG_PREFIX + g.id,
+    }));
+    return _.concat(tags, groupTags);
   }
   resetFlashcard() {
     this.setting["cardTagSelected"] = [];
