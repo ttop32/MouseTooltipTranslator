@@ -23,6 +23,10 @@ import {
 } from "/src/event/mouseover";
 import * as util from "/src/util";
 import * as dom_util from "/src/util/dom";
+import {
+  refreshSavedWordHighlight,
+  cleanupSavedWordHighlight,
+} from "/src/event/savedHighlight.js";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
@@ -88,6 +92,7 @@ var listenText = "";
     loadSpeechRecognition();
     startMouseoverDetector(); // start current mouseover text detector
     startTextSelectDetector(); // start current text select detector
+    refreshSavedWordHighlight(setting); // highlight saved words (enabled groups only)
   } catch (error) {
     console.log(error);
   }
@@ -599,6 +604,19 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
+  // Ctrl+Shift+1..9 -> save into the group whose shortcut matches.
+  // A group's effective key defaults to "CtrlShift<id>" when unset.
+  if (e.ctrlKey && e.shiftKey && /^Digit[1-9]$/.test(e.code)) {
+    var combo = "CtrlShift" + e.code.replace("Digit", "");
+    var group = (setting["wordGroups"] || []).find(
+      (g) => (g.key ?? "CtrlShift" + g.id) === combo
+    );
+    if (group) {
+      e.preventDefault();
+      util.requestSaveTranslation(group.id);
+      return;
+    }
+  }
   //if user pressed ctrl+f  ctrl+a, hide tooltip
   if (/KeyA|KeyF/.test(e.code) && e.ctrlKey) {
     mouseMoved = false;
@@ -908,6 +926,7 @@ async function getSetting() {
     applyStyleSetting();
     checkVideo();
     speech.initSpeechRecognitionLang(setting);
+    refreshSavedWordHighlight(setting); // re-highlight on group enable/color change
   });
 }
 
@@ -1244,6 +1263,7 @@ function loadDestructor() {
 function destructor() {
   resetTooltipStatus();
   removePrevElement(); //remove element
+  cleanupSavedWordHighlight(); //disconnect highlight observer + unwrap highlights
   controller.abort(); //clear all event Listener by controller signal
 }
 

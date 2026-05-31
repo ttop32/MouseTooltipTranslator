@@ -53,7 +53,6 @@ import _ from "lodash";
 import { mapState } from "pinia";
 import { useAlertStore } from "/src/stores/alert.js";
 import { useSettingStore } from "/src/stores/setting.js";
-import { langListOpposite } from "/src/util/lang.js";
 import * as util from "/src/util";
 import Deck from "../../flashcard/deck";
 
@@ -76,28 +75,18 @@ export default {
 
       filterTagOptions: [],
       cardPlayPath: "/deck/card",
-      tagOptionTitle: "Select tag to play (Create card using history)",
+      tagOptionTitle: "Select group to play (saved words)",
       popupAlertData: {
         noHistoryData: {
           title: "No History Data",
           description:
-            "Flashcard makes card based on history data. Try to turn on history record.",
+            "Flashcard makes card based on saved words. Try saving some words first.",
           checkFunc: this.checkNoHistory,
         },
         noTagSelected: {
-          title: "No Tag Selected",
-          description: "Check Tags to Play.",
+          title: "No Group Selected",
+          description: "Check groups to play.",
           checkFunc: this.checkNoTag,
-        },
-        noActionTagSelected: {
-          title: "No Action Tag Selected",
-          description: "Check Tags to Play.",
-          checkFunc: this.checkNoActionTag,
-        },
-        noLangTagSelected: {
-          title: "No Language Tag Selected",
-          description: "Check Tags to Play.",
-          checkFunc: this.checkNoLangTag,
         },
         todayDayPlayDone: {
           title: "Today play is completed",
@@ -163,14 +152,6 @@ export default {
     },
     checkNoTag() {
       return this.setting["cardTagSelected"].length == 0;
-    },
-    checkNoActionTag() {
-      return !["mouseover", "select", "shortcutkey", "listen"].some((i) =>
-        this.setting["cardTagSelected"].includes(i)
-      );
-    },
-    checkNoLangTag() {
-      return !this.setting["cardTagSelected"].some((i) => langListOpposite[i]);
     },
     checkTodayFlashcardFinish() {
       return this.deck.checkTodayPlayFinish();

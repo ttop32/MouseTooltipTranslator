@@ -13,6 +13,7 @@ import _util from "/src/util/lodash_util.js";
 
 var setting;
 var recentTranslated = "";
+const DEFAULT_WORD_GROUP_ID = 1; // default saved-word group
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
 var recentRecord = {};
@@ -56,6 +57,10 @@ function addMessageListener() {
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
         updateCopyContext(request.data);
+        sendResponse({});
+      } else if (request.type === "saveTranslation") {
+        // in-page save key / Ctrl+Shift+1..5 -> force record into target group
+        insertHistory("shortcutkey", request?.data?.groupId);
         sendResponse({});
       } else if (request.type === "requestBase64") {
         var base64Url = await util.getBase64(request.url);
@@ -109,45 +114,63 @@ function recordHistory({
     date: util.getDateNow(),
     translator: setting["translatorVendor"],
   };
-  insertHistory();
+  insertHistory(); // auto-record path (group decided by each group's key)
 }
 
-function insertHistory(actionType) {
-  if (
-    setting["historyRecordActions"].includes(recentRecord.actionType) ||
-    actionType
-  ) {
-    var newRecord = actionType
-      ? TextUtil.concatJson(recentRecord, { actionType })
-      : recentRecord;
-    var prevRecord = setting["historyList"][0];
+// which group auto-saves this action ("select"/"mouseover"); null = none.
+// a group's key may be "select" / "mouseover" / "both" (exact wins over both)
+function getAutoGroupId(action) {
+  var groups = setting["wordGroups"] || [];
+  var exact = groups.find((g) => g.key === action);
+  if (exact) return exact.id;
+  var both = groups.find((g) => g.key === "both");
+  return both ? both.id : null;
+}
 
-    //skip if same prev
-    if (_util.getRecordID(newRecord) == _util.getRecordID(prevRecord)) {
+function insertHistory(actionType, groupId) {
+  var isExplicit = !!actionType; // manual save (Ctrl+Shift+N / right-click)
+  var targetGroupId;
+  if (isExplicit) {
+    targetGroupId = groupId != null ? groupId : DEFAULT_WORD_GROUP_ID;
+  } else {
+    // auto-record: only when a group is configured to auto-save this action
+    targetGroupId = getAutoGroupId(recentRecord.actionType);
+    if (targetGroupId == null) {
       return;
     }
-    //skip duplicate select
-    if (
-      newRecord.actionType == "select" &&
-      newRecord.sourceText.includes(setting["historyList"]?.[0]?.sourceText)
-    ) {
-      setting["historyList"].shift();
-    }
-
-    // save
-    setting["historyList"].unshift(newRecord);
-    //remove when too many list
-    if (setting["historyList"].length > 10000) {
-      setting["historyList"].pop();
-    }
-    setting.save();
   }
+
+  var base = isExplicit
+    ? TextUtil.concatJson(recentRecord, { actionType })
+    : recentRecord;
+  var newRecord = TextUtil.concatJson(base, { groupId: targetGroupId });
+  var prevRecord = setting["historyList"][0];
+
+  //skip if same prev
+  if (_util.getRecordID(newRecord) == _util.getRecordID(prevRecord)) {
+    return;
+  }
+  //skip duplicate select
+  if (
+    newRecord.actionType == "select" &&
+    newRecord.sourceText.includes(setting["historyList"]?.[0]?.sourceText)
+  ) {
+    setting["historyList"].shift();
+  }
+
+  // save
+  setting["historyList"].unshift(newRecord);
+  //remove when too many list
+  if (setting["historyList"].length > 10000) {
+    setting["historyList"].pop();
+  }
+  setting.save();
 }
 
 function addSaveTranslationKeyListener() {
-  util.addCommandListener("save-translation", () =>
-    insertHistory("shortcutkey")
-  );
+  // right-click "Save" -> default group (1). Ctrl+Shift+1..5 are handled
+  // in-page (contentScript) and routed via the saveTranslation message.
+  util.addContextListener("save", () => insertHistory("shortcutkey"));
 }
 
 // ================= Copy
@@ -160,10 +183,17 @@ function addCopyRequestListener() {
 async function updateCopyContext({ targetText }) {
   // remove previous
   await removeContext("copy");
+  await removeContext("save");
   //create new menu
   browser.contextMenus.create({
     id: "copy",
     title: "Copy : " + TextUtil.truncate(targetText, 20),
+    contexts: ["all"],
+    visible: true,
+  });
+  browser.contextMenus.create({
+    id: "save",
+    title: "Save : " + TextUtil.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });
