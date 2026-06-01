@@ -1,7 +1,7 @@
 <template>
   <popupWindow>
     <!-- top nav bar (no back button: opened as a standalone tab) -->
-    <BackHeader title="Saved Words" :hideBack="true">
+    <BackHeader :title='$t("Saved_Words")' :hideBack="true">
       <v-btn
         v-for="buttonData in toolbarButtons"
         :key="buttonData.name"
@@ -19,7 +19,7 @@
         <v-select
           v-model="groupFilter"
           :items="groupFilterOptions"
-          label="Group"
+          :label='$t("Group")'
           density="compact"
           variant="underlined"
           hide-details
@@ -36,19 +36,19 @@
           color="primary"
           density="compact"
           hide-details
-          label="Right-click menu"
-          title="Add right-click context menu (Copy + Save to each group)"
+          :label='$t("Right_click_menu")'
+          :title='$t("Add_right_click_context_menu")'
           @update:model-value="setSaveContextMenu"
         ></v-switch>
       </div>
 
       <!-- bulk action bar (shown when rows are selected) -->
       <div v-if="selected.length" class="saved-bulk px-4 py-1">
-        <span class="text-caption">{{ selected.length }} selected</span>
+        <span class="text-caption">{{ selected.length }} {{ $t("selected") }}</span>
         <v-select
           :model-value="null"
           :items="groupSelectOptions"
-          label="Move to group"
+          :label='$t("Move_to_group")'
           density="compact"
           variant="underlined"
           hide-details
@@ -61,9 +61,11 @@
           color="red"
           prepend-icon="mdi-trash-can"
           @click="deleteSelected"
-          >Delete</v-btn
+          >{{ $t("Delete") }}</v-btn
         >
-        <v-btn variant="text" size="small" @click="clearSelection">Clear</v-btn>
+        <v-btn variant="text" size="small" @click="clearSelection">{{
+          $t("Clear")
+        }}</v-btn>
       </div>
 
       <!-- board style list; click a header to sort by that column -->
@@ -97,7 +99,7 @@
         <tbody>
           <tr v-if="!displayList.length">
             <td :colspan="columns.length + 2" class="text-center text-disabled py-6">
-              No saved words yet
+              {{ $t("No_saved_words_yet") }}
             </td>
           </tr>
           <tr v-for="row in pagedRows" :key="row.no">
@@ -145,7 +147,7 @@
     <v-dialog v-model="groupDialog" max-width="560">
       <v-card>
         <v-card-title class="d-flex align-center">
-          Manage Groups
+          {{ $t("Manage_Groups") }}
           <v-spacer></v-spacer>
           <v-btn icon variant="text" size="small" @click="addGroup">
             <v-icon>mdi-plus</v-icon>
@@ -187,7 +189,7 @@
             <v-select
               v-model="group.key"
               :items="groupKeyOptions"
-              label="Save key"
+              :label='$t("Save_key")'
               density="compact"
               variant="underlined"
               hide-details
@@ -200,7 +202,7 @@
               color="primary"
               density="compact"
               hide-details
-              title="Highlight on page"
+              :title='$t("Highlight_on_page")'
               class="ml-3"
             ></v-switch>
 
@@ -219,7 +221,9 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn variant="text" @click="groupDialog = false">Done</v-btn>
+          <v-btn variant="text" @click="groupDialog = false">{{
+            $t("Done")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -227,9 +231,12 @@
 </template>
 <script>
 import { mapState } from "pinia";
+import browser from "webextension-polyfill";
 import { useSettingStore } from "/src/stores/setting.js";
 import { defaultData, settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
+
+const t = (key) => browser.i18n.getMessage(key) || key;
 
 // every saved/history entry belongs to a group; entries without an
 // explicit group are treated as group 1 (the default group)
@@ -260,36 +267,36 @@ export default {
       sortDesc: true, // newest first by default
       // data columns (in table order); headers are click-to-sort
       columns: [
-        { key: "date", label: "Date", width: "150px" },
-        { key: "sourceText", label: "Source" }, // flexible
-        { key: "targetText", label: "Translation" }, // flexible
-        { key: "groupId", label: "Group", width: "110px" },
+        { key: "date", label: t("Date"), width: "150px" },
+        { key: "sourceText", label: t("Source") }, // flexible
+        { key: "targetText", label: t("Translation") }, // flexible
+        { key: "groupId", label: t("Group"), width: "110px" },
       ],
       selected: [], // selected entry references for bulk move
       groupDialog: false,
       editGroups: [], // local edit buffer for the group dialog
       toolbarButtons: {
         groups: {
-          name: "Manage groups",
-          title: "Manage groups",
+          name: "groups",
+          title: t("Manage_Groups"),
           icon: "mdi-tag-multiple",
           func: this.openGroupDialog,
         },
         remove: {
-          name: "Remove all",
-          title: "Remove all",
+          name: "remove",
+          title: t("Remove_all"),
           icon: "mdi-trash-can",
           func: this.removeAllSaved,
         },
         importCsv: {
-          name: "Import CSV",
-          title: "Import CSV",
+          name: "importCsv",
+          title: t("Import_CSV"),
           icon: "mdi-upload",
           func: this.importCSV,
         },
         download: {
-          name: "Download CSV",
-          title: "Download CSV",
+          name: "download",
+          title: t("Download_CSV"),
           icon: "mdi-download",
           func: this.downloadCSV,
         },
@@ -309,7 +316,7 @@ export default {
       return this.setting["wordGroups"] || [];
     },
     groupKeyOptions() {
-      const opts = [{ title: "None", value: "null" }];
+      const opts = [{ title: t("None"), value: "null" }];
       // Ctrl+Shift+0..9 combos
       for (let i = 0; i <= 9; i++) {
         opts.push({ title: `Ctrl+Shift+${i}`, value: `CtrlShift${i}` });
@@ -321,16 +328,16 @@ export default {
         if (value !== "null") opts.push({ title, value });
       }
       // auto-save triggers (replaces the old global "Record when")
-      opts.push({ title: "On Select", value: "select" });
-      opts.push({ title: "On Hover", value: "mouseover" });
-      opts.push({ title: "On Select + Hover", value: "both" });
+      opts.push({ title: t("On_Select"), value: "select" });
+      opts.push({ title: t("On_Hover"), value: "mouseover" });
+      opts.push({ title: t("On_Select_n_Hover"), value: "both" });
       return opts;
     },
     groupSelectOptions() {
       return this.groups.map((g) => ({ title: g.name, value: g.id }));
     },
     groupFilterOptions() {
-      return [{ title: "All", value: null }, ...this.groupSelectOptions];
+      return [{ title: t("All"), value: null }, ...this.groupSelectOptions];
     },
     filteredList() {
       if (this.groupFilter == null) return this.savedList;

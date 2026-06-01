@@ -51,10 +51,13 @@
 <script>
 import _ from "lodash";
 import { mapState } from "pinia";
+import browser from "webextension-polyfill";
 import { useAlertStore } from "/src/stores/alert.js";
 import { useSettingStore } from "/src/stores/setting.js";
 import * as util from "/src/util";
 import Deck from "../../flashcard/deck";
+
+const t = (key) => browser.i18n.getMessage(key) || key;
 
 export default {
   name: "FlashCardMenu",
@@ -75,17 +78,16 @@ export default {
 
       filterTagOptions: [],
       cardPlayPath: "/deck/card",
-      tagOptionTitle: "Select group to play (saved words)",
+      tagOptionTitle: t("Select_group_to_play"),
       popupAlertData: {
         noHistoryData: {
           title: "No History Data",
-          description:
-            "Flashcard makes card based on saved words. Try saving some words first.",
+          description: t("Flashcard_makes_cards_from_your_saved_words"),
           checkFunc: this.checkNoHistory,
         },
         noTagSelected: {
-          title: "No Group Selected",
-          description: "Check groups to play.",
+          title: t("No_Group_Selected"),
+          description: t("Check_groups_to_play"),
           checkFunc: this.checkNoTag,
         },
         todayDayPlayDone: {

@@ -25,6 +25,7 @@ import "vuetify/dist/vuetify.min.css"; //vuetify css
 import { vMaska } from "maska";
 
 import SettingUtil from "/src/util/setting_util.js";
+import browser from "webextension-polyfill";
 
 var lang = SettingUtil.getDefaultLang();
 var messages = {};
@@ -62,7 +63,10 @@ const vuetify = createVuetify({
   },
 });
 
-createApp(App)
+const app = createApp(App);
+// global i18n helper: {{ $t("Saved_Words") }} -> localized message (key fallback)
+app.config.globalProperties.$t = (key) => browser.i18n.getMessage(key) || key;
+app
   .directive("maska", vMaska)
   .use(vuetify)
   .use(createPinia())

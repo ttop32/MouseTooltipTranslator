@@ -315,7 +315,7 @@ var toolbarIcons = {
     path: "/deck",
   },
   saved: {
-    title: "saved words",
+    title: browser.i18n.getMessage("Saved_Words"),
     icon: "mdi-bookmark-multiple",
     path: "/saved",
     newTab: true, // open saved-words board in a full browser tab

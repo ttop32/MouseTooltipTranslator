@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.222
+  - Localize the Saved Words page, flashcard group menu, and saved-words toolbar (i18n via _locales) instead of hardcoded English
 - 0.1.221
   - Add a single right-click context menu toggle on the Saved Words page: on registers all menus (Copy + Save to each group), off registers none (default off)
 - 0.1.220
