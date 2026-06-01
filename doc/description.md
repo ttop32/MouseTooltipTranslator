@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.221
+  - Add a single right-click context menu toggle on the Saved Words page: on registers all menus (Copy + Save to each group), off registers none (default off)
 - 0.1.220
   - Add Saved Words page with word groups (group color highlight on page, per-group save shortcut)
   - Save words with Ctrl+Shift+1~5 or on select/hover, manage them in a board (sort, filter, bulk move/delete, CSV import/export)

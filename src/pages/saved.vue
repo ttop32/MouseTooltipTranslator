@@ -28,6 +28,18 @@
           {{ savedList.length.toLocaleString() }} /
           {{ maxSaved.toLocaleString() }}
         </span>
+        <v-spacer></v-spacer>
+        <!-- master toggle: on -> register all right-click menus (Copy + a
+             "Save to <group>" per group); off -> register none -->
+        <v-switch
+          :model-value="saveContextMenu"
+          color="primary"
+          density="compact"
+          hide-details
+          label="Right-click menu"
+          title="Add right-click context menu (Copy + Save to each group)"
+          @update:model-value="setSaveContextMenu"
+        ></v-switch>
       </div>
 
       <!-- bulk action bar (shown when rows are selected) -->
@@ -192,19 +204,6 @@
               class="ml-3"
             ></v-switch>
 
-            <!-- right-click "Save to <group>" context menu on/off -->
-            <v-checkbox
-              v-model="group.context"
-              density="compact"
-              hide-details
-              title="Add right-click save menu"
-              class="ml-2"
-            >
-              <template v-slot:label>
-                <v-icon size="small">mdi-menu</v-icon>
-              </template>
-            </v-checkbox>
-
             <!-- delete (default group not deletable) -->
             <v-btn
               icon
@@ -301,6 +300,10 @@ export default {
     ...mapState(useSettingStore, ["setting"]),
     savedList() {
       return this.setting["historyList"] || [];
+    },
+    // master right-click context-menu toggle (Copy + Save to each group)
+    saveContextMenu() {
+      return !!this.setting["saveContextMenu"];
     },
     groups() {
       return this.setting["wordGroups"] || [];
@@ -455,6 +458,9 @@ export default {
       });
       if (changed) this.setting["historyList"] = normalized;
     },
+    setSaveContextMenu(val) {
+      this.setting["saveContextMenu"] = !!val;
+    },
     getGroupColor(groupId) {
       const group = this.groups.find((g) => g.id === (groupId ?? DEFAULT_GROUP_ID));
       return group?.color || "transparent";
@@ -531,7 +537,6 @@ export default {
         color: "#21dc6d40",
         enabled: true,
         key: nextId <= 9 ? `CtrlShift${nextId}` : "null",
-        context: false,
       });
     },
     removeGroup(group) {

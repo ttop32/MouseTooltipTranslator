@@ -92,7 +92,16 @@ function addMessageListener() {
 //setting ============================================================
 
 async function getSetting() {
-  setting = await SettingUtil.loadSetting();
+  setting = await SettingUtil.loadSetting(onSettingChanged);
+}
+
+// react to live setting changes from the popup / Saved Words page
+function onSettingChanged(changes) {
+  // master right-click-menu toggle flipped: rebuild (on) or clear (off) now,
+  // instead of waiting for the next tooltip to call updateContextMenus.
+  if (changes["saveContextMenu"]) {
+    updateContextMenus({ targetText: recentTranslated });
+  }
 }
 
 function recordHistory({
@@ -182,8 +191,13 @@ function addCopyRequestListener() {
 }
 
 async function updateContextMenus({ targetText }) {
-  // rebuild our menus: Copy by default + one Save per context-enabled group
+  recentTranslated = targetText;
   await browser.contextMenus.removeAll();
+  // master toggle (controlled on the Saved Words page): off -> register no
+  // right-click menus at all; on -> Copy + one "Save to <group>" per group.
+  if (!setting["saveContextMenu"]) {
+    return;
+  }
   browser.contextMenus.create({
     id: "copy",
     title: "Copy : " + TextUtil.truncate(targetText, 20),
@@ -191,16 +205,13 @@ async function updateContextMenus({ targetText }) {
     visible: true,
   });
   for (const group of setting["wordGroups"] || []) {
-    if (group.context) {
-      browser.contextMenus.create({
-        id: "save-group-" + group.id,
-        title: "Save to " + group.name,
-        contexts: ["all"],
-        visible: true,
-      });
-    }
+    browser.contextMenus.create({
+      id: "save-group-" + group.id,
+      title: "Save to " + group.name,
+      contexts: ["all"],
+      visible: true,
+    });
   }
-  recentTranslated = targetText;
 }
 
 async function removeContext(id) {
