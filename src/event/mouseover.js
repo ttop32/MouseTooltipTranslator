@@ -587,7 +587,26 @@ export function getNextExpandedRange(range, detectType) {
     offsetIncrement += 1;
   }
 
+  // expand("sentence") on inline elements (e.g. <em> containing <img>) can return
+  // a range with the same start as the current range, meaning it expanded backward
+  // into already-read content. Clip to start from where we left off.
+  if (nextRange && rangeHasSameStart(nextRange, range)) {
+    try {
+      const clipped = nextRange.cloneRange();
+      clipped.setStart(range.endContainer, range.endOffset);
+      if (clipped.toString().trim()) return clipped;
+    } catch {}
+    return null;
+  }
+
   return nextRange;
+}
+
+function rangeHasSameStart(nextRange, range) {
+  return (
+    nextRange.startContainer === range.startContainer &&
+    nextRange.startOffset === range.startOffset
+  );
 }
 
 function checkSameRange(range1, range2) {
@@ -598,11 +617,40 @@ function checkSameRange(range1, range2) {
     range1.endOffset === range2.endOffset
   );
 }
+function getFirstTextInNode(node) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    return { node, index: 0 };
+  }
+  for (const child of node.childNodes) {
+    const result = getFirstTextInNode(child);
+    if (result) return result;
+  }
+  return null;
+}
+
 function getNextRange(range, offsetIncrement = 1) {
-  const endContainer = range.endContainer;
-  const endOffset = range.endOffset;
+  let endContainer = range.endContainer;
+  let endOffset = range.endOffset;
   const rangeClone = range.cloneRange();
-  const nextNodeAndOffset = getNextNodeAndOffset(endContainer, endOffset + offsetIncrement);
+  let nextNodeAndOffset;
+
+  if (endContainer.nodeType !== Node.TEXT_NODE) {
+    // endOffset is a child-node index; find the first text node starting from that child
+    for (let i = endOffset; i < endContainer.childNodes.length; i++) {
+      nextNodeAndOffset = getFirstTextInNode(endContainer.childNodes[i]);
+      if (nextNodeAndOffset) break;
+    }
+    if (!nextNodeAndOffset) {
+      // no text in remaining children — advance past this element
+      nextNodeAndOffset = getNextNodeAndOffset(
+        getNextSiblingElement(endContainer),
+        0
+      );
+    }
+  } else {
+    nextNodeAndOffset = getNextNodeAndOffset(endContainer, endOffset + offsetIncrement);
+  }
+
   if (!nextNodeAndOffset) return null;
   const { node, index } = nextNodeAndOffset;
   rangeClone.setStart(node, index);
