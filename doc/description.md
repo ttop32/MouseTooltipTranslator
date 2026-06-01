@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.223
+  - Fix auto-reader loop at a paragraph ending with an inline element (e.g. image inside em); skip blank gaps when advancing (contributed by trysomeway)
 - 0.1.222
   - Localize the Saved Words page, flashcard group menu, and saved-words toolbar (i18n via _locales) instead of hardcoded English
 - 0.1.221
