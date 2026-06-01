@@ -587,19 +587,72 @@ export function getNextExpandedRange(range, detectType) {
     offsetIncrement += 1;
   }
 
-  // expand("sentence") on inline elements (e.g. <em> containing <img>) can return
-  // a range with the same start as the current range, meaning it expanded backward
-  // into already-read content. Clip to start from where we left off.
+  // expand("sentence") can snap back to the same start as the current range:
+  // it expanded backward into already-read content (e.g. across a text-less
+  // YouTube thumbnail/menu block, or an inline element at a paragraph end).
   if (nextRange && rangeHasSameStart(nextRange, range)) {
+    // first try the unread tail of this same sentence
     try {
       const clipped = nextRange.cloneRange();
       clipped.setStart(range.endContainer, range.endOffset);
       if (clipped.toString().trim()) return clipped;
     } catch {}
-    return null;
+    nextRange = null; // nothing new here
   }
 
-  return nextRange;
+  if (nextRange) return nextRange;
+
+  // normal advance found nothing new (a text-less gap or the end of a block).
+  // Walk forward to the next unread text and expand from there, so the reader
+  // keeps moving down a grid / list (e.g. a YouTube results list) instead of
+  // stopping at the first gap. Forward-only + ends at the last text node, so
+  // it can't loop.
+  return getForwardExpandedRange(range, detectType);
+}
+
+const MAX_FORWARD_SKIPS = 10; // un-expandable spots to step over before giving up
+
+function getForwardExpandedRange(range, detectType) {
+  const doc = range.endContainer.ownerDocument || document;
+  if (!doc.body) return null;
+
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) =>
+      n.textContent && n.textContent.trim()
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_SKIP,
+  });
+  // resume scanning right after the text we last read
+  walker.currentNode =
+    range.endContainer.nodeType === Node.TEXT_NODE
+      ? range.endContainer
+      : range.endContainer.childNodes[range.endOffset] || range.endContainer;
+
+  let skips = 0;
+  let textNode;
+  while ((textNode = walker.nextNode()) && skips < MAX_FORWARD_SKIPS) {
+    const seed = doc.createRange();
+    seed.setStart(textNode, 0);
+    seed.setEnd(textNode, 0);
+
+    const expanded = expandRange(seed, detectType);
+    if (!expanded || !expanded.toString().trim()) {
+      skips += 1;
+      continue;
+    }
+    // if it expanded backward into already-read content, clip to where we stopped
+    try {
+      if (expanded.compareBoundaryPoints(Range.END_TO_START, range) < 0) {
+        expanded.setStart(range.endContainer, range.endOffset);
+        if (!expanded.toString().trim()) {
+          skips += 1;
+          continue;
+        }
+      }
+    } catch {}
+    return expanded;
+  }
+  return null;
 }
 
 function rangeHasSameStart(nextRange, range) {
