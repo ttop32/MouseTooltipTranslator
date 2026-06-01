@@ -619,7 +619,8 @@ function checkSameRange(range1, range2) {
 }
 function getFirstTextInNode(node) {
   if (node.nodeType === Node.TEXT_NODE) {
-    return { node, index: 0 };
+    // skip empty / whitespace-only nodes so the reader doesn't land on a blank gap
+    return node.textContent?.trim() ? { node, index: 0 } : null;
   }
   for (const child of node.childNodes) {
     const result = getFirstTextInNode(child);
@@ -629,8 +630,8 @@ function getFirstTextInNode(node) {
 }
 
 function getNextRange(range, offsetIncrement = 1) {
-  let endContainer = range.endContainer;
-  let endOffset = range.endOffset;
+  const endContainer = range.endContainer;
+  const endOffset = range.endOffset;
   const rangeClone = range.cloneRange();
   let nextNodeAndOffset;
 
