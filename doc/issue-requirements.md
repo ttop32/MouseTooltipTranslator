@@ -13,9 +13,9 @@
 - `#4` (2021-08-15) — [기능] 드래그 선택 텍스트 번역 지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/4) — ✅ **적용됨** (코드: `src/event/selection.js`, translateWhen=select)
 - `#6` (2021-09-25) — RTL(오른쪽→왼쪽) 언어 정렬 지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/6) — ✅ **적용됨** (코드: 툴팁/자막 RTL 처리, tooltipTextAlign)
 - `#7` (2021-09-25) — 다양한 아이디어 모음 (개선 제안) — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/7)
-- `#8` (2021-09-26) — YouTube 자막이 컨테이너로 잘못 인식됨 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/8)
-- `#9` (2021-10-07) — 저장한 단어를 다른 색상으로 표시 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/9)
-- `#11` (2021-11-09) — PDF 링크 에러 수정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/11)
+- `#8` (2021-09-26) — YouTube 자막이 컨테이너로 잘못 인식됨 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/8) — ✅ **적용됨** (코드: 자막을 선택가능 DOM 텍스트로 렌더 `src/subtitle/baseVideo.js` listenCaptionHover + `user-select:text`, 일반 mouseover word/sentence/container 규칙 적용)
+- `#9` (2021-10-07) — 저장한 단어를 다른 색상으로 표시 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/9) — ✅ **적용됨** (코드: 그룹 색상 하이라이트 `src/event/savedHighlight.js`, 저장단어 그룹 `src/pages/saved.vue` wordGroups; 0.1.220~)
+- `#11` (2021-11-09) — PDF 링크 에러 수정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/11) — ✅ **적용됨** (코드: `getPDFUrl`의 `encodeURIComponent(url)` `src/util/index.js:243`, file= URL의 `&` 잘림 방지)
 
 ## 2022
 
@@ -26,7 +26,7 @@
 - `#17` (2022-05-29) — OCR 언어 자동 감지 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/17)
 - `#18` (2022-06-12) — Firefox 지원 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/18) — ✅ **적용됨** (코드: webextension-polyfill 기반, Firefox 빌드)
 - `#19` (2022-06-28) — Chrome 자동 페이지 번역이 팝업에 영향 주지 않게 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/19)
-- `#20` (2022-07-31) — Google 서버 번역 기능 깨짐 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/20)
+- `#20` (2022-07-31) — Google 서버 번역 기능 깨짐 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/20) — ✅ **해소** (현재 `google.js` gtx 엔드포인트 + googleGTX/googleV2/googleWeb 대체 + `fallbackTranslatorEngine` 자동 스왑 `translateCaller.js`)
 - `#21` (2022-10-14) — Firefox 애드온 버전 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/21) — ✅ **적용됨** (코드: Firefox 빌드 지원)
 - `#22` (2022-10-25) — 양쪽 정렬(justified) 텍스트 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/22) — ✅ **적용됨** (코드: tooltipTextAlign=justify)
 - `#23` (2022-11-14) — Firefox 브라우저용 확장 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/23) — ✅ **적용됨** (코드: Firefox 빌드 지원)
@@ -53,7 +53,7 @@
 - `#47` (2023-08-29) — 비주얼(외형) 커스터마이즈 불가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/47) — ✅ **적용됨** (코드: setting_default graphic 탭 옵션군)
 - `#48` (2023-08-30) — 사용 도움 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/48)
 - `#49` (2023-09-02) — OCR 사용법 문의 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/49)
-- `#50` (2023-09-07) — Bing 번역 소스 에러 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/50)
+- `#50` (2023-09-07) — Bing 번역 소스 에러 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/50) — ✅ **적용됨** (코드: `bing.js` www→`cn.bing.com` 토큰/번역 폴백 `useChina`, GFW로 www 차단 시 cn 사용)
 - `#54` (2023-09-14) — 확장 소리(TTS) 끄는 방법 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/54) — ✅ **적용됨** (코드: TTSWhen 키 지정으로 제어)
 - `#56` (2023-09-22) — 아랍어 번역 누락 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/56)
 - `#59` (2023-09-24) — 툴팁 애니메이션 변경 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/59) — ✅ **적용됨** (코드: tooltipAnimation 옵션)

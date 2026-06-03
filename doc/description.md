@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.225
+  - Fix TTS going silent or cutting off after the first part: keep the offscreen audio document alive during playback (AUDIO_PLAYBACK reason) so Chrome no longer auto-closes it (#221 #224 #225 #140)
+  - Bing translate: fall back to cn.bing.com when www.bing.com is blocked, e.g. in China (#50)
 - 0.1.224
   - Fix auto-reader null check (contributed by trysomeway)
   - Russian, English UK, English US localization (contributed by D0n-A)
