@@ -991,7 +991,11 @@ function applyStyleSetting() {
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
-    appendTo: isSticky ? tooltipContainerEle : document.body,
+    // function form so tippy re-evaluates the live <body> on every show; a
+    // static reference goes stale when an SPA / View Transitions navigation
+    // swaps document.body, leaving the tooltip appended to the detached old
+    // body (worked again only after a full reload). (#80)
+    appendTo: isSticky ? tooltipContainerEle : () => document.body,
     animation: setting["tooltipAnimation"],
   });
   var rtlDirection = getRtlDir(setting["translateTarget"]);
