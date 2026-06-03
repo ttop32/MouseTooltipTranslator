@@ -918,13 +918,33 @@ function addMsgListener() {
 
 function checkExcludeUrl() {
   var url = util.getCurrentUrl();
-  var isExcludeBan = matchUrl(url, setting["websiteExcludeList"]);
+  var isExcludeBan = matchSite(url, setting["websiteExcludeList"]);
   var isWhiteListBan =
     setting["websiteWhiteList"]?.length != 0 &&
-    !matchUrl(url, setting["websiteWhiteList"]);
+    !matchSite(url, setting["websiteWhiteList"]);
   if (isExcludeBan || isWhiteListBan) {
     return true;
   }
+}
+
+// Match a URL against a user site list. In addition to match-url-wildcard's
+// exact-host / explicit-wildcard rules, a bare domain entry ("example.com")
+// also matches its subdomains ("www.example.com", "m.example.com"), which is
+// what users expect when excluding/whitelisting a site (#197).
+function matchSite(url, list) {
+  if (!list || !list.length) {
+    return false;
+  }
+  if (matchUrl(url, list)) {
+    return true;
+  }
+  return list.some((entry) => {
+    var host = String(entry)
+      .replace(/^\w+:\/\//, "") // strip protocol
+      .replace(/[\/?#].*$/, "") // strip path/query/hash
+      .replace(/:\d+$/, ""); // strip port
+    return host && matchUrl(url, "*." + host);
+  });
 }
 
 // setting handling & container style===============================================================
