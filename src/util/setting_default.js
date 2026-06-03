@@ -790,8 +790,13 @@ async function exportSettingOnclickFunc() {
   const a = document.createElement("a");
   a.href = url;
   a.download = "mouse-tooltip-translator-settings.json";
+  // the anchor must be in the document for the download to fire in some
+  // browsers, and the object URL must outlive the click, else the download
+  // silently does nothing (#264)
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function resetSettingOnclickFunc() {
