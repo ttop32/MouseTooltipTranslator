@@ -111,7 +111,7 @@
 - `#145` (2024-07-22) — 앱에 새 도구 추가 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/145)
 - `#146` (2024-07-29) — 도움 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/146)
 - `#148` (2024-08-03) — 글쓰기 번역 단축키 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/148) — ✅ **적용됨** (코드: keyDownTranslateWriting 옵션)
-- `#149` (2024-08-03) — 위키낱말사전 소스 / 커스텀 소스 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/149)
+- `#149` (2024-08-03) — 위키낱말사전 소스 / 커스텀 소스 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/149) — ✅ **적용됨(Wiktionary)** (코드: `src/translator/wiktionary.js` REST definition API + 설정 `tooltipWordDictionarySource`=wiktionary → `translateCaller`에서 dict 교체. 커스텀 임의 소스는 범위 외)
 - `#150` (2024-08-07) — 번역 팁에서 원문 중복 숨기는 방법 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/150) — ✅ **적용됨** (코드: tooltipInfoSourceText off 기본값)
 - `#151` (2024-08-10) — YouTube에서 자막 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/151)
 - `#152` (2024-08-11) — 새 키 추가 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/152)
@@ -142,7 +142,7 @@
 ## 2025
 
 - `#195` (2025-01-02) — 언어별 다른 읽기 속도 설정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/195) — 🟡 **부분 적용** (코드: voiceTranslatedRate로 번역문 속도 별도 설정)
-- `#196` (2025-01-12) — 툴팁에 다른 단어 형태(활용형) 표시 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/196) — 🟡 **부분 적용** (코드: tooltipWordDictionary 사전 표시)
+- `#196` (2025-01-12) — 툴팁에 다른 단어 형태(활용형) 표시 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/196) — 🟡 **부분 적용** (코드: `google.js` dict가 품사별 여러 뜻 표시 `pos: terms` + Wiktionary 소스(#149)로 품사+정의 다중 표시; 활용형 자체는 미지원)
 - `#197` (2025-01-20) — 사이트 제외 기능 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/197)
 - `#198` (2025-02-04) — "현재 사이트 제외" 버튼 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/198) — ✅ **적용됨** (코드: websiteExcludeBtn `excludeCurrentWebsiteOnclickFunc`)
 - `#200` (2025-02-11) — 안드로이드 버전 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/200)
