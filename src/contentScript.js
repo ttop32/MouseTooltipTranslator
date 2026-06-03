@@ -386,21 +386,25 @@ function wrapDict(dict, targetLang) {
   if (!dict) {
     return "";
   }
-  var htmlText = wrapMain(dict, targetLang);
-  // wrap first text as bold
-  dict
+  // bold the "part-of-speech:" label at the start of each line. Done per line
+  // (not a global string replace) so repeated/substring/definition-embedded
+  // labels render correctly for any source (translator dict, Wiktionary, ...).
+  var html = dict
     .split("\n")
-    .map((line) => line.split(":")[0])
-    .map(
-      (text) =>
-        (htmlText = htmlText.replace(
-          text,
-          $("<b/>", {
-            text,
-          }).prop("outerHTML")
-        ))
-    );
-  return htmlText;
+    .map((line) => {
+      var idx = line.indexOf(":");
+      if (idx === -1) {
+        return $("<span/>", { text: line }).prop("outerHTML");
+      }
+      return (
+        $("<b/>", { text: line.slice(0, idx + 1) }).prop("outerHTML") +
+        $("<span/>", { text: line.slice(idx + 1) }).prop("outerHTML")
+      );
+    })
+    .join("\n");
+  return $("<span/>", { dir: getRtlDir(targetLang) })
+    .html(html)
+    .prop("outerHTML");
 }
 
 function wrapInfoText(text, type, dirLang = null) {
