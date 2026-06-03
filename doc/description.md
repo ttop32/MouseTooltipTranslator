@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.224
   - Fix auto-reader null check (contributed by trysomeway)
+  - Add UI localization for 50+ languages (translated via Crowdin)
 - 0.1.223
   - Fix auto-reader loop at a paragraph ending with an inline element (e.g. image inside em); skip blank gaps when advancing (contributed by trysomeway)
 - 0.1.222
