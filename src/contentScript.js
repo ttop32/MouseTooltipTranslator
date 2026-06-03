@@ -122,11 +122,21 @@ function stageTooltipTextHover(event, useEvent = true, resetStaged = false) {
   if (
     setting["translateWhen"].includes("mouseover") &&
     hoveredData &&
-    !isOtherServiceActive()
+    !isOtherServiceActive() &&
+    !isTooltipSuppressedWhileWriting()
   ) {
     var { mouseoverText, mouseoverRange } = hoveredData;
     stageTooltipText(mouseoverText, "mouseover", mouseoverRange);
   }
+}
+
+// #186: optionally suppress the mouseover tooltip while the user is typing in an
+// input / textarea / contenteditable, so it doesn't obscure what they type.
+function isTooltipSuppressedWhileWriting() {
+  return (
+    setting["mouseoverWhileWriting"] === "false" &&
+    !!dom_util.getFocusedWritingBox()
+  );
 }
 
 function stageTooltipTextSelect(event, useEvent = true) {

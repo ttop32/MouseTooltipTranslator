@@ -487,6 +487,12 @@ export var settingDict = {
     optionList: toggleList,
     settingTab: "advanced",
   },
+  mouseoverWhileWriting: {
+    default: "true",
+    i18nKey: "Show_Tooltip_While_Typing",
+    optionList: toggleList,
+    settingTab: "advanced",
+  },
   tooltipInfoSourceText: {
     default: "false",
     i18nKey: "Tooltip_Info_Source_Text",
