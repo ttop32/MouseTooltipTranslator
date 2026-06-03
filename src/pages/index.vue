@@ -162,10 +162,8 @@
               </v-btn>
             </div>
 
-            <v-list-item-title v-else-if="option.optionType == 'button'" class="ma-2" @click="option.onClickFuncName ? this[option.onClickFuncName]() : null">
-              <v-avatar :color="option.color" class="mr-2">
-              <v-icon size="25" color="white">{{ option.icon }}</v-icon>
-              </v-avatar>
+            <v-list-item-title v-else-if="option.optionType == 'button'" class="button-item" @click="option.onClickFuncName ? this[option.onClickFuncName]() : null">
+              <v-icon size="20" :color="option.color" class="mr-3">{{ option.icon }}</v-icon>
               {{ option.description }}
             </v-list-item-title>
 
@@ -585,5 +583,20 @@ export default {
   }
 }
 
+/* action rows (import/export/reset, block/allow site): keep them quiet so they
+   blend with the underlined select rows instead of standing out as big colored
+   buttons */
+.button-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 400;
+  cursor: pointer;
+  opacity: 0.85;
+}
 
+.button-item:hover {
+  opacity: 1;
+}
 </style>
