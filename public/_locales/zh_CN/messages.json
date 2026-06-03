@@ -200,6 +200,9 @@
 	"Tooltip_Word_Dictionary": {
 		"message": "工具提示词典"
 	},
+	"Tooltip_Word_Dictionary_Source": {
+		"message": "Tooltip Word Dictionary Source"
+	},
 	"Voice_Translated_Speed": {
 		"message": "语音翻译速度"
 	},
