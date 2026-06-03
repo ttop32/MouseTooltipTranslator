@@ -132,9 +132,12 @@ function stageTooltipTextHover(event, useEvent = true, resetStaged = false) {
 
 // #186: optionally suppress the mouseover tooltip while the user is typing in an
 // input / textarea / contenteditable, so it doesn't obscure what they type.
+// Google Docs is excluded so translation keeps working there (its editor is a
+// contenteditable surface but users still want the tooltip).
 function isTooltipSuppressedWhileWriting() {
   return (
     setting["mouseoverWhileWriting"] === "false" &&
+    !util.isGoogleDoc() &&
     !!dom_util.getFocusedWritingBox()
   );
 }

@@ -130,7 +130,7 @@
 - `#182` (2024-11-21) — 모든 기능 단축키 사용자 지정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/182) — ✅ **적용됨** (코드: setting_default keyboard 탭 키 옵션군)
 - `#183` (2024-11-21) — 번역 어휘 업데이트 제안 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/183)
 - `#185` (2024-11-23) — 읽어주기 버튼 + 직접 입력 번역 팝업 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/185)
-- `#186` (2024-11-26) — 입력 중 번역 텍스트 표시 비활성 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/186) — ✅ **적용됨** (기본 Off — 입력창(input/textarea/contenteditable) 포커스 중 mouseover 툴팁 억제. 설정 `mouseoverWhileWriting`(advanced)을 On으로 켜면 표시. `contentScript.js` `isTooltipSuppressedWhileWriting`)
+- `#186` (2024-11-26) — 입력 중 번역 텍스트 표시 비활성 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/186) — ✅ **적용됨** (기본 Off — 입력창(input/textarea/contenteditable) 포커스 중 mouseover 툴팁 억제. **Google Docs는 예외**로 유지. 설정 `mouseoverWhileWriting`(advanced)을 On으로 켜면 표시. `contentScript.js` `isTooltipSuppressedWhileWriting`)
 - `#187` (2024-11-27) — 이중 자막 배경 없어 가독성 떨어짐 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/187) — ✅ **적용됨** (코드: 자막 배경 스타일, `src/subtitle/`)
 - `#188` (2024-11-28) — Firefox 브라우저 지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/188) — ✅ **적용됨** (코드: Firefox 빌드 지원)
 - `#190` (2024-11-30) — Yandex 자연 음성 TTS, opensubtitles 연동 등 다수 제안 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/190) — 🟡 **부분 적용** (코드: `src/translator/yandex.js` / Yandex TTS·자막사이트 연동 미지원)
