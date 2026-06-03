@@ -185,6 +185,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "Chuột di vào phụ đề sẽ Tạm Dừng"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Thông tin nguồn văn bản"
 	},
@@ -199,6 +202,9 @@
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Từ điển giải thích của công cụ"
+	},
+	"Tooltip_Word_Dictionary_Source": {
+		"message": "Tooltip Word Dictionary Source"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Voice Translated Speed"

@@ -185,6 +185,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "Пауза субтитров при наведении курсора"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Исходный текст в поле переводчика"
 	},
@@ -199,6 +202,9 @@
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
+	},
+	"Tooltip_Word_Dictionary_Source": {
+		"message": "Tooltip Word Dictionary Source"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Скорость воспроизведения перевода"
