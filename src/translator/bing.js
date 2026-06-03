@@ -132,14 +132,15 @@ export default class bing extends BaseTranslator {
   static langCodeJson = bingLangCode;
   static bingAccessToken;
   static customAgent;
+  static useChina = false; // switched on when only cn.bing.com is reachable (#50)
   static async requestTranslate(text, sourceLang, targetLang) {
     const { token, key, IG, IID, cookie } = await this.getBingAccessToken();
 
     return await ky
-      .post(this.bingBaseUrl, {
+      .post(this.useChina ? this.bingChinaBaseUrl : this.bingBaseUrl, {
         headers: {
           "User-Agent": this.customAgent || navigator.userAgent,
-          Referer: this.bingTokenUrl,
+          Referer: this.useChina ? this.bingChinaTokenUrl : this.bingTokenUrl,
           ...(cookie ? { Cookie: cookie } : {}),
         },
         searchParams: {
@@ -173,53 +174,61 @@ export default class bing extends BaseTranslator {
   }
 
   static async getBingAccessToken() {
-    // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
-    try {
-      //if no access token or token is timeout, get new token
-      if (
-        !this.bingAccessToken ||
-        Date.now() - this.bingAccessToken["tokenTs"] >
-          this.bingAccessToken["tokenExpiryInterval"]
-      ) {
-        const response = await ky(this.bingTokenUrl, {
-          headers: {
-            "User-Agent":
-              this.customAgent ||
-              (typeof navigator !== "undefined" ? navigator.userAgent : ""),
-          },
-        });
-        const data = await response.text();
-        const setCookies =
-          response.headers.getSetCookie?.() ||
-          (response.headers.get("set-cookie")
-            ? [response.headers.get("set-cookie")]
-            : []);
-        const cookie = setCookies.map((c) => c.split(";")[0]).join("; ");
-        const IG = data.match(/IG:"([^"]+)"/)[1];
-        const IID = data.match(/data-iid="([^"]+)"/)[1];
-        var [_key, _token, interval] = JSON.parse(
-          data.match(/params_AbusePreventionHelper\s?=\s?([^\]]+\])/)[1]
-        );
-        this.bingAccessToken = {
-          IG,
-          IID,
-          key: _key,
-          token: _token,
-          tokenTs: Date.now(),
-          tokenExpiryInterval: interval,
-          isAuthv2: undefined,
-          count: 0,
-          cookie,
-        };
-      }
+    // reuse a cached token until it expires
+    if (
+      this.bingAccessToken &&
+      Date.now() - this.bingAccessToken["tokenTs"] <=
+        this.bingAccessToken["tokenExpiryInterval"]
+    ) {
       return this.bingAccessToken;
-    } catch (e) {
-      console.log(e);
+    }
+    // Try the global host first, then fall back to the China mirror
+    // (cn.bing.com), which stays reachable when www.bing.com is blocked behind
+    // the GFW (#50). The host that yields a token also serves the translate
+    // request (see requestTranslate / useChina).
+    for (const china of [false, true]) {
+      try {
+        const tokenUrl = china ? this.bingChinaTokenUrl : this.bingTokenUrl;
+        this.bingAccessToken = await this.fetchBingToken(tokenUrl);
+        this.useChina = china;
+        return this.bingAccessToken;
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
-}
 
-async function checkChinaFirewall() {
-  var res = await ky.get("https://www.bing.com");
-  return res.status == 200;
+  // https://github.com/plainheart/bing-translate-api/blob/dd0319e1046d925fa4cd4850e2323c5932de837a/src/index.js#L42
+  static async fetchBingToken(tokenUrl) {
+    const response = await ky(tokenUrl, {
+      headers: {
+        "User-Agent":
+          this.customAgent ||
+          (typeof navigator !== "undefined" ? navigator.userAgent : ""),
+      },
+    });
+    const data = await response.text();
+    const setCookies =
+      response.headers.getSetCookie?.() ||
+      (response.headers.get("set-cookie")
+        ? [response.headers.get("set-cookie")]
+        : []);
+    const cookie = setCookies.map((c) => c.split(";")[0]).join("; ");
+    const IG = data.match(/IG:"([^"]+)"/)[1];
+    const IID = data.match(/data-iid="([^"]+)"/)[1];
+    const [_key, _token, interval] = JSON.parse(
+      data.match(/params_AbusePreventionHelper\s?=\s?([^\]]+\])/)[1]
+    );
+    return {
+      IG,
+      IID,
+      key: _key,
+      token: _token,
+      tokenTs: Date.now(),
+      tokenExpiryInterval: interval,
+      isAuthv2: undefined,
+      count: 0,
+      cookie,
+    };
+  }
 }
