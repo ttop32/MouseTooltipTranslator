@@ -142,6 +142,11 @@ var textAlignList = {
   Justify: "justify",
 };
 
+var dictionarySourceList = {
+  Translator: "translator",
+  Wiktionary: "wiktionary",
+};
+
 var speechTextTargetList = {
   Source: "source",
   Translated: "target",
@@ -504,6 +509,12 @@ export var settingDict = {
     default: "true",
     i18nKey: "Tooltip_Word_Dictionary",
     optionList: toggleList,
+    settingTab: "advanced",
+  },
+  tooltipWordDictionarySource: {
+    default: "translator",
+    i18nKey: "Tooltip_Word_Dictionary_Source",
+    optionList: dictionarySourceList,
     settingTab: "advanced",
   },
   voiceTranslatedRate: {

@@ -1,4 +1,5 @@
 import translator from "/src/translator/index.js";
+import wiktionary from "/src/translator/wiktionary.js";
 import * as util from "/src/util";
 
 var fallbackEngineActList = [
@@ -39,6 +40,8 @@ export async function translate(
     engine,
   });
 
+  response = await applyWiktionaryDict(response, text);
+
   response = wrappingFailTranslateResult(
     response,
     engine,
@@ -48,6 +51,20 @@ export async function translate(
   );
 
   return response;
+}
+
+// When the dictionary source is set to Wiktionary, replace the translator's
+// dict with Wiktionary definitions for the hovered word (#149).
+async function applyWiktionaryDict(response, text) {
+  if (
+    !response ||
+    setting["tooltipWordDictionary"] !== "true" ||
+    setting["tooltipWordDictionarySource"] !== "wiktionary"
+  ) {
+    return response;
+  }
+  const dict = await wiktionary.getDict(text, response.sourceLang);
+  return dict ? { ...response, dict } : response;
 }
 
 async function translateSameLangInReverse({
