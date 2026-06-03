@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.225
+  - Add UI localization for 50+ languages (translated via Crowdin)
 - 0.1.224
   - Fix saved-word highlighting: match saved phrases across inline tags and ignore whitespace, punctuation and quote differences, so saved sentences (not just exact single-word matches) get highlighted on the page
   - Highlight via the CSS Custom Highlight API instead of wrapping matches in spans (no page DOM changes), and re-highlight reliably on dynamic pages that swap content after load (e.g. Google search)
