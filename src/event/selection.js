@@ -74,9 +74,14 @@ export function getSelectionText() {
 
 export function getWindowSelection() {
   var html = getWindowSelectionHtml();
+  // ruby reading annotations (<rt>) get duplicated into getSelection().toString()
+  // (e.g. NHK Easy News furigana). When the selection contains ruby, use the
+  // furigana-filtered text (extractTextFromHtml drops ruby>rt) instead of the
+  // raw toString so the reading isn't spoken/translated twice (#120).
+  var hasRuby = !!html.querySelector("ruby>rt");
   var selectText = util.extractTextFromHtml(html);
-  var winText=_win?.getSelection()?.toString()
-  return winText || selectText ;
+  var winText = _win?.getSelection()?.toString();
+  return hasRuby ? selectText || winText : winText || selectText;
 }
 
 function getWindowSelectionHtml() {
