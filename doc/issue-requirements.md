@@ -72,7 +72,7 @@
 - `#76` (2024-01-24) — UI 언어 설정 가능 여부 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/76) — 🟡 **부분 적용** (다수 로케일 i18n 지원, UI 언어 직접 선택은 제한적)
 - `#77` (2024-01-24) — 'Highlight Mouseover Text' 기능 중단됨? — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/77) — ✅ **적용됨** (코드: mouseoverHighlightText 옵션, `highlightText`)
 - `#79` (2024-01-25) — 확장 없이 PDF 여는 방법 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/79) — ✅ **적용됨** (코드: detectPDF off 옵션)
-- `#80` (2024-01-31) — View Transitions API 호환성 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/80)
+- `#80` (2024-01-31) — View Transitions API 호환성 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/80) — ✅ **수정** (원인: tippy `appendTo`가 정적 `document.body` 참조라 SPA/View-Transitions가 body 교체 시 popper가 분리된 옛 body에 붙음. `contentScript.js`에서 `appendTo: () => document.body` 함수형으로 변경. 라이브 검증 권장)
 - `#81` (2024-02-03) — 'Detect Type Swap Hold Key' 옵션 의미 문의 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/81) — ✅ **적용됨** (코드: keyHoldMouseoverTextType 옵션)
 - `#82` (2024-02-03) — 'Reverse Translate Language' 옵션 문서화 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/82) — ✅ **적용됨** (코드: translateReverseTarget 옵션)
 - `#83` (2024-02-03) — [기능] 옵션 창 마지막 탭 기억 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/83)
