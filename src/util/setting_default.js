@@ -147,6 +147,12 @@ var dictionarySourceList = {
   Wiktionary: "wiktionary",
 };
 
+var websiteFilterModeList = {
+  Both: "auto", // exclude list blocks; a non-empty whitelist also restricts (legacy)
+  Blacklist: "blacklist", // only the exclude list applies (run everywhere else)
+  Whitelist: "whitelist", // only the whitelist applies (run nowhere else)
+};
+
 var speechTextTargetList = {
   Source: "source",
   Translated: "target",
@@ -430,6 +436,12 @@ export var settingDict = {
     i18nKey: "Exclude_Language",
     optionList: langList,
     optionType: "multipleSelect",
+    settingTab: "exclude",
+  },
+  websiteFilterMode: {
+    default: "auto",
+    i18nKey: "Website_Filter_Mode",
+    optionList: websiteFilterModeList,
     settingTab: "exclude",
   },
   websiteExcludeList: {

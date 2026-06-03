@@ -200,7 +200,7 @@
 - `#289` (2026-02-11) — Arc 브라우저에서 Google Doc 편집 실패 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/289)
 - `#290` (2026-02-22) — [버그] 새 핫키 분리가 기존 "Container" 모드 무시(리그레션) — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/290)
 - `#293` (2026-03-28) — 감사 인사 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/293)
-- `#297` (2026-04-15) — 화이트리스트/블랙리스트 동작 방식 선택 가능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/297) — 🟡 **부분 적용** (코드: websiteExcludeList + websiteWhiteList 둘 다, `checkExcludeUrl`)
+- `#297` (2026-04-15) — 화이트리스트/블랙리스트 동작 방식 선택 가능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/297) — ✅ **적용됨** (설정 `websiteFilterMode`: Both(기본,기존동작)/Blacklist(제외목록만)/Whitelist(허용목록만). `contentScript.js checkExcludeUrl` 모드 분기, exclude 탭)
 - `#299` (2026-04-22) — 키(단축키) 관련 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/299)
 - `#301` (2026-04-23) — 자막/읽기로 언어 학습 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/301) — 🟡 **부분 적용** (코드: 이중 자막 + Auto Reader)
 - `#321` (2026-05-20) — 예전 mouseover 텍스트 타입 토글 버튼으로 복귀 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/321)

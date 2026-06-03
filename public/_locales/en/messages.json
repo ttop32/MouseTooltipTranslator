@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "Exclude Language"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Exclude Website"
 	},
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"

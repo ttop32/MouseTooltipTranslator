@@ -935,6 +935,16 @@ function checkExcludeUrl() {
   var isWhiteListBan =
     setting["websiteWhiteList"]?.length != 0 &&
     !matchSite(url, setting["websiteWhiteList"]);
+
+  // #297: choose whether the blacklist (exclude list), the whitelist, or both
+  // govern. "auto" keeps the legacy behavior (both apply).
+  var mode = setting["websiteFilterMode"];
+  if (mode === "blacklist") {
+    return isExcludeBan;
+  }
+  if (mode === "whitelist") {
+    return isWhiteListBan;
+  }
   if (isExcludeBan || isWhiteListBan) {
     return true;
   }
