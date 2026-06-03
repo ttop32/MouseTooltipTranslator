@@ -594,7 +594,12 @@ export async function createOffscreen() {
   try {
     await browser?.offscreen?.createDocument({
       url: "offscreen.html",
-      reasons: ["USER_MEDIA"],
+      // AUDIO_PLAYBACK keeps the document alive while TTS audio plays; a
+      // USER_MEDIA-only document is auto-closed by Chrome when no media stream
+      // is active, which silenced TTS / cut it off after the first chunk
+      // ("Receiving end does not exist"). USER_MEDIA is still needed for the
+      // speech-recognition mic. (#221 #224 #225 #140)
+      reasons: ["AUDIO_PLAYBACK", "USER_MEDIA"],
       justification: "TTS & Speech",
     });
   } catch (error) {
