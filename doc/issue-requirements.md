@@ -143,7 +143,7 @@
 
 - `#195` (2025-01-02) — 언어별 다른 읽기 속도 설정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/195) — 🟡 **부분 적용** (코드: voiceTranslatedRate로 번역문 속도 별도 설정)
 - `#196` (2025-01-12) — 툴팁에 다른 단어 형태(활용형) 표시 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/196) — 🟡 **부분 적용** (코드: `google.js` dict가 품사별 여러 뜻 표시 `pos: terms` + Wiktionary 소스(#149)로 품사+정의 다중 표시; 활용형 자체는 미지원)
-- `#197` (2025-01-20) — 사이트 제외 기능 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/197)
+- `#197` (2025-01-20) — 사이트 제외 기능 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/197) — ✅ **수정** (원인: `match-url-wildcard`가 hostname 정확 매칭이라 `example.com` 입력이 `www.example.com`과 불일치. `contentScript.js` `matchSite`로 맨도메인→서브도메인(`*.domain`)까지 매칭)
 - `#198` (2025-02-04) — "현재 사이트 제외" 버튼 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/198) — ✅ **적용됨** (코드: websiteExcludeBtn `excludeCurrentWebsiteOnclickFunc`)
 - `#200` (2025-02-11) — 안드로이드 버전 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/200)
 - `#201` (2025-02-13) — Ebook 테마 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/201)

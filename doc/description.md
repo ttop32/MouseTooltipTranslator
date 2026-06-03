@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
+  - Fix website exclude / whitelist not matching a bare domain against its subdomains; "example.com" now also covers www.example.com, m.example.com, etc. (#197)
   - Add Wiktionary as an optional tooltip word-dictionary source (part of speech + definitions); choose it under Tooltip Word Dictionary Source (#149 #196)
   - Fix TTS going silent or cutting off after the first part: keep the offscreen audio document alive during playback (AUDIO_PLAYBACK reason) so Chrome no longer auto-closes it (#221 #224 #225 #140)
   - Bing translate: fall back to cn.bing.com when www.bing.com is blocked, e.g. in China (#50)
