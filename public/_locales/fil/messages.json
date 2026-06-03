@@ -203,6 +203,9 @@
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Voice_Translated_Speed": {
 		"message": "Bilis ng Pagsasalin ng Boses"
 	},
