@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
+  - Fix the Export Setting button doing nothing in some browsers (the settings file now downloads reliably) (#264)
   - Exclude ruby reading annotations (furigana/pinyin `<rt>`) from selected text so they are not translated or spoken twice, e.g. on NHK Easy News (#120)
   - Hide the mouseover tooltip while a text box is focused so it no longer obscures typing (default; Google Docs excluded); re-enable it with the "Show Tooltip While Typing" option (#186)
   - Fix the tooltip breaking after an SPA / View Transitions navigation (it stayed attached to the old swapped-out page body); it now follows the live page (#80)

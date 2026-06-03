@@ -164,7 +164,7 @@
 - `#224` (2025-05-18) — Bing TTS 음성이 안 나옴 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/224)
 - `#225` (2025-05-19) — TTS 기능 전체 깨짐 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/225)
 - `#226` (2025-05-24) — Firefox에서 일부 사이트 영어 번역 불가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/226)
-- `#234` (2025-06-19) — 햄버거(3선) 메뉴가 빈 화면으로 열림 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/234)
+- `#234` (2025-06-19) — 햄버거(3선) 메뉴가 빈 화면으로 열림 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/234) — 🔍 **라이브 재현 필요** (라우트 `/about`·`/speech`는 vue-router/auto로 자동 생성돼 존재 → 라우트 누락 아님. 빈 화면은 렌더/환경(Mac M1 Chrome) 에러로 콘솔 로그 없이 진단 불가)
 - `#235` (2025-06-23) — 좋지만 너무 느림(성능) — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/235)
 - `#238` (2025-06-27) — 설정 화면 다크 모드 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/238) — ✅ **적용됨** (코드: 설정 페이지 `dark` 테마 `src/pages/index.vue`)
 - `#239` (2025-07-01) — [기능] 개인 사전 + 단어 추적/하이라이트 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/239) — 🟡 **부분 적용** (코드: flashcard/deck 기능)
@@ -181,7 +181,7 @@
 - `#261` (2025-09-12) — 「bing is broken」 에러 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/261)
 - `#262` (2025-09-18) — 번역 언어 관련 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/262)
 - `#263` (2025-09-22) — 언어 선택 기능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/263)
-- `#264` (2025-09-26) — 설정 내보내기(export) 버튼 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/264)
+- `#264` (2025-09-26) — 설정 내보내기(export) 버튼 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/264) — ✅ **수정** (원인: `exportSettingOnclickFunc`가 download anchor를 DOM에 안 붙이고 즉시 `revokeObjectURL` → 일부 브라우저에서 다운로드 무시. anchor를 body에 추가 후 click·remove + revoke 1초 지연. `setting_default.js`)
 - `#270` (2025-11-11) — 제안 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/270)
 - `#272` (2025-11-11) — 폰트 축소 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/272) — ✅ **적용됨** (코드: tooltipFontSize 6~40 범위)
 - `#273` (2025-11-11) — 창 크기 조절 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/273)
@@ -194,7 +194,7 @@
 
 ## 2026
 
-- `#283` (2026-01-05) — 텍스트 선택 후 클릭으로 선택 해제 안 됨 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/283)
+- `#283` (2026-01-05) — 텍스트 선택 후 클릭으로 선택 해제 안 됨 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/283) — 🔍 **라이브 재현 필요** (코드상 click/mousedown에 preventDefault·stopPropagation·선택복원 없음, `disableEdgeMiniMenu`는 데드코드. 확장이 해제를 막는 경로 미발견 → Wayland/KDE 환경 가능성)
 - `#286` (2026-01-15) — [기능] Edge 몰입형 리더 모드 지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/286)
 - `#287` (2026-01-16) — Edge 브라우저 MSN.com 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/287)
 - `#289` (2026-02-11) — Arc 브라우저에서 Google Doc 편집 실패 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/289)
