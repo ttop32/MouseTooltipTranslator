@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "Исключить язык"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Исключить указанный веб-сайт"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "ДОПОЛНИТЕЛЬНО"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "Определять PDF-файлы"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "Контейнер"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Оригинал"

@@ -8,9 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
-	"UI_Language": {
-		"message": "UI Language"
-	},
 	"Translate_When": {
 		"message": "Translate When"
 	},
@@ -170,15 +167,6 @@
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
 	},
-	"Both": {
-		"message": "Both"
-	},
-	"Blacklist": {
-		"message": "Blacklist"
-	},
-	"Whitelist": {
-		"message": "Whitelist"
-	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
 	},
@@ -190,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "ADVANCED"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
@@ -406,6 +397,15 @@
 	},
 	"Container": {
 		"message": "Container"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Source"

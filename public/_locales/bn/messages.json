@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "পরিহার্য ভাষা"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "পরিহার্য ওয়েবসাইট"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "উন্নীত"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "পিডিএফ শনাক্তকরণ"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "ধারক"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Source"

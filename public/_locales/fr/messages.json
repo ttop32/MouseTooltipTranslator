@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "Exclure la langue"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Exclure le site Web"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "AVANCÉ"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "Détecter PDF"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "Container"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Source"

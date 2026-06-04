@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "Dili Hariç Tut"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Veb Sitesini Hariç Tut"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "ADVANCED"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "Detect PDF"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "Kapsayıcı"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Kaynak"

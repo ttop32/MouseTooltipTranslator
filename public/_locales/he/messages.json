@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "אל תתרגם את השפות"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "אל תתרגם את האתרים"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "ADVANCED"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "זהה pdf"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "Container"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "Source"

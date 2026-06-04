@@ -158,6 +158,9 @@
 	"Exclude_Language": {
 		"message": "排除语言"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "排除网站"
 	},
@@ -175,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "高级"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "检测PDF"
@@ -391,6 +397,15 @@
 	},
 	"Container": {
 		"message": "容器"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "原文"
