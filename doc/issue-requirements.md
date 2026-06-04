@@ -124,7 +124,7 @@
 - `#172` (2024-10-10) — 몇 가지 개선 제안 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/172)
 - `#173` (2024-10-13) — 브라우저용 완벽 앱 — 제안 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/173)
 - `#174` (2024-10-18) — Google로 PDF 열기 실패 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/174)
-- `#177` (2024-11-17) — 문서 전체를 번역하는 기능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/177)
+- `#177` (2024-11-17) — 문서 전체를 번역하는 기능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/177) — ✅ **적용됨(MVP)** (코드: `src/event/pageTranslate.js` — 핫키 `keyDownTranslatePage`(keyboard 탭) 토글로 페이지 텍스트노드를 배치(줄단위) 번역·제자리 치환, 다시 누르면 원문 복원. 배치 줄수 보존 라이브 검증. 동적 콘텐츠는 토글 시점 기준)
 - `#180` (2024-11-21) — 읽어주기(read aloud) 컨트롤 바 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/180) — 🟡 **부분 적용** (코드: Auto Reader 존재, 전용 컨트롤 바 미구현)
 - `#181` (2024-11-21) — 다른 플랫폼 이중 자막 지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/181) — 🟡 **부분 적용** (코드: netflix/svt 자막)
 - `#182` (2024-11-21) — 모든 기능 단축키 사용자 지정 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/182) — ✅ **적용됨** (코드: setting_default keyboard 탭 키 옵션군)
