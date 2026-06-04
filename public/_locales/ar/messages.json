@@ -8,6 +8,9 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Mouse Tooltip Translator"
 	},
+	"UI_Language": {
+		"message": "UI Language"
+	},
 	"Translate_When": {
 		"message": "متى يترجم"
 	},
