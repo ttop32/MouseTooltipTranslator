@@ -97,6 +97,7 @@ i18List = [
     "Voice When",
     "Translate Writing When",
     "Auto Reader When",
+    "Translate Page When",
     "OCR When",
     "Mouseover Text Type Swap Key",
     "Speech Recognition When",

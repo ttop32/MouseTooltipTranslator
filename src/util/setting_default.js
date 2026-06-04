@@ -358,6 +358,12 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  keyDownTranslatePage: {
+    default: "null",
+    i18nKey: "Translate_Page_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
   keyDownOCR: {
     default: "ShiftLeft",
     i18nKey: "OCR_When",

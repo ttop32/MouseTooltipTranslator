@@ -27,6 +27,7 @@ import {
   refreshSavedWordHighlight,
   cleanupSavedWordHighlight,
 } from "/src/event/savedHighlight.js";
+import { togglePageTranslate } from "/src/event/pageTranslate.js";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
@@ -701,6 +702,9 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     }
     if (setting["keyDownAutoReader"]==key) {
       startAutoReader();
+    }
+    if (setting["keyDownTranslatePage"]==key) {
+      togglePageTranslate(setting);
     }
     // per-group save shortcut using a single allowed key (Ctrl/Alt/F2/click...)
     var saveGroup = (setting["wordGroups"] || []).find((g) => g.key === key);
