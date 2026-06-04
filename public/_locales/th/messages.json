@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "ยกเว้นภาษา"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "ยกเว้นเว็บไซต์"
 	},
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
@@ -185,6 +197,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "หยุดคำบรรยายชั่วคราว Mouseover"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "ข้อความแหล่งที่มาข้อมูล Tooltip"
 	},
@@ -202,9 +217,6 @@
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
-	},
-	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Voice Translated Speed"
