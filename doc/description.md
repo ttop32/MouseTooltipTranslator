@@ -20,19 +20,19 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
-  - Stop Chrome's "translate this page" from re-translating the tooltip (which made it flicker): the tooltip is now excluded from page translation (#19)
-  - Stop console errors from mouseover range expansion when a node is detached from the page (dynamic sites / other extensions) (#104)
-  - Add full-page translation: set a "Translate Page When" hotkey to translate the whole page in place, and press it again to restore the original text (#177)
-  - Add a UI Language setting to show the extension UI (and the PDF viewer toolbar) in a chosen language instead of following the browser language (#76 #153)
-  - Add a Website Filter Mode (Both / Blacklist / Whitelist) so you can choose whether the exclude list, the whitelist, or both decide where the extension runs (#297)
-  - Fix the Export Setting button doing nothing in some browsers (the settings file now downloads reliably) (#264)
-  - Exclude ruby reading annotations (furigana/pinyin `<rt>`) from selected text so they are not translated or spoken twice, e.g. on NHK Easy News (#120)
-  - Hide the mouseover tooltip while a text box is focused so it no longer obscures typing (default; Google Docs excluded); re-enable it with the "Show Tooltip While Typing" option (#186)
-  - Fix the tooltip breaking after an SPA / View Transitions navigation (it stayed attached to the old swapped-out page body); it now follows the live page (#80)
-  - Fix website exclude / whitelist not matching a bare domain against its subdomains; "example.com" now also covers www.example.com, m.example.com, etc. (#197)
-  - Add Wiktionary as an optional tooltip word-dictionary source (part of speech + definitions); choose it under Tooltip Word Dictionary Source (#149 #196)
-  - Fix TTS going silent or cutting off after the first part: keep the offscreen audio document alive during playback (AUDIO_PLAYBACK reason) so Chrome no longer auto-closes it (#221 #224 #225 #140)
-  - Bing translate: fall back to cn.bing.com when www.bing.com is blocked, e.g. in China (#50)
+  - Stop Chrome's "translate this page" from re-translating the tooltip (which made it flicker): the tooltip is now excluded from page translation
+  - Stop console errors from mouseover range expansion when a node is detached from the page (dynamic sites / other extensions)
+  - Add full-page translation: set a "Translate Page When" hotkey to translate the whole page in place, and press it again to restore the original text
+  - Add a UI Language setting to show the extension UI (and the PDF viewer toolbar) in a chosen language instead of following the browser language
+  - Add a Website Filter Mode (Both / Blacklist / Whitelist) so you can choose whether the exclude list, the whitelist, or both decide where the extension runs
+  - Fix the Export Setting button doing nothing in some browsers (the settings file now downloads reliably)
+  - Exclude ruby reading annotations (furigana/pinyin `<rt>`) from selected text so they are not translated or spoken twice, e.g. on NHK Easy News
+  - Hide the mouseover tooltip while a text box is focused so it no longer obscures typing (default; Google Docs excluded); re-enable it with the "Show Tooltip While Typing" option
+  - Fix the tooltip breaking after an SPA / View Transitions navigation (it stayed attached to the old swapped-out page body); it now follows the live page
+  - Fix website exclude / whitelist not matching a bare domain against its subdomains; "example.com" now also covers www.example.com, m.example.com, etc.
+  - Add Wiktionary as an optional tooltip word-dictionary source (part of speech + definitions); choose it under Tooltip Word Dictionary Source
+  - Fix TTS going silent or cutting off after the first part: keep the offscreen audio document alive during playback (AUDIO_PLAYBACK reason) so Chrome no longer auto-closes it
+  - Bing translate: fall back to cn.bing.com when www.bing.com is blocked, e.g. in China
 - 0.1.224
   - Fix auto-reader null check (contributed by trysomeway)
   - Russian, English UK, English US localization (contributed by D0n-A)
