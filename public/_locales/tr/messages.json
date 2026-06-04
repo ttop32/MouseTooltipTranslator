@@ -8,6 +8,9 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Fare İpucu Çevirisi"
 	},
+	"UI_Language": {
+		"message": "UI Language"
+	},
 	"Translate_When": {
 		"message": "Şu Durumda Çevir"
 	},
@@ -169,6 +172,15 @@
 	},
 	"Whitelist_Website": {
 		"message": "Beyaz Liste Web Sitesi"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"

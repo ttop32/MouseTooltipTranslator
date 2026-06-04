@@ -8,6 +8,9 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "মাউস টুলটিপ ট্রান্সলেটর"
 	},
+	"UI_Language": {
+		"message": "UI Language"
+	},
 	"Translate_When": {
 		"message": "অনুবাদের সময়"
 	},
@@ -169,6 +172,15 @@
 	},
 	"Whitelist_Website": {
 		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "এই সাইটে অনুবাদ হবে না"
