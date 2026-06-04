@@ -68,6 +68,9 @@
 	"Auto_Reader_When": {
 		"message": "何时进行自动阅读"
 	},
+	"Translate_Page_When": {
+		"message": "Translate Page When"
+	},
 	"OCR_When": {
 		"message": "何时进行OCR"
 	},

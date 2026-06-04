@@ -68,6 +68,9 @@
 	"Auto_Reader_When": {
 		"message": "Otomatik Okuyucu Ne Zaman"
 	},
+	"Translate_Page_When": {
+		"message": "Translate Page When"
+	},
 	"OCR_When": {
 		"message": "OCR Şu Durumda"
 	},

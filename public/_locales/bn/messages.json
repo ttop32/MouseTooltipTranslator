@@ -68,6 +68,9 @@
 	"Auto_Reader_When": {
 		"message": "অটো রিডার চলার শর্ত"
 	},
+	"Translate_Page_When": {
+		"message": "Translate Page When"
+	},
 	"OCR_When": {
 		"message": "ওসিআর চলার শর্ত"
 	},

@@ -68,6 +68,9 @@
 	"Auto_Reader_When": {
 		"message": "Автоматическое чтение при нажатии"
 	},
+	"Translate_Page_When": {
+		"message": "Translate Page When"
+	},
 	"OCR_When": {
 		"message": "Распознавание текста при нажатии"
 	},

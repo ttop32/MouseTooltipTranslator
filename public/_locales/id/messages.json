@@ -68,6 +68,9 @@
 	"Auto_Reader_When": {
 		"message": "Auto Reader When"
 	},
+	"Translate_Page_When": {
+		"message": "Translate Page When"
+	},
 	"OCR_When": {
 		"message": "Gunakan OCR Saat"
 	},
