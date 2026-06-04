@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.226
+  - Fix the Firefox build failing validation from duplicate localization keys (the UI Language / website filter labels were listed twice, and an unused "SAVED WORDS" key collided with "Saved Words")
 - 0.1.225
   - Stop Chrome's "translate this page" from re-translating the tooltip (which made it flicker): the tooltip is now excluded from page translation
   - Stop console errors from mouseover range expansion when a node is detached from the page (dynamic sites / other extensions)

@@ -238,7 +238,6 @@ i18List = [
     "Click Right",
     "google",
     "bing",
-    "SAVED WORDS",
     "Saved Words",
     "Group",
     "All",

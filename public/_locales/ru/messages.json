@@ -8,9 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "Переводчик контекста мышью"
 	},
-	"UI_Language": {
-		"message": "UI Language"
-	},
 	"Translate_When": {
 		"message": "Переводить при"
 	},
@@ -172,15 +169,6 @@
 	},
 	"Whitelist_Website": {
 		"message": "Белый список сайтов"
-	},
-	"Both": {
-		"message": "Both"
-	},
-	"Blacklist": {
-		"message": "Blacklist"
-	},
-	"Whitelist": {
-		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Блокировать текущий сайт"
@@ -502,9 +490,6 @@
 	},
 	"bing": {
 		"message": "Bing"
-	},
-	"SAVED_WORDS": {
-		"message": "СОХРАНЕННЫЕ СЛОВА"
 	},
 	"Saved_Words": {
 		"message": "Сохраненные слова"

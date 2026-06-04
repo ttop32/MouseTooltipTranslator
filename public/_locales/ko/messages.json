@@ -8,9 +8,6 @@
 	"Mouse_Tooltip_Translator": {
 		"message": "마우스 툴팁 번역기"
 	},
-	"UI_Language": {
-		"message": "UI Language"
-	},
 	"Translate_When": {
 		"message": "번역 표시:"
 	},
@@ -172,15 +169,6 @@
 	},
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
-	},
-	"Both": {
-		"message": "Both"
-	},
-	"Blacklist": {
-		"message": "Blacklist"
-	},
-	"Whitelist": {
-		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
@@ -502,9 +490,6 @@
 	},
 	"bing": {
 		"message": "bing"
-	},
-	"SAVED_WORDS": {
-		"message": "SAVED WORDS"
 	},
 	"Saved_Words": {
 		"message": "Saved Words"
