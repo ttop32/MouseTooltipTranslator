@@ -25,7 +25,7 @@
 - `#16` (2022-05-12) — 툴팁 배경 블러 효과 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/16) — ✅ **적용됨** (코드: tooltipBackgroundBlur 옵션)
 - `#17` (2022-05-29) — OCR 언어 자동 감지 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/17)
 - `#18` (2022-06-12) — Firefox 지원 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/18) — ✅ **적용됨** (코드: webextension-polyfill 기반, Firefox 빌드)
-- `#19` (2022-06-28) — Chrome 자동 페이지 번역이 팝업에 영향 주지 않게 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/19)
+- `#19` (2022-06-28) — Chrome 자동 페이지 번역이 팝업에 영향 주지 않게 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/19) — ✅ **수정** (원인: tippy 팝퍼가 body에 붙어 `#mttContainer`의 notranslate 밖 → Chrome 자동번역이 툴팁을 재번역해 깜빡임. `contentScript.js`에서 `tooltip.popper`에 `notranslate` class + `translate="no"` 부여)
 - `#20` (2022-07-31) — Google 서버 번역 기능 깨짐 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/20) — ✅ **해소** (현재 `google.js` gtx 엔드포인트 + googleGTX/googleV2/googleWeb 대체 + `fallbackTranslatorEngine` 자동 스왑 `translateCaller.js`)
 - `#21` (2022-10-14) — Firefox 애드온 버전 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/21) — ✅ **적용됨** (코드: Firefox 빌드 지원)
 - `#22` (2022-10-25) — 양쪽 정렬(justified) 텍스트 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/22) — ✅ **적용됨** (코드: tooltipTextAlign=justify)

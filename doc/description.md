@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
+  - Stop Chrome's "translate this page" from re-translating the tooltip (which made it flicker): the tooltip is now excluded from page translation (#19)
   - Stop console errors from mouseover range expansion when a node is detached from the page (dynamic sites / other extensions) (#104)
   - Add full-page translation: set a "Translate Page When" hotkey to translate the whole page in place, and press it again to restore the original text (#177)
   - Add a UI Language setting to show the extension UI (and the PDF viewer toolbar) in a chosen language instead of following the browser language (#76 #153)

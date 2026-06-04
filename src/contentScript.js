@@ -1011,6 +1011,12 @@ async function addElementEnv() {
     interactive: true,
     plugins: [sticky],
   });
+
+  // The tippy popper is appended to <body> (not inside #mttContainer), so mark
+  // it as non-translatable too; otherwise Chrome's "translate this page" keeps
+  // re-translating our translated tooltip and it flickers (#19).
+  tooltip.popper?.classList.add("notranslate");
+  tooltip.popper?.setAttribute("translate", "no");
 }
 
 function applyStyleSetting() {
