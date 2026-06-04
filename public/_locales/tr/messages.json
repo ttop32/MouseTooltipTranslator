@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "Dili Hariç Tut"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Veb Sitesini Hariç Tut"
 	},
 	"Whitelist_Website": {
 		"message": "Beyaz Liste Web Sitesi"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
@@ -185,6 +197,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "Mouseover Pause Subtitle"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "İpucu Kaynak Metni"
 	},
@@ -202,9 +217,6 @@
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
-	},
-	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Sesli Çeviri Hızı"
