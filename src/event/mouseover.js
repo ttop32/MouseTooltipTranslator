@@ -154,7 +154,10 @@ function shouldUseSegmentation() {
 
 function expandRange(range, type, useSegmentation) {
   try {
-    if (!range) {
+    // bail if the range's node was detached from the DOM (dynamic pages /
+    // other extensions removing nodes). expand()/setEndAfter() throw on a
+    // null or parentless node, which only spammed the console (#104).
+    if (!range || !range.startContainer || !range.startContainer.isConnected) {
       return;
     }
     if (type == "container") {
@@ -201,6 +204,9 @@ export function caretRangeFromPoint(x, y, _document = document) {
   var range;
   if (!_document?.caretRangeFromPoint) {
     var caretPos = _document.caretPositionFromPoint(x, y);
+    if (!caretPos?.offsetNode) {
+      return;
+    }
     range = document.createRange();
     range.setStart(caretPos.offsetNode, caretPos.offset);
     range.setEnd(caretPos.offsetNode, caretPos.offset);
@@ -209,7 +215,7 @@ export function caretRangeFromPoint(x, y, _document = document) {
   }
 
   //if no range or is not text, give null
-  if (range?.startContainer.nodeType !== Node.TEXT_NODE) {
+  if (range?.startContainer?.nodeType !== Node.TEXT_NODE) {
     return;
   }
   return range;
