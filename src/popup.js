@@ -25,6 +25,7 @@ import "vuetify/dist/vuetify.min.css"; //vuetify css
 import { vMaska } from "maska";
 
 import SettingUtil from "/src/util/setting_util.js";
+import * as i18n from "/src/util/i18n.js";
 import browser from "webextension-polyfill";
 
 var lang = SettingUtil.getDefaultLang();
@@ -63,13 +64,24 @@ const vuetify = createVuetify({
   },
 });
 
-const app = createApp(App);
-// global i18n helper: {{ $t("Saved_Words") }} -> localized message (key fallback)
-app.config.globalProperties.$t = (key) => browser.i18n.getMessage(key) || key;
-app
-  .directive("maska", vMaska)
-  .use(vuetify)
-  .use(createPinia())
-  .use(router)
-  // .component("popupWindow", PopupWindow)
-  .mount("#app");
+// load the chosen UI language (#76) before mounting so the first render is
+// already localized, then build the app
+(async () => {
+  try {
+    const setting = await SettingUtil.loadSetting();
+    await i18n.loadUiLanguage(setting["uiLanguage"]);
+  } catch (e) {
+    console.log(e);
+  }
+
+  const app = createApp(App);
+  // global i18n helper: {{ $t("Saved_Words") }} -> localized message (key fallback)
+  app.config.globalProperties.$t = i18n.t;
+  app
+    .directive("maska", vMaska)
+    .use(vuetify)
+    .use(createPinia())
+    .use(router)
+    // .component("popupWindow", PopupWindow)
+    .mount("#app");
+})();

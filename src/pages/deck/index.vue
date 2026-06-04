@@ -52,12 +52,13 @@
 import _ from "lodash";
 import { mapState } from "pinia";
 import browser from "webextension-polyfill";
+import * as i18n from "/src/util/i18n.js";
 import { useAlertStore } from "/src/stores/alert.js";
 import { useSettingStore } from "/src/stores/setting.js";
 import * as util from "/src/util";
 import Deck from "../../flashcard/deck";
 
-const t = (key) => browser.i18n.getMessage(key) || key;
+const t = (key) => i18n.getMessage(key) || key;
 
 export default {
   name: "FlashCardMenu",

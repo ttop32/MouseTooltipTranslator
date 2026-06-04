@@ -24,6 +24,7 @@
 
 <script>
 import browser from "webextension-polyfill";
+import * as i18n from "/src/util/i18n.js";
 import { useSettingStore } from "/src/stores/setting.js";
 import { mapState } from "pinia";
 import {getReviewUrl} from "/src/util/review_util.js";
@@ -35,11 +36,11 @@ export default {
   data() {
     return {
       messages: {
-        title: browser.i18n.getMessage("Support_this_extension"),
-        subtitle: browser.i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
+        title: i18n.getMessage("Support_this_extension"),
+        subtitle: i18n.getMessage("Feed_a_coffee_to_the_extension_devs"),
         url: "https://buymeacoffee.com/ttop324",
-        reviewTitle: browser.i18n.getMessage("Review_this"),
-        reviewSubtitle: browser.i18n.getMessage("Developer_love_criticism"),
+        reviewTitle: i18n.getMessage("Review_this"),
+        reviewSubtitle: i18n.getMessage("Developer_love_criticism"),
         reviewUrl: getReviewUrl(),
       },
       isBannerVisible: false,

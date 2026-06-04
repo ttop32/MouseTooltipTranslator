@@ -232,11 +232,12 @@
 <script>
 import { mapState } from "pinia";
 import browser from "webextension-polyfill";
+import * as i18n from "/src/util/i18n.js";
 import { useSettingStore } from "/src/stores/setting.js";
 import { defaultData, settingDict } from "/src/util/setting_default.js";
 import TextUtil from "/src/util/text_util.js";
 
-const t = (key) => browser.i18n.getMessage(key) || key;
+const t = (key) => i18n.getMessage(key) || key;
 
 // every saved/history entry belongs to a group; entries without an
 // explicit group are treated as group 1 (the default group)

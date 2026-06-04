@@ -243,6 +243,7 @@
 
 
 import browser from "webextension-polyfill";
+import * as i18n from "/src/util/i18n.js";
 import { isProxy, toRaw } from "vue";
 import _ from "lodash";
 import TextUtil from "/src/util/text_util.js";
@@ -259,7 +260,7 @@ import { useSettingStore } from "/src/stores/setting.js";
 function convertOptionI18n(option) {
   return Object.fromEntries(
       Object.entries(option).map(([key, value]) => [
-        browser.i18n.getMessage(key) || key,
+        i18n.getMessage(key) || key,
         value,
       ])
     );
@@ -281,7 +282,7 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
   if (tab === "REMAINS") return acc;
   if (!acc[tab]) acc[tab] = {};
 
-  value.description = browser.i18n.getMessage(value.i18nKey);
+  value.description = i18n.getMessage(value.i18nKey);
   value.optionList = convertOptionI18n(value.optionList);
   acc[tab][key] = value;
   return acc;
@@ -290,13 +291,13 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
 // convert tab name to i18n
 var tabs = Object.keys(tabItems).reduce((acc, tab) => {
   if (tab === "REMAINS") return acc;
-  acc[tab] = browser.i18n.getMessage(tab);
+  acc[tab] = i18n.getMessage(tab);
   return acc;
 }, {});
 
 var remainSettingDesc = {
-  appName: browser.i18n.getMessage("Mouse_Tooltip_Translator"),
-  Voice_for_: browser.i18n.getMessage("Voice_for_"),
+  appName: i18n.getMessage("Mouse_Tooltip_Translator"),
+  Voice_for_: i18n.getMessage("Voice_for_"),
 };
 
 var langPriorityOptionList = [
@@ -313,7 +314,7 @@ var toolbarIcons = {
     path: "/deck",
   },
   saved: {
-    title: browser.i18n.getMessage("Saved_Words"),
+    title: i18n.getMessage("Saved_Words"),
     icon: "mdi-bookmark-multiple",
     path: "/saved",
     newTab: true, // open saved-words board in a full browser tab
@@ -367,6 +368,14 @@ export default {
         // use wrapper to detect new old comparable
         this.checkSettingLangPriority(newSetting, oldSetting);
         this.applyLlmProviderPreset(newSetting, oldSetting);
+        // UI language is applied at startup, so reload to re-localize (#76).
+        // Small delay lets the setting persist before the reload.
+        if (
+          oldSetting?.uiLanguage !== undefined &&
+          newSetting.uiLanguage !== oldSetting.uiLanguage
+        ) {
+          setTimeout(() => location.reload(), 400);
+        }
       },
     },
   },

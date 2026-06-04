@@ -42,6 +42,7 @@
 </template>
 <script>
 import browser from "webextension-polyfill";
+import * as i18n from "/src/util/i18n.js";
 import { getReviewUrl } from "/src/util/review_util.js";
 
 export default {
@@ -50,15 +51,15 @@ export default {
     return {
       aboutPageList: {
         howToUse: {
-          name: browser.i18n.getMessage("How_to_use"),
-          sub_name: browser.i18n.getMessage("Check_how_to_use_this_extension"),
+          name: i18n.getMessage("How_to_use"),
+          sub_name: i18n.getMessage("Check_how_to_use_this_extension"),
           url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use",
           icon: "mdi-help-box",
           color: "green",
         },
         pdfViewer: {
-          name: browser.i18n.getMessage("PDF_Viewer"),
-          sub_name: browser.i18n.getMessage("Translate_local_PDF_file"),
+          name: i18n.getMessage("PDF_Viewer"),
+          sub_name: i18n.getMessage("Translate_local_PDF_file"),
           url:
             browser.runtime.getURL("/pdfjs/web/viewer.html") +
             "?file=/pdf_demo.pdf",
@@ -66,44 +67,44 @@ export default {
           color: "red",
         },
         epub: {
-          name: browser.i18n.getMessage("Ebook_Reader"),
-          sub_name: browser.i18n.getMessage("Translate_local_ebook_file"),
+          name: i18n.getMessage("Ebook_Reader"),
+          sub_name: i18n.getMessage("Translate_local_ebook_file"),
           url: browser.runtime.getURL("/foliate-js/reader.html"),
           icon: "mdi-book-open-blank-variant",
           color: "orange",
         },
         voicePanel: {
-          name: browser.i18n.getMessage("Voice_Panel"),
-          sub_name: browser.i18n.getMessage("Translate_Voice"),
+          name: i18n.getMessage("Voice_Panel"),
+          sub_name: i18n.getMessage("Translate_Voice"),
           url: "/popup.html#/speech",
           icon: "mdi-microphone-message",
           color: "cyan",
           isPanelOpen: true,
         },
         reviewPage: {
-          name: browser.i18n.getMessage("Review_Page"),
-          sub_name: browser.i18n.getMessage("Comment_on_this extension"),
+          name: i18n.getMessage("Review_Page"),
+          sub_name: i18n.getMessage("Comment_on_this extension"),
           url: getReviewUrl(),
           icon: "mdi-message-draw",
           color: "primary",
         },
         sourceCode: {
-          name: browser.i18n.getMessage("Source_code"),
-          sub_name: browser.i18n.getMessage("Check_source_code_in_github"),
+          name: i18n.getMessage("Source_code"),
+          sub_name: i18n.getMessage("Check_source_code_in_github"),
           url: "https://github.com/ttop32/MouseTooltipTranslator",
           icon: "mdi-github",
           color: "black",
         },
         privacyPolicy: {
-          name: browser.i18n.getMessage("Privacy_Policy"),
-          sub_name: browser.i18n.getMessage("User_privacy_policy"),
+          name: i18n.getMessage("Privacy_Policy"),
+          sub_name: i18n.getMessage("User_privacy_policy"),
           url: "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/privacy_policy.md",
           icon: "mdi-shield-account",
           color: "error",
         },
         buyMeCoffee: {
-          name: browser.i18n.getMessage("Support_this_extension"),
-          sub_name: browser.i18n.getMessage(
+          name: i18n.getMessage("Support_this_extension"),
+          sub_name: i18n.getMessage(
             "Feed_a_coffee_to_the_extension_devs"
           ),
           url: "https://buymeacoffee.com/ttop324",

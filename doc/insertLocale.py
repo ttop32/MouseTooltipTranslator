@@ -77,6 +77,7 @@ i18List = [
     "MAIN                                      ",
     "MAIN",
     "Mouse Tooltip Translator",
+    "UI Language",
     "Translate When",
     "Translate From",
     "Translate Into",

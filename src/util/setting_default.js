@@ -153,6 +153,67 @@ var websiteFilterModeList = {
   Whitelist: "whitelist", // only the whitelist applies (run nowhere else)
 };
 
+// UI language picker (#76). Keys are endonyms (shown as-is); values are the
+// _locales directory names. "auto" follows the browser language.
+var uiLanguageList = {
+  Auto: "auto",
+  English: "en",
+  "English (UK)": "en_GB",
+  "English (US)": "en_US",
+  "English (Australia)": "en_AU",
+  العربية: "ar",
+  አማርኛ: "am",
+  Български: "bg",
+  বাংলা: "bn",
+  Català: "ca",
+  Čeština: "cs",
+  Dansk: "da",
+  Deutsch: "de",
+  Ελληνικά: "el",
+  Español: "es",
+  "Español (Latinoamérica)": "es_419",
+  Eesti: "et",
+  فارسی: "fa",
+  Suomi: "fi",
+  Filipino: "fil",
+  Français: "fr",
+  ગુજરાતી: "gu",
+  עברית: "he",
+  हिन्दी: "hi",
+  Hrvatski: "hr",
+  Magyar: "hu",
+  "Bahasa Indonesia": "id",
+  Italiano: "it",
+  日本語: "ja",
+  ಕನ್ನಡ: "kn",
+  한국어: "ko",
+  Lietuvių: "lt",
+  Latviešu: "lv",
+  മലയാളം: "ml",
+  मराठी: "mr",
+  "Bahasa Melayu": "ms",
+  Nederlands: "nl",
+  Norsk: "no",
+  Polski: "pl",
+  "Português (Brasil)": "pt_BR",
+  "Português (Portugal)": "pt_PT",
+  Română: "ro",
+  Русский: "ru",
+  Slovenčina: "sk",
+  Slovenščina: "sl",
+  Српски: "sr",
+  Svenska: "sv",
+  Kiswahili: "sw",
+  தமிழ்: "ta",
+  తెలుగు: "te",
+  ไทย: "th",
+  Türkçe: "tr",
+  Українська: "uk",
+  "Tiếng Việt": "vi",
+  "中文(简体)": "zh_CN",
+  "中文(繁體)": "zh_TW",
+};
+
 var speechTextTargetList = {
   Source: "source",
   Translated: "target",
@@ -481,6 +542,12 @@ export var settingDict = {
 
   // advanced
 
+  uiLanguage: {
+    default: "auto",
+    i18nKey: "UI_Language",
+    optionList: uiLanguageList,
+    settingTab: "advanced",
+  },
   detectPDF: {
     default: "true",
     i18nKey: "Detect_PDF",
