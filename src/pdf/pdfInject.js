@@ -3,6 +3,7 @@ import $ from "jquery";
 
 import * as util from "/src/util";
 import * as dom_util from "/src/util/dom";
+import SettingUtil from "/src/util/setting_util.js";
 
 // <link rel="stylesheet" href="../../tippy.css" />
 // <script src="../../contentScript.js"></script>
@@ -12,7 +13,40 @@ import * as dom_util from "/src/util/dom";
 var isPdfSpaceInserted= false;
 var waitCount=[1000,5000,10000,15000,20000,30000,60000]; //ms
 
+setPdfViewerLocale();
 initPdf();
+
+// Localize the PDF.js viewer toolbar to the chosen UI language (#153). The
+// content script runs at document_start, so the webviewerloaded listener is
+// registered before viewer.mjs fires it; setting localeProperties then makes
+// PDF.js load that locale's viewer.ftl (falls back to navigator.language when
+// "auto" or when the locale isn't bundled).
+// extension locale code -> PDF.js locale. Most match after "_"->"-", and PDF.js
+// negotiates language ranges (so "es"/"hi"/... resolve to a region variant);
+// only a few differ by code. (am/sw/ml have no PDF.js locale -> English.)
+var PDF_LOCALE = { fil: "tl", no: "nb-NO" };
+
+async function setPdfViewerLocale() {
+  var lang = null;
+  var apply = () => {
+    if (!lang || lang === "auto") return;
+    try {
+      window.PDFViewerApplicationOptions?.set("localeProperties", {
+        lang: PDF_LOCALE[lang] || lang.replace(/_/g, "-"),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  document.addEventListener("webviewerloaded", apply);
+  try {
+    var setting = await SettingUtil.loadSetting();
+    lang = setting["uiLanguage"];
+    apply(); // in case webviewerloaded already fired before the setting loaded
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 async function initPdf() {
   checkPdfError();
