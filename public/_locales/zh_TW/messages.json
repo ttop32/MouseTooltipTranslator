@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "排除語言"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "排除網站"
 	},
 	"Whitelist_Website": {
 		"message": "網站白名單"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
@@ -185,6 +197,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "滑鼠懸停暫停字幕"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "工具提示信息來源文本"
 	},
@@ -202,9 +217,6 @@
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
-	},
-	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
 	},
 	"Voice_Translated_Speed": {
 		"message": "語音翻譯速度"
