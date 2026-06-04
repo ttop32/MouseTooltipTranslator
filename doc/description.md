@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
+  - Stop console errors from mouseover range expansion when a node is detached from the page (dynamic sites / other extensions) (#104)
   - Add full-page translation: set a "Translate Page When" hotkey to translate the whole page in place, and press it again to restore the original text (#177)
   - Add a UI Language setting to show the extension UI (and the PDF viewer toolbar) in a chosen language instead of following the browser language (#76 #153)
   - Add a Website Filter Mode (Both / Blacklist / Whitelist) so you can choose whether the exclude list, the whitelist, or both decide where the extension runs (#297)
