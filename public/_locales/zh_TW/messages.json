@@ -167,15 +167,6 @@
 	"Whitelist_Website": {
 		"message": "網站白名單"
 	},
-	"Both": {
-		"message": "Both"
-	},
-	"Blacklist": {
-		"message": "Blacklist"
-	},
-	"Whitelist": {
-		"message": "Whitelist"
-	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
 	},
@@ -187,6 +178,9 @@
 	},
 	"ADVANCED": {
 		"message": "進階"
+	},
+	"UI_Language": {
+		"message": "UI Language"
 	},
 	"Detect_PDF": {
 		"message": "檢測PDF"
@@ -403,6 +397,15 @@
 	},
 	"Container": {
 		"message": "容器"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Source": {
 		"message": "原文"
