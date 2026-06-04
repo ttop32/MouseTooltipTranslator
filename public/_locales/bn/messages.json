@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "পরিহার্য ভাষা"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "পরিহার্য ওয়েবসাইট"
 	},
 	"Whitelist_Website": {
 		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "এই সাইটে অনুবাদ হবে না"
@@ -185,6 +197,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "টুলটিপের তথ্যে মূল লেখা"
 	},
@@ -202,9 +217,6 @@
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
-	},
-	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
 	},
 	"Voice_Translated_Speed": {
 		"message": "সবাক অনুবাদের গতি"
