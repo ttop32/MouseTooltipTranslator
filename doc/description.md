@@ -20,6 +20,7 @@ English, Russian, Japanese, Chinese and so on
 
 # Change Log
 - 0.1.225
+  - Add a UI Language setting to show the extension UI (and the PDF viewer toolbar) in a chosen language instead of following the browser language (#76 #153)
   - Add a Website Filter Mode (Both / Blacklist / Whitelist) so you can choose whether the exclude list, the whitelist, or both decide where the extension runs (#297)
   - Fix the Export Setting button doing nothing in some browsers (the settings file now downloads reliably) (#264)
   - Exclude ruby reading annotations (furigana/pinyin `<rt>`) from selected text so they are not translated or spoken twice, e.g. on NHK Easy News (#120)
