@@ -158,11 +158,23 @@
 	"Exclude_Language": {
 		"message": "Excluir Idioma"
 	},
+	"Website_Filter_Mode": {
+		"message": "Website Filter Mode"
+	},
 	"Exclude_Website": {
 		"message": "Excluir Sitio Web"
 	},
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
+	},
+	"Both": {
+		"message": "Both"
+	},
+	"Blacklist": {
+		"message": "Blacklist"
+	},
+	"Whitelist": {
+		"message": "Whitelist"
 	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
@@ -185,6 +197,9 @@
 	"Mouseover_Pause_Subtitle": {
 		"message": "Pausar Subtítulo al Pasar el Mouse"
 	},
+	"Show_Tooltip_While_Typing": {
+		"message": "Show Tooltip While Typing"
+	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Texto de Origen de la Información de la Ventana Emergente"
 	},
@@ -202,9 +217,6 @@
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
-	},
-	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Voice Translated Speed"
