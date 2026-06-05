@@ -97,8 +97,8 @@ async function getSetting() {
 
 // react to live setting changes from the popup / Saved Words page
 function onSettingChanged(changes) {
-  // master right-click-menu toggle flipped: rebuild (on) or clear (off) now,
-  // instead of waiting for the next tooltip to call updateContextMenus.
+  // "Save to <group>" toggle flipped: rebuild the menus now (Copy stays,
+  // group menus added/removed) instead of waiting for the next tooltip.
   if (changes["saveContextMenu"]) {
     updateContextMenus({ targetText: recentTranslated });
   }
@@ -193,17 +193,17 @@ function addCopyRequestListener() {
 async function updateContextMenus({ targetText }) {
   recentTranslated = targetText;
   await browser.contextMenus.removeAll();
-  // master toggle (controlled on the Saved Words page): off -> register no
-  // right-click menus at all; on -> Copy + one "Save to <group>" per group.
-  if (!setting["saveContextMenu"]) {
-    return;
-  }
+  // "Copy" is the long-standing default and is always available. The Saved
+  // Words page toggle only governs the per-group "Save to <group>" menus.
   browser.contextMenus.create({
     id: "copy",
     title: "Copy : " + TextUtil.truncate(targetText, 20),
     contexts: ["all"],
     visible: true,
   });
+  if (!setting["saveContextMenu"]) {
+    return;
+  }
   for (const group of setting["wordGroups"] || []) {
     browser.contextMenus.create({
       id: "save-group-" + group.id,

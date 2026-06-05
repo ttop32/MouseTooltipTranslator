@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.227
+  - Fix the right-click "Copy" of the translated text disappearing: Copy is now always available again, while the Saved Words page toggle only governs the per-group "Save to `<group>`" menus
 - 0.1.226
   - Fix the Firefox build failing validation from duplicate localization keys (the UI Language / website filter labels were listed twice, and an unused "SAVED WORDS" key collided with "Saved Words")
 - 0.1.225
