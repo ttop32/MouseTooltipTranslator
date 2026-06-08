@@ -54,6 +54,12 @@ export default class TTS {
       isTranslateTargetLang && setting["voiceTranslatedRate"] != "default"
         ? Number(setting["voiceTranslatedRate"])
         : rate;
+    // per-language read-aloud speed override (#195, #210): if the user set a
+    // speed for this specific language, it wins over the global / translated rate.
+    var langRate = setting?.["ttsRate_" + lang];
+    if (langRate != null && langRate !== "default") {
+      rate = Number(langRate);
+    }
     var voiceFullName = setting?.["ttsVoice_" + lang];
     var isExternalTts = /^(BingTTS|GoogleTranslateTTS).*/.test(voiceFullName);
     var voice = isExternalTts ? voiceFullName.split("_")[1] : voiceFullName;

@@ -2,7 +2,7 @@ import $ from "jquery";
 import memoize from "memoizee";
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
-// import { isRtl, } from "/src/util/lang.js";
+import { isRtl } from "/src/util/lang.js";
 
 // https://terrillthompson.com/648
 // https://developers.google.com/youtube/iframe_api_reference
@@ -168,6 +168,10 @@ export default class Youtube extends BaseVideo {
     if (!subtitle?.events) {
       return {events: [], pens: [{}], wireMagic: "pb3", wpWinPositions: [{}], wsWinStyles: [{}]};
     }
+    // RTL languages (Arabic, Hebrew, ...) need right justification + RTL base
+    // direction so word order, embedded LTR runs (e.g. "LLM") and numbers render
+    // correctly. wsWinStyleId 2 carries juJustifCode:1 (rtl). (#206)
+    var rtl = isRtl(lang);
     var newEvents = [];
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {
@@ -191,7 +195,9 @@ export default class Youtube extends BaseVideo {
         newEvents.push({
           tStartMs: event.tStartMs,
           dDurationMs: event.dDurationMs,
-          // wsWinStyleId: isRtl ? 2 : 1,
+          // only override style for RTL; LTR keeps the previous default so its
+          // rendering is byte-for-byte unchanged.
+          ...(rtl ? { wsWinStyleId: 2 } : {}),
           segs: [
             {
               utf8: oneLineSubTrim,

@@ -89,6 +89,9 @@
 	"Secondary_Language_When": {
 		"message": "Secondary Language When"
 	},
+	"Swap_Key_Toggle_Mode": {
+		"message": "Swap Key Toggle Mode"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "图形                                      "
 	},
@@ -106,6 +109,9 @@
 	},
 	"Tooltip_Animation": {
 		"message": "工具提示动画"
+	},
+	"Tooltip_Disappear_Duration": {
+		"message": "Tooltip Disappear Duration"
 	},
 	"Tooltip_Position": {
 		"message": "工具提示位置"
@@ -131,6 +137,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "鼠标悬停文本高亮颜色"
 	},
+	"Setting_Compact_mode": {
+		"message": "Setting Compact mode"
+	},
 	"VOICE______________________________________": {
 		"message": "语音                                      "
 	},
@@ -151,6 +160,9 @@
 	},
 	"Voice_for_": {
 		"message": "语音用于 "
+	},
+	"Voice_speed_for_": {
+		"message": "Voice speed for "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "排除                                      "

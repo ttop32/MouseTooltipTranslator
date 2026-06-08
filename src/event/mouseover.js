@@ -178,10 +178,49 @@ function expandRange(range, type, useSegmentation) {
 
 function getContainerRange(rangeOri) {
   var range = rangeOri.cloneRange();
+  // climb past inline wrappers to the nearest block-level ancestor so sites that
+  // wrap each line/segment of a paragraph in its own inline <span> (e.g. X.com)
+  // select the whole block as the container instead of a single inline fragment
+  // (which only matched one "sentence"). (#254)
+  var block = getBlockAncestor(range.startContainer);
+  if (block) {
+    range.selectNodeContents(block);
+    return range;
+  }
+  // fallback: original single-parent behavior
   range.setStartBefore(range.startContainer);
   range.setEndAfter(range.startContainer);
   range.setStart(range.startContainer, 0);
   return range;
+}
+
+function getBlockAncestor(node) {
+  var el = node?.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+  if (!el) {
+    return null;
+  }
+  // walk up while the current element is inline, but never past a block parent
+  // and never up to body/html (which would grab the entire page).
+  while (
+    el.parentElement &&
+    el.parentElement !== document.body &&
+    el.parentElement !== document.documentElement &&
+    isInlineElement(el)
+  ) {
+    el = el.parentElement;
+  }
+  return el;
+}
+
+function isInlineElement(el) {
+  try {
+    var display = getComputedStyle(el).display;
+    return (
+      display.startsWith("inline") || display === "ruby" || display === "contents"
+    );
+  } catch (error) {
+    return false;
+  }
 }
 
 function getExpandRange(rangeOri, type) {

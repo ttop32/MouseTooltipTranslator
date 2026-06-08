@@ -89,6 +89,9 @@
 	"Secondary_Language_When": {
 		"message": "Secondary Language When"
 	},
+	"Swap_Key_Toggle_Mode": {
+		"message": "Swap Key Toggle Mode"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "GRAPHIC                                      "
 	},
@@ -106,6 +109,9 @@
 	},
 	"Tooltip_Animation": {
 		"message": "툴팁 애니메이션"
+	},
+	"Tooltip_Disappear_Duration": {
+		"message": "Tooltip Disappear Duration"
 	},
 	"Tooltip_Position": {
 		"message": "툴팁 위치"
@@ -131,6 +137,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "마우스오버 텍스트 하이라이트 색상"
 	},
+	"Setting_Compact_mode": {
+		"message": "Setting Compact mode"
+	},
 	"VOICE______________________________________": {
 		"message": "VOICE                                      "
 	},
@@ -151,6 +160,9 @@
 	},
 	"Voice_for_": {
 		"message": "Voice for "
+	},
+	"Voice_speed_for_": {
+		"message": "Voice speed for "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUDE                                      "

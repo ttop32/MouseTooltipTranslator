@@ -36,7 +36,10 @@
 
     <!-- main page contents -->
 
-    <v-tabs-window v-model="currentTab" class="scroll-container">
+    <v-tabs-window
+      v-model="currentTab"
+      :class="['scroll-container', { 'compact-mode': setting && setting.compactMode === 'true' }]"
+    >
 
 
       
@@ -298,6 +301,7 @@ var tabs = Object.keys(tabItems).reduce((acc, tab) => {
 var remainSettingDesc = {
   appName: i18n.getMessage("Mouse_Tooltip_Translator"),
   Voice_for_: i18n.getMessage("Voice_for_"),
+  Voice_speed_for_: i18n.getMessage("Voice_speed_for_"),
 };
 
 var langPriorityOptionList = [
@@ -452,6 +456,11 @@ export default {
     async addTtsVoiceTabOption() {
       var voiceTabOption = {};
       var availableVoiceList = await SettingUtil.getAllVoiceList();
+      // per-language read-aloud speed list ("default" keeps the global rate) (#195, #210)
+      var rateOptionList = TextUtil.getJsonFromList([
+        "default", "0.25", "0.5", "0.75", "1.0",
+        "1.25", "1.5", "1.75", "2.0", "2.5", "3.0",
+      ]);
 
       for (var key in langListOpposite) {
         if (!(key in availableVoiceList)) {
@@ -462,6 +471,12 @@ export default {
           description:
             this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
           optionList: voiceOptionList,
+        };
+        // speed dropdown for this language, right after its voice dropdown
+        voiceTabOption["ttsRate_" + key] = {
+          description:
+            this.remainSettingDesc["Voice_speed_for_"] + langListOpposite[key],
+          optionList: rateOptionList,
         };
       }
 
@@ -607,5 +622,11 @@ export default {
 
 .button-item:hover {
   opacity: 1;
+}
+
+/* compact mode (#220): shrink the big per-row spacing so many more settings fit
+   on one screen. The 16px top/bottom margin is the dominant gap between rows. */
+.compact-mode .setting-item {
+  margin: 3px 0;
 }
 </style>

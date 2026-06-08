@@ -13,6 +13,7 @@ import _util from "/src/util/lodash_util.js";
 
 var setting;
 var recentTranslated = "";
+var recentSource = "";
 const DEFAULT_WORD_GROUP_ID = 1; // default saved-word group
 var introSiteUrl =
   "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/intro.md#how-to-use";
@@ -178,11 +179,14 @@ function insertHistory(actionType, groupId) {
 // ================= Copy / Save context menus
 
 function addCopyRequestListener() {
-  util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy
-  // single onClicked handler: "copy" + dynamic "save-group-<id>" menus
+  util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy translated
+  util.addCommandListener("copy-source-text", requestCopyForSourceText); //command shortcut key handler for copy source (#204)
+  // single onClicked handler: "copy" / "copy-source" + dynamic "save-group-<id>" menus
   browser.contextMenus.onClicked.addListener((info) => {
     if (info.menuItemId === "copy") {
       requestCopyForTargetText();
+    } else if (info.menuItemId === "copy-source") {
+      requestCopyForSourceText();
     } else if (String(info.menuItemId).startsWith("save-group-")) {
       var gid = parseInt(String(info.menuItemId).replace("save-group-", ""), 10);
       insertHistory("shortcutkey", gid);
@@ -190,8 +194,9 @@ function addCopyRequestListener() {
   });
 }
 
-async function updateContextMenus({ targetText }) {
+async function updateContextMenus({ targetText, sourceText }) {
   recentTranslated = targetText;
+  recentSource = sourceText ?? recentSource;
   await browser.contextMenus.removeAll();
   // "Copy" is the long-standing default and is always available. The Saved
   // Words page toggle only governs the per-group "Save to <group>" menus.
@@ -201,6 +206,15 @@ async function updateContextMenus({ targetText }) {
     contexts: ["all"],
     visible: true,
   });
+  // "Copy original" copies the source text under the cursor (#204).
+  if (recentSource) {
+    browser.contextMenus.create({
+      id: "copy-source",
+      title: "Copy original : " + TextUtil.truncate(recentSource, 20),
+      contexts: ["all"],
+      visible: true,
+    });
+  }
   if (!setting["saveContextMenu"]) {
     return;
   }
@@ -225,6 +239,10 @@ async function removeContextAll(id) {
 
 function requestCopyForTargetText() {
   requestCopyOnTab(recentTranslated);
+}
+
+function requestCopyForSourceText() {
+  requestCopyOnTab(recentSource);
 }
 
 function requestCopyOnTab(text) {

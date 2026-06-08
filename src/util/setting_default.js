@@ -94,6 +94,7 @@ var voiceRepeatList = _util.getRangeOption(1, 11);
 var tooltipBackgroundBlurList = _util.getRangeOption(0, 21);
 var distanceList = _util.getRangeOption(0, 41);
 var tooltipIntervalTimeList = _util.getRangeOption(0.1, 2.1, 0.1, 1);
+var tooltipDisappearList = _util.getRangeOption(0, 501, 50, 0);
 
 var tooltipPositionList = {
   Follow: "follow",
@@ -388,6 +389,14 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  swapKeyToggleMode: {
+    // On: the mouseover-text-type swap key and secondary-language key act as a
+    // press-to-toggle (stays switched until pressed again) instead of hold (#321).
+    default: "false",
+    i18nKey: "Swap_Key_Toggle_Mode",
+    optionList: toggleList,
+    settingTab: "keyboard",
+  },
   // voice
   voiceVolume: {
     default: "1.0",
@@ -437,6 +446,12 @@ export var settingDict = {
     default: "fade",
     i18nKey: "Tooltip_Animation",
     optionList: tooltipAnimationList,
+    settingTab: "graphic",
+  },
+  tooltipDisappearDuration: {
+    default: "250",
+    i18nKey: "Tooltip_Disappear_Duration",
+    optionList: tooltipDisappearList,
     settingTab: "graphic",
   },
   tooltipPosition: {
@@ -493,6 +508,12 @@ export var settingDict = {
     optionList: {},
     optionType: "colorPicker",
     menu: false,
+    settingTab: "graphic",
+  },
+  compactMode: {
+    default: "false",
+    i18nKey: "Setting_Compact_mode",
+    optionList: toggleList,
     settingTab: "graphic",
   },
 

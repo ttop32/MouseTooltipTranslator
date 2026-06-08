@@ -89,6 +89,9 @@
 	"Secondary_Language_When": {
 		"message": "Второй язык при нажатии"
 	},
+	"Swap_Key_Toggle_Mode": {
+		"message": "Swap Key Toggle Mode"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
 	},
@@ -106,6 +109,9 @@
 	},
 	"Tooltip_Animation": {
 		"message": "Анимация появления поля переводчика"
+	},
+	"Tooltip_Disappear_Duration": {
+		"message": "Tooltip Disappear Duration"
 	},
 	"Tooltip_Position": {
 		"message": "Позиция поля переводчика"
@@ -131,6 +137,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Цвет подсветки текста при наведении курсора"
 	},
+	"Setting_Compact_mode": {
+		"message": "Setting Compact mode"
+	},
 	"VOICE______________________________________": {
 		"message": "ГОЛОСОВЫЕ НАСТРОЙКИ                                      "
 	},
@@ -151,6 +160,9 @@
 	},
 	"Voice_for_": {
 		"message": "Голосовой синтезатор для "
+	},
+	"Voice_speed_for_": {
+		"message": "Voice speed for "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ИСКЛЮЧЕНИЯ                                      "

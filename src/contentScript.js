@@ -50,6 +50,7 @@ var mouseMovedCount = 0;
 var keyDownList = { always: true }; //use key down for enable translation partially
 var keyDownDoublePress = {};
 var keyDownPressTime = {};
+var keyPhysicalHeld = {}; //track physical hold to debounce auto-repeat for toggle-mode keys (#321)
 var mouseKeyMap = ["ClickLeft", "ClickMiddle", "ClickRight"];
 
 var destructionEvent = "destructmyextension_MouseTooltipTranslator"; // + chrome.runtime.id;
@@ -663,9 +664,31 @@ function handleMouseKeyUp(e) {
 }
 
 function holdKeydownList(key) {
+  // toggle mode (#321): the swap / secondary-lang key flips its state on each
+  // fresh press and is NOT cleared on release, so it stays switched. Reading
+  // sites (getMouseoverType, stageTooltipText) check keyDownList[key] as before,
+  // so no other code path needs to change.
+  if (isToggleKey(key)) {
+    if (!keyPhysicalHeld[key]) {
+      keyPhysicalHeld[key] = true; // ignore auto-repeat while physically held
+      keyDownList[key] = !keyDownList[key];
+      runKeydownPostProcess(key, true);
+    }
+    return;
+  }
   var detectKeyDown = recordKeydownList(key);
   recordDoublePress(key);
   runKeydownPostProcess(key, detectKeyDown);
+}
+
+function isToggleKey(key) {
+  return (
+    setting["swapKeyToggleMode"] === "true" &&
+    key &&
+    key !== "null" &&
+    (key === setting["keyHoldMouseoverTextType"] ||
+      key === setting["keySecondaryLang"])
+  );
 }
 
 function recordKeydownList(key) {
@@ -858,6 +881,12 @@ function disableEdgeMiniMenu(e) {
 
 async function releaseKeydownList(key) {
   await delay(20);
+  // toggle mode (#321): keep the toggled state on release, just allow the next
+  // physical press to flip it again.
+  if (isToggleKey(key)) {
+    keyPhysicalHeld[key] = false;
+    return;
+  }
   keyDownList[key] = false;
   if (key == setting["keySpeechRecognition"]) {
     speech.stopSpeechRecognition();
@@ -1030,6 +1059,9 @@ function applyStyleSetting() {
     // body (worked again only after a full reload). (#80)
     appendTo: isSticky ? tooltipContainerEle : () => document.body,
     animation: setting["tooltipAnimation"],
+    // [show, hide] animation duration. Hide is configurable so users can make
+    // the tooltip vanish instantly (0) or fade slower when the mouse leaves (#240).
+    duration: [300, Number(setting["tooltipDisappearDuration"])],
   });
   var rtlDirection = getRtlDir(setting["translateTarget"]);
 

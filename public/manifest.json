@@ -35,6 +35,12 @@
         "default": "Ctrl+Shift+6"
       },
       "description": "Copy Translated Text"
+    },
+    "copy-source-text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+7"
+      },
+      "description": "Copy Source Text"
     }
   },
   "omnibox": { "keyword" : "/" },

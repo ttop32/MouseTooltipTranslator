@@ -19,6 +19,14 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.228
+  - Add per-language read-aloud speed: set a different voice speed for each language (e.g. English 1.0, Chinese 1.5) under the Voice tab
+  - Add a "Copy Source Text" hotkey (Ctrl+Shift+7) and a right-click "Copy original" menu to copy the original text under the cursor (the existing copy still copies the translation)
+  - Add "Swap Key Toggle Mode": make the mouseover-text-type swap key and the secondary-language key toggle (press to switch, press again to revert) instead of having to hold them
+  - Add "Tooltip Disappear Duration" to control how quickly the tooltip fades out when the mouse leaves (0 = vanish instantly)
+  - Add "Setting Compact mode" to shrink the spacing between settings rows so many more options fit on one screen
+  - Fix Container mode only selecting a single line on sites that wrap each line/segment in its own inline element (e.g. X.com); it now selects the whole block
+  - Right-align RTL subtitles (Arabic, Hebrew, ...) on YouTube so word order, embedded Latin text (e.g. "LLM") and numbers display correctly
 - 0.1.227
   - Fix the right-click "Copy" of the translated text disappearing: Copy is now always available again, while the Saved Words page toggle only governs the per-group "Save to `<group>`" menus
 - 0.1.226
