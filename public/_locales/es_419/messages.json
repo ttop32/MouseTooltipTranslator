@@ -92,6 +92,9 @@
 	"Swap_Key_Toggle_Mode": {
 		"message": "Swap Key Toggle Mode"
 	},
+	"Toggle_Extension_When": {
+		"message": "Toggle Extension When"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "GRÁFICOS                                      "
 	},
@@ -220,6 +223,9 @@
 	},
 	"Tooltip_Interval_Time": {
 		"message": "Tiempo de Intervalo de la Ventana Emergente"
+	},
+	"Tooltip_Show_Delay": {
+		"message": "Tooltip Show Delay"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Tooltip Word Dictionary"
@@ -388,6 +394,9 @@
 	},
 	"Fixed": {
 		"message": "Fixed"
+	},
+	"Top_Right": {
+		"message": "Top Right"
 	},
 	"Fade": {
 		"message": "Fade"
