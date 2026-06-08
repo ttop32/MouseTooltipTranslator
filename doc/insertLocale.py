@@ -105,6 +105,7 @@ i18List = [
     "Mouseover Text Type Key Hold",
     "Secondary Language When",
     "Swap Key Toggle Mode",
+    "Toggle Extension When",
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",

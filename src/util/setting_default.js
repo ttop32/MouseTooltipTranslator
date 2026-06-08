@@ -398,6 +398,13 @@ export var settingDict = {
     optionList: toggleList,
     settingTab: "keyboard",
   },
+  keyToggleEnable: {
+    // press to turn the mouseover/select tooltip + TTS on/off for the session (#126)
+    default: "null",
+    i18nKey: "Toggle_Extension_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
   // voice
   voiceVolume: {
     default: "1.0",

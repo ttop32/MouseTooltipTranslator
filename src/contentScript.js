@@ -64,6 +64,7 @@ var stagedText = null;
 var prevTooltipText = "";
 var isAutoReaderRunning = false;
 var isStopAutoReaderOn = false;
+var extensionDisabled = false; // session on/off toggled by keyToggleEnable (#126)
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
@@ -177,6 +178,7 @@ async function stageTooltipText(text, actionType, range) {
   // hide tooltip, if  no text
   // if tooltip is off, hide tooltip
   if (
+    extensionDisabled ||
     !checkWindowFocus() ||
     checkMouseTargetIsTooltip() ||
     stagedText == text ||
@@ -728,6 +730,12 @@ async function runKeydownPostProcess(key, detectKeyDown) {
     }
     if (setting["keyDownTranslatePage"]==key) {
       togglePageTranslate(setting);
+    }
+    // master on/off toggle for the mouseover/select tooltip + TTS (#126)
+    if (setting["keyToggleEnable"]==key && key != "null") {
+      extensionDisabled = !extensionDisabled;
+      hideTooltip();
+      util.requestStopTTS(Date.now() + 500);
     }
     // per-group save shortcut using a single allowed key (Ctrl/Alt/F2/click...)
     var saveGroup = (setting["wordGroups"] || []).find((g) => g.key === key);
