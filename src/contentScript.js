@@ -607,6 +607,16 @@ function loadEventListener() {
   //detect tab switching to reset env
   addEventHandler("blur", resetTooltipStatus);
   addEventHandler("beforeunload", killAutoReader);
+
+  // when the user focuses a rich-text editor, drop our injected container right
+  // away so it can't be serialized into the edited HTML / saved by page builders
+  // (#102, #115). Google Docs keeps the tooltip, so it is excluded.
+  addEventHandler("focusin", () => {
+    if (!util.isGoogleDoc() && dom_util.getFocusedWritingBox()) {
+      hideTooltip(true);
+      $("#mttContainer").remove();
+    }
+  });
 }
 
 function handleMousemove(e) {
@@ -1027,6 +1037,10 @@ async function addElementEnv() {
   tooltipContainer = $("<div/>", {
     id: "mttContainer",
     class: "notranslate",
+    // keep our injected node out of rich-text editors / page builders: it must
+    // not be editable, and we tag it so editor serialization can ignore it (#102, #115)
+    contenteditable: "false",
+    "data-mtt": "1",
   });
   tooltipContainerEle = tooltipContainer.get(0);
 
