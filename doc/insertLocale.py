@@ -148,6 +148,7 @@ i18List = [
     "Tooltip Info Source Language",
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",
+    "Tooltip Show Delay",
     "Tooltip Word Dictionary",
     "Tooltip Word Dictionary Source",
     "Voice Translated Speed",

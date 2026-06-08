@@ -221,6 +221,9 @@
 	"Tooltip_Interval_Time": {
 		"message": "工具提示间隔时间"
 	},
+	"Tooltip_Show_Delay": {
+		"message": "Tooltip Show Delay"
+	},
 	"Tooltip_Word_Dictionary": {
 		"message": "工具提示词典"
 	},

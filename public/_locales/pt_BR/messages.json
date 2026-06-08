@@ -221,6 +221,9 @@
 	"Tooltip_Interval_Time": {
 		"message": "Intervalo de Tempo da Dica"
 	},
+	"Tooltip_Show_Delay": {
+		"message": "Tooltip Show Delay"
+	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Dicionário de Palavras de Dicas"
 	},

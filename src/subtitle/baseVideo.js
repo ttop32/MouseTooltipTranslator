@@ -219,9 +219,12 @@ export default class BaseVideo {
           var sub1 = this.parseSubtitle(response, sourceLang);
           var responseSub = sub1;
           //get target lang sub, if not same lang
+          // skip the translated second line when the subtitle's source language
+          // is excluded, matching the tooltip's exclude behavior (#136)
           if (
             sourceLang != targetLang &&
-            this.setting["detectSubtitle"] == "dualsub"
+            this.setting["detectSubtitle"] == "dualsub" &&
+            !this.setting["langExcludeList"]?.includes(sourceLang)
           ) {
             await this.waitRandom(300, 2000); //wait for avoid ban
             var sub2 = await this.requestSubtitleCached(

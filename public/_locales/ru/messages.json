@@ -221,6 +221,9 @@
 	"Tooltip_Interval_Time": {
 		"message": "Задержка появления подсказки"
 	},
+	"Tooltip_Show_Delay": {
+		"message": "Tooltip Show Delay"
+	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
 	},

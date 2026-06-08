@@ -95,6 +95,7 @@ var tooltipBackgroundBlurList = _util.getRangeOption(0, 21);
 var distanceList = _util.getRangeOption(0, 41);
 var tooltipIntervalTimeList = _util.getRangeOption(0.1, 2.1, 0.1, 1);
 var tooltipDisappearList = _util.getRangeOption(0, 501, 50, 0);
+var mouseoverIntervalList = _util.getRangeOption(0, 1001, 50, 0);
 
 var tooltipPositionList = {
   Follow: "follow",
@@ -795,10 +796,12 @@ export var settingDict = {
     settingTab: "remains",
   },
   mouseoverEventInterval: {
+    // debounce (ms) before the mouseover tooltip appears after the cursor stops.
+    // Exposed so users can make the tooltip show faster (lower = snappier). (#235)
     default: "300",
-    i18nKey: "Mouseover_Event_Interval",
-    optionList: tooltipIntervalTimeList,
-    settingTab: "remains",
+    i18nKey: "Tooltip_Show_Delay",
+    optionList: mouseoverIntervalList,
+    settingTab: "advanced",
   },
   cardPlayMeta: {
     default: ["image"],

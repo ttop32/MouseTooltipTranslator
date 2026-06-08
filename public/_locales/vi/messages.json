@@ -221,6 +221,9 @@
 	"Tooltip_Interval_Time": {
 		"message": "Thời gian của công cụ"
 	},
+	"Tooltip_Show_Delay": {
+		"message": "Tooltip Show Delay"
+	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Từ điển giải thích của công cụ"
 	},
