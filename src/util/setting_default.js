@@ -100,6 +100,7 @@ var mouseoverIntervalList = _util.getRangeOption(0, 1001, 50, 0);
 var tooltipPositionList = {
   Follow: "follow",
   Fixed: "fixed",
+  "Top Right": "topright",
 };
 var tooltipAnimationList = {
   None: "",

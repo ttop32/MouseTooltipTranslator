@@ -395,6 +395,9 @@
 	"Fixed": {
 		"message": "Фиксированная"
 	},
+	"Top_Right": {
+		"message": "Top Right"
+	},
 	"Fade": {
 		"message": "Затухание"
 	},

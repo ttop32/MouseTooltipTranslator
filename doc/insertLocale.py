@@ -206,6 +206,7 @@ i18List = [
     "Mouseover n Select",
     "Follow",
     "Fixed",
+    "Top Right",
     "Fade",
     "Scale",
     "Shift away",

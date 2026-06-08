@@ -395,6 +395,9 @@
 	"Fixed": {
 		"message": "固定"
 	},
+	"Top_Right": {
+		"message": "Top Right"
+	},
 	"Fade": {
 		"message": "淡入淡出"
 	},

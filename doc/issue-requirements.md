@@ -47,7 +47,7 @@
 - `#39` (2023-06-16) — [기능] Google 백업용 다른 번역 엔진 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/39) — ✅ **적용됨** (코드: fallbackTranslatorEngine, `translateCaller.js`)
 - `#40` (2023-06-19) — Firefox용 확장 제공 요청 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/40) — ✅ **적용됨** (코드: Firefox 빌드 지원)
 - `#41` (2023-06-20) — 동작하지 않음 (버그 신고) — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/41)
-- `#43` (2023-07-29) — 번역을 우상단에만 표시하는 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/43) — 🟡 **부분 적용** (코드: tooltipPosition=fixed)
+- `#43` (2023-07-29) — 번역을 우상단에만 표시하는 옵션 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/43) — ✅ **적용됨** (설정 `tooltipPosition`에 "Top Right" 추가 → 툴팁이 커서를 따라다니지 않고 **화면 우상단에 고정** 표시(읽는 중 텍스트 위로 안 튀어나옴). `contentScript.js` applyStyleSetting에서 tippy `placement:"bottom-end"` + `#mttContainer`를 우상단 앵커로, setTooltipPosition은 topright 시 마우스 추종 안 함. 라이브 위치 미세조정 검증 권장)
 - `#45` (2023-08-21) — PDF 열기 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/45)
 - `#46` (2023-08-28) — OCR을 별도 확장/플러그인으로 분리 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/46)
 - `#47` (2023-08-29) — 비주얼(외형) 커스터마이즈 불가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/47) — ✅ **적용됨** (코드: setting_default graphic 탭 옵션군)

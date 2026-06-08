@@ -952,6 +952,11 @@ function setMouseStatus(e) {
   mouseTarget = e.target;
 }
 function setTooltipPosition(x, y) {
+  // top-right mode keeps the tooltip pinned at the corner, so don't track the mouse (#43)
+  if (setting["tooltipPosition"] == "topright") {
+    tooltipContainer?.css("transform", "none");
+    return;
+  }
   tooltipContainer?.css("transform", `translate(${x}px,${y}px)`);
 }
 
@@ -1072,6 +1077,9 @@ async function addElementEnv() {
 
 function applyStyleSetting() {
   var isSticky = setting["tooltipPosition"] == "follow";
+  // pin the tooltip to the top-right corner instead of following the cursor, so
+  // it stops popping up over the text while reading (#43)
+  var isTopRight = setting["tooltipPosition"] == "topright";
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
@@ -1080,20 +1088,22 @@ function applyStyleSetting() {
     // swaps document.body, leaving the tooltip appended to the detached old
     // body (worked again only after a full reload). (#80)
     appendTo: isSticky ? tooltipContainerEle : () => document.body,
+    placement: isTopRight ? "bottom-end" : "top",
     animation: setting["tooltipAnimation"],
     // [show, hide] animation duration. Hide is configurable so users can make
     // the tooltip vanish instantly (0) or fade slower when the mouse leaves (#240).
     duration: [300, Number(setting["tooltipDisappearDuration"])],
   });
+  // top-right mode anchors the (empty) container at the corner; other modes use
+  // the 1000px-wide box centered on the cursor via setTooltipPosition's transform.
+  var containerPosCss = isTopRight
+    ? `top: 12px !important; right: 12px !important; left: auto !important; width: auto !important; margin: 0 !important;`
+    : `left: 0 !important; top: 0 !important; width: 1000px !important; margin: 0px !important; margin-left: -500px !important;`;
   var rtlDirection = getRtlDir(setting["translateTarget"]);
 
   style.html(`
     #mttContainer {
-      left: 0 !important;
-      top: 0 !important;
-      width: 1000px !important;
-      margin: 0px !important;
-      margin-left: -500px !important;
+      ${containerPosCss}
       position: fixed !important;
       z-index: 2147483647 !important; /* Maximum z-index to overcome overlays */
       background: none !important;
