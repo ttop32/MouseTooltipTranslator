@@ -89,6 +89,9 @@
 	"Secondary_Language_When": {
 		"message": "Secondary Language When"
 	},
+	"Swap_Key_Toggle_Mode": {
+		"message": "Swap Key Toggle Mode"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "กราฟิก                                      "
 	},
@@ -106,6 +109,9 @@
 	},
 	"Tooltip_Animation": {
 		"message": "แอนิเมชั่น Tooltip"
+	},
+	"Tooltip_Disappear_Duration": {
+		"message": "Tooltip Disappear Duration"
 	},
 	"Tooltip_Position": {
 		"message": "ตำแหน่ง Tooltip"
@@ -131,6 +137,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "สีเน้นข้อความ"
 	},
+	"Setting_Compact_mode": {
+		"message": "Setting Compact mode"
+	},
 	"VOICE______________________________________": {
 		"message": "เสียง                                      "
 	},
@@ -151,6 +160,9 @@
 	},
 	"Voice_for_": {
 		"message": "สำหรับเสียง "
+	},
+	"Voice_speed_for_": {
+		"message": "Voice speed for "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ยกเว้น                                      "
