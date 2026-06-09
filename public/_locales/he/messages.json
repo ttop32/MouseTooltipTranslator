@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "Tooltip Info Source Text"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Tooltip Info Source Language"
 	},

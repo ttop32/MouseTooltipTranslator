@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "টুলটিপের তথ্যে মূল লেখা"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "টুলটিপের তথ্যে মূল ভাষা"
 	},

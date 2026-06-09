@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "Texto de Origem da Fonte de Dica"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Idioma de Origem da Dica"
 	},

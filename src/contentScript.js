@@ -161,6 +161,25 @@ function isOtherServiceActive(excludeSelect = false) {
   return listenText || isAutoReaderRunning || (!excludeSelect && selectedText);
 }
 
+// #36: skip translating text that matches the user's exclude regex (e.g. pure
+// numbers, URLs). Compile lazily and cache; an invalid pattern is ignored.
+var excludeRegexCache = { src: null, re: null };
+function isExcludedByRegex(text) {
+  var src = setting["translateExcludeRegex"];
+  if (!src || !text) {
+    return false;
+  }
+  if (excludeRegexCache.src !== src) {
+    excludeRegexCache.src = src;
+    try {
+      excludeRegexCache.re = new RegExp(src);
+    } catch (e) {
+      excludeRegexCache.re = null; // invalid regex -> never excludes
+    }
+  }
+  return excludeRegexCache.re ? excludeRegexCache.re.test(text) : false;
+}
+
 //process detected word
 async function stageTooltipText(text, actionType, range) {
   var isTtsOn =
@@ -197,6 +216,13 @@ async function stageTooltipText(text, actionType, range) {
     hideTooltip();
   }
 
+
+  // skip translation for text matching the user's exclude regex (#36)
+  if (isExcludedByRegex(text)) {
+    stagedText = text;
+    hideTooltip();
+    return;
+  }
 
   //stage current processing word
   stagedText = text;

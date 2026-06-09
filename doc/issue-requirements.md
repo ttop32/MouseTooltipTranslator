@@ -41,7 +41,7 @@
 - `#32` (2023-04-25) — 그래픽 작업 위임(디자인 도움) — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/32)
 - `#33` (2023-04-25) — 원문 대신 번역문을 음성으로 읽기 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/33) — ✅ **적용됨** (코드: voiceTarget=target)
 - `#35` (2023-05-10) — PDF 다크 모드 미지원 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/35) — ✅ **적용됨** (코드: PDF.js 뷰어 다크 모드)
-- `#36` (2023-06-10) — 정규식 / 클립보드 기능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/36) — 🟡 **부분 적용** (클립보드 복사 코드 존재, 정규식 미지원)
+- `#36` (2023-06-10) — 정규식 / 클립보드 기능 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/36) — ✅ **적용됨** (3요청 중: ① **정규식 제외 필터** 신규 — 설정 `translateExcludeRegex`(advanced)에 패턴 입력 시 매치되는 감지 텍스트는 번역 안 함, `contentScript.js isExcludedByRegex`(컴파일 캐시, 잘못된 정규식 무시). ② 원문=목표 언어면 미표시 = 이미 #279. ③ 번역 결과 클립보드 출력 = 복사 #138/#204. 클립보드→번역 입력 방향만 범위 외)
 - `#37` (2023-06-11) — Invalid manifest 에러 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/37)
 - `#38` (2023-06-15) — [버그] 툴팁 활성화 Hold 키 동작 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/38)
 - `#39` (2023-06-16) — [기능] Google 백업용 다른 번역 엔진 추가 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/39) — ✅ **적용됨** (코드: fallbackTranslatorEngine, `translateCaller.js`)

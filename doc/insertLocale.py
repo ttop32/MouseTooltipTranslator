@@ -146,6 +146,7 @@ i18List = [
     "Mouseover Pause Subtitle",
     "Show Tooltip While Typing",
     "Tooltip Info Source Text",
+    "Translate Exclude Regex",
     "Tooltip Info Source Language",
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",

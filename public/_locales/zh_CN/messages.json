@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "工具提示信息源文本"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "工具提示信息源语言"
 	},

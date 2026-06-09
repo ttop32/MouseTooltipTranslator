@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "ข้อความแหล่งที่มาข้อมูล Tooltip"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "ภาษาแหล่งที่มา Tooltip"
 	},

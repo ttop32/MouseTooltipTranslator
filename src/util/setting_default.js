@@ -614,6 +614,15 @@ export var settingDict = {
     optionList: toggleList,
     settingTab: "advanced",
   },
+  translateExcludeRegex: {
+    // detected text matching this regex is not translated (no tooltip). (#36)
+    default: "",
+    i18nKey: "Translate_Exclude_Regex",
+    optionList: {},
+    optionType: "textField",
+    placeholder: "e.g. ^[0-9.,]+$|https?://",
+    settingTab: "advanced",
+  },
   tooltipInfoSourceLanguage: {
     default: "false",
     i18nKey: "Tooltip_Info_Source_Language",

@@ -215,6 +215,9 @@
 	"Tooltip_Info_Source_Text": {
 		"message": "Thông tin nguồn văn bản"
 	},
+	"Translate_Exclude_Regex": {
+		"message": "Translate Exclude Regex"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Thông tin nguồn về ngôn ngữ"
 	},
