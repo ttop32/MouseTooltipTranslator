@@ -140,6 +140,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "滑鼠懸停文本高亮顏色"
 	},
+	"Ebook_Theme": {
+		"message": "Ebook Theme"
+	},
 	"Setting_Compact_mode": {
 		"message": "Setting Compact mode"
 	},
@@ -472,6 +475,12 @@
 	},
 	"Justify": {
 		"message": "兩端對齊"
+	},
+	"Light": {
+		"message": "Light"
+	},
+	"Dark": {
+		"message": "Dark"
 	},
 	"Default": {
 		"message": "預設"
