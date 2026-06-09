@@ -171,7 +171,7 @@
 - `#240` (2025-07-21) — 툴팁이 더 빨리 사라지게 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/240) — ✅ **적용됨** (제보: "마우스가 단어 밖으로 나갈 때 사라짐 속도를 즉시/100ms 등으로 조절 옵션". 설정 `tooltipDisappearDuration`(graphic 탭, 0~500ms, 기본 250) 추가 → `contentScript.js applyStyleSetting`에서 tippy `duration: [300, hide]`의 hide(사라짐 페이드) 시간 제어. 0 = 즉시 사라짐. 반응 지연은 기존 `mouseoverEventInterval`로 별도 조절)
 - `#242` (2025-07-31) — Brave 브라우저에서 동작 안 함 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/242)
 - `#250` (2025-08-29) — 이미지 전체 번역 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/250)
-- `#251` (2025-08-30) — [기능] 카테고리별 커스텀 사전 + 핫키 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/251)
+- `#251` (2025-08-30) — [기능] 카테고리별 커스텀 사전 + 핫키 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/251) — ✅ **적용됨** (저장 단어 그룹 기능으로 충족: `wordGroups`=사용자 정의 카테고리(이름/색상), 그룹별 저장 핫키 + Ctrl+Shift+1~5 + 우클릭 "Save to `<group>`", 관리 UI `src/pages/saved.vue`(Manage Groups·이동·삭제), Download CSV 내보내기, in-page 하이라이트 `savedHighlight.js`. #9/#239 기반)
 - `#252` (2025-08-30) — [기능] 데스크톱 OCR + 오프라인 번역 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/252)
 - `#253` (2025-08-31) — [버그] 확장이 hover 모달 표시를 막음 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/253)
 - `#254` (2025-09-01) — X.com 컨테이너 인식 문제 — [link](https://github.com/ttop32/MouseTooltipTranslator/issues/254) — ✅ **수정** (원인: `mouseover.js getContainerRange`가 마우스가 가리킨 텍스트노드의 **바로 위 부모**만 컨테이너로 잡음. X.com은 한 문단을 줄/구절별 인라인 `<span>`으로 감싸 그 span 하나(=한 문장)만 잡혀 "Container인데 Sentence만 됨". `getBlockAncestor`로 인라인 래퍼를 건너뛰고 가장 가까운 **블록 레벨 조상**을 컨테이너로 선택(`selectNodeContents`). body/html까지 올라가 페이지 전체를 잡는 것은 가드. 라이브 검증 권장)
