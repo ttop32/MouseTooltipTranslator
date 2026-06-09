@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.230
+  - Remove the right-click "Copy original" context menu; copying the source text under the cursor is now done with the Ctrl+Shift+7 hotkey only
 - 0.1.229
   - Add a "Top Right" tooltip position that pins the tooltip to the top-right corner instead of following the cursor, so it stops popping up over the text while reading
   - Add an extension on/off toggle hotkey ("Toggle Extension When") to quickly turn the mouseover tooltip and speech on or off, e.g. only on the sites you need
@@ -30,7 +32,7 @@ English, Russian, Japanese, Chinese and so on
   - Fix the writing-translation hotkey needing several taps and sometimes duplicating the result (it now ignores re-entrant presses while one is in progress)
 - 0.1.228
   - Add per-language read-aloud speed: set a different voice speed for each language (e.g. English 1.0, Chinese 1.5) under the Voice tab
-  - Add a "Copy Source Text" hotkey (Ctrl+Shift+7) and a right-click "Copy original" menu to copy the original text under the cursor (the existing copy still copies the translation)
+  - Add a "Copy Source Text" hotkey (Ctrl+Shift+7) to copy the original text under the cursor (the existing copy still copies the translation)
   - Add "Swap Key Toggle Mode": make the mouseover-text-type swap key and the secondary-language key toggle (press to switch, press again to revert) instead of having to hold them
   - Add "Tooltip Disappear Duration" to control how quickly the tooltip fades out when the mouse leaves (0 = vanish instantly)
   - Add "Setting Compact mode" to shrink the spacing between settings rows so many more options fit on one screen

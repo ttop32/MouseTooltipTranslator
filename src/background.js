@@ -180,13 +180,11 @@ function insertHistory(actionType, groupId) {
 
 function addCopyRequestListener() {
   util.addCommandListener("copy-translated-text", requestCopyForTargetText); //command shortcut key handler for copy translated
-  util.addCommandListener("copy-source-text", requestCopyForSourceText); //command shortcut key handler for copy source (#204)
-  // single onClicked handler: "copy" / "copy-source" + dynamic "save-group-<id>" menus
+  util.addCommandListener("copy-source-text", requestCopyForSourceText); //command shortcut key handler for copy source (#204, hotkey only)
+  // single onClicked handler: "copy" + dynamic "save-group-<id>" menus
   browser.contextMenus.onClicked.addListener((info) => {
     if (info.menuItemId === "copy") {
       requestCopyForTargetText();
-    } else if (info.menuItemId === "copy-source") {
-      requestCopyForSourceText();
     } else if (String(info.menuItemId).startsWith("save-group-")) {
       var gid = parseInt(String(info.menuItemId).replace("save-group-", ""), 10);
       insertHistory("shortcutkey", gid);
@@ -206,15 +204,6 @@ async function updateContextMenus({ targetText, sourceText }) {
     contexts: ["all"],
     visible: true,
   });
-  // "Copy original" copies the source text under the cursor (#204).
-  if (recentSource) {
-    browser.contextMenus.create({
-      id: "copy-source",
-      title: "Copy original : " + TextUtil.truncate(recentSource, 20),
-      contexts: ["all"],
-      visible: true,
-    });
-  }
   if (!setting["saveContextMenu"]) {
     return;
   }
