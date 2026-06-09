@@ -69,7 +69,7 @@
 		"message": "Автоматическое чтение при нажатии"
 	},
 	"Translate_Page_When": {
-		"message": "Translate Page When"
+		"message": "Когда переводить страницу"
 	},
 	"OCR_When": {
 		"message": "Распознавание текста при нажатии"
@@ -90,10 +90,10 @@
 		"message": "Второй язык при нажатии"
 	},
 	"Swap_Key_Toggle_Mode": {
-		"message": "Swap Key Toggle Mode"
+		"message": "Переключение по нажатию"
 	},
 	"Toggle_Extension_When": {
-		"message": "Toggle Extension When"
+		"message": "Когда включать/отключать расширение"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
@@ -114,7 +114,7 @@
 		"message": "Анимация появления поля переводчика"
 	},
 	"Tooltip_Disappear_Duration": {
-		"message": "Tooltip Disappear Duration"
+		"message": "Время исчезновения подсказки"
 	},
 	"Tooltip_Position": {
 		"message": "Позиция поля переводчика"
@@ -141,7 +141,7 @@
 		"message": "Цвет подсветки текста при наведении курсора"
 	},
 	"Setting_Compact_mode": {
-		"message": "Setting Compact mode"
+		"message": "Компактный режим настроек"
 	},
 	"VOICE______________________________________": {
 		"message": "ГОЛОСОВЫЕ НАСТРОЙКИ                                      "
@@ -165,7 +165,7 @@
 		"message": "Голосовой синтезатор для "
 	},
 	"Voice_speed_for_": {
-		"message": "Voice speed for "
+		"message": "Скорость речи для "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "ИСКЛЮЧЕНИЯ                                      "
@@ -177,7 +177,7 @@
 		"message": "Исключить язык"
 	},
 	"Website_Filter_Mode": {
-		"message": "Website Filter Mode"
+		"message": "Режим фильтрации сайтов"
 	},
 	"Exclude_Website": {
 		"message": "Исключить указанный веб-сайт"
@@ -198,7 +198,7 @@
 		"message": "ДОПОЛНИТЕЛЬНО"
 	},
 	"UI_Language": {
-		"message": "UI Language"
+		"message": "Язык интерфейса"
 	},
 	"Detect_PDF": {
 		"message": "Определять PDF-файлы"
@@ -210,7 +210,7 @@
 		"message": "Пауза субтитров при наведении курсора"
 	},
 	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
+		"message": "Показывать подсказку при вводе текста"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "Исходный текст в поле переводчика"
@@ -225,13 +225,13 @@
 		"message": "Задержка появления подсказки"
 	},
 	"Tooltip_Show_Delay": {
-		"message": "Tooltip Show Delay"
+		"message": "Задержка появления подсказки"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "Пользовательский словарь в поле переводчика"
 	},
 	"Tooltip_Word_Dictionary_Source": {
-		"message": "Tooltip Word Dictionary Source"
+		"message": "Источник словаря для подсказок"
 	},
 	"Voice_Translated_Speed": {
 		"message": "Скорость воспроизведения перевода"
@@ -396,7 +396,7 @@
 		"message": "Фиксированная"
 	},
 	"Top_Right": {
-		"message": "Top Right"
+		"message": "Сверху справа"
 	},
 	"Fade": {
 		"message": "Затухание"
@@ -423,13 +423,13 @@
 		"message": "Контейнер"
 	},
 	"Both": {
-		"message": "Both"
+		"message": "Оба списка"
 	},
 	"Blacklist": {
-		"message": "Blacklist"
+		"message": "Чёрный список"
 	},
 	"Whitelist": {
-		"message": "Whitelist"
+		"message": "Белый список"
 	},
 	"Source": {
 		"message": "Оригинал"
