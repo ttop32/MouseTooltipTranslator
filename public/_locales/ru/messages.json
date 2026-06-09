@@ -141,7 +141,7 @@
 		"message": "Цвет подсветки текста при наведении курсора"
 	},
 	"Ebook_Theme": {
-		"message": "Ebook Theme"
+		"message": "Тема для электронных книг"
 	},
 	"Setting_Compact_mode": {
 		"message": "Компактный режим настроек"
@@ -219,7 +219,7 @@
 		"message": "Исходный текст в поле переводчика"
 	},
 	"Translate_Exclude_Regex": {
-		"message": "Translate Exclude Regex"
+		"message": "Исключения из перевода (RegEx)"
 	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Информация об исходном языке в поле переводчика"
@@ -477,10 +477,10 @@
 		"message": "По ширине"
 	},
 	"Light": {
-		"message": "Light"
+		"message": "Светлая"
 	},
 	"Dark": {
-		"message": "Dark"
+		"message": "Тёмная"
 	},
 	"Default": {
 		"message": "По умолчанию"
