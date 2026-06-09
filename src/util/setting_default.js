@@ -102,6 +102,11 @@ var tooltipPositionList = {
   Fixed: "fixed",
   "Top Right": "topright",
 };
+var ebookThemeList = {
+  Auto: "auto",
+  Light: "light",
+  Dark: "dark",
+};
 var tooltipAnimationList = {
   None: "",
   Fade: "fade",
@@ -517,6 +522,14 @@ export var settingDict = {
     optionList: {},
     optionType: "colorPicker",
     menu: false,
+    settingTab: "graphic",
+  },
+  ebookTheme: {
+    // forces the local ebook reader's page color scheme so a book's own
+    // background doesn't make the auto dark theme unreadable (#201)
+    default: "auto",
+    i18nKey: "Ebook_Theme",
+    optionList: ebookThemeList,
     settingTab: "graphic",
   },
   compactMode: {

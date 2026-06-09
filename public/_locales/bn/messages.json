@@ -140,6 +140,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
 	},
+	"Ebook_Theme": {
+		"message": "Ebook Theme"
+	},
 	"Setting_Compact_mode": {
 		"message": "Setting Compact mode"
 	},
@@ -472,6 +475,12 @@
 	},
 	"Justify": {
 		"message": "দু’পাশ সমান"
+	},
+	"Light": {
+		"message": "Light"
+	},
+	"Dark": {
+		"message": "Dark"
 	},
 	"Default": {
 		"message": "ডিফল্ট"

@@ -140,6 +140,9 @@
 	"Mouseover_Text_Highlight_Color": {
 		"message": "마우스오버 텍스트 하이라이트 색상"
 	},
+	"Ebook_Theme": {
+		"message": "Ebook Theme"
+	},
 	"Setting_Compact_mode": {
 		"message": "Setting Compact mode"
 	},
@@ -472,6 +475,12 @@
 	},
 	"Justify": {
 		"message": "Justify"
+	},
+	"Light": {
+		"message": "Light"
+	},
+	"Dark": {
+		"message": "Dark"
 	},
 	"Default": {
 		"message": "Default"

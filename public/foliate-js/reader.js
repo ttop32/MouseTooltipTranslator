@@ -96,11 +96,29 @@ const getView = async file => {
     return view
 }
 
-const getCSS = ({ spacing, justify, hyphenate }) => `
-    @namespace epub "http://www.idpf.org/2007/ops";
-    html {
-        color-scheme: light dark;
+// MouseTooltipTranslator: read the user's ebook theme (auto/light/dark) so a
+// book's own background can't make the auto dark theme unreadable (#201).
+const getEbookTheme = async () => {
+    try {
+        const api = globalThis.browser || globalThis.chrome
+        const res = await api.storage.local.get('ebookTheme')
+        return res?.ebookTheme || 'auto'
+    } catch (e) {
+        return 'auto'
     }
+}
+const themeCSS = (theme) =>
+    theme === 'light'
+        ? `html { color-scheme: light !important; }
+           html, body { background: #ffffff !important; color: #111111 !important; }`
+        : theme === 'dark'
+        ? `html { color-scheme: dark !important; }
+           html, body { background: #1b1b1b !important; color: #d6d6d6 !important; }`
+        : `html { color-scheme: light dark; }`
+
+const getCSS = ({ spacing, justify, hyphenate, theme }) => `
+    @namespace epub "http://www.idpf.org/2007/ops";
+    ${themeCSS(theme)}
     /* https://github.com/whatwg/html/issues/5426 */
     @media (prefers-color-scheme: dark) {
         a:link {
@@ -187,6 +205,7 @@ class Reader {
         this.view.addEventListener('relocate', this.#onRelocate.bind(this))
 
         const { book } = this.view
+        this.style.theme = await getEbookTheme() // #201: user-selected ebook theme
         this.view.renderer.setStyles?.(getCSS(this.style))
         this.view.renderer.next()
 
