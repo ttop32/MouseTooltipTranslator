@@ -65,6 +65,7 @@ var prevTooltipText = "";
 var isAutoReaderRunning = false;
 var isStopAutoReaderOn = false;
 var extensionDisabled = false; // session on/off toggled by keyToggleEnable (#126)
+var isTranslatingWriting = false; // re-entrancy guard for the writing-translate hotkey (#75)
 
 var tooltipRemoveTimeoutId = "";
 var tooltipRemoveTime = 3000;
@@ -511,24 +512,35 @@ async function translateWriting() {
   // if is google doc do not check writing box
   if (!dom_util.getFocusedWritingBox() && !util.isGoogleDoc()) {
     return;
-  }  
-  // get writing text
-  var writingText = await getWritingText();
-  if (!writingText) {
+  }
+  // ignore re-entrant presses: the flow is async (IME finish + translate +
+  // execCommand insert), so a second tap mid-run raced the selection/insert and
+  // duplicated or dropped the result, making users tap several times (#75).
+  if (isTranslatingWriting) {
     return;
   }
-  // translate
-  var { targetText, isBroken } = await util.requestTranslate(
-    writingText,
-    "auto",
-    setting["writingLanguage"],
-    setting["translateTarget"]
-  );
-  //skip no translation or is too late to respond
-  if (isBroken) {
-    return;
+  isTranslatingWriting = true;
+  try {
+    // get writing text
+    var writingText = await getWritingText();
+    if (!writingText) {
+      return;
+    }
+    // translate
+    var { targetText, isBroken } = await util.requestTranslate(
+      writingText,
+      "auto",
+      setting["writingLanguage"],
+      setting["translateTarget"]
+    );
+    //skip no translation or is too late to respond
+    if (isBroken) {
+      return;
+    }
+    await insertText(targetText);
+  } finally {
+    isTranslatingWriting = false;
   }
-  insertText(targetText);
 }
 
 async function getWritingText() {

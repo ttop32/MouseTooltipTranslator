@@ -19,6 +19,15 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.229
+  - Add a "Top Right" tooltip position that pins the tooltip to the top-right corner instead of following the cursor, so it stops popping up over the text while reading
+  - Add an extension on/off toggle hotkey ("Toggle Extension When") to quickly turn the mouseover tooltip and speech on or off, e.g. only on the sites you need
+  - Add "Tooltip Show Delay" (Advanced tab) so you can make the tooltip appear faster after the cursor stops (lower = snappier)
+  - Add "Translate Exclude Regex" (Advanced tab) to skip translating text that matches a pattern, e.g. pure numbers or URLs
+  - Add an "Ebook Theme" setting (Auto / Light / Dark) so a book's own background no longer makes the local ebook reader unreadable
+  - Skip the translated second dual-subtitle line when the subtitle's source language is in the exclude list
+  - Keep the tooltip container out of rich-text editors and page builders (DIVI, Elementor) so it no longer inserts unwanted HTML while you edit
+  - Fix the writing-translation hotkey needing several taps and sometimes duplicating the result (it now ignores re-entrant presses while one is in progress)
 - 0.1.228
   - Add per-language read-aloud speed: set a different voice speed for each language (e.g. English 1.0, Chinese 1.5) under the Voice tab
   - Add a "Copy Source Text" hotkey (Ctrl+Shift+7) and a right-click "Copy original" menu to copy the original text under the cursor (the existing copy still copies the translation)
