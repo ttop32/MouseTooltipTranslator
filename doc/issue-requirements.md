@@ -117,7 +117,7 @@
 | [#124](https://github.com/ttop32/MouseTooltipTranslator/issues/124) | 2024-05-01 | 오디오 일시정지 후 이어듣기 | ✅ 적용 | `keyTTSPause` 핫키 — 일시정지/멈춘 지점부터 재개. chrome.tts·HTML audio(currentTime 보존)·speechSynthesis 3엔진. `isUserPaused` 가드로 큐 안 넘어감 |
 | [#126](https://github.com/ttop32/MouseTooltipTranslator/issues/126) | 2024-05-02 | 확장 On/Off 핫키 | ✅ 적용 | `keyToggleEnable` — 툴팁+TTS 세션 토글(`extensionDisabled`) |
 | [#134](https://github.com/ttop32/MouseTooltipTranslator/issues/134) | 2024-05-17 | 추가 요청 다수 | 🟡 부분 | 설정 동기화 ✅(`syncSetting`, storage.sync 미러, 히스토리/저장단어는 8KB 한도로 제외) / PDF 하이라이트 ✅(PDF.js 내장 #145), PDF 아이콘·줌 개선은 ❌ |
-| [#135](https://github.com/ttop32/MouseTooltipTranslator/issues/135) | 2024-06-04 | OpenAI/Gemini/Claude + AI 음성 | 🟡 부분 | `localLlm.js` + llmProviderList / AI 음성 미지원 |
+| [#135](https://github.com/ttop32/MouseTooltipTranslator/issues/135) | 2024-06-04 | OpenAI/Gemini/Claude + AI 음성 | 🟡 부분 | `localLlm.js` + llmProviderList(OpenAI/Claude/Gemini/Grok#330 등). LLM이 원문 언어도 감지·반환(`<ISO>\t<번역>`)해 동일언어 스킵·source TTS 동작 / AI(뉴럴) 음성 자체는 미지원 |
 | [#136](https://github.com/ttop32/MouseTooltipTranslator/issues/136) | 2024-06-09 | 제외 언어가 이중 자막 미적용 | ✅ 수정 | dualsub 조건에 `!langExcludeList.includes(sourceLang)` 추가 — 제외 언어면 원문 자막만 |
 | [#137](https://github.com/ttop32/MouseTooltipTranslator/issues/137) | 2024-06-09 | 다른 플랫폼 자막 미감지 | 🟡 부분 | netflix.js, svt.js 추가 |
 | [#138](https://github.com/ttop32/MouseTooltipTranslator/issues/138) | 2024-06-09 | 번역 후 복사 | ✅ 적용 | `copyTextToClipboard` |
@@ -208,7 +208,7 @@
 | [#276](https://github.com/ttop32/MouseTooltipTranslator/issues/276) | 2025-12-02 | 문장/단어 핫키 분리 | ✅ 적용 | mouseoverTextType2 + keyHoldMouseoverTextType |
 | [#277](https://github.com/ttop32/MouseTooltipTranslator/issues/277) | 2025-12-03 | 문장 복사 옵션 | ✅ 적용 | 복사가 감지 단위 따름 → sentence 모드+복사=문장 복사 |
 | [#278](https://github.com/ttop32/MouseTooltipTranslator/issues/278) | 2025-12-08 | 제외 섹션 사이트 제외 | ✅ 적용 | websiteExcludeList + 버튼 |
-| [#279](https://github.com/ttop32/MouseTooltipTranslator/issues/279) | 2025-12-19 | 원문=대상 언어면 중단 | ✅ 적용 | `stageTooltipText`에서 `sourceLang==targetLang`이면 hideTooltip+return (툴팁·TTS 스킵) |
+| [#279](https://github.com/ttop32/MouseTooltipTranslator/issues/279) | 2025-12-19 | 원문=대상 언어면 중단 | ✅ 적용 | `stageTooltipText`에서 `sourceLang==targetLang`이면 hideTooltip+return (툴팁·TTS 스킵). 일반 엔진은 detectedLang, LLM도 이제 원문 언어 반환해 적용됨 |
 | [#280](https://github.com/ttop32/MouseTooltipTranslator/issues/280) | 2025-12-25 | LLM 기반 번역 | ✅ 적용 | `localLlm.js` |
 
 ## 2026

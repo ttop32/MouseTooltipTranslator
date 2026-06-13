@@ -19,6 +19,17 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.231
+  - Add a "TTS Pause/Resume" hotkey: pause the read-aloud and resume from where it left off
+  - Read-aloud arrow-key control: while reading, Left/Right jump to the previous/next paragraph and Up/Down change the speed
+  - Add "Sync Setting": optionally sync your settings across devices (history and saved words stay local because of the sync size limit)
+  - Add "Tooltip Font Family" so you can set a custom font (e.g. a Persian font like Vazirmatn)
+  - Remember the last-viewed options tab and reopen there
+  - Add a "Subtitle Background" toggle to turn off the translucent background behind dual subtitles
+  - Add Grok (xAI) as an LLM translator provider; LLM translation now also detects the source language (so same-language text is skipped and read aloud in the right voice)
+  - Sort the Voice tab's per-language rows by how often you use each language (most-used on top)
+  - Fix duplicated YouTube subtitles ("AA BB") on auto-generated captions
+  - Move the donation button up to the toolbar (always visible) and the flashcard deck to the About page
 - 0.1.230
   - Remove the right-click "Copy original" context menu; copying the source text under the cursor is now done with the Ctrl+Shift+7 hotkey only
 - 0.1.229
