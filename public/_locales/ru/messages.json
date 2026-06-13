@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "Размер шрифта в поле переводчика"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "Ширина поля переводчика"
 	},

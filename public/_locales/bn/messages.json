@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "টুলটিপের ফন্টের সাইজ"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "টুলটিপের প্রস্থ"
 	},

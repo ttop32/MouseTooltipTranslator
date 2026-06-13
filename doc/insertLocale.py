@@ -110,6 +110,7 @@ i18List = [
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",
+    "Tooltip Font Family",
     "Tooltip Width",
     "Tooltip Distance",
     "Tooltip Animation",

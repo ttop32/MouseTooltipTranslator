@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "Ukuran Font Tooltip"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "Lebar Tooltip"
 	},

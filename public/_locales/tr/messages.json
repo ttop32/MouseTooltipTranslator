@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "İpucu Yazı Boyutu"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "İpucu Genişliği"
 	},

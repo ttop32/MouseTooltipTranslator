@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "حجم خط تلميح الأداة"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "عرض تلميح الأداة"
 	},

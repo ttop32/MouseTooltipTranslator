@@ -1249,7 +1249,7 @@ function applyStyleSetting() {
       text-align: ${setting["tooltipTextAlign"]} !important;
       overflow-wrap: break-word !important;
       color: ${setting["tooltipFontColor"]} !important;
-      font-family: 
+      font-family: ${setting["tooltipFontFamily"] ? setting["tooltipFontFamily"] + "," : ""}
         -apple-system, BlinkMacSystemFont,
         "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans",
@@ -1324,7 +1324,7 @@ function applyStyleSetting() {
     #ytp-caption-window-container .ytp-caption-segment {
       cursor: text !important;
       user-select: text !important;
-      font-family: 
+      font-family: ${setting["tooltipFontFamily"] ? setting["tooltipFontFamily"] + "," : ""}
       -apple-system, BlinkMacSystemFont,
       "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans",

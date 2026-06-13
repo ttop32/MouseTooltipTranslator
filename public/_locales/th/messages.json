@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "ขนาดตัวอักษร Tooltip"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "ความกว้างของ Tooltip"
 	},

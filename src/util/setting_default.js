@@ -451,6 +451,16 @@ export var settingDict = {
     optionList: tooltipFontSizeList,
     settingTab: "graphic",
   },
+  tooltipFontFamily: {
+    // custom tooltip font; prepended to the default stack. e.g. a Persian font
+    // like Vazirmatn (the font must be installed/available). (#86)
+    default: "",
+    i18nKey: "Tooltip_Font_Family",
+    optionList: {},
+    optionType: "textField",
+    placeholder: '"Vazirmatn", Tahoma',
+    settingTab: "graphic",
+  },
   tooltipWidth: {
     default: "200",
     i18nKey: "Tooltip_Width",

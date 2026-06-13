@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "Tamaño de Fuente de la Ventana Emergente"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "Ancho de la Ventana Emergente"
 	},

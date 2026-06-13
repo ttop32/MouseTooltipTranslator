@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "Tamanho da Fonte da Dica"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "Largura da Dica"
 	},

@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "툴팁 폰트 크기"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "툴팁 너비"
 	},

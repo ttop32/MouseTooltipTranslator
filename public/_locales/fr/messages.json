@@ -107,6 +107,9 @@
 	"Tooltip_Font_Size": {
 		"message": "Taille de la police de l'infobulle"
 	},
+	"Tooltip_Font_Family": {
+		"message": "Tooltip Font Family"
+	},
 	"Tooltip_Width": {
 		"message": "Largeur de l'infobulle"
 	},

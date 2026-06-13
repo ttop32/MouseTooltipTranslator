@@ -94,7 +94,7 @@
 | [#82](https://github.com/ttop32/MouseTooltipTranslator/issues/82) | 2024-02-03 | Reverse Translate 문서화 | ✅ 적용 | translateReverseTarget |
 | [#83](https://github.com/ttop32/MouseTooltipTranslator/issues/83) | 2024-02-03 | 옵션 창 마지막 탭 기억 | ❌ 미구현 | 옵션 창이 항상 Main 탭으로 열림 → 마지막 본 탭 복원 요청. 간단(currentTab 저장/복원) |
 | [#84](https://github.com/ttop32/MouseTooltipTranslator/issues/84) | 2024-02-03 | 선호 언어만/희귀 언어 제외 | ✅ 적용 | langExcludeList + langPriority |
-| [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ❌ 미구현 | 툴팁 폰트(굵기/종류) 변경 옵션 요청. fontSize만 있고 폰트 패밀리 선택은 미구현 |
+| [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ✅ 적용 | 설정 `tooltipFontFamily`(graphic, 텍스트 입력) 추가 → 입력한 폰트를 툴팁·자막 font-family 기본 스택 앞에 prepend. 예: `"Vazirmatn", Tahoma`(폰트는 설치/사용 가능해야 함) |
 | [#88](https://github.com/ttop32/MouseTooltipTranslator/issues/88) | 2024-02-08 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
 | [#90](https://github.com/ttop32/MouseTooltipTranslator/issues/90) | 2024-02-12 | YouTube 영상 번역 오류 | 🔍 재현 | 일부 영상 자막 중복(AA BB)·빠름 + ">>undefined". ASR(자동생성) 누적/오버랩 자막을 `parseSubtitle`이 또 붙여 중복 추정. 라이브 검증 필요(회귀 위험) |
 | [#98](https://github.com/ttop32/MouseTooltipTranslator/issues/98) | 2024-02-19 | 복사 문서화 | ✅ 적용 | `copyTextToClipboard` |
