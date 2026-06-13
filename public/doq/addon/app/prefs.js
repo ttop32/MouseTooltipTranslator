@@ -1,20 +1,16 @@
-
 import { DOQ, getDefaultPrefs } from "./config.js";
+import deepmerge from "deepmerge";
 
 /* Preferences */
 function readPreferences() {
   const prefs = getDefaultPrefs();
   const theme = getSysTheme();
-  const store = JSON.parse(localStorage.getItem(`doq.preferences.${theme}`));
+  const storedData = localStorage.getItem(`doq.preferences.${theme}`);
+  const store = storedData ? JSON.parse(storedData) : {};
 
-  for (const key in store) {
-    const value = store[key];
-    if (key in prefs && typeof value === typeof prefs[key]) {
-      prefs[key] = value;
-    }
-  }
-  DOQ.preferences = prefs;
-  return prefs;
+  // Deep merge with default preferences to prevent loss of properties
+  DOQ.preferences = deepmerge(prefs, store);
+  return DOQ.preferences;
 }
 
 function updatePreference(key, value) {
@@ -41,7 +37,8 @@ function migratePrefs() {
     return;
   }
   for (const theme of ["light", "dark"]) {
-    const store = JSON.parse(localStorage.getItem(`doq.preferences.${theme}`));
+    const storedData = localStorage.getItem(`doq.preferences.${theme}`);
+    const store = storedData ? JSON.parse(storedData) : {};
     if (store?.scheme !== undefined) {
       ++store.scheme;
       localStorage.setItem(`doq.preferences.${theme}`, JSON.stringify(store));
@@ -51,7 +48,8 @@ function migratePrefs() {
 }
 
 function readOptions() {
-  const store = JSON.parse(localStorage.getItem("doq.options"));
+  const storedData = localStorage.getItem("doq.options");
+  const store = storedData ? JSON.parse(storedData) : {};
   const { options } = DOQ;
 
   for (const key in options) {
