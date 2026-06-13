@@ -23,6 +23,7 @@ var recentRecord = {};
   try {
     injectContentScriptForAllTab(); // check extension updated, then re inject content script
     addInstallUrl(introSiteUrl); // check first start and redirect to how to use url
+    addUpdateUrl(); // on each update, open a "what's new" tab (changelog + donation)
     // addUninstallUrl(util.getReviewUrl());  //listen extension uninstall and
 
     await getSetting(); //  load setting
@@ -290,6 +291,17 @@ function addInstallUrl(url) {
   browser.runtime.onInstalled.addListener(async (details) => {
     if (details.reason == "install") {
       browser.tabs.create({ url });
+    }
+  });
+}
+
+// on extension update, open the "what's new" page (changelog + donation ask)
+function addUpdateUrl() {
+  browser.runtime.onInstalled.addListener(async (details) => {
+    if (details.reason == "update") {
+      browser.tabs.create({
+        url: browser.runtime.getURL("popup.html?whatsnew=1"),
+      });
     }
   });
 }

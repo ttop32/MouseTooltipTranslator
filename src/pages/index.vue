@@ -81,6 +81,28 @@
             >
             </v-select>
 
+            <!-- font family select: render each option (and the selected value)
+                 in its own typeface so you can preview fonts (#86) -->
+            <v-select
+              v-else-if="option.optionType == 'fontSelect'"
+              v-model="setting[optionName]"
+              :items="wrapTitleValueJson(option.optionList, optionName)"
+              :label="option.description"
+              variant="underlined"
+              class="compact-input"
+              hide-details="auto"
+            >
+              <template v-slot:item="{ props, item }">
+                <v-list-item
+                  v-bind="props"
+                  :style="{ fontFamily: item.raw.value || 'inherit' }"
+                ></v-list-item>
+              </template>
+              <template v-slot:selection="{ item }">
+                <span :style="{ fontFamily: item.raw.value || 'inherit' }">{{ item.title }}</span>
+              </template>
+            </v-select>
+
             <!-- combo box option -->
             <v-combobox
               v-else-if="option.optionType == 'comboBox'"
@@ -239,6 +261,47 @@
       </v-speed-dial>
     </v-fab> -->
 
+    <!-- "What's New" window shown over the settings after an update (#donation).
+         Closable; not a separate page. -->
+    <v-dialog v-model="showWhatsNew" max-width="600" scrollable>
+      <v-card>
+        <v-card-title class="d-flex align-center">
+          <span class="text-h6">🎉 {{ whatsNewTitle }}</span>
+          <v-spacer></v-spacer>
+          <v-btn icon variant="text" @click="showWhatsNew = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text style="max-height: 50vh;">
+          <div v-if="whatsNewLoading" class="text-medium-emphasis">Loading…</div>
+          <pre
+            v-else-if="whatsNewLog"
+            style="white-space: pre-wrap; word-break: break-word; font-family: inherit; margin: 0;"
+            >{{ whatsNewLog }}</pre>
+          <div v-else>
+            See the full change log on
+            <a :href="whatsNewUrl" target="_blank" rel="noopener">GitHub</a>.
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="d-flex flex-column pa-4">
+          <div class="text-body-2 mb-2 text-center">
+            This extension is free & open-source. Please consider supporting it 💚
+          </div>
+          <v-btn
+            color="brown"
+            variant="flat"
+            prepend-icon="mdi-coffee-to-go"
+            href="https://buymeacoffee.com/ttop324"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ remainSettingDesc["Support_this_extension"] || "Buy me a coffee" }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </popupWindow>
 </template>
 <script>
@@ -256,6 +319,7 @@ import {
   langListOpposite,
 } from "/src/util/lang.js";
 import localLlm from "/src/translator/localLlm.js";
+import { requestTranslate } from "/src/util";
 
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
@@ -302,11 +366,13 @@ var remainSettingDesc = {
   appName: i18n.getMessage("Mouse_Tooltip_Translator"),
   Voice_for_: i18n.getMessage("Voice_for_"),
   Voice_speed_for_: i18n.getMessage("Voice_speed_for_"),
+  Support_this_extension: i18n.getMessage("Support_this_extension"),
 };
 
 var langPriorityOptionList = [
   "translateSource",
   "translateTarget",
+  "translateTarget2",
   "writingLanguage",
   "translateReverseTarget",
 ];
@@ -354,16 +420,29 @@ export default {
       llmModelsFetching: false,
       llmFetchError: "",
       llmFetchErrorShown: false,
+      // "What's New" dialog (shown after an update)
+      showWhatsNew: false,
+      whatsNewLoading: true,
+      whatsNewLog: "",
+      whatsNewTitle: "Mouse Tooltip Translator updated",
+      whatsNewUrl:
+        "https://github.com/ttop32/MouseTooltipTranslator/blob/main/doc/description.md#change-log",
     };
   },
   async mounted() {
     await this.addTtsVoiceTabOption();
+    await this.addFontFamilyOption();
     await this.waitSettingLoad();
     this.defaultSettings = await SettingUtil.getDefaultDataAll();
     // restore the last-viewed options tab (#83)
     var lastTab = this.setting?.["lastSettingTab"];
     if (lastTab && this.tabs[lastTab]) {
       this.currentTab = lastTab;
+    }
+    // after an update the background opens this popup with ?whatsnew=1 → show the
+    // closable change-log + donation dialog over the settings
+    if (new URLSearchParams(location.search).get("whatsnew")) {
+      this.openWhatsNew();
     }
   },
   computed: {
@@ -457,15 +536,145 @@ export default {
       return textValList;
     },
     checkSettingLangPriority(newSetting, oldSetting) {
+      // explicit language-choice settings: the chosen language (value) scores +1
       for (var option of langPriorityOptionList) {
         if (
           newSetting[option] != oldSetting[option] &&
           oldSetting[option] != null
         ) {
-          var lang = newSetting[option];
-          var langPriority = this.setting?.["langPriority"]?.[lang] || 0;
-          this.setting["langPriority"][lang] = langPriority + 1;
+          this.bumpLangPriority(newSetting[option]);
         }
+      }
+      // per-language voice / speed changes also score the language in the KEY,
+      // so adjusting a language's TTS bumps it up the lists too
+      for (var key of Object.keys(newSetting)) {
+        if (
+          (key.startsWith("ttsVoice_") || key.startsWith("ttsRate_")) &&
+          oldSetting[key] != null &&
+          newSetting[key] != oldSetting[key]
+        ) {
+          this.bumpLangPriority(key.replace(/^ttsVoice_|^ttsRate_/, ""));
+        }
+      }
+    },
+    bumpLangPriority(lang) {
+      if (!lang || lang === "null") {
+        return;
+      }
+      if (!this.setting["langPriority"]) {
+        this.setting["langPriority"] = {};
+      }
+      this.setting["langPriority"][lang] =
+        (this.setting["langPriority"][lang] || 0) + 1;
+    },
+    // show the change-log + donation dialog, pulling the log from the repo so it
+    // stays current without a rebuild
+    async openWhatsNew() {
+      this.showWhatsNew = true;
+      this.whatsNewLoading = true;
+      try {
+        const res = await fetch(
+          "https://raw.githubusercontent.com/ttop32/MouseTooltipTranslator/main/doc/description.md"
+        );
+        var log = this.extractChangeLog(await res.text());
+        this.whatsNewLog = await this.translateChangeLog(log);
+      } catch (e) {
+        this.whatsNewLog = "";
+      } finally {
+        this.whatsNewLoading = false;
+      }
+    },
+    // auto-translate the (English) change log into the user's target language
+    async translateChangeLog(log) {
+      var targetLang = this.setting?.["writingLanguage"];
+      if (!log || !targetLang || targetLang == "en") {
+        return log;
+      }
+      try {
+        var res = await requestTranslate(log, "en", targetLang, targetLang);
+        return res?.isBroken || !res?.targetText ? log : res.targetText;
+      } catch (e) {
+        return log;
+      }
+    },
+    extractChangeLog(md) {
+      const start = md.indexOf("# Change Log");
+      if (start < 0) return "";
+      let section = md.slice(start + "# Change Log".length);
+      const next = section.search(/\n#\s/);
+      if (next >= 0) section = section.slice(0, next);
+      // keep only the latest few versions (top-level "- " entries)
+      const out = [];
+      let versionCount = 0;
+      for (const line of section.split("\n")) {
+        if (/^- /.test(line)) {
+          versionCount += 1;
+          if (versionCount > 4) break;
+        }
+        out.push(line);
+      }
+      return out.join("\n").trim();
+    },
+    // fill the Tooltip Font Family dropdown from the browser's installed fonts
+    // (chrome.fontSettings); Firefox lacks the API so fall back to common fonts. (#86)
+    async addFontFamilyOption() {
+      var fonts = {};
+      fonts[i18n.getMessage("Default") || "Default"] = "";
+      // CSS generic families (always supported by the browser)
+      [
+        "sans-serif", "serif", "monospace", "cursive", "fantasy", "system-ui",
+      ].forEach((g) => (fonts[g] = g));
+      // common cross-platform fonts as a baseline, grouped by script so non-Latin
+      // languages are covered too (mainly for Firefox / when a font isn't in the
+      // system list). On Chrome getFontList() below adds every installed font.
+      [
+        // Latin / general
+        "Arial", "Helvetica", "Verdana", "Tahoma", "Trebuchet MS", "Segoe UI",
+        "Roboto", "Open Sans", "Lato", "Calibri", "Cambria", "Georgia",
+        "Garamond", "Palatino Linotype", "Times New Roman", "Courier New",
+        "Consolas", "Lucida Console", "Comic Sans MS", "Impact",
+        "Noto Sans", "Noto Serif",
+        // Korean
+        "Malgun Gothic", "Nanum Gothic", "Noto Sans KR", "Batang", "Gulim", "Dotum",
+        // Japanese
+        "Yu Gothic", "Meiryo", "MS Gothic", "MS Mincho", "Noto Sans JP", "Hiragino Sans",
+        // Chinese (Simplified / Traditional)
+        "Microsoft YaHei", "SimSun", "SimHei", "Microsoft JhengHei",
+        "Noto Sans SC", "Noto Sans TC", "PingFang SC",
+        // Arabic / Persian
+        "Vazirmatn", "Cairo", "Amiri", "Noto Naskh Arabic", "Noto Sans Arabic",
+        "Geeza Pro", "Arabic Typesetting",
+        // Hebrew
+        "Noto Sans Hebrew", "David", "Arial Hebrew",
+        // Thai
+        "Noto Sans Thai", "Leelawadee UI", "Angsana New",
+        // Indic — Nirmala UI covers many of these on Windows; Noto per-script for the rest
+        "Nirmala UI",
+        "Noto Sans Devanagari", "Mangal", // Hindi / Marathi
+        "Noto Sans Bengali", "Vrinda", // Bengali
+        "Noto Sans Gujarati", "Shruti", // Gujarati
+        "Noto Sans Tamil", "Latha", // Tamil
+        "Noto Sans Telugu", "Gautami", // Telugu
+        "Noto Sans Kannada", "Tunga", // Kannada
+        "Noto Sans Malayalam", "Kartika", // Malayalam
+        // Amharic (Ethiopic)
+        "Noto Sans Ethiopic", "Nyala", "Abyssinica SIL",
+        // Greek
+        "Noto Sans Greek",
+        // Cyrillic
+        "PT Sans", "PT Serif",
+      ].forEach((n) => (fonts[n] = n));
+      // every font the browser/system actually has (Chrome/Edge)
+      try {
+        var list = await chrome.fontSettings.getFontList();
+        for (var f of list) {
+          fonts[f.displayName || f.fontId] = f.fontId;
+        }
+      } catch (e) {
+        // Firefox lacks chrome.fontSettings — the baseline above still applies
+      }
+      if (this.tabItems?.["GRAPHIC"]?.["tooltipFontFamily"]) {
+        this.tabItems["GRAPHIC"]["tooltipFontFamily"].optionList = fonts;
       }
     },
     async addTtsVoiceTabOption() {
@@ -501,6 +710,11 @@ export default {
             this.remainSettingDesc["Voice_speed_for_"] + langListOpposite[key],
           optionList: rateOptionList,
         };
+        // show "default" instead of a blank dropdown; "default" = follow the main
+        // voice speed (tts/index.js treats "default" like the global rate)
+        if (this.setting["ttsRate_" + key] == null) {
+          this.setting["ttsRate_" + key] = "default";
+        }
       }
 
       //add voice option
@@ -523,7 +737,13 @@ export default {
       };
     },
     isDefaultSetting(optionName) {
-      return isSettingEqual(this.setting[optionName], this.defaultSettings[optionName]);
+      var def = this.defaultSettings[optionName];
+      // per-language speed defaults to "default" (follow main speed), so don't
+      // flag it as modified / show a reset icon when it's at "default"
+      if (def === undefined && optionName.startsWith("ttsRate_")) {
+        def = "default";
+      }
+      return isSettingEqual(this.setting[optionName], def);
     },
     async fetchLlmModels() {
       const endpoint = this.setting["llmApiEndpoint"];

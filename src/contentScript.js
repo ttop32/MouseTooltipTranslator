@@ -1232,6 +1232,13 @@ function applyStyleSetting() {
     ? `top: 12px !important; right: 12px !important; left: auto !important; width: auto !important; margin: 0 !important;`
     : `left: 0 !important; top: 0 !important; width: 1000px !important; margin: 0px !important; margin-left: -500px !important;`;
   var rtlDirection = getRtlDir(setting["translateTarget"]);
+  // user font prepended to the family stack (#86). Quote named fonts (may contain
+  // spaces) but leave CSS generic families (sans-serif, ...) unquoted so they work.
+  var customFont = setting["tooltipFontFamily"];
+  var genericFonts = ["sans-serif", "serif", "monospace", "cursive", "fantasy", "system-ui"];
+  var fontPrefix = customFont
+    ? (genericFonts.includes(customFont) ? customFont : `"${customFont}"`) + ","
+    : "";
 
   style.html(`
     #mttContainer {
@@ -1249,7 +1256,7 @@ function applyStyleSetting() {
       text-align: ${setting["tooltipTextAlign"]} !important;
       overflow-wrap: break-word !important;
       color: ${setting["tooltipFontColor"]} !important;
-      font-family: ${setting["tooltipFontFamily"] ? setting["tooltipFontFamily"] + "," : ""}
+      font-family: ${fontPrefix}
         -apple-system, BlinkMacSystemFont,
         "Segoe UI", "Roboto", "Oxygen",
         "Ubuntu", "Cantarell", "Fira Sans",
@@ -1324,7 +1331,7 @@ function applyStyleSetting() {
     #ytp-caption-window-container .ytp-caption-segment {
       cursor: text !important;
       user-select: text !important;
-      font-family: ${setting["tooltipFontFamily"] ? setting["tooltipFontFamily"] + "," : ""}
+      font-family: ${fontPrefix}
       -apple-system, BlinkMacSystemFont,
       "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans",

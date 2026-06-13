@@ -23,7 +23,8 @@ English, Russian, Japanese, Chinese and so on
   - Add a "TTS Pause/Resume" hotkey: pause the read-aloud and resume from where it left off
   - Read-aloud arrow-key control: while reading, Left/Right jump to the previous/next paragraph and Up/Down change the speed
   - Add "Sync Setting": optionally sync your settings across devices (history and saved words stay local because of the sync size limit)
-  - Add "Tooltip Font Family" so you can set a custom font (e.g. a Persian font like Vazirmatn)
+  - Add "Tooltip Font Family": pick a tooltip/subtitle font from a dropdown of your installed fonts (previewed in their own style), covering all supported languages
+  - Show a closable "What's New" window (recent change log, auto-translated to your language, + a thank-you) after each update
   - Remember the last-viewed options tab and reopen there
   - Add a "Subtitle Background" toggle to turn off the translucent background behind dual subtitles
   - Add Grok (xAI) as an LLM translator provider; LLM translation now also detects the source language (so same-language text is skipped and read aloud in the right voice)

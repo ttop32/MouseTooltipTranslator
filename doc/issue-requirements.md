@@ -94,7 +94,7 @@
 | [#82](https://github.com/ttop32/MouseTooltipTranslator/issues/82) | 2024-02-03 | Reverse Translate 문서화 | ✅ 적용 | translateReverseTarget |
 | [#83](https://github.com/ttop32/MouseTooltipTranslator/issues/83) | 2024-02-03 | 옵션 창 마지막 탭 기억 | ✅ 적용 | `index.vue`에서 `currentTab` 변경 시 `lastSettingTab`(숨김 설정)에 저장, mounted 시 복원. 다음에 마지막 탭으로 열림 |
 | [#84](https://github.com/ttop32/MouseTooltipTranslator/issues/84) | 2024-02-03 | 선호 언어만/희귀 언어 제외 | ✅ 적용 | langExcludeList + langPriority |
-| [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ✅ 적용 | 설정 `tooltipFontFamily`(graphic, 텍스트 입력) 추가 → 입력한 폰트를 툴팁·자막 font-family 기본 스택 앞에 prepend. 예: `"Vazirmatn", Tahoma`(폰트는 설치/사용 가능해야 함) |
+| [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ✅ 적용 | 설정 `tooltipFontFamily`(graphic) — **드롭다운**으로 폰트 선택. `chrome.fontSettings.getFontList()`(시스템 설치 폰트)로 옵션 채움(manifest `fontSettings` 권한), Firefox는 공통 폰트 fallback. 선택 폰트를 툴팁·자막 font-family 앞에 prepend(따옴표 처리). Default=기본 스택 |
 | [#88](https://github.com/ttop32/MouseTooltipTranslator/issues/88) | 2024-02-08 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
 | [#90](https://github.com/ttop32/MouseTooltipTranslator/issues/90) | 2024-02-12 | YouTube 영상 번역 오류 | ✅ 수정 | 중복(AA BB) 원인: ASR(자동생성) 자막은 같은 줄을 rolling/누적 전송하는데 `parseSubtitle` else-branch가 무조건 append. `mergeCaptionText`(단어 단위 겹침 제거: 중복/누적/부분겹침 처리)로 교체. 겹침 경로(ASR)만 타므로 수동 자막 무영향. ">>undefined" 자동번역 트랙 라벨은 별개. 라이브 검증 권장 |
 | [#98](https://github.com/ttop32/MouseTooltipTranslator/issues/98) | 2024-02-19 | 복사 문서화 | ✅ 적용 | `copyTextToClipboard` |
