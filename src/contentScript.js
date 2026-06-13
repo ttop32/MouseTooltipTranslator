@@ -64,6 +64,11 @@ var stagedText = null;
 var prevTooltipText = "";
 var isAutoReaderRunning = false;
 var isStopAutoReaderOn = false;
+// arrow-key navigation for the read-aloud (#180): a trail of read ranges + a
+// pending jump requested by the arrow keys.
+var autoReaderHistory = [];
+var autoReaderPos = -1;
+var autoReaderPending = null; // "next" | "prev" | null
 var extensionDisabled = false; // session on/off toggled by keyToggleEnable (#126)
 var isTranslatingWriting = false; // re-entrancy guard for the writing-translate hotkey (#75)
 
@@ -673,6 +678,12 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
+  // arrow keys navigate the read-aloud while it is running: left/up = previous
+  // paragraph, right/down = next. Only captured during reading, so normal page
+  // scrolling is unaffected otherwise. (#180)
+  if (isAutoReaderRunning && handleAutoReaderKey(e)) {
+    return;
+  }
   // Ctrl+Shift+0..9 -> save into the group whose shortcut matches.
   // A group's effective key defaults to "CtrlShift<id>" when unset.
   if (e.ctrlKey && e.shiftKey && /^Digit[0-9]$/.test(e.code)) {
@@ -819,6 +830,7 @@ async function startAutoReader() {
   util.clearSelection();
   util.requestKillAutoReaderTabs();
   await killAutoReader();
+  resetAutoReaderNav(); // fresh read -> fresh arrow-key history (#180)
   // hoveredData.mouseoverRange was detected with correct iframe-local coords;
   // re-detecting via clientX/clientY fails for scaled iframes (BookFusion)
   // because those are outer-page coords, not iframe-local coords.
@@ -838,6 +850,81 @@ function syncBookFusionActiveIframe(range) {
   }
 }
 
+// arrow-key control while the read-aloud runs (#180):
+//   left/right = previous/next paragraph, up/down = speed +/-
+function handleAutoReaderKey(e) {
+  if (e.code == "ArrowLeft" || e.code == "ArrowRight") {
+    autoReaderPending = e.code == "ArrowRight" ? "next" : "prev";
+    // force-stop the current sentence (auto-reader TTS runs with noInterrupt) so
+    // the loop's awaited callTTS resolves and advances to the chosen range.
+    util.requestStopTTS(Date.now(), true);
+    e.preventDefault();
+    return true;
+  }
+  if (e.code == "ArrowUp" || e.code == "ArrowDown") {
+    adjustAutoReaderSpeed(e.code == "ArrowUp" ? 0.1 : -0.1);
+    e.preventDefault();
+    return true;
+  }
+  return false;
+}
+
+// adjust the read-aloud speed (applies from the next paragraph). Changes whichever
+// rate setting is actually in effect for the target language, then persists it so
+// the background TTS picks it up.
+function adjustAutoReaderSpeed(delta) {
+  var tgt = setting["translateTarget"];
+  var key = "voiceRate";
+  if (setting["ttsRate_" + tgt] && setting["ttsRate_" + tgt] !== "default") {
+    key = "ttsRate_" + tgt;
+  } else if (
+    setting["voiceTranslatedRate"] &&
+    setting["voiceTranslatedRate"] !== "default"
+  ) {
+    key = "voiceTranslatedRate";
+  }
+  var rate = Number(setting[key]) || 1.0;
+  rate = Math.min(2.0, Math.max(0.5, Math.round((rate + delta) * 10) / 10));
+  setting[key] = String(rate);
+  setting.save?.();
+}
+
+function resetAutoReaderNav() {
+  autoReaderHistory = [];
+  autoReaderPos = -1;
+  autoReaderPending = null;
+}
+
+function recordAutoReaderHistory(range) {
+  // skip when re-entering a range we jumped to (already at this position)
+  if (autoReaderHistory[autoReaderPos] === range) {
+    return;
+  }
+  autoReaderHistory = autoReaderHistory.slice(0, autoReaderPos + 1);
+  autoReaderHistory.push(range);
+  autoReaderPos = autoReaderHistory.length - 1;
+  if (autoReaderHistory.length > 300) {
+    autoReaderHistory.shift();
+    autoReaderPos -= 1;
+  }
+}
+
+// decide the next range after a sentence finishes: honor a pending arrow jump
+// (prev/next through history), otherwise advance forward normally.
+function getAutoReaderNextRange(forwardRange) {
+  var pending = autoReaderPending;
+  autoReaderPending = null;
+  if (pending === "prev" && autoReaderPos > 0) {
+    autoReaderPos -= 1;
+    return autoReaderHistory[autoReaderPos];
+  }
+  if (pending === "next" && autoReaderPos < autoReaderHistory.length - 1) {
+    autoReaderPos += 1;
+    return autoReaderHistory[autoReaderPos];
+  }
+  return forwardRange;
+}
+
 async function processAutoReader(stagedRange, isTtsSwap) {
   if (!stagedRange || isStopAutoReaderOn) {
     hideTooltip();
@@ -847,6 +934,7 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   }
   syncBookFusionActiveIframe(stagedRange);
   isAutoReaderRunning = true;
+  recordAutoReaderHistory(stagedRange);
   var text = util.extractTextFromRange(stagedRange);
   var translatedData = await util.requestTranslate(
     text,
@@ -862,10 +950,10 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   }, autoReaderScrollTime);
   showTooltip(targetText);
 
-  var nextStagedRange =
+  var forwardRange =
     getNextExpandedRange(stagedRange, setting["mouseoverTextType"]) ||
     getNextBookFusionChapterRange(stagedRange, setting["mouseoverTextType"]);
-  preloadNextTranslation(nextStagedRange);
+  preloadNextTranslation(forwardRange);
   await callTTS(
     text,
     sourceLang,
@@ -876,7 +964,8 @@ async function processAutoReader(stagedRange, isTtsSwap) {
     isTtsSwap
   );
 
-  processAutoReader(nextStagedRange, isTtsSwap);
+  // arrow keys may have requested a jump while this sentence was read (#180)
+  processAutoReader(getAutoReaderNextRange(forwardRange), isTtsSwap);
 }
 
 function getNextBookFusionChapterRange(currentRange, detectType) {
@@ -931,6 +1020,7 @@ async function killAutoReader() {
   util.requestStopTTS(Date.now(), true);
   await util.waitUntilForever(() => !isAutoReaderRunning);
   isStopAutoReaderOn = false;
+  resetAutoReaderNav(); // clear arrow-key history when reading stops (#180)
 }
 function disableEdgeMiniMenu(e) {
   if (util.isEdge() && mouseKeyMap[e.button] == "ClickLeft") {
