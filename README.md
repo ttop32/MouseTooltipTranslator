@@ -66,6 +66,13 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/trysomeway">
+            <img src="https://avatars.githubusercontent.com/u/25189461?v=4" width="100;" alt="trysomeway"/>
+            <br />
+            <sub><b>Max</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/ardasatata">
             <img src="https://avatars.githubusercontent.com/u/17568508?v=4" width="100;" alt="ardasatata"/>
             <br />
@@ -77,13 +84,6 @@ npm run build        // or 'npm run watch' for developing
             <img src="https://avatars.githubusercontent.com/u/1388336?v=4" width="100;" alt="neoOpus"/>
             <br />
             <sub><b>Anoir Ben Tanfous</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/trysomeway">
-            <img src="https://avatars.githubusercontent.com/u/25189461?v=4" width="100;" alt="trysomeway"/>
-            <br />
-            <sub><b>Max</b></sub>
         </a>
     </td>
     <td align="center">
@@ -137,13 +137,20 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/MatrixNeoKozak">
+            <img src="https://avatars.githubusercontent.com/u/261791209?v=4" width="100;" alt="MatrixNeoKozak"/>
+            <br />
+            <sub><b>KozakLordOfMatrix</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
         <a href="https://github.com/SFGFDSD">
             <img src="https://avatars.githubusercontent.com/u/162313212?v=4" width="100;" alt="SFGFDSD"/>
             <br />
             <sub><b>Null</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/Witnull">
             <img src="https://avatars.githubusercontent.com/u/110181476?v=4" width="100;" alt="Witnull"/>
