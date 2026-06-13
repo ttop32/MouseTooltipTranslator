@@ -29,7 +29,8 @@ English, Russian, Japanese, Chinese and so on
   - Add Grok (xAI) as an LLM translator provider; LLM translation now also detects the source language (so same-language text is skipped and read aloud in the right voice)
   - Sort the Voice tab's per-language rows by how often you use each language (most-used on top)
   - Fix duplicated YouTube subtitles ("AA BB") on auto-generated captions
-  - Fix the dictionary popup losing some preference toggles when its saved settings were incomplete
+  - Fix the dictionary popup losing some preference toggles when its saved settings were incomplete (contributed by MatrixNeoKozak)
+  - Russian, English UK, English US localization (contributed by D0n-A)
 - 0.1.230
   - Remove the right-click "Copy original" context menu; copying the source text under the cursor is now done with the Ctrl+Shift+7 hotkey only
 - 0.1.229
