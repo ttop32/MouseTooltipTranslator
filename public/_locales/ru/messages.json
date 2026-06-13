@@ -293,6 +293,9 @@
 	"BACKUP": {
 		"message": "РЕЗЕРВ"
 	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
+	},
 	"Import_Setting": {
 		"message": "Импорт настроек"
 	},

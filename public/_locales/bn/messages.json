@@ -293,6 +293,9 @@
 	"BACKUP": {
 		"message": "ব্যাকআপ"
 	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
+	},
 	"Import_Setting": {
 		"message": "সেটিং ইম্পোর্ট করব"
 	},

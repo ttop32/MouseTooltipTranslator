@@ -293,6 +293,9 @@
 	"BACKUP": {
 		"message": "YEDEKLE"
 	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
+	},
 	"Import_Setting": {
 		"message": "Ayarları İçe Aktar"
 	},

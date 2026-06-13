@@ -865,6 +865,14 @@ export var settingDict = {
     settingTab: "remains",
   },
 
+  syncSetting: {
+    // On: mirror settings (not history/saved words — too large for sync) to the
+    // browser account so they follow you across devices. Per-device opt-in. (#134)
+    default: "false",
+    i18nKey: "Sync_Setting",
+    optionList: toggleList,
+    settingTab: "backup",
+  },
   importSetting: {
     i18nKey: "Import_Setting",
     optionList: [],

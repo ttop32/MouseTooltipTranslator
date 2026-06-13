@@ -293,6 +293,9 @@
 	"BACKUP": {
 		"message": "备份"
 	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
+	},
 	"Import_Setting": {
 		"message": "导入设置"
 	},

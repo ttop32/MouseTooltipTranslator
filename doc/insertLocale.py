@@ -172,6 +172,7 @@ i18List = [
     "Voice Panel Background Color",
     "BACKUP                                      ",
     "BACKUP",
+    "Sync Setting",
     "Import Setting",
     "Export Setting",
     "Reset Setting",
