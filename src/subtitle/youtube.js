@@ -163,6 +163,25 @@ export default class Youtube extends BaseVideo {
     return langUrl ? langUrl + "&fmt=json3" : "";
   }
 
+  // merge a rolling caption chunk into the accumulated line, removing the
+  // overlap so ASR "rolling" captions don't duplicate. Word-level (split on
+  // space) so it never merges mid-word. (#90)
+  static mergeCaptionText(acc, next) {
+    if (!next) return acc;
+    if (!acc) return next;
+    if (acc.endsWith(next)) return acc; // exact duplicate tail
+    if (next.startsWith(acc)) return next; // cumulative — new supersedes old
+    var words = next.split(" ");
+    for (var i = words.length; i > 0; i--) {
+      var head = words.slice(0, i).join(" ");
+      if (acc.endsWith(head)) {
+        var rest = words.slice(i).join(" ");
+        return rest ? `${acc} ${rest}` : acc;
+      }
+    }
+    return `${acc} ${next}`;
+  }
+
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
     if (!subtitle?.events) {
@@ -215,9 +234,13 @@ export default class Youtube extends BaseVideo {
             event.tStartMs - newEvents[newEvents.length - 2].tStartMs-1;
         }
       } else {
-        newEvents[newEvents.length - 1].segs[0].utf8 += oneLineSubTrim
-          ? ` ${oneLineSubTrim}`
-          : "";
+        // overlapping events get merged into the previous line. Auto-generated
+        // (ASR) captions roll the same line repeatedly, so a plain append
+        // produced duplicated subtitles like "AA BB"; dedupe the overlap. (#90)
+        newEvents[newEvents.length - 1].segs[0].utf8 = this.mergeCaptionText(
+          newEvents[newEvents.length - 1].segs[0].utf8,
+          oneLineSubTrim
+        );
 
         // increase duration upto current sub
         newEvents[newEvents.length - 1].dDurationMs =

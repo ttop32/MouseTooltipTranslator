@@ -28,7 +28,7 @@
           :key="key"
           :title="aboutPageItem.name"
           :subtitle="aboutPageItem.sub_name"
-          @click="openUrl(aboutPageItem.url, aboutPageItem.isPanelOpen)"
+          @click="aboutPageItem.route ? $router.push(aboutPageItem.route) : openUrl(aboutPageItem.url, aboutPageItem.isPanelOpen)"
         >
           <template v-slot:prepend>
             <v-avatar :color="aboutPageItem.color">
@@ -102,14 +102,15 @@ export default {
           icon: "mdi-shield-account",
           color: "error",
         },
-        buyMeCoffee: {
-          name: i18n.getMessage("Support_this_extension"),
-          sub_name: i18n.getMessage(
-            "Feed_a_coffee_to_the_extension_devs"
-          ),
-          url: "https://buymeacoffee.com/ttop324",
-          icon: "mdi-coffee-to-go",
-          color: "brown",
+        deck: {
+          // flashcard deck moved here from the toolbar (swapped with donation)
+          name: i18n.getMessage("Flashcard") || "Flashcard",
+          sub_name:
+            i18n.getMessage("Flashcard_makes_cards_from_your_saved_words") ||
+            "Flashcards from your saved words",
+          route: "/deck",
+          icon: "mdi-card-multiple",
+          color: "primary",
         },
       },
     };

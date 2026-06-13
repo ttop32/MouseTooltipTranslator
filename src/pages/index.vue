@@ -312,10 +312,12 @@ var langPriorityOptionList = [
 ];
 
 var toolbarIcons = {
-  card: {
-    title: "card",
-    icon: "mdi-card-multiple",
-    path: "/deck",
+  coffee: {
+    // donation button moved up to the toolbar for visibility (swapped with the
+    // deck button, which moved to the About page)
+    title: i18n.getMessage("Support_this_extension") || "Support",
+    icon: "mdi-coffee-to-go",
+    url: "https://buymeacoffee.com/ttop324",
   },
   saved: {
     title: i18n.getMessage("Saved_Words"),
@@ -397,7 +399,9 @@ export default {
 
   methods: {
     openIcon(iconData) {
-      if (iconData.newTab) {
+      if (iconData.url) {
+        window.open(iconData.url); // external link (e.g. donation)
+      } else if (iconData.newTab) {
         browser.tabs.create({
           url: browser.runtime.getURL("popup.html#" + iconData.path),
         });
@@ -466,6 +470,7 @@ export default {
     },
     async addTtsVoiceTabOption() {
       var voiceTabOption = {};
+      await this.waitSettingLoad(); // need langPriority to sort the list (#334)
       var availableVoiceList = await SettingUtil.getAllVoiceList();
       // per-language read-aloud speed list ("default" keeps the global rate) (#195, #210)
       var rateOptionList = TextUtil.getJsonFromList([
@@ -473,10 +478,17 @@ export default {
         "1.25", "1.5", "1.75", "2.0", "2.5", "3.0",
       ]);
 
-      for (var key in langListOpposite) {
-        if (!(key in availableVoiceList)) {
-          continue;
-        }
+      // order the per-language voice rows by langPriority so frequently used
+      // languages (your translate source/target) appear at the top (#334)
+      var langKeys = Object.keys(langListOpposite)
+        .filter((key) => key in availableVoiceList)
+        .sort(
+          (a, b) =>
+            (this.setting?.["langPriority"]?.[b] || 0) -
+            (this.setting?.["langPriority"]?.[a] || 0)
+        );
+
+      for (var key of langKeys) {
         var voiceOptionList = TextUtil.getJsonFromList(availableVoiceList[key]);
         voiceTabOption["ttsVoice_" + key] = {
           description:

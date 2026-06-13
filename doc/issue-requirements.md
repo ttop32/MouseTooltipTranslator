@@ -66,8 +66,8 @@
 | [#45](https://github.com/ttop32/MouseTooltipTranslator/issues/45) | 2023-08-21 | PDF 열기 문제 | 🔍 재현 | PDF 열 때마다 권한 프롬프트 → 안 묻는 옵션 요청. `detectPDF` off로 회피. #174 동일 계열 |
 | [#46](https://github.com/ttop32/MouseTooltipTranslator/issues/46) | 2023-08-28 | OCR 별도 확장 분리 | ✅ 해소 | 핵심은 "OCR이 키 없이 항상 동작". 현재 OCR은 `keyDownOcr`(Shift) 홀드+이미지 위에서만 → 분리 불필요 |
 | [#47](https://github.com/ttop32/MouseTooltipTranslator/issues/47) | 2023-08-29 | 외형 커스터마이즈 | ✅ 적용 | graphic 탭 옵션군 |
-| [#48](https://github.com/ttop32/MouseTooltipTranslator/issues/48) | 2023-08-30 | 사용 도움 요청 | ℹ️ 질문 | — |
-| [#49](https://github.com/ttop32/MouseTooltipTranslator/issues/49) | 2023-09-02 | OCR 사용법 문의 | ℹ️ 질문 | keyDownOcr 홀드+이미지 hover |
+| [#48](https://github.com/ttop32/MouseTooltipTranslator/issues/48) | 2023-08-30 | TTS 음성 끄는 법 | ℹ️ 사용법 | "Ctrl 누르면 읽어주는데 어떻게 끄냐" → TTSWhen을 None으로 바꾸거나 다른 키로 변경(#54) |
+| [#49](https://github.com/ttop32/MouseTooltipTranslator/issues/49) | 2023-09-02 | OCR 사용법 문의 | ℹ️ 사용법 | "이미지 위 Shift 눌러도 안 됨, 결과 어디서 보냐" → `keyDownOcr`(Shift) 홀드+이미지 위 → 번역문이 이미지 위에 오버레이로 표시 |
 | [#50](https://github.com/ttop32/MouseTooltipTranslator/issues/50) | 2023-09-07 | Bing 소스 에러 | ✅ 적용 | `bing.js` www→`cn.bing.com` 폴백(`useChina`) |
 | [#54](https://github.com/ttop32/MouseTooltipTranslator/issues/54) | 2023-09-14 | TTS 끄는 방법 | ✅ 적용 | TTSWhen 키 제어 |
 | [#56](https://github.com/ttop32/MouseTooltipTranslator/issues/56) | 2023-09-22 | 아랍어 번역 누락 | ✅ 해소 | 과거 분실 보고. 현재 `ar` 로케일 존재 + RTL(#6,#206) |
@@ -77,7 +77,7 @@
 | [#66](https://github.com/ttop32/MouseTooltipTranslator/issues/66) | 2023-11-23 | 0.1.91 Bing 음역 깨짐 | ✅ 해소 | 현재 `bing.js wrapResponse`가 번역문+음역 둘 다 반환(테스트 통과). 회귀 해소 |
 | [#68](https://github.com/ttop32/MouseTooltipTranslator/issues/68) | 2023-11-28 | Google Docs 사용 | ✅ 적용 | `util.isGoogleDoc`, `injectGoogleDocAnnotation` |
 | [#69](https://github.com/ttop32/MouseTooltipTranslator/issues/69) | 2023-12-05 | 확장 동작 안 함 | 🔍 재현 | Edge의 Bing Chat AI 사이트, 상세 없음 |
-| [#70](https://github.com/ttop32/MouseTooltipTranslator/issues/70) | 2023-12-08 | 추가 제안 5건 | 🟡 부분 | 풍부한 단어창 일부(dict+Wiktionary) / 자막 사이트 일부(netflix·svt) / 직접 입력 번역창 ❌(=#185) / 양방향 자동번역 일부 / PDF 하이라이트 ❌(=#145) |
+| [#70](https://github.com/ttop32/MouseTooltipTranslator/issues/70) | 2023-12-08 | 추가 제안 5건 | 🟡 부분 | 풍부한 단어창 일부(dict+Wiktionary) / 자막 사이트 일부(netflix·svt) / 직접 입력 번역창 ❌(=#185) / 양방향 자동번역 일부 / PDF 하이라이트 ✅(PDF.js 내장 #145) |
 
 ## 2024
 
@@ -96,7 +96,7 @@
 | [#84](https://github.com/ttop32/MouseTooltipTranslator/issues/84) | 2024-02-03 | 선호 언어만/희귀 언어 제외 | ✅ 적용 | langExcludeList + langPriority |
 | [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ✅ 적용 | 설정 `tooltipFontFamily`(graphic, 텍스트 입력) 추가 → 입력한 폰트를 툴팁·자막 font-family 기본 스택 앞에 prepend. 예: `"Vazirmatn", Tahoma`(폰트는 설치/사용 가능해야 함) |
 | [#88](https://github.com/ttop32/MouseTooltipTranslator/issues/88) | 2024-02-08 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
-| [#90](https://github.com/ttop32/MouseTooltipTranslator/issues/90) | 2024-02-12 | YouTube 영상 번역 오류 | 🔍 재현 | 일부 영상 자막 중복(AA BB)·빠름 + ">>undefined". ASR(자동생성) 누적/오버랩 자막을 `parseSubtitle`이 또 붙여 중복 추정. 라이브 검증 필요(회귀 위험) |
+| [#90](https://github.com/ttop32/MouseTooltipTranslator/issues/90) | 2024-02-12 | YouTube 영상 번역 오류 | ✅ 수정 | 중복(AA BB) 원인: ASR(자동생성) 자막은 같은 줄을 rolling/누적 전송하는데 `parseSubtitle` else-branch가 무조건 append. `mergeCaptionText`(단어 단위 겹침 제거: 중복/누적/부분겹침 처리)로 교체. 겹침 경로(ASR)만 타므로 수동 자막 무영향. ">>undefined" 자동번역 트랙 라벨은 별개. 라이브 검증 권장 |
 | [#98](https://github.com/ttop32/MouseTooltipTranslator/issues/98) | 2024-02-19 | 복사 문서화 | ✅ 적용 | `copyTextToClipboard` |
 | [#100](https://github.com/ttop32/MouseTooltipTranslator/issues/100) | 2024-02-22 | 활성/비활성 토글 키 | ✅ 적용 | showTooltipWhen / translateWhen + 핫키 #126 |
 | [#102](https://github.com/ttop32/MouseTooltipTranslator/issues/102) | 2024-02-29 | 에디터에 불필요 HTML 삽입 | ✅ 수정 | `#mttContainer`가 본문 직렬화에 포함됨 → `contenteditable="false"`+`data-mtt` + 작성박스 포커스 시 제거 |
@@ -109,14 +109,14 @@
 | [#112](https://github.com/ttop32/MouseTooltipTranslator/issues/112) | 2024-03-18 | TTS Ctrl이 Ctrl+C 충돌 | ✅ 적용 | TTSWhen 키 변경 |
 | [#114](https://github.com/ttop32/MouseTooltipTranslator/issues/114) | 2024-03-21 | 클릭 시 툴팁 숨김 + Edge 위치 | 🟡 부분 | ① 하이라이트 재클릭으로 툴팁 숨김 ❌ ② Edge 미니메뉴 겹침 → 위치 옵션: tooltipPosition·"Top Right"(#43)로 일부 회피 |
 | [#115](https://github.com/ttop32/MouseTooltipTranslator/issues/115) | 2024-03-24 | DIVI/Elementor 불필요 코드 | ✅ 수정 | #102 동일 — 컨테이너 `contenteditable="false"`+포커스 시 제거 |
-| [#116](https://github.com/ttop32/MouseTooltipTranslator/issues/116) | 2024-04-02 | cws(크롬 웹스토어) | ℹ️ 질문 | 모호 — 스토어 관련 |
+| [#116](https://github.com/ttop32/MouseTooltipTranslator/issues/116) | 2024-04-02 | cws | ℹ️ 내용없음 | 제목 "cws"(크롬 웹스토어 추정)만, 본문 없음 — 조치 불가 |
 | [#117](https://github.com/ttop32/MouseTooltipTranslator/issues/117) | 2024-04-11 | Gemini/Kimi AI 사이트 안 됨 | 🔍 재현 | ChatGPT는 됨. 가상스크롤/Shadow DOM 등으로 `caretRangeFromPoint` 텍스트노드 못 잡는 케이스 추정. 사이트 DOM 라이브 확인 |
 | [#118](https://github.com/ttop32/MouseTooltipTranslator/issues/118) | 2024-04-16 | Voice When Always/Select | ✅ 적용 | TTSWhen=keyListWithAlwaysSelect |
 | [#120](https://github.com/ttop32/MouseTooltipTranslator/issues/120) | 2024-04-19 | ruby>rt 제외 | ✅ 수정 | `selection.js`가 rt 포함 텍스트 우선하던 것 수정 — ruby 있으면 필터 텍스트 사용 |
 | [#122](https://github.com/ttop32/MouseTooltipTranslator/issues/122) | 2024-05-01 | 색상 잘못 표시 | 🔍 재현 | koreatimes.co.kr 사이트 CSS 충돌 가능. 색상은 graphic 탭 조절 가능. 라이브 확인 |
 | [#124](https://github.com/ttop32/MouseTooltipTranslator/issues/124) | 2024-05-01 | 오디오 일시정지 후 이어듣기 | ✅ 적용 | `keyTTSPause` 핫키 — 일시정지/멈춘 지점부터 재개. chrome.tts·HTML audio(currentTime 보존)·speechSynthesis 3엔진. `isUserPaused` 가드로 큐 안 넘어감 |
 | [#126](https://github.com/ttop32/MouseTooltipTranslator/issues/126) | 2024-05-02 | 확장 On/Off 핫키 | ✅ 적용 | `keyToggleEnable` — 툴팁+TTS 세션 토글(`extensionDisabled`) |
-| [#134](https://github.com/ttop32/MouseTooltipTranslator/issues/134) | 2024-05-17 | 추가 요청 다수 | 🟡 부분 | 설정 동기화 ✅(`syncSetting`, storage.sync 미러, 히스토리/저장단어는 8KB 한도로 제외) / PDF 아이콘·드래그 하이라이트·줌(=#145) ❌ |
+| [#134](https://github.com/ttop32/MouseTooltipTranslator/issues/134) | 2024-05-17 | 추가 요청 다수 | 🟡 부분 | 설정 동기화 ✅(`syncSetting`, storage.sync 미러, 히스토리/저장단어는 8KB 한도로 제외) / PDF 하이라이트 ✅(PDF.js 내장 #145), PDF 아이콘·줌 개선은 ❌ |
 | [#135](https://github.com/ttop32/MouseTooltipTranslator/issues/135) | 2024-06-04 | OpenAI/Gemini/Claude + AI 음성 | 🟡 부분 | `localLlm.js` + llmProviderList / AI 음성 미지원 |
 | [#136](https://github.com/ttop32/MouseTooltipTranslator/issues/136) | 2024-06-09 | 제외 언어가 이중 자막 미적용 | ✅ 수정 | dualsub 조건에 `!langExcludeList.includes(sourceLang)` 추가 — 제외 언어면 원문 자막만 |
 | [#137](https://github.com/ttop32/MouseTooltipTranslator/issues/137) | 2024-06-09 | 다른 플랫폼 자막 미감지 | 🟡 부분 | netflix.js, svt.js 추가 |
@@ -124,9 +124,9 @@
 | [#139](https://github.com/ttop32/MouseTooltipTranslator/issues/139) | 2024-06-13 | IPA/가나/병음 표시 | ✅ 적용 | tooltipInfoTransliteration |
 | [#140](https://github.com/ttop32/MouseTooltipTranslator/issues/140) | 2024-06-15 | 음성 첫 단어만 재생 | ✅ 수정 | offscreen에 `AUDIO_PLAYBACK` reason 추가(Chrome 자동종료 방지). 0.1.225 |
 | [#141](https://github.com/ttop32/MouseTooltipTranslator/issues/141) | 2024-06-28 | 음성 인식 단축키 안 됨 | 🔍 재현 | 키보드는 안 되고 마우스 중클릭은 됨. 코드 경로 동일 — Web Speech API/포커스 차이 라이브 진단 |
-| [#143](https://github.com/ttop32/MouseTooltipTranslator/issues/143) | 2024-07-21 | 마우스 번역 관련 | ℹ️ 질문 | 모호 |
-| [#145](https://github.com/ttop32/MouseTooltipTranslator/issues/145) | 2024-07-22 | PDF 텍스트 하이라이트 도구 | ❌ 미구현 | 웹앱 PDF 뷰어에서 하이라이트 도구. #70/#134 중복 |
-| [#146](https://github.com/ttop32/MouseTooltipTranslator/issues/146) | 2024-07-29 | 도움 요청 | ℹ️ 질문 | — |
+| [#143](https://github.com/ttop32/MouseTooltipTranslator/issues/143) | 2024-07-21 | "mouse translast" | ℹ️ 내용없음 | 제목만, 본문 없음 — 조치 불가 |
+| [#145](https://github.com/ttop32/MouseTooltipTranslator/issues/145) | 2024-07-22 | PDF 텍스트 하이라이트 도구 | ✅ 적용 | 번들 PDF.js v4.8.69에 **하이라이트 에디터 내장**(viewer 툴바 `editorHighlightButton`, 색상 선택 포함). 다운로드(저장) 시 PDF에 주석 임베드. 단 웹 PDF 재열람 시 자동복원은 안 됨(저장 파일로 유지) |
+| [#146](https://github.com/ttop32/MouseTooltipTranslator/issues/146) | 2024-07-29 | Windows standalone 앱 가능? | ⛔ 범위밖 | "브라우저 말고 Windows 앱으로 실행 가능하냐" → 데스크톱 앱은 확장 범위 밖(#173/#252) |
 | [#148](https://github.com/ttop32/MouseTooltipTranslator/issues/148) | 2024-08-03 | 글쓰기 번역 단축키 | ✅ 적용 | keyDownTranslateWriting |
 | [#149](https://github.com/ttop32/MouseTooltipTranslator/issues/149) | 2024-08-03 | 위키낱말사전 소스 | ✅ 적용 | `wiktionary.js` + `tooltipWordDictionarySource`=wiktionary. 임의 커스텀 소스는 범위 외 |
 | [#150](https://github.com/ttop32/MouseTooltipTranslator/issues/150) | 2024-08-07 | 원문 중복 숨기기 | ✅ 적용 | tooltipInfoSourceText off 기본 |
@@ -171,7 +171,7 @@
 | [#205](https://github.com/ttop32/MouseTooltipTranslator/issues/205) | 2025-02-28 | YouTube 자막 배경 끄기 | ✅ 적용 | 원인: `.ytp-caption-segment`에 확장이 하드코딩한 `backdrop-filter:blur(3px)`+`background:rgba(8,8,8,0.1)`(#187). 설정 `subtitleBackground`(graphic, 기본 On) 추가 → Off면 배경·블러 제거(text-shadow만 유지). 라이브 검증 권장 |
 | [#206](https://github.com/ttop32/MouseTooltipTranslator/issues/206) | 2025-03-01 | RTL 자막 정렬 | ✅ 적용 | `parseSubtitle`에서 `isRtl(lang)`이면 `wsWinStyleId:2`(juJustifCode rtl) — 우측 정렬+bidi. LTR 무회귀 |
 | [#207](https://github.com/ttop32/MouseTooltipTranslator/issues/207) | 2025-03-06 | Firefox 문장→단어 전환 불가 | 🔍 해소추정 | 전환은 브라우저 무관(드롭다운+F8 홀드), Firefox는 `expandRangeWithSeg`로 word/sentence 구현. #290로 해소 추정, 라이브 검증 |
-| [#209](https://github.com/ttop32/MouseTooltipTranslator/issues/209) | 2025-03-31 | 버전 차이 문의 | ℹ️ 질문 | — |
+| [#209](https://github.com/ttop32/MouseTooltipTranslator/issues/209) | 2025-03-31 | 버전 차이 문의 | ℹ️ 질문 | 릴리스 0.1.168 / GitHub 0.1.89 / CWS 0.1.166 왜 다르냐 → manifest 버전(0.1.89)이 repo에 stale, 배포 시 갱신 |
 | [#210](https://github.com/ttop32/MouseTooltipTranslator/issues/210) | 2025-04-02 | 언어별 읽기 속도 개별 | ✅ 적용 | #195 동일 — `ttsRate_<lang>`(영어 1.0/중국어 1.5 등) |
 | [#212](https://github.com/ttop32/MouseTooltipTranslator/issues/212) | 2025-04-16 | 도구 깨짐 | 🔍 재현 | 베트남어 번역 중 "Google was broken". 일시 장애 가능, fallback 완화. 재현으로 구분 |
 | [#213](https://github.com/ttop32/MouseTooltipTranslator/issues/213) | 2025-04-21 | (제목 없음) | ℹ️ 빈내용 | 본문 "." 한 글자 — 조치 불가 |
@@ -198,8 +198,8 @@
 | [#257](https://github.com/ttop32/MouseTooltipTranslator/issues/257) | 2025-09-03 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
 | [#260](https://github.com/ttop32/MouseTooltipTranslator/issues/260) | 2025-09-08 | 음성 번역 | ✅ 적용 | `src/speech/index.js` 음성 인식 번역 |
 | [#261](https://github.com/ttop32/MouseTooltipTranslator/issues/261) | 2025-09-12 | bing is broken | 🔍 코드무관 | 테스트 로컬 통과. bing은 데이터센터 IP에 캡차 → 일부 지역 무음. cn 폴백·fallback 권장 |
-| [#262](https://github.com/ttop32/MouseTooltipTranslator/issues/262) | 2025-09-18 | 번역 언어 관련 | ℹ️ 질문 | 모호 |
-| [#263](https://github.com/ttop32/MouseTooltipTranslator/issues/263) | 2025-09-22 | 언어 선택 기능 | ℹ️ 질문 | 모호 |
+| [#262](https://github.com/ttop32/MouseTooltipTranslator/issues/262) | 2025-09-18 | 사이트별 번역 대상 언어 | ❌ 미구현 | "사이트에 따라 번역 대상 언어를 유연하게 지정" → 전역 translateTarget만 있고 사이트별 대상 언어 매핑은 미구현 |
+| [#263](https://github.com/ttop32/MouseTooltipTranslator/issues/263) | 2025-09-22 | 빠른 언어 코드 입력 | 🟡 부분 | "상단에 1~2글자로 언어 선택하는 필드" → MAIN의 Translate Into select에서 타이핑 검색은 되나, 전용 빠른 입력 필드는 ❌ |
 | [#264](https://github.com/ttop32/MouseTooltipTranslator/issues/264) | 2025-09-26 | 설정 내보내기 버튼 안 됨 | ✅ 수정 | anchor를 body에 추가 후 click·remove + revoke 1초 지연 |
 | [#270](https://github.com/ttop32/MouseTooltipTranslator/issues/270) | 2025-11-11 | 제안 | ⛔ 범위밖 | 모바일 단어복습 웹 버전 — 별도 영역 |
 | [#272](https://github.com/ttop32/MouseTooltipTranslator/issues/272) | 2025-11-11 | 폰트 축소 | ✅ 적용 | tooltipFontSize 6~40 |
@@ -226,6 +226,6 @@
 | [#301](https://github.com/ttop32/MouseTooltipTranslator/issues/301) | 2026-04-23 | 자막/읽기로 언어 학습 | 🟡 부분 | 이중 자막+Auto Reader ✅ / 단어별 인라인 번역·아랍어 diacritics ❌ |
 | [#321](https://github.com/ttop32/MouseTooltipTranslator/issues/321) | 2026-05-20 | 예전 토글 버튼 복귀 | ✅ 적용 | `swapKeyToggleMode`(기본 Off=hold). On이면 swap·secondary 키가 누를 때마다 토글(유지). #290 영구저장 버그 없이 인메모리 토글 |
 | [#329](https://github.com/ttop32/MouseTooltipTranslator/issues/329) | 2026-06-04 | 우클릭 번역문 복사 사라짐 | ✅ 해소 | 0.1.227(c71a0392)에서 "copy" 메뉴 항상 생성 복구 — Saved Words 토글은 그룹 메뉴만 제어 |
-| [#330](https://github.com/ttop32/MouseTooltipTranslator/issues/330) | 2026-06-05 | Grok LLM 추가 | ❌ 미구현 | LLM 옵션에 Grok 없음. Grok은 OpenAI 호환(`https://api.x.ai/v1`)라 `llmProviderList`/`llmProviderEndpoints` 프리셋 추가로 가능(작음) |
+| [#330](https://github.com/ttop32/MouseTooltipTranslator/issues/330) | 2026-06-05 | Grok LLM 추가 | ✅ 적용 | LLM Provider에 "Grok (xAI)" 추가(`grok: https://api.x.ai/v1`, Groq와 별개). localLlm이 OpenAI 호환이라 동작. 실패 원인은 확장 차단 아님(`<all_urls>`)·엔드포인트 `/v1` 누락/모델 미지정/유료 키 문제 → 프리셋이 엔드포인트 자동설정, 모델(grok-2-latest 등)+충전 키 필요 |
 | [#331](https://github.com/ttop32/MouseTooltipTranslator/issues/331) | 2026-06-06 | 단어 여러 번역 옵션(TransOver) | 🟡 부분 | #196/#183 중복. dict 다중 뜻+Wiktionary 일부 / TransOver식 다중 대체 번역 전체는 ❌ |
-| [#334](https://github.com/ttop32/MouseTooltipTranslator/issues/334) | 2026-06-09 | 여러 개선·버그 | 🟡 부분 | ① Voice 탭도 자주 쓰는 언어 위로 정렬 → langPriority가 Voice 목록 미적용 ❌ ② **버그**: "Translate Webpage"를 Ctrl+Right로 지정했는데 Ctrl+Left에도 발동 → Ctrl 키 매칭 오작동 의심, 재현·조사 필요 |
+| [#334](https://github.com/ttop32/MouseTooltipTranslator/issues/334) | 2026-06-09 | 여러 개선·버그 | 🟡 부분 | ① Voice 목록 우선언어 정렬 ✅ — `addTtsVoiceTabOption`이 언어별 음성/속도 행을 `langPriority` 내림차순으로 추가(자주 쓰는 언어 위로) ② Ctrl 키 버그 🔍 — 코드는 `e.code`(ControlLeft/ControlRight 구분)를 일관 사용 → Ctrl+Right 바인딩이 Ctrl+Left에 발동할 경로 미발견(기본 TTS=Ctrl Left와 혼동 가능성). 라이브 재현 필요 |

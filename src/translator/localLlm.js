@@ -55,7 +55,7 @@ export default class localLlm extends BaseTranslator {
             {
               role: "system",
               content:
-                "You are a professional translator. Return only the translated text, no explanations or additional text.",
+                "Reply only: source ISO 639-1 code, a tab, then the translation.",
             },
             {
               role: "user",
@@ -69,10 +69,20 @@ export default class localLlm extends BaseTranslator {
   }
 
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    const targetText = res?.choices?.[0]?.message?.content?.trim() || "";
+    const raw = res?.choices?.[0]?.message?.content?.trim() || "";
+    // expected "<iso code>\t<translation>"; parse tolerantly — if it doesn't
+    // match (model ignored the format), treat the whole reply as the translation
+    // so nothing regresses. detectedLang lets same-language skip / source TTS work.
+    let detectedLang = "";
+    let targetText = raw;
+    const match = raw.match(/^([a-zA-Z]{2,3}(?:-[a-zA-Z]{2,4})?)[\t\n]+([\s\S]+)$/);
+    if (match) {
+      detectedLang = match[1].toLowerCase();
+      targetText = match[2].trim();
+    }
     return {
       targetText,
-      detectedLang: "",
+      detectedLang,
       transliteration: "",
     };
   }
