@@ -458,6 +458,15 @@ export default {
         this.setting["lastSettingTab"] = val;
       }
     },
+    // once the "What's New" dialog is closed (button or click-outside), drop the
+    // ?whatsnew=1 param so a refresh of this tab won't pop it up again
+    showWhatsNew(val) {
+      if (!val && new URLSearchParams(location.search).get("whatsnew")) {
+        var url = new URL(location.href);
+        url.searchParams.delete("whatsnew");
+        history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+    },
     settingWrapper: {
       deep: true,
       handler(newSetting, oldSetting) {
