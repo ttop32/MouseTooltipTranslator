@@ -584,9 +584,9 @@ export default {
         this.whatsNewLoading = false;
       }
     },
-    // auto-translate the (English) change log into the user's target language
+    // auto-translate the (English) change log into the user's "Translate Into" language
     async translateChangeLog(log) {
-      var targetLang = this.setting?.["writingLanguage"];
+      var targetLang = this.setting?.["translateTarget"];
       if (!log || !targetLang || targetLang == "en") {
         return log;
       }
