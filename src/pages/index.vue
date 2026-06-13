@@ -358,6 +358,11 @@ export default {
     await this.addTtsVoiceTabOption();
     await this.waitSettingLoad();
     this.defaultSettings = await SettingUtil.getDefaultDataAll();
+    // restore the last-viewed options tab (#83)
+    var lastTab = this.setting?.["lastSettingTab"];
+    if (lastTab && this.tabs[lastTab]) {
+      this.currentTab = lastTab;
+    }
   },
   computed: {
     ...mapState(useSettingStore, ["setting", "waitSettingLoad"]),
@@ -366,6 +371,12 @@ export default {
     },
   },
   watch: {
+    // remember the last-viewed options tab so it reopens there next time (#83)
+    currentTab(val) {
+      if (this.setting && this.setting["lastSettingTab"] !== val) {
+        this.setting["lastSettingTab"] = val;
+      }
+    },
     settingWrapper: {
       deep: true,
       handler(newSetting, oldSetting) {

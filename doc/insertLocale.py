@@ -111,6 +111,7 @@ i18List = [
     "GRAPHIC",
     "Tooltip Font Size",
     "Tooltip Font Family",
+    "Subtitle Background",
     "Tooltip Width",
     "Tooltip Distance",
     "Tooltip Animation",

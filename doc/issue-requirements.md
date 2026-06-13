@@ -49,7 +49,7 @@
 | 이슈 | 날짜 | 제목 | 상태 | 설명 / 근거 |
 |---|---|---|---|---|
 | [#25](https://github.com/ttop32/MouseTooltipTranslator/issues/25) | 2023-01-06 | src 폴더 Chrome 로드 실패 | ℹ️ 설정 | 런타임 버그 아님 — "Load unpacked"는 빌드 산출물 `build/` 폴더를 로드해야 함 |
-| [#28](https://github.com/ttop32/MouseTooltipTranslator/issues/28) | 2023-03-10 | 웹 PDF 원본 URL 복사 | ❌ 미구현 | PDF 뷰어에서 원본 URL 복사 기능 요청. `getPDFUrl` 로직은 있으나 복사 UI는 별도(미구현) |
+| [#28](https://github.com/ttop32/MouseTooltipTranslator/issues/28) | 2023-03-10 | 웹 PDF 원본 URL 복사 | 🟡 부분 | 원본 URL이 뷰어 URL `viewer.html?file=<encodeURIComponent(원본)>`에 보존(`getPDFUrl`) → 주소창 `file=` 값 디코드로 복원 가능. 전용 "원본 URL 복사" 원클릭 버튼만 없음 |
 | [#29](https://github.com/ttop32/MouseTooltipTranslator/issues/29) | 2023-03-23 | 특정 사이트 제외 | ✅ 적용 | websiteExcludeList, `checkExcludeUrl` |
 | [#30](https://github.com/ttop32/MouseTooltipTranslator/issues/30) | 2023-04-11 | 일본어 로마자 | ✅ 적용 | tooltipInfoTransliteration |
 | [#31](https://github.com/ttop32/MouseTooltipTranslator/issues/31) | 2023-04-13 | 번역 결과 클립보드 복사 | ✅ 적용 | `copyTextToClipboard` |
@@ -92,7 +92,7 @@
 | [#80](https://github.com/ttop32/MouseTooltipTranslator/issues/80) | 2024-01-31 | View Transitions 호환 | ✅ 수정 | tippy `appendTo`가 정적 body 참조 → 함수형 `() => document.body` |
 | [#81](https://github.com/ttop32/MouseTooltipTranslator/issues/81) | 2024-02-03 | Detect Type Swap Hold Key 문의 | ✅ 적용 | keyHoldMouseoverTextType |
 | [#82](https://github.com/ttop32/MouseTooltipTranslator/issues/82) | 2024-02-03 | Reverse Translate 문서화 | ✅ 적용 | translateReverseTarget |
-| [#83](https://github.com/ttop32/MouseTooltipTranslator/issues/83) | 2024-02-03 | 옵션 창 마지막 탭 기억 | ❌ 미구현 | 옵션 창이 항상 Main 탭으로 열림 → 마지막 본 탭 복원 요청. 간단(currentTab 저장/복원) |
+| [#83](https://github.com/ttop32/MouseTooltipTranslator/issues/83) | 2024-02-03 | 옵션 창 마지막 탭 기억 | ✅ 적용 | `index.vue`에서 `currentTab` 변경 시 `lastSettingTab`(숨김 설정)에 저장, mounted 시 복원. 다음에 마지막 탭으로 열림 |
 | [#84](https://github.com/ttop32/MouseTooltipTranslator/issues/84) | 2024-02-03 | 선호 언어만/희귀 언어 제외 | ✅ 적용 | langExcludeList + langPriority |
 | [#86](https://github.com/ttop32/MouseTooltipTranslator/issues/86) | 2024-02-05 | 페르시아어 폰트 변경 | ✅ 적용 | 설정 `tooltipFontFamily`(graphic, 텍스트 입력) 추가 → 입력한 폰트를 툴팁·자막 font-family 기본 스택 앞에 prepend. 예: `"Vazirmatn", Tahoma`(폰트는 설치/사용 가능해야 함) |
 | [#88](https://github.com/ttop32/MouseTooltipTranslator/issues/88) | 2024-02-08 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
@@ -168,7 +168,7 @@
 | [#201](https://github.com/ttop32/MouseTooltipTranslator/issues/201) | 2025-02-13 | Ebook 테마 | ✅ 적용 | `ebookTheme`(Auto/Light/Dark) — reader.js가 storage에서 읽어 foliate `setStyles`로 강제 color-scheme. 책 배경 충돌 가독성 해결 |
 | [#202](https://github.com/ttop32/MouseTooltipTranslator/issues/202) | 2025-02-13 | 5가지 제안 | 🟡 대부분 | 화이트리스트 ✅(#297), 키 추가 ✅, 언어별/교차 음성 ✅ / 우 Ctrl 마이크 무동작은 버그 |
 | [#204](https://github.com/ttop32/MouseTooltipTranslator/issues/204) | 2025-02-21 | 단축키로 원문 복사 | ✅ 적용 | `copy-source-text`(Ctrl+Shift+7) 단축키. 복사 범위는 mouseoverTextType 따름. 우클릭 메뉴는 제거(단축키 전용, 0.1.230) |
-| [#205](https://github.com/ttop32/MouseTooltipTranslator/issues/205) | 2025-02-28 | YouTube 자막 배경 끄기 | 🟡 부분 | #187이 추가한 자막 배경이 거슬림 → 끄는 옵션 요청. 배경은 YouTube 플레이어 캡션 측이라 옵션화엔 출처 조사+라이브 필요(미구현) |
+| [#205](https://github.com/ttop32/MouseTooltipTranslator/issues/205) | 2025-02-28 | YouTube 자막 배경 끄기 | ✅ 적용 | 원인: `.ytp-caption-segment`에 확장이 하드코딩한 `backdrop-filter:blur(3px)`+`background:rgba(8,8,8,0.1)`(#187). 설정 `subtitleBackground`(graphic, 기본 On) 추가 → Off면 배경·블러 제거(text-shadow만 유지). 라이브 검증 권장 |
 | [#206](https://github.com/ttop32/MouseTooltipTranslator/issues/206) | 2025-03-01 | RTL 자막 정렬 | ✅ 적용 | `parseSubtitle`에서 `isRtl(lang)`이면 `wsWinStyleId:2`(juJustifCode rtl) — 우측 정렬+bidi. LTR 무회귀 |
 | [#207](https://github.com/ttop32/MouseTooltipTranslator/issues/207) | 2025-03-06 | Firefox 문장→단어 전환 불가 | 🔍 해소추정 | 전환은 브라우저 무관(드롭다운+F8 홀드), Firefox는 `expandRangeWithSeg`로 word/sentence 구현. #290로 해소 추정, 라이브 검증 |
 | [#209](https://github.com/ttop32/MouseTooltipTranslator/issues/209) | 2025-03-31 | 버전 차이 문의 | ℹ️ 질문 | — |

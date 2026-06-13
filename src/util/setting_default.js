@@ -461,6 +461,14 @@ export var settingDict = {
     placeholder: '"Vazirmatn", Tahoma',
     settingTab: "graphic",
   },
+  subtitleBackground: {
+    // On (default): dual-subtitle text gets a translucent blurred backdrop for
+    // readability (#187). Off: transparent, text-shadow only (#205).
+    default: "true",
+    i18nKey: "Subtitle_Background",
+    optionList: toggleList,
+    settingTab: "graphic",
+  },
   tooltipWidth: {
     default: "200",
     i18nKey: "Tooltip_Width",
@@ -853,6 +861,13 @@ export var settingDict = {
   cardPlayMeta: {
     default: ["image"],
     i18nKey: "Card_Play_Meta",
+    optionList: [],
+    settingTab: "remains",
+  },
+  lastSettingTab: {
+    // remembers the last-viewed options tab (#83); hidden (remains tab)
+    default: "MAIN",
+    i18nKey: "Last_Setting_Tab",
     optionList: [],
     settingTab: "remains",
   },

@@ -110,6 +110,9 @@
 	"Tooltip_Font_Family": {
 		"message": "Tooltip Font Family"
 	},
+	"Subtitle_Background": {
+		"message": "Subtitle Background"
+	},
 	"Tooltip_Width": {
 		"message": "Ancho de la Ventana Emergente"
 	},

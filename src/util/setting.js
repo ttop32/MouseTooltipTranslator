@@ -21,7 +21,7 @@ const DEPRECATED_KEY_MAP = {
 // they follow the user across devices. These keys never go to sync — too large
 // for the 8KB-per-item / 100KB-total sync quota, or per-device:
 //   historyList (translation history), wordGroups (saved words), syncSetting itself.
-const SYNC_EXCLUDE = ["historyList", "wordGroups", "syncSetting"];
+const SYNC_EXCLUDE = ["historyList", "wordGroups", "syncSetting", "lastSettingTab"];
 const SYNC_ITEM_MAX = 7000; // bytes; skip any single key bigger than this (under 8KB)
 
 export class Setting {
