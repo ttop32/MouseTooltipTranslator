@@ -681,11 +681,15 @@ export default {
       var voiceTabOption = {};
       await this.waitSettingLoad(); // need langPriority to sort the list (#334)
       var availableVoiceList = await SettingUtil.getAllVoiceList();
-      // per-language read-aloud speed list ("default" keeps the global rate) (#195, #210)
-      var rateOptionList = TextUtil.getJsonFromList([
-        "default", "0.25", "0.5", "0.75", "1.0",
-        "1.25", "1.5", "1.75", "2.0", "2.5", "3.0",
-      ]);
+      // per-language read-aloud speed list; "Default" (label) keeps the global
+      // rate, stored as the value "default" (#195, #210)
+      var rateOptionList = {
+        [i18n.getMessage("Default") || "Default"]: "default",
+        ...TextUtil.getJsonFromList([
+          "0.25", "0.5", "0.75", "1.0",
+          "1.25", "1.5", "1.75", "2.0", "2.5", "3.0",
+        ]),
+      };
 
       // order the per-language voice rows by langPriority so frequently used
       // languages (your translate source/target) appear at the top (#334)
