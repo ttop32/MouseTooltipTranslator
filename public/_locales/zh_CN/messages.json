@@ -95,6 +95,9 @@
 	"Toggle_Extension_When": {
 		"message": "Toggle Extension When"
 	},
+	"TTS_Pause_Resume_When": {
+		"message": "TTS Pause Resume When"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "图形                                      "
 	},
@@ -289,6 +292,9 @@
 	},
 	"BACKUP": {
 		"message": "备份"
+	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
 	},
 	"Import_Setting": {
 		"message": "导入设置"
