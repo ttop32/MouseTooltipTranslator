@@ -54,6 +54,9 @@ function addMessageListener() {
       } else if (request.type === "stopTTS") {
         TTS.stopTTS(request?.data?.timestamp, request?.data?.force);
         sendResponse({});
+      } else if (request.type === "pauseResumeTTS") {
+        await TTS.pauseResume();
+        sendResponse({});
       } else if (request.type === "recordTooltipText") {
         recordHistory(request.data);
         updateContextMenus(request.data);

@@ -106,6 +106,7 @@ i18List = [
     "Secondary Language When",
     "Swap Key Toggle Mode",
     "Toggle Extension When",
+    "TTS Pause Resume When",
     "GRAPHIC                                      ",
     "GRAPHIC",
     "Tooltip Font Size",

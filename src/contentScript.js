@@ -785,6 +785,10 @@ async function runKeydownPostProcess(key, detectKeyDown) {
       hideTooltip();
       util.requestStopTTS(Date.now() + 500);
     }
+    // pause / resume TTS from where it left off (#124)
+    if (setting["keyTTSPause"]==key && key != "null") {
+      util.requestPauseResumeTTS();
+    }
     // per-group save shortcut using a single allowed key (Ctrl/Alt/F2/click...)
     var saveGroup = (setting["wordGroups"] || []).find((g) => g.key === key);
     if (saveGroup) {

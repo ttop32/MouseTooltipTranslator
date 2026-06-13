@@ -538,6 +538,15 @@ export async function requestStopTtsOffscreen(timestamp) {
   return await sendMessageOffscreen({ type: "stopTTSOffscreen", data: { timestamp } });
 }
 
+// pause/resume TTS (#124): content script -> background
+export async function requestPauseResumeTTS() {
+  return await sendMessage({ type: "pauseResumeTTS", data: {} });
+}
+// background -> offscreen, with the explicit action so background owns the state
+export async function requestPauseResumeTtsOffscreen(action) {
+  return await sendMessageOffscreen({ type: "pauseResumeTTSOffscreen", data: { action } });
+}
+
 export async function requestMdfTtsOffscreen(text, voice, lang, rate, volume, timestamp) {
   return await sendMessageOffscreen({ type: "playMDNTTSOffscreen", data: { text, voice, lang, rate, volume, timestamp } });
 }

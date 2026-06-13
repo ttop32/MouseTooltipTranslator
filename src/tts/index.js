@@ -7,6 +7,21 @@ import tts_engine from "/src/tts/tts_engine.js";
 export default class TTS {
   static stopTtsTimestamp = 0;
   static noInterrupt = false;
+  static isPaused = false; // #124 pause/resume state (owned by background)
+
+  // #124: toggle pause/resume. Covers all 3 engines — chrome.tts (BrowserTTS,
+  // background), and the offscreen HTML <audio> (Bing/Google) + speechSynthesis
+  // (SpeechTTS). Position is preserved by each engine's native pause/resume.
+  static async pauseResume() {
+    this.isPaused = !this.isPaused;
+    if (this.isPaused) {
+      browser?.tts?.pause?.();
+      await util.requestPauseResumeTtsOffscreen("pause");
+    } else {
+      browser?.tts?.resume?.();
+      await util.requestPauseResumeTtsOffscreen("resume");
+    }
+  }
 
   static async playTtsQueue({
     sourceText,
@@ -20,6 +35,7 @@ export default class TTS {
     setting,
   }) {
     this.noInterrupt = noInterrupt;
+    this.isPaused = false; // a fresh play cancels any leftover pause state (#124)
     var ttsTarget = voiceTarget || setting["voiceTarget"];
     var ttsRepeat = voiceRepeat || setting["voiceRepeat"];
 
@@ -85,6 +101,7 @@ export default class TTS {
       return;
     }
     this.stopTtsTimestamp = timestamp;
+    this.isPaused = false; // a stop clears pause state (#124)
     browser?.tts?.stop(); //remove prev voice
     await util.requestStopTtsOffscreen(timestamp);
   }

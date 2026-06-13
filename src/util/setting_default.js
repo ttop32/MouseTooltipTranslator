@@ -411,6 +411,13 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  keyTTSPause: {
+    // press to pause TTS and press again to resume from where it left off (#124)
+    default: "null",
+    i18nKey: "TTS_Pause_Resume_When",
+    optionList: keyList,
+    settingTab: "keyboard",
+  },
   // voice
   voiceVolume: {
     default: "1.0",
