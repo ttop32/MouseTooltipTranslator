@@ -95,6 +95,9 @@
 	"Toggle_Extension_When": {
 		"message": "Когда включать/отключать расширение"
 	},
+	"TTS_Pause_Resume_When": {
+		"message": "TTS Pause Resume When"
+	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
 	},
@@ -289,6 +292,9 @@
 	},
 	"BACKUP": {
 		"message": "РЕЗЕРВ"
+	},
+	"Sync_Setting": {
+		"message": "Sync Setting"
 	},
 	"Import_Setting": {
 		"message": "Импорт настроек"
