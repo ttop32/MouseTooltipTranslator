@@ -546,13 +546,13 @@
 		"message": "সব"
 	},
 	"Move_to_group": {
-		"message": "গ্রুপে নেব"
+		"message": "গ্রুপে সরিয়ে নেব"
 	},
 	"Delete": {
 		"message": "মুছে ফেলব"
 	},
 	"Clear": {
-		"message": "Clear"
+		"message": "বাদ দেব"
 	},
 	"selected": {
 		"message": "সিলেক্ট করা"
@@ -588,31 +588,31 @@
 		"message": "রাইট-ক্লিক মেন্যু"
 	},
 	"Add_right_click_context_menu": {
-		"message": "Add right click context menu"
+		"message": "রাইট-ক্লিকে কনটেক্সট মেন্যুর উপস্থিতি"
 	},
 	"Done": {
-		"message": "Done"
+		"message": "হয়ে গেছে"
 	},
 	"On_Select": {
-		"message": "On Select"
+		"message": "সিলেক্ট করা"
 	},
 	"On_Hover": {
-		"message": "On Hover"
+		"message": "মাউস ধরা"
 	},
 	"On_Select_n_Hover": {
-		"message": "On Select n Hover"
+		"message": "সিলেক্ট করা ও মাউস ধরা"
 	},
 	"Select_group_to_play": {
-		"message": "Select group to play"
+		"message": "খেলতে চাইলে গ্রুপ নির্বাচন করুন"
 	},
 	"No_Group_Selected": {
-		"message": "No Group Selected"
+		"message": "কোনো গ্রুপ নির্বাচন করা হয় নি"
 	},
 	"Check_groups_to_play": {
-		"message": "Check groups to play"
+		"message": "খেলতে চাইলে গ্রুপ নির্বাচন করুন"
 	},
 	"Flashcard_makes_cards_from_your_saved_words": {
-		"message": "Flashcard makes cards from your saved words"
+		"message": "ফ্ল্যাশকার্ডে আপনার সেভ করা শব্দ নিয়ে কার্ড তৈরি হবে"
 	},
 	"appName": {
 		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং ইউটিউবে দ্বিভাষী সাবটাইটেল"
