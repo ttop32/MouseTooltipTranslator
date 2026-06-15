@@ -21,16 +21,16 @@
 		"message": "অনুবাদের ইঞ্জিন"
 	},
 	"LLM_Provider": {
-		"message": "LLM Provider"
+		"message": "এলএলএম সরবরাহকারী"
 	},
 	"LLM_Api_Endpoint": {
-		"message": "LLM API Endpoint URL"
+		"message": "এলএলএমের এপিআই এন্ডপয়েন্টের লিঙ্ক"
 	},
 	"LLM_Api_Key": {
-		"message": "LLM API Key"
+		"message": "এলএলএমের এপিআই কি (ঐচ্ছিক)"
 	},
 	"LLM_Model": {
-		"message": "LLM Model"
+		"message": "এলএলএমের মডেল"
 	},
 	"Mouseover_Text_Type": {
 		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
@@ -69,7 +69,7 @@
 		"message": "অটো রিডার চলার শর্ত"
 	},
 	"Translate_Page_When": {
-		"message": "Translate Page When"
+		"message": "পেইজ অনুবাদের সময়"
 	},
 	"OCR_When": {
 		"message": "ওসিআর চলার শর্ত"
