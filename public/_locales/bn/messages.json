@@ -33,7 +33,7 @@
 		"message": "এলএলএমের মডেল"
 	},
 	"Mouseover_Text_Type": {
-		"message": "যেমন লেখায় মাউস ধরলে অনুবাদ হবে"
+		"message": "যে ধরনের লেখায় মাউস ধরলে অনুবাদ হবে"
 	},
 	"Translate_Into_2": {
 		"message": "দ্বিতীয় উদ্দিষ্ট ভাষা"
@@ -69,34 +69,34 @@
 		"message": "অটো রিডার চলার শর্ত"
 	},
 	"Translate_Page_When": {
-		"message": "পেইজ অনুবাদের সময়"
+		"message": "পেইজ অনুবাদের শর্ত"
 	},
 	"OCR_When": {
 		"message": "ওসিআর চলার শর্ত"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "মাউস ধরার লেখার ধরন বদলের কি"
+		"message": "অনুবাদ্য লেখার ধরন বদলের কি"
 	},
 	"Speech_Recognition_When": {
 		"message": "কথা শনাক্তকরণের শর্ত"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "মাউস ধরার লক্ষ্যের ধরন পরিবর্তনের শর্ত"
+		"message": "অনুবাদ্য লেখার ধরন বদলের শর্ত"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
-		"message": "Mouseover Text Type Key Hold"
+		"message": "অনুবাদ্য লেখার ধরন বদলের জন্য চেপে ধরার কি"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার জন্য শর্ত"
 	},
 	"Swap_Key_Toggle_Mode": {
-		"message": "Swap Key Toggle Mode"
+		"message": "বদলের কি’র ক্ষেত্রে টগল মোড"
 	},
 	"Toggle_Extension_When": {
-		"message": "Toggle Extension When"
+		"message": "এক্সটেনশন চলা / বন্ধ হওয়ার শর্ত"
 	},
 	"TTS_Pause_Resume_When": {
-		"message": "TTS Pause Resume When"
+		"message": "থামিয়ে রাখা টিটিএস আবার চলার শর্ড"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "রূপ                                      "
@@ -108,10 +108,10 @@
 		"message": "টুলটিপের ফন্টের সাইজ"
 	},
 	"Tooltip_Font_Family": {
-		"message": "Tooltip Font Family"
+		"message": "টুলটিপের ফন্ট ফ্যামিলি"
 	},
 	"Subtitle_Background": {
-		"message": "Subtitle Background"
+		"message": "সাবটাইটেলের পটভূমি"
 	},
 	"Tooltip_Width": {
 		"message": "টুলটিপের প্রস্থ"
@@ -123,7 +123,7 @@
 		"message": "টুলটিপের অ্যানিমেশন"
 	},
 	"Tooltip_Disappear_Duration": {
-		"message": "Tooltip Disappear Duration"
+		"message": "টুলটিপ চলে যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Position": {
 		"message": "টুলটিপের অবস্থান"
@@ -135,7 +135,7 @@
 		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণ"
+		"message": "মাউস ধরলে অনুবাদ্য লেখা চিহ্নিত করে দেখানো"
 	},
 	"Tooltip_Font_Color": {
 		"message": "টুলটিপের লেখার রং"
@@ -147,13 +147,13 @@
 		"message": "টুলটিপের সীমারেখার রং"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "মাউস ধরার ফলে লেখা চিহ্নিতকরণের রং"
+		"message": "অনুবাদ্য লেখা চিহ্নিতকরণের রং"
 	},
 	"Ebook_Theme": {
-		"message": "Ebook Theme"
+		"message": "ইবুকের থিম"
 	},
 	"Setting_Compact_mode": {
-		"message": "Setting Compact mode"
+		"message": "সেটিংসের তন্বী মোড"
 	},
 	"VOICE______________________________________": {
 		"message": "কথা                                      "
@@ -171,13 +171,13 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "কথার পুনরাবৃত্তির সংখ্যা"
+		"message": "কথার পুনরাবৃত্তি"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
 	},
 	"Voice_speed_for_": {
-		"message": "Voice speed for "
+		"message": "কথার গতি: "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "বাদ                                      "
@@ -189,19 +189,19 @@
 		"message": "পরিহার্য ভাষা"
 	},
 	"Website_Filter_Mode": {
-		"message": "Website Filter Mode"
+		"message": "ওয়েবসাইট ফিল্টার করার মোড"
 	},
 	"Exclude_Website": {
 		"message": "পরিহার্য ওয়েবসাইট"
 	},
 	"Whitelist_Website": {
-		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
+		"message": "হোয়াইটলিস্ট করা ওয়েবসাইট"
 	},
 	"Block_Current_Site": {
-		"message": "এই সাইটে অনুবাদ হবে না"
+		"message": "এই সাইটে অনুবাদ বন্ধ রাখব"
 	},
 	"Allow_Current_Site": {
-		"message": "এই সাইটে অনুবাদ হবে"
+		"message": "এই সাইটে অনুবাদ চালু রাখব"
 	},
 	"ADVANCED______________________________________": {
 		"message": "উন্নীত                                      "
@@ -210,25 +210,25 @@
 		"message": "উন্নীত"
 	},
 	"UI_Language": {
-		"message": "UI Language"
+		"message": "এই এক্সটেনশনের ভাষা"
 	},
 	"Detect_PDF": {
 		"message": "পিডিএফ শনাক্তকরণ"
 	},
 	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
+		"message": "অনুবাদ্য লেখার দ্বিতীয় ধরন"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
 	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
+		"message": "টাইপ করার সময় টুলটিপ দেখা"
 	},
 	"Tooltip_Info_Source_Text": {
 		"message": "টুলটিপের তথ্যে মূল লেখা"
 	},
 	"Translate_Exclude_Regex": {
-		"message": "Translate Exclude Regex"
+		"message": "অনুবাদে অগ্রাহ্য করার জন্য রেগুলার এক্সপ্রেশন"
 	},
 	"Tooltip_Info_Source_Language": {
 		"message": "টুলটিপের তথ্যে মূল ভাষা"
@@ -240,19 +240,19 @@
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Show_Delay": {
-		"message": "Tooltip Show Delay"
+		"message": "টুলটিপ ওঠার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "টুলটিপের শব্দের ডিকশনারি"
 	},
 	"Tooltip_Word_Dictionary_Source": {
-		"message": "Tooltip Word Dictionary Source"
+		"message": "টুলটিপের শব্দের ডিকশনারির তথ্যসূত্র"
 	},
 	"Voice_Translated_Speed": {
 		"message": "সবাক অনুবাদের গতি"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "অনুবাদের ফলব্যাক ইঞ্জিন\""
+		"message": "অনুবাদের ফলব্যাক ইঞ্জিন"
 	},
 	"SPEECH": {
 		"message": "কথা"
@@ -300,7 +300,7 @@
 		"message": "ব্যাকআপ"
 	},
 	"Sync_Setting": {
-		"message": "Sync Setting"
+		"message": "সিঙ্কের সেটিংস"
 	},
 	"Import_Setting": {
 		"message": "সেটিং ইম্পোর্ট করব"
@@ -312,7 +312,7 @@
 		"message": "সেটিং রিসেট করব"
 	},
 	"About______________________________________": {
-		"message": "About                                      "
+		"message": "পরিচিতি                                      "
 	},
 	"How_to_use": {
 		"message": "ব্যবহারের উপায়"
@@ -381,10 +381,10 @@
 		"message": "এক্সটেনশনটির ডেভেলপারদের কফি খাওয়ান"
 	},
 	"Title______________________________________": {
-		"message": "Title                                      "
+		"message": "শিরোনাম                                      "
 	},
 	"SELECT_OPTION______________________________": {
-		"message": "SELECT OPTION                              "
+		"message": "অপশন নির্বাচন                              "
 	},
 	"On": {
 		"message": "চালু"
@@ -393,7 +393,7 @@
 		"message": "বন্ধ"
 	},
 	"Auto": {
-		"message": "Auto"
+		"message": "অটো"
 	},
 	"None": {
 		"message": "প্রযোজ্য নয়"
@@ -408,28 +408,28 @@
 		"message": "মাউস ধরা ও সিলেক্ট করা"
 	},
 	"Follow": {
-		"message": "Follow"
+		"message": "কার্সরের সাথে সাথে"
 	},
 	"Fixed": {
-		"message": "Fixed"
+		"message": "লেখা বরাবর"
 	},
 	"Top_Right": {
-		"message": "Top Right"
+		"message": "ওপরের ডান কোণে"
 	},
 	"Fade": {
-		"message": "Fade"
+		"message": "ধীরে ধীরে দৃশ্যমান"
 	},
 	"Scale": {
-		"message": "Scale"
+		"message": "ছোট থেকে বড়"
 	},
 	"Shift_away": {
-		"message": "Shift away"
+		"message": "নীচ থেকে ওপরে"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "ওপর থেকে নীচে"
 	},
 	"Perspective": {
-		"message": "Perspective"
+		"message": "শোয়ানো থেকে খাড়া"
 	},
 	"Word": {
 		"message": "শব্দ"
@@ -441,28 +441,28 @@
 		"message": "ধারক"
 	},
 	"Both": {
-		"message": "Both"
+		"message": "দুই রকমই"
 	},
 	"Blacklist": {
-		"message": "Blacklist"
+		"message": "ব্ল্যাকলিস্ট"
 	},
 	"Whitelist": {
-		"message": "Whitelist"
+		"message": "হোয়াইটলিস্ট"
 	},
 	"Source": {
-		"message": "Source"
+		"message": "উদ্দিষ্ট"
 	},
 	"Source_Text": {
-		"message": "Source Text"
+		"message": "উদ্দিষ্ট লেখা"
 	},
 	"Translated_Text": {
-		"message": "Translated Text"
+		"message": "অনূদিত লেখা"
 	},
 	"Source_n_Translated": {
 		"message": "উদ্দিষ্ট ও অনূদিত"
 	},
 	"Translated_n_Source": {
-		"message": "Translated n Source"
+		"message": "অনূদিত ও উদ্দিষ্ট"
 	},
 	"Dual_Subtitle": {
 		"message": "দুই ভাষার সাবটাইটেল"
@@ -489,25 +489,25 @@
 		"message": "দু’পাশ সমান"
 	},
 	"Light": {
-		"message": "Light"
+		"message": "সাদা"
 	},
 	"Dark": {
-		"message": "Dark"
+		"message": "কালো"
 	},
 	"Default": {
 		"message": "ডিফল্ট"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl - বাম"
+		"message": "কন্ট্রোল - বাম"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl - ডান"
+		"message": "কন্ট্রোল - ডান"
 	},
 	"Alt_Left": {
-		"message": "Alt - বাম"
+		"message": "অল্ট - বাম"
 	},
 	"Alt_Right": {
-		"message": "Alt - ডান"
+		"message": "অল্ট - ডান"
 	},
 	"Shift_Left": {
 		"message": "শিফট - বাম"
@@ -537,55 +537,55 @@
 		"message": "বিং"
 	},
 	"Saved_Words": {
-		"message": "Saved Words"
+		"message": "সেভ করা শব্দ"
 	},
 	"Group": {
-		"message": "Group"
+		"message": "গ্রুপ"
 	},
 	"All": {
-		"message": "All"
+		"message": "সব"
 	},
 	"Move_to_group": {
-		"message": "Move to group"
+		"message": "গ্রুপে নেব"
 	},
 	"Delete": {
-		"message": "Delete"
+		"message": "মুছে ফেলব"
 	},
 	"Clear": {
 		"message": "Clear"
 	},
 	"selected": {
-		"message": "selected"
+		"message": "সিলেক্ট করা"
 	},
 	"Date": {
-		"message": "Date"
+		"message": "তারিখ"
 	},
 	"Translation": {
-		"message": "Translation"
+		"message": "অনুবাদ"
 	},
 	"No_saved_words_yet": {
-		"message": "No saved words yet"
+		"message": "এখনও কোনো শব্দ সেভ করা হয় নি"
 	},
 	"Manage_Groups": {
-		"message": "Manage Groups"
+		"message": "গ্রুপের ব্যবস্থাপনা"
 	},
 	"Remove_all": {
-		"message": "Remove all"
+		"message": "সব মুছে ফেলব"
 	},
 	"Import_CSV": {
-		"message": "Import CSV"
+		"message": "সিএসভি ইম্পোর্ট করব"
 	},
 	"Download_CSV": {
-		"message": "Download CSV"
+		"message": "সিএসভি ডাউনলোড করব"
 	},
 	"Save_key": {
-		"message": "Save key"
+		"message": "সেভ করার কি"
 	},
 	"Highlight_on_page": {
-		"message": "Highlight on page"
+		"message": "পেইজে চিহ্নিত করে দেখানো"
 	},
 	"Right_click_menu": {
-		"message": "Right click menu"
+		"message": "রাইট-ক্লিক মেন্যু"
 	},
 	"Add_right_click_context_menu": {
 		"message": "Add right click context menu"
