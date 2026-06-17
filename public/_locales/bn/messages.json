@@ -9,13 +9,13 @@
 		"message": "মাউস টুলটিপ ট্রান্সলেটর"
 	},
 	"Translate_When": {
-		"message": "অনুবাদের সময়"
+		"message": "অনুবাদ হওয়ার শর্ত"
 	},
 	"Translate_From": {
-		"message": "যে ভাষা থেকে করা হবে"
+		"message": "অনুবাদের মূল ভাষা"
 	},
 	"Translate_Into": {
-		"message": "যে ভাষায় করা হবে"
+		"message": "অনুবাদের উদ্দিষ্ট ভাষা"
 	},
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
@@ -57,7 +57,7 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "টুলটিপ ওঠার শর্ত"
+		"message": "টুলটিপ দেখা যাওয়ার শর্ত"
 	},
 	"Voice_When": {
 		"message": "কথা শোনা যাওয়ার শর্ত"
@@ -69,7 +69,7 @@
 		"message": "অটো রিডার চলার শর্ত"
 	},
 	"Translate_Page_When": {
-		"message": "পেইজ অনুবাদের সময়"
+		"message": "পেইজ অনুবাদের শর্ত"
 	},
 	"OCR_When": {
 		"message": "ওসিআর চলার শর্ত"
@@ -240,7 +240,7 @@
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Show_Delay": {
-		"message": "টুলটিপ ওঠার আগে দেরি"
+		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "টুলটিপের শব্দের ডিকশনারি"
