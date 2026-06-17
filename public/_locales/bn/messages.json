@@ -69,7 +69,7 @@
 		"message": "অটো রিডার চলার শর্ত"
 	},
 	"Translate_Page_When": {
-		"message": "পেইজ অনুবাদের শর্ত"
+		"message": "পেইজ অনুবাদের সময়"
 	},
 	"OCR_When": {
 		"message": "ওসিআর চলার শর্ত"
@@ -195,13 +195,13 @@
 		"message": "পরিহার্য ওয়েবসাইট"
 	},
 	"Whitelist_Website": {
-		"message": "হোয়াইটলিস্ট করা ওয়েবসাইট"
+		"message": "হোয়াইটলিস্টকৃত ওয়েবসাইট"
 	},
 	"Block_Current_Site": {
-		"message": "এই সাইটে অনুবাদ বন্ধ রাখব"
+		"message": "এই সাইটে অনুবাদ হবে না"
 	},
 	"Allow_Current_Site": {
-		"message": "এই সাইটে অনুবাদ চালু রাখব"
+		"message": "এই সাইটে অনুবাদ হবে"
 	},
 	"ADVANCED______________________________________": {
 		"message": "উন্নীত                                      "
@@ -249,7 +249,7 @@
 		"message": "টুলটিপের শব্দের ডিকশনারির তথ্যসূত্র"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "অনুবাদের ফলব্যাক ইঞ্জিন"
+		"message": "অনুবাদের ফলব্যাক ইঞ্জিন\""
 	},
 	"SPEECH": {
 		"message": "কথা"
@@ -543,7 +543,7 @@
 		"message": "সব"
 	},
 	"Move_to_group": {
-		"message": "গ্রুপে সরিয়ে নেব"
+		"message": "গ্রুপে নেব"
 	},
 	"Delete": {
 		"message": "মুছে ফেলব"
