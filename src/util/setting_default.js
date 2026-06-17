@@ -687,12 +687,6 @@ export var settingDict = {
     optionList: dictionarySourceList,
     settingTab: "advanced",
   },
-  voiceTranslatedRate: {
-    default: "default",
-    i18nKey: "Voice_Translated_Speed",
-    optionList: voiceRateListWithDefault,
-    settingTab: "advanced",
-  },
   fallbackTranslatorEngine: {
     default: "true",
     i18nKey: "Fallback_Translator_Engine",

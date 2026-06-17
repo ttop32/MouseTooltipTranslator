@@ -63,15 +63,10 @@ export default class TTS {
     if (!text) {
       return;
     }
-    var isTranslateTargetLang = lang == setting["translateTarget"];
     var volume = Number(setting["voiceVolume"]);
     var rate = Number(setting["voiceRate"]);
-    rate =
-      isTranslateTargetLang && setting["voiceTranslatedRate"] != "default"
-        ? Number(setting["voiceTranslatedRate"])
-        : rate;
     // per-language read-aloud speed override (#195, #210): if the user set a
-    // speed for this specific language, it wins over the global / translated rate.
+    // speed for this specific language, it wins over the global rate.
     var langRate = setting?.["ttsRate_" + lang];
     if (langRate != null && langRate !== "default") {
       rate = Number(langRate);

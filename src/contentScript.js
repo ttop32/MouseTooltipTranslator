@@ -877,11 +877,6 @@ function adjustAutoReaderSpeed(delta) {
   var key = "voiceRate";
   if (setting["ttsRate_" + tgt] && setting["ttsRate_" + tgt] !== "default") {
     key = "ttsRate_" + tgt;
-  } else if (
-    setting["voiceTranslatedRate"] &&
-    setting["voiceTranslatedRate"] !== "default"
-  ) {
-    key = "voiceTranslatedRate";
   }
   var rate = Number(setting[key]) || 1.0;
   rate = Math.min(2.0, Math.max(0.5, Math.round((rate + delta) * 10) / 10));
