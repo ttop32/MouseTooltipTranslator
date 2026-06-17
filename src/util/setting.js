@@ -54,12 +54,10 @@ export class Setting {
   }
 
   async loadStorageData() {
-    var settingData = this;
-    var keysToFetch = [
-      ...Object.keys(settingData),
-      ...Object.keys(DEPRECATED_KEY_MAP),
-    ];
-    var storage = await browser.storage.local.get(keysToFetch);
+    // fetch ALL stored keys (null), not just the default-schema keys. dynamic
+    // per-language keys like ttsRate_<lang> / ttsVoice_<lang> aren't in the
+    // schema, so a known-key fetch would silently drop them on restart (#338)
+    var storage = await browser.storage.local.get(null);
 
     var migrated = false;
     for (var [oldKey, newKey] of Object.entries(DEPRECATED_KEY_MAP)) {

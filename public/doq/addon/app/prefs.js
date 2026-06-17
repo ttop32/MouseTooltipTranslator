@@ -1,5 +1,25 @@
 import { DOQ, getDefaultPrefs } from "./config.js";
-import deepmerge from "deepmerge";
+
+// these files are loaded as raw ES modules in the PDF.js viewer (not webpack
+// bundled), so we can't import a bare "deepmerge" specifier here (#339). small
+// inline deep merge instead: stored values override defaults, nested plain
+// objects are merged so partial saved prefs don't drop keys (#335).
+function deepMerge(base, override) {
+  const out = Array.isArray(base) ? base.slice() : { ...base };
+  for (const key in override) {
+    const b = base?.[key];
+    const o = override[key];
+    if (isPlainObject(b) && isPlainObject(o)) {
+      out[key] = deepMerge(b, o);
+    } else {
+      out[key] = o;
+    }
+  }
+  return out;
+}
+function isPlainObject(v) {
+  return v && typeof v === "object" && !Array.isArray(v);
+}
 
 /* Preferences */
 function readPreferences() {
@@ -9,7 +29,7 @@ function readPreferences() {
   const store = storedData ? JSON.parse(storedData) : {};
 
   // Deep merge with default preferences to prevent loss of properties
-  DOQ.preferences = deepmerge(prefs, store);
+  DOQ.preferences = deepMerge(prefs, store);
   return DOQ.preferences;
 }
 
