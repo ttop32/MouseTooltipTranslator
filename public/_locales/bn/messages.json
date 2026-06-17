@@ -248,9 +248,6 @@
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "টুলটিপের শব্দের ডিকশনারির তথ্যসূত্র"
 	},
-	"Voice_Translated_Speed": {
-		"message": "সবাক অনুবাদের গতি"
-	},
 	"Fallback_Translator_Engine": {
 		"message": "অনুবাদের ফলব্যাক ইঞ্জিন"
 	},

@@ -157,7 +157,6 @@ i18List = [
     "Tooltip Show Delay",
     "Tooltip Word Dictionary",
     "Tooltip Word Dictionary Source",
-    "Voice Translated Speed",
     "Fallback Translator Engine",
     "SPEECH",
     "Speech Recognition Language",

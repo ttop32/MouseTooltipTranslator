@@ -248,9 +248,6 @@
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "Tooltip Word Dictionary Source"
 	},
-	"Voice_Translated_Speed": {
-		"message": "سرعة الترجمة الصوتية"
-	},
 	"Fallback_Translator_Engine": {
 		"message": "Fallback Translator Engine"
 	},
