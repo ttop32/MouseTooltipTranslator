@@ -22,6 +22,7 @@ English, Russian, Japanese, Chinese and so on
 - 0.1.232
   - Fix the built-in PDF viewer translation breaking in 0.1.231 (dictionary popup failed to load with a "deepmerge" module error)
   - Fix per-language read-aloud speed (and voice) being lost after restarting the browser
+  - Bengali localization (contributed by nr072)
 - 0.1.231
   - Add a "TTS Pause/Resume" hotkey: pause the read-aloud and resume from where it left off
   - Read-aloud arrow-key control: while reading, Left/Right jump to the previous/next paragraph and Up/Down change the speed
