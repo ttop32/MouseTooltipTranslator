@@ -295,10 +295,18 @@ function addInstallUrl(url) {
   });
 }
 
-// on extension update, open the "what's new" page (changelog + donation ask)
+// on extension update, open the "what's new" page (changelog + donation ask).
+// only every 10th patch release (…230, …240) so it doesn't nag on every update.
 function addUpdateUrl() {
   browser.runtime.onInstalled.addListener(async (details) => {
-    if (details.reason == "update") {
+    if (details.reason != "update") {
+      return;
+    }
+    var patch = parseInt(
+      browser.runtime.getManifest().version.split(".").pop(),
+      10
+    );
+    if (Number.isFinite(patch) && patch % 10 === 0) {
       browser.tabs.create({
         url: browser.runtime.getURL("popup.html?whatsnew=1"),
       });
