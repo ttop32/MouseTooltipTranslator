@@ -9,13 +9,13 @@
 		"message": "মাউস টুলটিপ ট্রান্সলেটর"
 	},
 	"Translate_When": {
-		"message": "অনুবাদের সময়"
+		"message": "অনুবাদ হওয়ার শর্ত"
 	},
 	"Translate_From": {
-		"message": "যে ভাষা থেকে করা হবে"
+		"message": "অনুবাদের মূল ভাষা"
 	},
 	"Translate_Into": {
-		"message": "যে ভাষায় করা হবে"
+		"message": "অনুবাদের উদ্দিষ্ট ভাষা"
 	},
 	"Translator_Engine": {
 		"message": "অনুবাদের ইঞ্জিন"
@@ -57,7 +57,7 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "টুলটিপ ওঠার শর্ত"
+		"message": "টুলটিপ দেখা যাওয়ার শর্ত"
 	},
 	"Voice_When": {
 		"message": "কথা শোনা যাওয়ার শর্ত"
@@ -75,25 +75,25 @@
 		"message": "ওসিআর চলার শর্ত"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "অনুবাদ্য লেখার ধরন বদলের কি"
+		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর কি"
 	},
 	"Speech_Recognition_When": {
 		"message": "কথা শনাক্তকরণের শর্ত"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "অনুবাদ্য লেখার ধরন বদলের শর্ত"
+		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর শর্ত"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
-		"message": "অনুবাদ্য লেখার ধরন বদলের জন্য চেপে ধরার কি"
+		"message": "অনুবাদ্য লেখার ধরন পাল্টাতে চেপে ধরার কি"
 	},
 	"Secondary_Language_When": {
 		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার জন্য শর্ত"
 	},
 	"Swap_Key_Toggle_Mode": {
-		"message": "বদলের কি’র ক্ষেত্রে টগল মোড"
+		"message": "পাল্টানোর কিগুলোর ক্ষেত্রে টগল মোড"
 	},
 	"Toggle_Extension_When": {
-		"message": "এক্সটেনশন চলা / বন্ধ হওয়ার শর্ত"
+		"message": "এক্সটেনশন চলা / না চলার শর্ত"
 	},
 	"TTS_Pause_Resume_When": {
 		"message": "থামিয়ে রাখা টিটিএস আবার চলার শর্ড"
@@ -123,13 +123,13 @@
 		"message": "টুলটিপের অ্যানিমেশন"
 	},
 	"Tooltip_Disappear_Duration": {
-		"message": "টুলটিপ চলে যাওয়ার আগে দেরি"
+		"message": "টুলটিপ চলে যেতে লাগা সময়"
 	},
 	"Tooltip_Position": {
 		"message": "টুলটিপের অবস্থান"
 	},
 	"Tooltip_Text_Align": {
-		"message": "টুলটিপের লেখার অনুভূমিক অবস্থান"
+		"message": "টুলটিপের লেখার আড়াআড়ি অবস্থান"
 	},
 	"Tooltip_Background_Blur": {
 		"message": "টুলটিপের পটভূমির ব্লার"
@@ -156,10 +156,10 @@
 		"message": "সেটিংসের তন্বী মোড"
 	},
 	"VOICE______________________________________": {
-		"message": "কথা                                      "
+		"message": "কণ্ঠ                                      "
 	},
 	"VOICE": {
-		"message": "কথা"
+		"message": "কণ্ঠ"
 	},
 	"Voice_Volume": {
 		"message": "কথার ভলিউম"
@@ -171,7 +171,7 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "কথার পুনরাবৃত্তি"
+		"message": "কথার পুনরাবৃত্তির সংখ্যা"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
@@ -180,10 +180,10 @@
 		"message": "কথার গতি: "
 	},
 	"EXCLUDE______________________________________": {
-		"message": "বাদ                                      "
+		"message": "ব্যতিক্রম                                      "
 	},
 	"EXCLUDE": {
-		"message": "বাদ"
+		"message": "ব্যতিক্রম"
 	},
 	"Exclude_Language": {
 		"message": "পরিহার্য ভাষা"
@@ -204,10 +204,10 @@
 		"message": "এই সাইটে অনুবাদ চালু রাখব"
 	},
 	"ADVANCED______________________________________": {
-		"message": "উন্নীত                                      "
+		"message": "খুঁটিনাটি                                      "
 	},
 	"ADVANCED": {
-		"message": "উন্নীত"
+		"message": "খুঁটিনাটি"
 	},
 	"UI_Language": {
 		"message": "এই এক্সটেনশনের ভাষা"
@@ -240,7 +240,7 @@
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Show_Delay": {
-		"message": "টুলটিপ ওঠার আগে দেরি"
+		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
 		"message": "টুলটিপের শব্দের ডিকশনারি"
@@ -258,16 +258,16 @@
 		"message": "কথা শনাক্তকরণে ভাষা"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "ভয়েস প্যানেলে অনুবাদের ভাষা"
+		"message": "ভয়েস প্যানেলের অনুবাদের ভাষা"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "ভয়েস প্যানেলে উদ্দিষ্ট লেখা"
+		"message": "ভয়েস প্যানেলের উদ্দিষ্ট লেখা"
 	},
 	"Voice_Panel_Padding": {
 		"message": "ভয়েস প্যানেলের প্যাডিং"
 	},
 	"Voice_Panel_Text_Align": {
-		"message": "ভয়েস প্যানেলে লেখার অনুভূমিক অবস্থান"
+		"message": "ভয়েস প্যানেলে লেখার আড়াআড়ি অবস্থান"
 	},
 	"Voice_Panel_Source_Font_Size": {
 		"message": "ভয়েস প্যানেলে মূল লেখার সাইজ"
@@ -357,7 +357,7 @@
 		"message": "ভয়েস প্যানেল"
 	},
 	"Translate_Voice": {
-		"message": "সবাক অনুবাদ"
+		"message": "কথার অনুবাদ"
 	},
 	"Review______________________________________": {
 		"message": "রিভিউ                                      "
@@ -384,10 +384,10 @@
 		"message": "অপশন নির্বাচন                              "
 	},
 	"On": {
-		"message": "চালু"
+		"message": "হ্যাঁ"
 	},
 	"Off": {
-		"message": "বন্ধ"
+		"message": "না"
 	},
 	"Auto": {
 		"message": "অটো"
@@ -420,13 +420,13 @@
 		"message": "ছোট থেকে বড়"
 	},
 	"Shift_away": {
-		"message": "নীচ থেকে ওপরে"
+		"message": "লেখা থেকে দূরে"
 	},
 	"Shift_toward": {
-		"message": "ওপর থেকে নীচে"
+		"message": "লেখার দিকে"
 	},
 	"Perspective": {
-		"message": "শোয়ানো থেকে খাড়া"
+		"message": "উল্লম্ব আবর্তন"
 	},
 	"Word": {
 		"message": "শব্দ"
@@ -447,19 +447,19 @@
 		"message": "হোয়াইটলিস্ট"
 	},
 	"Source": {
-		"message": "উদ্দিষ্ট"
+		"message": "মূল"
 	},
 	"Source_Text": {
-		"message": "উদ্দিষ্ট লেখা"
+		"message": "মূল লেখা"
 	},
 	"Translated_Text": {
-		"message": "অনূদিত লেখা"
+		"message": "অনুবাদ"
 	},
 	"Source_n_Translated": {
-		"message": "উদ্দিষ্ট ও অনূদিত"
+		"message": "মূল ও অনুবাদ"
 	},
 	"Translated_n_Source": {
-		"message": "অনূদিত ও উদ্দিষ্ট"
+		"message": "অনুবাদ ও মূল"
 	},
 	"Dual_Subtitle": {
 		"message": "দুই ভাষার সাবটাইটেল"
@@ -483,7 +483,7 @@
 		"message": "ডানে"
 	},
 	"Justify": {
-		"message": "দু’পাশ সমান"
+		"message": "দুই পাশ সমান"
 	},
 	"Light": {
 		"message": "সাদা"
@@ -612,9 +612,9 @@
 		"message": "ফ্ল্যাশকার্ডে আপনার সেভ করা শব্দ নিয়ে কার্ড তৈরি হবে"
 	},
 	"appName": {
-		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং ইউটিউবে দ্বিভাষী সাবটাইটেল"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ও ইউটিউবে দ্বিভাষী সাবটাইটেল"
 	},
 	"appDesc": {
-		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রানস্লেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
+		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রান্সলেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
 	}
 }
