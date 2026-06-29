@@ -1126,7 +1126,11 @@ function checkExcludeUrl() {
     return isExcludeBan;
   }
   if (mode === "whitelist") {
-    return isWhiteListBan;
+    // #344: explicit Whitelist mode must take effect immediately — translate
+    // only on whitelisted sites. An empty list therefore means "nowhere yet"
+    // (block everywhere), unlike the auto/Both `isWhiteListBan` above whose
+    // `length != 0` guard treats an empty whitelist as "no restriction".
+    return !matchSite(url, setting["websiteWhiteList"]);
   }
   if (isExcludeBan || isWhiteListBan) {
     return true;
