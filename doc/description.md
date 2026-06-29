@@ -19,6 +19,10 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.233
+  - Fix the Whitelist website filter mode doing nothing until you added a site: choosing Whitelist mode now restricts translation to your whitelisted sites right away (an empty whitelist means it runs nowhere until you add one)
+  - Remove the unused "Voice Translated Speed" advanced option
+  - Only open the "What's New" page on every 10th patch release instead of on every update
 - 0.1.232
   - Fix the built-in PDF viewer translation breaking in 0.1.231 (dictionary popup failed to load with a "deepmerge" module error)
   - Fix per-language read-aloud speed (and voice) being lost after restarting the browser
