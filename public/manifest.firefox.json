@@ -11,7 +11,7 @@
         "128": "icons/icon_128.png"
     },
     "content_security_policy": "script-src 'self' 'wasm-unsafe-eval' ;  object-src 'none'",
-    "permissions": ["storage", "tabs", "scripting", "contextMenus", "search", "<all_urls>"],
+    "permissions": ["storage", "tabs", "scripting", "contextMenus", "search", "webRequest", "webRequestBlocking", "<all_urls>"],
 
 
 

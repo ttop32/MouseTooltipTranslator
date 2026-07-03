@@ -159,7 +159,13 @@ function stageTooltipTextSelect(event, useEvent = true) {
   ) {
     prevSelected = selectedText;
     selectedText = useEvent ? event?.selectedText : selectedText;
-    stageTooltipText(selectedText, "select");
+    // A sentence dragged across multiple lines (especially in the PDF viewer,
+    // where getSelection() inserts a newline at every line/span boundary) was
+    // sent to the translator split by newlines and came back as two fragments.
+    // Collapse whitespace runs (incl. newlines) to a single space so a wrapped
+    // sentence is translated — and read aloud — as one flowing sentence.
+    var selectText = selectedText?.replace(/\s+/g, " ").trim();
+    stageTooltipText(selectText, "select");
   }
 }
 

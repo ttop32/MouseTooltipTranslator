@@ -571,6 +571,10 @@ function checkFirefox() {
   return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 }
 
+export function isFirefox() {
+  return checkFirefox();
+}
+
 function getOffscreenIframe() {
   return document.querySelector('iframe[src="offscreen.html"]');
 }

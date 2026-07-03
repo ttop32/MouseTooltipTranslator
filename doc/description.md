@@ -19,6 +19,9 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.235
+  - Firefox: web (http/https) PDFs now open in the extension's own PDF viewer so mouseover translation works, instead of Firefox's built-in viewer which extensions can't add features to (local file:// PDFs still use the built-in viewer)
+  - Selecting text across multiple lines (e.g. a PDF sentence that wraps) no longer splits the sentence at the line breaks: newlines are collapsed to spaces so it is translated and read aloud as one sentence
 - 0.1.234
   - Fix broken menus and pop-ups on sites that use Tippy.js for their own UI (e.g. zulip.com): the extension's tooltip styles no longer leak onto the page's own tooltips
   - Scroll the settings tab bar sideways with the mouse wheel (no more clicking the arrow buttons when tabs overflow)

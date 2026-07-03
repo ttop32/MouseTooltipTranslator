@@ -30,6 +30,7 @@ var recentRecord = {};
     addCopyRequestListener(); // listen copy / save context menus and shortcut key
     addTabSwitchEventListener(); // listen tab switch for kill tts
     addPdfFileTabListener(); //listen drag and drop pdf
+    addFirefoxPdfRedirectListener(); //firefox: redirect web pdf to our viewer
     addSearchBarListener(); // listen url search bar for translate omnibox
     addMessageListener(); // listen message from content script for handle translate & tts
   } catch (error) {
@@ -350,6 +351,34 @@ async function openPDFViewer(url, tabId) {
 //url is end with .pdf, start with file://
 function checkIsLocalPdfUrl(url) {
   return /^(file:\/\/).*(\.pdf)$/.test(url?.toLowerCase());
+}
+
+// Firefox only: its built-in pdf.js viewer is a privileged page we can't inject
+// our tooltip/translation into (bugzilla 1454760, unfixed 7+ yrs). So intercept
+// http(s) PDF navigations BEFORE the built-in viewer loads and redirect them to
+// our own bundled viewer (a normal extension page where the content script
+// runs). Chrome (MV3) can't use blocking webRequest and keeps the embed-swap
+// path in contentScript.detectPDF instead.
+// Limitation: Firefox webRequest can't intercept file:// requests, so local PDFs
+// still open in the built-in viewer.
+function addFirefoxPdfRedirectListener() {
+  if (!util.isFirefox() || !browser.webRequest?.onBeforeRequest) {
+    return;
+  }
+  browser.webRequest.onBeforeRequest.addListener(
+    function (details) {
+      if (setting?.detectPDF === "false") {
+        return {};
+      }
+      // never touch our own viewer (it loads the pdf via ?file=) -> no loop
+      if (details.url.includes("/pdfjs/web/viewer.html")) {
+        return {};
+      }
+      return { redirectUrl: util.getPDFUrl(details.url) };
+    },
+    { urls: ["*://*/*.pdf", "*://*/*.pdf?*"], types: ["main_frame"] },
+    ["blocking"]
+  );
 }
 
 //search bar================================================
