@@ -197,6 +197,9 @@
 	"Whitelist_Website": {
 		"message": "Белый список сайтов"
 	},
+	"Website_Target_Language": {
+		"message": "Website Target Language"
+	},
 	"Block_Current_Site": {
 		"message": "Блокировать текущий сайт"
 	},
