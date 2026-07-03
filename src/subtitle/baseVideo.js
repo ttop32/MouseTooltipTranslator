@@ -1,4 +1,6 @@
+import { BatchInterceptor } from "@mswjs/interceptors";
 import { XMLHttpRequestInterceptor } from "@mswjs/interceptors/XMLHttpRequest";
+import { FetchInterceptor } from "@mswjs/interceptors/fetch";
 import { debounce } from "throttle-debounce";
 import $ from "jquery";
 import memoize from "memoizee";
@@ -25,10 +27,30 @@ export default class BaseVideo {
   static interceptorLoaded = false;
   static scriptUrl = "subtitle.js";
   static interceptKillTime = 1 * 60 * 1000; //1min
-  static interceptor = new XMLHttpRequestInterceptor();
+  // Intercept BOTH XHR and fetch: recent YouTube requests the timedtext caption
+  // over fetch, which an XHR-only interceptor silently missed, so the dual
+  // subtitle was never assembled (only the native single line showed). The same
+  // "request" + request.respondWith() contract applies to both interceptors.
+  static interceptor = new BatchInterceptor({
+    name: "mtt-subtitle-interceptor",
+    interceptors: [
+      new XMLHttpRequestInterceptor(),
+      new FetchInterceptor(),
+    ],
+  });
   static setting = {};
   static useManualIntercept = false;
   static subtitleLangDict = {};
+
+  // Native fetch captured at module load — BEFORE interceptCaption() patches the
+  // global fetch. Our own timedtext requests (requestSubtitle) go through this so
+  // they bypass our interceptor; otherwise the fetch interceptor would re-catch
+  // them and recurse forever.
+  static originalFetch =
+    typeof fetch !== "undefined" ? fetch.bind(globalThis) : null;
+  static rawFetch(...args) {
+    return (this.originalFetch || fetch)(...args);
+  }
 
   static async handleVideo(setting) {
     if (!this.isVideoSite() || setting["detectSubtitle"] == "null") {
@@ -299,6 +321,43 @@ export default class BaseVideo {
   }
   static filterSpecialText(word) {
     return word.replace(/[^a-zA-Z ]/g, "");
+  }
+
+  // Pick the target-track line to stack under a given source-track line. The
+  // source (original) and target (translation) tracks are fetched and segmented
+  // independently — different line counts and boundaries — so they can't be
+  // zipped 1:1; each source line needs the translation spoken during it.
+  //
+  // Rank candidates by real time overlap `min(ends) - max(starts)` and take the
+  // largest. `bestOverlap` starts at -Infinity so that when NOTHING truly
+  // overlaps we still return the closest line (a negative overlap is just the
+  // gap, so least-negative = nearest) instead of dropping the translation. So a
+  // source line still always gets a translation (as the original merge did) —
+  // only the ranking changed. Returns null only when there are no candidates.
+  // Callers pass start/end accessors, so this serves both YouTube json3 events
+  // (tStartMs / dDurationMs) and Netflix TTML lines (start / end).
+  //
+  // History — both mergers previously scored candidates with
+  //   score = Math.max(srcEnd - tgtStart, tgtEnd - srcStart)   sorted ascending.
+  // By the identity max(e1-s2, e2-s1) = (dur1+dur2)/2 + |mid1-mid2|, that ranked
+  // by MIDPOINT DISTANCE (a nearest-center match, biased toward shorter target
+  // lines), not by overlap — its `>0` gate was always true, so it too always
+  // attached something. The real defect was the ranking: when one long target
+  // line spanned several short source lines its center sat far away, so a
+  // shorter, less-relevant line won and the dual subtitle looked misaligned.
+  // Overlap-max fixes the ranking while keeping the always-attach behaviour.
+  static findMostOverlappingLine(start, end, candidates, getStart, getEnd) {
+    var best = null;
+    var bestOverlap = -Infinity;
+    for (var line of candidates || []) {
+      var overlap =
+        Math.min(end, getEnd(line)) - Math.max(start, getStart(line));
+      if (overlap > bestOverlap) {
+        bestOverlap = overlap;
+        best = line;
+      }
+    }
+    return best;
   }
 
   //inject script for handle local function===============================

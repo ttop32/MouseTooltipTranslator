@@ -197,6 +197,9 @@
 	"Whitelist_Website": {
 		"message": "Beyaz Liste Web Sitesi"
 	},
+	"Website_Target_Language": {
+		"message": "Website Target Language"
+	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
 	},

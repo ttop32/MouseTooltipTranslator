@@ -49,7 +49,7 @@
 | 이슈 | 날짜 | 제목 | 상태 | 설명 / 근거 |
 |---|---|---|---|---|
 | [#25](https://github.com/ttop32/MouseTooltipTranslator/issues/25) | 2023-01-06 | src 폴더 Chrome 로드 실패 | ℹ️ 설정 | 런타임 버그 아님 — "Load unpacked"는 빌드 산출물 `build/` 폴더를 로드해야 함 |
-| [#28](https://github.com/ttop32/MouseTooltipTranslator/issues/28) | 2023-03-10 | 웹 PDF 원본 URL 복사 | 🟡 부분 | 원본 URL이 뷰어 URL `viewer.html?file=<encodeURIComponent(원본)>`에 보존(`getPDFUrl`) → 주소창 `file=` 값 디코드로 복원 가능. 전용 "원본 URL 복사" 원클릭 버튼만 없음 |
+| [#28](https://github.com/ttop32/MouseTooltipTranslator/issues/28) | 2023-03-10 | 웹 PDF 원본 URL 복사 | ✅ 적용 | 원본 URL이 뷰어 URL `viewer.html?file=<encodeURIComponent(원본)>`에 보존(`getPDFUrl`). `pdfInject.js addCopyUrlButton`이 PDF.js Tools(secondary) 메뉴에 "Copy PDF URL" 항목 추가 → 클릭 시 `getFileParam()`(URLSearchParams가 이미 디코드) 원본 URL을 클립보드 복사(라벨 "Copied!" 피드백). http(s) PDF에서만 노출(로컬/blob 제외) |
 | [#29](https://github.com/ttop32/MouseTooltipTranslator/issues/29) | 2023-03-23 | 특정 사이트 제외 | ✅ 적용 | websiteExcludeList, `checkExcludeUrl` |
 | [#30](https://github.com/ttop32/MouseTooltipTranslator/issues/30) | 2023-04-11 | 일본어 로마자 | ✅ 적용 | tooltipInfoTransliteration |
 | [#31](https://github.com/ttop32/MouseTooltipTranslator/issues/31) | 2023-04-13 | 번역 결과 클립보드 복사 | ✅ 적용 | `copyTextToClipboard` |
@@ -77,7 +77,7 @@
 | [#66](https://github.com/ttop32/MouseTooltipTranslator/issues/66) | 2023-11-23 | 0.1.91 Bing 음역 깨짐 | ✅ 해소 | 현재 `bing.js wrapResponse`가 번역문+음역 둘 다 반환(테스트 통과). 회귀 해소 |
 | [#68](https://github.com/ttop32/MouseTooltipTranslator/issues/68) | 2023-11-28 | Google Docs 사용 | ✅ 적용 | `util.isGoogleDoc`, `injectGoogleDocAnnotation` |
 | [#69](https://github.com/ttop32/MouseTooltipTranslator/issues/69) | 2023-12-05 | 확장 동작 안 함 | 🔍 재현 | Edge의 Bing Chat AI 사이트, 상세 없음 |
-| [#70](https://github.com/ttop32/MouseTooltipTranslator/issues/70) | 2023-12-08 | 추가 제안 5건 | 🟡 부분 | 풍부한 단어창 일부(dict+Wiktionary) / 자막 사이트 일부(netflix·svt) / 직접 입력 번역창 ❌(=#185) / 양방향 자동번역 일부 / PDF 하이라이트 ✅(PDF.js 내장 #145) |
+| [#70](https://github.com/ttop32/MouseTooltipTranslator/issues/70) | 2023-12-08 | 추가 제안 5건 | 🟡 부분 | 풍부한 단어창 일부(dict+Wiktionary) / 자막 사이트 일부(netflix·svt) / 직접 입력 번역창 ❌(=#185, 미지원) / 양방향 자동번역 일부 / PDF 하이라이트 ✅(PDF.js 내장 #145) |
 
 ## 2024
 
@@ -107,7 +107,7 @@
 | [#110](https://github.com/ttop32/MouseTooltipTranslator/issues/110) | 2024-03-15 | google 엔진 차이 문의 | ✅ 적용 | googleGTX/Web/V2 모두 존재 + 선택 |
 | [#111](https://github.com/ttop32/MouseTooltipTranslator/issues/111) | 2024-03-15 | ChatGPT(Web) 추가 | 🟡 부분 | LLM OpenAI API(`localLlm.js`) / ChatGPT 웹(`chatgpt.js`)은 차단되어 비활성 |
 | [#112](https://github.com/ttop32/MouseTooltipTranslator/issues/112) | 2024-03-18 | TTS Ctrl이 Ctrl+C 충돌 | ✅ 적용 | TTSWhen 키 변경 |
-| [#114](https://github.com/ttop32/MouseTooltipTranslator/issues/114) | 2024-03-21 | 클릭 시 툴팁 숨김 + Edge 위치 | 🟡 부분 | ① 하이라이트 재클릭으로 툴팁 숨김 ❌ ② Edge 미니메뉴 겹침 → 위치 옵션: tooltipPosition·"Top Right"(#43)로 일부 회피 |
+| [#114](https://github.com/ttop32/MouseTooltipTranslator/issues/114) | 2024-03-21 | 클릭 시 툴팁 숨김 + Edge 위치 | 🟡 부분 | ① 클릭으로 툴팁 숨김 ✅ 적용: 좌클릭 시 `dismissTooltipOnClick`가 `mouseMoved=false`+`hideTooltip()`(Ctrl+A/F와 동일 억제)로 툴팁을 숨기고 마우스 이동 전까지 재표시 안 함. 좌클릭이 show/TTS/secondary 트리거로 바인딩된 경우엔 스킵, preventDefault 안 해 링크/버튼 정상 동작 ② Edge 미니메뉴 겹침 → tooltipPosition·"Top Right"(#43)로 일부 회피 |
 | [#115](https://github.com/ttop32/MouseTooltipTranslator/issues/115) | 2024-03-24 | DIVI/Elementor 불필요 코드 | ✅ 수정 | #102 동일 — 컨테이너 `contenteditable="false"`+포커스 시 제거 |
 | [#116](https://github.com/ttop32/MouseTooltipTranslator/issues/116) | 2024-04-02 | cws | ℹ️ 내용없음 | 제목 "cws"(크롬 웹스토어 추정)만, 본문 없음 — 조치 불가 |
 | [#117](https://github.com/ttop32/MouseTooltipTranslator/issues/117) | 2024-04-11 | Gemini/Kimi AI 사이트 안 됨 | 🔍 재현 | ChatGPT는 됨. 가상스크롤/Shadow DOM 등으로 `caretRangeFromPoint` 텍스트노드 못 잡는 케이스 추정. 사이트 DOM 라이브 확인 |
@@ -130,7 +130,7 @@
 | [#148](https://github.com/ttop32/MouseTooltipTranslator/issues/148) | 2024-08-03 | 글쓰기 번역 단축키 | ✅ 적용 | keyDownTranslateWriting |
 | [#149](https://github.com/ttop32/MouseTooltipTranslator/issues/149) | 2024-08-03 | 위키낱말사전 소스 | ✅ 적용 | `wiktionary.js` + `tooltipWordDictionarySource`=wiktionary. 임의 커스텀 소스는 범위 외 |
 | [#150](https://github.com/ttop32/MouseTooltipTranslator/issues/150) | 2024-08-07 | 원문 중복 숨기기 | ✅ 적용 | tooltipInfoSourceText off 기본 |
-| [#151](https://github.com/ttop32/MouseTooltipTranslator/issues/151) | 2024-08-10 | YouTube 자막 안 됨 | 🔍 재현 | 본문 모호. YouTube 포맷/EP 변경 시 간헐 실패 가능(#90 동일 영역). 라이브 검증 |
+| [#151](https://github.com/ttop32/MouseTooltipTranslator/issues/151) | 2024-08-10 | YouTube 자막 안 됨 | ✅ 수정(추정) | 최신 YouTube 듀얼 자막 실패 원인: 자막(timedtext) 요청이 XHR→**fetch**로 바뀌었는데 `baseVideo.js` 인터셉터가 `XMLHttpRequestInterceptor`만 써서 못 잡음 → 듀얼 자막 미조립(원문만 표시). **수정**: `BatchInterceptor`로 XHR+fetch 둘 다 인터셉트. 핸들러 내부의 자막 재요청(`requestSubtitle`)이 fetch 인터셉터에 재귀되지 않도록 인터셉트 적용 전 캡처한 native fetch(`rawFetch`) 사용(youtube/netflix). `getUserGeneratedSubUrl`의 `captionList?.filter` 방어 추가. 추가로 `mergeSubtitles` 매칭 버그 수정 및 공통화: 원문/번역 트랙 세그먼트가 달라 1:1이 안 되는데, 기존 metric `max(srcEnd-tgtStart,tgtEnd-srcStart)`은 항등식상 `(dur1+dur2)/2+|mid1-mid2|`(중심점 거리) — 긴 번역 줄이 여러 원문 줄에 걸칠 때 중심이 멀어 짧은 엉뚱한 줄을 골라 오정렬. → **실제 시간 겹침(min(end)-max(start)) 최대**로 매칭하는 공통 헬퍼 `BaseVideo.findMostOverlappingLine`로 추출(youtube/netflix 공용), 겹침이 없으면 가장 가까운 줄로 폴백해 번역을 항상 붙임(원래 always-attach 동작 유지). 또 youtube가 번역 seg를 in-place 변형+참조 공유하던 것을 매 매칭마다 새 seg 생성으로 바꿔 "한국어가 `\n\n`으로 뭉쳐 뜨는" 현상 해소(합성 데이터로 확인). **단, 타이밍 동일한 tlang 자동번역 케이스는 신·구 모두 병합 정상 → 그 경우 "영어만"은 병합이 아니라 sub2(번역) 미fetch/인터셉트 미발동 문제.** 라이브 검증 권장 |
 | [#152](https://github.com/ttop32/MouseTooltipTranslator/issues/152) | 2024-08-11 | 새 키 추가 | ✅ 적용 | keyboard 탭 키 옵션군(#182) |
 | [#153](https://github.com/ttop32/MouseTooltipTranslator/issues/153) | 2024-08-16 | PDF GUI 언어 변경 | ✅ 적용 | `pdfInject.js`가 PDF.js `localeProperties`를 `uiLanguage`로 설정 |
 | [#155](https://github.com/ttop32/MouseTooltipTranslator/issues/155) | 2024-09-06 | Show Tooltip When 지연 | ✅ 적용 | 표시 지연 `mouseoverEventInterval`을 "Tooltip Show Delay"(advanced, 0~1000ms)로 노출(#235) — 낮추면 즉시 표시 |
@@ -138,7 +138,7 @@
 | [#165](https://github.com/ttop32/MouseTooltipTranslator/issues/165) | 2024-09-16 | 문단/PDF 통째로 읽기 | ✅ 적용 | `startAutoReader`, keyDownAutoReader=F2 |
 | [#167](https://github.com/ttop32/MouseTooltipTranslator/issues/167) | 2024-09-28 | YouTube 리다이렉트 이상 | 🔍 재현 | 확장 켜면 Google 검색→YouTube 구독 페이지 리다이렉트. 환경 의존, 재현 필요 |
 | [#171](https://github.com/ttop32/MouseTooltipTranslator/issues/171) | 2024-10-03 | Firefox 지원 | ✅ 적용 | Firefox 빌드 |
-| [#172](https://github.com/ttop32/MouseTooltipTranslator/issues/172) | 2024-10-10 | 개선 제안 | 🟡 부분 | LLM 키 ✅, 다크모드 ✅(#238), 단축키 탭 ✅ / 직접 입력 번역 탭 ❌(=#185), 사이드바 ❌ |
+| [#172](https://github.com/ttop32/MouseTooltipTranslator/issues/172) | 2024-10-10 | 개선 제안 | 🟡 부분 | LLM 키 ✅, 다크모드 ✅(#238), 단축키 탭 ✅ / 직접 입력 번역 탭 ❌(=#185, 미지원), 사이드바 ❌ |
 | [#173](https://github.com/ttop32/MouseTooltipTranslator/issues/173) | 2024-10-13 | 완벽 앱 제안 | ⛔ 범위밖 | 게임·앱 위 마우스오버 번역 = Windows 데스크톱 앱 |
 | [#174](https://github.com/ttop32/MouseTooltipTranslator/issues/174) | 2024-10-18 | Google PDF 열기 실패 | 🔍 재현 | 확장이 PDF 열기 막음, 끄면 정상(#45 동일 PDF 가로채기 계열). 라이브 확인 |
 | [#177](https://github.com/ttop32/MouseTooltipTranslator/issues/177) | 2024-11-17 | 문서 전체 번역 | ✅ 적용(MVP) | `pageTranslate.js` — `keyDownTranslatePage` 토글로 페이지 텍스트 제자리 번역/복원 |
@@ -146,7 +146,7 @@
 | [#181](https://github.com/ttop32/MouseTooltipTranslator/issues/181) | 2024-11-21 | 다른 플랫폼 이중 자막 | 🟡 부분 | netflix/svt |
 | [#182](https://github.com/ttop32/MouseTooltipTranslator/issues/182) | 2024-11-21 | 모든 기능 단축키 지정 | ✅ 적용 | keyboard 탭 키 옵션군 |
 | [#183](https://github.com/ttop32/MouseTooltipTranslator/issues/183) | 2024-11-21 | 번역 어휘 업데이트 | 🟡 부분 | 품사·정의 dict+Wiktionary(#196/#149) / 문맥 최적 단어·예문 ❌ |
-| [#185](https://github.com/ttop32/MouseTooltipTranslator/issues/185) | 2024-11-23 | 읽어주기 버튼 + 입력 번역 팝업 | ❌ 미구현 | 팝업에 클릭형 읽어주기 버튼 + 키워드 직접 입력→번역. #70/#172 중복 |
+| [#185](https://github.com/ttop32/MouseTooltipTranslator/issues/185) | 2024-11-23 | 읽어주기 버튼 + 입력 번역 팝업 | ❌ 미지원 | 팝업 직접 입력 번역 페이지 + 클릭형 읽어주기 — **지원 안 하기로 결정**(구현했다가 제거). 마우스오버/드래그 번역·TTS로 충분. #70/#172 동일 |
 | [#186](https://github.com/ttop32/MouseTooltipTranslator/issues/186) | 2024-11-26 | 입력 중 툴팁 비활성 | ✅ 적용 | 기본 Off — 입력창 포커스 중 툴팁 억제(Google Docs 예외). `mouseoverWhileWriting` |
 | [#187](https://github.com/ttop32/MouseTooltipTranslator/issues/187) | 2024-11-27 | 이중 자막 배경 | ✅ 적용 | 자막 배경 스타일 (참고: #205는 이 배경 끄는 옵션 요청) |
 | [#188](https://github.com/ttop32/MouseTooltipTranslator/issues/188) | 2024-11-28 | Firefox 지원 | ✅ 적용 | Firefox 빌드 |
@@ -198,7 +198,7 @@
 | [#257](https://github.com/ttop32/MouseTooltipTranslator/issues/257) | 2025-09-03 | 브라질 포르투갈어 | ✅ 적용 | pt-BR 로케일 |
 | [#260](https://github.com/ttop32/MouseTooltipTranslator/issues/260) | 2025-09-08 | 음성 번역 | ✅ 적용 | `src/speech/index.js` 음성 인식 번역 |
 | [#261](https://github.com/ttop32/MouseTooltipTranslator/issues/261) | 2025-09-12 | bing is broken | 🔍 코드무관 | 테스트 로컬 통과. bing은 데이터센터 IP에 캡차 → 일부 지역 무음. cn 폴백·fallback 권장 |
-| [#262](https://github.com/ttop32/MouseTooltipTranslator/issues/262) | 2025-09-18 | 사이트별 번역 대상 언어 | ❌ 미구현 | "사이트에 따라 번역 대상 언어를 유연하게 지정" → 전역 translateTarget만 있고 사이트별 대상 언어 매핑은 미구현 |
+| [#262](https://github.com/ttop32/MouseTooltipTranslator/issues/262) | 2025-09-18 | 사이트별 번역 대상 언어 | ✅ 적용 | exclude 탭에 `websiteTargetLangList`(comboBox) 추가 — `site=lang` 항목(예 `github.com=ko`, `*.reddit.com=ja`)을 넣으면 해당 사이트에서 전역 대신 그 언어로 번역. 콘텐츠 스크립트 `applyPerSiteTargetLang`가 현재 URL을 `matchSite`(도메인→서브도메인 #197 규칙)로 매칭해 첫 일치 언어로 결정, `setting["translateTarget"]`를 **런타임 전용 override**(`Setting.setLocalOverride`)로 교체 → 툴팁·자막·페이지번역·TTS 등 모든 소비처에 일관 적용되면서도 `save()`는 전역값만 저장(TTS-rate/youtube 저장 시 override 누수 방지). 전역 대상·목록 변경 시 라이브 재적용, 항목 제거 시 전역 복원 |
 | [#263](https://github.com/ttop32/MouseTooltipTranslator/issues/263) | 2025-09-22 | 빠른 언어 코드 입력 | 🟡 부분 | "상단에 1~2글자로 언어 선택하는 필드" → MAIN의 Translate Into select에서 타이핑 검색은 되나, 전용 빠른 입력 필드는 ❌ |
 | [#264](https://github.com/ttop32/MouseTooltipTranslator/issues/264) | 2025-09-26 | 설정 내보내기 버튼 안 됨 | ✅ 수정 | anchor를 body에 추가 후 click·remove + revoke 1초 지연 |
 | [#270](https://github.com/ttop32/MouseTooltipTranslator/issues/270) | 2025-11-11 | 제안 | ⛔ 범위밖 | 모바일 단어복습 웹 버전 — 별도 영역 |
@@ -234,4 +234,5 @@
 | [#340](https://github.com/ttop32/MouseTooltipTranslator/issues/340) | 2026-06-17 | (중복) 재시작 후 속도 초기화 | ✅ 수정 | #338 중복 |
 | [#342](https://github.com/ttop32/MouseTooltipTranslator/issues/342) | 2026-06-17 | PDF 다크 모드 사라짐 | ✅ 해소 | #339와 동일 원인 — 0.1.231에서 doq `import deepmerge` bare specifier 때문에 PDF.js 뷰어 전체가 깨져 다크모드 설정 패널도 안 뜸. 0.1.232에서 인라인 `deepMerge`로 수정(보고자도 0.1.232 수동설치로 해결 확인). Edge Add-ons·CWS가 아직 0.1.231에 정체돼 스토어 사용자만 영향 — 스토어 갱신이 실제 해소책 |
 | [#343](https://github.com/ttop32/MouseTooltipTranslator/issues/343) | 2026-06-18 | Windows 프로그램 번역 앱 | ⛔ 범위밖 | "브라우저 말고 Windows 프로그램·설정 등의 UI를 번역하는 앱이면 성공할 것" → 데스크톱 앱 = 브라우저 확장 범위 밖(#146/#173/#252 동일). 댓글도 확장으로는 타 프로그램 메뉴 접근 불가·메모리 낭비 지적 |
-| [#344](https://github.com/ttop32/MouseTooltipTranslator/issues/344) | 2026-06-28 | 개선·버그 2건 | 🟡 부분 | ① 설정 탭바 가로 스크롤(화살표 버튼 누르기 싫음): `index.vue`가 Vuetify `<v-tabs show-arrows>` 사용 → 탭이 넘치면 좌우 화살표 클릭 필요, 마우스 휠 가로스크롤 미연결 ❌(휠→스크롤 핸들러 추가 여지) ② 화이트리스트 모드 버그 ✅ 수정: `checkExcludeUrl`의 whitelist 모드가 `isWhiteListBan`(=`websiteWhiteList?.length != 0` 가드 포함)을 반환해 **목록이 비면 차단 안 함(전체 허용)** → Whitelist 모드를 골라도 사이트를 추가하기 전엔 무효과였음. whitelist 모드 분기를 `!matchSite(url, websiteWhiteList)`로 변경 — 빈 목록이면 전체 차단(즉시 제한), 사이트 추가 시 그 사이트만 번역. auto/Both의 `isWhiteListBan`(빈 목록=무제한 legacy)은 그대로 유지. #297 후속 |
+| [#344](https://github.com/ttop32/MouseTooltipTranslator/issues/344) | 2026-06-28 | 개선·버그 2건 | ✅ 적용 | ① 설정 탭바 가로 스크롤 ✅ 적용: `index.vue`의 `<v-tabs show-arrows>`에 `@wheel="onTabWheel"` 추가 — 세로 휠(트랙패드는 deltaX 우선)로 `.v-slide-group__container`의 `scrollLeft` 조정, Vuetify onScroll이 화살표 상태 자동 동기화. 탭이 안 넘치면 무동작(그때만 preventDefault 생략해 페이지 스크롤 보존) ② 화이트리스트 모드 버그 ✅ 수정: `checkExcludeUrl`의 whitelist 모드가 `isWhiteListBan`(=`websiteWhiteList?.length != 0` 가드 포함)을 반환해 **목록이 비면 차단 안 함(전체 허용)** → Whitelist 모드를 골라도 사이트를 추가하기 전엔 무효과였음. whitelist 모드 분기를 `!matchSite(url, websiteWhiteList)`로 변경 — 빈 목록이면 전체 차단(즉시 제한), 사이트 추가 시 그 사이트만 번역. auto/Both의 `isWhiteListBan`(빈 목록=무제한 legacy)은 그대로 유지. #297 후속 |
+| [#345](https://github.com/ttop32/MouseTooltipTranslator/issues/345) | 2026-06-30 | zulip.com 웹 UI 팝업 메뉴 깨짐 | ✅ 수정 | 원인: `contentScript.js` 주입 CSS의 **전역** 규칙 두 개가 페이지 자체 Tippy.js 팝오버까지 오염. zulip은 메뉴/팝오버에 Tippy.js 사용 → ① `[data-tippy-root] { display:inline-block; visibility:visible !important }`가 zulip의 모든 tippy 루트를 강제 표시·인라인화(닫힌 메뉴도 항상 보임, 세로 늘어남) ② `.tippy-content *`가 모든 팝오버 자식에 확장 폰트/색/정렬 강제. **수정**: 두 규칙을 확장 전용 theme(`custom`/`ocr`/`transparent`)로 스코프 — `[data-tippy-root]`는 `:has(> .tippy-box[data-theme~="..."])`로, `.tippy-content *`는 `.tippy-box[data-theme~="..."] .tippy-content *`로 한정. 확장 툴팁은 항상 이 theme를 가지므로 무회귀, 사이트 자체 tippy는 불간섭. 라이브 검증 권장 |

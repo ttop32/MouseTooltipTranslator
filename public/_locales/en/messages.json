@@ -197,6 +197,9 @@
 	"Whitelist_Website": {
 		"message": "Whitelist Website"
 	},
+	"Website_Target_Language": {
+		"message": "Per-Site Target Language (e.g. github.com=ko)"
+	},
 	"Block_Current_Site": {
 		"message": "Block Current Site"
 	},

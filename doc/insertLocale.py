@@ -140,6 +140,7 @@ i18List = [
     "Website Filter Mode",
     "Exclude Website",
     "Whitelist Website",
+    "Website Target Language",
     "Block Current Site",
     "Allow Current Site",
     "ADVANCED                                      ",

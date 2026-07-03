@@ -54,6 +54,7 @@ async function initPdf() {
   checkLocalFileUrl(); // warn no permission if file url
   checkLocalFileType();
   addCustomKeystroke();
+  addCopyUrlButton(); // one-click copy of the original web PDF url (#28)
 
   //make line break for spaced text
   addCallbackForPdfTextLoad(addSpaceBetweenPdfText);
@@ -189,6 +190,46 @@ function insertLineBreak(){
   });  
 }
 
+
+// Add a "Copy PDF URL" entry to the viewer's Tools menu. A web PDF opened
+// through our viewer keeps its original address (encoded) in the ?file=
+// param; this copies it back in one click instead of forcing users to
+// hand-decode the address bar (#28). getFileParam() already returns the
+// decoded url (URLSearchParams decodes once), so don't decode again.
+function addCopyUrlButton() {
+  var url = getFileParam() || "";
+  // only web PDFs have a shareable original url (skip local files / blobs)
+  if (!/^https?:\/\//i.test(url)) {
+    return;
+  }
+  var container = document.getElementById("secondaryToolbarButtonContainer");
+  if (!container || document.getElementById("mttCopyPdfUrl")) {
+    return;
+  }
+  var defaultLabel = "Copy PDF URL";
+  var button = $("<button />", {
+    id: "mttCopyPdfUrl",
+    class: "toolbarButton labeled",
+    type: "button",
+    title: defaultLabel,
+    html: `<span>${defaultLabel}</span>`,
+    on: {
+      click: async function () {
+        var span = $(this).find("span");
+        try {
+          await navigator.clipboard.writeText(url);
+          span.text("Copied!");
+        } catch (e) {
+          console.log(e);
+          span.text("Copy failed");
+        }
+        setTimeout(() => span.text(defaultLabel), 1200);
+      },
+    },
+  });
+  // sit right under "Open File" at the top of the Tools menu
+  $(container).prepend(button);
+}
 
 function addCustomKeystroke() {
   document.addEventListener("keydown", function onPress(evt) {

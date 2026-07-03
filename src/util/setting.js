@@ -116,31 +116,69 @@ export class Setting {
   }
 
   save() {
-    browser.storage.local.set(this); // local = full source of truth (unchanged)
+    // getPersistData() swaps out any runtime-only override (#262) for its real
+    // (global) value, so an in-page per-site setting is never written to storage
+    var data = this.getPersistData();
+    browser.storage.local.set(data); // local = full source of truth (unchanged)
     // mirror the small config subset to storage.sync when enabled (#134)
     if (this.syncSetting === "true" && browser?.storage?.sync) {
       browser.storage.sync
-        .set(this.getSyncSubset())
+        .set(this.getSyncSubset(data))
         .catch((error) => console.log(error)); // ignore quota / sync-unavailable
     }
   }
 
-  // small config keys safe to put in storage.sync (excludes large/per-device data
-  // and any single key that would bust the per-item quota). (#134)
-  getSyncSubset() {
+  // own enumerable settings to persist, with any runtime-only override (#262)
+  // replaced by the real (global) value. Identical to `this` when no override
+  // is active (__overrides is undefined until setLocalOverride is called).
+  getPersistData() {
     var data = {};
     for (var key of Object.keys(this)) {
-      if (SYNC_EXCLUDE.includes(key) || typeof this[key] === "function") {
+      data[key] =
+        this.__overrides && key in this.__overrides
+          ? this.__overrides[key]
+          : this[key];
+    }
+    return data;
+  }
+
+  // Apply a runtime-only override: reads of `setting[key]` see `value`, but
+  // save()/sync persist `globalValue` instead. Used for the per-site translate
+  // target (#262) so an in-page override never leaks into the saved global.
+  setLocalOverride(key, value, globalValue) {
+    if (!this.__overrides) {
+      Object.defineProperty(this, "__overrides", {
+        value: {},
+        enumerable: false, // keep it out of Object.keys / storage serialization
+        writable: true,
+        configurable: true,
+      });
+    }
+    if (value === globalValue) {
+      delete this.__overrides[key]; // no real override — persist normally
+    } else {
+      this.__overrides[key] = globalValue;
+    }
+    this[key] = value;
+  }
+
+  // small config keys safe to put in storage.sync (excludes large/per-device data
+  // and any single key that would bust the per-item quota). (#134)
+  getSyncSubset(source) {
+    source = source || this;
+    var data = {};
+    for (var key of Object.keys(source)) {
+      if (SYNC_EXCLUDE.includes(key) || typeof source[key] === "function") {
         continue;
       }
       try {
-        if (JSON.stringify(this[key]).length > SYNC_ITEM_MAX) {
+        if (JSON.stringify(source[key]).length > SYNC_ITEM_MAX) {
           continue;
         }
       } catch (error) {
         continue;
       }
-      data[key] = this[key];
+      data[key] = source[key];
     }
     return data;
   }

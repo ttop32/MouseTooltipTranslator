@@ -112,7 +112,10 @@ export default class Youtube extends BaseVideo {
     }
     var json;
     try {
-      var res = await fetch(this.getTrafficSafeUrl(subUrl));
+      // rawFetch = native fetch (bypasses our interceptor) so this timedtext
+      // request isn't re-intercepted into infinite recursion now that fetch is
+      // intercepted alongside XHR.
+      var res = await this.rawFetch(this.getTrafficSafeUrl(subUrl));
       json = await res.json();
     } catch (error) {
       console.log(error);
@@ -122,7 +125,7 @@ export default class Youtube extends BaseVideo {
       // if fail, change base url and try again
       if (!json) {
         this.isSubtitleRequestFailed = !this.isSubtitleRequestFailed;
-        const res = await fetch(this.getTrafficSafeUrl(subUrl));
+        const res = await this.rawFetch(this.getTrafficSafeUrl(subUrl));
         json = await res.json();
       }
     } catch (error) {
@@ -156,8 +159,11 @@ export default class Youtube extends BaseVideo {
     var metaData = await this.getYoutubeMetaDataCached(v);
     var captionList =
       metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-    //get one that is selected language sub, not auto generated
-    var langUrl = captionList.filter(
+    //get one that is selected language sub, not auto generated.
+    // guard the filter: when the metadata shape lacks captionTracks a bare
+    // .filter() throws and silently kills the whole dual-sub assembly; instead
+    // fall through (return "") so the caller uses the tlang auto-translated url.
+    var langUrl = captionList?.filter(
       (caption) => !caption?.kind && caption.languageCode == lang
     )?.[0]?.baseUrl;
     return langUrl ? langUrl + "&fmt=json3" : "";
@@ -280,24 +286,22 @@ export default class Youtube extends BaseVideo {
   }
 
   static mergeSubtitles(sub1, sub2) {
-    // fix mismatch length between sub1 sub2
-    for (let [i, event] of sub1.events.entries()) {
-      var line1 = event.segs[0]["utf8"];
-      var line2 = "";
-      // get most overlapped sub
-      sub2.events.forEach((line) => {
-        line.overlap = Math.max(
-          event.tStartMs + event.dDurationMs - line.tStartMs,
-          line.tStartMs + line.dDurationMs - event.tStartMs
-        );
-      });
-      sub2.events.sort((a, b) => a.overlap - b.overlap);
-      if (sub2.events.length && 0 < sub2.events[0].overlap) {
-        line2 = sub2.events[0];
-        line2.segs[0]["utf8"] = "\n" + line2.segs[0]["utf8"];
-      }
-      if (line2) {
-        event.segs.push(line2.segs[0]);
+    // Stack the translated line under each source line, paired by time overlap
+    // via the shared BaseVideo.findMostOverlappingLine (see it for why overlap,
+    // not the old midpoint-distance metric). Push a FRESH seg each time — never
+    // mutate/share sub2's seg object: prepending "\n" in place and pushing the
+    // same reference made the translation accumulate blank lines and duplicate
+    // across events, which showed up as bunched-up dual subtitles.
+    for (let event of sub1.events) {
+      var best = this.findMostOverlappingLine(
+        event.tStartMs,
+        event.tStartMs + event.dDurationMs,
+        sub2.events,
+        (l) => l.tStartMs,
+        (l) => l.tStartMs + l.dDurationMs
+      );
+      if (best) {
+        event.segs.push({ utf8: "\n" + best.segs[0].utf8 });
       }
     }
     return sub1;

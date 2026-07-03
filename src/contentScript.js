@@ -719,6 +719,29 @@ function handleKeyup(e) {
 
 function handleMouseKeyDown(e) {
   holdKeydownList(mouseKeyMap[e.button]);
+  dismissTooltipOnClick(e); // #114: click dismisses a tooltip that's in the way
+}
+
+// #114: a left click hides the current tooltip and keeps it hidden until the
+// mouse moves again (reusing the Ctrl+A / Ctrl+F suppression). Skipped when
+// left-click is itself the configured tooltip/TTS/secondary trigger so it can't
+// fight a click-to-show binding. We never preventDefault, so the click still
+// reaches the page (links/buttons keep working); the tooltip reappears on the
+// next mouse move.
+function dismissTooltipOnClick(e) {
+  var key = mouseKeyMap[e.button];
+  if (key !== "ClickLeft") {
+    return;
+  }
+  if (
+    key === setting["showTooltipWhen"] ||
+    key === setting["TTSWhen"] ||
+    key === setting["keySecondaryLang"]
+  ) {
+    return;
+  }
+  mouseMoved = false;
+  hideTooltip();
 }
 function handleMouseKeyUp(e) {
   releaseKeydownList(mouseKeyMap[e.button]);
@@ -1157,16 +1180,68 @@ function matchSite(url, list) {
   });
 }
 
+// #262: per-site translate target. Users map sites to a language via
+// websiteTargetLangList ("site=lang", e.g. "github.com=ko"); on a matching page
+// we translate into that language instead of the global target. The override is
+// applied as a runtime-only override (see setting.setLocalOverride) so it is
+// never saved into the user's global target, and it flows to every consumer
+// (tooltip, subtitle, page translate, TTS) that reads setting["translateTarget"].
+var globalTranslateTarget = null;
+
+function applyPerSiteTargetLang(changes) {
+  // Track the user's real (global) target separately: on first run, and whenever
+  // a live change to the global target lands (the storage listener has already
+  // written it onto `setting` before this callback runs). On unrelated changes,
+  // setting["translateTarget"] may currently hold our override, so don't re-read.
+  if (globalTranslateTarget == null || changes?.translateTarget) {
+    globalTranslateTarget = setting["translateTarget"];
+  }
+  var matched = matchTargetLangForUrl(
+    util.getCurrentUrl(),
+    setting["websiteTargetLangList"]
+  );
+  var effective = matched || globalTranslateTarget;
+  if (setting.setLocalOverride) {
+    setting.setLocalOverride("translateTarget", effective, globalTranslateTarget);
+  } else {
+    setting["translateTarget"] = effective;
+  }
+}
+
+// Parse "site=lang" entries and return the target language whose site pattern
+// matches the url (first match wins), or null. The site part uses the same
+// matching rules as the exclude/whitelist lists (bare domain -> subdomains).
+function matchTargetLangForUrl(url, list) {
+  if (!list || !list.length) {
+    return null;
+  }
+  for (var entry of list) {
+    var raw = String(entry);
+    var sep = raw.indexOf("=");
+    if (sep <= 0) {
+      continue;
+    }
+    var site = raw.slice(0, sep).trim();
+    var lang = raw.slice(sep + 1).trim();
+    if (site && lang && matchSite(url, [site])) {
+      return lang;
+    }
+  }
+  return null;
+}
+
 // setting handling & container style===============================================================
 
 async function getSetting() {
-  setting = await SettingUtil.loadSetting(function settingCallbackFn() {
+  setting = await SettingUtil.loadSetting(function settingCallbackFn(changes) {
+    applyPerSiteTargetLang(changes); // re-derive per-site target override (#262)
     resetTooltipStatus(true, false);
     applyStyleSetting();
     checkVideo();
     speech.initSpeechRecognitionLang(setting);
     refreshSavedWordHighlight(setting); // re-highlight on group enable/color change
   });
+  applyPerSiteTargetLang(); // apply per-site translate-target override (#262)
 }
 
 async function addElementEnv() {
@@ -1250,7 +1325,10 @@ function applyStyleSetting() {
       visibility: visible  !important;
       white-space: pre-line;
     }
-    .tippy-box[data-theme~="custom"], .tippy-box[data-theme~="ocr"], .tippy-content *{
+    .tippy-box[data-theme~="custom"], .tippy-box[data-theme~="ocr"],
+    .tippy-box[data-theme~="custom"] .tippy-content *,
+    .tippy-box[data-theme~="ocr"] .tippy-content *,
+    .tippy-box[data-theme~="transparent"] .tippy-content *{
       font-size: ${setting["tooltipFontSize"]}px  !important;
       text-align: ${setting["tooltipTextAlign"]} !important;
       overflow-wrap: break-word !important;
@@ -1287,7 +1365,13 @@ function applyStyleSetting() {
       opacity: 0.0; /* Adjusted opacity for transparency */
       transition: opacity 0.3s ease-in-out; /* Added transition for opacity */
     }
-    [data-tippy-root] {
+    /* Scope to our own tooltip roots only (theme custom/ocr/transparent).
+       A bare [data-tippy-root] rule leaked onto sites that use Tippy.js for
+       their own menus/popovers (e.g. zulip.com), forcing them to
+       inline-block + always-visible and breaking every menu (#345). */
+    [data-tippy-root]:has(> .tippy-box[data-theme~="custom"]),
+    [data-tippy-root]:has(> .tippy-box[data-theme~="ocr"]),
+    [data-tippy-root]:has(> .tippy-box[data-theme~="transparent"]) {
       display: inline-block !important;
       visibility: visible  !important;
     }

@@ -595,6 +595,15 @@ export var settingDict = {
     optionType: "comboBox",
     settingTab: "exclude",
   },
+  // per-site translate target: "site=lang" entries (e.g. "github.com=ko") make
+  // matching pages translate into that language instead of the global target (#262)
+  websiteTargetLangList: {
+    default: [],
+    i18nKey: "Website_Target_Language",
+    optionList: "",
+    optionType: "comboBox",
+    settingTab: "exclude",
+  },
   websiteExcludeBtn: {
     i18nKey: "Block_Current_Site",
     optionList: [],

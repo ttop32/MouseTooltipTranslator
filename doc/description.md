@@ -19,6 +19,14 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.234
+  - Fix broken menus and pop-ups on sites that use Tippy.js for their own UI (e.g. zulip.com): the extension's tooltip styles no longer leak onto the page's own tooltips
+  - Scroll the settings tab bar sideways with the mouse wheel (no more clicking the arrow buttons when tabs overflow)
+  - Add a "Copy PDF URL" item to the built-in PDF viewer's Tools menu to copy the original web address of a PDF in one click
+  - Add per-site target language: in the Exclude tab, add "site=lang" entries (e.g. github.com=ko) to translate specific sites into a different language than your global target
+  - Click to dismiss a tooltip that is in the way: a left click now hides the tooltip until you move the mouse again (links and buttons keep working)
+  - Fix YouTube dual subtitles not showing on recent YouTube: the caption (timedtext) request is now intercepted over fetch as well as XHR, so the translated second subtitle line is assembled again
+  - Fix YouTube dual subtitles misaligning (some lines showed the original only and the next line had the translation bunched up): the translated line is now matched to the source line by largest time overlap and no longer shares/duplicates text between lines
 - 0.1.233
   - Fix the Whitelist website filter mode doing nothing until you added a site: choosing Whitelist mode now restricts translation to your whitelisted sites right away (an empty whitelist means it runs nowhere until you add one)
   - Remove the unused "Voice Translated Speed" advanced option

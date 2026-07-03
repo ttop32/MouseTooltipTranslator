@@ -27,6 +27,7 @@
           show-arrows
           slider-color="red"
           class="custom-tabs"
+          @wheel="onTabWheel"
         >
           <v-tab v-for="(tabName, tabId) in tabs" :key="tabId" :value="tabId" :text="tabName">
           </v-tab>
@@ -486,6 +487,21 @@ export default {
   },
 
   methods: {
+    // scroll the settings tab strip sideways with the mouse wheel so users
+    // don't have to click the overflow arrow buttons (#344). The tab strip's
+    // container natively scrolls horizontally; nudging its scrollLeft keeps
+    // Vuetify's arrow state in sync via its own onScroll handler.
+    onTabWheel(e) {
+      var container = e.currentTarget.querySelector(".v-slide-group__container");
+      if (!container || container.scrollWidth <= container.clientWidth) {
+        return;
+      }
+      e.preventDefault();
+      // plain wheels send deltaY, trackpads may send deltaX — use the larger
+      var delta =
+        Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      container.scrollLeft += delta;
+    },
     openIcon(iconData) {
       if (iconData.url) {
         window.open(iconData.url); // external link (e.g. donation)

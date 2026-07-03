@@ -158,7 +158,10 @@ export default class Netflix extends BaseVideo {
 
 
   static async requestSubtitle(subUrl, lang, tlang, videoId) {
-    var res = await fetch(subUrl);
+    // rawFetch = native fetch (bypasses our interceptor). subUrl matches this
+    // site's captionRequestPattern, so a plain fetch here would be re-intercepted
+    // and recurse now that fetch is intercepted alongside XHR.
+    var res = await this.rawFetch(subUrl);
     return res;
   }
   static async setTextTrack(sub) {
@@ -346,17 +349,17 @@ export default class Netflix extends BaseVideo {
 
     // 두 자막을 같은 p에 br로 합쳐서 region 충돌 방지 (한 region에 stacked 표시)
     for (const line1 of sub1) {
-      // get most overlapped sub
-      sub2.forEach((line) => {
-        line.overlap = Math.max(
-          line1.end - line.start,
-          line.end - line1.start
-        );
-      });
-      sub2.sort((a, b) => a.overlap - b.overlap);
+      // pair with the most time-overlapping target line (shared with youtube.js
+      // via BaseVideo.findMostOverlappingLine — see it for the ranking rationale)
+      const line2 = this.findMostOverlappingLine(
+        line1.start,
+        line1.end,
+        sub2,
+        (l) => l.start,
+        (l) => l.end
+      );
 
-      if (sub2.length && 0 < sub2[0].overlap) {
-        const line2 = sub2[0];
+      if (line2) {
         const v1 = isRegionVertical(sub1Meta.xmlDoc, line1.region);
         const v2 = isRegionVertical(sub2Meta.xmlDoc, line2.region);
         // sub1 세로 + sub2 가로 → sub2(가로) region/style을 base로 (TTML writingMode는 region 단위)

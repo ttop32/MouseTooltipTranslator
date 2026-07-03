@@ -197,6 +197,9 @@
 	"Whitelist_Website": {
 		"message": "হোয়াইটলিস্ট করা ওয়েবসাইট"
 	},
+	"Website_Target_Language": {
+		"message": "Website Target Language"
+	},
 	"Block_Current_Site": {
 		"message": "এই সাইটে অনুবাদ বন্ধ রাখব"
 	},
