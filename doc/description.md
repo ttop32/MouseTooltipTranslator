@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.237
+  - Papago translation is temporarily unavailable: Naver rebuilt papago.naver.com and removed the endpoint the extension used, so it no longer returns results (other engines — Google, DeepL, Bing, Yandex — are unaffected; pick one of those in settings). A rework against the new papago API is planned
 - 0.1.236
   - Fix crashes / broken pages on single-page apps built with React or SvelteKit (e.g. Open WebUI): the tooltip is now attached to <html> instead of <body>, so the site's own framework no longer trips over our injected node and throws a "removeChild NotFoundError" (review: Nafi openwebui crash)
 - 0.1.235
