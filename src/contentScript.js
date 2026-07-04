@@ -165,6 +165,15 @@ function stageTooltipTextSelect(event, useEvent = true) {
     // Collapse whitespace runs (incl. newlines) to a single space so a wrapped
     // sentence is translated — and read aloud — as one flowing sentence.
     var selectText = selectedText?.replace(/\s+/g, " ").trim();
+    // A completed selection is explicit interaction with this tab, so mark the
+    // mouse as active. Without this a stationary double-click never fires
+    // mousemove, and its mousedown already reset mouseMoved=false via the
+    // click-to-hide feature (#114), so checkWindowFocus() would block the
+    // tooltip and the translation would never appear. A plain click makes no
+    // selection (selectText empty) so it stays hidden — click-to-hide preserved.
+    if (selectText) {
+      mouseMoved = true;
+    }
     stageTooltipText(selectText, "select");
   }
 }

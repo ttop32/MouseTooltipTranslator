@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.239
+  - Fix: double-clicking a word in place (or otherwise selecting without moving the mouse) now shows the translation again. The recent click-to-hide behavior reset the "mouse active" flag on mouse-down and a stationary double-click never fired a mouse-move to restore it, so the selection tooltip was suppressed; a completed selection is now treated as active interaction
 - 0.1.238
   - Fix store upload rejection: the Bengali (bn) extension name was 76 characters (store limit is 75); trimmed a redundant conjunction to 74 without changing the meaning
 - 0.1.237
