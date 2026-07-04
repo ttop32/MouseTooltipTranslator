@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.236
+  - Fix crashes / broken pages on single-page apps built with React or SvelteKit (e.g. Open WebUI): the tooltip is now attached to <html> instead of <body>, so the site's own framework no longer trips over our injected node and throws a "removeChild NotFoundError" (review: Nafi openwebui crash)
 - 0.1.235
   - Firefox: web (http/https) PDFs now open in the extension's own PDF viewer so mouseover translation works, instead of Firefox's built-in viewer which extensions can't add features to (local file:// PDFs still use the built-in viewer)
   - Selecting text across multiple lines (e.g. a PDF sentence that wraps) no longer splits the sentence at the line breaks: newlines are collapsed to spaces so it is translated and read aloud as one sentence

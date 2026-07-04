@@ -377,7 +377,14 @@ function checkTooltipContainerInit() {
 }
 function checkTooltipContainer() {
   if (!$("#mttContainer").get(0)) {
-    tooltipContainer.appendTo(document.body);
+    // Append to <html>, NOT <body>. SPA frameworks (React / SvelteKit — e.g.
+    // Open WebUI) assume they own <body>'s child list; a foreign node we add &
+    // remove there on every tooltip show/hide (every few seconds) makes their
+    // reconciler try to removeChild a node it no longer tracks and throw
+    // "NotFoundError", crashing the page. <html>'s direct children aren't
+    // reconciled by those frameworks, and documentElement (unlike body) is not
+    // swapped on SPA / View-Transitions navigations, so it's also more stable.
+    tooltipContainer.appendTo(document.documentElement);
   }
 }
 
@@ -1280,9 +1287,10 @@ async function addElementEnv() {
     plugins: [sticky],
   });
 
-  // The tippy popper is appended to <body> (not inside #mttContainer), so mark
-  // it as non-translatable too; otherwise Chrome's "translate this page" keeps
-  // re-translating our translated tooltip and it flickers (#19).
+  // The tippy popper is appended to <html> (see applyStyleSetting's appendTo),
+  // not inside #mttContainer, so mark it as non-translatable too; otherwise
+  // Chrome's "translate this page" keeps re-translating our translated tooltip
+  // and it flickers (#19).
   tooltip.popper?.classList.add("notranslate");
   tooltip.popper?.setAttribute("translate", "no");
 }
@@ -1295,11 +1303,14 @@ function applyStyleSetting() {
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
-    // function form so tippy re-evaluates the live <body> on every show; a
-    // static reference goes stale when an SPA / View Transitions navigation
-    // swaps document.body, leaving the tooltip appended to the detached old
-    // body (worked again only after a full reload). (#80)
-    appendTo: isSticky ? tooltipContainerEle : () => document.body,
+    // function form so tippy re-evaluates the live root on every show; a static
+    // reference goes stale after an SPA / View-Transitions navigation. Use
+    // <html> (documentElement), not <body>: <body> gets swapped on such
+    // navigations (#80) leaving the tooltip on a detached body, AND SPA
+    // frameworks that own <body>'s children crash when we add/remove a node
+    // there (NotFoundError on Open WebUI / SvelteKit). documentElement avoids
+    // both.
+    appendTo: isSticky ? tooltipContainerEle : () => document.documentElement,
     placement: isTopRight ? "bottom-end" : "top",
     animation: setting["tooltipAnimation"],
     // [show, hide] animation duration. Hide is configurable so users can make
