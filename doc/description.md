@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.238
+  - Fix store upload rejection: the Bengali (bn) extension name was 76 characters (store limit is 75); trimmed a redundant conjunction to 74 without changing the meaning
 - 0.1.237
   - Papago translation is temporarily unavailable: Naver rebuilt papago.naver.com and removed the endpoint the extension used, so it no longer returns results (other engines — Google, DeepL, Bing, Yandex — are unaffected; pick one of those in settings). A rework against the new papago API is planned
 - 0.1.236
