@@ -135,7 +135,7 @@
 		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "মাউস ধরলে অনুবাদ্য লেখা চিহ্নিত করে দেখানো"
+		"message": "মাউস ধরলে অনুবাদ্য লেখা চিহ্নিত হবে"
 	},
 	"Tooltip_Font_Color": {
 		"message": "টুলটিপের লেখার রং"
@@ -171,7 +171,7 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "কথার পুনরাবৃত্তির সংখ্যা"
+		"message": "কথার পুনরাবৃত্তি"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
@@ -198,7 +198,7 @@
 		"message": "হোয়াইটলিস্ট করা ওয়েবসাইট"
 	},
 	"Website_Target_Language": {
-		"message": "Website Target Language"
+		"message": "সাইটভিত্তিক উদ্দিষ্ট ভাষা (যেমন: github.com=ko)"
 	},
 	"Block_Current_Site": {
 		"message": "এই সাইটে অনুবাদ বন্ধ রাখব"
@@ -216,7 +216,7 @@
 		"message": "এই এক্সটেনশনের ভাষা"
 	},
 	"Detect_PDF": {
-		"message": "পিডিএফ শনাক্তকরণ"
+		"message": "পিডিএফ শনাক্ত হবে"
 	},
 	"Mouseover_Text_Type_2": {
 		"message": "অনুবাদ্য লেখার দ্বিতীয় ধরন"
@@ -225,16 +225,16 @@
 		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
 	"Show_Tooltip_While_Typing": {
-		"message": "টাইপ করার সময় টুলটিপ দেখা"
+		"message": "টাইপ করার সময় টুলটিপ দেখা যাবে"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "টুলটিপের তথ্যে মূল লেখা"
+		"message": "টুলটিপের তথ্যে মূল লেখাও থাকবে"
 	},
 	"Translate_Exclude_Regex": {
 		"message": "অনুবাদে অগ্রাহ্য করার জন্য রেগুলার এক্সপ্রেশন"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "টুলটিপের তথ্যে মূল ভাষা"
+		"message": "টুলটিপের তথ্যে মূল ভাষার নাম থাকবে"
 	},
 	"Tooltip_Info_Transliteration": {
 		"message": "টুলটিপের তথ্যে প্রতিবর্ণীকরণ"
@@ -300,7 +300,7 @@
 		"message": "ব্যাকআপ"
 	},
 	"Sync_Setting": {
-		"message": "সিঙ্কের সেটিংস"
+		"message": "অন্যান্য ডিভাইসে সেটিংস সিঙ্ক হবে"
 	},
 	"Import_Setting": {
 		"message": "সেটিং ইম্পোর্ট করব"
@@ -429,7 +429,7 @@
 		"message": "লেখার দিকে"
 	},
 	"Perspective": {
-		"message": "উল্লম্ব আবর্তন"
+		"message": "খাড়া ঘুর্ণন"
 	},
 	"Word": {
 		"message": "শব্দ"
