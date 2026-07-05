@@ -57,46 +57,46 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "টুলটিপ দেখা যাওয়ার শর্ত"
+		"message": "টুলটিপ দেখার কি"
 	},
 	"Voice_When": {
-		"message": "কথা শোনা যাওয়ার শর্ত"
+		"message": "কথা শোনার কি"
 	},
 	"Translate_Writing_When": {
-		"message": "লেখা অনুবাদ হওয়ার শর্ত"
+		"message": "লেখা অনুবাদ করার কি"
 	},
 	"Auto_Reader_When": {
-		"message": "অটো রিডার চলার শর্ত"
+		"message": "অটো রিডার চালানোর কি"
 	},
 	"Translate_Page_When": {
-		"message": "পেইজ অনুবাদের শর্ত"
+		"message": "পেইজ অনুবাদ করার কি"
 	},
 	"OCR_When": {
-		"message": "ওসিআর চলার শর্ত"
+		"message": "ওসিআর চালানোর কি"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর কি"
 	},
 	"Speech_Recognition_When": {
-		"message": "কথা শনাক্তকরণের শর্ত"
+		"message": "কথা শনাক্তকরণের কি"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর শর্ত"
+		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর কি"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
 		"message": "অনুবাদ্য লেখার ধরন পাল্টাতে চেপে ধরার কি"
 	},
 	"Secondary_Language_When": {
-		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার জন্য শর্ত"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার কি"
 	},
 	"Swap_Key_Toggle_Mode": {
 		"message": "পাল্টানোর কিগুলোর ক্ষেত্রে টগল মোড"
 	},
 	"Toggle_Extension_When": {
-		"message": "এক্সটেনশন চলা / না চলার শর্ত"
+		"message": "এক্সটেনশন চালু/বন্ধ করার কি"
 	},
 	"TTS_Pause_Resume_When": {
-		"message": "থামিয়ে রাখা টিটিএস আবার চলার শর্ড"
+		"message": "টিটিএস থামানো/চালানোর কি"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "রূপ                                      "
@@ -498,16 +498,16 @@
 		"message": "ডিফল্ট"
 	},
 	"Ctrl_Left": {
-		"message": "কন্ট্রোল - বাম"
+		"message": "Ctrl - বাম"
 	},
 	"Ctrl_Right": {
-		"message": "কন্ট্রোল - ডান"
+		"message": "Ctrl - ডান"
 	},
 	"Alt_Left": {
-		"message": "অল্ট - বাম"
+		"message": "Alt - বাম"
 	},
 	"Alt_Right": {
-		"message": "অল্ট - ডান"
+		"message": "Alt - ডান"
 	},
 	"Shift_Left": {
 		"message": "শিফট - বাম"
@@ -615,7 +615,7 @@
 		"message": "ফ্ল্যাশকার্ডে আপনার সেভ করা শব্দ নিয়ে কার্ড তৈরি হবে"
 	},
 	"appName": {
-		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ইউটিউবে দ্বিভাষী সাবটাইটেল"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ও ইউটিউবে দ্বিভাষী সাবটাইটেল"
 	},
 	"appDesc": {
 		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রান্সলেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
