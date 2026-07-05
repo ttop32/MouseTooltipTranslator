@@ -228,16 +228,16 @@
 		"message": "টাইপ করার সময় টুলটিপ দেখা যাবে"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "টুলটিপের তথ্যে মূল লেখাও থাকবে"
+		"message": "টুলটিপে মূল লেখাও থাকবে"
 	},
 	"Translate_Exclude_Regex": {
 		"message": "অনুবাদে অগ্রাহ্য করার জন্য রেগুলার এক্সপ্রেশন"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "টুলটিপের তথ্যে মূল ভাষার নাম থাকবে"
+		"message": "টুলটিপে মূল ভাষার নাম থাকবে"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "টুলটিপের তথ্যে প্রতিবর্ণীকরণ"
+		"message": "টুলটিপে লেখার প্রতিবর্ণীকরণ থাকবে"
 	},
 	"Tooltip_Interval_Time": {
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
@@ -246,13 +246,13 @@
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "টুলটিপের শব্দের ডিকশনারি"
+		"message": "টুলটিপের শব্দের জন্য ডিকশনারি থাকবে"
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "টুলটিপের শব্দের ডিকশনারির তথ্যসূত্র"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "অনুবাদের ফলব্যাক ইঞ্জিন"
+		"message": "অনুবাদের জন্য ফলব্যাক ইঞ্জিন থাকবে"
 	},
 	"SPEECH": {
 		"message": "কথা"
@@ -303,13 +303,13 @@
 		"message": "অন্যান্য ডিভাইসে সেটিংস সিঙ্ক হবে"
 	},
 	"Import_Setting": {
-		"message": "সেটিং ইম্পোর্ট করব"
+		"message": "সেটিংস ইম্পোর্ট করব"
 	},
 	"Export_Setting": {
-		"message": "সেটিং এক্সপোর্ট করব"
+		"message": "সেটিংস এক্সপোর্ট করব"
 	},
 	"Reset_Setting": {
-		"message": "সেটিং রিসেট করব"
+		"message": "সেটিংস রিসেট করব"
 	},
 	"About______________________________________": {
 		"message": "পরিচিতি                                      "
@@ -588,7 +588,7 @@
 		"message": "রাইট-ক্লিক মেন্যু"
 	},
 	"Add_right_click_context_menu": {
-		"message": "রাইট-ক্লিকে কনটেক্সট মেন্যুর উপস্থিতি"
+		"message": "রাইট-ক্লিকে কনটেক্সট মেন্যু দেখা যাবে কি না"
 	},
 	"Done": {
 		"message": "হয়ে গেছে"
