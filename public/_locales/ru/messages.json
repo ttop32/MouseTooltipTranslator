@@ -18,7 +18,7 @@
 		"message": "Переводить на"
 	},
 	"Translator_Engine": {
-		"message": "Выбор системы перевода"
+		"message": "Сервис перевода"
 	},
 	"LLM_Provider": {
 		"message": "Провайдер LLM"
@@ -27,7 +27,7 @@
 		"message": "URL-адрес эндпоинта API LLM"
 	},
 	"LLM_Api_Key": {
-		"message": "LLM API Key"
+		"message": "API-ключ LLM (необязательно)"
 	},
 	"LLM_Model": {
 		"message": "Модель LLM"
@@ -48,7 +48,7 @@
 		"message": "Язык распознавания текста"
 	},
 	"Detect_Subtitle": {
-		"message": "Определять наличие субтитров"
+		"message": "Режим перевода субтитров"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "КЛАВИШИ"
@@ -60,43 +60,43 @@
 		"message": "Показать подсказку когда"
 	},
 	"Voice_When": {
-		"message": "Озвучивать текст при нажатии"
+		"message": "Озвучивать текст — по нажатию"
 	},
 	"Translate_Writing_When": {
-		"message": "Перевод при наборе текста"
+		"message": "Переводить набранный текст — по нажатию"
 	},
 	"Auto_Reader_When": {
-		"message": "Автоматическое чтение при нажатии"
+		"message": "Автоматическое чтение — по нажатию"
 	},
 	"Translate_Page_When": {
-		"message": "Когда переводить страницу"
+		"message": "Переводить страницу — по нажатию"
 	},
 	"OCR_When": {
-		"message": "Распознавание текста при нажатии"
+		"message": "Распознавание текста (OCR) — по нажатию"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Смена типа текста при наведении курсора при нажатии"
+		"message": "Клавиша смены типа текста"
 	},
 	"Speech_Recognition_When": {
-		"message": "Распознавание речи при нажатии"
+		"message": "Распознавание речи — по нажатию"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Переключение типа текста при нажатии"
+		"message": "Переключение типа текста — по нажатию"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
-		"message": "Смена типа текста при удержании клавиши"
+		"message": "Смена типа текста — при удержании"
 	},
 	"Secondary_Language_When": {
-		"message": "Второй язык при нажатии"
+		"message": "Второй язык — по нажатию"
 	},
 	"Swap_Key_Toggle_Mode": {
-		"message": "Переключение по нажатию"
+		"message": "Смена по нажатию (вместо удержания)"
 	},
 	"Toggle_Extension_When": {
-		"message": "Когда включать/отключать расширение"
+		"message": "Включение/отключение расширения — по нажатию"
 	},
 	"TTS_Pause_Resume_When": {
-		"message": "Когда приостанавливать/возобновлять речь"
+		"message": "Пауза/возобновление озвучки — по нажатию"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "ГРАФИКА"
@@ -105,7 +105,7 @@
 		"message": "ГРАФИКА"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Размер шрифта в поле переводчика"
+		"message": "Размер шрифта подсказки"
 	},
 	"Tooltip_Font_Family": {
 		"message": "Шрифт подсказки"
@@ -114,37 +114,37 @@
 		"message": "Фон субтитров"
 	},
 	"Tooltip_Width": {
-		"message": "Ширина поля переводчика"
+		"message": "Ширина подсказки"
 	},
 	"Tooltip_Distance": {
-		"message": "Расстояние до поля переводчика"
+		"message": "Расстояние до подсказки"
 	},
 	"Tooltip_Animation": {
-		"message": "Анимация появления поля переводчика"
+		"message": "Анимация подсказки"
 	},
 	"Tooltip_Disappear_Duration": {
 		"message": "Время исчезновения подсказки"
 	},
 	"Tooltip_Position": {
-		"message": "Позиция поля переводчика"
+		"message": "Позиция подсказки"
 	},
 	"Tooltip_Text_Align": {
 		"message": "Выравнивание текста в подсказке"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Размытие фона поля переводчика"
+		"message": "Размытие фона подсказки"
 	},
 	"Mouseover_Highlight_Text": {
 		"message": "Подсветка текста при наведении курсора"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Цвет шрифта в поле переводчика"
+		"message": "Цвет шрифта подсказки"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Цвет фона поля переводчика"
+		"message": "Цвет фона подсказки"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Цвет рамки поля переводчика"
+		"message": "Цвет рамки подсказки"
 	},
 	"Mouseover_Text_Highlight_Color": {
 		"message": "Цвет подсветки текста при наведении курсора"
@@ -192,13 +192,13 @@
 		"message": "Режим фильтрации сайтов"
 	},
 	"Exclude_Website": {
-		"message": "Исключить указанный веб-сайт"
+		"message": "Чёрный список сайтов"
 	},
 	"Whitelist_Website": {
 		"message": "Белый список сайтов"
 	},
 	"Website_Target_Language": {
-		"message": "Website Target Language"
+		"message": "Язык перевода для отдельных сайтов (напр. github.com=ru)"
 	},
 	"Block_Current_Site": {
 		"message": "Блокировать текущий сайт"
@@ -219,7 +219,7 @@
 		"message": "Определять PDF-файлы"
 	},
 	"Mouseover_Text_Type_2": {
-		"message": "Альтернативный тип текста при наведении"
+		"message": "Второй тип текста при наведении"
 	},
 	"Mouseover_Pause_Subtitle": {
 		"message": "Пауза субтитров при наведении курсора"
@@ -228,31 +228,31 @@
 		"message": "Показывать подсказку при вводе текста"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Исходный текст в поле переводчика"
+		"message": "Исходный текст в подсказке"
 	},
 	"Translate_Exclude_Regex": {
 		"message": "Исключения из перевода (RegEx)"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Информация об исходном языке в поле переводчика"
+		"message": "Исходный язык в подсказке"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Транслитерация исходного текста в поле переводчика"
+		"message": "Транслитерация исходного текста в подсказке"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Задержка появления подсказки"
+		"message": "Интервал между подсказками"
 	},
 	"Tooltip_Show_Delay": {
 		"message": "Задержка появления подсказки"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Пользовательский словарь в поле переводчика"
+		"message": "Словарь для слов в подсказке"
 	},
 	"Tooltip_Word_Dictionary_Source": {
-		"message": "Источник словаря для подсказок"
+		"message": "Источник словаря в подсказке"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Резервный движок перевода"
+		"message": "Резервный сервис перевода"
 	},
 	"SPEECH": {
 		"message": "РЕЧЬ"
@@ -261,10 +261,10 @@
 		"message": "Язык распознавания речи"
 	},
 	"Voice_Panel_Translate_Language": {
-		"message": "Язык обратного перевода в голосовой панели"
+		"message": "Язык перевода в голосовой панели"
 	},
 	"Voice_Panel_Text_Target": {
-		"message": "Цель при наборе текста в голосовой панели"
+		"message": "Отображаемый текст в голосовой панели"
 	},
 	"Voice_Panel_Padding": {
 		"message": "Размер отступа голосовой панели"
@@ -276,19 +276,19 @@
 		"message": "Размер шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Размер шрифта переводимого текста в голосовой панели"
+		"message": "Размер шрифта переведённого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Font_Color": {
 		"message": "Цвет шрифта исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Цвет шрифта переводимого текста в голосовой панели"
+		"message": "Цвет шрифта переведённого текста в голосовой панели"
 	},
 	"Voice_Panel_Source_Border_Color": {
 		"message": "Цвет рамки исходного текста в голосовой панели"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Цвет рамки переводимого текста в голосовой панели"
+		"message": "Цвет рамки переведённого текста в голосовой панели"
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Цвет фона голосовой панели"
@@ -300,7 +300,7 @@
 		"message": "РЕЗЕРВ"
 	},
 	"Sync_Setting": {
-		"message": "Sync Setting"
+		"message": "Синхронизация настроек между устройствами"
 	},
 	"Import_Setting": {
 		"message": "Импорт настроек"
@@ -348,13 +348,13 @@
 		"message": "Исходный код"
 	},
 	"Check_source_code_in_github": {
-		"message": "Проверьте исходный код на GitHub"
+		"message": "Посмотреть исходный код на GitHub"
 	},
 	"Privacy_Policy": {
 		"message": "Политика конфиденциальности"
 	},
 	"User_privacy_policy": {
-		"message": "Пользовательская политика конфиденциальности"
+		"message": "Политика конфиденциальности пользователей"
 	},
 	"Voice_Panel": {
 		"message": "Голосовая панель"
@@ -537,7 +537,7 @@
 		"message": "Bing"
 	},
 	"Saved_Words": {
-		"message": "Сохраненные слова"
+		"message": "Сохранённые слова"
 	},
 	"Group": {
 		"message": "Группа"
@@ -555,7 +555,7 @@
 		"message": "Очистить"
 	},
 	"selected": {
-		"message": "выбранные"
+		"message": "выбрано"
 	},
 	"Date": {
 		"message": "Дата"
@@ -564,7 +564,7 @@
 		"message": "Перевод"
 	},
 	"No_saved_words_yet": {
-		"message": "Сохраненных слов пока нет"
+		"message": "Сохранённых слов пока нет"
 	},
 	"Manage_Groups": {
 		"message": "Управление группами"
