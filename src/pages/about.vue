@@ -83,7 +83,7 @@ export default {
         },
         reviewPage: {
           name: i18n.getMessage("Review_Page"),
-          sub_name: i18n.getMessage("Comment_on_this extension"),
+          sub_name: i18n.getMessage("Comment_on_this_extension"),
           url: getReviewUrl(),
           icon: "mdi-message-draw",
           color: "primary",

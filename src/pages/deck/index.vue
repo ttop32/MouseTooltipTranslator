@@ -64,12 +64,12 @@ export default {
   name: "FlashCardMenu",
   data() {
     return {
-      toolbarTitle: "Flashcard",
-      playButtonTitle: "Play Flashcard",
+      toolbarTitle: t("Flashcard"),
+      playButtonTitle: t("Play_Flashcard"),
       toolbarButtons: {
         resetProgress: {
-          name: "reset progress",
-          title: "reset progress",
+          name: t("Reset_progress"),
+          title: t("Reset_progress"),
           icon: "mdi-recycle-variant",
           func: this.resetFlashcard,
         },
@@ -82,7 +82,7 @@ export default {
       tagOptionTitle: t("Select_group_to_play"),
       popupAlertData: {
         noHistoryData: {
-          title: "No History Data",
+          title: t("No_History_Data"),
           description: t("Flashcard_makes_cards_from_your_saved_words"),
           checkFunc: this.checkNoHistory,
         },
@@ -92,13 +92,13 @@ export default {
           checkFunc: this.checkNoTag,
         },
         todayDayPlayDone: {
-          title: "Today play is completed",
-          description: "Try on next day",
+          title: t("Today_play_is_completed"),
+          description: t("Try_on_next_day"),
           checkFunc: this.checkTodayFlashcardFinish,
         },
         noMoreCardToLearn: {
-          title: "No more card to learn today",
-          description: "Add more history data to play with",
+          title: t("No_more_card_to_learn_today"),
+          description: t("Add_more_history_data_to_play_with"),
           checkFunc: this.checkNoMoreCard,
         },
       },
@@ -106,15 +106,15 @@ export default {
       playProgressList: {},
       progressProperties: {
         newCardLen: {
-          text: "New",
+          text: t("New"),
           color: "text-green",
         },
         reviewCardLen: {
-          text: "Review",
+          text: t("Review"),
           color: "text-orange",
         },
         learningCardLen: {
-          text: "Learning",
+          text: t("Learning"),
           color: "text-blue",
         },
       },

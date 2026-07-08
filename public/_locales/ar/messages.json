@@ -614,6 +614,78 @@
 	"Flashcard_makes_cards_from_your_saved_words": {
 		"message": "Flashcard makes cards from your saved words"
 	},
+	"Flashcard": {
+		"message": "Flashcard"
+	},
+	"Play_Flashcard": {
+		"message": "Play Flashcard"
+	},
+	"Reset_progress": {
+		"message": "Reset progress"
+	},
+	"No_History_Data": {
+		"message": "No History Data"
+	},
+	"Today_play_is_completed": {
+		"message": "Today play is completed"
+	},
+	"Try_on_next_day": {
+		"message": "Try on next day"
+	},
+	"No_more_card_to_learn_today": {
+		"message": "No more card to learn today"
+	},
+	"Add_more_history_data_to_play_with": {
+		"message": "Add more history data to play with"
+	},
+	"Finish": {
+		"message": "Finish"
+	},
+	"Today_Flashcards_are_Completed": {
+		"message": "Today Flashcards are Completed"
+	},
+	"No_More_Card_Data": {
+		"message": "No More Card Data"
+	},
+	"Show_Answer": {
+		"message": "Show Answer"
+	},
+	"Again": {
+		"message": "Again"
+	},
+	"Hard": {
+		"message": "Hard"
+	},
+	"Good": {
+		"message": "Good"
+	},
+	"Easy": {
+		"message": "Easy"
+	},
+	"New": {
+		"message": "New"
+	},
+	"Review": {
+		"message": "Review"
+	},
+	"Learning": {
+		"message": "Learning"
+	},
+	"About": {
+		"message": "About"
+	},
+	"Translator": {
+		"message": "Translator"
+	},
+	"Wiktionary": {
+		"message": "Wiktionary"
+	},
+	"Translated": {
+		"message": "Translated"
+	},
+	"Custom": {
+		"message": "Custom"
+	},
 	"appName": {
 		"message": "مترجم تلميحات الفأرة"
 	},

@@ -31,7 +31,7 @@ import { togglePageTranslate } from "/src/event/pageTranslate.js";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
-import { langListOpposite } from "/src/util/lang.js";
+import { langListOpposite, getLocalizedLangName } from "/src/util/lang.js";
 import * as speech from "/src/speech";
 
 //init environment var======================================================================\
@@ -410,6 +410,14 @@ function hideHighlight(checkSkipCase) {
   $(".mtt-highlight")?.remove();
 }
 
+// UI language for localized language names in the tooltip: the user-picked
+// extension language (uiLanguage setting), else the browser language
+function getUiLangCode() {
+  const uiLang = setting?.["uiLanguage"];
+  if (uiLang && uiLang !== "auto") return uiLang.replace(/_/g, "-");
+  return navigator.language || "en";
+}
+
 function handleTooltip(text, translatedData, actionType, range) {
   var { targetText, sourceLang, targetLang, transliteration, dict, imageUrl } =
     translatedData;
@@ -417,7 +425,13 @@ function handleTooltip(text, translatedData, actionType, range) {
   var isShowLangOn = setting["tooltipInfoSourceLanguage"] == "true";
   var isTransliterationOn = setting["tooltipInfoTransliteration"] == "true";
   var tooltipTransliteration = isTransliterationOn ? transliteration : "";
-  var tooltipLang = isShowLangOn ? langListOpposite[sourceLang] : "";
+  var tooltipLang = isShowLangOn
+    ? getLocalizedLangName(
+        sourceLang,
+        langListOpposite[sourceLang],
+        getUiLangCode()
+      )
+    : "";
   var tooltipOriText = isShowOriTextOn ? text : "";
   var isDictOn = setting["tooltipWordDictionary"] == "true";
   var dictData = isDictOn ? wrapDict(dict, targetLang) : "";

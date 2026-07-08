@@ -19,6 +19,12 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.240
+  - Language dropdowns (Translate From/Into, OCR, speech recognition, per-language voices) now show language names in the extension UI language instead of English (via the browser's built-in CLDR data; rare languages without CLDR data keep the English name)
+  - Fix the "Top Right" tooltip position option showing untranslated in every UI language
+  - Fix the review page subtitle in About being blank (typo in the locale key)
+  - Localize the flashcard screens (titles, buttons, difficulty labels, progress counters and alerts were hardcoded English)
+  - Add missing locale entries: Translator/Wiktionary (dictionary source), Translated (voice panel), About; remove the wrong duplicate "Swedish_Kenya" speech recognition entry
 - 0.1.239
   - Fix: double-clicking a word in place (or otherwise selecting without moving the mouse) now shows the translation again. The recent click-to-hide behavior reset the "mouse active" flag on mouse-down and a stationary double-click never fired a mouse-move to restore it, so the selection tooltip was suppressed; a completed selection is now treated as active interaction
 - 0.1.238

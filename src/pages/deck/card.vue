@@ -19,7 +19,7 @@
 
         <v-card-title
           :dir="getRtlDir(currentCard?.sourceLang)"
-          v-text="currentCard?.sourceText || 'No More Card Data'"
+          v-text="currentCard?.sourceText || noMoreCardText"
           class="text-white text-wrap text-center"
         ></v-card-title>
       </v-img>
@@ -119,8 +119,7 @@
           @click="showTarget"
           :height="70"
         >
-          <v-row>SHOW </v-row>
-          <v-row> ANSWER </v-row>
+          <v-row class="text-uppercase">{{ showAnswerText }}</v-row>
         </v-btn>
       </v-row>
     </v-bottom-sheet>
@@ -130,6 +129,9 @@
 import * as util from "/src/util";
 import Deck from "/src/flashcard/deck.js";
 import { getRtlDir } from "/src/util/lang.js";
+import * as i18n from "/src/util/i18n.js";
+
+const t = (key) => i18n.getMessage(key) || key;
 
 import _ from "lodash";
 import { mapState } from "pinia";
@@ -143,25 +145,25 @@ export default {
     return {
       difficultyButtons: {
         again: {
-          name: "again",
+          name: t("Again"),
           difficulty: "1",
           icon: "mdi-autorenew",
           color: "red",
         },
         hard: {
-          name: "hard",
+          name: t("Hard"),
           difficulty: "2",
           icon: " mdi-help",
           color: "orange",
         },
         good: {
-          name: "good",
+          name: t("Good"),
           difficulty: "3",
           icon: "mdi-exclamation-thick",
           color: "green",
         },
         easy: {
-          name: "easy",
+          name: t("Easy"),
           difficulty: "4",
           icon: "mdi-lightbulb-on",
           color: "cyan",
@@ -201,8 +203,8 @@ export default {
       deck: {},
 
       finishedPopupInfo: {
-        title: "Finish",
-        description: "Today Flashcards are Completed",
+        title: t("Finish"),
+        description: t("Today_Flashcards_are_Completed"),
       },
       progressMain: 0,
       progressSub: 0,
@@ -212,18 +214,20 @@ export default {
       playProgressList: [],
       progressProperties: {
         newCardLen: {
-          text: "New",
+          text: t("New"),
           color: "text-green",
         },
         reviewCardLen: {
-          text: "Review",
+          text: t("Review"),
           color: "text-orange",
         },
         learningCardLen: {
-          text: "Learning",
+          text: t("Learning"),
           color: "text-blue",
         },
       },
+      noMoreCardText: t("No_More_Card_Data"),
+      showAnswerText: t("Show_Answer"),
     };
   },
 

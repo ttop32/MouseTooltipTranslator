@@ -102,7 +102,7 @@ var mouseoverIntervalList = _util.getRangeOption(0, 1001, 50, 0);
 var tooltipPositionList = {
   Follow: "follow",
   Fixed: "fixed",
-  "Top Right": "topright",
+  Top_Right: "topright",
 };
 var ebookThemeList = {
   Auto: "auto",
@@ -243,18 +243,21 @@ export var settingDict = {
     default: "auto",
     i18nKey: "Translate_From",
     optionList: langListWithAuto,
+    langOptionList: true,
     settingTab: "main",
   },
   translateTarget: {
     default: "en",
     i18nKey: "Translate_Into",
     optionList: langList,
+    langOptionList: true,
     settingTab: "main",
   },
   translateTarget2: {
     default: "null",
     i18nKey: "Translate_Into_2",
     optionList: langListWithNone,
+    langOptionList: true,
     settingTab: "main",
   },
   translatorVendor: {
@@ -322,18 +325,21 @@ export var settingDict = {
     default: "en",
     i18nKey: "Writing_Language",
     optionList: langList,
+    langOptionList: true,
     settingTab: "main",
   },
   ocrLang: {
     default: "jpn_vert",
     i18nKey: "OCR_Language",
     optionList: ocrLangList,
+    langOptionList: true,
     settingTab: "main",
   },
   translateReverseTarget: {
     default: "null",
     i18nKey: "Reverse_Translate_Language",
     optionList: langListWithNone,
+    langOptionList: true,
     settingTab: "main",
   },
   detectSubtitle: {
@@ -572,6 +578,7 @@ export var settingDict = {
     default: [],
     i18nKey: "Exclude_Language",
     optionList: langList,
+    langOptionList: true,
     optionType: "multipleSelect",
     settingTab: "exclude",
   },
@@ -708,6 +715,7 @@ export var settingDict = {
     default: "en-US",
     i18nKey: "Speech_Recognition_Language",
     optionList: listenLangList,
+    langOptionList: true,
     settingTab: "speech",
   },
 
@@ -715,6 +723,7 @@ export var settingDict = {
     default: "default",
     i18nKey: "Voice_Panel_Translate_Language",
     optionList: langListWithDefault,
+    langOptionList: true,
     settingTab: "speech",
   },
   voicePanelTextTarget: {

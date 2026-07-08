@@ -614,6 +614,78 @@
 	"Flashcard_makes_cards_from_your_saved_words": {
 		"message": "Карточки создаются из ваших сохранённых слов"
 	},
+	"Flashcard": {
+		"message": "Флеш-карточки"
+	},
+	"Play_Flashcard": {
+		"message": "Начать повторение"
+	},
+	"Reset_progress": {
+		"message": "Сбросить прогресс"
+	},
+	"No_History_Data": {
+		"message": "Нет данных истории"
+	},
+	"Today_play_is_completed": {
+		"message": "Повторение на сегодня завершено"
+	},
+	"Try_on_next_day": {
+		"message": "Возвращайтесь завтра"
+	},
+	"No_more_card_to_learn_today": {
+		"message": "На сегодня карточек больше нет"
+	},
+	"Add_more_history_data_to_play_with": {
+		"message": "Добавьте больше слов в историю"
+	},
+	"Finish": {
+		"message": "Готово"
+	},
+	"Today_Flashcards_are_Completed": {
+		"message": "Карточки на сегодня пройдены"
+	},
+	"No_More_Card_Data": {
+		"message": "Карточки закончились"
+	},
+	"Show_Answer": {
+		"message": "Показать ответ"
+	},
+	"Again": {
+		"message": "Снова"
+	},
+	"Hard": {
+		"message": "Трудно"
+	},
+	"Good": {
+		"message": "Хорошо"
+	},
+	"Easy": {
+		"message": "Легко"
+	},
+	"New": {
+		"message": "Новые"
+	},
+	"Review": {
+		"message": "Повторение"
+	},
+	"Learning": {
+		"message": "Изучение"
+	},
+	"About": {
+		"message": "О программе"
+	},
+	"Translator": {
+		"message": "Переводчик"
+	},
+	"Wiktionary": {
+		"message": "Викисловарь"
+	},
+	"Translated": {
+		"message": "Перевод"
+	},
+	"Custom": {
+		"message": "Свой вариант"
+	},
 	"appName": {
 		"message": "Переводчик контекста мышью — PDF и двойные субтитры Netflix и YouTube"
 	},
