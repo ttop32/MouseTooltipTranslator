@@ -57,46 +57,46 @@
 		"message": "কিবোর্ড"
 	},
 	"Show_Tooltip_When": {
-		"message": "টুলটিপ দেখা যাওয়ার শর্ত"
+		"message": "টুলটিপ দেখার কি"
 	},
 	"Voice_When": {
-		"message": "কথা শোনা যাওয়ার শর্ত"
+		"message": "কথা শোনার কি"
 	},
 	"Translate_Writing_When": {
-		"message": "লেখা অনুবাদ হওয়ার শর্ত"
+		"message": "লেখা অনুবাদ করার কি"
 	},
 	"Auto_Reader_When": {
-		"message": "অটো রিডার চলার শর্ত"
+		"message": "অটো রিডার চালানোর কি"
 	},
 	"Translate_Page_When": {
-		"message": "পেইজ অনুবাদের শর্ত"
+		"message": "পেইজ অনুবাদ করার কি"
 	},
 	"OCR_When": {
-		"message": "ওসিআর চলার শর্ত"
+		"message": "ওসিআর চালানোর কি"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
 		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর কি"
 	},
 	"Speech_Recognition_When": {
-		"message": "কথা শনাক্তকরণের শর্ত"
+		"message": "কথা শনাক্তকরণের কি"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর শর্ত"
+		"message": "অনুবাদ্য লেখার ধরন পাল্টানোর কি"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
 		"message": "অনুবাদ্য লেখার ধরন পাল্টাতে চেপে ধরার কি"
 	},
 	"Secondary_Language_When": {
-		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার জন্য শর্ত"
+		"message": "দ্বিতীয় উদ্দিষ্ট ভাষার কি"
 	},
 	"Swap_Key_Toggle_Mode": {
 		"message": "পাল্টানোর কিগুলোর ক্ষেত্রে টগল মোড"
 	},
 	"Toggle_Extension_When": {
-		"message": "এক্সটেনশন চলা / না চলার শর্ত"
+		"message": "এক্সটেনশন চালু/বন্ধ করার কি"
 	},
 	"TTS_Pause_Resume_When": {
-		"message": "থামিয়ে রাখা টিটিএস আবার চলার শর্ড"
+		"message": "টিটিএস থামানো/চালানোর কি"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "রূপ                                      "
@@ -135,7 +135,7 @@
 		"message": "টুলটিপের পটভূমির ব্লার"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "মাউস ধরলে অনুবাদ্য লেখা চিহ্নিত করে দেখানো"
+		"message": "মাউস ধরলে অনুবাদ্য লেখা চিহ্নিত হবে"
 	},
 	"Tooltip_Font_Color": {
 		"message": "টুলটিপের লেখার রং"
@@ -171,7 +171,7 @@
 		"message": "কথার লক্ষ্য"
 	},
 	"Voice_Repeat": {
-		"message": "কথার পুনরাবৃত্তির সংখ্যা"
+		"message": "কথার পুনরাবৃত্তি"
 	},
 	"Voice_for_": {
 		"message": "কণ্ঠ: "
@@ -198,7 +198,7 @@
 		"message": "হোয়াইটলিস্ট করা ওয়েবসাইট"
 	},
 	"Website_Target_Language": {
-		"message": "Website Target Language"
+		"message": "সাইটভিত্তিক উদ্দিষ্ট ভাষা (যেমন: github.com=ko)"
 	},
 	"Block_Current_Site": {
 		"message": "এই সাইটে অনুবাদ বন্ধ রাখব"
@@ -216,7 +216,7 @@
 		"message": "এই এক্সটেনশনের ভাষা"
 	},
 	"Detect_PDF": {
-		"message": "পিডিএফ শনাক্তকরণ"
+		"message": "পিডিএফ শনাক্ত হবে"
 	},
 	"Mouseover_Text_Type_2": {
 		"message": "অনুবাদ্য লেখার দ্বিতীয় ধরন"
@@ -225,19 +225,19 @@
 		"message": "মাউস ধরলে সাবটাইটেল থামবে"
 	},
 	"Show_Tooltip_While_Typing": {
-		"message": "টাইপ করার সময় টুলটিপ দেখা"
+		"message": "টাইপ করার সময় টুলটিপ দেখা যাবে"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "টুলটিপের তথ্যে মূল লেখা"
+		"message": "টুলটিপে মূল লেখাও থাকবে"
 	},
 	"Translate_Exclude_Regex": {
 		"message": "অনুবাদে অগ্রাহ্য করার জন্য রেগুলার এক্সপ্রেশন"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "টুলটিপের তথ্যে মূল ভাষা"
+		"message": "টুলটিপে মূল ভাষার নাম থাকবে"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "টুলটিপের তথ্যে প্রতিবর্ণীকরণ"
+		"message": "টুলটিপে লেখার প্রতিবর্ণীকরণ থাকবে"
 	},
 	"Tooltip_Interval_Time": {
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
@@ -246,13 +246,13 @@
 		"message": "টুলটিপ দেখা যাওয়ার আগে দেরি"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "টুলটিপের শব্দের ডিকশনারি"
+		"message": "টুলটিপের শব্দের জন্য ডিকশনারি থাকবে"
 	},
 	"Tooltip_Word_Dictionary_Source": {
 		"message": "টুলটিপের শব্দের ডিকশনারির তথ্যসূত্র"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "অনুবাদের ফলব্যাক ইঞ্জিন"
+		"message": "অনুবাদের জন্য ফলব্যাক ইঞ্জিন থাকবে"
 	},
 	"SPEECH": {
 		"message": "কথা"
@@ -300,16 +300,16 @@
 		"message": "ব্যাকআপ"
 	},
 	"Sync_Setting": {
-		"message": "সিঙ্কের সেটিংস"
+		"message": "অন্যান্য ডিভাইসে সেটিংস সিঙ্ক হবে"
 	},
 	"Import_Setting": {
-		"message": "সেটিং ইম্পোর্ট করব"
+		"message": "সেটিংস ইম্পোর্ট করব"
 	},
 	"Export_Setting": {
-		"message": "সেটিং এক্সপোর্ট করব"
+		"message": "সেটিংস এক্সপোর্ট করব"
 	},
 	"Reset_Setting": {
-		"message": "সেটিং রিসেট করব"
+		"message": "সেটিংস রিসেট করব"
 	},
 	"About______________________________________": {
 		"message": "পরিচিতি                                      "
@@ -429,7 +429,7 @@
 		"message": "লেখার দিকে"
 	},
 	"Perspective": {
-		"message": "উল্লম্ব আবর্তন"
+		"message": "খাড়া ঘুর্ণন"
 	},
 	"Word": {
 		"message": "শব্দ"
@@ -498,16 +498,16 @@
 		"message": "ডিফল্ট"
 	},
 	"Ctrl_Left": {
-		"message": "কন্ট্রোল - বাম"
+		"message": "Ctrl - বাম"
 	},
 	"Ctrl_Right": {
-		"message": "কন্ট্রোল - ডান"
+		"message": "Ctrl - ডান"
 	},
 	"Alt_Left": {
-		"message": "অল্ট - বাম"
+		"message": "Alt - বাম"
 	},
 	"Alt_Right": {
-		"message": "অল্ট - ডান"
+		"message": "Alt - ডান"
 	},
 	"Shift_Left": {
 		"message": "শিফট - বাম"
@@ -588,7 +588,7 @@
 		"message": "রাইট-ক্লিক মেন্যু"
 	},
 	"Add_right_click_context_menu": {
-		"message": "রাইট-ক্লিকে কনটেক্সট মেন্যুর উপস্থিতি"
+		"message": "রাইট-ক্লিকে কনটেক্সট মেন্যু দেখা যাবে কি না"
 	},
 	"Done": {
 		"message": "হয়ে গেছে"
@@ -687,7 +687,7 @@
 		"message": "Custom"
 	},
 	"appName": {
-		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ইউটিউবে দ্বিভাষী সাবটাইটেল"
+		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ও ইউটিউবে দ্বিভাষী সাবটাইটেল"
 	},
 	"appDesc": {
 		"message": "লেখার ওপর মাউস ধরলে মাউস টুলটিপ ট্রান্সলেটরের মাধ্যমে তা গুগোল ট্রান্সলেট দিয়ে অনুবাদ হয়ে যায়। এছাড়া এতে আছে ওসিআর, টিটিএস, ম্যাঙ্গা ও পিডিএফ অনুবাদের ব্যবস্থাও।"
