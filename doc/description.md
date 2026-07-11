@@ -25,6 +25,8 @@ English, Russian, Japanese, Chinese and so on
   - Fix the review page subtitle in About being blank (typo in the locale key)
   - Localize the flashcard screens (titles, buttons, difficulty labels, progress counters and alerts were hardcoded English)
   - Add missing locale entries: Translator/Wiktionary (dictionary source), Translated (voice panel), About; remove the wrong duplicate "Swedish_Kenya" speech recognition entry
+  - Improve the Russian locale: fill missing strings, fix mistranslations, and unify terminology
+  - The i18n code fixes, localized language names, and Russian locale improvements above were contributed by D0n-A; Russian and Bengali translations were also updated via Crowdin
 - 0.1.239
   - Fix: double-clicking a word in place (or otherwise selecting without moving the mouse) now shows the translation again. The recent click-to-hide behavior reset the "mouse active" flag on mouse-down and a stationary double-click never fired a mouse-move to restore it, so the selection tooltip was suppressed; a completed selection is now treated as active interaction
 - 0.1.238
