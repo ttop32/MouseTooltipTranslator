@@ -60,7 +60,10 @@ export default class Youtube extends BaseVideo {
     await this.interceptCaption(); // start caption intercept
     this.loadCaption(); // turn on caption for embed video
     this.setPlayerCaption(lang, tlang); //turn on caption on specified lang
-    await this.waitRandom(4000, 5000);
+    // wait for setPlayerCaption to take effect before forcing a reload. Lowered
+    // from 4-5s to make the dual subtitle appear faster; if captions stop being
+    // detected (shown as native/untranslated) this may be too short.
+    await this.waitRandom(1500, 2500);
     this.reloadCaption(); //reset previous caption immediately
   }
 
