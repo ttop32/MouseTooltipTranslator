@@ -205,6 +205,14 @@ export default class Youtube extends BaseVideo {
       var oneLineSub = event.segs
         .reduce((acc, cur) => (acc += cur.utf8), "")
       var oneLineSubTrim = oneLineSub
+        // strip inline caption markup like <font color=#FFE100FF>...</font> that
+        // some YouTube captions embed. We re-emit json3 whose utf8 renders as
+        // plain text, so an untouched tag shows up literally in the subtitle
+        // (and gets translated) instead of styling the text. <br> -> space so a
+        // line-break tag can't glue two words together. (netflix/svt read via
+        // DOM textContent, which already strips tags, so this is youtube-only.)
+        .replace(/<br\s*\/?>/gi, " ")
+        .replace(/<\/?[a-zA-Z][^>]*>/g, "")
         .replace(/\s+/g, " ")
         .trim();
 

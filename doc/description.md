@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.241
+  - Fix YouTube subtitles showing inline caption markup (e.g. `<font color=...>...</font>`) as literal text: the tags are now stripped from the subtitle so it reads cleanly instead of leaking the markup into the text (and the translation)
 - 0.1.240
   - Language dropdowns (Translate From/Into, OCR, speech recognition, per-language voices) now show language names in the extension UI language instead of English (via the browser's built-in CLDR data; rare languages without CLDR data keep the English name)
   - Fix the "Top Right" tooltip position option showing untranslated in every UI language
