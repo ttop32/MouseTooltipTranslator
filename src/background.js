@@ -297,7 +297,8 @@ function addInstallUrl(url) {
 }
 
 // on extension update, open the "what's new" page (changelog + donation ask).
-// only every 10th patch release (…230, …240) so it doesn't nag on every update.
+// only every 10th patch release from 250 on (…250, …260) so it doesn't nag on
+// every update; 240 and earlier are skipped.
 function addUpdateUrl() {
   browser.runtime.onInstalled.addListener(async (details) => {
     if (details.reason != "update") {
@@ -307,7 +308,7 @@ function addUpdateUrl() {
       browser.runtime.getManifest().version.split(".").pop(),
       10
     );
-    if (Number.isFinite(patch) && patch % 10 === 0) {
+    if (Number.isFinite(patch) && patch % 10 === 0 && patch >= 250) {
       browser.tabs.create({
         url: browser.runtime.getURL("popup.html?whatsnew=1"),
       });
