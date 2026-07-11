@@ -69,8 +69,9 @@ export default class Youtube extends BaseVideo {
   }
 
   // resolve once the player's caption tracklist is populated (caption system
-  // ready), or after a timeout fallback so a video with no caption data / an
-  // API change can't hang the activation.
+  // ready). Returns as soon as it's ready, so a generous timeout costs nothing
+  // on normal loads and only caps genuinely stuck cases (no caption data / API
+  // change): 15s gives slow player loads plenty of room before we reload anyway.
   static async waitCaptionReady() {
     try {
       await waitUntil(
@@ -85,7 +86,7 @@ export default class Youtube extends BaseVideo {
             return false;
           }
         },
-        { timeout: 8000, intervalBetweenAttempts: 150 }
+        { timeout: 15000, intervalBetweenAttempts: 150 }
       );
     } catch (e) {
       // tracklist never appeared within the timeout — reload anyway
