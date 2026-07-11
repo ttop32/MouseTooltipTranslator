@@ -318,6 +318,7 @@ import SettingUtil from "/src/util/setting_util.js";
 import {settingDict, llmProviderEndpoints} from "/src/util/setting_default.js";
 import {
   langListOpposite,
+  getLocalizedLangName,
 } from "/src/util/lang.js";
 import localLlm from "/src/translator/localLlm.js";
 import { requestTranslate } from "/src/util";
@@ -325,13 +326,27 @@ import { requestTranslate } from "/src/util";
 import { mapState } from "pinia";
 import { useSettingStore } from "/src/stores/setting.js";
 
-function convertOptionI18n(option) {
-  return Object.fromEntries(
-      Object.entries(option).map(([key, value]) => [
-        i18n.getMessage(key) || key,
+function convertOptionI18n(option, isLangOption) {
+  const uiLang = i18n.getUiLangCode();
+  const specials = []; // Auto/None/Default rows keep their place at the top
+  const langs = [];
+  for (const [key, value] of Object.entries(option)) {
+    // locale entries win (regular options and Auto/None/Default in language lists)
+    const message = i18n.getMessage(key);
+    if (message || !isLangOption) {
+      specials.push([message || key, value]);
+    } else {
+      // language rows have no locale entry; localize via CLDR (Intl.DisplayNames),
+      // falling back to the curated English name (keys use "_" for spaces)
+      langs.push([
+        getLocalizedLangName(value, key.replace(/_/g, " "), uiLang),
         value,
-      ])
-    );
+      ]);
+    }
+  }
+  // language rows are alphabetical in English; keep them alphabetical in the UI language
+  langs.sort((a, b) => a[0].localeCompare(b[0], uiLang));
+  return Object.fromEntries(specials.concat(langs));
 }
 
 function isSettingEqual(setting1, setting2) {
@@ -351,7 +366,7 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
   if (!acc[tab]) acc[tab] = {};
 
   value.description = i18n.getMessage(value.i18nKey);
-  value.optionList = convertOptionI18n(value.optionList);
+  value.optionList = convertOptionI18n(value.optionList, value.langOptionList);
   acc[tab][key] = value;
   return acc;
 }, {});
@@ -393,7 +408,7 @@ var toolbarIcons = {
     newTab: true, // open saved-words board in a full browser tab
   },
   about: {
-    title: "about",
+    title: i18n.getMessage("About") || "About",
     icon: "mdi-menu",
     path: "/about",
   },
@@ -728,15 +743,20 @@ export default {
 
       for (var key of langKeys) {
         var voiceOptionList = TextUtil.getJsonFromList(availableVoiceList[key]);
+        var localizedLangName = getLocalizedLangName(
+          key,
+          langListOpposite[key],
+          i18n.getUiLangCode()
+        );
         voiceTabOption["ttsVoice_" + key] = {
           description:
-            this.remainSettingDesc["Voice_for_"] + langListOpposite[key],
+            this.remainSettingDesc["Voice_for_"] + localizedLangName,
           optionList: voiceOptionList,
         };
         // speed dropdown for this language, right after its voice dropdown
         voiceTabOption["ttsRate_" + key] = {
           description:
-            this.remainSettingDesc["Voice_speed_for_"] + langListOpposite[key],
+            this.remainSettingDesc["Voice_speed_for_"] + localizedLangName,
           optionList: rateOptionList,
         };
         // show "default" instead of a blank dropdown; "default" = follow the main

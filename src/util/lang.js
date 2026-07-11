@@ -754,8 +754,7 @@ export var listenLangList = {
   Spanish_Uruguay: "es-UY",
   Spanish_Venezuela: "es-VE",
   Sundanese: "su-ID",
-  Swedish_undefined: "sv-SE",
-  Swedish_Kenya: "sw-KE",
+  Swedish: "sv-SE",
   Tamil_India: "ta-IN",
   Tamil_Singapore: "ta-SG",
   "Tamil_Sri Lanka": "ta-LK",
@@ -771,6 +770,60 @@ export var listenLangList = {
 };
 
 
+
+// Localized language names for the language dropdowns and tooltip info.
+// Uses Intl.DisplayNames (CLDR data built into the browser) with the extension
+// UI language; falls back to the curated English name when the tag is invalid
+// or CLDR has no data (rare google-only codes like "alz").
+// English UI keeps the curated names as-is.
+var displayNamesCache = {};
+function getDisplayNames(uiLang) {
+  if (!(uiLang in displayNamesCache)) {
+    try {
+      displayNamesCache[uiLang] = new Intl.DisplayNames([uiLang], {
+        type: "language",
+        fallback: "none",
+      });
+    } catch (e) {
+      displayNamesCache[uiLang] = null;
+    }
+  }
+  return displayNamesCache[uiLang];
+}
+
+// tesseract script-variant codes that CLDR cannot resolve directly
+var tesseractCodeMap = {
+  chi_sim: "zh-Hans",
+  chi_tra: "zh-Hant",
+};
+
+export function getLocalizedLangName(code, englishName, uiLang) {
+  if (!code || !uiLang || uiLang.startsWith("en")) return englishName;
+  const displayNames = getDisplayNames(uiLang);
+  if (!displayNames) return englishName;
+  // tesseract variant codes like "jpn_vert" / "chi_sim_vert": localize the base
+  // language and keep the qualifier from the English label (e.g. "(vertical)")
+  let base = String(code);
+  let hasVariant = false;
+  if (base.endsWith("_vert")) {
+    hasVariant = true;
+    base = base.slice(0, -"_vert".length);
+  }
+  base = tesseractCodeMap[base] || base.split("_")[0];
+  let name;
+  try {
+    name = displayNames.of(base);
+  } catch (e) {
+    return englishName;
+  }
+  if (!name || name === base) return englishName;
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  if (hasVariant) {
+    const qualifier = englishName?.match(/\(.+\)$/)?.[0];
+    if (qualifier) name += " " + qualifier;
+  }
+  return name;
+}
 
 export function isRtl(lang) {
   return rtlLangList.includes(lang);
