@@ -1,6 +1,5 @@
 import $ from "jquery";
 import memoize from "memoizee";
-import { waitUntil } from "async-wait-until";
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
 import { isRtl } from "/src/util/lang.js";
@@ -61,35 +60,8 @@ export default class Youtube extends BaseVideo {
     await this.interceptCaption(); // start caption intercept
     this.loadCaption(); // turn on caption for embed video
     this.setPlayerCaption(lang, tlang); //turn on caption on specified lang
-    // wait organically until the caption system is actually loaded, instead of
-    // a fixed delay: instant on fast loads, patient on slow ones (the old fixed
-    // 4-5s wait was for slow player loads).
-    await this.waitCaptionReady();
+    await this.waitRandom(4000, 5000);
     this.reloadCaption(); //reset previous caption immediately
-  }
-
-  // resolve once the player's caption tracklist is populated (caption system
-  // ready). Returns as soon as it's ready, so the timeout only caps genuinely
-  // stuck cases (no caption data / API change) before we reload anyway.
-  static async waitCaptionReady() {
-    try {
-      await waitUntil(
-        () => {
-          try {
-            var api = this.getPlayerApi().get(0);
-            return !!(
-              api?.getOption &&
-              (api.getOption("captions", "tracklist") || []).length
-            );
-          } catch (e) {
-            return false;
-          }
-        },
-        { timeout: 8000, intervalBetweenAttempts: 150 }
-      );
-    } catch (e) {
-      // tracklist never appeared within the timeout — reload anyway
-    }
   }
 
   // player control advance================================
