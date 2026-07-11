@@ -203,6 +203,19 @@ export default class Netflix extends BaseVideo {
     }, 2500);
     return this.sub?.[videoId]?.[lang];
   }
+  // textContent of a TTML <p>, but with <br/> turned into a space so a caption
+  // that wraps across a <br> isn't glued into one word (e.g. "word<br/>next" ->
+  // "word next", not "wordnext"). Runs on a throwaway clone so the original node
+  // kept for display (originalP, <br> intact) is untouched. Display uses
+  // originalP; this text is the fallback / bookkeeping copy.
+  static getTextWithBr(node) {
+    var clone = node.cloneNode(true);
+    var brs = Array.from(clone.getElementsByTagName("br"));
+    for (var br of brs) {
+      br.parentNode?.replaceChild(clone.ownerDocument.createTextNode(" "), br);
+    }
+    return clone.textContent;
+  }
   static parseSubtitle(sub, videoId) {
     const concatSubtitles = [];
     const parser = new DOMParser();
@@ -259,7 +272,7 @@ export default class Netflix extends BaseVideo {
       const subtitle = clonedPs[i];
       const start = parseInt(subtitle.getAttribute("begin").replace("t", ""));
       const end = parseInt(subtitle.getAttribute("end").replace("t", ""));
-      const text = subtitle.textContent;
+      const text = this.getTextWithBr(subtitle);
       // suffixRef로 이미 lang 붙어있어 그대로 읽음
       const region = subtitle.getAttribute("region");
       // p의 style 우선, 없으면 첫 span style fallback
