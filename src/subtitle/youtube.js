@@ -188,6 +188,52 @@ export default class Youtube extends BaseVideo {
     return `${acc} ${next}`;
   }
 
+  // strip inline caption markup (tags) to plain text; <br> -> space so a line
+  // break can't glue words. Whitespace collapsed but NOT trimmed (callers trim
+  // where needed) so join spaces between colored runs survive.
+  static cleanSubText(s) {
+    return String(s)
+      .replace(/<br\s*\/?>/gi, " ")
+      .replace(/<\/?[a-zA-Z][^>]*>/g, "")
+      .replace(/\s+/g, " ");
+  }
+
+  // return (or add) the pen index for an RGB color. pen 0 stays the default.
+  static getPenId(pens, rgb) {
+    for (var i = 1; i < pens.length; i++) {
+      if (pens[i].fcColor === rgb) return i;
+    }
+    pens.push({ fcColor: rgb });
+    return pens.length - 1;
+  }
+
+  // Convert inline <font color="#RRGGBB(AA)">...</font> runs into json3 segs
+  // that reference a colored pen, so YouTube renders the color instead of us
+  // leaking the tag as text (old bug) or stripping the color away. Any other
+  // tags are removed. Falls back gracefully: a non-font caption becomes a
+  // single plain seg; an unknown pen color just renders uncolored.
+  static buildColoredSegs(raw, pens) {
+    var parts = [];
+    var lastIndex = 0;
+    var m;
+    var re =
+      /<font\b[^>]*?\bcolor\s*=\s*["']?#?([0-9a-fA-F]{6})(?:[0-9a-fA-F]{2})?["']?[^>]*>([\s\S]*?)<\/font>/gi;
+    while ((m = re.exec(raw)) !== null) {
+      parts.push({ t: this.cleanSubText(raw.slice(lastIndex, m.index)), pen: 0 });
+      parts.push({ t: this.cleanSubText(m[2]), pen: this.getPenId(pens, parseInt(m[1], 16)) });
+      lastIndex = re.lastIndex;
+    }
+    parts.push({ t: this.cleanSubText(raw.slice(lastIndex)), pen: 0 });
+    parts = parts.filter((p) => p.t.length);
+    if (parts.length === 0) return [{ utf8: "" }];
+    // trim only the outer edges so inter-run join spaces are kept
+    parts[0].t = parts[0].t.replace(/^\s+/, "");
+    parts[parts.length - 1].t = parts[parts.length - 1].t.replace(/\s+$/, "");
+    parts = parts.filter((p) => p.t.length);
+    if (parts.length === 0) return [{ utf8: "" }];
+    return parts.map((p) => (p.pen ? { utf8: p.t, pPenId: p.pen } : { utf8: p.t }));
+  }
+
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
     if (!subtitle?.events) {
@@ -198,23 +244,15 @@ export default class Youtube extends BaseVideo {
     // correctly. wsWinStyleId 2 carries juJustifCode:1 (rtl). (#206)
     var rtl = isRtl(lang);
     var newEvents = [];
+    var pens = [{}]; // pen 0 = default; <font color> runs add entries (below)
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {
         continue;
       }
       var oneLineSub = event.segs
         .reduce((acc, cur) => (acc += cur.utf8), "")
-      var oneLineSubTrim = oneLineSub
-        // strip inline caption markup like <font color=#FFE100FF>...</font> that
-        // some YouTube captions embed. We re-emit json3 whose utf8 renders as
-        // plain text, so an untouched tag shows up literally in the subtitle
-        // (and gets translated) instead of styling the text. <br> -> space so a
-        // line-break tag can't glue two words together. (netflix/svt read via
-        // DOM textContent, which already strips tags, so this is youtube-only.)
-        .replace(/<br\s*\/?>/gi, " ")
-        .replace(/<\/?[a-zA-Z][^>]*>/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+      // plain text (tags stripped) for the dedup / merge / "\n" checks below
+      var oneLineSubTrim = this.cleanSubText(oneLineSub).trim();
 
       // if prev sub time overlapped current sub, concat
       if (
@@ -231,11 +269,9 @@ export default class Youtube extends BaseVideo {
           // only override style for RTL; LTR keeps the previous default so its
           // rendering is byte-for-byte unchanged.
           ...(rtl ? { wsWinStyleId: 2 } : {}),
-          segs: [
-            {
-              utf8: oneLineSubTrim,
-            },
-          ],
+          // preserve inline <font color> styling as json3 pens so the color
+          // renders, instead of leaking the tag as text or stripping the color.
+          segs: this.buildColoredSegs(oneLineSub, pens),
         });
 
         // if prev sub time overlapped current sub(\n case), cut the prev sub
@@ -251,10 +287,17 @@ export default class Youtube extends BaseVideo {
         // overlapping events get merged into the previous line. Auto-generated
         // (ASR) captions roll the same line repeatedly, so a plain append
         // produced duplicated subtitles like "AA BB"; dedupe the overlap. (#90)
-        newEvents[newEvents.length - 1].segs[0].utf8 = this.mergeCaptionText(
-          newEvents[newEvents.length - 1].segs[0].utf8,
-          oneLineSubTrim
-        );
+        // rolling ASR lines get merged; collapse the previous (possibly
+        // multi-seg colored) line to one plain seg, then dedupe the overlap.
+        var prevEv = newEvents[newEvents.length - 1];
+        prevEv.segs = [
+          {
+            utf8: this.mergeCaptionText(
+              prevEv.segs.map((s) => s.utf8).join(""),
+              oneLineSubTrim
+            ),
+          },
+        ];
 
         // increase duration upto current sub
         newEvents[newEvents.length - 1].dDurationMs =
@@ -265,7 +308,7 @@ export default class Youtube extends BaseVideo {
 
     return {
       events: newEvents,
-      pens: [{}],
+      pens: pens,
       wireMagic: "pb3",
       wpWinPositions: [
         {},
@@ -309,7 +352,10 @@ export default class Youtube extends BaseVideo {
         (l) => l.tStartMs + l.dDurationMs
       );
       if (best) {
-        event.segs.push({ utf8: "\n" + best.segs[0].utf8 });
+        // join all of the target's segs (it may be multi-seg when colored) and
+        // append as a plain line under the source (which keeps its colored segs).
+        var targetText = best.segs.map((s) => s.utf8).join("");
+        event.segs.push({ utf8: "\n" + targetText });
       }
     }
     return sub1;
