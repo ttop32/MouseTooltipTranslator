@@ -258,7 +258,7 @@
 		"message": "কথা"
 	},
 	"Speech_Recognition_Language": {
-		"message": "কথা শনাক্তকরণে ভাষা"
+		"message": "কথা শনাক্তকরণের ভাষা"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "ভয়েস প্যানেলের অনুবাদের ভাষা"
@@ -615,76 +615,76 @@
 		"message": "ফ্ল্যাশকার্ডে আপনার সেভ করা শব্দ নিয়ে কার্ড তৈরি হবে"
 	},
 	"Flashcard": {
-		"message": "Flashcard"
+		"message": "ফ্ল্যাশকার্ড"
 	},
 	"Play_Flashcard": {
-		"message": "Play Flashcard"
+		"message": "ফ্ল্যাশকার্ড খেলব"
 	},
 	"Reset_progress": {
-		"message": "Reset progress"
+		"message": "অগ্রগতি রিসেট করব"
 	},
 	"No_History_Data": {
-		"message": "No History Data"
+		"message": "হিস্ট্রিতে কোনো তথ্য নেই"
 	},
 	"Today_play_is_completed": {
-		"message": "Today play is completed"
+		"message": "আজকের খেলা শেষ"
 	},
 	"Try_on_next_day": {
-		"message": "Try on next day"
+		"message": "আবার আগামীকাল খেলবেন"
 	},
 	"No_more_card_to_learn_today": {
-		"message": "No more card to learn today"
+		"message": "আজ শেখার মতো আর কার্ড নেই"
 	},
 	"Add_more_history_data_to_play_with": {
-		"message": "Add more history data to play with"
+		"message": "খেলার জন্য হিস্ট্রির তথ্য আরও বাড়ান"
 	},
 	"Finish": {
-		"message": "Finish"
+		"message": "শেষ"
 	},
 	"Today_Flashcards_are_Completed": {
-		"message": "Today Flashcards are Completed"
+		"message": "আজকের ফ্ল্যাশকার্ড করা শেষ"
 	},
 	"No_More_Card_Data": {
-		"message": "No More Card Data"
+		"message": "কার্ড বিষয়ক আর কোনো তথ্য নেই"
 	},
 	"Show_Answer": {
-		"message": "Show Answer"
+		"message": "উত্তর দেখব"
 	},
 	"Again": {
-		"message": "Again"
+		"message": "আবার"
 	},
 	"Hard": {
-		"message": "Hard"
+		"message": "কঠিন"
 	},
 	"Good": {
-		"message": "Good"
+		"message": "ভালো"
 	},
 	"Easy": {
-		"message": "Easy"
+		"message": "সহজ"
 	},
 	"New": {
-		"message": "New"
+		"message": "নতুন"
 	},
 	"Review": {
-		"message": "Review"
+		"message": "ফিরে দেখা"
 	},
 	"Learning": {
-		"message": "Learning"
+		"message": "শিখছি"
 	},
 	"About": {
-		"message": "About"
+		"message": "পরিচিতি"
 	},
 	"Translator": {
-		"message": "Translator"
+		"message": "অনুবাদক"
 	},
 	"Wiktionary": {
-		"message": "Wiktionary"
+		"message": "উইকশনারি"
 	},
 	"Translated": {
-		"message": "Translated"
+		"message": "অনূদিত"
 	},
 	"Custom": {
-		"message": "Custom"
+		"message": "কাস্টম"
 	},
 	"appName": {
 		"message": "মাউস টুলটিপ ট্রান্সলেটর - পিডিএফ এবং নেটফ্লিক্স ও ইউটিউবে দ্বিভাষী সাবটাইটেল"
