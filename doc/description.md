@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.242
   - Fix AltGr (right Alt on international keyboard layouts) triggering the writing-translate/select shortcut while typing special characters (@ € { } [ ] \ | ~ ...), which highlighted the text twice and inserted spaces; AltGr is now treated as plain typing (#352)
+  - Fix store upload rejection: the Bengali (bn) extension name was 76 characters (store limit is 75); trimmed a redundant conjunction to 74 without changing the meaning
 - 0.1.241
   - Fix YouTube subtitles leaking inline caption markup (e.g. `<font color=...>...</font>`) as literal text: colored words now keep their color (the tag is converted to the subtitle's native styling) instead of showing the raw tag, and other tags are stripped
 - 0.1.240
