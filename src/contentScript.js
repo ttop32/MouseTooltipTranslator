@@ -714,6 +714,14 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
+  // AltGr (right Alt on international layouts: Swiss/German/French/Polish/...) is
+  // delivered by the browser as Ctrl+AltRight with getModifierState("AltGraph")
+  // true. Typing a special char (@ € { } [ ] \ | ~ ...) then wrongly fired the
+  // AltRight-bound writing-translate/select shortcut, highlighting the text twice
+  // and inserting spaces. Treat AltGr as plain typing, not a shortcut. (#352)
+  if (e.getModifierState && e.getModifierState("AltGraph")) {
+    return;
+  }
   // arrow keys navigate the read-aloud while it is running: left/up = previous
   // paragraph, right/down = next. Only captured during reading, so normal page
   // scrolling is unaffected otherwise. (#180)
