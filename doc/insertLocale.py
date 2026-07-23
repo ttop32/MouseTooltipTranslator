@@ -96,6 +96,7 @@ i18List = [
     "Show Tooltip When",
     "Voice When",
     "Translate Writing When",
+    "Ignore AltGr Modifier",
     "Auto Reader When",
     "Translate Page When",
     "OCR When",

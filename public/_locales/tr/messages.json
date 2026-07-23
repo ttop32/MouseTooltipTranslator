@@ -65,6 +65,9 @@
 	"Translate_Writing_When": {
 		"message": "Yazıyı Şu Durumda Çevir"
 	},
+	"Ignore_AltGr_Modifier": {
+		"message": "Ignore AltGr Modifier"
+	},
 	"Auto_Reader_When": {
 		"message": "Otomatik Okuyucu Ne Zaman"
 	},

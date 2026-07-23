@@ -65,6 +65,9 @@
 	"Translate_Writing_When": {
 		"message": "何時翻譯書寫"
 	},
+	"Ignore_AltGr_Modifier": {
+		"message": "Ignore AltGr Modifier"
+	},
 	"Auto_Reader_When": {
 		"message": "何時進行自動閱讀"
 	},

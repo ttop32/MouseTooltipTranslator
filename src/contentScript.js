@@ -718,8 +718,14 @@ function handleKeydown(e) {
   // delivered by the browser as Ctrl+AltRight with getModifierState("AltGraph")
   // true. Typing a special char (@ € { } [ ] \ | ~ ...) then wrongly fired the
   // AltRight-bound writing-translate/select shortcut, highlighting the text twice
-  // and inserting spaces. Treat AltGr as plain typing, not a shortcut. (#352)
-  if (e.getModifierState && e.getModifierState("AltGraph")) {
+  // and inserting spaces (#352). Only skip it when the user opted in: on many
+  // layouts AltGr is never actually used to type, so ignoring it unconditionally
+  // broke Right Alt as a plain trigger (#355). Off by default = old behavior.
+  if (
+    setting["ignoreAltGr"] === "true" &&
+    e.getModifierState &&
+    e.getModifierState("AltGraph")
+  ) {
     return;
   }
   // arrow keys navigate the read-aloud while it is running: left/up = previous

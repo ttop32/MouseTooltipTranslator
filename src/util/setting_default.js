@@ -368,6 +368,17 @@ export var settingDict = {
     optionList: keyList,
     settingTab: "keyboard",
   },
+  ignoreAltGr: {
+    // On: AltGr (right Alt on international layouts, delivered as Ctrl+AltRight
+    // with getModifierState("AltGraph")) is treated as plain typing so it never
+    // fires the AltRight-bound shortcut while typing @ € { } [ ] \ | ~ ... (#352).
+    // Off (default): AltGr behaves like a normal key so Right Alt still works as a
+    // trigger, since on many layouts AltGr is never actually used to type (#355).
+    default: "false",
+    i18nKey: "Ignore_AltGr_Modifier",
+    optionList: toggleList,
+    settingTab: "keyboard",
+  },
   keyDownAutoReader: {
     default: "F2",
     i18nKey: "Auto_Reader_When",

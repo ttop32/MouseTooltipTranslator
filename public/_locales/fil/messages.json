@@ -65,6 +65,9 @@
 	"Translate_Writing_When": {
 		"message": "Translate Writing When"
 	},
+	"Ignore_AltGr_Modifier": {
+		"message": "Ignore AltGr Modifier"
+	},
 	"Auto_Reader_When": {
 		"message": "Awtomatikong tagabasa kapag"
 	},
