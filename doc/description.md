@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.244
+  - Add a "Tooltip Placement" option (Graphic settings): the translation popup can now open below the text/cursor instead of above it (Above/Below; default Above, unchanged). Ignored in Top Right mode
 - 0.1.243
   - Make the AltGr fix (0.1.242) optional: the new "Ignore AltGr Modifier" keyboard option is Off by default, so Right Alt again works as a normal trigger key on international layouts (many keyboards expose Right Alt as AltGr and never actually type AltGr characters, so the previous always-on behavior broke their shortcut). Turn it On only if AltGr special-character typing (@ € { } [ ] \ | ~ ...) falsely triggers the shortcut (#353, #354, #355)
   - Spanish (Latin America) localization updated via Crowdin (contributed by Decoded Notes)

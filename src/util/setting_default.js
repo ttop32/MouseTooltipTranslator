@@ -104,6 +104,10 @@ var tooltipPositionList = {
   Fixed: "fixed",
   Top_Right: "topright",
 };
+var tooltipPlacementList = {
+  Above: "top",
+  Below: "bottom",
+};
 var ebookThemeList = {
   Auto: "auto",
   Light: "light",
@@ -516,6 +520,15 @@ export var settingDict = {
     default: "follow",
     i18nKey: "Tooltip_Position",
     optionList: tooltipPositionList,
+    settingTab: "graphic",
+  },
+  tooltipPlacement: {
+    // Whether the tooltip opens above (default) or below the cursor/text. Lets the
+    // popup sit under the text instead of covering the line above (user request).
+    // Ignored in Top Right mode, which is always pinned to the corner.
+    default: "top",
+    i18nKey: "Tooltip_Placement",
+    optionList: tooltipPlacementList,
     settingTab: "graphic",
   },
   tooltipTextAlign: {

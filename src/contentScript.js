@@ -1337,6 +1337,15 @@ function applyStyleSetting() {
   // pin the tooltip to the top-right corner instead of following the cursor, so
   // it stops popping up over the text while reading (#43)
   var isTopRight = setting["tooltipPosition"] == "topright";
+  // tooltip opens above the cursor/text by default; "bottom" places it under the
+  // text instead (user request). Any non-"bottom" value (incl. old stored
+  // settings without the key) keeps the previous "top" behavior. Top Right stays
+  // pinned to the corner and ignores this.
+  var placement = isTopRight
+    ? "bottom-end"
+    : setting["tooltipPlacement"] == "bottom"
+    ? "bottom"
+    : "top";
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
@@ -1348,7 +1357,7 @@ function applyStyleSetting() {
     // there (NotFoundError on Open WebUI / SvelteKit). documentElement avoids
     // both.
     appendTo: isSticky ? tooltipContainerEle : () => document.documentElement,
-    placement: isTopRight ? "bottom-end" : "top",
+    placement: placement,
     animation: setting["tooltipAnimation"],
     // [show, hide] animation duration. Hide is configurable so users can make
     // the tooltip vanish instantly (0) or fade slower when the mouse leaves (#240).

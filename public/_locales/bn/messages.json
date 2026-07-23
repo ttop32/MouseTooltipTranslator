@@ -131,6 +131,15 @@
 	"Tooltip_Position": {
 		"message": "টুলটিপের অবস্থান"
 	},
+	"Tooltip_Placement": {
+		"message": "Tooltip Placement"
+	},
+	"Above": {
+		"message": "Above"
+	},
+	"Below": {
+		"message": "Below"
+	},
 	"Tooltip_Text_Align": {
 		"message": "টুলটিপের লেখার আড়াআড়ি অবস্থান"
 	},

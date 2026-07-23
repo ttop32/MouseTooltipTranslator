@@ -131,6 +131,15 @@
 	"Tooltip_Position": {
 		"message": "Vị trí công cụ"
 	},
+	"Tooltip_Placement": {
+		"message": "Tooltip Placement"
+	},
+	"Above": {
+		"message": "Above"
+	},
+	"Below": {
+		"message": "Below"
+	},
 	"Tooltip_Text_Align": {
 		"message": "Căn chỉnh công cụ"
 	},

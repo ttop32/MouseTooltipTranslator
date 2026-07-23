@@ -131,6 +131,15 @@
 	"Tooltip_Position": {
 		"message": "Posición de la Ventana Emergente"
 	},
+	"Tooltip_Placement": {
+		"message": "Tooltip Placement"
+	},
+	"Above": {
+		"message": "Above"
+	},
+	"Below": {
+		"message": "Below"
+	},
 	"Tooltip_Text_Align": {
 		"message": "Alineación de Texto de la Ventana Emergente"
 	},
