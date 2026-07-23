@@ -21,7 +21,7 @@
 		"message": "Motor de Traducción"
 	},
 	"LLM_Provider": {
-		"message": "LLM Provider"
+		"message": "Proveedor de LLM"
 	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
