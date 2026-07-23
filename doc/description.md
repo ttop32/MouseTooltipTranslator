@@ -21,6 +21,7 @@ English, Russian, Japanese, Chinese and so on
 # Change Log
 - 0.1.243
   - Make the AltGr fix (0.1.242) optional: the new "Ignore AltGr Modifier" keyboard option is Off by default, so Right Alt again works as a normal trigger key on international layouts (many keyboards expose Right Alt as AltGr and never actually type AltGr characters, so the previous always-on behavior broke their shortcut). Turn it On only if AltGr special-character typing (@ € { } [ ] \ | ~ ...) falsely triggers the shortcut (#353, #354, #355)
+  - Spanish (Latin America) localization updated via Crowdin (contributed by Decoded Notes)
 - 0.1.242
   - Fix AltGr (right Alt on international keyboard layouts) triggering the writing-translate/select shortcut while typing special characters (@ € { } [ ] \ | ~ ...), which highlighted the text twice and inserted spaces; AltGr is now treated as plain typing (#352)
   - Fix store upload rejection: the Bengali (bn) extension name was 76 characters (store limit is 75); trimmed a redundant conjunction to 74 without changing the meaning
