@@ -21,7 +21,7 @@
 		"message": "Motor de Traducción"
 	},
 	"LLM_Provider": {
-		"message": "LLM Provider"
+		"message": "Proveedor de LLM"
 	},
 	"LLM_Api_Endpoint": {
 		"message": "LLM API Endpoint URL"
@@ -30,13 +30,13 @@
 		"message": "LLM API Key"
 	},
 	"LLM_Model": {
-		"message": "LLM Model"
+		"message": "Modelo de LLM"
 	},
 	"Mouseover_Text_Type": {
 		"message": "Tipo de Texto al Pasar el Mouse"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "Traducción Secundaria a"
 	},
 	"Writing_Language": {
 		"message": "Idioma de Escritura"
@@ -51,10 +51,10 @@
 		"message": "Detectar Subtítulo"
 	},
 	"KEYBOARD______________________________________": {
-		"message": "KEYBOARD                                      "
+		"message": "TECLADO                                      "
 	},
 	"KEYBOARD": {
-		"message": "KEYBOARD"
+		"message": "TECLADO"
 	},
 	"Show_Tooltip_When": {
 		"message": "Mostrar Ventana Emergente Cuando"
@@ -69,10 +69,10 @@
 		"message": "Ignore AltGr Modifier"
 	},
 	"Auto_Reader_When": {
-		"message": "Auto Reader When"
+		"message": "Lectura automáticamente cuando"
 	},
 	"Translate_Page_When": {
-		"message": "Translate Page When"
+		"message": "Traducir página cuando"
 	},
 	"OCR_When": {
 		"message": "OCR Cuando"
@@ -81,10 +81,10 @@
 		"message": "Tecla de Intercambio de Tipo de Texto al Pasar el Mouse"
 	},
 	"Speech_Recognition_When": {
-		"message": "Speech Recognition When"
+		"message": "Reconocimiento de voz cuando"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Toggle Mouseover Text Type When"
+		"message": "Alternar el tipo de texto al pasar el cursor cuando"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
 		"message": "Mouseover Text Type Key Hold"
