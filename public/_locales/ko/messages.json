@@ -131,6 +131,15 @@
 	"Tooltip_Position": {
 		"message": "툴팁 위치"
 	},
+	"Tooltip_Placement": {
+		"message": "Tooltip Placement"
+	},
+	"Above": {
+		"message": "Above"
+	},
+	"Below": {
+		"message": "Below"
+	},
 	"Tooltip_Text_Align": {
 		"message": "툴팁 텍스트 정렬"
 	},
