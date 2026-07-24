@@ -18,10 +18,13 @@ export default class google extends BaseTranslator {
     return await ky(`${apiUrl}?${params}`).json();
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
+    // Google returns each sentence with its own trailing space (and "\n" for
+    // line breaks) already baked in, so join with "" — joining with " " doubles
+    // the space between every sentence (#review: double space in textarea translate).
     var targetText = res.sentences
       ?.map((sentence) => sentence.trans)
       .filter((trans) => trans)
-      .join(" ");
+      .join("");
     var transliteration = res.sentences
       ?.map((sentence) => sentence.src_translit)
       .filter((translit) => translit)

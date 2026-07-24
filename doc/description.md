@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.245
+  - Fix double space appearing between sentences when translating multi-sentence text (e.g. the writing/textarea translate button) with the Google engine: sentence chunks were joined with an extra space on top of the trailing space Google already includes, so every sentence break got two spaces
 - 0.1.244
   - Add a "Tooltip Placement" option (Graphic settings): the translation popup can now open below the text/cursor instead of above it (Above/Below; default Above, unchanged). Ignored in Top Right mode
 - 0.1.243

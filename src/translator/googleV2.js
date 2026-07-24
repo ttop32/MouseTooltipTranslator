@@ -46,10 +46,13 @@ export default class googleV2 extends BaseTranslator {
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
     var json = JSON.parse(JSON.parse(/\[.*\]/.exec(res))[0][2]);
+    // Each chunk already carries its own trailing space (same as the gtx
+    // endpoint's sentences[].trans), so join with "" — " " doubles the space
+    // between sentences.
     var targetText = json[1][0][0][5]
       .map((text) => text?.[0])
       .filter((text) => text)
-      .join(" ");
+      .join("");
 
     return {
       targetText,
