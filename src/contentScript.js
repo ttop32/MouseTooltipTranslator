@@ -80,8 +80,8 @@ var bookFusionActiveIframe = null;
 
 var listenText = "";
 
-// (#352) a short delay after CtrlLeft is pressed before we verify it, so AltGr (Ctrl+AltRight)
-// doesn't trigger 
+// (#352) short delay after a ControlLeft press before we register it, so AltGr
+// (delivered as Ctrl+AltRight) can cancel the phantom ControlLeft first.
 const CTRL_VERIFICATION_DELAY = 20;
 var pendingControlLeftTimer = null;
 //tooltip core======================================================================
@@ -718,26 +718,32 @@ function handleTouchstart(e) {
   mouseMoved = true;
 }
 
-// (#352)
-function shouldVerifyKey(key) {
-
-    const actions = keyBindings.get(key);
-
-    if (!actions) {
-        return false;
-    }
-
-    switch (key) {
-
-        case "ControlLeft":
-            return true;
-
-        default:
-            return false;
-    }
-}
-
 function handleKeydown(e) {
+  const key = e.code;
+  // (#352) AltGr on international layouts is delivered as a phantom ControlLeft
+  // keydown immediately followed by AltRight. If a deferred ControlLeft (below)
+  // is still pending when AltRight arrives, it was AltGr: drop the ControlLeft.
+  // This runs before the ignoreAltGr early-return so that return can't swallow
+  // the AltRight event and let the deferred ControlLeft slip through.
+  if (key === "AltRight" && pendingControlLeftTimer) {
+    clearTimeout(pendingControlLeftTimer);
+    pendingControlLeftTimer = null;
+  }
+  // AltGr (right Alt on international layouts: Swiss/German/French/Polish/...) is
+  // delivered as Ctrl+AltRight with getModifierState("AltGraph") true. The
+  // phantom ControlLeft half is disambiguated automatically below (a real Left
+  // Ctrl is never followed by AltRight), but the AltRight half is unresolvable:
+  // on many layouts the physical Right Alt *is* AltGr, so "typing @ € { } ..."
+  // can't be told apart from "using Right Alt as a trigger". Only skip it when
+  // the user opted in, since ignoring it unconditionally broke Right Alt as a
+  // plain trigger (#355). Off by default = old behavior (#352).
+  if (
+    setting["ignoreAltGr"] === "true" &&
+    e.getModifierState &&
+    e.getModifierState("AltGraph")
+  ) {
+    return;
+  }
   // arrow keys navigate the read-aloud while it is running: left/up = previous
   // paragraph, right/down = next. Only captured during reading, so normal page
   // scrolling is unaffected otherwise. (#180)
@@ -770,34 +776,21 @@ function handleKeydown(e) {
     e.preventDefault(); // prevent alt site unfocus
   }
 
-  const key = e.code;
-  // AltGr arrived before the Ctrl timer fired.
-if (
-    key === "AltRight" &&
-    pendingControlLeftTimer
-) {
+  // (#352) Defer a ControlLeft press briefly. A real Left Ctrl is not followed by
+  // AltRight, so the timer fires and the key registers; AltGr's phantom
+  // ControlLeft is cancelled at the top of this handler before it can trigger a
+  // ControlLeft-bound shortcut (TTS is ControlLeft by default). Only when
+  // something is actually bound to ControlLeft, so unused ControlLeft is instant.
+  if (key === "ControlLeft" && keyBindings.has("ControlLeft")) {
     clearTimeout(pendingControlLeftTimer);
-    pendingControlLeftTimer = null;
-}
-
-if (
-    key === "ControlLeft" &&
-    keyBindings.has("ControlLeft")
-) {
-
-    clearTimeout(pendingControlLeftTimer);
-
     pendingControlLeftTimer = setTimeout(() => {
-
-        holdKeydownList("ControlLeft");
-        pendingControlLeftTimer = null;
-
+      pendingControlLeftTimer = null;
+      holdKeydownList("ControlLeft");
     }, CTRL_VERIFICATION_DELAY);
-
     return;
-}
+  }
 
-holdKeydownList(key);
+  holdKeydownList(key);
 }
 
 function handleKeyup(e) {
@@ -886,103 +879,49 @@ function recordDoublePress(key) {
 }
 
 async function runKeydownPostProcess(key, detectKeyDown) {
-/*   // Old run keydown process
+  // (#352) dispatch the newly-pressed key to every action bound to it, resolved
+  // from the keyBindings reverse-lookup map (rebuilt on setting change). A key
+  // may drive several actions; word-group saves arrive as {id} objects.
   if (detectKeyDown) {
-    if (setting["keyDownTranslateWriting"]==key) {
-      translateWriting();
+    for (const action of keyBindings.get(key) || []) {
+      if (typeof action === "object") {
+        util.requestSaveTranslation(action.id); // per-group save shortcut
+        continue;
+      }
+      switch (action) {
+        case "keyDownTranslateWriting":
+          translateWriting();
+          break;
+        case "keySpeechRecognition":
+          speech.startSpeechRecognition();
+          break;
+        case "keyDownAutoReader":
+          startAutoReader();
+          break;
+        case "keyDownTranslatePage":
+          togglePageTranslate(setting);
+          break;
+        case "keyToggleEnable": // master on/off for mouseover/select tooltip + TTS (#126)
+          extensionDisabled = !extensionDisabled;
+          hideTooltip();
+          util.requestStopTTS(Date.now() + 500);
+          break;
+        case "keyTTSPause": // pause / resume TTS from where it left off (#124)
+          util.requestPauseResumeTTS();
+          break;
+        case "keySecondaryLang":
+          if (setting["translateTarget2"] != "null") {
+            stageTooltipTextHover(null, false, true);
+          } else {
+            restartWordProcess();
+          }
+          break;
+        default: // showTooltipWhen / TTSWhen / keyHoldMouseoverTextType: re-evaluate
+          restartWordProcess();
+          break;
+      }
     }
-    if (setting["keySpeechRecognition"]==key) {
-      speech.startSpeechRecognition();
-    }
-    if (setting["keyDownAutoReader"]==key) {
-      startAutoReader();
-    }
-    if (setting["keyDownTranslatePage"]==key) {
-      togglePageTranslate(setting);
-    }
-    // master on/off toggle for the mouseover/select tooltip + TTS (#126)
-    if (setting["keyToggleEnable"]==key && key != "null") {
-      extensionDisabled = !extensionDisabled;
-      hideTooltip();
-      util.requestStopTTS(Date.now() + 500);
-    }
-    // pause / resume TTS from where it left off (#124)
-    if (setting["keyTTSPause"]==key && key != "null") {
-      util.requestPauseResumeTTS();
-    }
-    // per-group save shortcut using a single allowed key (Ctrl/Alt/F2/click...)
-    var saveGroup = (setting["wordGroups"] || []).find((g) => g.key === key);
-    if (saveGroup) {
-      util.requestSaveTranslation(saveGroup.id);
-    }
-    // if (setting["keyHoldMouseoverTextType"]==key) {
-    //   setting["mouseoverTextType"] = setting["mouseoverTextType"] == "word" ? "sentence" : "word";
-    //   setting.save();
-    // }
-    if (setting["keySecondaryLang"]==key && setting["translateTarget2"] != "null") {
-      stageTooltipTextHover(null, false, true);
-    } else {
-      restartWordProcess();
-    }
-  } */
-
-// New run keydown process (#352)
-if (detectKeyDown) {
-
-    const actions = keyBindings.get(key);
-
-    if (actions) {
-
-        for (const action of actions) {
-
-            if (typeof action === "object") {
-                util.requestSaveTranslation(action.id);
-                continue;
-            }
-
-            switch (action) {
-
-                case "keyDownTranslateWriting":
-                    translateWriting();
-                    break;
-
-                case "keySpeechRecognition":
-                    speech.startSpeechRecognition();
-                    break;
-
-                case "keyDownAutoReader":
-                    startAutoReader();
-                    break;
-
-                case "keyDownTranslatePage":
-                    togglePageTranslate(setting);
-                    break;
-
-                case "keyToggleEnable":
-                    extensionDisabled = !extensionDisabled;
-                    hideTooltip();
-                    util.requestStopTTS(Date.now() + 500);
-                    break;
-
-                case "keyTTSPause":
-                    util.requestPauseResumeTTS();
-                    break;
-
-                case "keySecondaryLang":
-                    if (setting["translateTarget2"] != "null") {
-                        stageTooltipTextHover(null, false, true);
-                    } else {
-                        restartWordProcess();
-                    }
-                    break;
-
-                default:
-                    restartWordProcess();
-                    break;
-            }
-        }
-    }
-}
+  }
 
   if (util.isCharKey(key)) {
     util.requestStopTTS(Date.now() + 500);
@@ -990,19 +929,14 @@ if (detectKeyDown) {
   }
 }
 
-// (#352): check if the action is active based on the current keyDownList
+// (#352) true when the key bound to actionName is currently held (keyDownList)
 function isActionActive(actionName) {
-
-    const key = setting[actionName];
-
-    if (!key || key === "null") {
-        return false;
-    }
-
-    return !!keyDownList[key]; // (#352): Boolean true/false flag for the key in keyDownList
+  const key = setting[actionName];
+  if (!key || key === "null") {
+    return false;
+  }
+  return !!keyDownList[key];
 }
-
-
 
 async function startAutoReader() {
   if (!keyDownList[setting["keyDownAutoReader"]]) {
@@ -1405,54 +1339,42 @@ async function getSetting() {
   rebuildKeyBindings(); // rebuild the keyBindings map (#352)
 }
 
-// rebuild the keyBindings map whenever the user changes a relevant setting (#352).
+// Rebuild the key -> [action] reverse-lookup whenever a relevant setting changes
+// (#352). OCR (keyDownOCR) is intentionally absent: it is polled on mousemove
+// (ocrView.checkImage), not dispatched from a keydown.
 function rebuildKeyBindings() {
-    keyBindings.clear();
+  keyBindings.clear();
 
-    const keyboardSettings = [
-        "showTooltipWhen",
-        "TTSWhen",
-        "keySecondaryLang",
-        "keyHoldMouseoverTextType",
-        "keyDownTranslateWriting",
-        "keySpeechRecognition",
-        "keyDownAutoReader",
-        "keyDownTranslatePage",
-        "keyToggleEnable",
-        "keyTTSPause",
-    ];
+  const keyboardSettings = [
+    "showTooltipWhen",
+    "TTSWhen",
+    "keySecondaryLang",
+    "keyHoldMouseoverTextType",
+    "keyDownTranslateWriting",
+    "keySpeechRecognition",
+    "keyDownAutoReader",
+    "keyDownTranslatePage",
+    "keyToggleEnable",
+    "keyTTSPause",
+  ];
 
-    for (const settingName of keyboardSettings) {
-
-        const key = setting[settingName];
-
-        if (!key || key === "null") {
-            continue;
-        }
-
-        if (!keyBindings.has(key)) {
-            keyBindings.set(key, []);
-        }
-
-        keyBindings.get(key).push(settingName);
+  const addBinding = (key, action) => {
+    if (!key || key === "null") {
+      return;
     }
-
-    // Add Word Group shortcuts
-    for (const group of setting["wordGroups"] || []) {
-
-        if (!group.key) {
-            continue;
-        }
-
-        if (!keyBindings.has(group.key)) {
-            keyBindings.set(group.key, []);
-        }
-
-        keyBindings.get(group.key).push({
-            type: "wordGroup",
-            id: group.id,
-        });
+    if (!keyBindings.has(key)) {
+      keyBindings.set(key, []);
     }
+    keyBindings.get(key).push(action);
+  };
+
+  for (const settingName of keyboardSettings) {
+    addBinding(setting[settingName], settingName);
+  }
+  // per-group save shortcut, carried as an object so dispatch can tell it apart
+  for (const group of setting["wordGroups"] || []) {
+    addBinding(group.key, { type: "wordGroup", id: group.id });
+  }
 }
 
 async function addElementEnv() {
@@ -1498,6 +1420,15 @@ function applyStyleSetting() {
   // pin the tooltip to the top-right corner instead of following the cursor, so
   // it stops popping up over the text while reading (#43)
   var isTopRight = setting["tooltipPosition"] == "topright";
+  // tooltip opens above the cursor/text by default; "bottom" places it under the
+  // text instead (user request). Any non-"bottom" value (incl. old stored
+  // settings without the key) keeps the previous "top" behavior. Top Right stays
+  // pinned to the corner and ignores this. (0.1.244)
+  var placement = isTopRight
+    ? "bottom-end"
+    : setting["tooltipPlacement"] == "bottom"
+    ? "bottom"
+    : "top";
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
@@ -1509,7 +1440,7 @@ function applyStyleSetting() {
     // there (NotFoundError on Open WebUI / SvelteKit). documentElement avoids
     // both.
     appendTo: isSticky ? tooltipContainerEle : () => document.documentElement,
-    placement: isTopRight ? "bottom-end" : "top",
+    placement: placement,
     animation: setting["tooltipAnimation"],
     // [show, hide] animation duration. Hide is configurable so users can make
     // the tooltip vanish instantly (0) or fade slower when the mouse leaves (#240).
