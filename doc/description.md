@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.245
+  - Harden the AltGr keyboard handling from 0.1.244. AltGr on international layouts is delivered as a phantom Left Ctrl immediately followed by Right Alt, which could fire whatever is bound to Left Ctrl (the default text-to-speech key). The phantom is now cancelled only when the paired Right Alt actually carries the AltGraph modifier, so a deliberate Left Ctrl + (non-AltGr) Right Alt combination no longer loses the real Left Ctrl press. Right Alt keeps working as a plain trigger, and AltGr no longer misfires Left Ctrl shortcuts (#353, #354, #355, #359)
 - 0.1.244
   - Add a "Tooltip Placement" option (Graphic settings): the translation popup can now open below the text/cursor instead of above it (Above/Below; default Above, unchanged). Ignored in Top Right mode
   - Fix double space appearing between sentences when translating multi-sentence text (e.g. the writing/textarea translate button) with the Google engine: sentence chunks were joined with an extra space on top of the trailing space Google already includes, so every sentence break got two spaces

@@ -80,8 +80,12 @@ var bookFusionActiveIframe = null;
 
 var listenText = "";
 
-// (#352) short delay after a ControlLeft press before we register it, so AltGr
-// (delivered as Ctrl+AltRight) can cancel the phantom ControlLeft first.
+// (#354) AltGr on international layouts arrives as a phantom ControlLeft keydown
+// immediately followed by AltRight. The phantom can't be told from a real Left
+// Ctrl on the ControlLeft event alone, so handleKeydown briefly DEFERS acting on
+// a ControlLeft; the paired AltRight (carrying the AltGraph modifier) cancels it.
+// The handler only arms this timer and returns, so the paired AltRight is
+// processed well inside the window.
 const CTRL_VERIFICATION_DELAY = 20;
 var pendingControlLeftTimer = null;
 //tooltip core======================================================================
@@ -719,24 +723,29 @@ function handleTouchstart(e) {
 }
 
 function handleKeydown(e) {
-  const key = e.code;
-  // (#352) AltGr on international layouts is delivered as a phantom ControlLeft
-  // keydown immediately followed by AltRight. If a deferred ControlLeft (below)
-  // is still pending when AltRight arrives, it was AltGr: drop the ControlLeft.
-  // This runs before the ignoreAltGr early-return so that return can't swallow
-  // the AltRight event and let the deferred ControlLeft slip through.
-  if (key === "AltRight" && pendingControlLeftTimer) {
+  // (#354) AltGr's phantom ControlLeft (see the defer at the end of this handler)
+  // is cancelled here when its paired AltRight arrives. Guarded by
+  // getModifierState("AltGraph") so ONLY a real AltGr cancels the pending Left
+  // Ctrl — a deliberate Left Ctrl + (non-AltGr) Right Alt keeps the real press.
+  // Runs before the ignoreAltGr early-return so that return can't let the
+  // deferred ControlLeft slip through when the option is on.
+  if (
+    e.code === "AltRight" &&
+    pendingControlLeftTimer &&
+    e.getModifierState &&
+    e.getModifierState("AltGraph")
+  ) {
     clearTimeout(pendingControlLeftTimer);
     pendingControlLeftTimer = null;
   }
   // AltGr (right Alt on international layouts: Swiss/German/French/Polish/...) is
-  // delivered as Ctrl+AltRight with getModifierState("AltGraph") true. The
-  // phantom ControlLeft half is disambiguated automatically below (a real Left
-  // Ctrl is never followed by AltRight), but the AltRight half is unresolvable:
-  // on many layouts the physical Right Alt *is* AltGr, so "typing @ € { } ..."
-  // can't be told apart from "using Right Alt as a trigger". Only skip it when
-  // the user opted in, since ignoring it unconditionally broke Right Alt as a
-  // plain trigger (#355). Off by default = old behavior (#352).
+  // delivered by the browser as Ctrl+AltRight with getModifierState("AltGraph")
+  // true. Typing a special char (@ € { } [ ] \ | ~ ...) then wrongly fired the
+  // AltRight-bound writing-translate/select shortcut, highlighting the text twice
+  // and inserting spaces (#352). Only skip it when the user opted in: on many
+  // layouts AltGr is never actually used to type, so ignoring it unconditionally
+  // broke Right Alt as a plain trigger (#353, #354, #355). Off by default = old
+  // behavior.
   if (
     setting["ignoreAltGr"] === "true" &&
     e.getModifierState &&
@@ -776,12 +785,14 @@ function handleKeydown(e) {
     e.preventDefault(); // prevent alt site unfocus
   }
 
-  // (#352) Defer a ControlLeft press briefly. A real Left Ctrl is not followed by
-  // AltRight, so the timer fires and the key registers; AltGr's phantom
-  // ControlLeft is cancelled at the top of this handler before it can trigger a
-  // ControlLeft-bound shortcut (TTS is ControlLeft by default). Only when
-  // something is actually bound to ControlLeft, so unused ControlLeft is instant.
-  if (key === "ControlLeft" && keyBindings.has("ControlLeft")) {
+  // (#354) Defer acting on a ControlLeft press briefly so AltGr's phantom
+  // ControlLeft can be cancelled above (by its paired AltRight) before it fires a
+  // Ctrl-bound shortcut — the default TTS key is ControlLeft. A real lone Left
+  // Ctrl has no AltRight after it, so the timer fires and it registers normally.
+  // Only deferred when something is bound to ControlLeft, so an unused Left Ctrl
+  // stays instant. We PREVENT here rather than undo later because one-shot Ctrl
+  // actions (TTS speak, writing-translate) can't be un-fired after the fact.
+  if (e.code === "ControlLeft" && keyBindings.has("ControlLeft")) {
     clearTimeout(pendingControlLeftTimer);
     pendingControlLeftTimer = setTimeout(() => {
       pendingControlLeftTimer = null;
@@ -790,7 +801,7 @@ function handleKeydown(e) {
     return;
   }
 
-  holdKeydownList(key);
+  holdKeydownList(e.code);
 }
 
 function handleKeyup(e) {
