@@ -66,7 +66,7 @@
 		"message": "Переводить набранный текст — по нажатию"
 	},
 	"Ignore_AltGr_Modifier": {
-		"message": "Ignore AltGr Modifier"
+		"message": "Игнорировать модификатор AltGr"
 	},
 	"Auto_Reader_When": {
 		"message": "Автоматическое чтение — по нажатию"
@@ -132,13 +132,13 @@
 		"message": "Позиция подсказки"
 	},
 	"Tooltip_Placement": {
-		"message": "Tooltip Placement"
+		"message": "Расположение подсказки"
 	},
 	"Above": {
-		"message": "Above"
+		"message": "Сверху"
 	},
 	"Below": {
-		"message": "Below"
+		"message": "Снизу"
 	},
 	"Tooltip_Text_Align": {
 		"message": "Выравнивание текста в подсказке"
