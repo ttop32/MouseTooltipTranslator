@@ -225,7 +225,16 @@ export async function getBlobUrl(url) {
 }
 
 export function isPDF() {
-  return document?.body?.children?.[0]?.type == "application/pdf";
+  // Chrome used to render a web PDF as <embed type="application/pdf"> as the
+  // first body child; recent Chrome leaves <body> empty and renders the PDF via
+  // an internal viewer, so that check silently fails (#pdf-hijack). document
+  // .contentType reflects the response's Content-Type and is set from
+  // document_start, so it's the reliable signal. Keep the old embed check as a
+  // fallback for engines that still use it.
+  return (
+    document?.contentType == "application/pdf" ||
+    document?.body?.children?.[0]?.type == "application/pdf"
+  );
 }
 
 

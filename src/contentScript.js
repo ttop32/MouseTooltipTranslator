@@ -100,7 +100,11 @@ var pendingControlLeftTimer = null;
       return;
     }
     await dom_util.waitJquery(); //wait jquery load
-    detectPDF(); //check current page is pdf
+    // If this is a web PDF we hijack it into our viewer (document is rewritten
+    // to host the viewer iframe). The viewer loads its own contentScript.js, so
+    // this throwaway wrapper document needs none of the tooltip env below —
+    // stop init here to avoid injecting a second, useless tooltip stack onto it.
+    if (detectPDF()) return; //check current page is pdf
     checkVideo(); // check  video  site for subtitle
     checkGoogleDocs(); // check google doc
     addElementEnv(); //add tooltip container
@@ -1616,11 +1620,17 @@ function applyStyleSetting() {
 
 // url check and element env===============================================================
 
-async function detectPDF() {
+function detectPDF() {
   if (setting["detectPDF"] == "true" && util.isPDF()) {
-    util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
     openPdfIframe(window.location.href);
+    // Register AFTER openPdfIframe: it rewrites the document (document.open),
+    // which can drop listeners; adding it now keeps the wrapper window able to
+    // catch the viewer iframe's error postMessage so the blob fallback can
+    // re-mount for CORS/auth-gated PDFs.
+    util.addFrameListener("pdfErrorLoadDocument", openPdfIframeBlob);
+    return true;
   }
+  return false;
 }
 
 async function openPdfIframeBlob() {
@@ -1629,20 +1639,29 @@ async function openPdfIframeBlob() {
   openPdfIframe(url);
 }
 
+// Host our bundled PDF.js viewer while keeping the ORIGINAL pdf url in the
+// address bar (that's the whole point of framing it instead of navigating the
+// tab). We used to just append an <embed> to <body>, but recent Chrome renders
+// a web PDF through an internal viewer "guest" surface that is NOT part of the
+// page DOM (the body is left empty), so that <embed> was painted underneath and
+// the hijack silently did nothing. Fully rewriting the document with
+// document.open()/write() tears that native guest down; we then host the viewer
+// in a full-page iframe. The top document stays the .pdf URL, so the address
+// bar is unchanged, and the iframe (a child frame) can still postMessage the
+// pdfErrorLoadDocument fallback up to us. viewer.html loads contentScript.js +
+// pdfInject.js itself, so tooltips and PDF features work inside the frame.
 function openPdfIframe(url) {
-  $("embed").remove();
-
-  $("<embed/>", {
-    id: "mttPdfIframe",
-    src: util.getPDFUrl(url),
-    css: {
-      display: "block",
-      border: "none",
-      height: "100vh",
-      width: "100vw",
-      overflow: "hidden",
-    },
-  }).appendTo("body");
+  var viewer = util.getPDFUrl(url);
+  document.open();
+  document.write(
+    '<!doctype html><html><head><meta charset="utf-8">' +
+      "<style>html,body{margin:0;padding:0;height:100%;background:#fff;overflow:hidden}" +
+      "#mttPdfIframe{border:0;display:block;width:100vw;height:100vh}</style>" +
+      '</head><body><iframe id="mttPdfIframe" allow="clipboard-write; clipboard-read"></iframe></body></html>'
+  );
+  document.close();
+  // set src after write so the url doesn't need HTML-escaping into the markup
+  document.getElementById("mttPdfIframe").src = viewer;
 }
 
 //check google docs=========================================================

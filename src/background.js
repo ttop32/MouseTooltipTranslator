@@ -264,17 +264,25 @@ async function injectContentScriptForAllTab() {
 
         try {
           //load css and js on opened tab
+          // These are async; a plain try/catch can't catch their rejection, so
+          // pages we can't inject into (e.g. Chrome's PDF main frame) surfaced
+          // an "Uncaught (in promise) Cannot access contents of the page" — a
+          // benign but noisy leak. Swallow the per-tab rejection explicitly.
           if (cs.css) {
-            browser.scripting.insertCSS({
-              target: { tabId: tab.id },
-              files: cs.css,
-            });
+            browser.scripting
+              .insertCSS({
+                target: { tabId: tab.id },
+                files: cs.css,
+              })
+              .catch((error) => console.log(error));
           }
           if (cs.js) {
-            browser.scripting.executeScript({
-              target: { tabId: tab.id },
-              files: cs.js,
-            });
+            browser.scripting
+              .executeScript({
+                target: { tabId: tab.id },
+                files: cs.js,
+              })
+              .catch((error) => console.log(error));
           }
         } catch (error) {
           console.log(error);
