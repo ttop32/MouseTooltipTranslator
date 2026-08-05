@@ -89,5 +89,8 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!ky|another-library)/"
     ]
+  },
+  "overrides": {
+    "postcss": "8.5.18"
   }
 }
