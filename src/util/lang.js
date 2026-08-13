@@ -193,6 +193,20 @@ export var langList = {
 };
 
 export var langListOpposite = _.invert(langList);
+
+// Language detectors and translation providers do not agree on regional
+// variants: one may return `pt` while the selected target is `pt-BR` (or
+// `pt-PT`). Treat those codes as the same language when deciding whether a
+// translation is necessary. Keep the full code for actual provider requests.
+export function isSameLanguage(langA, langB) {
+  if (!langA || !langB || langA === "auto" || langB === "auto") {
+    return false;
+  }
+
+  const baseLanguage = (lang) => String(lang).toLowerCase().split("-")[0];
+  return baseLanguage(langA) === baseLanguage(langB);
+}
+
 export var rtlLangList = [
   "ar", ///Arabic
   "az", ///Azerbaijani

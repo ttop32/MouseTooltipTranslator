@@ -1,6 +1,7 @@
 import translator from "/src/translator/index.js";
 import wiktionary from "/src/translator/wiktionary.js";
 import * as util from "/src/util";
+import { isSameLanguage } from "/src/util/lang.js";
 
 var fallbackEngineActList = [
   "google",
@@ -75,7 +76,7 @@ async function translateSameLangInReverse({
   engine,
 }) {
   if (
-    targetLang == response?.sourceLang &&
+    isSameLanguage(targetLang, response?.sourceLang) &&
     reverseLang != "null" &&
     reverseLang != targetLang
   ) {
