@@ -9,46 +9,46 @@
 		"message": "Mouse Tooltip Translator"
 	},
 	"Translate_When": {
-		"message": "Traduzir Quando"
+		"message": "Traduzir ao"
 	},
 	"Translate_From": {
-		"message": "Traduzir De"
+		"message": "Traduzir de"
 	},
 	"Translate_Into": {
-		"message": "Traduzir Para"
+		"message": "Traduzir para"
 	},
 	"Translator_Engine": {
-		"message": "Mecanismo de Tradução"
+		"message": "Motor de tradução"
 	},
 	"LLM_Provider": {
-		"message": "LLM Provider"
+		"message": "Provedor de LLM"
 	},
 	"LLM_Api_Endpoint": {
-		"message": "LLM API Endpoint URL"
+		"message": "URL do endpoint da API de LLM"
 	},
 	"LLM_Api_Key": {
 		"message": "LLM API Key"
 	},
 	"LLM_Model": {
-		"message": "LLM Model"
+		"message": "Modelo de LLM"
 	},
 	"Mouseover_Text_Type": {
-		"message": "Tipo de Texto ao Passar o Mouse"
+		"message": "Tipo de texto ao passar o mouse"
 	},
 	"Translate_Into_2": {
-		"message": "Secondary Translate Into"
+		"message": "Segundo idioma de destino"
 	},
 	"Writing_Language": {
 		"message": "Idioma de Escrita"
 	},
 	"Reverse_Translate_Language": {
-		"message": "Idioma de Tradução Reversa"
+		"message": "Idioma da tradução reversa"
 	},
 	"OCR_Language": {
 		"message": "Idioma de OCR"
 	},
 	"Detect_Subtitle": {
-		"message": "Detectar Legenda"
+		"message": "Detectar legendas"
 	},
 	"KEYBOARD______________________________________": {
 		"message": "TECLADO                                      "
@@ -57,49 +57,49 @@
 		"message": "TECLADO"
 	},
 	"Show_Tooltip_When": {
-		"message": "Mostrar Dica Quando"
+		"message": "Mostrar tradução ao"
 	},
 	"Voice_When": {
-		"message": "Voz Quando"
+		"message": "Ler em voz alta ao"
 	},
 	"Translate_Writing_When": {
-		"message": "Traduzir Escrita Quando"
+		"message": "Traduzir texto digitado ao"
 	},
 	"Ignore_AltGr_Modifier": {
-		"message": "Ignore AltGr Modifier"
+		"message": "Ignorar modificador AltGr"
 	},
 	"Auto_Reader_When": {
-		"message": "Leitor Automático Quando"
+		"message": "Leitor automático ao"
 	},
 	"Translate_Page_When": {
-		"message": "Translate Page When"
+		"message": "Traduzir página ao"
 	},
 	"OCR_When": {
 		"message": "OCR Quando"
 	},
 	"Mouseover_Text_Type_Swap_Key": {
-		"message": "Tipo de Texto ao Trocar de Chave ao Passar o Mouse"
+		"message": "Tecla para alternar o tipo de texto"
 	},
 	"Speech_Recognition_When": {
-		"message": "Reconhecimento de fala quando"
+		"message": "Reconhecimento de fala ao"
 	},
 	"Toggle_Mouseover_Text_Type_When": {
-		"message": "Toggle Mouseover Text Type When"
+		"message": "Alternar tipo de texto ao passar o mouse ao"
 	},
 	"Mouseover_Text_Type_Key_Hold": {
-		"message": "Mouseover Text Type Key Hold"
+		"message": "Tecla pressionada para alternar o tipo de texto"
 	},
 	"Secondary_Language_When": {
-		"message": "Secondary Language When"
+		"message": "Segundo idioma ao"
 	},
 	"Swap_Key_Toggle_Mode": {
-		"message": "Swap Key Toggle Mode"
+		"message": "Modo de alternância da tecla de troca"
 	},
 	"Toggle_Extension_When": {
-		"message": "Toggle Extension When"
+		"message": "Ativar ou desativar a extensão ao"
 	},
 	"TTS_Pause_Resume_When": {
-		"message": "TTS Pause Resume When"
+		"message": "Pausar ou retomar a leitura ao"
 	},
 	"GRAPHIC______________________________________": {
 		"message": "GRÁFICO                                      "
@@ -108,64 +108,64 @@
 		"message": "GRÁFICO"
 	},
 	"Tooltip_Font_Size": {
-		"message": "Tamanho da Fonte da Dica"
+		"message": "Tamanho da fonte da tradução"
 	},
 	"Tooltip_Font_Family": {
-		"message": "Tooltip Font Family"
+		"message": "Família da fonte da tradução"
 	},
 	"Subtitle_Background": {
-		"message": "Subtitle Background"
+		"message": "Fundo da legenda"
 	},
 	"Tooltip_Width": {
-		"message": "Largura da Dica"
+		"message": "Largura da tradução"
 	},
 	"Tooltip_Distance": {
-		"message": "Distância da Dica"
+		"message": "Distância da tradução"
 	},
 	"Tooltip_Animation": {
-		"message": "Animação da Dica"
+		"message": "Animação da tradução"
 	},
 	"Tooltip_Disappear_Duration": {
-		"message": "Tooltip Disappear Duration"
+		"message": "Duração de exibição da tradução"
 	},
 	"Tooltip_Position": {
-		"message": "Posição da Dica"
+		"message": "Posição da tradução"
 	},
 	"Tooltip_Placement": {
-		"message": "Tooltip Placement"
+		"message": "Posicionamento da tradução"
 	},
 	"Above": {
-		"message": "Above"
+		"message": "Acima"
 	},
 	"Below": {
-		"message": "Below"
+		"message": "Abaixo"
 	},
 	"Tooltip_Text_Align": {
-		"message": "Alinhamento do Texto da Dica"
+		"message": "Alinhamento do texto da tradução"
 	},
 	"Tooltip_Background_Blur": {
-		"message": "Desfoque do Fundo da Dica"
+		"message": "Desfoque do fundo da tradução"
 	},
 	"Mouseover_Highlight_Text": {
-		"message": "Destaque do Texto ao Passar o Mouse"
+		"message": "Destacar texto ao passar o mouse"
 	},
 	"Tooltip_Font_Color": {
-		"message": "Cor da Fonte da Dica"
+		"message": "Cor da fonte da tradução"
 	},
 	"Tooltip_Background_Color": {
-		"message": "Cor do Fundo da Dica"
+		"message": "Cor do fundo da tradução"
 	},
 	"Tooltip_Border_Color": {
-		"message": "Cor da Borda da Dica"
+		"message": "Cor da borda da tradução"
 	},
 	"Mouseover_Text_Highlight_Color": {
-		"message": "Cor do Texto Destacado ao Passar o Mouse"
+		"message": "Cor do texto destacado ao passar o mouse"
 	},
 	"Ebook_Theme": {
-		"message": "Ebook Theme"
+		"message": "Tema do e-book"
 	},
 	"Setting_Compact_mode": {
-		"message": "Setting Compact mode"
+		"message": "Modo compacto"
 	},
 	"VOICE______________________________________": {
 		"message": "VOZ                                      "
@@ -180,7 +180,7 @@
 		"message": "Velocidade de Voz"
 	},
 	"Voice_Target": {
-		"message": "Voz alvo"
+		"message": "Texto para leitura"
 	},
 	"Voice_Repeat": {
 		"message": "Repetir Voz"
@@ -189,7 +189,7 @@
 		"message": "Voz para "
 	},
 	"Voice_speed_for_": {
-		"message": "Voice speed for "
+		"message": "Velocidade da voz para "
 	},
 	"EXCLUDE______________________________________": {
 		"message": "EXCLUIR                                   "
@@ -201,7 +201,7 @@
 		"message": "Excluir Idioma"
 	},
 	"Website_Filter_Mode": {
-		"message": "Website Filter Mode"
+		"message": "Modo de filtro de sites"
 	},
 	"Exclude_Website": {
 		"message": "Excluir site"
@@ -210,13 +210,13 @@
 		"message": "Lista de permissões"
 	},
 	"Website_Target_Language": {
-		"message": "Website Target Language"
+		"message": "Idioma de destino por site"
 	},
 	"Block_Current_Site": {
-		"message": "Block Current Site"
+		"message": "Bloquear site atual"
 	},
 	"Allow_Current_Site": {
-		"message": "Allow Current Site"
+		"message": "Permitir site atual"
 	},
 	"ADVANCED______________________________________": {
 		"message": "AVANÇADO                                      "
@@ -225,52 +225,52 @@
 		"message": "AVANÇADO"
 	},
 	"UI_Language": {
-		"message": "UI Language"
+		"message": "Idioma da interface"
 	},
 	"Detect_PDF": {
 		"message": "Detectar PDF"
 	},
 	"Mouseover_Text_Type_2": {
-		"message": "Secondary Mouseover Text Type"
+		"message": "Segundo tipo de texto ao passar o mouse"
 	},
 	"Mouseover_Pause_Subtitle": {
-		"message": "Legenda de Pausa ao Passar o Mouse"
+		"message": "Pausar legenda ao passar o mouse"
 	},
 	"Show_Tooltip_While_Typing": {
-		"message": "Show Tooltip While Typing"
+		"message": "Mostrar tradução ao digitar"
 	},
 	"Tooltip_Info_Source_Text": {
-		"message": "Texto de Origem da Fonte de Dica"
+		"message": "Mostrar texto original"
 	},
 	"Translate_Exclude_Regex": {
-		"message": "Translate Exclude Regex"
+		"message": "Expressão regular para não traduzir"
 	},
 	"Tooltip_Info_Source_Language": {
-		"message": "Idioma de Origem da Dica"
+		"message": "Mostrar idioma original"
 	},
 	"Tooltip_Info_Transliteration": {
-		"message": "Transliteração da Informação da Dica"
+		"message": "Mostrar transliteração"
 	},
 	"Tooltip_Interval_Time": {
-		"message": "Intervalo de Tempo da Dica"
+		"message": "Intervalo para detectar texto"
 	},
 	"Tooltip_Show_Delay": {
-		"message": "Tooltip Show Delay"
+		"message": "Atraso para exibir a tradução"
 	},
 	"Tooltip_Word_Dictionary": {
-		"message": "Dicionário de Palavras de Dicas"
+		"message": "Dicionário de palavras"
 	},
 	"Tooltip_Word_Dictionary_Source": {
-		"message": "Tooltip Word Dictionary Source"
+		"message": "Fonte do dicionário de palavras"
 	},
 	"Fallback_Translator_Engine": {
-		"message": "Motor de tradução de Fallback"
+		"message": "Motor de tradução alternativo"
 	},
 	"SPEECH": {
 		"message": "DISCURSO"
 	},
 	"Speech_Recognition_Language": {
-		"message": "Reconhecimento de Fala do Discurso"
+		"message": "Idioma do reconhecimento de fala"
 	},
 	"Voice_Panel_Translate_Language": {
 		"message": "Idioma de tradução do painel de voz"
@@ -288,40 +288,40 @@
 		"message": "Tamanho da fonte de origem do painel de voz"
 	},
 	"Voice_Panel_Target_Font_Size": {
-		"message": "Tamanho da fonte destino do painel de voz"
+		"message": "Tamanho da fonte do texto traduzido no painel de voz"
 	},
 	"Voice_Panel_Source_Font_Color": {
 		"message": "Cor da fonte de origem do painel de voz"
 	},
 	"Voice_Panel_Target_Font_Color": {
-		"message": "Cor da fonte do destino do painel de voz"
+		"message": "Cor da fonte do texto traduzido no painel de voz"
 	},
 	"Voice_Panel_Source_Border_Color": {
-		"message": "Cor da fonte da borda do painel de voz"
+		"message": "Cor da borda do texto original no painel de voz"
 	},
 	"Voice_Panel_Target_Border_Color": {
-		"message": "Cor da fonte da borda do destino do painel de voz"
+		"message": "Cor da borda do texto traduzido no painel de voz"
 	},
 	"Voice_Panel_Background_Color": {
 		"message": "Cor do fundo do painel de voz"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP                                      "
+		"message": "BACKUP"
 	},
 	"BACKUP": {
 		"message": "BACKUP"
 	},
 	"Sync_Setting": {
-		"message": "Sync Setting"
+		"message": "Sincronizar configurações"
 	},
 	"Import_Setting": {
-		"message": "Import Setting"
+		"message": "Importar configurações"
 	},
 	"Export_Setting": {
-		"message": "Export Setting"
+		"message": "Exportar configurações"
 	},
 	"Reset_Setting": {
-		"message": "Reset Setting"
+		"message": "Redefinir configurações"
 	},
 	"About______________________________________": {
 		"message": "Sobre                                      "
@@ -330,13 +330,13 @@
 		"message": "Como usar"
 	},
 	"Check_how_to_use_this_extension": {
-		"message": "Cheque como usar essa extensão"
+		"message": "Veja como usar esta extensão"
 	},
 	"PDF_Viewer": {
 		"message": "Visualizador de PDF"
 	},
 	"Translate_local_PDF_file": {
-		"message": "Traduza arquivo PDF local"
+		"message": "Traduzir arquivo PDF local"
 	},
 	"Ebook_Reader": {
 		"message": "Leitor de ebook"
@@ -348,7 +348,7 @@
 		"message": "Twitter"
 	},
 	"Retweet_twitter_post": {
-		"message": "Respostar a postagem do Twitter"
+		"message": "Republicar postagem do Twitter"
 	},
 	"Review_Page": {
 		"message": "Avaliações"
@@ -360,13 +360,13 @@
 		"message": "Código-fonte"
 	},
 	"Check_source_code_in_github": {
-		"message": "Checar o código-fonte no GitHub"
+		"message": "Ver código-fonte no GitHub"
 	},
 	"Privacy_Policy": {
 		"message": "Política de Privacidade"
 	},
 	"User_privacy_policy": {
-		"message": "Política de Privacidade do usuário"
+		"message": "Política de privacidade do usuário"
 	},
 	"Voice_Panel": {
 		"message": "Painel de Voz"
@@ -381,7 +381,7 @@
 		"message": "Revise isso"
 	},
 	"Developer_love_criticism": {
-		"message": "Developer love criticism"
+		"message": "O desenvolvedor agradece as críticas"
 	},
 	"Coffee______________________________________": {
 		"message": "Café"
@@ -396,151 +396,151 @@
 		"message": "Título                                      "
 	},
 	"SELECT_OPTION______________________________": {
-		"message": "SELECT OPTION                              "
+		"message": "SELECIONE UMA OPÇÃO                              "
 	},
 	"On": {
-		"message": "On"
+		"message": "Ativado"
 	},
 	"Off": {
-		"message": "Off"
+		"message": "Desativado"
 	},
 	"Auto": {
-		"message": "Auto"
+		"message": "Automático"
 	},
 	"None": {
-		"message": "None"
+		"message": "Nenhum"
 	},
 	"Select": {
-		"message": "Select"
+		"message": "Selecionar"
 	},
 	"Mouseover": {
-		"message": "Mouseover"
+		"message": "Ao passar o mouse"
 	},
 	"Mouseover_n_Select": {
-		"message": "Mouseover n Select"
+		"message": "Ao passar o mouse e selecionar"
 	},
 	"Follow": {
-		"message": "Follow"
+		"message": "Acompanhar cursor"
 	},
 	"Fixed": {
-		"message": "Fixed"
+		"message": "Fixa"
 	},
 	"Top_Right": {
-		"message": "Top Right"
+		"message": "Superior direito"
 	},
 	"Fade": {
-		"message": "Fade"
+		"message": "Esmaecer"
 	},
 	"Scale": {
-		"message": "Scale"
+		"message": "Escala"
 	},
 	"Shift_away": {
-		"message": "Shift away"
+		"message": "Afastar"
 	},
 	"Shift_toward": {
-		"message": "Shift toward"
+		"message": "Aproximar"
 	},
 	"Perspective": {
-		"message": "Perspective"
+		"message": "Perspectiva"
 	},
 	"Word": {
-		"message": "Word"
+		"message": "Palavra"
 	},
 	"Sentence": {
-		"message": "Sentence"
+		"message": "Frase"
 	},
 	"Container": {
-		"message": "Container"
+		"message": "Bloco de texto"
 	},
 	"Both": {
-		"message": "Both"
+		"message": "Ambos"
 	},
 	"Blacklist": {
-		"message": "Blacklist"
+		"message": "Lista de bloqueio"
 	},
 	"Whitelist": {
-		"message": "Whitelist"
+		"message": "Lista de permissões"
 	},
 	"Source": {
-		"message": "Source"
+		"message": "Original"
 	},
 	"Source_Text": {
-		"message": "Source Text"
+		"message": "Texto original"
 	},
 	"Translated_Text": {
-		"message": "Translated Text"
+		"message": "Texto traduzido"
 	},
 	"Source_n_Translated": {
-		"message": "Source n Translated"
+		"message": "Original e traduzido"
 	},
 	"Translated_n_Source": {
-		"message": "Translated n Source"
+		"message": "Traduzido e original"
 	},
 	"Dual_Subtitle": {
-		"message": "Dual Subtitle"
+		"message": "Legenda dupla"
 	},
 	"Target_Single_Subtitle": {
-		"message": "Target Single Subtitle"
+		"message": "Apenas legenda traduzida"
 	},
 	"Source_Single_Subtitle": {
-		"message": "Source Single Subtitle"
+		"message": "Apenas legenda original"
 	},
 	"Always": {
-		"message": "Always"
+		"message": "Sempre"
 	},
 	"Center": {
-		"message": "Center"
+		"message": "Centralizado"
 	},
 	"Left": {
-		"message": "Left"
+		"message": "Esquerda"
 	},
 	"Right": {
-		"message": "Right"
+		"message": "Direita"
 	},
 	"Justify": {
-		"message": "Justify"
+		"message": "Justificado"
 	},
 	"Light": {
-		"message": "Light"
+		"message": "Claro"
 	},
 	"Dark": {
-		"message": "Dark"
+		"message": "Escuro"
 	},
 	"Default": {
-		"message": "Default"
+		"message": "Padrão"
 	},
 	"Ctrl_Left": {
-		"message": "Ctrl Left"
+		"message": "Ctrl esquerdo"
 	},
 	"Ctrl_Right": {
-		"message": "Ctrl Right"
+		"message": "Ctrl direito"
 	},
 	"Alt_Left": {
-		"message": "Alt Left"
+		"message": "Alt esquerdo"
 	},
 	"Alt_Right": {
-		"message": "Alt Right"
+		"message": "Alt direito"
 	},
 	"Shift_Left": {
-		"message": "Shift Left"
+		"message": "Shift esquerdo"
 	},
 	"Shift_Right": {
-		"message": "Shift Right"
+		"message": "Shift direito"
 	},
 	"Meta_Left": {
-		"message": "Meta Left"
+		"message": "Meta esquerda"
 	},
 	"Meta_Right": {
-		"message": "Meta Right"
+		"message": "Meta direita"
 	},
 	"Click_Left": {
-		"message": "Click Left"
+		"message": "Clique esquerdo"
 	},
 	"Click_Middle": {
-		"message": "Click Middle"
+		"message": "Clique do meio"
 	},
 	"Click_Right": {
-		"message": "Click Right"
+		"message": "Clique direito"
 	},
 	"google": {
 		"message": "google"
@@ -549,159 +549,159 @@
 		"message": "bing"
 	},
 	"Saved_Words": {
-		"message": "Saved Words"
+		"message": "Palavras salvas"
 	},
 	"Group": {
-		"message": "Group"
+		"message": "Grupo"
 	},
 	"All": {
-		"message": "All"
+		"message": "Todos"
 	},
 	"Move_to_group": {
-		"message": "Move to group"
+		"message": "Mover para o grupo"
 	},
 	"Delete": {
-		"message": "Delete"
+		"message": "Excluir"
 	},
 	"Clear": {
-		"message": "Clear"
+		"message": "Limpar"
 	},
 	"selected": {
-		"message": "selected"
+		"message": "selecionada(s)"
 	},
 	"Date": {
-		"message": "Date"
+		"message": "Data"
 	},
 	"Translation": {
-		"message": "Translation"
+		"message": "Tradução"
 	},
 	"No_saved_words_yet": {
-		"message": "No saved words yet"
+		"message": "Nenhuma palavra salva ainda"
 	},
 	"Manage_Groups": {
-		"message": "Manage Groups"
+		"message": "Gerenciar grupos"
 	},
 	"Remove_all": {
-		"message": "Remove all"
+		"message": "Remover todas"
 	},
 	"Import_CSV": {
-		"message": "Import CSV"
+		"message": "Importar CSV"
 	},
 	"Download_CSV": {
-		"message": "Download CSV"
+		"message": "Baixar CSV"
 	},
 	"Save_key": {
-		"message": "Save key"
+		"message": "Salvar tecla"
 	},
 	"Highlight_on_page": {
-		"message": "Highlight on page"
+		"message": "Destacar na página"
 	},
 	"Right_click_menu": {
-		"message": "Right click menu"
+		"message": "Menu do clique direito"
 	},
 	"Add_right_click_context_menu": {
-		"message": "Add right click context menu"
+		"message": "Adicionar ao menu do clique direito"
 	},
 	"Done": {
-		"message": "Done"
+		"message": "Concluído"
 	},
 	"On_Select": {
-		"message": "On Select"
+		"message": "Ao selecionar"
 	},
 	"On_Hover": {
-		"message": "On Hover"
+		"message": "Ao passar o mouse"
 	},
 	"On_Select_n_Hover": {
-		"message": "On Select n Hover"
+		"message": "Ao selecionar e passar o mouse"
 	},
 	"Select_group_to_play": {
-		"message": "Select group to play"
+		"message": "Selecione um grupo para reproduzir"
 	},
 	"No_Group_Selected": {
-		"message": "No Group Selected"
+		"message": "Nenhum grupo selecionado"
 	},
 	"Check_groups_to_play": {
-		"message": "Check groups to play"
+		"message": "Selecione os grupos para reproduzir"
 	},
 	"Flashcard_makes_cards_from_your_saved_words": {
-		"message": "Flashcard makes cards from your saved words"
+		"message": "Os cartões usam suas palavras salvas"
 	},
 	"Flashcard": {
-		"message": "Flashcard"
+		"message": "Cartões de estudo"
 	},
 	"Play_Flashcard": {
-		"message": "Play Flashcard"
+		"message": "Iniciar cartões de estudo"
 	},
 	"Reset_progress": {
-		"message": "Reset progress"
+		"message": "Redefinir progresso"
 	},
 	"No_History_Data": {
-		"message": "No History Data"
+		"message": "Nenhum histórico disponível"
 	},
 	"Today_play_is_completed": {
-		"message": "Today play is completed"
+		"message": "A sessão de hoje foi concluída"
 	},
 	"Try_on_next_day": {
-		"message": "Try on next day"
+		"message": "Tente novamente amanhã"
 	},
 	"No_more_card_to_learn_today": {
-		"message": "No more card to learn today"
+		"message": "Não há mais cartões para estudar hoje"
 	},
 	"Add_more_history_data_to_play_with": {
-		"message": "Add more history data to play with"
+		"message": "Adicione mais palavras ao histórico para continuar"
 	},
 	"Finish": {
-		"message": "Finish"
+		"message": "Finalizar"
 	},
 	"Today_Flashcards_are_Completed": {
-		"message": "Today Flashcards are Completed"
+		"message": "Os cartões de hoje foram concluídos"
 	},
 	"No_More_Card_Data": {
-		"message": "No More Card Data"
+		"message": "Não há mais cartões"
 	},
 	"Show_Answer": {
-		"message": "Show Answer"
+		"message": "Mostrar resposta"
 	},
 	"Again": {
-		"message": "Again"
+		"message": "Novamente"
 	},
 	"Hard": {
-		"message": "Hard"
+		"message": "Difícil"
 	},
 	"Good": {
-		"message": "Good"
+		"message": "Bom"
 	},
 	"Easy": {
-		"message": "Easy"
+		"message": "Fácil"
 	},
 	"New": {
-		"message": "New"
+		"message": "Novo"
 	},
 	"Review": {
-		"message": "Review"
+		"message": "Revisar"
 	},
 	"Learning": {
-		"message": "Learning"
+		"message": "Aprendendo"
 	},
 	"About": {
-		"message": "About"
+		"message": "Sobre"
 	},
 	"Translator": {
-		"message": "Translator"
+		"message": "Tradutor"
 	},
 	"Wiktionary": {
 		"message": "Wiktionary"
 	},
 	"Translated": {
-		"message": "Translated"
+		"message": "Traduzido"
 	},
 	"Custom": {
-		"message": "Custom"
+		"message": "Personalizado"
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator - Legendas duplas em PDF, Netflix e YouTube"
+		"message": "Mouse Tooltip Translator — tradução com o mouse, legendas duplas em PDF, Netflix e YouTube"
 	},
 	"appDesc": {
-		"message": "Tradução de Texto usando google tradutor do Mouse Tooltip Translator. Suporte ao OCR, TTS, tradutor de manga & tradutor de PDF."
+		"message": "Traduza textos ao passar o mouse. Suporte a OCR, leitura em voz alta, mangás, PDFs, Netflix e YouTube."
 	}
 }
