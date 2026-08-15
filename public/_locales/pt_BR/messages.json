@@ -306,7 +306,7 @@
 		"message": "Cor do fundo do painel de voz"
 	},
 	"BACKUP______________________________________": {
-		"message": "BACKUP"
+		"message": "BACKUP                                      "
 	},
 	"BACKUP": {
 		"message": "BACKUP"
@@ -699,7 +699,7 @@
 		"message": "Personalizado"
 	},
 	"appName": {
-		"message": "Mouse Tooltip Translator — tradução com o mouse, legendas duplas em PDF, Netflix e YouTube"
+		"message": "Mouse Tooltip Translator — tradução com o mouse, legendas duplas"
 	},
 	"appDesc": {
 		"message": "Traduza textos ao passar o mouse. Suporte a OCR, leitura em voz alta, mangás, PDFs, Netflix e YouTube."

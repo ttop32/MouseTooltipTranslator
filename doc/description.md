@@ -19,6 +19,8 @@ Mouseover Translate Any Language At Once
 English, Russian, Japanese, Chinese and so on
 
 # Change Log
+- 0.1.247
+  - Brazilian Portuguese localization largely rewritten — 139 strings that were still falling back to English are now translated, and the existing wording was made consistent (contributed by [coldrenatinho](https://github.com/coldrenatinho), #364). The localized store name was shortened back under the 75-character store limit
 - 0.1.246
   - Fix web PDF auto-hijack no longer working on Chrome: opening an online `.pdf` used to swap in our bundled PDF.js viewer automatically, but recent Chrome broke it two ways — the page was no longer detected as a PDF (Chrome now leaves `<body>` empty instead of holding an `<embed type="application/pdf">`), and even when detected, appending our `<embed>` did nothing because Chrome paints its native viewer on a separate surface above the empty page. Detection now uses `document.contentType`, and the viewer is mounted by rewriting the document and hosting it in a full-page iframe (which tears down Chrome's native viewer). The original PDF address stays in the address bar, and tooltips/translation work inside the viewer as before
   - Silence a benign "Uncaught (in promise) Cannot access contents of the page" logged on extension update when a tab we can't inject into (e.g. Chrome's PDF frame) is open: the re-injection now handles the async rejection per tab
