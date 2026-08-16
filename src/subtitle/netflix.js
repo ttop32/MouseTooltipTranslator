@@ -1,5 +1,5 @@
 import BaseVideo from "./baseVideo";
-import { isSameLanguage } from "/src/util/lang.js";
+import { isSameLanguage, isLangExcluded } from "/src/util/lang.js";
 
 
 // https://github.com/mikesteele/dual-captions/blob/b0ab92e4670100a27b76b2796995ad1be89f1672/site_integrations/netflix/index.js
@@ -123,7 +123,8 @@ export default class Netflix extends BaseVideo {
 
           if (
             !isSameLanguage(sourceLang, targetLang) &&
-            this.setting["detectSubtitle"] == "dualsub"
+            this.setting["detectSubtitle"] == "dualsub" &&
+            !isLangExcluded(this.setting["langExcludeList"], sourceLang)
           ) {
             var sub2 = await this.requestSubtitleWithReset(targetLang);
             var mergedSub = this.mergeSubtitles(sub1, sub2);

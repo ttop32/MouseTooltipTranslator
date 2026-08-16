@@ -25,6 +25,16 @@ describe("isSameLanguage", () => {
     expect(isSameLanguage("mni-Mtei", "mni")).toBe(false);
   });
 
+  test("treats legacy/ISO aliases of one language as the same", () => {
+    // google detects `tl` but the setting list only offers `fil`
+    expect(isSameLanguage("tl", "fil")).toBe(true);
+    expect(isSameLanguage("he", "iw")).toBe(true);
+    expect(isSameLanguage("jv", "jw")).toBe(true);
+    expect(isSameLanguage("in", "id")).toBe(true);
+    expect(isSameLanguage("nb", "no")).toBe(true);
+    expect(isSameLanguage("tl", "id")).toBe(false);
+  });
+
   test("normalizes case and underscores, ignores empty/auto", () => {
     expect(isSameLanguage("PT", "pt-br")).toBe(true);
     expect(isSameLanguage("pt_BR", "pt-BR")).toBe(true);

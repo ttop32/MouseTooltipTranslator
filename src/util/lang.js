@@ -198,6 +198,19 @@ export var langListOpposite = _.invert(langList);
 // variants: one may return `pt` while the selected target is `pt-BR` (or
 // `pt-PT`). Treat those codes as the same language when deciding whether a
 // translation is necessary. Keep the full code for actual provider requests.
+
+// The same language under two names. langList holds google's legacy codes
+// (iw/jw) and fil, while detectors hand back the ISO/BCP-47 ones (he/jv) or
+// google's own `tl` for Filipino - so a Filipino page with a `fil` target used
+// to get a tooltip repeating the sentence.
+const LANG_ALIAS = {
+  he: "iw", // Hebrew
+  jv: "jw", // Javanese
+  in: "id", // Indonesian
+  tl: "fil", // Filipino / Tagalog
+  nb: "no", // Norwegian Bokmal
+};
+
 export function isSameLanguage(langA, langB) {
   if (!langA || !langB || langA === "auto" || langB === "auto") {
     return false;
@@ -210,7 +223,7 @@ export function isSameLanguage(langA, langB) {
 
   const parse = (tag) => {
     const parts = tag.split("-");
-    const language = parts[0];
+    const language = LANG_ALIAS[parts[0]] ?? parts[0];
     const script = parts.find((p) => p.length === 4); // e.g. Hans/Hant/Arab/Latn
     return { language, script, hasVariant: parts.length > 1 };
   };
