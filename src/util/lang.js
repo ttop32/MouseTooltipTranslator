@@ -193,6 +193,45 @@ export var langList = {
 };
 
 export var langListOpposite = _.invert(langList);
+
+// Language detectors and translation providers do not agree on regional
+// variants: one may return `pt` while the selected target is `pt-BR` (or
+// `pt-PT`). Treat those codes as the same language when deciding whether a
+// translation is necessary. Keep the full code for actual provider requests.
+export function isSameLanguage(langA, langB) {
+  if (!langA || !langB || langA === "auto" || langB === "auto") {
+    return false;
+  }
+
+  const normalize = (lang) => String(lang).trim().replaceAll("_", "-").toLowerCase();
+  const a = normalize(langA);
+  const b = normalize(langB);
+  if (a === b) return true;
+
+  const parse = (tag) => {
+    const parts = tag.split("-");
+    const language = parts[0];
+    const script = parts.find((p) => p.length === 4); // e.g. Hans/Hant/Arab/Latn
+    return { language, script, hasVariant: parts.length > 1 };
+  };
+
+  const pa = parse(a);
+  const pb = parse(b);
+  if (pa.language !== pb.language) return false;
+
+  // Chinese regional tags (zh-CN/zh-TW/zh-HK) are meaningful for script; don't collapse them.
+  if (pa.language === "zh") return false;
+
+  // If either tag specifies a script, only treat as same when both scripts match.
+  if (pa.script || pb.script) {
+    return Boolean(pa.script) && pa.script === pb.script;
+  }
+
+  // Collapse base-vs-region only (e.g. pt vs pt-BR), but keep different variants distinct.
+  if (pa.hasVariant && pb.hasVariant) return false;
+  return true;
+}
+
 export var rtlLangList = [
   "ar", ///Arabic
   "az", ///Azerbaijani

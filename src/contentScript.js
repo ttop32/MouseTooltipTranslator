@@ -31,7 +31,11 @@ import { togglePageTranslate } from "/src/event/pageTranslate.js";
 
 import * as ocrView from "/src/ocr/ocrView.js";
 import subtitle from "/src/subtitle/subtitle.js";
-import { langListOpposite, getLocalizedLangName } from "/src/util/lang.js";
+import {
+  langListOpposite,
+  getLocalizedLangName,
+  isSameLanguage,
+} from "/src/util/lang.js";
 import * as speech from "/src/speech";
 
 //init environment var======================================================================\
@@ -274,7 +278,7 @@ async function stageTooltipText(text, actionType, range) {
     return;
   } else if (
     !targetText ||
-    sourceLang == targetLang ||
+    isSameLanguage(sourceLang, targetLang) ||
     setting["langExcludeList"].includes(sourceLang)
   ) {
     hideTooltip();
