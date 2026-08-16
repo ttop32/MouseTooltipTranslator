@@ -10,6 +10,7 @@ try {
   browser = require("webextension-polyfill");
 } catch (error) {}
 import TextUtil from "/src/util/text_util.js";
+import { isSameLanguage, isLangExcluded } from "/src/util/lang.js";
 
 export default class BaseVideo {
   static sitePattern = /^(https:\/\/)(example\.com)/;
@@ -244,9 +245,9 @@ export default class BaseVideo {
           // skip the translated second line when the subtitle's source language
           // is excluded, matching the tooltip's exclude behavior (#136)
           if (
-            sourceLang != targetLang &&
+            !isSameLanguage(sourceLang, targetLang) &&
             this.setting["detectSubtitle"] == "dualsub" &&
-            !this.setting["langExcludeList"]?.includes(sourceLang)
+            !isLangExcluded(this.setting["langExcludeList"], sourceLang)
           ) {
             await this.waitRandom(300, 2000); //wait for avoid ban
             var sub2 = await this.requestSubtitleCached(

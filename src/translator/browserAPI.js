@@ -1,4 +1,5 @@
 import BaseTranslator from "./baseTranslator";
+import { isSameLanguage } from "/src/util/lang.js";
 
 export default class browserAPI extends BaseTranslator {
   static detector = null;
@@ -29,7 +30,8 @@ export default class browserAPI extends BaseTranslator {
       }
 
       // Skip translation if source and target languages are the same
-      if (detectedLang === targetLang) {
+      // (pt vs pt-BR included - the built-in API has no variant pair either)
+      if (isSameLanguage(detectedLang, targetLang) || detectedLang === targetLang) {
         throw new Error("Source and target languages are the same. Translation skipped.");
       }
 

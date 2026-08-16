@@ -232,6 +232,38 @@ export function isSameLanguage(langA, langB) {
   return true;
 }
 
+// Same language by code is not enough to call a translation pointless. Google
+// reports a bare `pt` for Brazilian wording, yet still rewrites it into
+// European Portuguese when the target is pt-PT ("se torna parte" -> "passa a
+// fazer parte") — dropping that is the very conversion #257 asked for. So for
+// regional-variant pairs, only skip when the engine handed back the same text;
+// an exact code match keeps the old unconditional skip.
+export function isRedundantTranslation(
+  sourceText,
+  targetText,
+  sourceLang,
+  targetLang
+) {
+  if (sourceLang == targetLang) {
+    return true;
+  }
+  if (!isSameLanguage(sourceLang, targetLang)) {
+    return false;
+  }
+  const normalizeText = (text) => String(text ?? "").replace(/\s+/g, " ").trim();
+  return normalizeText(sourceText) == normalizeText(targetText);
+}
+
+// The exclude list holds full codes (pt-BR), while detectors report the base
+// code (pt), so a plain includes() never matches for regional variants.
+export function isLangExcluded(langExcludeList, lang) {
+  return Boolean(
+    langExcludeList?.some(
+      (excluded) => excluded == lang || isSameLanguage(excluded, lang)
+    )
+  );
+}
+
 export var rtlLangList = [
   "ar", ///Arabic
   "az", ///Azerbaijani

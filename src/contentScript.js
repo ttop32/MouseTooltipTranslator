@@ -34,7 +34,8 @@ import subtitle from "/src/subtitle/subtitle.js";
 import {
   langListOpposite,
   getLocalizedLangName,
-  isSameLanguage,
+  isRedundantTranslation,
+  isLangExcluded,
 } from "/src/util/lang.js";
 import * as speech from "/src/speech";
 
@@ -278,8 +279,8 @@ async function stageTooltipText(text, actionType, range) {
     return;
   } else if (
     !targetText ||
-    isSameLanguage(sourceLang, targetLang) ||
-    setting["langExcludeList"].includes(sourceLang)
+    isRedundantTranslation(text, targetText, sourceLang, targetLang) ||
+    isLangExcluded(setting["langExcludeList"], sourceLang)
   ) {
     hideTooltip();
     return;

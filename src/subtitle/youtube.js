@@ -2,7 +2,7 @@ import $ from "jquery";
 import memoize from "memoizee";
 import BaseVideo from "./baseVideo";
 import * as util from "/src/util";
-import { isRtl } from "/src/util/lang.js";
+import { isRtl, isSameLanguage } from "/src/util/lang.js";
 
 // https://terrillthompson.com/648
 // https://developers.google.com/youtube/iframe_api_reference
@@ -391,14 +391,15 @@ export default class Youtube extends BaseVideo {
     var lang = captionAsr?.[0]?.languageCode;
     // get target lang if targetsinglesub setting
     if (this.setting["detectSubtitle"] == "targetsinglesub") {
-      var caption = captionMeta?.filter(
-        (sub) => sub.languageCode == this.setting["translateTarget"]
+      // youtube labels its tracks with the base code (pt), so an exact match
+      // against a regional target (pt-BR) would translate a track we already have
+      var caption = captionMeta?.filter((sub) =>
+        isSameLanguage(sub.languageCode, this.setting["translateTarget"])
       );
       lang = caption?.[0]?.languageCode || lang;
-      tlang =
-        lang != this.setting["translateTarget"]
-          ? { languageCode: this.setting["translateTarget"] }
-          : "";
+      tlang = !isSameLanguage(lang, this.setting["translateTarget"])
+        ? { languageCode: this.setting["translateTarget"] }
+        : "";
     }
     return {
       lang: lang || "en",
