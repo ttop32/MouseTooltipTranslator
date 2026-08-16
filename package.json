@@ -85,6 +85,9 @@
       "js",
       "json"
     ],
+    "moduleNameMapper": {
+      "^/src/(.*)$": "<rootDir>/src/$1"
+    },
     "testEnvironment": "node",
     "transformIgnorePatterns": [
       "/node_modules/(?!ky|another-library)/"
