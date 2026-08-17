@@ -29,7 +29,10 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  test("deepl translator - translate", async () => {
+  // deepl sits behind the same datacenter-IP blocking as bing (its jsonrpc
+  // endpoint answers from a residential IP and refuses a runner), so it is a
+  // release-blocking flake on CI. Still runs locally.
+  testSkipOnCi("deepl translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
@@ -37,7 +40,8 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  test("yandex translator - translate", async () => {
+  // same for yandex: its mobile api rate-limits/blocks datacenter ranges
+  testSkipOnCi("yandex translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
