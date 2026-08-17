@@ -88,6 +88,7 @@ var yandexLangCode = {
   yi: "yi",
 
   tl: "tl",
+  fil: "tl", // the language list offers Filipino as `fil`; yandex only knows `tl`
   iw: "he",
   jw: "jv",
   "zh-CN": "zh",

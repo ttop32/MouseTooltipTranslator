@@ -35,7 +35,7 @@ var bingLangCode = {
   fi: "fi", // Finnish
   fr: "fr", // French
   "fr-FR": "fr", // French (French)
-  "fr-CA": "fr-ca", // French (Canadian)
+  "fr-CA": "fr-CA", // French (Canadian)
   gl: "gl", // Galician
   lg: "lug", // Ganda (Luganda)
   ka: "ka", // Georgian
@@ -85,7 +85,7 @@ var bingLangCode = {
   fa: "fa", // Persian
   pl: "pl", // Polish
   pt: "pt", // Portuguese
-  "pt-PT": "pt-pt", // Portuguese (Portugal)
+  "pt-PT": "pt-PT", // Portuguese (Portugal)
   "pt-BR": "pt", // Portuguese (Brazil)
   pa: "pa", // Punjabi
   ro: "ro", // Romanian
