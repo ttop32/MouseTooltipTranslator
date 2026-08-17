@@ -83,6 +83,7 @@ var bingLangCode = {
   or: "or", // Odia (Oriya)
   ps: "ps", // Pashto
   fa: "fa", // Persian
+  "fa-AF": "prs", // Dari - bing calls it prs, the raw fa-AF is rejected
   pl: "pl", // Polish
   pt: "pt", // Portuguese
   "pt-PT": "pt-PT", // Portuguese (Portugal)
