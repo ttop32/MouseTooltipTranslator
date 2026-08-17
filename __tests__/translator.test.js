@@ -29,9 +29,10 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  // deepl sits behind the same datacenter-IP blocking as bing (its jsonrpc
-  // endpoint answers from a residential IP and refuses a runner), so it is a
-  // release-blocking flake on CI. Still runs locally.
+  // deepl is the same story as bing: the 0.1.247 release run died here with
+  // `result` undefined while google and yandex passed, i.e. www2.deepl.com
+  // refused the runner (it answers a residential IP fine). Skip on CI so a
+  // blocked datacenter IP stops holding the release back; still runs locally.
   testSkipOnCi("deepl translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
@@ -40,8 +41,7 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  // same for yandex: its mobile api rate-limits/blocks datacenter ranges
-  testSkipOnCi("yandex translator - translate", async () => {
+  test("yandex translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
