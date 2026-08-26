@@ -87,6 +87,21 @@ npm run build        // or 'npm run watch' for developing
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/D0n-A">
+            <img src="https://avatars.githubusercontent.com/u/38649081?v=4" width="100;" alt="D0n-A"/>
+            <br />
+            <sub><b>Don-A</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/coldrenatinho">
+            <img src="https://avatars.githubusercontent.com/u/97402553?v=4" width="100;" alt="coldrenatinho"/>
+            <br />
+            <sub><b>Renato A. Silva</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
         <a href="https://github.com/lg28literconvectionmicrowaveoven">
             <img src="https://avatars.githubusercontent.com/u/68274755?v=4" width="100;" alt="lg28literconvectionmicrowaveoven"/>
             <br />
@@ -99,8 +114,7 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>StarsSail</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/Blueberryy">
             <img src="https://avatars.githubusercontent.com/u/36592509?v=4" width="100;" alt="Blueberryy"/>
@@ -128,7 +142,8 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Imgbot</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/newmind">
             <img src="https://avatars.githubusercontent.com/u/379460?v=4" width="100;" alt="newmind"/>
@@ -142,8 +157,14 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>KozakLordOfMatrix</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
+    <td align="center">
+        <a href="https://github.com/MrDx3">
+            <img src="https://avatars.githubusercontent.com/u/81303714?v=4" width="100;" alt="MrDx3"/>
+            <br />
+            <sub><b>Doom Dudash</b></sub>
+        </a>
+    </td>
     <td align="center">
         <a href="https://github.com/SFGFDSD">
             <img src="https://avatars.githubusercontent.com/u/162313212?v=4" width="100;" alt="SFGFDSD"/>
@@ -164,7 +185,8 @@ npm run build        // or 'npm run watch' for developing
             <br />
             <sub><b>Silvestri, Javier</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/netanelavi">
             <img src="https://avatars.githubusercontent.com/u/81083157?v=4" width="100;" alt="netanelavi"/>
