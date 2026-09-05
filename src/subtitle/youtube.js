@@ -133,6 +133,11 @@ export default class Youtube extends BaseVideo {
     }
     return json;
   }
+  // youtube's parseSubtitle() turns a failed fetch into a valid-looking track
+  // with no events; that is a failure, not a subtitle
+  static isSubtitleEmpty(sub) {
+    return !sub?.events?.length;
+  }
   static getTrafficSafeUrl(url) {
     if (this.isSubtitleRequestFailed) {
       const urlObj = new URL(url);

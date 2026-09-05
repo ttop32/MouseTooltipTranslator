@@ -109,33 +109,50 @@ export default class Netflix extends BaseVideo {
     this.interceptorLoaded = true;
     this.interceptor.apply();
     this.interceptor.on("request", async ({ request, requestId }) => {
+      if (!this.captionRequestPattern.test(request.url)) {
+        return;
+      }
+      // xml is kept outside the try so a failure in the translated track still
+      // answers the player with the original subtitle instead of hanging it
+      var xml = null;
       try {
-        if (this.captionRequestPattern.test(request.url)) {
-          //get source lang sub
-          var response = await this.requestSubtitle(request.url);
-          var sourceLang = this.getCurrentSubtitleLang();
-          var targetLang = this.getPreferredTargetLang();
-          var videoId = this.getVideoId();
-          var xml = await response.text();
-          var sub1 = this.parseSubtitle(xml, videoId);
-          // 단일 자막은 원본 xml 그대로 반환 → ruby/br/nested span 구조 100% 보존
-          var xmlRes = xml;
+        //get source lang sub
+        var response = await this.requestSubtitle(request.url);
+        var sourceLang = this.getCurrentSubtitleLang();
+        var targetLang = this.getPreferredTargetLang();
+        var videoId = this.getVideoId();
+        xml = await response.text();
+        var sub1 = this.parseSubtitle(xml, videoId);
+        // 단일 자막은 원본 xml 그대로 반환 → ruby/br/nested span 구조 100% 보존
+        var xmlRes = xml;
 
-          if (
-            !isSameLanguage(sourceLang, targetLang) &&
-            this.setting["detectSubtitle"] == "dualsub" &&
-            !isLangExcluded(this.setting["langExcludeList"], sourceLang)
-          ) {
-            var sub2 = await this.requestSubtitleWithReset(targetLang);
-            var mergedSub = this.mergeSubtitles(sub1, sub2);
-            if (mergedSub) {
-              xmlRes = this.encodeMergedSubtitles(mergedSub);
-            }
+        if (
+          !isSameLanguage(sourceLang, targetLang) &&
+          this.setting["detectSubtitle"] == "dualsub" &&
+          !isLangExcluded(this.setting["langExcludeList"], sourceLang)
+        ) {
+          var mergedXml = await this.withDeadline(
+            (async () => {
+              var sub2 = await this.requestSubtitleWithReset(targetLang);
+              var mergedSub = this.mergeSubtitles(sub1, sub2);
+              return mergedSub ? this.encodeMergedSubtitles(mergedSub) : null;
+            })(),
+            this.dualSubDeadline
+          );
+          if (mergedXml) {
+            xmlRes = mergedXml;
           }
-          request.respondWith(new Response(xmlRes));
         }
+        request.respondWith(new Response(xmlRes));
       } catch (error) {
         console.log(error);
+        if (xml) {
+          try {
+            request.respondWith(new Response(xml));
+          } catch (respondError) {
+            console.log(respondError);
+          }
+        }
       }
     });
   }
@@ -175,9 +192,13 @@ export default class Netflix extends BaseVideo {
 
   static async requestSubtitleWithReset(lang, videoId) {
     var prevSub = this.getCurrentSubtitle();
-    var sub = await this.requestTrack(lang, videoId);
-    this.setTextTrack(prevSub);
-    return sub;
+    try {
+      return await this.requestTrack(lang, videoId);
+    } finally {
+      // restore in finally: this used to be skipped whenever requestTrack threw
+      // or timed out, which left the viewer watching the translated track
+      this.setTextTrack(prevSub);
+    }
   }
 
   static async requestTrack(lang, videoId) {
@@ -200,9 +221,14 @@ export default class Netflix extends BaseVideo {
       return null;
     }
     this.setTextTrack(selectedTimedTextTrack);
-    await this.waitUntil(() => {
-      return this.sub?.[videoId]?.[lang];
-    }, 2500);
+    try {
+      await this.waitUntil(() => {
+        return this.sub?.[videoId]?.[lang];
+      }, 2500);
+    } catch (error) {
+      // now that waitUntil honours its timeout it throws instead of hanging
+      console.log(error);
+    }
     return this.sub?.[videoId]?.[lang];
   }
   // textContent of a TTML <p>, but with <br/> turned into a space so a caption
