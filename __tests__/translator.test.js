@@ -7,12 +7,17 @@ import baidu from "../src/translator/baidu";
 
 // npx jest
 
-// Bing serves a captcha/blocked page to datacenter IPs (GitHub Actions, etc.),
-// so its scraping-based token endpoint fails on CI but works on residential IPs.
+// Every engine here is reached by scraping a consumer endpoint, and all of them
+// throttle or captcha datacenter IPs - bing was the first, then papago, then
+// deepl, and google/yandex come and go. A third party deciding to rate limit a
+// GitHub runner should not be able to block a release, so the whole network
+// suite is skipped on CI and the offline unit tests (lang, fallbackEngine) are
+// the gate there. These still run locally, which is where they are useful:
+// they are the pre-release check that an engine has not been broken for real.
 const testSkipOnCi = process.env.CI ? test.skip : test;
 
 describe("Translator - translate", () => {
-  test("google translator - translate", async () => {
+  testSkipOnCi("google translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
@@ -41,7 +46,7 @@ describe("Translator - translate", () => {
     expect(result.targetText).toBe("Hola"); // Expected translation
   });
 
-  test("yandex translator - translate", async () => {
+  testSkipOnCi("yandex translator - translate", async () => {
     const text = "Hello";
     const sourceLang = "en";
     const targetLang = "es";
