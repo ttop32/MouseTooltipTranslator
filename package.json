@@ -58,7 +58,7 @@
     "iso-639-3": "^3.0.1",
     "jquery": "^4.0.0-beta",
     "ky": "^1.0.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.0",
     "maska": "^2.1.10",
     "match-url-wildcard": "^0.0.5",
     "memoizee": "^0.4.15",
