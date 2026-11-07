@@ -460,6 +460,13 @@ export var settingDict = {
     optionList: voiceTargetList,
     settingTab: "voice",
   },
+  showAutoReaderTranslation: {
+    default: "true",
+    i18nKey: "Popup_in_Auto_Read",
+    description: "Popup in Auto Read",
+    optionList: toggleList,
+    settingTab: "voice",
+  },
   voiceRepeat: {
     default: "1",
     i18nKey: "Voice_Repeat",
