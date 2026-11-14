@@ -854,8 +854,8 @@ export default {
 
 .custom-tabs :deep(.v-tab) {
   font-size: 0.75rem;
-  min-width: 60px;
-  padding: 0 12px;
+  min-width: 0;
+  padding: 0 8px;
 }
 
 .compact-list-item {
