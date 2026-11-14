@@ -182,6 +182,9 @@
 	"Voice_Target": {
 		"message": "อ่านออกเสียงที่"
 	},
+	"Popup_in_Auto_Read": {
+		"message": "Popup in Auto Read"
+	},
 	"Voice_Repeat": {
 		"message": "เล่นเสียงซ้ำ"
 	},
