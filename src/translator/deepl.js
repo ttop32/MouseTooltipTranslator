@@ -59,9 +59,12 @@ export default class deepl extends BaseTranslator {
       .json();
   }
   static async wrapResponse(res, text, sourceLang, targetLang) {
-    if (res.result) {
+    const targetText = res?.result?.texts?.[0]?.text;
+    // DeepL's free endpoint now answers "update the app" as if it were the
+    // translation; treat it as a failure instead of showing it (#373)
+    if (targetText && !/older version of DeepL/i.test(targetText)) {
       return {
-        targetText: res.result.texts[0].text,
+        targetText,
         detectedLang: res.result.lang,
         transliteration: "",
       };
