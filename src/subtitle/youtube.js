@@ -393,7 +393,14 @@ export default class Youtube extends BaseVideo {
       metaData?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
     // get auto generated lang
     var captionAsr = captionMeta?.filter((sub) => sub.kind);
-    var lang = captionAsr?.[0]?.languageCode;
+    // several auto-generated tracks can be listed (#372): prefer the one that
+    // belongs to the video's default audio track instead of whichever is first
+    var tracklist = metaData?.captions?.playerCaptionsTracklistRenderer;
+    var audioTrack = tracklist?.audioTracks?.[tracklist?.defaultAudioTrackIndex ?? 0];
+    var audioAsr = captionAsr?.filter((sub) =>
+      audioTrack?.captionTrackIndices?.includes(captionMeta.indexOf(sub))
+    );
+    var lang = (audioAsr?.[0] || captionAsr?.[0])?.languageCode;
     // get target lang if targetsinglesub setting
     if (this.setting["detectSubtitle"] == "targetsinglesub") {
       // youtube labels its tracks with the base code (pt), so an exact match
