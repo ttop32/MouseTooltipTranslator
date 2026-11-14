@@ -710,7 +710,7 @@ export var settingDict = {
     i18nKey: "TTS_Replace_List",
     optionList: {},
     optionType: "textField",
-    placeholder: "e.g. *=>  (one rule per line, from=>to)",
+    placeholder: "e.g. *=> (one rule per line: from=>to)",
     settingTab: "voice",
   },
   tooltipInfoSourceLanguage: {

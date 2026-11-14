@@ -349,6 +349,8 @@ async function callTTS(
   noInterrupt,
   isTtsSwap
 ) {
+  text = applyTtsReplace(text);
+  targetText = applyTtsReplace(targetText);
   if (isTtsSwap) {
     await util.requestTTS(
       targetText,
