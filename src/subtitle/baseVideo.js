@@ -549,15 +549,24 @@ export default class BaseVideo {
     });
   }
   //message between inject script==========================================
+  static injectCallableMethods = ["activateCaption"];
   static listenMessageFrameFromInject() {
     if (!this.isVideoSite() || !this.checkIsInjectedScript()) {
       return;
     }
-    window.addEventListener("message", ({ data }) => {
+    window.addEventListener("message", ({ data, source, origin }) => {
+      // only accept messages our own content script posted in this very window (#375)
+      if (source !== window || origin !== window.location.origin) {
+        return;
+      }
       if (data?.type == "resetInjectScript") {
         this?.resetInject(data?.setting);
-      } else if (data?.type == "callMethod") {
-        this?.[data?.name]?.(...data?.args);
+      } else if (
+        data?.type == "callMethod" &&
+        this.injectCallableMethods.includes(data?.name) &&
+        Array.isArray(data?.args)
+      ) {
+        this[data.name](...data.args);
       }
     });
   }
