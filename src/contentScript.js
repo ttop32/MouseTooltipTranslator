@@ -328,6 +328,18 @@ async function handleTTS(
   );
 }
 
+// apply the user's "from=>to" lines to text before speaking it (#369)
+function applyTtsReplace(text) {
+  var rules = String(setting["ttsReplaceList"] || "").split(/\r?\n/);
+  for (var rule of rules) {
+    var i = rule.indexOf("=>");
+    if (i > 0 && text) {
+      text = text.split(rule.slice(0, i)).join(rule.slice(i + 2));
+    }
+  }
+  return text;
+}
+
 async function callTTS(
   text,
   sourceLang,

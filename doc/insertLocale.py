@@ -156,6 +156,7 @@ i18List = [
     "Show Tooltip While Typing",
     "Tooltip Info Source Text",
     "Translate Exclude Regex",
+    "TTS Replace List",
     "Tooltip Info Source Language",
     "Tooltip Info Transliteration",
     "Tooltip Interval Time",

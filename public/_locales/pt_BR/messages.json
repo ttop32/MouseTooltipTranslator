@@ -245,6 +245,9 @@
 	"Translate_Exclude_Regex": {
 		"message": "Expressão regular para não traduzir"
 	},
+	"TTS_Replace_List": {
+		"message": "TTS Replace List"
+	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Mostrar idioma original"
 	},

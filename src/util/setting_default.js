@@ -703,6 +703,16 @@ export var settingDict = {
     placeholder: "e.g. ^[0-9.,]+$|https?://",
     settingTab: "advanced",
   },
+  ttsReplaceList: {
+    // one rule per line, "from=>to"; empty "to" silences the text. Applied to
+    // the text before it is read aloud (#369)
+    default: "",
+    i18nKey: "TTS_Replace_List",
+    optionList: {},
+    optionType: "textField",
+    placeholder: "e.g. *=>  (one rule per line, from=>to)",
+    settingTab: "voice",
+  },
   tooltipInfoSourceLanguage: {
     default: "false",
     i18nKey: "Tooltip_Info_Source_Language",
