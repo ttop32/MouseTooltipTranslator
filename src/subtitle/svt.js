@@ -13,9 +13,11 @@ export default class SVT extends BaseVideo {
   static baseUrl = "https://www.svtplay.se";
   static playerSelector = "video";
   static captionContainerSelector = '[data-rt="subtitles-container"]';
+  static nativeSubtitleSelector = '[data-rt="subtitles-container"]';
   static captionWindowSelector = '[data-rt="subtitles-container"] > *';
   static captionBoxSelector =
     '[data-rt="subtitles-container"] span, [data-rt="subtitles-container"] p';
+  static errorLabel = "SVT Translator";
 
   static useManualIntercept = true;
   static overlay = null;
@@ -43,35 +45,37 @@ export default class SVT extends BaseVideo {
     }
     this.overlay = overlay;
 
-    // Hide SVT subtitles visually, keep in DOM so we can observe them.
+    // Hide native subtitles visually, keep them in the DOM so we can observe them.
     const styleEl = document.createElement("style");
     styleEl.textContent =
-      '[data-rt="subtitles-container"]{opacity:0!important;pointer-events:none!important;}';
+      `${this.nativeSubtitleSelector}{opacity:0!important;pointer-events:none!important;}`;
     document.head.appendChild(styleEl);
 
     $(overlay)
       .on("mouseenter", () => this.pause())
       .on("mouseleave", () => this.play());
 
-    const observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.type !== "childList") continue;
-        for (const node of m.addedNodes) {
-          const text = (node.innerText || node.textContent || "").trim();
-          if (!text) continue;
-          this.lastText = text;
-
-          const el = document.createElement("div");
-          el.innerText = text;
-          this.overlay.innerHTML = "";
-          this.overlay.appendChild(el);
-
-          this.translateInPlace(el, text);
-          return;
-        }
+    const updateCaption = () => {
+      const text = (container.innerText || container.textContent || "").trim();
+      if (text === this.lastText) return;
+      this.lastText = text;
+      if (!text) {
+        this.overlay.replaceChildren();
+        return;
       }
+
+      const el = document.createElement("div");
+      el.innerText = text;
+      this.overlay.replaceChildren(el);
+      this.translateInPlace(el, text);
+    };
+    const observer = new MutationObserver(updateCaption);
+    observer.observe(container, {
+      childList: true,
+      subtree: true,
+      characterData: true,
     });
-    observer.observe(container, { childList: true, subtree: false });
+    updateCaption();
   }
 
   static translateInPlace(el, text) {
@@ -108,7 +112,10 @@ export default class SVT extends BaseVideo {
       this.cache.set(text, translated);
       this.applyTranslation(el, text, translated, isDual);
     } catch (e) {
-      console.error("[SVT Translator]", e);
+      if (this.lastText === text) {
+        this.applyTranslation(el, text, text, false);
+      }
+      console.error(`[${this.errorLabel}]`, e);
     }
   }
 

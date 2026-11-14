@@ -149,7 +149,7 @@ function stageTooltipTextHover(event, useEvent = true, resetStaged = false) {
   if (
     setting["translateWhen"].includes("mouseover") &&
     hoveredData &&
-    !isOtherServiceActive() &&
+    !isOtherServiceActive(false, true) &&
     !isTooltipSuppressedWhileWriting()
   ) {
     var { mouseoverText, mouseoverRange } = hoveredData;
@@ -196,8 +196,12 @@ function stageTooltipTextSelect(event, useEvent = true) {
   }
 }
 
-function isOtherServiceActive(excludeSelect = false) {
-  return listenText || isAutoReaderRunning || (!excludeSelect && selectedText);
+function isOtherServiceActive(excludeSelect = false, allowDuringAutoReader = false) {
+  return (
+    listenText ||
+    (isAutoReaderRunning && !allowDuringAutoReader) ||
+    (!excludeSelect && selectedText)
+  );
 }
 
 // #36: skip translating text that matches the user's exclude regex (e.g. pure
@@ -246,20 +250,20 @@ async function stageTooltipText(text, actionType, range) {
     return;
   } else if (!text) {
     stagedText = text;
-    hideTooltip();
+    hideTooltip(false, isAutoReaderRunning);
     return;
   } else if (!isTooltipOn && !isTtsOn) {
-    hideTooltip();
+    hideTooltip(false, isAutoReaderRunning);
     return;
   } else if (!isTooltipOn) {
-    hideTooltip();
+    hideTooltip(false, isAutoReaderRunning);
   }
 
 
   // skip translation for text matching the user's exclude regex (#36)
   if (isExcludedByRegex(text)) {
     stagedText = text;
-    hideTooltip();
+    hideTooltip(false, isAutoReaderRunning);
     return;
   }
 
@@ -282,7 +286,7 @@ async function stageTooltipText(text, actionType, range) {
     isRedundantTranslation(text, targetText, sourceLang, targetLang) ||
     isLangExcluded(setting["langExcludeList"], sourceLang)
   ) {
-    hideTooltip();
+    hideTooltip(false, isAutoReaderRunning);
     return;
   }
 
@@ -381,9 +385,9 @@ function checkMouseTargetIsTooltip() {
 }
 
 //tooltip show hide logic=========================================================
-function showTooltip(text) {
+function showTooltip(text, preserveAutoReaderHighlight = false) {
   if (prevTooltipText != text) {
-    hideTooltip(true);
+    hideTooltip(true, preserveAutoReaderHighlight);
   }
   prevTooltipText = text;
   cancelRemoveTooltipContainer();
@@ -392,12 +396,12 @@ function showTooltip(text) {
   tooltip?.show();
 }
 
-function hideTooltip(resetAll = false) {
+function hideTooltip(resetAll = false, preserveAutoReaderHighlight = false) {
   if (resetAll) {
     // hideAll({ duration: 0 }); //hide all tippy
   }
   tooltip?.hide();
-  hideHighlight();
+  hideHighlight(preserveAutoReaderHighlight);
   removeTooltipContainer();
 }
 
@@ -476,7 +480,7 @@ function handleTooltip(text, translatedData, actionType, range) {
     wrapInfoText(tooltipLang, "sup");
   var tooltipText = tooltipMainText + tooltipSubText;
 
-  showTooltip(tooltipText);
+  showTooltip(tooltipText, isAutoReaderRunning);
 
   util.requestRecordTooltipText(
     text,
@@ -486,7 +490,9 @@ function handleTooltip(text, translatedData, actionType, range) {
     dict,
     actionType
   );
-  highlightText(range);
+  if (!isAutoReaderRunning) {
+    highlightText(range);
+  }
 }
 
 function wrapMain(targetText, targetLang) {
@@ -987,6 +993,9 @@ async function startAutoReader() {
   var mouseoverRange =
     hoveredData?.mouseoverRange ||
     (await getMouseoverText(clientX, clientY)).mouseoverRange;
+  if (setting["showAutoReaderTranslation"] != "true") {
+    hideTooltip();
+  }
   processAutoReader(mouseoverRange, isTtsSwap);
 }
 
@@ -1081,24 +1090,51 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   isAutoReaderRunning = true;
   recordAutoReaderHistory(stagedRange);
   var text = util.extractTextFromRange(stagedRange);
-  var translatedData = await util.requestTranslate(
-    text,
-    setting["translateSource"],
-    setting["translateTarget"],
-    setting["translateReverseTarget"]
-  );
+  var needsTranslation = shouldTranslateAutoReader(isTtsSwap);
+  var translatedData;
+  if (needsTranslation) {
+    translatedData = await util.requestTranslate(
+      text,
+      setting["translateSource"],
+      setting["translateTarget"],
+      setting["translateReverseTarget"]
+    );
+  } else {
+    var detectedSourceLang =
+      setting["translateSource"] == "auto"
+        ? await util.detectLangBrowser(text)
+        : setting["translateSource"];
+    var sourceLang =
+      detectedSourceLang && detectedSourceLang != "und"
+        ? SettingUtil.parseLocaleLang(detectedSourceLang)
+        : null;
+    translatedData = sourceLang
+      ? {
+          targetText: text,
+          sourceLang,
+          targetLang: sourceLang,
+        }
+      : await util.requestTranslate(
+          text,
+          setting["translateSource"],
+          setting["translateTarget"],
+          setting["translateReverseTarget"]
+        );
+  }
   var { targetText, sourceLang, targetLang } = translatedData;
 
   scrollAutoReader(stagedRange);
   setTimeout(() => {
     highlightText(stagedRange, true);
   }, autoReaderScrollTime);
-  showTooltip(targetText);
+  if (setting["showAutoReaderTranslation"] == "true") {
+    showTooltip(targetText);
+  }
 
   var forwardRange =
     getNextExpandedRange(stagedRange, setting["mouseoverTextType"]) ||
     getNextBookFusionChapterRange(stagedRange, setting["mouseoverTextType"]);
-  preloadNextTranslation(forwardRange);
+  preloadNextTranslation(forwardRange, needsTranslation);
   await callTTS(
     text,
     sourceLang,
@@ -1113,6 +1149,20 @@ async function processAutoReader(stagedRange, isTtsSwap) {
   processAutoReader(getAutoReaderNextRange(forwardRange), isTtsSwap);
 }
 
+function shouldTranslateAutoReader(isTtsSwap) {
+  if (setting["showAutoReaderTranslation"] == "true") {
+    return true;
+  }
+
+  var voiceTarget = setting["voiceTarget"];
+  var readsTranslatedText =
+    voiceTarget == "sourcetarget" ||
+    voiceTarget == "targetsource" ||
+    (isTtsSwap ? voiceTarget == "source" : voiceTarget == "target");
+
+  return readsTranslatedText;
+}
+
 function getNextBookFusionChapterRange(currentRange, detectType) {
   if (!util.isBookFusion() || !currentRange) return null;
   const iframes = Array.from(document.querySelectorAll('iframe[id^="bf-epub-view-"]'));
@@ -1121,8 +1171,8 @@ function getNextBookFusionChapterRange(currentRange, detectType) {
   return getFirstExpandedRangeInDoc(iframes[idx + 1].contentDocument, detectType);
 }
 
-async function preloadNextTranslation(stagedRange) {
-  if (!stagedRange) {
+async function preloadNextTranslation(stagedRange, shouldTranslate) {
+  if (!stagedRange || !shouldTranslate) {
     return;
   }
   await delay(700);

@@ -135,6 +135,7 @@ i18List = [
     "Voice Volume",
     "Voice Speed",
     "Voice Target",
+    "Popup in Auto Read",
     "Voice Repeat",
     "Voice for ",
     "Voice speed for ",

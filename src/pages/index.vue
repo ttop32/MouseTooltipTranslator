@@ -365,7 +365,8 @@ var tabItems = Object.entries(settingDict).reduce((acc, [key, value]) => {
   if (tab === "REMAINS") return acc;
   if (!acc[tab]) acc[tab] = {};
 
-  value.description = i18n.getMessage(value.i18nKey);
+  value.description =
+    i18n.getMessage(value.i18nKey) || value.description || value.i18nKey;
   value.optionList = convertOptionI18n(value.optionList, value.langOptionList);
   acc[tab][key] = value;
   return acc;
