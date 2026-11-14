@@ -183,7 +183,7 @@
 		"message": "Что озвучивать"
 	},
 	"Popup_in_Auto_Read": {
-		"message": "Popup in Auto Read"
+		"message": "Подсказка при автоматическом чтении"
 	},
 	"Voice_Repeat": {
 		"message": "Повтор озвучки"
@@ -249,7 +249,7 @@
 		"message": "Исключения из перевода (RegEx)"
 	},
 	"TTS_Replace_List": {
-		"message": "TTS Replace List"
+		"message": "Список замен для речи"
 	},
 	"Tooltip_Info_Source_Language": {
 		"message": "Исходный язык в подсказке"
