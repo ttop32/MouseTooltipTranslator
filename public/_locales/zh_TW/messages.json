@@ -182,6 +182,9 @@
 	"Voice_Target": {
 		"message": "語音目標"
 	},
+	"Popup_in_Auto_Read": {
+		"message": "Popup in Auto Read"
+	},
 	"Voice_Repeat": {
 		"message": "語音重複"
 	},
