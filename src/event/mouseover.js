@@ -31,9 +31,21 @@ export function enableMouseoverTextEvent(_window = window, currentSetting, keyDo
     triggerMouseoverText(await getMouseoverText(clientX, clientY));
   }, textDetectTime);
 
+  // hiding must follow "Tooltip disappear duration", not the hover delay (#370):
+  // once the pointer rests off any text, clear the tooltip after that shorter wait
+  const hideDelay = Number(setting?.["tooltipDisappearDuration"]) || 0;
+  const hideIfNoTextWithDelay = debounce(async () => {
+    if (!(await getMouseoverText(clientX, clientY))) {
+      triggerMouseoverText("");
+    }
+  }, hideDelay);
+
   window.addEventListener("mousemove", async (e) => {
     updateMouseoverXY(e);
     triggerMouseoverTextWithDelay();
+    if (hideDelay < textDetectTime) {
+      hideIfNoTextWithDelay();
+    }
   });
   window.addEventListener("scroll", (e) => {
     triggerMouseoverTextWithDelay();
