@@ -5,5 +5,6 @@ import SVT from "./svt.js";
 import TV4Play from "./tv4play.js";
 import DR from "./dr.js";
 import URPlay from "./urplay.js";
+import Arte from "./arte.js";
 
-export default { Youtube, Netflix, YoutubeNoCookie, SVT, TV4Play, DR, URPlay };
+export default { Youtube, Netflix, YoutubeNoCookie, SVT, TV4Play, DR, URPlay, Arte };
