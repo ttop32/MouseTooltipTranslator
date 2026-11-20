@@ -16,13 +16,27 @@ export default class DOMSubtitleVideo extends BaseVideo {
     return document.querySelector("video")?.parentElement;
   }
 
+  static getCaptionObserverRoot(container) {
+    return container;
+  }
+
   static async listenCaptionHover() {
     if (!this.captionContainerSelector) return;
     await this.waitUntil(() => $(this.captionContainerSelector).get(0));
-    const container = $(this.captionContainerSelector).get(0);
+    const initialContainer = $(this.captionContainerSelector).get(0);
+    const observerRoot = this.getCaptionObserverRoot(initialContainer);
 
     this.createOverlay();
     const updateCaption = () => {
+      const container = observerRoot.matches(this.captionContainerSelector)
+        ? observerRoot
+        : observerRoot.querySelector(this.captionContainerSelector);
+      if (!container) {
+        this.lastText = "";
+        this.overlay.replaceChildren();
+        return;
+      }
+
       const text = (container.innerText || container.textContent || "").trim();
       if (text === this.lastText) return;
       this.lastText = text;
@@ -38,7 +52,7 @@ export default class DOMSubtitleVideo extends BaseVideo {
     };
 
     const observer = new MutationObserver(updateCaption);
-    observer.observe(container, {
+    observer.observe(observerRoot, {
       childList: true,
       subtree: true,
       characterData: true,
