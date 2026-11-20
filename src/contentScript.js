@@ -421,16 +421,26 @@ function checkTooltipContainerInit() {
   checkStyleContainer();
 }
 function checkTooltipContainer() {
-  if (!$("#mttContainer").get(0)) {
-    // Append to <html>, NOT <body>. SPA frameworks (React / SvelteKit — e.g.
-    // Open WebUI) assume they own <body>'s child list; a foreign node we add &
-    // remove there on every tooltip show/hide (every few seconds) makes their
-    // reconciler try to removeChild a node it no longer tracks and throw
-    // "NotFoundError", crashing the page. <html>'s direct children aren't
-    // reconciled by those frameworks, and documentElement (unlike body) is not
-    // swapped on SPA / View-Transitions navigations, so it's also more stable.
-    tooltipContainer.appendTo(document.documentElement);
+  const root = getTooltipRoot();
+  if (tooltipContainerEle.parentElement !== root) {
+    root.appendChild(tooltipContainerEle);
   }
+}
+
+function getTooltipRoot() {
+  return document.fullscreenElement || document.documentElement;
+}
+
+function handleFullscreenChange() {
+  checkTooltipContainer();
+  if (!tooltip?.state.isVisible || !tooltip.popper) return;
+
+  const isSticky = setting["tooltipPosition"] == "follow";
+  const popperRoot = isSticky ? tooltipContainerEle : getTooltipRoot();
+  if (tooltip.popper.parentElement !== popperRoot) {
+    popperRoot.appendChild(tooltip.popper);
+  }
+  tooltip.popperInstance?.update();
 }
 
 function checkStyleContainer() {
@@ -713,6 +723,7 @@ function loadEventListener() {
   //use mouse position for tooltip position
   addEventHandler("mousemove", handleMousemove);
   addEventHandler("touchstart", handleTouchstart);
+  addEventHandler("fullscreenchange", handleFullscreenChange);
 
   addEventHandler("scroll", () => hideHighlight(true));
   //detect activation hold key pressed
@@ -1516,14 +1527,9 @@ function applyStyleSetting() {
   tooltip.setProps({
     offset: [0, setting["tooltipDistance"]],
     sticky: isSticky ? "reference" : "popper",
-    // function form so tippy re-evaluates the live root on every show; a static
-    // reference goes stale after an SPA / View-Transitions navigation. Use
-    // <html> (documentElement), not <body>: <body> gets swapped on such
-    // navigations (#80) leaving the tooltip on a detached body, AND SPA
-    // frameworks that own <body>'s children crash when we add/remove a node
-    // there (NotFoundError on Open WebUI / SvelteKit). documentElement avoids
-    // both.
-    appendTo: isSticky ? tooltipContainerEle : () => document.documentElement,
+    // Re-evaluate the live root on every show: SPA navigations may replace
+    // <body>, and fullscreen only displays descendants of the fullscreen element.
+    appendTo: isSticky ? tooltipContainerEle : () => getTooltipRoot(),
     placement: placement,
     animation: setting["tooltipAnimation"],
     // [show, hide] animation duration. Hide is configurable so users can make

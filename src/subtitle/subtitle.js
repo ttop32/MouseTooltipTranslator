@@ -3,5 +3,19 @@ import Netflix from "./netflix.js";
 import YoutubeNoCookie from "./youtube-nocookie.js";
 import SVT from "./svt.js";
 import TV4Play from "./tv4play.js";
+import DR from "./dr.js";
+import URPlay from "./urplay.js";
+import Arte from "./arte.js";
+import YleAreena from "./yleAreena.js";
 
-export default { Youtube, Netflix, YoutubeNoCookie, SVT, TV4Play };
+export default {
+  Youtube,
+  Netflix,
+  YoutubeNoCookie,
+  SVT,
+  TV4Play,
+  DR,
+  URPlay,
+  Arte,
+  YleAreena,
+};
