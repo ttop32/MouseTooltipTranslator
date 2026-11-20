@@ -3,5 +3,6 @@ import Netflix from "./netflix.js";
 import YoutubeNoCookie from "./youtube-nocookie.js";
 import SVT from "./svt.js";
 import TV4Play from "./tv4play.js";
+import DR from "./dr.js";
 
-export default { Youtube, Netflix, YoutubeNoCookie, SVT, TV4Play };
+export default { Youtube, Netflix, YoutubeNoCookie, SVT, TV4Play, DR };
