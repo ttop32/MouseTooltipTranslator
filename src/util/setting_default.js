@@ -473,6 +473,12 @@ export var settingDict = {
     optionList: voiceRepeatList,
     settingTab: "voice",
   },
+  voiceSkipParenthesis: {
+    default: "false",
+    i18nKey: "Skip_Text_in_Parentheses_When_Reading",
+    optionList: toggleList,
+    settingTab: "voice",
+  },
 
   // graphic
   tooltipFontSize: {

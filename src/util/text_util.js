@@ -54,13 +54,15 @@ export default class TextUtil {
     return word;
   }
 
-  static filterSpeechText(text){
+  static filterSpeechText(text, skipParenthesis = false){
     text = this.trimAllSpace(text);
     text=isUrl(text)?'':text; 
     text=this.filterEmoji(text)
     text=this.filterHtmlTag(text)
     text=this.filterNonSoundText(text)
-    text=this.filterParenthesis(text)
+    if (skipParenthesis) {
+      text=this.filterParenthesis(text)
+    }
     return text
   }
   static filterNonSoundText(text){
