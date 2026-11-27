@@ -115,17 +115,18 @@ export default class Youtube extends BaseVideo {
       // rawFetch = native fetch (bypasses our interceptor) so this timedtext
       // request isn't re-intercepted into infinite recursion now that fetch is
       // intercepted alongside XHR.
-      var res = await this.rawFetch(this.getTrafficSafeUrl(subUrl));
+      var res = await this.rawFetch(subUrl);
       json = await res.json();
     } catch (error) {
       console.log(error);
     }
 
     try {
-      // if fail, change base url and try again
+      // Only fall back to video.google.com/timedtext for this failed request
+      // instead of sticking a global flag that forces every future request
+      // cross-origin.
       if (!json) {
-        this.isSubtitleRequestFailed = !this.isSubtitleRequestFailed;
-        const res = await this.rawFetch(this.getTrafficSafeUrl(subUrl));
+        const res = await this.rawFetch(this.getTrafficSafeUrl(subUrl, true));
         json = await res.json();
       }
     } catch (error) {
@@ -138,8 +139,8 @@ export default class Youtube extends BaseVideo {
   static isSubtitleEmpty(sub) {
     return !sub?.events?.length;
   }
-  static getTrafficSafeUrl(url) {
-    if (this.isSubtitleRequestFailed) {
+  static getTrafficSafeUrl(url, useFallback = this.isSubtitleRequestFailed) {
+    if (useFallback) {
       const urlObj = new URL(url);
       urlObj.hostname = "video.google.com";
       urlObj.pathname = "/timedtext";
@@ -239,6 +240,17 @@ export default class Youtube extends BaseVideo {
     return parts.map((p) => (p.pen ? { utf8: p.t, pPenId: p.pen } : { utf8: p.t }));
   }
 
+  // Trim prevEv so it ends just before nextStartMs when consecutive cues overlap.
+  static trimOverlappingEvent(prevEv, nextStartMs) {
+    if (
+      prevEv &&
+      nextStartMs > prevEv.tStartMs &&
+      prevEv.tStartMs + prevEv.dDurationMs > nextStartMs
+    ) {
+      prevEv.dDurationMs = Math.max(1, nextStartMs - prevEv.tStartMs - 1);
+    }
+  }
+
   // concat sub=====================================
   static parseSubtitle(subtitle, lang) {
     if (!subtitle?.events) {
@@ -250,24 +262,63 @@ export default class Youtube extends BaseVideo {
     var rtl = isRtl(lang);
     var newEvents = [];
     var pens = [{}]; // pen 0 = default; <font color> runs add entries (below)
+    var windowModes = {};
+    for (var metaEvent of subtitle.events) {
+      if (metaEvent.id != null && metaEvent.wsWinStyleId != null) {
+        windowModes[metaEvent.id] =
+          subtitle.wsWinStyles?.[metaEvent.wsWinStyleId]?.mhModeHint;
+      }
+    }
+    var forceNewEvent = false;
+    var prevHasNewline = false;
+    var maxMergedSpanMs = 5000;
+
     for (var event of subtitle.events) {
       if (!event.segs || !event.dDurationMs) {
         continue;
       }
       var oneLineSub = event.segs
-        .reduce((acc, cur) => (acc += cur.utf8), "")
+        .reduce((acc, cur) => (acc += cur.utf8), "");
       // plain text (tags stripped) for the dedup / merge / "\n" checks below
       var oneLineSubTrim = this.cleanSubText(oneLineSub).trim();
 
-      // if prev sub time overlapped current sub, concat
+      // Standalone newline/whitespace separator (e.g. ASR aAppend "\n"):
+      // trim the active cue if it overlaps and start the next cue fresh
+      // without leaving an empty event in newEvents.
+      if (!oneLineSubTrim) {
+        if (oneLineSub.includes("\n")) {
+          forceNewEvent = true;
+          this.trimOverlappingEvent(
+            newEvents[newEvents.length - 1],
+            event.tStartMs
+          );
+        }
+        continue;
+      }
+
+      var hasInternalNewline = /\n/.test(oneLineSub.trim());
+      var isPopOnWindow =
+        event.wWinId != null && windowModes[event.wWinId] === 0;
+      var prevEv = newEvents[newEvents.length - 1];
+      var mergedSpanMs = prevEv
+        ? event.tStartMs + event.dDurationMs - prevEv.tStartMs
+        : 0;
+
+      // Start a new cue whenever cues don't overlap, a newline/window boundary
+      // separates them, or merging would chain cues past a single-caption span
+      // (preventing overlapping non-ASR cues from merging into the whole transcript).
       if (
-        newEvents.length == 0 ||
-        oneLineSub=="\n" ||
-        // 5000 < newEvents[newEvents.length - 1].dDurationMs ||
-        newEvents[newEvents.length - 1].tStartMs +
-          newEvents[newEvents.length - 1].dDurationMs <=
-          event.tStartMs
+        !prevEv ||
+        forceNewEvent ||
+        prevEv.tStartMs + prevEv.dDurationMs <= event.tStartMs ||
+        prevHasNewline ||
+        hasInternalNewline ||
+        isPopOnWindow ||
+        prevEv.dDurationMs > maxMergedSpanMs ||
+        mergedSpanMs > maxMergedSpanMs
       ) {
+        forceNewEvent = false;
+        prevHasNewline = hasInternalNewline;
         newEvents.push({
           tStartMs: event.tStartMs,
           dDurationMs: event.dDurationMs,
@@ -279,22 +330,14 @@ export default class Youtube extends BaseVideo {
           segs: this.buildColoredSegs(oneLineSub, pens),
         });
 
-        // if prev sub time overlapped current sub(\n case), cut the prev sub
-        if (newEvents.length > 2 &&
-          newEvents[newEvents.length - 2].tStartMs +
-          newEvents[newEvents.length - 2].dDurationMs >
-          event.tStartMs
-        ) {
-          newEvents[newEvents.length - 2].dDurationMs =
-            event.tStartMs - newEvents[newEvents.length - 2].tStartMs-1;
-        }
+        // Trim the previous cue so overlapping consecutive cues do not stack.
+        this.trimOverlappingEvent(prevEv, event.tStartMs);
       } else {
         // overlapping events get merged into the previous line. Auto-generated
         // (ASR) captions roll the same line repeatedly, so a plain append
         // produced duplicated subtitles like "AA BB"; dedupe the overlap. (#90)
         // rolling ASR lines get merged; collapse the previous (possibly
         // multi-seg colored) line to one plain seg, then dedupe the overlap.
-        var prevEv = newEvents[newEvents.length - 1];
         prevEv.segs = [
           {
             utf8: this.mergeCaptionText(
@@ -305,9 +348,8 @@ export default class Youtube extends BaseVideo {
         ];
 
         // increase duration upto current sub
-        newEvents[newEvents.length - 1].dDurationMs =
-          event.tStartMs - newEvents[newEvents.length - 1].tStartMs +
-          event.dDurationMs;
+        prevEv.dDurationMs =
+          event.tStartMs - prevEv.tStartMs + event.dDurationMs;
       }
     }
 
