@@ -59,7 +59,10 @@ export default class TTS {
     if (Number(timestamp) < this.stopTtsTimestamp) {
       return;
     }
-    text = TextUtil.filterSpeechText(text);
+    text = TextUtil.filterSpeechText(
+      text,
+      setting?.["voiceSkipParenthesis"] == "true"
+    );
     if (!text) {
       return;
     }
